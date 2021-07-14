@@ -1,0 +1,53 @@
+identify:
+  realm: 1
+  type: 4
+  id: 1
+  auth: "hello"
+  ip: "127.0.0.1"
+  port: 14007
+  codec_type: 1
+io_threads: 16
+certificate:         #证书
+  public_key: E:\\APie\\etc\\key.pub    #公钥位置
+  private_key: E:\\APie\\etc\\key.pem   #私钥位置
+listeners:
+- address:
+    socket_address:
+      address: "127.0.0.1"
+      port_value: 14007
+      type: 1
+      mask_flag : 1
+service_registry:
+  address: "127.0.0.1"
+  port_value: 5007
+  auth: "hello"
+  type: 1
+log:
+  merge: true
+  level: 0
+  show_pos: true
+  split_size: 128
+  backup: "/usr/local/apie/logs/backup"
+  name: "gateway_server"
+  show_console: true
+metrics:
+  enable: true
+  ip: "127.0.0.1"
+  udp_port: 8089
+redis_clients:
+- client:
+    type: 1
+    id: 1
+    host: "127.0.0.1"
+    port: 6379
+    passwd: ""
+nats:               # nats
+  enable: false                # 是否连接, 默认false
+  connections:
+  - subscription:
+      type: 1
+      nats_server: "nats://127.0.0.1:4222"  # server 
+      channel_domains: "sub_topic"           # sub
+limited:
+  requests_per_unit: 0 
+  uint: 10             

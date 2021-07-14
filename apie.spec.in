@@ -1,0 +1,115 @@
+%define __name  @@name@@
+%define __ver   @@version@@
+%define __rel   @@release@@
+
+Summary: Server
+Name: %{__name}
+Version: %{__ver}
+Release: %{__rel}
+License: GPL
+Group: System
+URL: http://free-random.cn
+Source0: %{name}-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-root
+#BuildRequires: 
+#BuildRequires:  
+#Requires: 
+
+%description
+http://free-random.cn
+
+%prep
+pwd
+
+%setup -q
+
+%build
+pwd
+#export CFLAGS="-O2 -g -std=c++17"
+#export CXXFLAGS="-O2 -g -std=c++17"
+./configure
+make
+pwd
+
+%install
+echo "buildroot:%{buildroot}"
+pwd
+
+echo "install %{_builddir}  to %{buildroot}"
+pwd
+%{__install} -d %{buildroot}/usr/local/%{name}/bin
+%{__install} -d %{buildroot}/usr/local/%{name}/etc
+%{__install} -d %{buildroot}/usr/local/%{name}/conf
+%{__install} -d %{buildroot}/usr/local/%{name}/cron
+%{__install} -d %{buildroot}/usr/local/%{name}/data
+%{__install} -d %{buildroot}/usr/local/%{name}/lib
+%{__install} -d %{buildroot}/usr/local/%{name}/logs
+%{__install} -d %{buildroot}/usr/local/%{name}/keepalived
+%{__install} -d %{buildroot}/etc/rc.d/init.d
+
+
+%{__install} -c -m 644 conf/db_account_proxy.yaml %{buildroot}/usr/local/%{name}/conf/db_account_proxy.yaml
+%{__install} -c -m 644 conf/db_role_proxy.yaml %{buildroot}/usr/local/%{name}/conf/db_role_proxy.yaml
+%{__install} -c -m 644 conf/gateway_server.yaml %{buildroot}/usr/local/%{name}/conf/gateway_server.yaml
+%{__install} -c -m 644 conf/login_server.yaml %{buildroot}/usr/local/%{name}/conf/login_server.yaml
+%{__install} -c -m 644 conf/route_proxy.yaml %{buildroot}/usr/local/%{name}/conf/route_proxy.yaml
+%{__install} -c -m 644 conf/scene_server.yaml %{buildroot}/usr/local/%{name}/conf/scene_server.yaml
+%{__install} -c -m 644 conf/service_registry.yaml %{buildroot}/usr/local/%{name}/conf/service_registry.yaml
+%{__install} -c -m 644 conf/test_client.yaml %{buildroot}/usr/local/%{name}/conf/test_client.yaml
+
+%{__install} -c -m 644 etc/key.pem %{buildroot}/usr/local/%{name}/etc/key.pem
+%{__install} -c -m 644 etc/key.pub %{buildroot}/usr/local/%{name}/etc/key.pub
+
+/usr/bin/cp -i data/* %{buildroot}/usr/local/%{name}/data/
+
+%{__install} -c -m 755 etc/apie.sh %{buildroot}/etc/rc.d/init.d/apie
+
+make DESTDIR=%{buildroot} install
+
+%clean
+
+%pre
+
+%post
+/sbin/ldconfig
+if [ $1 = 0 ]; then 
+	# This is an initial install.
+	echo "post if " $1
+elif [ $1 = 1 ]; then
+	# This is an upgrade.
+	echo "post elif " $1
+else
+	echo "post else " $1
+fi
+
+%preun
+if [ $1 = 0 ]; then 
+	# This is an un-installation.
+	echo "preun if " $1
+elif [ $1 = 1 ]; then
+	# This is an upgrade.
+	echo "preun elif " $1
+else
+	echo "preun else " $1
+fi
+
+%postun
+/sbin/ldconfig
+
+
+%files
+%defattr(-,root,root)
+/usr/local/%{name}/bin
+/usr/local/%{name}/etc
+/usr/local/%{name}/conf
+/usr/local/%{name}/cron
+/usr/local/%{name}/data
+/usr/local/%{name}/lib
+/usr/local/%{name}/logs
+/usr/local/%{name}/keepalived
+/etc/rc.d/init.d
+%attr(0755,root,root) %config  %{_sysconfdir}/rc.d/init.d/apie
+
+%changelog
+
+

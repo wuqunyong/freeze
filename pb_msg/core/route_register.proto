@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package route_register;
+import "common.proto";
+
+//--------------------------
+
+
+message RouteInstance
+{
+	uint32 realm = 1;
+	common.EndPointType type = 2;
+	uint32 id = 3;
+	string auth = 4;
+}
+
+message MSG_REQUEST_ADD_ROUTE
+{
+	RouteInstance instance = 1;
+}
+
+message MSG_RESP_ADD_ROUTE
+{
+	RouteInstance target = 1;
+	RouteInstance route = 2;
+	uint32 status_code = 3;
+}
+
+message MSG_REQUEST_HEARTBEAT
+{
+}
+
+message MSG_RESP_HEARTBEAT
+{
+	uint32 status_code = 1;
+}

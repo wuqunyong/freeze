@@ -1,0 +1,51 @@
+identify:
+  type: 8
+  id: 1
+io_threads: 16
+clients:
+    socket_address:
+      #address: "10.0.16.59"
+      #address: "45.63.24.92"
+      address: "127.0.0.1"
+      port_value: 16007
+      type: 1
+      mask_flag : 0
+log:
+  merge: true
+  level: 0
+  show_pos: false
+  split_size: 128
+  show_console: true
+  backup: "/usr/local/apie/logs/backup"
+  name: "test_client"
+metrics:
+  enable: true
+  ip: "127.0.0.1"
+  udp_port: 8089
+redis_clients:
+- client:
+    type: 1
+    id: 1
+    #host: "10.0.16.59"
+    host: "127.0.0.1"
+    port: 6379
+    passwd: "" 
+auto_test:               # 自动化测试
+  enable: true           # 是否启用, 默认false
+  start: 1
+  stop: 500
+  ramp_up_interval_ms: 10000
+  ramp_up_nums: 50
+  task_suite:
+  - task_case:
+      case_type: 1
+      loop_count: 1
+      loop_interval_ms: 10
+  - task_case:
+      case_type: 2
+      loop_count: 100
+      loop_interval_ms: 100
+  - task_case:
+      case_type: 3
+      loop_count: 1
+      loop_interval_ms: 10               

@@ -1,0 +1,29 @@
+identify:
+  realm: 1
+  type: 2
+  id: 1
+io_threads: 2
+service_registry:
+  address: "127.0.0.1"
+  port_value: 5007
+  auth: "hello"
+  type: 1
+log:
+  merge: true
+  level: 0
+  show_pos: true
+  show_console: true
+  split_size: 128
+  backup: "/usr/local/apie/logs/backup"
+  name: "route_proxy"
+metrics:
+  enable: true
+  ip: "127.0.0.1"
+  udp_port: 8089
+nats:               # nats
+  enable: false                # 是否连接, 默认false
+  connections:
+  - subscription:
+      type: 1
+      nats_server: "nats://127.0.0.1:4222"  # server 
+      channel_domains: "sub_topic"           # sub
