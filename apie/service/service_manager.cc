@@ -3,33 +3,40 @@
 namespace apie {
 namespace service {
 
-	ServiceManager::ServiceManager()
-	{
 
+ServiceManager::ServiceManager()
+{
+	this->init();
+}
+
+ServiceManager::~ServiceManager()
+{
+	this->destroy();
+}
+
+std::optional<std::string> ServiceManager::getType(uint32_t opcode)
+{
+	auto find_ite = type_.find(opcode);
+	if (find_ite == type_.end())
+	{
+		return std::nullopt;
 	}
 
-	ServiceManager::~ServiceManager()
-	{
-		this->destroy();
-	}
+	return find_ite->second;
+}
 
-	std::optional<std::string> ServiceManager::getType(uint32_t opcode)
-	{
-		auto find_ite = type_.find(opcode);
-		if (find_ite == type_.end())
-		{
-			return std::nullopt;
-		}
+void ServiceManager::init()
+{
 
-		return find_ite->second;
-	}
+}
 
-	void ServiceManager::destroy()
-	{
-		type_.clear();
-		func_.clear();
-		service_.clear();
-	}
+void ServiceManager::destroy()
+{
+	type_.clear();
+	func_.clear();
+	service_.clear();
+}
+
 
 }  
 }

@@ -68,7 +68,8 @@ std::tuple<uint32_t, std::string> LoginMgr::ready()
 	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountLogin);
 
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccount);
+	//server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccount);
+	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountNotify);
 
 	std::stringstream ss;
 	ss << "Server Ready!";
@@ -113,6 +114,13 @@ apie::status::Status LoginMgr::handleAccount(uint64_t iSerialNum, const std::sha
 	ASYNC_PIE_LOG("LoginMgr/handleAccount", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	return { apie::status::StatusCode::OK, "" };
+}
+
+void LoginMgr::handleAccountNotify(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& notify)
+{
+	std::stringstream ss;
+	ss << "handleAccount:" << notify->ShortDebugString();
+	ASYNC_PIE_LOG("LoginMgr/handleAccount", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 }
 
 void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request)

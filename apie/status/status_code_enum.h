@@ -3,6 +3,7 @@
 namespace apie {
 namespace status {
 
+
 enum class StatusCode {
   /// Not an error; returned on success.
   OK = 0,
@@ -120,6 +121,7 @@ enum class StatusCode {
   /// Force users to include a default branch:
   DO_NOT_USE = -1
 };
+
 
 }
 }

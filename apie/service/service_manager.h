@@ -20,54 +20,54 @@ namespace service {
 
 
 class ServiceManager {
- public:
-	 using ServiceCallback = std::function<void(uint64_t serial_num, const std::shared_ptr<::google::protobuf::Message>&)>;
+public:
+	using ServiceCallback = std::function<void(uint64_t, const std::shared_ptr<::google::protobuf::Message>&)>;
 
-     ServiceManager();
-     virtual ~ServiceManager();
+	ServiceManager();
+	virtual ~ServiceManager();
 
-	 void destroy();
+	void init();
+	void destroy();
 
-  template <typename Request, uint32_t responseOpcode, typename Response>
-  bool createService(uint32_t opcode, const typename HandleRequestService<Request, responseOpcode, Response>::ServiceCallback& service_calllback);
+	std::optional<std::string> getType(uint32_t opcode);
 
-  template <typename Notify>
-  bool createService(uint32_t opcode, const typename HandleNotifyService<Notify>::ServiceCallback& service_calllback);
+	template <typename Request, uint32_t responseOpcode, typename Response>
+	bool createService(uint32_t opcode, const typename HandleRequestService<Request, responseOpcode, Response>::ServiceCallback& service_calllback);
+
+	template <typename Notify>
+	bool createService(uint32_t opcode, const typename HandleNotifyService<Notify>::ServiceCallback& service_calllback);
+
+	template <typename T>
+	void onMessage(uint64_t serial_num, uint32_t opcode, const std::shared_ptr<T>& message);
 
 
-  std::optional<std::string> getType(uint32_t opcode);
-  
-  template <typename T>
-  void onMessage(uint64_t serial_num, uint32_t opcode, const std::shared_ptr<T>& message);
-
-
- private:
-  std::map<uint32_t, std::shared_ptr<ServiceBase>> service_;
-  std::map<uint32_t, std::string> type_;
-  std::map<uint32_t, ServiceCallback> func_;
+private:
+	std::map<uint32_t, std::shared_ptr<ServiceBase>> service_;
+	std::map<uint32_t, std::string> type_;
+	std::map<uint32_t, ServiceCallback> func_;
 };
 
 
 template <typename Request, uint32_t responseOpcode, typename Response>
 bool ServiceManager::createService(
-    uint32_t opcode, const typename HandleRequestService<Request, responseOpcode, Response>::ServiceCallback&service_calllback)
+	uint32_t opcode, const typename HandleRequestService<Request, responseOpcode, Response>::ServiceCallback& service_calllback)
 {
-    auto find_ite = service_.find(opcode);
-    if (find_ite != service_.end())
-    {
-        //TODO
+	auto find_ite = service_.find(opcode);
+	if (find_ite != service_.end())
+	{
+		//TODO
 
-        return false;
-    }
+		return false;
+	}
 
 	auto service_ptr = std::make_shared<HandleRequestService<Request, responseOpcode, Response>>(opcode, service_calllback);
-    service_[opcode] = service_ptr;
+	service_[opcode] = service_ptr;
 
 	std::string pb_type = Request::descriptor()->full_name();
 	type_[opcode] = pb_type;
 	func_[opcode] = service_ptr->getHandler();
 
-    return true;
+	return true;
 }
 
 
@@ -79,7 +79,6 @@ bool ServiceManager::createService(
 	if (find_ite != service_.end())
 	{
 		//TODO
-
 		return false;
 	}
 
@@ -113,7 +112,7 @@ struct ServiceHandler
 };
 
 
- using ServiceHandlerSingleton = APie::ThreadSafeSingleton<ServiceHandler>;
+using ServiceHandlerSingleton = APie::ThreadSafeSingleton<ServiceHandler>;
 
 
 }  
