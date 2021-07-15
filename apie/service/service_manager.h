@@ -21,7 +21,7 @@ namespace service {
 
 class ServiceManager {
  public:
-	 using ServiceCallback = std::function<void(uint64_t serial_num, std::shared_ptr<::google::protobuf::Message>&)>;
+	 using ServiceCallback = std::function<void(uint64_t serial_num, const std::shared_ptr<::google::protobuf::Message>&)>;
 
      ServiceManager();
      virtual ~ServiceManager();
@@ -38,7 +38,7 @@ class ServiceManager {
   std::optional<std::string> getType(uint32_t opcode);
   
   template <typename T>
-  void onMessage(uint64_t serial_num, uint32_t opcode, std::shared_ptr<T>& message);
+  void onMessage(uint64_t serial_num, uint32_t opcode, const std::shared_ptr<T>& message);
 
 
  private:
@@ -94,7 +94,7 @@ bool ServiceManager::createService(
 }
 
 template <typename T>
-void ServiceManager::onMessage(uint64_t serial_num, uint32_t opcode, std::shared_ptr<T>& message)
+void ServiceManager::onMessage(uint64_t serial_num, uint32_t opcode, const std::shared_ptr<T>& message)
 {
 	auto find_ite = func_.find(opcode);
 	if (find_ite == func_.end())

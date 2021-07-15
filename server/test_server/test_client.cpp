@@ -408,6 +408,17 @@ int main(int argc, char **argv)
 	//std::tuple<int, float, std::string, int> tpl{ 4, 6.6, "hello", 7 };
 	//TuplePrinter<decltype(tpl), std::tuple_size<decltype(tpl)>::value>::print(tpl);
 
+	auto ptrPb = std::make_shared<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>();
+	ptrPb->set_account_id(100);
+
+	const std::shared_ptr<::google::protobuf::Message>& prtBase = ptrPb;
+
+	auto ptrDerived = std::dynamic_pointer_cast<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(prtBase);
+	if (ptrDerived != nullptr)
+	{
+		std::cout << ptrDerived->ShortDebugString();
+	}
+
 	std::is_constructible<int>::value;
 
 	auto pData = std::make_tuple(1, 2, 3, 4, 5);

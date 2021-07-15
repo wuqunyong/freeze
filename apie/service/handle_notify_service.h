@@ -30,9 +30,9 @@ class HandleNotifyService : public ServiceBase {
   void init();
   void destroy();
 
-  std::function<void(uint64_t, std::shared_ptr<::google::protobuf::Message>&) > getHandler()
+  std::function<void(uint64_t, const std::shared_ptr<::google::protobuf::Message>&) > getHandler()
   {
-	  auto ptr_cb = [this](uint64_t serial_num, std::shared_ptr<::google::protobuf::Message>& notify) {
+	  auto ptr_cb = [this](uint64_t serial_num, const std::shared_ptr<::google::protobuf::Message>& notify) {
 		  auto shared_obj = std::dynamic_pointer_cast<Notify>(notify);
 		  if (shared_obj == nullptr)
 		  {
