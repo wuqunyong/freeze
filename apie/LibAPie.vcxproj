@@ -264,8 +264,6 @@
     <ClInclude Include="service\handle_request_service.h" />
     <ClInclude Include="service\service_base.h" />
     <ClInclude Include="service\service_manager.h" />
-    <ClInclude Include="singleton\const_singleton.h" />
-    <ClInclude Include="singleton\instance.h" />
     <ClInclude Include="singleton\threadsafe_singleton.h" />
     <ClInclude Include="status\status.h" />
     <ClInclude Include="status\status_code_enum.h" />

@@ -177,12 +177,6 @@
     <ClInclude Include="network\platform_impl.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="singleton\const_singleton.h">
-      <Filter>singleton</Filter>
-    </ClInclude>
-    <ClInclude Include="singleton\instance.h">
-      <Filter>singleton</Filter>
-    </ClInclude>
     <ClInclude Include="singleton\threadsafe_singleton.h">
       <Filter>singleton</Filter>
     </ClInclude>
