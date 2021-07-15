@@ -74,7 +74,7 @@
     <LibraryPath>C:\Program Files\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)third_party\OpenSSL-Win64\include;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\include;$(SolutionDir)third_party\protobuf\src;$(SolutionDir)third_party\yaml-cpp\include;$(SolutionDir)third_party\libevent-release-2.1.11\include;$(SolutionDir)third_party\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)third_party\influxdb-cpp;$(SolutionDir)third_party\lz4\include;$(SolutionDir)third_party\jsoncpp\include;$(SolutionDir)third_party\tinyxml2;$(SolutionDir)third_party\cpp_redis\includes;$(SolutionDir)third_party\cpp_redis\tacopie\includes;$(SolutionDir)third_party\libnats;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)third_party\OpenSSL-Win64\include;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\include;$(SolutionDir)third_party\protobuf\src;$(SolutionDir)third_party\yaml-cpp\include;$(SolutionDir)third_party\libevent-release-2.1.11\include;$(SolutionDir)third_party\libevent-release-2.1.11\WIN32-Code\nmake;$(SolutionDir)third_party\influxdb-cpp;$(SolutionDir)third_party\lz4\include;$(SolutionDir)third_party\jsoncpp\include;$(SolutionDir)third_party\tinyxml2;$(SolutionDir)third_party\cpp_redis\includes;$(SolutionDir)third_party\cpp_redis\tacopie\includes;$(SolutionDir)third_party\libnats;$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)third_party\libs;$(SolutionDir)third_party\OpenSSL-Win64\lib;$(SolutionDir)third_party\MySQL\MySQL Server 5.7\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -260,9 +260,15 @@
     <ClInclude Include="rpc\server\rpc_server.h" />
     <ClInclude Include="serialization\byte_buffer.h" />
     <ClInclude Include="serialization\protocol_head.h" />
+    <ClInclude Include="service\handle_notify_service.h" />
+    <ClInclude Include="service\handle_request_service.h" />
+    <ClInclude Include="service\service_base.h" />
+    <ClInclude Include="service\service_manager.h" />
     <ClInclude Include="singleton\const_singleton.h" />
     <ClInclude Include="singleton\instance.h" />
     <ClInclude Include="singleton\threadsafe_singleton.h" />
+    <ClInclude Include="status\status.h" />
+    <ClInclude Include="status\status_code_enum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\pb_msg\core\common.pb.cc" />
@@ -348,6 +354,7 @@
     <ClCompile Include="rpc\server\rpc_server.cpp" />
     <ClCompile Include="serialization\byte_buffer.cpp" />
     <ClCompile Include="serialization\protocol_head.cpp" />
+    <ClCompile Include="service\service_manager.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\third_party\jsoncpp\src\lib_json\json_valueiterator.inl" />

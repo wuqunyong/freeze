@@ -49,5 +49,8 @@
 #include "rpc/client/rpc_client.h"
 #include "rpc/server/rpc_server.h"
 
+#include "service/service_manager.h"
+
+#include "status/status.h"
 
 #include "google/protobuf/message.h"

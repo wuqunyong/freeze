@@ -91,6 +91,12 @@
     <Filter Include="configs">
       <UniqueIdentifier>{4e9054e3-c562-4048-b198-9742a6da642a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="service">
+      <UniqueIdentifier>{deeb88af-0848-4c1d-9fb8-ce7b46ade21c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="status">
+      <UniqueIdentifier>{15cd5ea5-2b0d-4800-b0aa-606de5f07776}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -464,6 +470,24 @@
     <ClInclude Include="configs\configs.h">
       <Filter>configs</Filter>
     </ClInclude>
+    <ClInclude Include="service\handle_notify_service.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\handle_request_service.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="service\service_base.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="status\status.h">
+      <Filter>status</Filter>
+    </ClInclude>
+    <ClInclude Include="status\status_code_enum.h">
+      <Filter>status</Filter>
+    </ClInclude>
+    <ClInclude Include="service\service_manager.h">
+      <Filter>service</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -714,6 +738,9 @@
     </ClCompile>
     <ClCompile Include="..\pb_msg\core\nats_msg.pb.cc">
       <Filter>pb_msg\core</Filter>
+    </ClCompile>
+    <ClCompile Include="service\service_manager.cc">
+      <Filter>service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

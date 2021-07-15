@@ -32,9 +32,12 @@ namespace APie {
 
 		// CLIENT OPCODE
 		static void handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request);
+		
+
+		static apie::status::Status handleAccount(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>&, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>&);
 
 	private:
-
+		std::array<int, 5> a;
 	};
 
 	using LoginMgrSingleton = ThreadSafeSingleton<LoginMgr>;

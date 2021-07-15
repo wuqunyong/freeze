@@ -38,6 +38,8 @@
 #include "../crypto/crypto_utility.h"
 #include "../redis_driver/redis_client.h"
 
+#include "apie/service/service_manager.h"
+
 
 
 namespace APie {
@@ -585,6 +587,9 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 		}
 
 		optionalData.value()(itemPtr->iSerialNum, itemPtr->ptrMsg.get());
+
+
+		apie::service::ServiceHandlerSingleton::get().server.onMessage(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->ptrMsg);
 		break;
 	}
 	case APie::ConnetionType::CT_CLIENT:

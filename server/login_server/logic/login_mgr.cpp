@@ -1,6 +1,6 @@
 #include "login_mgr.h"
 
-#include "../../libapie/common/string_utils.h"
+#include "../../apie/common/string_utils.h"
 #include "../../common/dao/model_account.h"
 #include "../../common/dao/model_account_name.h"
 #include "../../common/opcodes.h"
@@ -67,6 +67,8 @@ std::tuple<uint32_t, std::string> LoginMgr::ready()
 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
 	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountLogin);
 
+	auto& server = apie::service::ServiceHandlerSingleton::get().server;
+	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccount);
 
 	std::stringstream ss;
 	ss << "Server Ready!";
@@ -103,6 +105,14 @@ void LoginMgr::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& ms
 
 	//uint64_t iSerialNum = refMsg.serial_num();
 
+}
+apie::status::Status LoginMgr::handleAccount(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>& response)
+{
+	std::stringstream ss;
+	ss << "handleAccount:" << request->ShortDebugString();
+	ASYNC_PIE_LOG("LoginMgr/handleAccount", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+
+	return { apie::status::StatusCode::OK, "" };
 }
 
 void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request)

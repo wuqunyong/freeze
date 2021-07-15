@@ -12,6 +12,8 @@
 #include "../decompressor/lz4_decompressor_impl.h"
 #include "../crypto/crypto_utility.h"
 
+#include "apie/service/service_manager.h"
+
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
 
