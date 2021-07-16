@@ -37,12 +37,6 @@
     <Filter Include="rpc">
       <UniqueIdentifier>{0360f5e6-d4a9-4cb4-ad23-1344147be2a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="rpc\rpc_client">
-      <UniqueIdentifier>{6e476114-90a7-4ddc-9173-cdb9d01ea044}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="rpc\rpc_server">
-      <UniqueIdentifier>{bf6794c7-d915-44a3-b739-cd2736118847}</UniqueIdentifier>
-    </Filter>
     <Filter Include="compressor">
       <UniqueIdentifier>{02cb0a7c-e270-4a85-96bd-632ba4bd65e2}</UniqueIdentifier>
     </Filter>
@@ -96,6 +90,12 @@
     </Filter>
     <Filter Include="status">
       <UniqueIdentifier>{15cd5ea5-2b0d-4800-b0aa-606de5f07776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rpc\client">
+      <UniqueIdentifier>{6e476114-90a7-4ddc-9173-cdb9d01ea044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="rpc\server">
+      <UniqueIdentifier>{bf6794c7-d915-44a3-b739-cd2736118847}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -305,10 +305,10 @@
       <Filter>rpc</Filter>
     </ClInclude>
     <ClInclude Include="rpc\client\rpc_client.h">
-      <Filter>rpc\rpc_client</Filter>
+      <Filter>rpc\client</Filter>
     </ClInclude>
     <ClInclude Include="rpc\server\rpc_server.h">
-      <Filter>rpc\rpc_server</Filter>
+      <Filter>rpc\server</Filter>
     </ClInclude>
     <ClInclude Include="network\end_point.h">
       <Filter>network</Filter>
@@ -482,6 +482,24 @@
     <ClInclude Include="service\service_manager.h">
       <Filter>service</Filter>
     </ClInclude>
+    <ClInclude Include="rpc\client\rpc_client_base.h">
+      <Filter>rpc\client</Filter>
+    </ClInclude>
+    <ClInclude Include="rpc\client\rpc_client_contex.h">
+      <Filter>rpc\client</Filter>
+    </ClInclude>
+    <ClInclude Include="rpc\client\rpc_client_manager.h">
+      <Filter>rpc\client</Filter>
+    </ClInclude>
+    <ClInclude Include="rpc\server\rpc_server_base.h">
+      <Filter>rpc\server</Filter>
+    </ClInclude>
+    <ClInclude Include="rpc\server\rpc_server_manager.h">
+      <Filter>rpc\server</Filter>
+    </ClInclude>
+    <ClInclude Include="common\protobuf_factory.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -616,12 +634,6 @@
     <ClCompile Include="http\string_util.cpp">
       <Filter>http</Filter>
     </ClCompile>
-    <ClCompile Include="rpc\client\rpc_client.cpp">
-      <Filter>rpc\rpc_client</Filter>
-    </ClCompile>
-    <ClCompile Include="rpc\server\rpc_server.cpp">
-      <Filter>rpc\rpc_server</Filter>
-    </ClCompile>
     <ClCompile Include="rpc\init.cpp">
       <Filter>rpc</Filter>
     </ClCompile>
@@ -735,6 +747,18 @@
     </ClCompile>
     <ClCompile Include="service\service_manager.cc">
       <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="rpc\client\rpc_client_contex.cpp">
+      <Filter>rpc\client</Filter>
+    </ClCompile>
+    <ClCompile Include="rpc\client\rpc_client_manager.cpp">
+      <Filter>rpc\client</Filter>
+    </ClCompile>
+    <ClCompile Include="rpc\server\rpc_server_manager.cc">
+      <Filter>rpc\server</Filter>
+    </ClCompile>
+    <ClCompile Include="common\protobuf_factory.cpp">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

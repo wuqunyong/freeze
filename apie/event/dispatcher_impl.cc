@@ -39,6 +39,8 @@
 #include "../redis_driver/redis_client.h"
 
 #include "apie/service/service_manager.h"
+#include "apie/rpc/client/rpc_client_manager.h"
+#include "apie/event/nats_proxy.h"
 
 
 
@@ -243,7 +245,7 @@ void DispatcherImpl::runIntervalCallbacks()
 	{
 	case APie::Event::EThreadType::TT_Logic:
 	{
-		APie::RPC::RpcClientSingleton::get().handleTimeout();
+		apie::rpc::RPCClientManagerSingleton::get().handleTimeout();
 		break;
 	}
 	default:

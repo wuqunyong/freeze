@@ -355,7 +355,8 @@ namespace Network {
 
 		::rpc_msg::CONTROLLER controller;
 		controller.set_serial_num(roleIdentifier.channel_serial_num());
-		return APie::RPC::RpcClientSingleton::get().call(controller, server, ::rpc_msg::RPC_DeMultiplexer_Forward, args, rpcCB);
+		return false;
+		//return APie::RPC::RpcClientSingleton::get().call(controller, server, ::rpc_msg::RPC_DeMultiplexer_Forward, args, rpcCB);
 	}
 
 	bool OutputStream::sendCommand(ConnetionType type, uint64_t iSerialNum, APie::Command& cmd)

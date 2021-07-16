@@ -24,6 +24,11 @@
 
 #include "../influxdb-cpp/influxdb.hpp"
 
+#include "apie/rpc/client/rpc_client_manager.h"
+#include "apie/status/status.h"
+
+#include "apie/rpc/server/rpc_server_manager.h"
+
 namespace APie {
 namespace Event {
 
@@ -412,85 +417,7 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 
 	if (msg->has_rpc_request())
 	{
-		::rpc_msg::RPC_REQUEST request = msg->rpc_request();
-
-		std::string channel = NatsManager::GetTopicChannel(request.client().stub().realm(), request.client().stub().type(), request.client().stub().id());
-
-		::rpc_msg::CHANNEL server;
-		server.set_realm(APie::CtxSingleton::get().identify().realm);
-		server.set_type(APie::CtxSingleton::get().identify().type);
-		server.set_id(APie::CtxSingleton::get().identify().id);
-
-		if (request.server().stub().realm() != server.realm() || request.server().stub().type() != server.type() || request.server().stub().id() != server.id())
-		{
-			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|has_rpc_request||cur server:%s|%s", server.ShortDebugString().c_str(), msg->ShortDebugString().c_str());
-			return;
-		}
-
-		request.mutable_client()->set_channel_serial_num(0);
-
-		::rpc_msg::RPC_RESPONSE response;
-		*response.mutable_client() = request.client();
-		*response.mutable_server()->mutable_stub() = server;
-
-
-		auto functionOpt = APie::RPC::RpcServerSingleton::get().findFunction(request.opcodes());
-		if (!functionOpt.has_value())
-		{
-			response.mutable_status()->set_code(::rpc_msg::RPC_CODE::CODE_Unregister);
-
-			::nats_msg::NATS_MSG_PRXOY nats_msg;
-			(*nats_msg.mutable_rpc_response()) = response;
-			APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
-
-			return;
-		}
-
-		auto typeOpt = APie::RPC::RpcServerSingleton::get().getType(request.opcodes());
-		if (!typeOpt.has_value())
-		{
-			response.mutable_status()->set_code(::rpc_msg::RPC_CODE::CODE_Unregister);
-
-			::nats_msg::NATS_MSG_PRXOY nats_msg;
-			(*nats_msg.mutable_rpc_response()) = response;
-			APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
-			return;
-		}
-
-		std::string sType = typeOpt.value();
-		auto ptrMsg = Api::PBHandler::createMessage(sType);
-		if (ptrMsg == nullptr)
-		{
-			return;
-		}
-
-		std::shared_ptr<::google::protobuf::Message> newMsg(ptrMsg);
-		bool bResult = newMsg->ParseFromString(request.args_data());
-		if (!bResult)
-		{
-			return;
-		}
-
-		auto tupleResult = functionOpt.value()(request.client(), newMsg.get());
-
-		uint32_t iCode = std::get<0>(tupleResult);
-		if (iCode == ::rpc_msg::RPC_CODE::CODE_Ok_Async)
-		{
-			return;
-		}
-
-		if (!request.client().required_reply())
-		{
-			return;
-		}
-
-		response.mutable_status()->set_code(iCode);
-		response.set_result_data(std::get<1>(tupleResult));
-
-		::nats_msg::NATS_MSG_PRXOY nats_msg;
-		(*nats_msg.mutable_rpc_response()) = response;
-		APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
-
+		apie::rpc::RPCServerManagerSingleton::get().onMessage(msg->rpc_request());
 		return;
 	}
 
@@ -509,37 +436,8 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 			return;
 		}
 
-		uint64_t seqId = response.client().seq_id();
-		auto replyCb = APie::RPC::RpcClientSingleton::get().find(seqId);
-		if (replyCb == nullptr)
-		{
-			//TODO
-			return;
-		}
-
-		bool hasMore = false;
-		auto status = response.status();
-
-		bool isStream = APie::RPC::RpcClientSingleton::get().isServerStream(seqId);
-		if (isStream)
-		{
-			hasMore = response.has_more();
-
-			status.set_has_more(hasMore);
-			status.set_offset(response.offset());
-		}
-
-		replyCb(status, response.result_data());
-
-		if (hasMore)
-		{
-			//Nothing
-		}
-		else
-		{
-			APie::RPC::RpcClientSingleton::get().del(seqId);
-		}
-		APie::RPC::RpcClientSingleton::get().handleTimeout();
+		apie::status::Status status((apie::status::StatusCode)(response.status().code()), response.status().msg());
+		apie::rpc::RPCClientManagerSingleton::get().handleResponse(response.client().seq_id(), status, response.result_data());
 	}
 }
 

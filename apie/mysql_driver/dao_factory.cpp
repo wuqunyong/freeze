@@ -235,8 +235,8 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 
 		cb(true, response.error_info(), iCallCount);
 	};
-
-	return RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDescTable, args, rpcCB);
+	return false;
+	//return RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDescTable, args, rpcCB);
 }
 
 bool RegisterRequiredTable(DeclarativeBase::DBType type, uint32_t iServerId, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb)

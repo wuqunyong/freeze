@@ -1,91 +1,97 @@
 #pragma once
 
-#include <array>
-#include <cstdint>
-#include <string>
+#include <functional>
+#include <memory>
 
-#include "../../api/api.h"
-#include "../../api/pb_handler.h"
+#include "apie/rpc/client/rpc_client_base.h"
+#include "apie/rpc/client/rpc_client_contex.h"
 
-#include "../../network/ctx.h"
-#include "../../network/address.h"
-#include "../../network/output_stream.h"
-#include "../../network/windows_platform.h"
-#include "../../singleton/threadsafe_singleton.h"
+#include "apie/status/status.h"
 
-#include "../../event/nats_proxy.h"
+namespace apie {
+namespace rpc {
 
-#include "../init.h"
+class RPCClientManager;
 
-#include <event2/util.h>
+template <typename Request, typename Response>
+class RPCClient : public RPCClientBase {
+public:
+	using SharedRequest = typename std::shared_ptr<Request>;
+	using SharedResponse = typename std::shared_ptr<Response>;
+	using CallbackType = std::function<void(const status::Status&, const SharedResponse&)>;
 
-
-namespace APie {
-namespace RPC {
-
-	using RpcReplyCb = std::function<void(const rpc_msg::STATUS& status, const std::string& replyData)>;
-	using RpcMultiReplyCb = std::function<void(const rpc_msg::STATUS& status, std::vector<std::tuple<rpc_msg::STATUS, std::string>> replyData)>;
-
-	struct MultiCallPending
+	RPCClient(RPCClientManager& manager, const std::string& server_id, uint32_t opcode, const CallbackType& callback)
+		: RPCClientBase(opcode),
+		manager_(manager),
+		callback_(callback),
+		context_(server_id, opcode)
 	{
-		uint32_t iCount = 0;
-		uint32_t iCompleted = 0;
-		uint32_t iCallTimes = 0;
-		std::vector<uint64_t> seqIdVec;
-		std::map<uint64_t, std::tuple<rpc_msg::STATUS, std::string>> replyData;
-		std::vector<std::tuple<rpc_msg::STATUS, std::string>> result;
-	};
+	}
 
-	class RpcClient
+	RPCClient() = delete;
+
+	virtual ~RPCClient() 
 	{
-	public:
-		bool init();
+		this->destroy();
+	}
 
-		bool callByRoute(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, 
-			RpcReplyCb reply = nullptr, std::optional<::rpc_msg::CONTROLLER> controllerOpt = std::nullopt);
+	bool sendRequest(SharedRequest request);
+	bool sendRequest(const Request& request);
 
-		bool callByRouteWithServerStream(::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, 
-			RpcReplyCb reply = nullptr, std::optional<::rpc_msg::CONTROLLER> controllerOpt = std::nullopt);
-		
-		bool multiCallByRoute(std::vector<std::tuple<::rpc_msg::CHANNEL, ::rpc_msg::RPC_OPCODES, std::string>> methods, 
-			RpcMultiReplyCb reply = nullptr, std::optional<::rpc_msg::CONTROLLER> controllerOpt = std::nullopt);
+	void destroy();
 
-		void handleTimeout();
 
-	public:
-		static void handleResponse(uint64_t iSerialNum, const ::rpc_msg::RPC_RESPONSE& response);
+private:
+	bool asyncSendRequest(SharedRequest request);
+	void handleResponse(const status::Status& status, const SharedResponse& response);
 
-	private:
-		bool call(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, ::google::protobuf::Message& args, RpcReplyCb reply = nullptr);
-		bool callWithStrArgs(::rpc_msg::CONTROLLER controller, ::rpc_msg::CHANNEL server, ::rpc_msg::RPC_OPCODES opcodes, const std::string& args, RpcReplyCb reply = nullptr);
+	RPCClientManager& manager_;
 
-		RpcReplyCb find(uint64_t seqId);
-		void del(uint64_t seqId);
+	uint64_t sequence_number_;
+	CallbackType callback_;
 
-		bool isServerStream(uint64_t seqId);
+	RPCClientContext context_;
+};
 
-	private:
-		std::map<uint64_t, RpcReplyCb> m_reply;
+template <typename Request, typename Response>
+void RPCClient<Request, Response>::destroy() {}
 
-		struct timer_info
-		{
-			uint64_t id;
-			uint64_t expireAt;
-		};
-		std::multimap<uint64_t, timer_info> m_expireAt;
-		std::map<uint64_t, bool> m_serverStream;
 
-		uint64_t m_iSeqId = 0;
-		uint64_t m_iCheckTimeoutAt = 60;
+template <typename Request, typename Response>
+bool RPCClient<Request, Response>::sendRequest(SharedRequest request)
+{
+	return asyncSendRequest(request);
+}
 
-		static uint64_t TIMEOUT_DURATION;
-		static uint64_t CHECK_INTERVAL;
+template <typename Request, typename Response>
+bool RPCClient<Request, Response>::sendRequest(const Request& request)
+{
+	auto request_ptr = std::make_shared<const Request>(request);
+	return sendRequest(request_ptr);
+}
 
-		friend class APie::Network::OutputStream;
-		friend class APie::Event::NatsManager;
-	};
 
-	typedef APie::ThreadSafeSingleton<RpcClient> RpcClientSingleton;
+template <typename Request, typename Response>
+bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request)
+{
+	auto seq_num = manager_.nextSeqNum();
+	bool result = manager_.addPendingRequests(seq_num, shared_from_this());
+	if (!result)
+	{
+		return result;
+	}
 
-} // namespace RPC
-} // namespace APie
+	return true;
+}
+
+
+template <typename Request, typename Response>
+void RPCClient<Request, Response>::handleResponse(const status::Status& status, const SharedResponse& response)
+{
+	callback_(status, response);
+}
+
+
+}
+}
+

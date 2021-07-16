@@ -8,8 +8,8 @@ namespace RPC {
 
 	void rpcInit()
 	{
-		RpcClientSingleton::get().init();
-		RpcServerSingleton::get().init();
+		//RpcClientSingleton::get().init();
+		//RpcServerSingleton::get().init();
 	}
 
 } // namespace Network

@@ -194,6 +194,7 @@
     <ClInclude Include="common\macros.h" />
     <ClInclude Include="common\message_traits.h" />
     <ClInclude Include="common\noncopyable.h" />
+    <ClInclude Include="common\protobuf_factory.h" />
     <ClInclude Include="common\pure.h" />
     <ClInclude Include="common\string_utils.h" />
     <ClInclude Include="common\time.h" />
@@ -256,8 +257,13 @@
     <ClInclude Include="pb_msg.h" />
     <ClInclude Include="redis_driver\redis_client.h" />
     <ClInclude Include="rpc\client\rpc_client.h" />
+    <ClInclude Include="rpc\client\rpc_client_base.h" />
+    <ClInclude Include="rpc\client\rpc_client_contex.h" />
+    <ClInclude Include="rpc\client\rpc_client_manager.h" />
     <ClInclude Include="rpc\init.h" />
     <ClInclude Include="rpc\server\rpc_server.h" />
+    <ClInclude Include="rpc\server\rpc_server_base.h" />
+    <ClInclude Include="rpc\server\rpc_server_manager.h" />
     <ClInclude Include="serialization\byte_buffer.h" />
     <ClInclude Include="serialization\protocol_head.h" />
     <ClInclude Include="service\handle_notify_service.h" />
@@ -304,6 +310,7 @@
     <ClCompile Include="common\exception_trap.cpp" />
     <ClCompile Include="common\file.cc" />
     <ClCompile Include="common\graphics_utility.cpp" />
+    <ClCompile Include="common\protobuf_factory.cpp" />
     <ClCompile Include="common\string_utils.cpp" />
     <ClCompile Include="common\utility.cc" />
     <ClCompile Include="compressor\lz4_compressor_impl.cc" />
@@ -347,9 +354,10 @@
     <ClCompile Include="network\output_stream.cc" />
     <ClCompile Include="network\signaler.cpp" />
     <ClCompile Include="redis_driver\redis_client.cpp" />
-    <ClCompile Include="rpc\client\rpc_client.cpp" />
+    <ClCompile Include="rpc\client\rpc_client_contex.cpp" />
+    <ClCompile Include="rpc\client\rpc_client_manager.cpp" />
     <ClCompile Include="rpc\init.cpp" />
-    <ClCompile Include="rpc\server\rpc_server.cpp" />
+    <ClCompile Include="rpc\server\rpc_server_manager.cc" />
     <ClCompile Include="serialization\byte_buffer.cpp" />
     <ClCompile Include="serialization\protocol_head.cpp" />
     <ClCompile Include="service\service_manager.cc" />

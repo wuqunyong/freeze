@@ -125,7 +125,8 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 			cb(newStatus, response.result(), response.affected_rows(), response.insert_id());
 		}
 	};
-	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
+	return false;
+	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
 }
 
 
@@ -169,7 +170,8 @@ DeleteFromDb(::rpc_msg::CHANNEL server, T& dbObj, DeleteFromDbCB cb)
 			cb(newStatus, response.result(), response.affected_rows());
 		}
 	};
-	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDelete, deleteRequest, deleteCB);
+	return false;
+	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDelete, deleteRequest, deleteCB);
 }
 
 
@@ -227,7 +229,8 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 			cb(newStatus, response.result(), response.affected_rows());
 		}
 	};
-	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlUpdate, updateRequest, updateCB);
+	return false;
+	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlUpdate, updateRequest, updateCB);
 }
 
 
@@ -296,7 +299,8 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 			cb(newStatus, dbObj, iRowCount);
 		}
 	};
-	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
+	return false;
+	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
 }
 
 template <typename T>
@@ -375,9 +379,8 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			}
 		}
 	};
-	return APie::RPC::RpcClientSingleton::get().callByRouteWithServerStream(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
-	
-	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
+	return false;
+	//return APie::RPC::RpcClientSingleton::get().callByRouteWithServerStream(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
 }
 
 template<class Tuple, std::size_t N>
@@ -535,9 +538,8 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 			cb(newStatus, tupleData, tupleRows);
 		}
 	};
-	return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlMultiQuery, queryRequest, queryCB);
-
-	return true;
+	return false;
+	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlMultiQuery, queryRequest, queryCB);
 }
 
 
