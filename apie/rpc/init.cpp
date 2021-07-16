@@ -3,8 +3,8 @@
 #include "../rpc/client/rpc_client.h"
 #include "../rpc/server/rpc_server.h"
 
-namespace APie {
-namespace RPC {
+namespace apie {
+namespace rpc {
 
 	void rpcInit()
 	{

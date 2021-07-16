@@ -23,7 +23,7 @@ std::tuple<uint32_t, std::string> LoginMgr::init()
 	LogicCmdHandlerSingleton::get().registerOnCmd("nats_publish", "nats_publish", LoginMgr::onNatsPublish);
 
 	// RPC
-	APie::RPC::rpcInit();
+	apie::rpc::rpcInit();
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
@@ -126,8 +126,10 @@ void LoginMgr::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(type);
 	server.set_id(id);
 
-	auto rpcObj = apie::rpc::RPCClientManagerSingleton::get().createRPCClient<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(server, rpc_msg::RPC_EchoTest, nullptr);
-	rpcObj->sendRequest(params);
+	//auto rpcObj = apie::rpc::RPCClientManagerSingleton::get().createRPCClient<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(server, rpc_msg::RPC_EchoTest, nullptr);
+	//rpcObj->sendRequest(params);
+
+	apie::rpc::RPC_Call<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(server, rpc_msg::RPC_EchoTest, params, LoginMgr::RPC_echoCb);
 
 }
 

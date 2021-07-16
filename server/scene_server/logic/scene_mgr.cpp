@@ -20,7 +20,7 @@ std::tuple<uint32_t, std::string> SceneMgr::init()
 
 
 	// RPC
-	APie::RPC::rpcInit();
+	apie::rpc::rpcInit();
 
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
