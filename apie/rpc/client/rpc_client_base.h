@@ -2,12 +2,15 @@
 
 #include <string>
 
+#include "apie/pb_msg.h"
+#include "apie/status/status.h"
+
 namespace apie {
 namespace rpc {
 
 class RPCClientBase : public std::enable_shared_from_this<RPCClientBase> {
 public:
-	explicit RPCClientBase(uint32_t opcode)
+	explicit RPCClientBase(::rpc_msg::RPC_OPCODES opcode)
 		: opcode_(opcode)
 	{
 	}
@@ -15,11 +18,12 @@ public:
 	virtual ~RPCClientBase() {}
 
 	virtual void destroy() = 0;
+	virtual void onMessage(const status::Status& status, const std::string& response_data) = 0;
 
-	uint32_t opcode() const { return opcode_; }
+	::rpc_msg::RPC_OPCODES opcode() const { return opcode_; }
 
 protected:
-	uint32_t opcode_;
+	::rpc_msg::RPC_OPCODES opcode_;
 
 };
 

@@ -44,6 +44,14 @@ void RPCClientManager::handleTimeout()
 
 void RPCClientManager::handleResponse(uint64_t seq_num, const status::Status& status, const std::string& response_data)
 {
+	auto find_ite = pending_requests_.find(seq_num);
+	if (find_ite == pending_requests_.end())
+	{
+		//TODO
+		return;
+	}
+	find_ite->second->onMessage(status, response_data);
+	pending_requests_.erase(find_ite);
 
 }
 

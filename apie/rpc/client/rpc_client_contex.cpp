@@ -3,9 +3,8 @@
 namespace apie {
 namespace rpc {
 
-RPCClientContext::RPCClientContext(const std::string& server_id, uint32_t opcode) :
-	server_id_(server_id),
-	opcode_(opcode)
+RPCClientContext::RPCClientContext(const ::rpc_msg::CHANNEL& server) :
+	server_id_(server)
 {
 
 }
@@ -13,6 +12,10 @@ RPCClientContext::RPCClientContext(const std::string& server_id, uint32_t opcode
 RPCClientContext::~RPCClientContext()
 {
 
+}
+::rpc_msg::CHANNEL RPCClientContext::getServerId()
+{
+	return server_id_;
 }
 
 }

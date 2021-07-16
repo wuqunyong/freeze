@@ -81,6 +81,11 @@ void RPCServer<Request, Response>::handleRequest(const ::rpc_msg::RPC_REQUEST& c
 	{
 		if (!status.isAsync())
 		{
+			if (!context.client().required_reply())
+			{
+				return;
+			}
+
 			sendResponse(context, response);
 		}
 	}

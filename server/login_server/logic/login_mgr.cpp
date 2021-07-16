@@ -20,6 +20,7 @@ std::tuple<uint32_t, std::string> LoginMgr::init()
 	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, LoginMgr::onLogicCommnad);
 
 	LogicCmdHandlerSingleton::get().init();
+	LogicCmdHandlerSingleton::get().registerOnCmd("nats_publish", "nats_publish", LoginMgr::onNatsPublish);
 
 	// RPC
 	APie::RPC::rpcInit();
@@ -29,32 +30,8 @@ std::tuple<uint32_t, std::string> LoginMgr::init()
 
 std::tuple<uint32_t, std::string> LoginMgr::start()
 {
-	// 加载:数据表结构
-	auto dbType = DeclarativeBase::DBType::DBT_Account;
-	auto ptrReadyCb = [](bool bResul, std::string sInfo, uint64_t iCallCount) {
-		if (!bResul)
-		{
-			std::stringstream ss;
-			ss << "CallMysqlDescTable|bResul:" << bResul << ",sInfo:" << sInfo << ",iCallCount:" << iCallCount;
-
-			PANIC_ABORT(ss.str().c_str());
-		}
-
-		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
-
-	};
-
-	bool bResult = RegisterRequiredTable(dbType, 1, { {ModelAccount::getFactoryName(), ModelAccount::createMethod},
-		{ModelAccountName::getFactoryName(), ModelAccountName::createMethod} }, ptrReadyCb);
-
-	if (bResult)
-	{
-		return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
-	}
-	else
-	{
-		return std::make_tuple(Hook::HookResult::HR_Error, "HR_Error");
-	}
+	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
+	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
 }
 
 std::tuple<uint32_t, std::string> LoginMgr::ready()
@@ -64,8 +41,6 @@ std::tuple<uint32_t, std::string> LoginMgr::ready()
 
 
 	// CLIENT OPCODE
-	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
-	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountLogin);
 
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
 	//server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccount);
@@ -123,153 +98,48 @@ void LoginMgr::handleAccountNotify(uint64_t iSerialNum, const std::shared_ptr<::
 	ASYNC_PIE_LOG("LoginMgr/handleAccount", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 }
 
-void LoginMgr::handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request)
+void LoginMgr::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
 {
-	ModelAccount accountData;
-	accountData.fields.account_id = request.account_id();
-
-	bool bResult = accountData.bindTable(DeclarativeBase::DBType::DBT_Account, ModelAccount::getFactoryName());
-	if (!bResult)
+	if (cmd.params_size() < 5)
 	{
-		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
-		response.set_status_code(opcodes::SC_BindTable_Error);
-		response.set_account_id(request.account_id());
-		Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 		return;
 	}
 
+	uint32_t realm = std::stoul(cmd.params()[0]);
+	uint32_t type = std::stoul(cmd.params()[1]);
+	uint32_t id = std::stoul(cmd.params()[2]);
+
+	std::string channel = APie::Event::NatsManager::GetTopicChannel(realm, type, id);
+
+	std::string name = cmd.params()[3];
+	std::string info = cmd.params()[4];
+
+	//::nats_msg::NATS_MSG_PRXOY nats_msg;
+	//APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
+
+	rpc_msg::MSG_RPC_REQUEST_ECHO params;
+	params.set_value1(200);
+	params.set_value2("test_hello");
+
 	::rpc_msg::CHANNEL server;
-	server.set_type(common::EPT_DB_ACCOUNT_Proxy);
-	server.set_id(1);
+	server.set_realm(realm);
+	server.set_type(type);
+	server.set_id(id);
 
-	ModelAccountName accountName;
-	accountName.fields.account_id = request.account_id();
-	bResult = accountName.bindTable(DeclarativeBase::DBType::DBT_Account, ModelAccountName::getFactoryName());
+	auto rpcObj = apie::rpc::RPCClientManagerSingleton::get().createRPCClient<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(server, rpc_msg::RPC_EchoTest, nullptr);
+	rpcObj->sendRequest(params);
 
-	// 测试
-	auto multiCb = [](const rpc_msg::STATUS& status, std::tuple<ModelAccount, ModelAccountName>& tupleData, std::array<uint32_t, 2>& tupleRows) {
-		int a = 1;
-		int c = a + 1;
-	};
-	bResult = Multi_LoadFromDb(multiCb, server, accountData, accountName);
+}
 
+void LoginMgr::RPC_echoCb(const apie::status::Status& status, const std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response)
+{
+	if (!status.ok())
+	{
+		return;
+	}
 
-	auto cb = [iSerialNum, request, server](rpc_msg::STATUS status, ModelAccount account, uint32_t iRows) {
-		if (status.code() != ::rpc_msg::CODE_Ok)
-		{
-			::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
-			response.set_status_code(status.code());
-			response.set_account_id(request.account_id());
-			Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-			return;
-		}
-
-		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
-		response.set_status_code(status.code());
-		response.set_account_id(request.account_id());
-
-		auto gatewayOpt = EndPointMgrSingleton::get().modulusEndpointById(::common::EPT_Gateway_Server, request.account_id());
-		if (!gatewayOpt.has_value())
-		{
-			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
-			Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-			return;
-		}
-
-		std::string ip = gatewayOpt.value().ip();
-		uint32_t port = gatewayOpt.value().port();
-		std::string sessionKey = APie::randomStr(16);
-
-		response.set_ip(ip);
-		response.set_port(port);
-		response.set_session_key(sessionKey);
-
-		::rpc_login::L2G_LoginPendingRequest rpcRequest;
-		rpcRequest.set_account_id(request.account_id());
-		rpcRequest.set_session_key(sessionKey);
-		rpcRequest.set_db_id(account.fields.db_id);
-		rpcRequest.set_version(request.version());
-
-		if (iRows != 0)
-		{
-			auto iAccountId = request.account_id();
-
-			auto curTime = time(NULL);
-			account.fields.modified_time = curTime;
-
-			account.markDirty({ ModelAccount::modified_time });
-			auto cb = [iAccountId](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
-				if (status.code() != ::rpc_msg::CODE_Ok)
-				{
-					std::stringstream ss;
-					ss << "UpdateToDb Error|accountId:" << iAccountId;
-					ASYNC_PIE_LOG("LoginMgr/handleAccountLogin", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-					return;
-				}
-			};
-			UpdateToDb<ModelAccount>(server, account, cb);
-
-			::rpc_msg::CHANNEL server;
-			server.set_type(gatewayOpt.value().type());
-			server.set_id(gatewayOpt.value().id());
-
-			auto rpcCB = [iSerialNum, response](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-			{
-				if (status.code() != ::rpc_msg::CODE_Ok)
-				{
-					response.set_status_code(status.code());
-					Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-					return;
-				}
-
-				Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-			};
-			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
-			return;
-		}
-
-		auto roleDBopt = EndPointMgrSingleton::get().modulusEndpointById(::common::EPT_DB_ROLE_Proxy, request.account_id());
-		if (!roleDBopt.has_value())
-		{
-			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
-			Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-			return;
-		}
-
-
-		auto curTime = time(NULL);
-		account.fields.register_time = curTime;
-		account.fields.modified_time = curTime;
-		account.fields.db_id = roleDBopt.value().id();
-
-		auto cb = [iSerialNum, response, gatewayOpt, rpcRequest](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
-			if (status.code() != ::rpc_msg::CODE_Ok)
-			{
-				response.set_status_code(status.code());
-				Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-				return;
-			}
-
-			::rpc_msg::CHANNEL server;
-			server.set_type(gatewayOpt.value().type());
-			server.set_id(gatewayOpt.value().id());
-
-			auto rpcCB = [iSerialNum, response](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-			{
-				if (status.code() != ::rpc_msg::CODE_Ok)
-				{
-					response.set_status_code(status.code());
-					Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-					return;
-				}
-
-				Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-			};
-			APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
-		};
-		InsertToDb<ModelAccount>(server, account, cb);
-	};
-	LoadFromDb<ModelAccount>(server, accountData, cb);
+	std::stringstream ss;
+	ss << "RPC_echoCb:" << response->ShortDebugString();
 }
 
 }

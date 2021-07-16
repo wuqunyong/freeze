@@ -425,20 +425,12 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 	{
 		::rpc_msg::RPC_RESPONSE response = msg->rpc_response();
 
-		::rpc_msg::CHANNEL server;
-		server.set_realm(APie::CtxSingleton::get().identify().realm);
-		server.set_type(APie::CtxSingleton::get().identify().type);
-		server.set_id(APie::CtxSingleton::get().identify().id);
-
-		if (response.client().stub().realm() != server.realm() || response.client().stub().type() != server.type() || response.client().stub().id() != server.id())
-		{
-			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|has_rpc_response|invalid target|cur server:%s|%s", server.DebugString().c_str(), msg->DebugString().c_str());
-			return;
-		}
-
 		apie::status::Status status((apie::status::StatusCode)(response.status().code()), response.status().msg());
 		apie::rpc::RPCClientManagerSingleton::get().handleResponse(response.client().seq_id(), status, response.result_data());
+		return;
 	}
+
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "Handle_Subscribe invalid params|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
 }
 
 std::string NatsManager::GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id)

@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "apie/pb_msg.h"
+
 namespace apie {
 namespace rpc {
 
@@ -13,16 +15,15 @@ public:
 		SERVER_STREAMING,
 	};
 
-	RPCClientContext(const std::string& server_id, uint32_t opcode);
+	RPCClientContext(const ::rpc_msg::CHANNEL& server);
 	~RPCClientContext();
 
 	Type type() const { return type_; }
-
+	::rpc_msg::CHANNEL getServerId();
 
 private:
-	std::string client_id_;
-	std::string server_id_;
-	uint32_t opcode_;
+	::rpc_msg::CHANNEL client_id_;
+	::rpc_msg::CHANNEL server_id_;
 	Type type_;
 };
 

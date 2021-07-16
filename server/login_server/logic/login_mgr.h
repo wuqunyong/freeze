@@ -31,11 +31,14 @@ namespace APie {
 		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 
 		// CLIENT OPCODE
-		static void handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request);
 		
 
 		static apie::status::Status handleAccount(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>&, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>&);
 		static void handleAccountNotify(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>&);
+
+		static void onNatsPublish(::pubsub::LOGIC_CMD& cmd);
+
+		static void RPC_echoCb(const apie::status::Status& status, const std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response);
 
 	private:
 		std::array<int, 5> a;

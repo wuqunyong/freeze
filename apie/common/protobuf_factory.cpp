@@ -5,7 +5,7 @@ namespace message {
 	
 google::protobuf::Message* ProtobufFactory::createMessage(const std::string& typeName)
 {
-	google::protobuf::Message* message = NULL;
+	google::protobuf::Message* message = nullptr;
 	const google::protobuf::Descriptor* descriptor = google::protobuf::DescriptorPool::generated_pool()->FindMessageTypeByName(typeName);
 	if (descriptor)
 	{

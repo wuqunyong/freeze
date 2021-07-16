@@ -24,7 +24,7 @@ public:
 
 
 	template <typename Request, typename Response>
-	auto createRPCClient(const std::string& server_id, uint32_t opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
+	auto createRPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
 		->std::shared_ptr<RPCClient<Request, Response>>;
 
 	uint64_t nextSeqNum();
@@ -40,10 +40,10 @@ private:
 };
 
 template <typename Request, typename Response>
-auto RPCClientManager::createRPCClient(const std::string& server_id, uint32_t opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
+auto RPCClientManager::createRPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
 	->std::shared_ptr<RPCClient<Request, Response>>
 {
-	auto client_ptr = std::make_shared<RPCClient<Request, Response>>(*this, server_id, opcode, calllback);
+	auto client_ptr = std::make_shared<RPCClient<Request, Response>>(*this, server, opcode, calllback);
 	return client_ptr;
 }
 
