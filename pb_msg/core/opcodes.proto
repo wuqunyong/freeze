@@ -12,11 +12,6 @@ enum OPCODE_ID {
 	OP_DISCOVERY_MSG_REQUEST_HEARTBEAT = 104;
 	OP_DISCOVERY_MSG_RESP_HEARTBEAT = 105;
 
-	OP_ROUTE_MSG_REQUEST_ADD_ROUTE = 201;
-	OP_ROUTE_MSG_RESP_ADD_ROUTE = 202;
-	OP_ROUTE_MSG_REQUEST_HEARTBEAT = 203;
-	OP_ROUTE_MSG_RESP_HEARTBEAT = 204;
-
 	OP_RPC_REQUEST = 301;
 	OP_RPC_RESPONSE = 302;
 }
@@ -30,10 +25,7 @@ enum StatusCode {
 	SC_Discovery_Unregistered = 102;
 	SC_Discovery_ServerListEmpty = 103;
 	SC_Discovery_InvalidPoint = 104;
-
-	SC_Route_InvalidPoint = 200;
-	SC_Route_AuthError = 201;
-	SC_Route_Unregistered = 202;
+	
 
 	SC_Rpc_Timeout = 300;
 	SC_Rpc_RouteEmpty = 301;

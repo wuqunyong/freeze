@@ -143,7 +143,6 @@
     <ClInclude Include="..\pb_msg\core\nats_msg.pb.h" />
     <ClInclude Include="..\pb_msg\core\opcodes.pb.h" />
     <ClInclude Include="..\pb_msg\core\pubsub.pb.h" />
-    <ClInclude Include="..\pb_msg\core\route_register.pb.h" />
     <ClInclude Include="..\pb_msg\core\rpc_msg.pb.h" />
     <ClInclude Include="..\pb_msg\core\service_discovery.pb.h" />
     <ClInclude Include="..\third_party\astar\fsa.h" />
@@ -279,7 +278,6 @@
     <ClCompile Include="..\pb_msg\core\nats_msg.pb.cc" />
     <ClCompile Include="..\pb_msg\core\opcodes.pb.cc" />
     <ClCompile Include="..\pb_msg\core\pubsub.pb.cc" />
-    <ClCompile Include="..\pb_msg\core\route_register.pb.cc" />
     <ClCompile Include="..\pb_msg\core\rpc_msg.pb.cc" />
     <ClCompile Include="..\pb_msg\core\service_discovery.pb.cc" />
     <ClCompile Include="..\third_party\http-parser\http_parser.c" />

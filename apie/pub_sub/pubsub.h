@@ -34,7 +34,6 @@ public:
 	virtual ~PubSub();
 
 	void publish(const MessageType& msg);
-	void publish(const MessagePtr& msg);
 
 	bool subscribe(uint32_t callback_id, const Callback& callback);
 	void unsubscribe(uint32_t callback_id) override;
@@ -42,6 +41,7 @@ public:
 	uint32_t getTopic() override;
 
 private:
+	void publish(const MessagePtr& msg);
 	void notify(const MessagePtr& msg);
 
 	uint32_t topic_;

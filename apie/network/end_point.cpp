@@ -38,7 +38,6 @@ void SelfRegistration::registerEndpoint()
 	auto identityType = APie::CtxSingleton::get().getServerType();
 
 	std::set<uint32_t> needRegister;
-	needRegister.insert(::common::EndPointType::EPT_Route_Proxy);
 	needRegister.insert(::common::EndPointType::EPT_Login_Server);
 	needRegister.insert(::common::EndPointType::EPT_Gateway_Server);
 	needRegister.insert(::common::EndPointType::EPT_Scene_Server);

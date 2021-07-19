@@ -439,9 +439,6 @@
     <ClInclude Include="..\pb_msg\core\pubsub.pb.h">
       <Filter>pb_msg\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\pb_msg\core\route_register.pb.h">
-      <Filter>pb_msg\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\pb_msg\core\rpc_msg.pb.h">
       <Filter>pb_msg\core</Filter>
     </ClInclude>
@@ -719,9 +716,6 @@
       <Filter>pb_msg\core</Filter>
     </ClCompile>
     <ClCompile Include="..\pb_msg\core\pubsub.pb.cc">
-      <Filter>pb_msg\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\pb_msg\core\route_register.pb.cc">
       <Filter>pb_msg\core</Filter>
     </ClCompile>
     <ClCompile Include="..\pb_msg\core\rpc_msg.pb.cc">
