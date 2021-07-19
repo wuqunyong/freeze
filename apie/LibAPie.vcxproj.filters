@@ -97,6 +97,9 @@
     <Filter Include="rpc\server">
       <UniqueIdentifier>{bf6794c7-d915-44a3-b739-cd2736118847}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pub_sub">
+      <UniqueIdentifier>{360879ec-1d1e-4ff3-8ab3-ccd9ea2a9b87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -497,6 +500,12 @@
     <ClInclude Include="common\protobuf_factory.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="pub_sub\pubsub.h">
+      <Filter>pub_sub</Filter>
+    </ClInclude>
+    <ClInclude Include="pub_sub\pubsub_manager.h">
+      <Filter>pub_sub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -753,6 +762,9 @@
     </ClCompile>
     <ClCompile Include="common\protobuf_factory.cpp">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="pub_sub\pubsub_manager.cc">
+      <Filter>pub_sub</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

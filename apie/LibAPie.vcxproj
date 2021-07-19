@@ -254,6 +254,8 @@
     <ClInclude Include="network\signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
     <ClInclude Include="pb_msg.h" />
+    <ClInclude Include="pub_sub\pubsub.h" />
+    <ClInclude Include="pub_sub\pubsub_manager.h" />
     <ClInclude Include="redis_driver\redis_client.h" />
     <ClInclude Include="rpc\client\rpc_client.h" />
     <ClInclude Include="rpc\client\rpc_client_base.h" />
@@ -351,6 +353,7 @@
     <ClCompile Include="network\object.cpp" />
     <ClCompile Include="network\output_stream.cc" />
     <ClCompile Include="network\signaler.cpp" />
+    <ClCompile Include="pub_sub\pubsub_manager.cc" />
     <ClCompile Include="redis_driver\redis_client.cpp" />
     <ClCompile Include="rpc\client\rpc_client_contex.cpp" />
     <ClCompile Include="rpc\client\rpc_client_manager.cpp" />
