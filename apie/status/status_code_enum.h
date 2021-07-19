@@ -118,6 +118,7 @@ enum class StatusCode {
   /// Unrecoverable data loss or corruption.
   DATA_LOSS = 17,
 TIMEOUT = 18,
+HOOK_ERROR = 19,
 
   /// Force users to include a default branch:
   DO_NOT_USE = -1

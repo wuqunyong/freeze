@@ -6,12 +6,12 @@
 
 namespace APie {
 
-std::tuple<uint32_t, std::string> SceneMgr::init()
+apie::status::Status SceneMgr::init()
 {
 	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Scene_Server });
 	if (!bResult)
 	{
-		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+		return {apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
 	}
 
 	// CMD
@@ -23,17 +23,17 @@ std::tuple<uint32_t, std::string> SceneMgr::init()
 	apie::rpc::rpcInit();
 
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> SceneMgr::start()
+apie::status::Status SceneMgr::start()
 {
 	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> SceneMgr::ready()
+apie::status::Status SceneMgr::ready()
 {
 	// CLIENT OPCODE
 	auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
@@ -47,7 +47,7 @@ std::tuple<uint32_t, std::string> SceneMgr::ready()
 	std::cout << ss.str() << std::endl;
 	ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
 void SceneMgr::exit()

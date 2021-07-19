@@ -16,9 +16,9 @@ namespace APie {
 	class SceneMgr
 	{
 	public:
-		std::tuple<uint32_t, std::string> init();
-		std::tuple<uint32_t, std::string> start();
-		std::tuple<uint32_t, std::string> ready();
+		apie::status::Status init();
+		apie::status::Status start();
+		apie::status::Status ready();
 		void exit();
 
 	public:

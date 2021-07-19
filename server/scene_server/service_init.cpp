@@ -5,25 +5,25 @@
 
 namespace APie {
 
-std::tuple<uint32_t, std::string> initHook()
+apie::status::Status initHook()
 {
 	return SceneMgrSingleton::get().init();
 }
 
-std::tuple<uint32_t, std::string> startHook()
+apie::status::Status startHook()
 {
 	return SceneMgrSingleton::get().start();
 }
 
-std::tuple<uint32_t, std::string> readyHook()
+apie::status::Status readyHook()
 {
 	return SceneMgrSingleton::get().ready();
 }
 
-std::tuple<uint32_t, std::string> exitHook()
+apie::status::Status exitHook()
 {
 	SceneMgrSingleton::get().exit();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
 }

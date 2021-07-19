@@ -2,12 +2,12 @@
 
 namespace APie {
 
-std::tuple<uint32_t, std::string> ServiceRegistry::init()
+apie::status::Status ServiceRegistry::init()
 {
 	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Service_Registry });
 	if (!bResult)
 	{
-		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+		return {apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
 	}
 
 	// CMD
@@ -28,10 +28,10 @@ std::tuple<uint32_t, std::string> ServiceRegistry::init()
 
 	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> ServiceRegistry::start()
+apie::status::Status ServiceRegistry::start()
 {
 	m_id = "id_" + APie::CtxSingleton::get().launchTime();
 	m_serviceTimeout = APie::CtxSingleton::get().yamlAs<uint32_t>({"service_timeout"}, 300);
@@ -45,17 +45,17 @@ std::tuple<uint32_t, std::string> ServiceRegistry::start()
 
 	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> ServiceRegistry::ready()
+apie::status::Status ServiceRegistry::ready()
 {
 	std::stringstream ss;
 	ss << "Server Ready!";
 	std::cout << ss.str() << std::endl;
 	ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
 void ServiceRegistry::exit()

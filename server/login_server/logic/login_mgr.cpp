@@ -8,12 +8,12 @@
 
 namespace APie {
 
-std::tuple<uint32_t, std::string> LoginMgr::init()
+apie::status::Status LoginMgr::init()
 {
 	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Login_Server });
 	if (!bResult)
 	{
-		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+		return { apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
 	}
 
 	// CMD
@@ -25,16 +25,16 @@ std::tuple<uint32_t, std::string> LoginMgr::init()
 	// RPC
 	apie::rpc::rpcInit();
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return {apie::status::StatusCode::OK, ""};
 }
 
-std::tuple<uint32_t, std::string> LoginMgr::start()
+apie::status::Status LoginMgr::start()
 {
 	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
-	return std::make_tuple(Hook::HookResult::HR_Ok, "HR_Ok");
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> LoginMgr::ready()
+apie::status::Status LoginMgr::ready()
 {
 	// PubSub
 	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, LoginMgr::onServerPeerClose);
@@ -49,7 +49,7 @@ std::tuple<uint32_t, std::string> LoginMgr::ready()
 	std::cout << ss.str() << std::endl;
 	ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
 void LoginMgr::exit()

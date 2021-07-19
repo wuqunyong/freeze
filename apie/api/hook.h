@@ -9,8 +9,9 @@
 #include <tuple>
 #include <mutex>
 #include <optional>
-#include "../singleton/threadsafe_singleton.h"
 
+#include "apie/singleton/threadsafe_singleton.h"
+#include "apie/status/status.h"
 
 namespace APie {
 namespace Hook {
@@ -31,7 +32,7 @@ enum HookResult
 
 class HookRegistry {
 public:
-	using HookCallback = std::function<std::tuple<uint32_t, std::string>(void)>;
+	using HookCallback = std::function<apie::status::Status(void)>;
 
 	struct HookEntry
 	{

@@ -7,7 +7,7 @@
 #include <algorithm> 
 
 #include "../network/logger.h"
-
+#include "apie/common/enum_to_int.h"
 
 namespace APie {
 namespace Hook {
@@ -56,10 +56,10 @@ namespace Hook {
 			for (auto& item : initCbOpt.value())
 			{
 				auto result = item.cb();
-				if (std::get<0>(result) != 0)
+				if (!result.ok())
 				{
 					std::stringstream ss;
-					ss << "errorCode:" << std::get<0>(result) << "|info:" << std::get<1>(result);
+					ss << "errorCode:" << APie::toUnderlyingType(result.error_code()) << "|info:" << result.error_message();
 
 					if (point == HookPoint::HP_Exit)
 					{
