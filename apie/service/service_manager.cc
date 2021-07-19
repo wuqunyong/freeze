@@ -37,6 +37,16 @@ void ServiceManager::destroy()
 	service_.clear();
 }
 
+ServiceManager::HandleMuxFunction& ServiceManager::getDefaultFunc()
+{
+	return default_func_;
+}
+
+void ServiceManager::setDefaultFunc(HandleMuxFunction func)
+{
+	default_func_ = func;
+}
+
 
 }  
 }

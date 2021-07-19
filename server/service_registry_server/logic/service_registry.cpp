@@ -17,10 +17,14 @@ std::tuple<uint32_t, std::string> ServiceRegistry::init()
 	LogicCmdHandlerSingleton::get().registerOnCmd("provider", "show_provider", ServiceRegistry::onShowProvider);
 
 	// RPC
-	APie::RPC::rpcInit();
+	apie::rpc::rpcInit();
 
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistry::handleRequestRegisterInstance);
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat);
+	auto& server = apie::service::ServiceHandlerSingleton::get().server;
+	server.createService<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, ::service_discovery::MSG_RESP_REGISTER_INSTANCE>(
+		::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistry::handleRequestRegisterInstance);
+	server.createService<::service_discovery::MSG_REQUEST_HEARTBEAT, opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, ::service_discovery::MSG_RESP_HEARTBEAT>(
+		::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat);
+
 
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
 
@@ -244,63 +248,64 @@ void ServiceRegistry::onLogicCommnad(uint64_t topic, ::google::protobuf::Message
 	handlerOpt.value()(command);
 }
 
-void ServiceRegistry::handleRequestRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE& request)
+apie::status::Status  ServiceRegistry::handleRequestRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
+	std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",request:" << request.ShortDebugString();
-
-	::service_discovery::MSG_RESP_REGISTER_INSTANCE response;
+	ss << "iSerialNum:" << iSerialNum << ",request:" << request->ShortDebugString();
 
 	auto auth = APie::CtxSingleton::get().identify().auth;
-	if (!auth.empty() && auth != request.auth())
+	if (!auth.empty() && auth != request->auth())
 	{
-		response.set_status_code(opcodes::SC_Discovery_AuthError);
-		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, response);
+		response->set_status_code(opcodes::SC_Discovery_AuthError);
 
 		ss << ",auth:error";
 		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
-		return;
+		return { apie::status::StatusCode::OK, "" };
 	}
 
-	bool bResult = ServiceRegistrySingleton::get().updateInstance(iSerialNum, request.instance());
+	bool bResult = ServiceRegistrySingleton::get().updateInstance(iSerialNum, request->instance());
 	if (!bResult)
 	{
-		response.set_status_code(opcodes::SC_Discovery_DuplicateNode);
-		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, response);
+		response->set_status_code(opcodes::SC_Discovery_DuplicateNode);
 
 		ss << ",node:duplicate";
 		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
-		return;
+		return { apie::status::StatusCode::OK, "" };
 	}
 	
 	ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-	response.set_status_code(::opcodes::StatusCode::SC_Ok);
-	APie::Network::OutputStream::sendMsg(iSerialNum, ::opcodes::OPCODE_ID::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, response);
+	response->set_status_code(::opcodes::StatusCode::SC_Ok);
 
-	ServiceRegistrySingleton::get().broadcast();
+	auto cb = [](){
+		ServiceRegistrySingleton::get().broadcast();
+	};
+	APie::CtxSingleton::get().getLogicThread()->dispatcher().post(cb);
+
+	return { apie::status::StatusCode::OK, "" };
 }
 
-void ServiceRegistry::handleRequestHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_HEARTBEAT& request)
+
+apie::status::Status  ServiceRegistry::handleRequestHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
+		std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",request:" << request.ShortDebugString();
+	ss << "iSerialNum:" << iSerialNum << ",request:" << request->ShortDebugString();
 
-	::service_discovery::MSG_RESP_HEARTBEAT response;
-	response.set_status_code(opcodes::SC_Ok);
+	response->set_status_code(opcodes::SC_Ok);
 
 	bool bResult = ServiceRegistrySingleton::get().updateHeartbeat(iSerialNum);
 	if (!bResult)
 	{
-		response.set_status_code(opcodes::SC_Discovery_Unregistered);
-		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, response);
+		response->set_status_code(opcodes::SC_Discovery_Unregistered);
 
-		ss << ",node:Unregistered";
+		ss << "node:Unregistered";
 		ASYNC_PIE_LOG("SelfRegistration/handleRequestHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
-		return;
+		return { apie::status::StatusCode::OK, "" };
 	}
 
-	APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, response);
+	return { apie::status::StatusCode::OK, "" };
 }
 
 

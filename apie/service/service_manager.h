@@ -22,6 +22,7 @@ namespace service {
 class ServiceManager {
 public:
 	using ServiceCallback = std::function<void(uint64_t, const std::shared_ptr<::google::protobuf::Message>&)>;
+	using HandleMuxFunction = std::function<void(uint64_t, uint32_t opcodes, const std::string& msg)>;
 
 	ServiceManager();
 	virtual ~ServiceManager();
@@ -40,11 +41,15 @@ public:
 	template <typename T>
 	void onMessage(uint64_t serial_num, uint32_t opcode, const std::shared_ptr<T>& message);
 
+	HandleMuxFunction& getDefaultFunc();
+	void setDefaultFunc(HandleMuxFunction func);
 
 private:
 	std::map<uint32_t, std::shared_ptr<ServiceBase>> service_;
 	std::map<uint32_t, std::string> type_;
 	std::map<uint32_t, ServiceCallback> func_;
+
+	HandleMuxFunction default_func_;
 };
 
 

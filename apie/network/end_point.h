@@ -42,13 +42,9 @@ namespace APie
 		void sendHeartbeat(APie::ClientProxy* ptrClient);
 
 	public:
-		static void handleRespRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_REGISTER_INSTANCE& response);
-		static void handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice);
-		static void handleRespHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_HEARTBEAT& response);
-		
-
-		static void handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request);
-		static void handleRouteHeartbeat(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_HEARTBEAT& request);
+		static void handleRespRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response);
+		static void handleNoticeInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_NOTICE_INSTANCE>& notice);
+		static void handleRespHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response);
 		
 
 		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);

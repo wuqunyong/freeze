@@ -13,8 +13,6 @@
 
 #include "apie/rpc/client/rpc_client_manager.h"
 
-#define USE_NATS_PROXY true
-
 namespace apie {
 namespace rpc {
 
@@ -27,5 +25,5 @@ namespace rpc {
 		return rpcObj->sendRequest(params);
 	}
 
-} // namespace Network
-} // namespace RPC
+}
+}

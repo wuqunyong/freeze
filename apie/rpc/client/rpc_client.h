@@ -11,6 +11,8 @@
 #include "apie/event/nats_proxy.h"
 #include "apie/common/protobuf_factory.h"
 
+#include "apie/network/ctx.h"
+
 namespace apie {
 namespace rpc {
 
@@ -22,6 +24,9 @@ public:
 	using SharedRequest = typename std::shared_ptr<Request>;
 	using SharedResponse = typename std::shared_ptr<Response>;
 	using CallbackType = std::function<void(const status::Status&, const SharedResponse&)>;
+
+	template <typename Request, typename Response>
+	friend bool RPC_Call(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const Request& params, const typename RPCClient<Request, Response>::CallbackType& calllback);
 
 	RPCClient(RPCClientManager& manager, const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
 		: RPCClientBase(opcode),
@@ -38,15 +43,13 @@ public:
 		this->destroy();
 	}
 
+	void onMessage(const status::Status& status, const std::string& response_data) override;
+	void destroy();
+
+private:
 	bool sendRequest(SharedRequest request);
 	bool sendRequest(const Request& request);
 
-	void onMessage(const status::Status& status, const std::string& response_data) override;
-
-	void destroy();
-
-
-private:
 	bool asyncSendRequest(SharedRequest request);
 	void handleResponse(const status::Status& status, const SharedResponse& response);
 
@@ -105,6 +108,10 @@ bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request_ptr)
 		{
 			return result;
 		}
+		uint64_t cur_time_ms = APie::CtxSingleton::get().getCurMilliseconds();
+		auto expire_at = cur_time_ms + context_.timeoutMs();
+		
+		manager_.insertRequestsTimeout(seq_num, expire_at);
 	}
 
 	bool bResult = false;

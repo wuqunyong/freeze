@@ -23,7 +23,6 @@
 #include "../network/end_point.h"
 
 #include "../api/api.h"
-#include "../api/pb_handler.h"
 #include "../api/hook.h"
 #include "../api/pubsub.h"
 
@@ -41,6 +40,8 @@
 #include "apie/service/service_manager.h"
 #include "apie/rpc/client/rpc_client_manager.h"
 #include "apie/event/nats_proxy.h"
+
+#include "apie/service/service_manager.h"
 
 
 
@@ -581,30 +582,13 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 	case APie::ConnetionType::CT_SERVER:
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
-
-		auto optionalData = Api::OpcodeHandlerSingleton::get().server.getFunction(itemPtr->iOpcode);
-		if (!optionalData)
-		{
-			return;
-		}
-
-		optionalData.value()(itemPtr->iSerialNum, itemPtr->ptrMsg.get());
-
-
 		apie::service::ServiceHandlerSingleton::get().server.onMessage(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->ptrMsg);
 		break;
 	}
 	case APie::ConnetionType::CT_CLIENT:
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
-
-		auto optionalData = Api::OpcodeHandlerSingleton::get().client.getFunction(itemPtr->iOpcode);
-		if (!optionalData)
-		{
-			return;
-		}
-
-		optionalData.value()(itemPtr->iSerialNum, itemPtr->ptrMsg.get());
+		apie::service::ServiceHandlerSingleton::get().client.onMessage(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->ptrMsg);
 		break;
 	}
 	default:
@@ -620,7 +604,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 
-		auto defaultHandler = Api::OpcodeHandlerSingleton::get().server.getDefaultFunc();
+		auto defaultHandler = apie::service::ServiceHandlerSingleton::get().server.getDefaultFunc();
 		if (!defaultHandler)
 		{
 			std::stringstream ss;
@@ -636,7 +620,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 
-		auto defaultHandler = Api::OpcodeHandlerSingleton::get().client.getDefaultFunc();
+		auto defaultHandler = apie::service::ServiceHandlerSingleton::get().server.getDefaultFunc();
 		if (!defaultHandler)
 		{
 			std::stringstream ss;

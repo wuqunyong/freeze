@@ -20,11 +20,13 @@ public:
 
 	Type type() const { return type_; }
 	::rpc_msg::CHANNEL getServerId();
+	uint32_t timeoutMs();
 
 private:
 	::rpc_msg::CHANNEL client_id_;
 	::rpc_msg::CHANNEL server_id_;
-	Type type_;
+	Type type_ = Type::UNARY;
+	uint32_t timeout_ms_ = 30000;
 };
 
 

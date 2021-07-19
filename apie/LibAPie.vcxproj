@@ -182,7 +182,6 @@
     <ClInclude Include="api\hook.h" />
     <ClInclude Include="api\logiccmd_handler.h" />
     <ClInclude Include="api\os_sys_calls.h" />
-    <ClInclude Include="api\pb_handler.h" />
     <ClInclude Include="api\pubsub.h" />
     <ClInclude Include="base\macros.h" />
     <ClInclude Include="common\c_smart_ptr.h" />
@@ -305,7 +304,6 @@
     <ClCompile Include="api\hook.cc" />
     <ClCompile Include="api\logiccmd_handler.cc" />
     <ClCompile Include="api\os_sys_calls.cc" />
-    <ClCompile Include="api\pb_handler.cc" />
     <ClCompile Include="api\pubsub.cc" />
     <ClCompile Include="common\exception_trap.cpp" />
     <ClCompile Include="common\file.cc" />

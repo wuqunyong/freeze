@@ -186,9 +186,6 @@
     <ClInclude Include="network\i_poll_events.hpp">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="api\pb_handler.h">
-      <Filter>api</Filter>
-    </ClInclude>
     <ClInclude Include="network\object.hpp">
       <Filter>network</Filter>
     </ClInclude>
@@ -540,9 +537,6 @@
     </ClCompile>
     <ClCompile Include="network\address.cc">
       <Filter>network</Filter>
-    </ClCompile>
-    <ClCompile Include="api\pb_handler.cc">
-      <Filter>api</Filter>
     </ClCompile>
     <ClCompile Include="network\object.cpp">
       <Filter>network</Filter>

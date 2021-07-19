@@ -7,12 +7,12 @@
 
 #include "../serialization/protocol_head.h"
 #include "logger.h"
-#include "../api/pb_handler.h"
 #include "address.h"
 #include "../decompressor/lz4_decompressor_impl.h"
 #include "../crypto/crypto_utility.h"
 
 #include "apie/service/service_manager.h"
+#include "apie/common/protobuf_factory.h"
 
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
@@ -236,7 +236,7 @@ void APie::ClientConnection::readPB()
 
 void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
 {
-	auto optionalData = Api::OpcodeHandlerSingleton::get().client.getType(iOpcode);
+	auto optionalData = apie::service::ServiceHandlerSingleton::get().client.getType(iOpcode);
 	if (!optionalData)
 	{
 		PBForward *itemObjPtr = new PBForward;
@@ -262,7 +262,7 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	}
 
 	std::string sType = optionalData.value();
-	auto ptrMsg = Api::PBHandler::createMessage(sType);
+	auto ptrMsg = apie::message::ProtobufFactory::createMessage(sType);
 	if (ptrMsg == nullptr)
 	{
 		return;

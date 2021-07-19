@@ -5,7 +5,6 @@
 
 #include "../pb_msg.h"
 
-#include "../api/pb_handler.h"
 #include "../api/pubsub.h"
 
 #include "../rpc/init.h"
@@ -13,19 +12,18 @@
 #include "output_stream.h"
 #include <sstream>
 
+#include "apie/service/service_manager.h"
+
 namespace APie{
 
 void SelfRegistration::init()
 {
 	//ServiceRegistry
-	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, SelfRegistration::handleRespRegisterInstance);
-	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance);
-	APie::Api::OpcodeHandlerSingleton::get().client.bind(::opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, SelfRegistration::handleRespHeartbeat);
+	auto& client = apie::service::ServiceHandlerSingleton::get().client;
+	client.createService<::service_discovery::MSG_RESP_REGISTER_INSTANCE>(::opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, SelfRegistration::handleRespRegisterInstance);
+	client.createService<::service_discovery::MSG_NOTICE_INSTANCE>(::opcodes::OP_DISCOVERY_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance);
+	client.createService<::service_discovery::MSG_RESP_HEARTBEAT>(::opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, SelfRegistration::handleRespHeartbeat);
 
-
-	//RouteProxy
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_ROUTE_MSG_REQUEST_ADD_ROUTE, SelfRegistration::handleAddRoute);
-	APie::Api::OpcodeHandlerSingleton::get().server.bind(::opcodes::OP_ROUTE_MSG_REQUEST_HEARTBEAT, SelfRegistration::handleRouteHeartbeat);
 
 	//PubSub
 	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ClientPeerClose, SelfRegistration::onClientPeerClose);
@@ -39,16 +37,12 @@ void SelfRegistration::registerEndpoint()
 	auto identityType = APie::CtxSingleton::get().getServerType();
 
 	std::set<uint32_t> needRegister;
-
-#ifdef USE_NATS_PROXY
-#else
 	needRegister.insert(::common::EndPointType::EPT_Route_Proxy);
 	needRegister.insert(::common::EndPointType::EPT_Login_Server);
 	needRegister.insert(::common::EndPointType::EPT_Gateway_Server);
 	needRegister.insert(::common::EndPointType::EPT_Scene_Server);
 	needRegister.insert(::common::EndPointType::EPT_DB_ACCOUNT_Proxy);
 	needRegister.insert(::common::EndPointType::EPT_DB_ROLE_Proxy);
-#endif
 
 	if (needRegister.count(identityType) == 0)
 	{
@@ -96,8 +90,8 @@ void SelfRegistration::registerEndpoint()
 		}
 	};
 	ptrClient->setHeartbeatCb(heartbeatCb);
-	ptrClient->addHeartbeatTimer(1000);
-	ptrClient->addReconnectTimer(1000);
+	ptrClient->addHeartbeatTimer(3000);
+	ptrClient->addReconnectTimer(5000);
 	ptrClient.reset();
 }
 
@@ -307,12 +301,12 @@ void EndPointMgr::clear()
 }
 
 
-void SelfRegistration::handleRespRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_REGISTER_INSTANCE& response)
+void SelfRegistration::handleRespRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
+	ss << "iSerialNum:" << iSerialNum << ",response:" << response->ShortDebugString();
 
-	if (response.status_code() != opcodes::StatusCode::SC_Ok)
+	if (response->status_code() != opcodes::StatusCode::SC_Ok)
 	{
 		ASYNC_PIE_LOG("SelfRegistration/handleRespRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 		return;
@@ -324,22 +318,22 @@ void SelfRegistration::handleRespRegisterInstance(uint64_t iSerialNum, const ::s
 	}
 }
 
-void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service_discovery::MSG_NOTICE_INSTANCE& notice)
+void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_NOTICE_INSTANCE>& notice)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",notice:" << notice.ShortDebugString();
+	ss << "iSerialNum:" << iSerialNum << ",notice:" << notice->ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/handleNoticeInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	switch (notice.mode())
+	switch (notice->mode())
 	{
 	case service_discovery::UM_Full:
 	{
-		if (notice.status() == service_discovery::RS_Forwarding)
+		if (notice->status() == service_discovery::RS_Forwarding)
 		{
 			EndPointMgrSingleton::get().clear();
 		}
 
-		for (const auto& items : notice.add_instance())
+		for (const auto& items : notice->add_instance())
 		{
 			EndPointMgrSingleton::get().registerEndpoint(items);
 		}
@@ -354,15 +348,16 @@ void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const ::service
 	}
 
 	::pubsub::DISCOVERY_NOTICE msg;
-	*msg.mutable_notice() = notice;
+	*msg.mutable_notice() = *notice;
 	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_DiscoveryNotice, msg);
 }
 
-void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_RESP_HEARTBEAT& response)
+
+void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",response:" << response.ShortDebugString();
-	if (response.status_code() == opcodes::StatusCode::SC_Ok)
+	ss << "iSerialNum:" << iSerialNum << ",response:" << response->ShortDebugString();
+	if (response->status_code() == opcodes::StatusCode::SC_Ok)
 	{
 		//ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 	}
@@ -372,64 +367,7 @@ void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const ::service_
 	}
 }
 
-void SelfRegistration::handleAddRoute(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_ADD_ROUTE& request)
-{
-	EndPoint point;
-	point.type = request.instance().type();
-	point.id = request.instance().id();
-	point.realm = request.instance().realm();
 
-	auto identify = ::APie::CtxSingleton::get().identify();
-
-	uint32_t realm = APie::CtxSingleton::get().getServerRealm();
-	uint32_t id = APie::CtxSingleton::get().getServerId();
-	uint32_t type = APie::CtxSingleton::get().getServerType();
-
-	::route_register::MSG_RESP_ADD_ROUTE response;
-	response.mutable_target()->set_realm(realm);
-	response.mutable_target()->set_id(id);
-	response.mutable_target()->set_type(static_cast<::common::EndPointType>(type));
-	response.mutable_target()->set_auth(identify.auth);
-	*response.mutable_route() = request.instance();
-
-	auto findOpt = EndPointMgrSingleton::get().findEndpoint(point);
-	if (!findOpt.has_value())
-	{
-		response.set_status_code(opcodes::SC_Route_InvalidPoint);
-		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_ROUTE_MSG_RESP_ADD_ROUTE, response);
-		return;
-	}
-
-	auto auth = findOpt.value().auth();
-	if (!auth.empty() && auth != request.instance().auth())
-	{
-		response.set_status_code(opcodes::SC_Route_AuthError);
-		APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_ROUTE_MSG_RESP_ADD_ROUTE, response);
-		return;
-	}
-
-	response.set_status_code(opcodes::SC_Ok);
-	APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_ROUTE_MSG_RESP_ADD_ROUTE, response);
-
-	EndPointMgrSingleton::get().addRoute(point, iSerialNum);
-}
-
-void SelfRegistration::handleRouteHeartbeat(uint64_t iSerialNum, const ::route_register::MSG_REQUEST_HEARTBEAT& request)
-{
-	auto optPoint = EndPointMgrSingleton::get().findRoute(iSerialNum);
-
-	::route_register::MSG_RESP_HEARTBEAT response;
-	if (optPoint)
-	{
-		response.set_status_code(opcodes::SC_Ok);
-		EndPointMgrSingleton::get().updateRouteHeartbeat(iSerialNum);
-	}
-	else
-	{
-		response.set_status_code(opcodes::SC_Route_Unregistered);
-	}
-	APie::Network::OutputStream::sendMsg(iSerialNum, opcodes::OP_ROUTE_MSG_RESP_HEARTBEAT, response);
-}
 
 void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
 {

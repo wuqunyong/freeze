@@ -36,10 +36,12 @@ namespace APie {
 
 		static void onShowProvider(::pubsub::LOGIC_CMD& cmd);
 
-		// Inner Protocols
-		static void handleRequestRegisterInstance(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE& request);
-		static void handleRequestHeartbeat(uint64_t iSerialNum, const ::service_discovery::MSG_REQUEST_HEARTBEAT& request);
-		
+		// Inner Protocols		
+		static apie::status::Status handleRequestRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request, 
+			std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response);
+		static apie::status::Status handleRequestHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
+			std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response);
+
 
 		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
 

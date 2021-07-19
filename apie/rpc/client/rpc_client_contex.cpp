@@ -18,6 +18,11 @@ RPCClientContext::~RPCClientContext()
 	return server_id_;
 }
 
+uint32_t RPCClientContext::timeoutMs()
+{
+	return timeout_ms_;
+}
+
 }
 }
 
