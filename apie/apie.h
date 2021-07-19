@@ -12,6 +12,8 @@
 
 #include "yaml-cpp/yaml.h"
 
+#include "apie/common/string_utils.h"
+
 #include "event/real_time_system.h"
 #include "event/dispatched_thread.h"
 #include "event/libevent_scheduler.h"
