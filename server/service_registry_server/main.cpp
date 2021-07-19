@@ -6,8 +6,6 @@
 #include <algorithm>
 #include <tuple>
 
-#include "apie.h"
-
 #include "service_init.h"
 
 int main(int argc, char **argv)

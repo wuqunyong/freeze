@@ -16,6 +16,7 @@
 namespace APie {
 namespace Hook {
 
+
 enum class HookPoint
 {
 	HP_Init = 0,
@@ -24,11 +25,6 @@ enum class HookPoint
 	HP_Exit = 3,
 };
 
-enum HookResult
-{
-	HR_Ok = 0,
-	HR_Error = 1,
-};
 
 class HookRegistry {
 public:
@@ -54,6 +50,7 @@ public:
 };
 
 typedef ThreadSafeSingleton<HookRegistry> HookRegistrySingleton;
+
 
 } 
 } 

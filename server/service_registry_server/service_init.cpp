@@ -1,6 +1,5 @@
 #include "service_init.h"
 
-#include "apie.h"
 #include "logic/service_registry.h"
 
 namespace APie {
