@@ -54,6 +54,7 @@
 
 #include "apie/rpc/server/rpc_server_manager.h"
 
+#include "apie/pub_sub/pubsub_manager.h"
 
 #include "google/protobuf/message.h"
 #include "apie/rpc/client/rpc_client_manager.h"

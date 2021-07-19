@@ -17,7 +17,7 @@ std::tuple<uint32_t, std::string> LoginMgr::init()
 	}
 
 	// CMD
-	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, LoginMgr::onLogicCommnad);
+	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, LoginMgr::onLogicCommnad);
 
 	LogicCmdHandlerSingleton::get().init();
 	LogicCmdHandlerSingleton::get().registerOnCmd("nats_publish", "nats_publish", LoginMgr::onNatsPublish);
@@ -37,7 +37,7 @@ std::tuple<uint32_t, std::string> LoginMgr::start()
 std::tuple<uint32_t, std::string> LoginMgr::ready()
 {
 	// PubSub
-	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, LoginMgr::onServerPeerClose);
+	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, LoginMgr::onServerPeerClose);
 
 
 	// CLIENT OPCODE
@@ -59,24 +59,22 @@ void LoginMgr::exit()
 
 }
 
-void LoginMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+void LoginMgr::onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
 {
-	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
-	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(command.cmd());
+	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(msg->cmd());
 	if (!handlerOpt.has_value())
 	{
 		return;
 	}
 
-	handlerOpt.value()(command);
+	handlerOpt.value()(*msg);
 }
 
-void LoginMgr::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+void LoginMgr::onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg)
 {
 	std::stringstream ss;
 
-	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
-	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
+	ss << "topic:" << ",refMsg:" << msg->ShortDebugString();
 	ASYNC_PIE_LOG("LoginMgr/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	//uint64_t iSerialNum = refMsg.serial_num();

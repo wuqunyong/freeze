@@ -42,6 +42,7 @@
 #include "apie/event/nats_proxy.h"
 
 #include "apie/service/service_manager.h"
+#include "apie/pub_sub/pubsub_manager.h"
 
 
 
@@ -844,7 +845,7 @@ void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 		*ptrParams = items;
 	}
 
-	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_LogicCmd, msg);
+	apie::pubsub::PubSubManagerSingleton::get().publish<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, msg);
 }
 
 void DispatcherImpl::handleAsyncCallFunctor(LogicAsyncCallFunctor* ptrCmd)
@@ -860,7 +861,7 @@ void DispatcherImpl::handleClientPeerClose(ClientPeerClose* ptrCmd)
 	msg.set_info(ptrCmd->sInfo);
 	msg.set_active(ptrCmd->iActive);
 
-	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_ClientPeerClose, msg);
+	apie::pubsub::PubSubManagerSingleton::get().publish<::pubsub::CLIENT_PEER_CLOSE>(::pubsub::PUB_TOPIC::PT_ClientPeerClose, msg);
 }
 
 void DispatcherImpl::handleCloseLocalClient(CloseLocalClient* ptrCmd)
@@ -889,7 +890,7 @@ void DispatcherImpl::handleServerPeerClose(ServerPeerClose* ptrCmd)
 	msg.set_info(ptrCmd->sInfo);
 	msg.set_active(ptrCmd->iActive);
 
-	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_ServerPeerClose, msg);
+	apie::pubsub::PubSubManagerSingleton::get().publish<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PUB_TOPIC::PT_ServerPeerClose, msg);
 }
 
 void DispatcherImpl::handleLogicStart(uint32_t iThreadId)

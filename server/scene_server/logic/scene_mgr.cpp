@@ -16,7 +16,7 @@ std::tuple<uint32_t, std::string> SceneMgr::init()
 
 	// CMD
 	LogicCmdHandlerSingleton::get().init();
-	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, SceneMgr::onLogicCommnad);
+	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, SceneMgr::onLogicCommnad);
 
 
 	// RPC
@@ -55,17 +55,16 @@ void SceneMgr::exit()
 
 }
 
-void SceneMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+void SceneMgr::onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
 {
 
-	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
-	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(command.cmd());
+	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(msg->cmd());
 	if (!handlerOpt.has_value())
 	{
 		return;
 	}
 
-	handlerOpt.value()(command);
+	handlerOpt.value()(*msg);
 }
 
 void SceneMgr::Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::login_msg::MSG_REQUEST_ECHO request)

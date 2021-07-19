@@ -32,7 +32,7 @@ namespace APie {
 
 	public:
 		// CMD
-		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
+		static void onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
 
 		static void onShowProvider(::pubsub::LOGIC_CMD& cmd);
 
@@ -43,7 +43,7 @@ namespace APie {
 			std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response);
 
 
-		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
+		static void onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg);
 
 	public:
 		void update();

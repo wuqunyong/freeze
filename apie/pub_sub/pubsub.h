@@ -16,6 +16,7 @@ class PubSubBase {
 public:
 	virtual ~PubSubBase() = default;
 
+	virtual uint32_t getTopic() = 0;
 	virtual void unsubscribe(uint32_t callback_id) = 0;
 };
 
@@ -37,6 +38,8 @@ public:
 
 	bool subscribe(uint32_t callback_id, const Callback& callback);
 	void unsubscribe(uint32_t callback_id) override;
+
+	uint32_t getTopic() override;
 
 private:
 	void notify(const MessagePtr& msg);
@@ -94,6 +97,11 @@ void PubSub<T>::unsubscribe(uint32_t callback_id)
 	published_callbacks_.erase(callback_id);
 }
 
+template <typename T>
+uint32_t PubSub<T>::getTopic()
+{
+	return topic_;
+}
 
 
 }

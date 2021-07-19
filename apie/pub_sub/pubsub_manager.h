@@ -17,6 +17,7 @@ class PubSubManager {
 public:
 	using TopicMap = std::unordered_map<uint32_t, std::shared_ptr<PubSubBase>>;
 
+	PubSubManager();
 	virtual ~PubSubManager();
 
 	template <typename T>
@@ -36,7 +37,6 @@ public:
 
 
 private:
-	PubSubManager();
 	PubSubManager(const PubSubManager&) = delete;
 	PubSubManager& operator=(const PubSubManager&) = delete;
 

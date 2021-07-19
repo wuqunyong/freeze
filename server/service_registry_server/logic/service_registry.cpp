@@ -11,7 +11,7 @@ std::tuple<uint32_t, std::string> ServiceRegistry::init()
 	}
 
 	// CMD
-	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, ServiceRegistry::onLogicCommnad);
+	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, ServiceRegistry::onLogicCommnad);
 
 	LogicCmdHandlerSingleton::get().init();
 	LogicCmdHandlerSingleton::get().registerOnCmd("provider", "show_provider", ServiceRegistry::onShowProvider);
@@ -26,7 +26,7 @@ std::tuple<uint32_t, std::string> ServiceRegistry::init()
 		::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat);
 
 
-	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
+	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
 
 	return std::make_tuple(Hook::HookResult::HR_Ok, "");
 }
@@ -236,16 +236,15 @@ void ServiceRegistry::broadcast()
 	}
 }
 
-void ServiceRegistry::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+void ServiceRegistry::onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
 {
-	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
-	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(command.cmd());
+	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(msg->cmd());
 	if (!handlerOpt.has_value())
 	{
 		return;
 	}
 
-	handlerOpt.value()(command);
+	handlerOpt.value()(*msg);
 }
 
 apie::status::Status  ServiceRegistry::handleRequestRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
@@ -309,14 +308,13 @@ apie::status::Status  ServiceRegistry::handleRequestHeartbeat(uint64_t iSerialNu
 }
 
 
-void ServiceRegistry::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+void ServiceRegistry::onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg)
 {
 	std::stringstream ss;
-	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
-	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
+	ss << "topic:"<< ",refMsg:" << msg->ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	uint64_t iSerialNum = refMsg.serial_num();
+	uint64_t iSerialNum = msg->serial_num();
 	bool bChanged = ServiceRegistrySingleton::get().deleteBySerialNum(iSerialNum);
 	if (bChanged)
 	{

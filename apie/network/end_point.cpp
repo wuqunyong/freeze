@@ -13,6 +13,7 @@
 #include <sstream>
 
 #include "apie/service/service_manager.h"
+#include "apie/pub_sub/pubsub_manager.h"
 
 namespace APie{
 
@@ -26,8 +27,9 @@ void SelfRegistration::init()
 
 
 	//PubSub
-	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ClientPeerClose, SelfRegistration::onClientPeerClose);
-	APie::PubSubSingleton::get().subscribe(::pubsub::PT_ServerPeerClose, SelfRegistration::onServerPeerClose);
+	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::CLIENT_PEER_CLOSE>(::pubsub::PT_ClientPeerClose, SelfRegistration::onClientPeerClose);
+	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, SelfRegistration::onServerPeerClose);
+
 
 	this->registerEndpoint();
 }
@@ -349,7 +351,8 @@ void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const std::shar
 
 	::pubsub::DISCOVERY_NOTICE msg;
 	*msg.mutable_notice() = *notice;
-	PubSubSingleton::get().publish(::pubsub::PUB_TOPIC::PT_DiscoveryNotice, msg);
+
+	apie::pubsub::PubSubManagerSingleton::get().publish<::pubsub::DISCOVERY_NOTICE>(::pubsub::PUB_TOPIC::PT_DiscoveryNotice, msg);
 }
 
 
@@ -369,14 +372,13 @@ void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const std::share
 
 
 
-void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+void SelfRegistration::onClientPeerClose(const std::shared_ptr<::pubsub::CLIENT_PEER_CLOSE>& msg)
 {
 	std::stringstream ss;
-	auto& refMsg = dynamic_cast<::pubsub::CLIENT_PEER_CLOSE&>(msg);
-	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
+	ss << "topic:" << ",refMsg:" << msg->ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/onClientPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	uint64_t iSerialNum = refMsg.serial_num();
+	uint64_t iSerialNum = msg->serial_num();
 	auto clientProxy = APie::ClientProxy::findClientProxy(iSerialNum);
 	if (clientProxy)
 	{
@@ -390,15 +392,13 @@ void SelfRegistration::onClientPeerClose(uint64_t topic, ::google::protobuf::Mes
 	}
 }
 
-void SelfRegistration::onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg)
+void SelfRegistration::onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg)
 {
 	std::stringstream ss;
-
-	auto& refMsg = dynamic_cast<::pubsub::SERVER_PEER_CLOSE&>(msg);
-	ss << "topic:" << topic << ",refMsg:" << refMsg.ShortDebugString();
+	ss << "topic:"<< ",refMsg:" << msg->ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	uint64_t iSerialNum = refMsg.serial_num();
+	uint64_t iSerialNum = msg->serial_num();
 	EndPointMgrSingleton::get().delRoute(iSerialNum);
 }
 

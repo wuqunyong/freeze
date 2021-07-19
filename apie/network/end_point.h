@@ -47,8 +47,8 @@ namespace APie
 		static void handleRespHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response);
 		
 
-		static void onClientPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
-		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
+		static void onClientPeerClose(const std::shared_ptr<::pubsub::CLIENT_PEER_CLOSE>& msg);
+		static void onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg);
 
 		static std::shared_ptr<SelfRegistration> createSelfRegistration();
 
