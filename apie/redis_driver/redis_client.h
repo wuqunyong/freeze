@@ -17,7 +17,7 @@
 #include "../singleton/threadsafe_singleton.h"
 #include "../event/timer.h"
 
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 
 namespace APie {

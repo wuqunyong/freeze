@@ -7,7 +7,7 @@
 #include "../network/address.h"
 #include "../network/windows_platform.h"
 
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 #include <event2/util.h>
 

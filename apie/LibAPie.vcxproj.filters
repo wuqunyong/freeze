@@ -76,12 +76,6 @@
     <Filter Include="third_party\astar">
       <UniqueIdentifier>{2bb075f9-31cc-4381-b52e-a0b9a255f9d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="pb_msg">
-      <UniqueIdentifier>{227d6725-b2cf-4c0e-b29d-31496b5093e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pb_msg\core">
-      <UniqueIdentifier>{487d2838-853b-4b39-9d06-cb462aa89a2f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="configs">
       <UniqueIdentifier>{4e9054e3-c562-4048-b198-9742a6da642a}</UniqueIdentifier>
     </Filter>
@@ -99,6 +93,9 @@
     </Filter>
     <Filter Include="pub_sub">
       <UniqueIdentifier>{360879ec-1d1e-4ff3-8ab3-ccd9ea2a9b87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{0291e72a-2bf4-4a47-af7f-71eea6dea596}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -427,31 +424,9 @@
     <ClInclude Include="common\graphics_utility.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\pb_msg\core\common.pb.h">
-      <Filter>pb_msg\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\pb_msg\core\mysql_proxy_msg.pb.h">
-      <Filter>pb_msg\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\pb_msg\core\opcodes.pb.h">
-      <Filter>pb_msg\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\pb_msg\core\pubsub.pb.h">
-      <Filter>pb_msg\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\pb_msg\core\rpc_msg.pb.h">
-      <Filter>pb_msg\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\pb_msg\core\service_discovery.pb.h">
-      <Filter>pb_msg\core</Filter>
-    </ClInclude>
     <ClInclude Include="event\nats_proxy.h">
       <Filter>event</Filter>
     </ClInclude>
-    <ClInclude Include="..\pb_msg\core\nats_msg.pb.h">
-      <Filter>pb_msg\core</Filter>
-    </ClInclude>
-    <ClInclude Include="pb_msg.h" />
     <ClInclude Include="configs\configs.h">
       <Filter>configs</Filter>
     </ClInclude>
@@ -496,6 +471,30 @@
     </ClInclude>
     <ClInclude Include="pub_sub\pubsub_manager.h">
       <Filter>pub_sub</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\common.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\init.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\mysql_proxy_msg.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\nats_msg.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\opcodes.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\pubsub.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\rpc_msg.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\service_discovery.pb.h">
+      <Filter>proto</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -706,29 +705,8 @@
     <ClCompile Include="common\graphics_utility.cpp">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\pb_msg\core\common.pb.cc">
-      <Filter>pb_msg\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\pb_msg\core\mysql_proxy_msg.pb.cc">
-      <Filter>pb_msg\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\pb_msg\core\opcodes.pb.cc">
-      <Filter>pb_msg\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\pb_msg\core\pubsub.pb.cc">
-      <Filter>pb_msg\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\pb_msg\core\rpc_msg.pb.cc">
-      <Filter>pb_msg\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\pb_msg\core\service_discovery.pb.cc">
-      <Filter>pb_msg\core</Filter>
-    </ClCompile>
     <ClCompile Include="event\nats_proxy.cc">
       <Filter>event</Filter>
-    </ClCompile>
-    <ClCompile Include="..\pb_msg\core\nats_msg.pb.cc">
-      <Filter>pb_msg\core</Filter>
     </ClCompile>
     <ClCompile Include="service\service_manager.cc">
       <Filter>service</Filter>
@@ -747,6 +725,27 @@
     </ClCompile>
     <ClCompile Include="pub_sub\pubsub_manager.cc">
       <Filter>pub_sub</Filter>
+    </ClCompile>
+    <ClCompile Include="proto\common.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="proto\mysql_proxy_msg.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="proto\nats_msg.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="proto\opcodes.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="proto\pubsub.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="proto\rpc_msg.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="proto\service_discovery.pb.cc">
+      <Filter>proto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,7 @@
 
 #include <mysql.h>
 
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 
 

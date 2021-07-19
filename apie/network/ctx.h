@@ -14,7 +14,7 @@
 
 #include "../configs/configs.h"
 
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 #include "yaml-cpp/yaml.h"
 

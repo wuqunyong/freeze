@@ -6,7 +6,7 @@
 
 #include "apie/rpc/server/rpc_server_base.h"
 #include "apie/status/status.h"
-#include "apie/pb_msg.h"
+#include "apie/proto/init.h"
 #include "apie/network/ctx.h"
 #include "apie/event/nats_proxy.h"
 

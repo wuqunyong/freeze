@@ -25,7 +25,7 @@
 #include <thread>
 
 #include "../network/logger.h"
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 namespace APie {
 namespace Event {

@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "apie/pb_msg.h"
+#include "apie/proto/init.h"
 #include "apie/status/status.h"
 
 namespace apie {

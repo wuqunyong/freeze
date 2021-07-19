@@ -20,7 +20,7 @@
 #include "mysql_connector.h"
 #include "result_set.h"
 
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 
 #ifdef _MSC_VER

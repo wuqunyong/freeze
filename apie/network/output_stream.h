@@ -13,7 +13,7 @@
 #include <event2/util.h>
 #include <google/protobuf/message.h>
 
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 
 

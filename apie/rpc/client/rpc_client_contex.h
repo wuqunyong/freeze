@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "apie/pb_msg.h"
+#include "apie/proto/init.h"
 
 namespace apie {
 namespace rpc {

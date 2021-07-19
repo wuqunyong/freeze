@@ -14,7 +14,7 @@
 #include "mysql_orm.h"
 
 #include "../singleton/threadsafe_singleton.h"
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 
 namespace APie {

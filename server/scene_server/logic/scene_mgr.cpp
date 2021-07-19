@@ -1,6 +1,5 @@
 #include "scene_mgr.h"
 
-#include "../../pb_msg/core/opcodes.pb.h"
 #include "../../common/opcodes.h"
 
 

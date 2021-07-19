@@ -138,13 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\pb_msg\core\common.pb.h" />
-    <ClInclude Include="..\pb_msg\core\mysql_proxy_msg.pb.h" />
-    <ClInclude Include="..\pb_msg\core\nats_msg.pb.h" />
-    <ClInclude Include="..\pb_msg\core\opcodes.pb.h" />
-    <ClInclude Include="..\pb_msg\core\pubsub.pb.h" />
-    <ClInclude Include="..\pb_msg\core\rpc_msg.pb.h" />
-    <ClInclude Include="..\pb_msg\core\service_discovery.pb.h" />
     <ClInclude Include="..\third_party\astar\fsa.h" />
     <ClInclude Include="..\third_party\astar\stlastar.h" />
     <ClInclude Include="..\third_party\http-parser\http_parser.h" />
@@ -250,7 +243,14 @@
     <ClInclude Include="network\platform_impl.h" />
     <ClInclude Include="network\signaler.h" />
     <ClInclude Include="network\windows_platform.h" />
-    <ClInclude Include="pb_msg.h" />
+    <ClInclude Include="proto\common.pb.h" />
+    <ClInclude Include="proto\init.h" />
+    <ClInclude Include="proto\mysql_proxy_msg.pb.h" />
+    <ClInclude Include="proto\nats_msg.pb.h" />
+    <ClInclude Include="proto\opcodes.pb.h" />
+    <ClInclude Include="proto\pubsub.pb.h" />
+    <ClInclude Include="proto\rpc_msg.pb.h" />
+    <ClInclude Include="proto\service_discovery.pb.h" />
     <ClInclude Include="pub_sub\pubsub.h" />
     <ClInclude Include="pub_sub\pubsub_manager.h" />
     <ClInclude Include="redis_driver\redis_client.h" />
@@ -273,13 +273,6 @@
     <ClInclude Include="status\status_code_enum.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\pb_msg\core\common.pb.cc" />
-    <ClCompile Include="..\pb_msg\core\mysql_proxy_msg.pb.cc" />
-    <ClCompile Include="..\pb_msg\core\nats_msg.pb.cc" />
-    <ClCompile Include="..\pb_msg\core\opcodes.pb.cc" />
-    <ClCompile Include="..\pb_msg\core\pubsub.pb.cc" />
-    <ClCompile Include="..\pb_msg\core\rpc_msg.pb.cc" />
-    <ClCompile Include="..\pb_msg\core\service_discovery.pb.cc" />
     <ClCompile Include="..\third_party\http-parser\http_parser.c" />
     <ClCompile Include="..\third_party\JPSPlusGoalBounding\BucketPriorityQueue.cpp" />
     <ClCompile Include="..\third_party\JPSPlusGoalBounding\DijkstraFloodfill.cpp" />
@@ -347,6 +340,13 @@
     <ClCompile Include="network\object.cpp" />
     <ClCompile Include="network\output_stream.cc" />
     <ClCompile Include="network\signaler.cpp" />
+    <ClCompile Include="proto\common.pb.cc" />
+    <ClCompile Include="proto\mysql_proxy_msg.pb.cc" />
+    <ClCompile Include="proto\nats_msg.pb.cc" />
+    <ClCompile Include="proto\opcodes.pb.cc" />
+    <ClCompile Include="proto\pubsub.pb.cc" />
+    <ClCompile Include="proto\rpc_msg.pb.cc" />
+    <ClCompile Include="proto\service_discovery.pb.cc" />
     <ClCompile Include="pub_sub\pubsub_manager.cc" />
     <ClCompile Include="redis_driver\redis_client.cpp" />
     <ClCompile Include="rpc\client\rpc_client_contex.cpp" />

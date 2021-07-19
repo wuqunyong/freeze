@@ -10,8 +10,6 @@
 
 #include "apie.h"
 
-#include "../../pb_msg/core/service_discovery.pb.h"
-
 
 namespace APie {
 

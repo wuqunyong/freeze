@@ -3,7 +3,7 @@
 #include "ctx.h"
 #include "client_proxy.h"
 
-#include "../pb_msg.h"
+#include "apie/proto/init.h"
 
 
 #include "../rpc/init.h"
