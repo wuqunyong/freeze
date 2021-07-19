@@ -24,7 +24,6 @@
 
 #include "../api/api.h"
 #include "../api/hook.h"
-#include "../api/pubsub.h"
 
 #include "../common/string_utils.h"
 

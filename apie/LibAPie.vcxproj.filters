@@ -268,9 +268,6 @@
     <ClInclude Include="common\file.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="api\pubsub.h">
-      <Filter>api</Filter>
-    </ClInclude>
     <ClInclude Include="http\http_common.h">
       <Filter>http</Filter>
     </ClInclude>
@@ -609,9 +606,6 @@
     </ClCompile>
     <ClCompile Include="common\file.cc">
       <Filter>common</Filter>
-    </ClCompile>
-    <ClCompile Include="api\pubsub.cc">
-      <Filter>api</Filter>
     </ClCompile>
     <ClCompile Include="http\http_parser_impl.cpp">
       <Filter>http</Filter>

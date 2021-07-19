@@ -5,7 +5,6 @@
 
 #include "../pb_msg.h"
 
-#include "../api/pubsub.h"
 
 #include "../rpc/init.h"
 
