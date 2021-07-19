@@ -76,12 +76,14 @@ void HandleRequestService<Request, responseOpcode, Response>::handleRequest(uint
 {
 	auto response = std::make_shared<Response>();
 	auto status = service_callback_(serial_num, request, response);
+	if (status.isAsync())
+	{
+		return;
+	}
+
 	if (status.ok())
 	{
-		if (!status.isAsync())
-		{
-			sendResponse(serial_num, response);
-		}
+		sendResponse(serial_num, response);
 	}
 }
 

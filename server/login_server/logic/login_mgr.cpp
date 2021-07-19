@@ -41,9 +41,7 @@ std::tuple<uint32_t, std::string> LoginMgr::ready()
 
 
 	// CLIENT OPCODE
-
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	//server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccount);
 	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountNotify);
 
 	std::stringstream ss;

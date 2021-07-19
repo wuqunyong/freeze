@@ -77,17 +77,20 @@ void RPCServer<Request, Response>::handleRequest(const ::rpc_msg::RPC_REQUEST& c
 {
 	auto response = std::make_shared<Response>();
 	auto status = service_callback_(context.client(), request, response);
+	if (status.isAsync())
+	{
+		return;
+	}
+
+
 	if (status.ok())
 	{
-		if (!status.isAsync())
+		if (!context.client().required_reply())
 		{
-			if (!context.client().required_reply())
-			{
-				return;
-			}
-
-			sendResponse(context, response);
+			return;
 		}
+
+		sendResponse(context, response);
 	}
 }
 

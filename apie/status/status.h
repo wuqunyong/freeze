@@ -27,7 +27,7 @@ public:
 
 	std::string error_message() const { return error_message_; }
 
-	bool ok() const { return code_ == StatusCode::OK || code_ == StatusCode::OK_ASYNC; }
+	bool ok() const { return code_ == StatusCode::OK; }
 	bool isAsync() const { return code_ == StatusCode::OK_ASYNC; }
 
 private:
