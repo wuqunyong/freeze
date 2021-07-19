@@ -26,17 +26,18 @@ namespace APie {
 	public:
 		// CMD
 		static void onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
+		static void onNatsPublish(::pubsub::LOGIC_CMD& cmd);
+
 
 		// PubSub
 		static void onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg);
 
-		// CLIENT OPCODE
-		
 
-		static apie::status::Status handleAccount(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>&, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>&);
+		// CLIENT OPCODE
+		static apie::status::Status handleAccount(
+			uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>&, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>&);
 		static void handleAccountNotify(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>&);
 
-		static void onNatsPublish(::pubsub::LOGIC_CMD& cmd);
 
 		static void RPC_echoCb(const apie::status::Status& status, const std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response);
 
