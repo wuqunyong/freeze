@@ -36,8 +36,8 @@ apie::status::Status SceneMgr::start()
 apie::status::Status SceneMgr::ready()
 {
 	// CLIENT OPCODE
-	auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
-	forwardHandler.server.bind(::APie::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho);
+	//auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
+	//forwardHandler.server.bind(::APie::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho);
 
 	apie::rpc::RPCServerManagerSingleton::get().createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_EchoTest, SceneMgr::RPC_echo);
 

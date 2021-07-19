@@ -18,7 +18,6 @@
 #include "event/nats_proxy.h"
 
 #include "api/api_impl.h"
-#include "api/forward_handler.h"
 #include "api/hook.h"
 #include "api/logiccmd_handler.h"
 #include "api/os_sys_calls.h"

@@ -316,9 +316,6 @@
     <ClInclude Include="api\os_sys_calls.h">
       <Filter>api</Filter>
     </ClInclude>
-    <ClInclude Include="api\forward_handler.h">
-      <Filter>api</Filter>
-    </ClInclude>
     <ClInclude Include="mysql_driver\dao_factory.h">
       <Filter>mysql_driver</Filter>
     </ClInclude>
@@ -641,9 +638,6 @@
       <Filter>network</Filter>
     </ClCompile>
     <ClCompile Include="api\os_sys_calls.cc">
-      <Filter>api</Filter>
-    </ClCompile>
-    <ClCompile Include="api\forward_handler.cc">
       <Filter>api</Filter>
     </ClCompile>
     <ClCompile Include="mysql_driver\dao_factory.cpp">
