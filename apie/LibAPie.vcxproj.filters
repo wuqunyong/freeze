@@ -97,6 +97,9 @@
     <Filter Include="proto">
       <UniqueIdentifier>{0291e72a-2bf4-4a47-af7f-71eea6dea596}</UniqueIdentifier>
     </Filter>
+    <Filter Include="forward">
+      <UniqueIdentifier>{944334a0-6137-4818-9a09-c9d3940681ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -496,6 +499,18 @@
     <ClInclude Include="proto\service_discovery.pb.h">
       <Filter>proto</Filter>
     </ClInclude>
+    <ClInclude Include="forward\forward_base.h">
+      <Filter>forward</Filter>
+    </ClInclude>
+    <ClInclude Include="forward\forward_manager.h">
+      <Filter>forward</Filter>
+    </ClInclude>
+    <ClInclude Include="forward\handle_notify_forward.h">
+      <Filter>forward</Filter>
+    </ClInclude>
+    <ClInclude Include="forward\handle_request_forward.h">
+      <Filter>forward</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -746,6 +761,9 @@
     </ClCompile>
     <ClCompile Include="proto\service_discovery.pb.cc">
       <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="forward\forward_manager.cc">
+      <Filter>forward</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

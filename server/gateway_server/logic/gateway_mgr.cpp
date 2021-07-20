@@ -206,12 +206,16 @@ bool GatewayMgr::removeGateWayRole(uint64_t iRoleId)
 
 void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {	
+	::rpc_msg::CHANNEL server;
+	server.set_realm(1);
+	server.set_type(4);
+	server.set_id(1);
 }
 
 apie::status::Status GatewayMgr::RPC_handleLoginPending(
 	const ::rpc_msg::CLIENT_IDENTIFIER& context, const std::shared_ptr<rpc_login::L2G_LoginPendingRequest>& request, std::shared_ptr<rpc_login::L2G_LoginPendingResponse>& response)
 {
-	auto curTime = time(nullptr);
+	auto curTime = apie::Ctx::getCurSeconds();
 
 	PendingLoginRole role;
 	role.role_id = request->account_id();

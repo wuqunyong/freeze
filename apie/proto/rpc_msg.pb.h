@@ -1595,7 +1595,7 @@ class PRC_Multiplexer_Forward :
 
   enum : int {
     kBodyMsgFieldNumber = 3,
-    kRoleIdFieldNumber = 1,
+    kRoleFieldNumber = 1,
     kOpcodesFieldNumber = 2,
   };
   // bytes body_msg = 3;
@@ -1614,19 +1614,19 @@ class PRC_Multiplexer_Forward :
   std::string* _internal_mutable_body_msg();
   public:
 
-  // .rpc_msg.RoleIdentifier role_id = 1;
-  bool has_role_id() const;
+  // .rpc_msg.RoleIdentifier role = 1;
+  bool has_role() const;
   private:
-  bool _internal_has_role_id() const;
+  bool _internal_has_role() const;
   public:
-  void clear_role_id();
-  const ::rpc_msg::RoleIdentifier& role_id() const;
-  ::rpc_msg::RoleIdentifier* release_role_id();
-  ::rpc_msg::RoleIdentifier* mutable_role_id();
-  void set_allocated_role_id(::rpc_msg::RoleIdentifier* role_id);
+  void clear_role();
+  const ::rpc_msg::RoleIdentifier& role() const;
+  ::rpc_msg::RoleIdentifier* release_role();
+  ::rpc_msg::RoleIdentifier* mutable_role();
+  void set_allocated_role(::rpc_msg::RoleIdentifier* role);
   private:
-  const ::rpc_msg::RoleIdentifier& _internal_role_id() const;
-  ::rpc_msg::RoleIdentifier* _internal_mutable_role_id();
+  const ::rpc_msg::RoleIdentifier& _internal_role() const;
+  ::rpc_msg::RoleIdentifier* _internal_mutable_role();
   public:
 
   // uint32 opcodes = 2;
@@ -1644,7 +1644,7 @@ class PRC_Multiplexer_Forward :
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr body_msg_;
-  ::rpc_msg::RoleIdentifier* role_id_;
+  ::rpc_msg::RoleIdentifier* role_;
   ::PROTOBUF_NAMESPACE_ID::uint32 opcodes_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
@@ -1758,7 +1758,7 @@ class PRC_DeMultiplexer_Forward :
 
   enum : int {
     kBodyMsgFieldNumber = 3,
-    kRoleIdFieldNumber = 1,
+    kRoleFieldNumber = 1,
     kOpcodesFieldNumber = 2,
   };
   // bytes body_msg = 3;
@@ -1777,19 +1777,19 @@ class PRC_DeMultiplexer_Forward :
   std::string* _internal_mutable_body_msg();
   public:
 
-  // .rpc_msg.RoleIdentifier role_id = 1;
-  bool has_role_id() const;
+  // .rpc_msg.RoleIdentifier role = 1;
+  bool has_role() const;
   private:
-  bool _internal_has_role_id() const;
+  bool _internal_has_role() const;
   public:
-  void clear_role_id();
-  const ::rpc_msg::RoleIdentifier& role_id() const;
-  ::rpc_msg::RoleIdentifier* release_role_id();
-  ::rpc_msg::RoleIdentifier* mutable_role_id();
-  void set_allocated_role_id(::rpc_msg::RoleIdentifier* role_id);
+  void clear_role();
+  const ::rpc_msg::RoleIdentifier& role() const;
+  ::rpc_msg::RoleIdentifier* release_role();
+  ::rpc_msg::RoleIdentifier* mutable_role();
+  void set_allocated_role(::rpc_msg::RoleIdentifier* role);
   private:
-  const ::rpc_msg::RoleIdentifier& _internal_role_id() const;
-  ::rpc_msg::RoleIdentifier* _internal_mutable_role_id();
+  const ::rpc_msg::RoleIdentifier& _internal_role() const;
+  ::rpc_msg::RoleIdentifier* _internal_mutable_role();
   public:
 
   // uint32 opcodes = 2;
@@ -1807,7 +1807,7 @@ class PRC_DeMultiplexer_Forward :
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr body_msg_;
-  ::rpc_msg::RoleIdentifier* role_id_;
+  ::rpc_msg::RoleIdentifier* role_;
   ::PROTOBUF_NAMESPACE_ID::uint32 opcodes_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
@@ -3127,64 +3127,64 @@ inline void RPC_RESPONSE::set_allocated_result_data(std::string* result_data) {
 
 // PRC_Multiplexer_Forward
 
-// .rpc_msg.RoleIdentifier role_id = 1;
-inline bool PRC_Multiplexer_Forward::_internal_has_role_id() const {
-  return this != internal_default_instance() && role_id_ != nullptr;
+// .rpc_msg.RoleIdentifier role = 1;
+inline bool PRC_Multiplexer_Forward::_internal_has_role() const {
+  return this != internal_default_instance() && role_ != nullptr;
 }
-inline bool PRC_Multiplexer_Forward::has_role_id() const {
-  return _internal_has_role_id();
+inline bool PRC_Multiplexer_Forward::has_role() const {
+  return _internal_has_role();
 }
-inline void PRC_Multiplexer_Forward::clear_role_id() {
-  if (GetArenaNoVirtual() == nullptr && role_id_ != nullptr) {
-    delete role_id_;
+inline void PRC_Multiplexer_Forward::clear_role() {
+  if (GetArenaNoVirtual() == nullptr && role_ != nullptr) {
+    delete role_;
   }
-  role_id_ = nullptr;
+  role_ = nullptr;
 }
-inline const ::rpc_msg::RoleIdentifier& PRC_Multiplexer_Forward::_internal_role_id() const {
-  const ::rpc_msg::RoleIdentifier* p = role_id_;
+inline const ::rpc_msg::RoleIdentifier& PRC_Multiplexer_Forward::_internal_role() const {
+  const ::rpc_msg::RoleIdentifier* p = role_;
   return p != nullptr ? *p : *reinterpret_cast<const ::rpc_msg::RoleIdentifier*>(
       &::rpc_msg::_RoleIdentifier_default_instance_);
 }
-inline const ::rpc_msg::RoleIdentifier& PRC_Multiplexer_Forward::role_id() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.PRC_Multiplexer_Forward.role_id)
-  return _internal_role_id();
+inline const ::rpc_msg::RoleIdentifier& PRC_Multiplexer_Forward::role() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.PRC_Multiplexer_Forward.role)
+  return _internal_role();
 }
-inline ::rpc_msg::RoleIdentifier* PRC_Multiplexer_Forward::release_role_id() {
-  // @@protoc_insertion_point(field_release:rpc_msg.PRC_Multiplexer_Forward.role_id)
+inline ::rpc_msg::RoleIdentifier* PRC_Multiplexer_Forward::release_role() {
+  // @@protoc_insertion_point(field_release:rpc_msg.PRC_Multiplexer_Forward.role)
   
-  ::rpc_msg::RoleIdentifier* temp = role_id_;
-  role_id_ = nullptr;
+  ::rpc_msg::RoleIdentifier* temp = role_;
+  role_ = nullptr;
   return temp;
 }
-inline ::rpc_msg::RoleIdentifier* PRC_Multiplexer_Forward::_internal_mutable_role_id() {
+inline ::rpc_msg::RoleIdentifier* PRC_Multiplexer_Forward::_internal_mutable_role() {
   
-  if (role_id_ == nullptr) {
+  if (role_ == nullptr) {
     auto* p = CreateMaybeMessage<::rpc_msg::RoleIdentifier>(GetArenaNoVirtual());
-    role_id_ = p;
+    role_ = p;
   }
-  return role_id_;
+  return role_;
 }
-inline ::rpc_msg::RoleIdentifier* PRC_Multiplexer_Forward::mutable_role_id() {
-  // @@protoc_insertion_point(field_mutable:rpc_msg.PRC_Multiplexer_Forward.role_id)
-  return _internal_mutable_role_id();
+inline ::rpc_msg::RoleIdentifier* PRC_Multiplexer_Forward::mutable_role() {
+  // @@protoc_insertion_point(field_mutable:rpc_msg.PRC_Multiplexer_Forward.role)
+  return _internal_mutable_role();
 }
-inline void PRC_Multiplexer_Forward::set_allocated_role_id(::rpc_msg::RoleIdentifier* role_id) {
+inline void PRC_Multiplexer_Forward::set_allocated_role(::rpc_msg::RoleIdentifier* role) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
-    delete role_id_;
+    delete role_;
   }
-  if (role_id) {
+  if (role) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
     if (message_arena != submessage_arena) {
-      role_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, role_id, submessage_arena);
+      role = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, role, submessage_arena);
     }
     
   } else {
     
   }
-  role_id_ = role_id;
-  // @@protoc_insertion_point(field_set_allocated:rpc_msg.PRC_Multiplexer_Forward.role_id)
+  role_ = role;
+  // @@protoc_insertion_point(field_set_allocated:rpc_msg.PRC_Multiplexer_Forward.role)
 }
 
 // uint32 opcodes = 2;
@@ -3271,64 +3271,64 @@ inline void PRC_Multiplexer_Forward::set_allocated_body_msg(std::string* body_ms
 
 // PRC_DeMultiplexer_Forward
 
-// .rpc_msg.RoleIdentifier role_id = 1;
-inline bool PRC_DeMultiplexer_Forward::_internal_has_role_id() const {
-  return this != internal_default_instance() && role_id_ != nullptr;
+// .rpc_msg.RoleIdentifier role = 1;
+inline bool PRC_DeMultiplexer_Forward::_internal_has_role() const {
+  return this != internal_default_instance() && role_ != nullptr;
 }
-inline bool PRC_DeMultiplexer_Forward::has_role_id() const {
-  return _internal_has_role_id();
+inline bool PRC_DeMultiplexer_Forward::has_role() const {
+  return _internal_has_role();
 }
-inline void PRC_DeMultiplexer_Forward::clear_role_id() {
-  if (GetArenaNoVirtual() == nullptr && role_id_ != nullptr) {
-    delete role_id_;
+inline void PRC_DeMultiplexer_Forward::clear_role() {
+  if (GetArenaNoVirtual() == nullptr && role_ != nullptr) {
+    delete role_;
   }
-  role_id_ = nullptr;
+  role_ = nullptr;
 }
-inline const ::rpc_msg::RoleIdentifier& PRC_DeMultiplexer_Forward::_internal_role_id() const {
-  const ::rpc_msg::RoleIdentifier* p = role_id_;
+inline const ::rpc_msg::RoleIdentifier& PRC_DeMultiplexer_Forward::_internal_role() const {
+  const ::rpc_msg::RoleIdentifier* p = role_;
   return p != nullptr ? *p : *reinterpret_cast<const ::rpc_msg::RoleIdentifier*>(
       &::rpc_msg::_RoleIdentifier_default_instance_);
 }
-inline const ::rpc_msg::RoleIdentifier& PRC_DeMultiplexer_Forward::role_id() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.PRC_DeMultiplexer_Forward.role_id)
-  return _internal_role_id();
+inline const ::rpc_msg::RoleIdentifier& PRC_DeMultiplexer_Forward::role() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.PRC_DeMultiplexer_Forward.role)
+  return _internal_role();
 }
-inline ::rpc_msg::RoleIdentifier* PRC_DeMultiplexer_Forward::release_role_id() {
-  // @@protoc_insertion_point(field_release:rpc_msg.PRC_DeMultiplexer_Forward.role_id)
+inline ::rpc_msg::RoleIdentifier* PRC_DeMultiplexer_Forward::release_role() {
+  // @@protoc_insertion_point(field_release:rpc_msg.PRC_DeMultiplexer_Forward.role)
   
-  ::rpc_msg::RoleIdentifier* temp = role_id_;
-  role_id_ = nullptr;
+  ::rpc_msg::RoleIdentifier* temp = role_;
+  role_ = nullptr;
   return temp;
 }
-inline ::rpc_msg::RoleIdentifier* PRC_DeMultiplexer_Forward::_internal_mutable_role_id() {
+inline ::rpc_msg::RoleIdentifier* PRC_DeMultiplexer_Forward::_internal_mutable_role() {
   
-  if (role_id_ == nullptr) {
+  if (role_ == nullptr) {
     auto* p = CreateMaybeMessage<::rpc_msg::RoleIdentifier>(GetArenaNoVirtual());
-    role_id_ = p;
+    role_ = p;
   }
-  return role_id_;
+  return role_;
 }
-inline ::rpc_msg::RoleIdentifier* PRC_DeMultiplexer_Forward::mutable_role_id() {
-  // @@protoc_insertion_point(field_mutable:rpc_msg.PRC_DeMultiplexer_Forward.role_id)
-  return _internal_mutable_role_id();
+inline ::rpc_msg::RoleIdentifier* PRC_DeMultiplexer_Forward::mutable_role() {
+  // @@protoc_insertion_point(field_mutable:rpc_msg.PRC_DeMultiplexer_Forward.role)
+  return _internal_mutable_role();
 }
-inline void PRC_DeMultiplexer_Forward::set_allocated_role_id(::rpc_msg::RoleIdentifier* role_id) {
+inline void PRC_DeMultiplexer_Forward::set_allocated_role(::rpc_msg::RoleIdentifier* role) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
-    delete role_id_;
+    delete role_;
   }
-  if (role_id) {
+  if (role) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
     if (message_arena != submessage_arena) {
-      role_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, role_id, submessage_arena);
+      role = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, role, submessage_arena);
     }
     
   } else {
     
   }
-  role_id_ = role_id;
-  // @@protoc_insertion_point(field_set_allocated:rpc_msg.PRC_DeMultiplexer_Forward.role_id)
+  role_ = role;
+  // @@protoc_insertion_point(field_set_allocated:rpc_msg.PRC_DeMultiplexer_Forward.role)
 }
 
 // uint32 opcodes = 2;

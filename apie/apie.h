@@ -60,3 +60,5 @@
 
 #include "google/protobuf/message.h"
 #include "apie/rpc/client/rpc_client_manager.h"
+
+#include "apie/forward/forward_manager.h"

@@ -104,7 +104,7 @@ message RPC_RESPONSE
 
 message PRC_Multiplexer_Forward
 {
-	RoleIdentifier role_id = 1;
+	RoleIdentifier role = 1;
 	uint32 opcodes = 2;
 	bytes body_msg = 3;
 }
@@ -112,7 +112,7 @@ message PRC_Multiplexer_Forward
 
 message PRC_DeMultiplexer_Forward
 {
-	RoleIdentifier role_id = 1;
+	RoleIdentifier role = 1;
 	uint32 opcodes = 2;
 	bytes body_msg = 3;
 }
