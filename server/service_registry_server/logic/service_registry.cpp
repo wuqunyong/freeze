@@ -17,7 +17,7 @@ apie::status::Status ServiceRegistry::init()
 	LogicCmdHandlerSingleton::get().registerOnCmd("provider", "show_provider", ServiceRegistry::onShowProvider);
 
 	// RPC
-	apie::rpc::rpcInit();
+
 
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
 	server.createService<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, ::service_discovery::MSG_RESP_REGISTER_INSTANCE>(

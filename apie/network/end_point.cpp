@@ -247,7 +247,7 @@ void EndPointMgr::addRoute(const EndPoint& point, uint64_t iSerialNum)
 {
 	EstablishedState state;
 	state.iSerialNum = iSerialNum;
-	state.iLastHeartbeat = time(NULL);
+	state.iLastHeartbeat = APie::Ctx::getCurSeconds();
 
 	m_establishedPoints[point] = state;
 	m_reversePoints[iSerialNum] = point;
@@ -279,7 +279,7 @@ void EndPointMgr::updateRouteHeartbeat(uint64_t iSerialNum)
 		return;
 	}
 
-	auto iCurTime = time(NULL);
+	auto iCurTime = APie::Ctx::getCurSeconds();
 	updateIte->second.iLastHeartbeat = iCurTime;
 }
 

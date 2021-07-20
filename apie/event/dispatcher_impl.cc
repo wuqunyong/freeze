@@ -279,7 +279,7 @@ void DispatcherImpl::runPostCallbacks() {
 
 void DispatcherImpl::handleCommand()
 {
-	time_t iCurTime = time(NULL);
+	time_t iCurTime = APie::Ctx::getCurSeconds();
 	size_t iLoopCount = mailbox_.size();
 	if (iLoopCount > m_maxMailboxStats)
 	{
@@ -998,7 +998,7 @@ void DispatcherImpl::handleMetric(MetricData* ptrCmd)
 					auto duration = now.time_since_epoch();
 					auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);
 
-					//uint64_t iCurTime = time(NULL) * 1000000000;
+
 					uint64_t iCurTime = nanoseconds.count();
 
 					std::string ip = APie::CtxSingleton::get().getConfigs()->metrics.ip;

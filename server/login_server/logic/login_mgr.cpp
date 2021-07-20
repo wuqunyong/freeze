@@ -22,7 +22,6 @@ apie::status::Status LoginMgr::init()
 	LogicCmdHandlerSingleton::get().registerOnCmd("nats_publish", "nats_publish", LoginMgr::onNatsPublish);
 
 	// RPC
-	apie::rpc::rpcInit();
 
 	return {apie::status::StatusCode::OK, ""};
 }

@@ -38,8 +38,6 @@ namespace APie
 		void start();
 		void destroy();
 
-		bool logEnable();
-
 		void waitForShutdown();
 
 		uint32_t generatorTId();
@@ -197,8 +195,6 @@ namespace APie
 		uint32_t m_server_realm = 0;
 		uint32_t m_server_id = 0;
 		uint32_t m_server_type = 0;
-
-		bool m_bLogEnable = false;
 
 		std::shared_ptr<APieConfig> m_ptrConfig;
 

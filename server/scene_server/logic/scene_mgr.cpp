@@ -19,7 +19,6 @@ apie::status::Status SceneMgr::init()
 
 
 	// RPC
-	apie::rpc::rpcInit();
 
 
 	return { apie::status::StatusCode::OK, "" };

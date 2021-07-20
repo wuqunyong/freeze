@@ -104,7 +104,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 	}
 	
 	char timebuf[64]={'\0'};
-	time_t now = time(NULL);
+	time_t now = APie::Ctx::getCurSeconds();
 	strftime(timebuf, sizeof(timebuf), "%Y-%m-%d %H:%M:%S",localtime(&now));
 
 	struct timeval tp;
@@ -289,7 +289,7 @@ LogFile* openFile(std::string file, int cycle)
 	std::string sFileName = sFile.substr(pos + 1);
 
 	APie::Filesystem::Directory::createDirectory(sPath.c_str());
-	time_t now = time(NULL);
+	time_t now = APie::Ctx::getCurSeconds();
 	struct tm * timeinfo;
 	timeinfo = localtime(&now);
 
@@ -333,7 +333,7 @@ void closeFile(LogFile* ptrFile)
 
 void moveFile(std::string from, std::string to)
 {
-	time_t now = time(NULL);
+	time_t now = APie::Ctx::getCurSeconds();
 	char curDate[64] = { '\0' };
 	strftime(curDate, sizeof(curDate), "%Y-%m-%d", localtime(&now));
 	to.append(curDate);
@@ -442,7 +442,7 @@ bool isChangeFile(LogFile* ptrFile, int cycle)
 		}
 	}
 
-	time_t now = time(NULL);
+	time_t now = APie::Ctx::getCurSeconds();
 	struct tm * timeinfo;
 	timeinfo = localtime(&now);
 

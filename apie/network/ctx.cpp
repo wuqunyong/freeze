@@ -154,16 +154,14 @@ std::shared_ptr<SelfRegistration> Ctx::getEndpoint()
 
 uint64_t Ctx::getCurMilliseconds()
 {
-	std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
-	auto duration = now.time_since_epoch();
+	auto duration = std::chrono::system_clock::now().time_since_epoch();
 	auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
 	return milliseconds.count();
 }
 
 uint64_t Ctx::getCurSeconds()
 {
-	std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
-	auto duration = now.time_since_epoch();
+	auto duration = std::chrono::system_clock::now().time_since_epoch();
 	auto seconds = std::chrono::duration_cast<std::chrono::seconds>(duration);
 	return seconds.count();
 }
@@ -343,7 +341,6 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 
 void Ctx::init(const std::string& configFile)
 {
-	this->m_bLogEnable = true;
 
 	this->m_configFile = configFile;
 	int64_t mtime = APie::Common::FileDataModificationTime(this->m_configFile);
@@ -353,7 +350,7 @@ void Ctx::init(const std::string& configFile)
 	}
 	this->setConfigFileMTime(mtime);
 
-	time_t now = time(NULL);
+	time_t now = APie::Ctx::getCurSeconds();
 
 	char timebuf[128] = { '\0' };
 	strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", localtime(&now));
@@ -591,7 +588,6 @@ void Ctx::start()
 
 void Ctx::destroy()
 {
-	this->m_bLogEnable = false;
 
 	APie::Event::DispatcherImpl::clearAllConnection();
 	ClientProxy::clearAllClientProxy();
@@ -643,10 +639,6 @@ void Ctx::destroy()
 	logFileClose();
 }
 
-bool Ctx::logEnable()
-{
-	return this->m_bLogEnable;
-}
 
 void Ctx::daemonize()
 {

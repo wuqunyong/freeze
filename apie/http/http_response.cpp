@@ -6,6 +6,8 @@
 
 #include "http_util.h"
 
+#include "apie/network/ctx.h"
+
 using namespace std;
 
 namespace APie
@@ -86,7 +88,7 @@ namespace APie
     void HttpResponse::enableDate()
     {
         char buf[128];
-		time_t now = time(NULL);
+		time_t now = APie::Ctx::getCurSeconds();
 		size_t n = strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", localtime(&now));
 
         static const string DateKey = "Date";

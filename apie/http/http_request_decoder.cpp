@@ -153,7 +153,7 @@ namespace APie
 		httpHead.insert(Headers_t::value_type("Connection", "close"));
 
 		std::stringstream ss;
-		ss << "parse error|" << time(NULL) << std::endl;
+		ss << "parse error|" << APie::Ctx::getCurSeconds() << std::endl;
 		HttpResponse response(error.statusCode, httpHead, ss.str());
 		std::string responseContent = response.dump();
 		m_session_ptr->handleSend(responseContent.data(), responseContent.size());

@@ -16,8 +16,6 @@
 namespace apie {
 namespace rpc {
 
-	void rpcInit();
-
 	template <typename Request, typename Response>
 	bool RPC_Call(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode,  const Request& params, const typename RPCClient<Request, Response>::CallbackType& calllback)
 	{
