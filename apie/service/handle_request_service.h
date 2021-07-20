@@ -90,7 +90,6 @@ void HandleRequestService<Request, responseOpcode, Response>::handleRequest(uint
 template <typename Request, uint32_t responseOpcode, typename Response>
 void HandleRequestService<Request, responseOpcode, Response>::sendResponse(uint64_t serial_num, const std::shared_ptr<Response>& response)
 {
-	std::cout << "sendResponse:" << responseOpcode_ << response->ShortDebugString() << std::endl;
 	APie::Network::OutputStream::sendMsg(serial_num, responseOpcode, *response);
 }
 

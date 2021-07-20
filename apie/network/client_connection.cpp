@@ -229,8 +229,6 @@ void APie::ClientConnection::readPB()
 		{
 			return;
 		}
-
-		//pBuf:申请的内存，在逻辑线程释放 free(pBuf))
 	}
 }
 
@@ -252,11 +250,14 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 		auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
 		if (ptrLogic == nullptr)
 		{
+			delete itemObjPtr;
+
 			std::stringstream ss;
 			ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode;
-			ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
+
 		ptrLogic->push(command);
 		return;
 	}
@@ -265,6 +266,9 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	auto ptrMsg = apie::message::ProtobufFactory::createMessage(sType);
 	if (ptrMsg == nullptr)
 	{
+		std::stringstream ss;
+		ss << "createMessage error|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|sType:" << sType;
+		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 
@@ -272,6 +276,9 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	bool bResult = newMsg->ParseFromString(requestStr);
 	if (!bResult)
 	{
+		std::stringstream ss;
+		ss << "ParseFromString error|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|sType:" << sType;
+		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 
@@ -290,6 +297,11 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
 	if (ptrLogic == nullptr)
 	{
+		delete itemObjPtr;
+
+		std::stringstream ss;
+		ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode;
+		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 	ptrLogic->push(command);
@@ -334,7 +346,6 @@ void APie::ClientConnection::eventcb(short what)
 		ss << "passive|" << what << "|BEV_EVENT_ERROR" << "|Got an error on the connection|" << strerror(errno);
 		//printf("Got an error on the connection: %s\n",strerror(errno));/*XXX win32*/
 		this->close(ss.str(),BEV_EVENT_ERROR);
-
 	} 
 	else if (what & BEV_EVENT_CONNECTED) 
 	{

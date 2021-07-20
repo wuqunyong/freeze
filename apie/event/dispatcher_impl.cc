@@ -42,6 +42,7 @@
 
 #include "apie/service/service_manager.h"
 #include "apie/pub_sub/pubsub_manager.h"
+#include "apie/common/enum_to_int.h"
 
 
 
@@ -571,8 +572,8 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 	DispatcherImpl::addConnection(ptrConnection);
 
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << "|fd:" << itemPtr->iFd << "|iType:" << static_cast<uint32_t>(itemPtr->iType) << "|peerIp:" << itemPtr->sPeerIp << " -> " << "ip:" << itemPtr->sIp;
-	ASYNC_PIE_LOG("DispatcherImpl/handleNewConnect", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+	ss << "iSerialNum:" << iSerialNum << "|fd:" << itemPtr->iFd << "|iType:" << toUnderlyingType(itemPtr->iType) << "|peerIp:" << itemPtr->sPeerIp << " -> " << "ip:" << itemPtr->sIp;
+	ASYNC_PIE_LOG("DispatcherImpl/handleNewConnect", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
 }
 
 void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
@@ -592,7 +593,12 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 		break;
 	}
 	default:
+	{
+		std::stringstream ss;
+		ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->iOpcode << "| invalid type";
+		ASYNC_PIE_LOG("DispatcherImpl/handlePBRequest", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		break;
+	}
 	}
 }
 
@@ -604,12 +610,12 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 
-		auto defaultHandler = apie::service::ServiceHandlerSingleton::get().server.getDefaultFunc();
+		auto& defaultHandler = apie::service::ServiceHandlerSingleton::get().server.getDefaultFunc();
 		if (!defaultHandler)
 		{
 			std::stringstream ss;
-			ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << (uint32_t)itemPtr->type << "|iOpcode:" << itemPtr->iOpcode << "|unregister";
-			ASYNC_PIE_LOG("handlePBForward/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+			ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->iOpcode << "|unregister";
+			ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
 
@@ -620,12 +626,12 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 
-		auto defaultHandler = apie::service::ServiceHandlerSingleton::get().server.getDefaultFunc();
+		auto& defaultHandler = apie::service::ServiceHandlerSingleton::get().server.getDefaultFunc();
 		if (!defaultHandler)
 		{
 			std::stringstream ss;
-			ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << (uint32_t)itemPtr->type << "|iOpcode:" << itemPtr->iOpcode << "|unregister";
-			ASYNC_PIE_LOG("handlePBForward/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+			ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->iOpcode << "|unregister";
+			ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
 
@@ -635,8 +641,8 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	default:
 	{
 		std::stringstream ss;
-		ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << (uint32_t)itemPtr->type << "|iOpcode:" << itemPtr->iOpcode << "| invalid type";
-		ASYNC_PIE_LOG("handlePBForward/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+		ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->iOpcode << "| invalid type";
+		ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		break;
 	}
 	}

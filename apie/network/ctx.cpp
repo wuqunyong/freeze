@@ -55,7 +55,7 @@ sigset_t g_SigSet;
 #include "../redis_driver/redis_client.h"
 #include "../common/file.h"
 #include "nats/nats.h"
-
+#include "apie/common/enum_to_int.h"
 
 namespace APie {
 
@@ -88,7 +88,6 @@ public:
 			peerIp = Network::makeFriendlyAddress(*ptrPeerAddr);
 		}
 
-
 		PassiveConnect *itemObjPtr = new PassiveConnect;
 		itemObjPtr->iFd = fd;
 		itemObjPtr->iType = m_type;
@@ -101,15 +100,15 @@ public:
 		command.args.passive_connect.ptrData = itemObjPtr;
 
 		std::stringstream ss;
-		ss << "accept connect|fd:" << fd << "|iType:" << static_cast<uint32_t>(m_type) << "|peerIp:" << peerIp << " -> " << "ip:" << ip;
-		ASYNC_PIE_LOG("PortCb/onAccept", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+		ss << "accept connect|fd:" << fd << "|iType:" << toUnderlyingType(m_type) << "|peerIp:" << peerIp << " -> " << "ip:" << ip;
+		ASYNC_PIE_LOG("PortCb/onAccept", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
 
 
 		auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
 		if (ptrThread == nullptr)
 		{
+			ASYNC_PIE_LOG("PortCb/onAccept", PIE_CYCLE_DAY, PIE_ERROR, "chooseIOThread NULL");
 			delete itemObjPtr;
-
 			return;
 		}
 		ptrThread->push(command);

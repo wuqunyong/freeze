@@ -198,8 +198,6 @@ void ServerConnection::readPB()
 		{
 			return;
 		}
-
-		//pBuf:申请的内存，在逻辑线程释放 free(pBuf))
 	}
 }
 
@@ -221,11 +219,14 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 		auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
 		if (ptrLogic == nullptr)
 		{
+			delete itemObjPtr;
+
 			std::stringstream ss;
 			ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode;
-			ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
+
 		ptrLogic->push(command);
 		return;
 	}
@@ -265,9 +266,11 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 	auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
 	if (ptrLogic == nullptr)
 	{
+		delete itemObjPtr;
+
 		std::stringstream ss;
 		ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 	ptrLogic->push(command);
