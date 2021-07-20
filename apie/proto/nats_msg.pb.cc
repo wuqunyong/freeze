@@ -14,6 +14,8 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_PRC_Multiplexer_Forward_rpc_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_RPC_REQUEST_rpc_5fmsg_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto;
 namespace nats_msg {
@@ -22,6 +24,8 @@ class NATS_MSG_PRXOYDefaultTypeInternal {
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<NATS_MSG_PRXOY> _instance;
   const ::rpc_msg::RPC_REQUEST* rpc_request_;
   const ::rpc_msg::RPC_RESPONSE* rpc_response_;
+  const ::rpc_msg::PRC_Multiplexer_Forward* multiplexer_forward_;
+  const ::rpc_msg::PRC_DeMultiplexer_Forward* demultiplexer_forward_;
 } _NATS_MSG_PRXOY_default_instance_;
 }  // namespace nats_msg
 static void InitDefaultsscc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto() {
@@ -35,10 +39,12 @@ static void InitDefaultsscc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto() {
   ::nats_msg::NATS_MSG_PRXOY::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto}, {
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, 0, InitDefaultsscc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto}, {
       &scc_info_RPC_REQUEST_rpc_5fmsg_2eproto.base,
-      &scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto.base,}};
+      &scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto.base,
+      &scc_info_PRC_Multiplexer_Forward_rpc_5fmsg_2eproto.base,
+      &scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto.base,}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_nats_5fmsg_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_nats_5fmsg_2eproto = nullptr;
@@ -52,6 +58,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_nats_5fmsg_2eproto::offsets[] 
   ~0u,  // no _weak_field_map_
   offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, rpc_request_),
   offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, rpc_response_),
+  offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, multiplexer_forward_),
+  offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, demultiplexer_forward_),
   PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, msg_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -64,10 +72,13 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_nats_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\016nats_msg.proto\022\010nats_msg\032\rrpc_msg.prot"
-  "o\"s\n\016NATS_MSG_PRXOY\022+\n\013rpc_request\030d \001(\013"
-  "2\024.rpc_msg.RPC_REQUESTH\000\022-\n\014rpc_response"
-  "\030e \001(\0132\025.rpc_msg.RPC_RESPONSEH\000B\005\n\003msgb\006"
-  "proto3"
+  "o\"\371\001\n\016NATS_MSG_PRXOY\022+\n\013rpc_request\030d \001("
+  "\0132\024.rpc_msg.RPC_REQUESTH\000\022-\n\014rpc_respons"
+  "e\030e \001(\0132\025.rpc_msg.RPC_RESPONSEH\000\022\?\n\023mult"
+  "iplexer_forward\030f \001(\0132 .rpc_msg.PRC_Mult"
+  "iplexer_ForwardH\000\022C\n\025demultiplexer_forwa"
+  "rd\030g \001(\0132\".rpc_msg.PRC_DeMultiplexer_For"
+  "wardH\000B\005\n\003msgb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_nats_5fmsg_2eproto_deps[1] = {
   &::descriptor_table_rpc_5fmsg_2eproto,
@@ -78,7 +89,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_nat
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_nats_5fmsg_2eproto_once;
 static bool descriptor_table_nats_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_nats_5fmsg_2eproto = {
-  &descriptor_table_nats_5fmsg_2eproto_initialized, descriptor_table_protodef_nats_5fmsg_2eproto, "nats_msg.proto", 166,
+  &descriptor_table_nats_5fmsg_2eproto_initialized, descriptor_table_protodef_nats_5fmsg_2eproto, "nats_msg.proto", 301,
   &descriptor_table_nats_5fmsg_2eproto_once, descriptor_table_nats_5fmsg_2eproto_sccs, descriptor_table_nats_5fmsg_2eproto_deps, 1, 1,
   schemas, file_default_instances, TableStruct_nats_5fmsg_2eproto::offsets,
   file_level_metadata_nats_5fmsg_2eproto, 1, file_level_enum_descriptors_nats_5fmsg_2eproto, file_level_service_descriptors_nats_5fmsg_2eproto,
@@ -95,11 +106,17 @@ void NATS_MSG_PRXOY::InitAsDefaultInstance() {
       ::rpc_msg::RPC_REQUEST::internal_default_instance());
   ::nats_msg::_NATS_MSG_PRXOY_default_instance_.rpc_response_ = const_cast< ::rpc_msg::RPC_RESPONSE*>(
       ::rpc_msg::RPC_RESPONSE::internal_default_instance());
+  ::nats_msg::_NATS_MSG_PRXOY_default_instance_.multiplexer_forward_ = const_cast< ::rpc_msg::PRC_Multiplexer_Forward*>(
+      ::rpc_msg::PRC_Multiplexer_Forward::internal_default_instance());
+  ::nats_msg::_NATS_MSG_PRXOY_default_instance_.demultiplexer_forward_ = const_cast< ::rpc_msg::PRC_DeMultiplexer_Forward*>(
+      ::rpc_msg::PRC_DeMultiplexer_Forward::internal_default_instance());
 }
 class NATS_MSG_PRXOY::_Internal {
  public:
   static const ::rpc_msg::RPC_REQUEST& rpc_request(const NATS_MSG_PRXOY* msg);
   static const ::rpc_msg::RPC_RESPONSE& rpc_response(const NATS_MSG_PRXOY* msg);
+  static const ::rpc_msg::PRC_Multiplexer_Forward& multiplexer_forward(const NATS_MSG_PRXOY* msg);
+  static const ::rpc_msg::PRC_DeMultiplexer_Forward& demultiplexer_forward(const NATS_MSG_PRXOY* msg);
 };
 
 const ::rpc_msg::RPC_REQUEST&
@@ -109,6 +126,14 @@ NATS_MSG_PRXOY::_Internal::rpc_request(const NATS_MSG_PRXOY* msg) {
 const ::rpc_msg::RPC_RESPONSE&
 NATS_MSG_PRXOY::_Internal::rpc_response(const NATS_MSG_PRXOY* msg) {
   return *msg->msg_.rpc_response_;
+}
+const ::rpc_msg::PRC_Multiplexer_Forward&
+NATS_MSG_PRXOY::_Internal::multiplexer_forward(const NATS_MSG_PRXOY* msg) {
+  return *msg->msg_.multiplexer_forward_;
+}
+const ::rpc_msg::PRC_DeMultiplexer_Forward&
+NATS_MSG_PRXOY::_Internal::demultiplexer_forward(const NATS_MSG_PRXOY* msg) {
+  return *msg->msg_.demultiplexer_forward_;
 }
 void NATS_MSG_PRXOY::set_allocated_rpc_request(::rpc_msg::RPC_REQUEST* rpc_request) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
@@ -150,6 +175,46 @@ void NATS_MSG_PRXOY::clear_rpc_response() {
     clear_has_msg();
   }
 }
+void NATS_MSG_PRXOY::set_allocated_multiplexer_forward(::rpc_msg::PRC_Multiplexer_Forward* multiplexer_forward) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  clear_msg();
+  if (multiplexer_forward) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      multiplexer_forward = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, multiplexer_forward, submessage_arena);
+    }
+    set_has_multiplexer_forward();
+    msg_.multiplexer_forward_ = multiplexer_forward;
+  }
+  // @@protoc_insertion_point(field_set_allocated:nats_msg.NATS_MSG_PRXOY.multiplexer_forward)
+}
+void NATS_MSG_PRXOY::clear_multiplexer_forward() {
+  if (_internal_has_multiplexer_forward()) {
+    delete msg_.multiplexer_forward_;
+    clear_has_msg();
+  }
+}
+void NATS_MSG_PRXOY::set_allocated_demultiplexer_forward(::rpc_msg::PRC_DeMultiplexer_Forward* demultiplexer_forward) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  clear_msg();
+  if (demultiplexer_forward) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      demultiplexer_forward = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, demultiplexer_forward, submessage_arena);
+    }
+    set_has_demultiplexer_forward();
+    msg_.demultiplexer_forward_ = demultiplexer_forward;
+  }
+  // @@protoc_insertion_point(field_set_allocated:nats_msg.NATS_MSG_PRXOY.demultiplexer_forward)
+}
+void NATS_MSG_PRXOY::clear_demultiplexer_forward() {
+  if (_internal_has_demultiplexer_forward()) {
+    delete msg_.demultiplexer_forward_;
+    clear_has_msg();
+  }
+}
 NATS_MSG_PRXOY::NATS_MSG_PRXOY()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
@@ -167,6 +232,14 @@ NATS_MSG_PRXOY::NATS_MSG_PRXOY(const NATS_MSG_PRXOY& from)
     }
     case kRpcResponse: {
       _internal_mutable_rpc_response()->::rpc_msg::RPC_RESPONSE::MergeFrom(from._internal_rpc_response());
+      break;
+    }
+    case kMultiplexerForward: {
+      _internal_mutable_multiplexer_forward()->::rpc_msg::PRC_Multiplexer_Forward::MergeFrom(from._internal_multiplexer_forward());
+      break;
+    }
+    case kDemultiplexerForward: {
+      _internal_mutable_demultiplexer_forward()->::rpc_msg::PRC_DeMultiplexer_Forward::MergeFrom(from._internal_demultiplexer_forward());
       break;
     }
     case MSG_NOT_SET: {
@@ -212,6 +285,14 @@ void NATS_MSG_PRXOY::clear_msg() {
       delete msg_.rpc_response_;
       break;
     }
+    case kMultiplexerForward: {
+      delete msg_.multiplexer_forward_;
+      break;
+    }
+    case kDemultiplexerForward: {
+      delete msg_.demultiplexer_forward_;
+      break;
+    }
     case MSG_NOT_SET: {
       break;
     }
@@ -248,6 +329,20 @@ const char* NATS_MSG_PRXOY::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
       case 101:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           ptr = ctx->ParseMessage(_internal_mutable_rpc_response(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .rpc_msg.PRC_Multiplexer_Forward multiplexer_forward = 102;
+      case 102:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          ptr = ctx->ParseMessage(_internal_mutable_multiplexer_forward(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .rpc_msg.PRC_DeMultiplexer_Forward demultiplexer_forward = 103;
+      case 103:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          ptr = ctx->ParseMessage(_internal_mutable_demultiplexer_forward(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -293,6 +388,22 @@ failure:
         101, _Internal::rpc_response(this), target, stream);
   }
 
+  // .rpc_msg.PRC_Multiplexer_Forward multiplexer_forward = 102;
+  if (_internal_has_multiplexer_forward()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        102, _Internal::multiplexer_forward(this), target, stream);
+  }
+
+  // .rpc_msg.PRC_DeMultiplexer_Forward demultiplexer_forward = 103;
+  if (_internal_has_demultiplexer_forward()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        103, _Internal::demultiplexer_forward(this), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -322,6 +433,20 @@ size_t NATS_MSG_PRXOY::ByteSizeLong() const {
       total_size += 2 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
           *msg_.rpc_response_);
+      break;
+    }
+    // .rpc_msg.PRC_Multiplexer_Forward multiplexer_forward = 102;
+    case kMultiplexerForward: {
+      total_size += 2 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *msg_.multiplexer_forward_);
+      break;
+    }
+    // .rpc_msg.PRC_DeMultiplexer_Forward demultiplexer_forward = 103;
+    case kDemultiplexerForward: {
+      total_size += 2 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *msg_.demultiplexer_forward_);
       break;
     }
     case MSG_NOT_SET: {
@@ -366,6 +491,14 @@ void NATS_MSG_PRXOY::MergeFrom(const NATS_MSG_PRXOY& from) {
     }
     case kRpcResponse: {
       _internal_mutable_rpc_response()->::rpc_msg::RPC_RESPONSE::MergeFrom(from._internal_rpc_response());
+      break;
+    }
+    case kMultiplexerForward: {
+      _internal_mutable_multiplexer_forward()->::rpc_msg::PRC_Multiplexer_Forward::MergeFrom(from._internal_multiplexer_forward());
+      break;
+    }
+    case kDemultiplexerForward: {
+      _internal_mutable_demultiplexer_forward()->::rpc_msg::PRC_DeMultiplexer_Forward::MergeFrom(from._internal_demultiplexer_forward());
       break;
     }
     case MSG_NOT_SET: {
