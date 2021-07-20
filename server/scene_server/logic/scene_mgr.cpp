@@ -74,7 +74,6 @@ void SceneMgr::Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::log
 	::login_msg::MSG_RESPONSE_ECHO response;
 	response.set_value1(request.value1());
 	response.set_value2(request.value2() + "|response");
-	network::OutputStream::sendMsgToUserByGateway(roleIdentifier, apie::OP_MSG_RESPONSE_ECHO, response);
 }
 
 apie::status::Status SceneMgr::RPC_echo(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::MSG_RPC_REQUEST_ECHO>& request, std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response)

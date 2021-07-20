@@ -334,30 +334,6 @@ namespace network {
 		return true;
 	}
 
-	bool OutputStream::sendMsgToUserByGateway(const ::rpc_msg::RoleIdentifier& roleIdentifier, uint32_t iOpcode, const ::google::protobuf::Message& msg)
-	{
-		::rpc_msg::PRC_DeMultiplexer_Forward_Args args;
-		*args.mutable_role_id() = roleIdentifier;
-		args.set_opcodes(iOpcode);
-		args.set_body_msg(msg.SerializeAsString());
-
-		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_Gateway_Server);
-		server.set_id(roleIdentifier.gw_id());
-
-		auto rpcCB = [](const rpc_msg::STATUS& status, const std::string& replyData)
-		{
-			if (status.code() != ::rpc_msg::CODE_Ok)
-			{
-				return;
-			}
-		};
-
-		::rpc_msg::CONTROLLER controller;
-		controller.set_serial_num(roleIdentifier.channel_serial_num());
-		return false;
-		//return APie::RPC::RpcClientSingleton::get().call(controller, server, ::rpc_msg::RPC_DeMultiplexer_Forward, args, rpcCB);
-	}
 
 	bool OutputStream::sendCommand(ConnetionType type, uint64_t iSerialNum, apie::Command& cmd)
 	{
