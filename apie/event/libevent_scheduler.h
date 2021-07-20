@@ -42,7 +42,7 @@ public:
   event_base& base() { return *libevent_; }
 
 private:
-  Libevent::BasePtr libevent_;
+  libevent::BasePtr libevent_;
 };
 
 } // namespace Event

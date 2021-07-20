@@ -24,7 +24,7 @@ void evconnlistener_free(evconnlistener*);
 
 namespace apie {
 namespace event_ns {
-namespace Libevent {
+namespace libevent {
 
 /**
  * Global functionality specific to libevent.

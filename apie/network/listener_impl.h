@@ -29,7 +29,7 @@ private:
   static void errorCallback(evconnlistener* listener, void* context);
 
   struct sockaddr_in listener_add_;
-  event_ns::Libevent::ListenerPtr listener_;
+  event_ns::libevent::ListenerPtr listener_;
 };
 
 } // namespace Network

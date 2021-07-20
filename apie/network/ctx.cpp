@@ -355,7 +355,7 @@ void Ctx::init(const std::string& configFile)
 
 	apie::ExceptionTrap();
 
-	apie::event_ns::Libevent::Global::initialize();
+	apie::event_ns::libevent::Global::initialize();
 
 	endpoint_ = SelfRegistration::createSelfRegistration();
 

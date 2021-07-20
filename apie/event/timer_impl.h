@@ -18,7 +18,7 @@ namespace event_ns {
  */
 class TimerImpl : public Timer, ImplBase {
 public:
-  TimerImpl(Libevent::BasePtr& libevent, TimerCb cb);
+  TimerImpl(libevent::BasePtr& libevent, TimerCb cb);
 
   // Timer
   void disableTimer() override;

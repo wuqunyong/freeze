@@ -6,7 +6,7 @@
 
 namespace apie {
 namespace event_ns {
-namespace Libevent {
+namespace libevent {
 
 bool Global::initialized_ = false;
 
