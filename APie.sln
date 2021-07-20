@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.960
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31402.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibAPie", "apie\LibAPie.vcxproj", "{52102A95-E447-4295-B4BB-5F6F4E78BA43}"
 EndProject
@@ -22,8 +22,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GatewayServer", "server\gateway_server\GatewayServer.vcxproj", "{33933AA4-C4B9-4B34-BA9A-9E5A2E73E34E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LoginServer", "server\login_server\LoginServer.vcxproj", "{15569726-82ED-4571-814E-D9A51EC6A080}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RouteProxy", "server\route_proxy_server\RouteProxy.vcxproj", "{211ED4B3-768F-4FE9-82F6-462A2D404D6A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SceneServer", "server\scene_server\SceneServer.vcxproj", "{44CFB77A-F146-4DE4-8421-F6055566E75C}"
 EndProject
@@ -71,14 +69,6 @@ Global
 		{15569726-82ED-4571-814E-D9A51EC6A080}.Release|x64.Build.0 = Release|x64
 		{15569726-82ED-4571-814E-D9A51EC6A080}.Release|x86.ActiveCfg = Release|Win32
 		{15569726-82ED-4571-814E-D9A51EC6A080}.Release|x86.Build.0 = Release|Win32
-		{211ED4B3-768F-4FE9-82F6-462A2D404D6A}.Debug|x64.ActiveCfg = Debug|x64
-		{211ED4B3-768F-4FE9-82F6-462A2D404D6A}.Debug|x64.Build.0 = Debug|x64
-		{211ED4B3-768F-4FE9-82F6-462A2D404D6A}.Debug|x86.ActiveCfg = Debug|Win32
-		{211ED4B3-768F-4FE9-82F6-462A2D404D6A}.Debug|x86.Build.0 = Debug|Win32
-		{211ED4B3-768F-4FE9-82F6-462A2D404D6A}.Release|x64.ActiveCfg = Release|x64
-		{211ED4B3-768F-4FE9-82F6-462A2D404D6A}.Release|x64.Build.0 = Release|x64
-		{211ED4B3-768F-4FE9-82F6-462A2D404D6A}.Release|x86.ActiveCfg = Release|Win32
-		{211ED4B3-768F-4FE9-82F6-462A2D404D6A}.Release|x86.Build.0 = Release|Win32
 		{44CFB77A-F146-4DE4-8421-F6055566E75C}.Debug|x64.ActiveCfg = Debug|x64
 		{44CFB77A-F146-4DE4-8421-F6055566E75C}.Debug|x64.Build.0 = Debug|x64
 		{44CFB77A-F146-4DE4-8421-F6055566E75C}.Debug|x86.ActiveCfg = Debug|Win32
