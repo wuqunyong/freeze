@@ -34,7 +34,7 @@ apie::status::Status ServiceRegistry::init()
 apie::status::Status ServiceRegistry::start()
 {
 	m_id = "id_" + APie::CtxSingleton::get().launchTime();
-	m_serviceTimeout = APie::CtxSingleton::get().yamlAs<uint32_t>({"service_timeout"}, 300);
+	m_serviceTimeout = APie::CtxSingleton::get().getConfigs()->service_timeout;
 
 	auto timerCb = [this]() {
 		this->update();
@@ -97,7 +97,7 @@ void ServiceRegistry::update()
 
 	if (this->m_status == service_discovery::RS_Learning)
 	{
-		auto iDuration = APie::CtxSingleton::get().yamlAs<uint32_t>({ "service_learning_duration" }, 60);
+		auto iDuration = APie::CtxSingleton::get().getConfigs()->service_learning_duration;
 
 		auto iCurTime = APie::CtxSingleton::get().getCurSeconds();
 		if (m_iStatusCheckTime == 0)

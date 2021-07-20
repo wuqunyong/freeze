@@ -60,7 +60,6 @@ sigset_t g_SigSet;
 namespace APie {
 
 PlatformImpl Ctx::s_platform;
-std::string Ctx::s_log_name;
 std::string Ctx::s_log_postfix;
 
 class PortCb : public Network::ListenerCallbacks
@@ -341,7 +340,6 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 
 void Ctx::init(const std::string& configFile)
 {
-
 	this->m_configFile = configFile;
 	int64_t mtime = APie::Common::FileDataModificationTime(this->m_configFile);
 	if (mtime == -1)
@@ -351,11 +349,9 @@ void Ctx::init(const std::string& configFile)
 	this->setConfigFileMTime(mtime);
 
 	time_t now = APie::Ctx::getCurSeconds();
-
 	char timebuf[128] = { '\0' };
 	strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", localtime(&now));
 	m_launchTime = timebuf;
-
 	memset(timebuf, 0, sizeof(timebuf));
 
 	APie::ExceptionTrap();
@@ -378,8 +374,6 @@ void Ctx::init(const std::string& configFile)
 		{
 			this->daemonize();
 		}
-
-		s_log_name = this->getConfigs()->log.name;
 
 		uint32_t pid = APie::Api::OsSysCallsSingleton::get().getCurProcessId();
 		snprintf(timebuf, sizeof(timebuf), "%s-%d", m_launchTime.c_str(), pid);
@@ -918,31 +912,6 @@ void Ctx::resetYamlNode(YAML::Node node)
 	this->m_ptrConfig = ptrConfig;
 }
 
-bool Ctx::yamlFieldsExists(std::vector<std::string> index)
-{
-	std::lock_guard<std::mutex> guard(node_sync_);
-
-	std::vector<YAML::Node> nodeList;
-	nodeList.push_back(node_);
-
-	uint32_t iIndex = 0;
-
-	for (const auto &items : index)
-	{
-		if (nodeList[iIndex][items])
-		{
-			nodeList.push_back(nodeList[iIndex][items]);
-			iIndex++;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
 std::string Ctx::launchTime()
 {
 	return m_launchTime;
@@ -1011,11 +980,6 @@ void Ctx::setConfigFileMTime(int64_t mtime)
 std::shared_ptr<APieConfig> Ctx::getConfigs()
 {
 	return m_ptrConfig;
-}
-
-std::string Ctx::logName()
-{
-	return s_log_name;
 }
 
 std::string Ctx::logPostfix()

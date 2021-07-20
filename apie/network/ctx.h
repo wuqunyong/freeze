@@ -43,7 +43,6 @@ namespace APie
 		uint32_t generatorTId();
 
 		void resetYamlNode(YAML::Node node);
-		bool yamlFieldsExists(std::vector<std::string> index);
 
 		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();
 		std::shared_ptr<Event::DispatchedThreadImpl> getLogicThread();
@@ -54,85 +53,6 @@ namespace APie
 		//std::shared_ptr<Event::DispatchedThreadImpl> getDBThread();
 
 		std::shared_ptr<Event::DispatchedThreadImpl> getThreadById(uint32_t id);
-
-		template <typename T>
-		T yamlAs(std::vector<std::string> index)
-		{
-			std::lock_guard<std::mutex> guard(node_sync_);
-
-			std::vector<YAML::Node> nodeList;
-			nodeList.push_back(node_);
-
-			uint32_t iIndex = 0;
-
-			for (const auto &items : index)
-			{
-				if (nodeList[iIndex][items])
-				{
-					nodeList.push_back(nodeList[iIndex][items]);
-					iIndex++;
-				}
-				else
-				{
-					throw std::invalid_argument("Configuration|field:" + items + "|not found");
-				}
-			}
-
-			return nodeList[iIndex].as<T>();
-		}
-		
-		template <typename T, typename S>
-		T yamlAs(std::vector<std::string> index, const S& fallback)
-		{
-			std::lock_guard<std::mutex> guard(node_sync_);
-
-			std::vector<YAML::Node> nodeList;
-			nodeList.push_back(node_);
-
-			uint32_t iIndex = 0;
-
-			for (const auto &items : index)
-			{
-				if (nodeList[iIndex][items])
-				{
-					nodeList.push_back(nodeList[iIndex][items]);
-					iIndex++;
-				}
-				else
-				{
-					return fallback;
-				}
-			}
-
-			return nodeList[iIndex].as<T>(fallback);
-		}
-
-		template <typename T, typename S>
-		T nodeYamlAs(YAML::Node curNode, std::vector<std::string> index, const S& fallback)
-		{
-			std::lock_guard<std::mutex> guard(node_sync_);
-
-			std::vector<YAML::Node> nodeList;
-			nodeList.push_back(curNode);
-
-			uint32_t iIndex = 0;
-
-			for (const auto &items : index)
-			{
-				if (nodeList[iIndex][items])
-				{
-					nodeList.push_back(nodeList[iIndex][items]);
-					iIndex++;
-				}
-				else
-				{
-					return fallback;
-				}
-			}
-
-			return nodeList[iIndex].as<T>(fallback);
-		}
-
 
 		std::string launchTime();
 
@@ -155,7 +75,6 @@ namespace APie
 		std::shared_ptr<APieConfig> getConfigs();
 
 	public:
-		static std::string logName();
 		static std::string logPostfix();
 		
 		static uint64_t getCurMilliseconds();
@@ -202,15 +121,11 @@ namespace APie
         const Ctx &operator = (const Ctx&) = delete;
 
 		static PlatformImpl s_platform;
-		static std::string s_log_name;
 		static std::string s_log_postfix;
     };
     
 
-	//typedef APie::ThreadSafeSingleton<Ctx> CtxSingleton;
-
 	using CtxSingleton = ThreadSafeSingleton<Ctx>;
 
-	//usage: Envoy::CtxSingleton::get();
 }
 
