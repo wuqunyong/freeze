@@ -13,8 +13,8 @@
 #include "apie/singleton/threadsafe_singleton.h"
 #include "apie/status/status.h"
 
-namespace APie {
-namespace Hook {
+namespace apie {
+namespace hook {
 
 
 enum class HookPoint

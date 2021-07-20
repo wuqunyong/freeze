@@ -5,8 +5,8 @@
 
 #include "../common/pure.h"
 
-namespace APie {
-namespace Decompressor {
+namespace apie {
+namespace decompressor {
 
 /**
  * Allows decompressing data.

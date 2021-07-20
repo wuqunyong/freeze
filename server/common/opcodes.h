@@ -11,7 +11,7 @@
 #include "apie.h"
 
 
-namespace APie {
+namespace apie {
 
 	enum Opcodes : uint16_t
 	{

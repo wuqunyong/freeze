@@ -20,7 +20,7 @@
 #include "apie/proto/init.h"
 
 
-namespace APie {
+namespace apie {
 
 	enum REDIS_CLIENT_TYPE
 	{
@@ -109,7 +109,7 @@ namespace APie {
 		RedisStatus m_status = RS_None;
 
 		cpp_redis::client m_client;
-		Event::TimerPtr m_reconnectTimer;
+		event_ns::TimerPtr m_reconnectTimer;
 	};
 
 

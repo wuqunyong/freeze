@@ -10,7 +10,7 @@
 #include "../common/file.h"
 
 
-namespace APie {
+namespace apie {
 
 	LogicCmdHandler::LogicCmdHandler()
 	{
@@ -88,9 +88,9 @@ namespace APie {
 	{
 		std::string configFile;
 		try {
-			configFile = APie::CtxSingleton::get().getConfigFile();
+			configFile = apie::CtxSingleton::get().getConfigFile();
 
-			int64_t mtime = APie::Common::FileDataModificationTime(configFile);
+			int64_t mtime = apie::common::FileDataModificationTime(configFile);
 			if (mtime == -1)
 			{
 				PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "reload|configFile:%s not exist", configFile.c_str());
@@ -99,7 +99,7 @@ namespace APie {
 				return;
 			}
 
-			if (APie::CtxSingleton::get().getConfigFileMTime() == mtime)
+			if (apie::CtxSingleton::get().getConfigFileMTime() == mtime)
 			{
 				PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_NOTICE, "reload|configFile:%s not changed", configFile.c_str());
 				std::cout << "reload|configFile:" << configFile << "|not changed";
@@ -108,8 +108,8 @@ namespace APie {
 			}
 
 			auto node = YAML::LoadFile(configFile);
-			APie::CtxSingleton::get().resetYamlNode(node);
-			APie::CtxSingleton::get().setConfigFileMTime(mtime);
+			apie::CtxSingleton::get().resetYamlNode(node);
+			apie::CtxSingleton::get().setConfigFileMTime(mtime);
 
 			PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_NOTICE, "reload|configFile:%s changed", configFile.c_str());
 			std::cout << "reload|configFile:" << configFile << "|changed";

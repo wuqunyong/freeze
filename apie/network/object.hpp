@@ -23,7 +23,7 @@
 #include <stdint.h>
 
 
-namespace APie
+namespace apie
 {
     //  Base class for all objects that participate in inter-thread
     //  communication.

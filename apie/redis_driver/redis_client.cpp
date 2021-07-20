@@ -6,7 +6,7 @@
 #include "../rpc/client/rpc_client.h"
 #include "../event/timer_impl.h"
 
-namespace APie {
+namespace apie {
 
 	RedisClient::RedisClient(Key key, const std::string &host, std::size_t port, const std::string &password, Cb cb) :
 		m_key(key),
@@ -45,7 +45,7 @@ namespace APie {
 
 			this->addReconnectTimer(3000);
 		};
-		this->m_reconnectTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
+		this->m_reconnectTimer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
 	}
 
 	RedisClient::~RedisClient()

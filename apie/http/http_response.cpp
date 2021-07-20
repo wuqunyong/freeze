@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace APie
+namespace apie
 {
 
     HttpResponse::HttpResponse()
@@ -88,7 +88,7 @@ namespace APie
     void HttpResponse::enableDate()
     {
         char buf[128];
-		time_t now = APie::Ctx::getCurSeconds();
+		time_t now = apie::Ctx::getCurSeconds();
 		size_t n = strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", localtime(&now));
 
         static const string DateKey = "Date";

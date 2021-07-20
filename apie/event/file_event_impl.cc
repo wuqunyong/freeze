@@ -8,8 +8,8 @@
 #include "event2/event.h"
 
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 FileEventImpl::FileEventImpl(DispatcherImpl& dispatcher, int fd, FileReadyCb cb,
                              FileTriggerType trigger, uint32_t events)

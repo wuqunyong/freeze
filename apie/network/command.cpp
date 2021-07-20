@@ -1,6 +1,6 @@
 #include "command.h"
 
-void APie::deallocateCommand(Command* cmd)
+void apie::deallocateCommand(Command* cmd)
 {
 	switch(cmd->type)
 	{

@@ -15,8 +15,8 @@
  #endif
 
 
-namespace APie {
-namespace Crypto {
+namespace apie {
+namespace crypto {
 
 	std::string Utility::hex(const uint8_t* src, size_t srcLen)
 	{

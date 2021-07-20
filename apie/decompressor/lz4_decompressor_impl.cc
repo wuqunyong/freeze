@@ -1,7 +1,7 @@
 #include "lz4_decompressor_impl.h"
 
-namespace APie {
-namespace Decompressor {
+namespace apie {
+namespace decompressor {
 
 	LZ4DecompressorImpl::LZ4DecompressorImpl()
 	{

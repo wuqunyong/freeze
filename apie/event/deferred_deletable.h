@@ -2,8 +2,8 @@
 
 #include <memory>
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 /**
  * If an object derives from this class, it can be passed to the dispatcher who guarantees to delete

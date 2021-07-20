@@ -6,7 +6,7 @@
 #include "../rpc/client/rpc_client.h"
 #include "../event/timer_impl.h"
 
-namespace APie {
+namespace apie {
 
 
 bool DAOFactory::registerFactory(const std::string name, TCreateMethod funcCreate)
@@ -180,7 +180,7 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 			{
 				recallObj(server, dbType, tables, cb, iCallCount);
 			};
-			auto ptrTimer = APie::Event::EphemeralTimerMgrSingleton::get().createEphemeralTimer(ephemeralTimerCb);
+			auto ptrTimer = apie::event_ns::EphemeralTimerMgrSingleton::get().createEphemeralTimer(ephemeralTimerCb);
 			ptrTimer->enableTimer(1000);
 			return;
 		}

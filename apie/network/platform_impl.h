@@ -5,7 +5,7 @@
 #include "../network/windows_platform.h"
 
 
-namespace APie {
+namespace apie {
 
 class PlatformImpl {
 public:

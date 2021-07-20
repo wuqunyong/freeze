@@ -7,8 +7,8 @@
 
 
 
-namespace APie {
-namespace Network {
+namespace apie {
+namespace network {
 
 std::shared_ptr<sockaddr_in> addressFromSockAddr(const sockaddr_storage& ss, socklen_t ss_len)
 {

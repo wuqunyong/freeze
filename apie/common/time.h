@@ -4,7 +4,7 @@
 
 #include "../common/pure.h"
 
-namespace APie {
+namespace apie {
 
 /**
  * Less typing for common system time and steady time type.

@@ -14,7 +14,7 @@ extern "C"
 
 using namespace std;
 
-namespace APie
+namespace apie
 {
     static string unknown = "Unknown Error";
     

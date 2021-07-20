@@ -4,8 +4,8 @@
 
 #include "../event/timer_impl.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 namespace {
 
 class RealScheduler : public Scheduler {

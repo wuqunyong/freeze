@@ -1,6 +1,6 @@
 #pragma once
 
-namespace APie {
+namespace apie {
 /**
  * Friendly name for a pure virtual routine.
  */

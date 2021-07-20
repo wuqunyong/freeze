@@ -4,8 +4,8 @@
 
 #include "event2/thread.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 namespace Libevent {
 
 bool Global::initialized_ = false;

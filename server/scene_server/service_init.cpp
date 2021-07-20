@@ -2,7 +2,7 @@
 
 #include "logic/scene_mgr.h"
 
-namespace APie {
+namespace apie {
 
 apie::status::Status initHook()
 {

@@ -7,8 +7,8 @@
 #include "../common/pure.h"
 #include "../common/time.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 /**
  * Callback invoked when a timer event fires.

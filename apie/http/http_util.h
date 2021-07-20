@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <string>
 
-namespace APie
+namespace apie
 {
     class HttpUtil
     {

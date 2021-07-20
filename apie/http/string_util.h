@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <sstream>
 
-namespace APie
+namespace apie
 {
     class StringUtil
     {

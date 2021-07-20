@@ -16,7 +16,7 @@
 #include <sstream>
 #include <stdlib.h>
 
-namespace APie
+namespace apie
 {
 
 const char kWhitespaceASCII[] = " \f\n\r\t\v";

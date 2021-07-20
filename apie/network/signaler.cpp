@@ -37,7 +37,7 @@
 
 #include "logger.h"
 
-APie::Signaler::Signaler()
+apie::Signaler::Signaler()
 {
     //  Create the socketpair for signaling.
     int rc = makeFdPair(&r, &w);
@@ -47,18 +47,18 @@ APie::Signaler::Signaler()
 	evutil_make_socket_nonblocking(r);
 }
 
-APie::Signaler::~Signaler()
+apie::Signaler::~Signaler()
 {
 	evutil_closesocket(w);
 	evutil_closesocket(r);
 }
 
-evutil_socket_t APie::Signaler::getFd()
+evutil_socket_t apie::Signaler::getFd()
 {
     return r;
 }
 
-void APie::Signaler::send ()
+void apie::Signaler::send ()
 {
 #if defined WIN32
     unsigned char dummy = 0;
@@ -121,7 +121,7 @@ void APie::Signaler::send ()
 #endif
 }
 
-void APie::Signaler::recv()
+void apie::Signaler::recv()
 {
     //  Attempt to read a signal.
     unsigned char dummy;
@@ -178,7 +178,7 @@ void APie::Signaler::recv()
     assert(dummy == 0);
 }
 
-int APie::Signaler::makeFdPair(evutil_socket_t *r, evutil_socket_t *w)
+int apie::Signaler::makeFdPair(evutil_socket_t *r, evutil_socket_t *w)
 {
 	evutil_socket_t pair[2];
 

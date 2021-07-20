@@ -99,12 +99,12 @@ void RPCServer<Request, Response>::sendResponse(const ::rpc_msg::RPC_REQUEST& co
 {
 	std::cout << context.ShortDebugString() << response_ptr->ShortDebugString() << std::endl;
 
-	std::string channel = APie::Event::NatsManager::GetTopicChannel(context.client().stub().realm(), context.client().stub().type(), context.client().stub().id());
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(context.client().stub().realm(), context.client().stub().type(), context.client().stub().id());
 
 	::rpc_msg::CHANNEL server;
-	server.set_realm(APie::CtxSingleton::get().identify().realm);
-	server.set_type(APie::CtxSingleton::get().identify().type);
-	server.set_id(APie::CtxSingleton::get().identify().id);
+	server.set_realm(apie::CtxSingleton::get().identify().realm);
+	server.set_type(apie::CtxSingleton::get().identify().type);
+	server.set_id(apie::CtxSingleton::get().identify().id);
 
 	::rpc_msg::RPC_RESPONSE response;
 	*response.mutable_client() = context.client();
@@ -116,7 +116,7 @@ void RPCServer<Request, Response>::sendResponse(const ::rpc_msg::RPC_REQUEST& co
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
 	(*nats_msg.mutable_rpc_response()) = response;
-	APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
+	apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 }
 
 

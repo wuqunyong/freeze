@@ -5,11 +5,11 @@
 #include "../../common/opcodes.h"
 
 
-namespace APie {
+namespace apie {
 
 apie::status::Status LoginMgr::init()
 {
-	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Login_Server });
+	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Login_Server });
 	if (!bResult)
 	{
 		return { apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
@@ -28,7 +28,7 @@ apie::status::Status LoginMgr::init()
 
 apie::status::Status LoginMgr::start()
 {
-	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
+	apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 	return { apie::status::StatusCode::OK, "" };
 }
 
@@ -40,7 +40,7 @@ apie::status::Status LoginMgr::ready()
 
 	// CLIENT OPCODE
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountNotify);
+	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgr::handleAccountNotify);
 
 	std::stringstream ss;
 	ss << "Server Ready!";
@@ -103,7 +103,7 @@ void LoginMgr::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
 	uint32_t type = std::stoul(cmd.params()[1]);
 	uint32_t id = std::stoul(cmd.params()[2]);
 
-	std::string channel = APie::Event::NatsManager::GetTopicChannel(realm, type, id);
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(realm, type, id);
 
 	std::string name = cmd.params()[3];
 	std::string info = cmd.params()[4];

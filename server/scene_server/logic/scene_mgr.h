@@ -11,7 +11,7 @@
 #include "apie.h"
 #include "../../pb_msg/business/login_msg.pb.h"
 
-namespace APie {
+namespace apie {
 
 	class SceneMgr
 	{

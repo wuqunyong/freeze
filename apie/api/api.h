@@ -6,8 +6,8 @@
 #include "../common/time.h"
 #include "../event/dispatcher.h"
 
-namespace APie {
-namespace Api {
+namespace apie {
+namespace api {
 
 /**
  * "Public" API that different components use to interact with the various system abstractions.
@@ -20,7 +20,7 @@ public:
    * Allocate a dispatcher.
    * @return Event::DispatcherPtr which is owned by the caller.
    */
-  virtual Event::DispatcherPtr allocateDispatcher(Event::EThreadType type, uint32_t tid) PURE;
+  virtual event_ns::DispatcherPtr allocateDispatcher(event_ns::EThreadType type, uint32_t tid) PURE;
 
 
 };

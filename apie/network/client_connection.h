@@ -13,7 +13,7 @@
 #include "../http/http_response_decoder.h"
 
 
-namespace APie
+namespace apie
 {
 	struct SetClientSessionAttr;
 

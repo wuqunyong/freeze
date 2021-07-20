@@ -23,7 +23,7 @@
 #endif
 
 
-namespace APie
+namespace apie
 {
 	void ExceptionTrap();
-}  // namespace APie
+}

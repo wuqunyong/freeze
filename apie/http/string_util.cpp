@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace APie
+namespace apie
 {
 
     vector<string> StringUtil::split(const string& src, const string& delim, size_t maxParts)

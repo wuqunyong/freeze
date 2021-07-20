@@ -10,7 +10,7 @@ extern "C"
 #include "http_common.h"
 #include "../common/noncopyable.h"
 
-namespace APie
+namespace apie
 {
     class HttpParser : public Noncopyable
     {

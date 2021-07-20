@@ -57,12 +57,12 @@ sigset_t g_SigSet;
 #include "nats/nats.h"
 #include "apie/common/enum_to_int.h"
 
-namespace APie {
+namespace apie {
 
 PlatformImpl Ctx::s_platform;
 std::string Ctx::s_log_postfix;
 
-class PortCb : public Network::ListenerCallbacks
+class PortCb : public network::ListenerCallbacks
 {
 public:
 	PortCb(ProtocolType type, uint32_t maskFlag) : 
@@ -76,16 +76,16 @@ public:
 	{
 		std::string ip;
 		std::string peerIp;
-		auto ptrAddr = Network::addressFromFd(fd);
+		auto ptrAddr = network::addressFromFd(fd);
 		if (ptrAddr != nullptr)
 		{
-			ip = Network::makeFriendlyAddress(*ptrAddr);
+			ip = network::makeFriendlyAddress(*ptrAddr);
 		}
 
-		auto ptrPeerAddr = Network::peerAddressFromFd(fd);
+		auto ptrPeerAddr = network::peerAddressFromFd(fd);
 		if (ptrPeerAddr != nullptr)
 		{
-			peerIp = Network::makeFriendlyAddress(*ptrPeerAddr);
+			peerIp = network::makeFriendlyAddress(*ptrPeerAddr);
 		}
 
 		PassiveConnect *itemObjPtr = new PassiveConnect;
@@ -104,7 +104,7 @@ public:
 		ASYNC_PIE_LOG("PortCb/onAccept", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
 
 
-		auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
+		auto ptrThread = apie::CtxSingleton::get().chooseIOThread();
 		if (ptrThread == nullptr)
 		{
 			ASYNC_PIE_LOG("PortCb/onAccept", PIE_CYCLE_DAY, PIE_ERROR, "chooseIOThread NULL");
@@ -340,22 +340,22 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 void Ctx::init(const std::string& configFile)
 {
 	this->m_configFile = configFile;
-	int64_t mtime = APie::Common::FileDataModificationTime(this->m_configFile);
+	int64_t mtime = apie::common::FileDataModificationTime(this->m_configFile);
 	if (mtime == -1)
 	{
 		PANIC_ABORT("configFile:%s not exist", configFile.c_str());
 	}
 	this->setConfigFileMTime(mtime);
 
-	time_t now = APie::Ctx::getCurSeconds();
+	time_t now = apie::Ctx::getCurSeconds();
 	char timebuf[128] = { '\0' };
 	strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", localtime(&now));
 	m_launchTime = timebuf;
 	memset(timebuf, 0, sizeof(timebuf));
 
-	APie::ExceptionTrap();
+	apie::ExceptionTrap();
 
-	APie::Event::Libevent::Global::initialize();
+	apie::event_ns::Libevent::Global::initialize();
 
 	endpoint_ = SelfRegistration::createSelfRegistration();
 
@@ -374,7 +374,7 @@ void Ctx::init(const std::string& configFile)
 			this->daemonize();
 		}
 
-		uint32_t pid = APie::Api::OsSysCallsSingleton::get().getCurProcessId();
+		uint32_t pid = apie::api::OsSysCallsSingleton::get().getCurProcessId();
 		snprintf(timebuf, sizeof(timebuf), "%s-%d", m_launchTime.c_str(), pid);
 		s_log_postfix = timebuf;
 
@@ -389,13 +389,13 @@ void Ctx::init(const std::string& configFile)
 		uint32_t id = this->getConfigs()->identify.id; 
 		uint32_t type = this->getConfigs()->identify.type;
 
-		APie::CtxSingleton::get().setServerRealm(realm);
-		APie::CtxSingleton::get().setServerId(id);
-		APie::CtxSingleton::get().setServerType(type);
+		apie::CtxSingleton::get().setServerRealm(realm);
+		apie::CtxSingleton::get().setServerId(id);
+		apie::CtxSingleton::get().setServerType(type);
 
-		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Init);
+		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Init);
 
-		std::shared_ptr<Event::DispatchedThreadImpl> ptrListen = nullptr;
+		std::shared_ptr<event_ns::DispatchedThreadImpl> ptrListen = nullptr;
 
 		for (const auto& item : this->getConfigs()->listeners)
 		{
@@ -404,10 +404,10 @@ void Ctx::init(const std::string& configFile)
 			uint16_t type = item.socket_address.type;
 			uint32_t maskFlag = item.socket_address.mask_flag;
 
-			Network::ListenerConfig config;
+			network::ListenerConfig config;
 			config.ip = ip;
 			config.port = port;
-			config.type = static_cast<APie::ProtocolType>(type);
+			config.type = static_cast<apie::ProtocolType>(type);
 
 			if (config.type <= ProtocolType::PT_None || config.type >= ProtocolType::PT_MAX)
 			{
@@ -419,8 +419,8 @@ void Ctx::init(const std::string& configFile)
 			
 			if (nullptr == ptrListen)
 			{
-				ptrListen = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Listen, this->generatorTId());
-				thread_[Event::EThreadType::TT_Listen].push_back(ptrListen);
+				ptrListen = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Listen, this->generatorTId());
+				thread_[event_ns::EThreadType::TT_Listen].push_back(ptrListen);
 			}
 
 			auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
@@ -436,14 +436,14 @@ void Ctx::init(const std::string& configFile)
 		}
 		for (uint32_t index = 0; index < ioThreads; index++)
 		{
-			thread_[Event::EThreadType::TT_IO].push_back(std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_IO, this->generatorTId()));
+			thread_[event_ns::EThreadType::TT_IO].push_back(std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_IO, this->generatorTId()));
 		}
 		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "ioThreads: %d", ioThreads);
 
-		logic_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Logic, this->generatorTId());
-		log_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Log, this->generatorTId());
-		metrics_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Metrics, this->generatorTId());
-		nats_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_Nats, this->generatorTId());
+		logic_thread_ = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Logic, this->generatorTId());
+		log_thread_ = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Log, this->generatorTId());
+		metrics_thread_ = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Metrics, this->generatorTId());
+		nats_thread_ = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Nats, this->generatorTId());
 
 		if (this->getConfigs()->mysql.enable)
 		{
@@ -465,7 +465,7 @@ void Ctx::init(const std::string& configFile)
 			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "mysql:%s|%s|%d", host.c_str(), db.c_str(), port);
 		}
 
-		bool bResult = APie::Event::NatsSingleton::get().init();
+		bool bResult = apie::event_ns::NatsSingleton::get().init();
 		if (!bResult)
 		{
 			std::stringstream ss;
@@ -534,7 +534,7 @@ void Ctx::start()
 	{
 		for (auto& elem : item.second)
 		{
-			if (elem->state() == Event::DTState::DTS_Ready)
+			if (elem->state() == event_ns::DTState::DTS_Ready)
 			{
 				elem->start();
 				thread_id_[elem->getTId()] = elem;
@@ -542,25 +542,25 @@ void Ctx::start()
 		}
 	}
 
-	if (logic_thread_->state() == Event::DTState::DTS_Ready)
+	if (logic_thread_->state() == event_ns::DTState::DTS_Ready)
 	{
 		logic_thread_->start();
 		thread_id_[logic_thread_->getTId()] = logic_thread_;
 	}
 
-	if (log_thread_->state() == Event::DTState::DTS_Ready)
+	if (log_thread_->state() == event_ns::DTState::DTS_Ready)
 	{
 		log_thread_->start();
 		thread_id_[log_thread_->getTId()] = log_thread_;
 	}
 
-	if (metrics_thread_->state() == Event::DTState::DTS_Ready)
+	if (metrics_thread_->state() == event_ns::DTState::DTS_Ready)
 	{
 		metrics_thread_->start();
 		thread_id_[metrics_thread_->getTId()] = metrics_thread_;
 	}
 
-	if (nats_thread_->state() == Event::DTState::DTS_Ready)
+	if (nats_thread_->state() == event_ns::DTState::DTS_Ready)
 	{
 		nats_thread_->start();
 		thread_id_[nats_thread_->getTId()] = nats_thread_;
@@ -575,14 +575,14 @@ void Ctx::start()
 
 	Command command;
 	command.type = Command::logic_start;
-	command.args.logic_start.iThreadId = APie::CtxSingleton::get().getLogicThread()->getTId();
-	APie::CtxSingleton::get().getLogicThread()->push(command);
+	command.args.logic_start.iThreadId = apie::CtxSingleton::get().getLogicThread()->getTId();
+	apie::CtxSingleton::get().getLogicThread()->push(command);
 }
 
 void Ctx::destroy()
 {
 
-	APie::Event::DispatcherImpl::clearAllConnection();
+	apie::event_ns::DispatcherImpl::clearAllConnection();
 	ClientProxy::clearAllClientProxy();
 
 	//----------------------1:stop----------------------------
@@ -597,7 +597,7 @@ void Ctx::destroy()
 		bAllStop = true;
 		for (auto& items : thread_id_)
 		{
-			if (items.second->state() != APie::Event::DTState::DTS_Exit)
+			if (items.second->state() != apie::event_ns::DTState::DTS_Exit)
 			{
 				bAllStop = false;
 				break;
@@ -615,8 +615,8 @@ void Ctx::destroy()
 	//----------------------3:delete----------------------------
 	thread_id_.clear();
 
-	thread_.erase(APie::Event::EThreadType::TT_Listen);
-	thread_.erase(APie::Event::EThreadType::TT_IO);
+	thread_.erase(apie::event_ns::EThreadType::TT_Listen);
+	thread_.erase(apie::event_ns::EThreadType::TT_IO);
 	//thread_.erase(APie::Event::EThreadType::TT_Logic);
 	//thread_.erase(APie::Event::EThreadType::TT_Log);
 	logic_thread_.reset();
@@ -759,7 +759,7 @@ void Ctx::waitForShutdown()
 				break;
 			}
 
-			std::string cmd = APie::TrimString(mystring, APie::kWhitespaceASCII);
+			std::string cmd = apie::TrimString(mystring, apie::kWhitespaceASCII);
 			if (cmd.empty())
 			{
 				continue;
@@ -771,7 +771,7 @@ void Ctx::waitForShutdown()
 			Command command;
 			command.type = Command::logic_cmd;
 			command.args.logic_cmd.ptrData = ptrCmd;
-			APie::CtxSingleton::get().getLogicThread()->push(command);
+			apie::CtxSingleton::get().getLogicThread()->push(command);
 		}
 	}
 #else
@@ -817,7 +817,7 @@ void Ctx::waitForShutdown()
 				Command command;
 				command.type = Command::logic_cmd;
 				command.args.logic_cmd.ptrData = ptrCmd;
-				APie::CtxSingleton::get().getLogicThread()->push(command);
+				apie::CtxSingleton::get().getLogicThread()->push(command);
 				break;
 			}
 			default:
@@ -854,7 +854,7 @@ void Ctx::waitForShutdown()
 					break;
 				}
 
-				std::string cmd = APie::TrimString(mystring, APie::kWhitespaceASCII);
+				std::string cmd = apie::TrimString(mystring, apie::kWhitespaceASCII);
 				if (cmd.empty())
 				{
 					continue;
@@ -866,7 +866,7 @@ void Ctx::waitForShutdown()
 				Command command;
 				command.type = Command::logic_cmd;
 				command.args.logic_cmd.ptrData = ptrCmd;
-				APie::CtxSingleton::get().getLogicThread()->push(command);
+				apie::CtxSingleton::get().getLogicThread()->push(command);
 			}
 		}
 	}
@@ -874,10 +874,10 @@ void Ctx::waitForShutdown()
 
 	Command command;
 	command.type = Command::logic_exit;
-	command.args.logic_exit.iThreadId = APie::CtxSingleton::get().getLogicThread()->getTId();
-	APie::CtxSingleton::get().getLogicThread()->push(command);
+	command.args.logic_exit.iThreadId = apie::CtxSingleton::get().getLogicThread()->getTId();
+	apie::CtxSingleton::get().getLogicThread()->push(command);
 
-	while (!APie::CtxSingleton::get().getLogicThread()->dispatcher().terminating())
+	while (!apie::CtxSingleton::get().getLogicThread()->dispatcher().terminating())
 	{ 
 		std::this_thread::yield(); 
 	}
@@ -986,38 +986,38 @@ std::string Ctx::logPostfix()
 	return s_log_postfix;
 }
 
-std::shared_ptr<Event::DispatchedThreadImpl> Ctx::chooseIOThread()
+std::shared_ptr<event_ns::DispatchedThreadImpl> Ctx::chooseIOThread()
 {
 	static size_t iIndex = 0;
 	iIndex++;
 
-	size_t iSize = thread_[Event::EThreadType::TT_IO].size();
+	size_t iSize = thread_[event_ns::EThreadType::TT_IO].size();
 	if (iSize == 0)
 	{
 		return nullptr;
 	}
 
 	size_t iCur = iIndex % iSize;
-	return thread_[Event::EThreadType::TT_IO][iCur];
+	return thread_[event_ns::EThreadType::TT_IO][iCur];
 }
 
 
-std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogicThread()
+std::shared_ptr<event_ns::DispatchedThreadImpl> Ctx::getLogicThread()
 {
 	return logic_thread_;
 }
 
-std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getLogThread()
+std::shared_ptr<event_ns::DispatchedThreadImpl> Ctx::getLogThread()
 {
 	return log_thread_;
 }
 
-std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getMetricsThread()
+std::shared_ptr<event_ns::DispatchedThreadImpl> Ctx::getMetricsThread()
 {
 	return metrics_thread_;
 }
 
-std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getNatsThread()
+std::shared_ptr<event_ns::DispatchedThreadImpl> Ctx::getNatsThread()
 {
 	return nats_thread_;
 }
@@ -1027,7 +1027,7 @@ std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getNatsThread()
 //	return db_thread_;
 //}
 
-std::shared_ptr<Event::DispatchedThreadImpl> Ctx::getThreadById(uint32_t id)
+std::shared_ptr<event_ns::DispatchedThreadImpl> Ctx::getThreadById(uint32_t id)
 {
 	auto findIte = thread_id_.find(id);
 	if (findIte == thread_id_.end())

@@ -3,7 +3,7 @@
 #include <memory>
 #include <mutex>
 
-namespace APie {
+namespace apie {
 
 
 template <class T> class ThreadSafeSingleton {

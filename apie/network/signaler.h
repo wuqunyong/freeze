@@ -6,7 +6,7 @@
 #include "event2/util.h"
 #include "event2/event.h"
 
-namespace APie
+namespace apie
 {
 
     //  This is a cross-platform equivalent to signal_fd. However, as opposed

@@ -7,7 +7,7 @@
 
 
 
-namespace APie {
+namespace apie {
 
 	struct APieConfig_Identify
 	{

@@ -1,7 +1,7 @@
 #include "lz4_compressor_impl.h"
 
-namespace APie {
-namespace Compressor {
+namespace apie {
+namespace compressor {
 
 	LZ4CompressorImpl::LZ4CompressorImpl()
 	{

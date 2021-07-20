@@ -17,14 +17,14 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Init, APie::initHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Start, APie::startHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Ready, APie::readyHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Exit, APie::exitHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Init, apie::initHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Start, apie::startHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Ready, apie::readyHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Exit, apie::exitHook);
 
-	APie::CtxSingleton::get().init(configFile);
-	APie::CtxSingleton::get().start();
-	APie::CtxSingleton::get().waitForShutdown();
+	apie::CtxSingleton::get().init(configFile);
+	apie::CtxSingleton::get().start();
+	apie::CtxSingleton::get().waitForShutdown();
 
     return 0;
 }

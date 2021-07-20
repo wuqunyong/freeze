@@ -9,8 +9,8 @@
 #include "../network/logger.h"
 #include "apie/common/enum_to_int.h"
 
-namespace APie {
-namespace Hook {
+namespace apie {
+namespace hook {
 
 	void HookRegistry::registerHook(HookPoint point, HookCallback cb, uint32_t priority)
 	{
@@ -45,7 +45,7 @@ namespace Hook {
 
 	void HookRegistry::triggerHook(HookPoint point)
 	{
-		auto initCbOpt = APie::Hook::HookRegistrySingleton::get().getHook(point);
+		auto initCbOpt = apie::hook::HookRegistrySingleton::get().getHook(point);
 		if (initCbOpt.has_value())
 		{
 			auto ptrCmp = [](HookEntry& lhs, HookEntry& rhs){
@@ -59,7 +59,7 @@ namespace Hook {
 				if (!result.ok())
 				{
 					std::stringstream ss;
-					ss << "errorCode:" << APie::toUnderlyingType(result.error_code()) << "|info:" << result.error_message();
+					ss << "errorCode:" << apie::toUnderlyingType(result.error_code()) << "|info:" << result.error_message();
 
 					if (point == HookPoint::HP_Exit)
 					{

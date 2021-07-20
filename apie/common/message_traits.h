@@ -27,7 +27,7 @@
 #include "../mysql_driver/dao_factory.h"
 
 
-namespace APie {
+namespace apie {
 
 DEFINE_TYPE_TRAIT(HasInsertToDb, insertToDb)
 DEFINE_TYPE_TRAIT(HasDeleteFromDb, deleteFromDb)

@@ -41,7 +41,7 @@ void RPCClientManager::removePendingRequests(uint64_t seq_num)
 
 void RPCClientManager::handleTimeout()
 {
-	uint64_t curTime = APie::CtxSingleton::get().getCurMilliseconds();
+	uint64_t curTime = apie::CtxSingleton::get().getCurMilliseconds();
 
 	if (curTime > last_check_timeout_at_)
 	{

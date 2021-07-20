@@ -85,9 +85,9 @@ bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request_ptr)
 	auto seq_num = manager_.nextSeqNum();
 
 	::rpc_msg::CHANNEL client;
-	client.set_type(APie::CtxSingleton::get().identify().type);
-	client.set_id(APie::CtxSingleton::get().identify().id);
-	client.set_realm(APie::CtxSingleton::get().identify().realm);
+	client.set_type(apie::CtxSingleton::get().identify().type);
+	client.set_id(apie::CtxSingleton::get().identify().id);
+	client.set_realm(apie::CtxSingleton::get().identify().realm);
 
 
 	::rpc_msg::RPC_REQUEST request;
@@ -108,18 +108,18 @@ bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request_ptr)
 		{
 			return result;
 		}
-		uint64_t cur_time_ms = APie::CtxSingleton::get().getCurMilliseconds();
+		uint64_t cur_time_ms = apie::CtxSingleton::get().getCurMilliseconds();
 		auto expire_at = cur_time_ms + context_.timeoutMs();
 		
 		manager_.insertRequestsTimeout(seq_num, expire_at);
 	}
 
 	bool bResult = false;
-	std::string channel = APie::Event::NatsManager::GetTopicChannel(request.server().stub().realm(), request.server().stub().type(), request.server().stub().id());
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(request.server().stub().realm(), request.server().stub().type(), request.server().stub().id());
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
 	(*nats_msg.mutable_rpc_request()) = request;
-	int32_t iRC = APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
+	int32_t iRC = apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 	if (iRC == 0)
 	{
 		bResult = true;

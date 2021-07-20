@@ -13,8 +13,8 @@
 #include "../network/command.h"
 #include "../mysql_driver/mysql_connector.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 	/**
 		* Generic dispatched thread.
@@ -53,7 +53,7 @@ namespace Event {
 			type_(type),
 			tid_(tid),
 			state_(DTState::DTS_Ready),
-			dispatcher_(std::make_unique<Event::DispatcherImpl>(type, tid))
+			dispatcher_(std::make_unique<event_ns::DispatcherImpl>(type, tid))
 		{
 		}
 
@@ -78,10 +78,10 @@ namespace Event {
 		Dispatcher& dispatcher() { return *dispatcher_; }
 		DispatcherImpl* dispatcherImpl() 
 		{
-			return dynamic_cast<Event::DispatcherImpl*>(dispatcher_.get());
+			return dynamic_cast<event_ns::DispatcherImpl*>(dispatcher_.get());
 		};
 
-		void push(std::shared_ptr<Network::Listener> listener);
+		void push(std::shared_ptr<network::Listener> listener);
 		void push(Command& cmd);
 
 		/**
@@ -100,7 +100,7 @@ namespace Event {
 		DTState state_;
 		DispatcherPtr dispatcher_;
 		std::thread thread_;
-		std::vector<std::shared_ptr<Network::Listener>> listener_;
+		std::vector<std::shared_ptr<network::Listener>> listener_;
 
 		MySQLConnector mysqlConnector_;
 	};

@@ -7,8 +7,8 @@
 
 #include "event2/event.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 // Implements Scheduler based on libevent.
 class LibeventScheduler : public Scheduler {

@@ -16,8 +16,8 @@
 
 #include "../singleton/threadsafe_singleton.h"
 
-namespace APie {
-namespace Api {
+namespace apie {
+namespace api {
 
 class OsSysCalls {
 

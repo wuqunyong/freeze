@@ -6,8 +6,8 @@
 
 #include "decompressor.h"
 
-namespace APie {
-namespace Decompressor {
+namespace apie {
+namespace decompressor {
 
 /**
  * Implementation of decompressor's interface.

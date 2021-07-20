@@ -3,8 +3,8 @@
 #include "../event/timer.h"
 #include "../common/utility.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 /**
  * Real-world time implementation of TimeSystem.
@@ -19,7 +19,7 @@ public:
   MonotonicTime monotonicTime() override { return time_source_.monotonicTime(); }
 
 private:
-	Common::RealTimeSource time_source_;
+	common::RealTimeSource time_source_;
 };
 
 } // namespace Event

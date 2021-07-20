@@ -14,8 +14,8 @@
 #include "../common/time.h"
 
 
-namespace APie {
-namespace Common {
+namespace apie {
+namespace common {
 
 /**
  * Real-world time implementation of TimeSource.

@@ -23,8 +23,8 @@
 #include <string>
 #include <sstream>
 
-namespace APie {
-namespace Common {
+namespace apie {
+namespace common {
 
 bool GetContent(const std::string &file_name, std::string *content) {
   std::ifstream fin(file_name);

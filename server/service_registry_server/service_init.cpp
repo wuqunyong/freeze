@@ -2,7 +2,7 @@
 
 #include "logic/service_registry.h"
 
-namespace APie {
+namespace apie {
 
 apie::status::Status initHook()
 {

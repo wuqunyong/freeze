@@ -13,8 +13,8 @@
 
 #include "command.h"
 
-namespace APie {
-namespace Network {
+namespace apie {
+namespace network {
 
 	bool OutputStream::sendMsg(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type)
 	{
@@ -22,12 +22,12 @@ namespace Network {
 		
 		switch (type)
 		{
-		case APie::ConnetionType::CT_NONE:
+		case apie::ConnetionType::CT_NONE:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
-				auto ptrClient = Event::DispatcherImpl::getClientConnection(iSerialNum);
+				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 				if (ptrClient == nullptr)
 				{
 					return false;
@@ -45,9 +45,9 @@ namespace Network {
 			}
 			break;
 		}
-		case APie::ConnetionType::CT_SERVER:
+		case apie::ConnetionType::CT_SERVER:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -56,9 +56,9 @@ namespace Network {
 			iThreadId = ptrConnection->getTId();
 			break;
 		}
-		case APie::ConnetionType::CT_CLIENT:
+		case apie::ConnetionType::CT_CLIENT:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getClientConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -101,12 +101,12 @@ namespace Network {
 
 		switch (type)
 		{
-		case APie::ConnetionType::CT_NONE:
+		case apie::ConnetionType::CT_NONE:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
-				auto ptrClient = Event::DispatcherImpl::getClientConnection(iSerialNum);
+				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 				if (ptrClient == nullptr)
 				{
 					return false;
@@ -124,9 +124,9 @@ namespace Network {
 			}
 			break;
 		}
-		case APie::ConnetionType::CT_SERVER:
+		case apie::ConnetionType::CT_SERVER:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -135,9 +135,9 @@ namespace Network {
 			iThreadId = ptrConnection->getTId();
 			break;
 		}
-		case APie::ConnetionType::CT_CLIENT:
+		case apie::ConnetionType::CT_CLIENT:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getClientConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -181,12 +181,12 @@ namespace Network {
 
 		switch (type)
 		{
-		case APie::ConnetionType::CT_NONE:
+		case apie::ConnetionType::CT_NONE:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
-				auto ptrClient = Event::DispatcherImpl::getClientConnection(iSerialNum);
+				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 				if (ptrClient == nullptr)
 				{
 					return false;
@@ -204,9 +204,9 @@ namespace Network {
 			}
 			break;
 		}
-		case APie::ConnetionType::CT_SERVER:
+		case apie::ConnetionType::CT_SERVER:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -215,9 +215,9 @@ namespace Network {
 			iThreadId = ptrConnection->getTId();
 			break;
 		}
-		case APie::ConnetionType::CT_CLIENT:
+		case apie::ConnetionType::CT_CLIENT:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getClientConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -260,12 +260,12 @@ namespace Network {
 
 		switch (type)
 		{
-		case APie::ConnetionType::CT_NONE:
+		case apie::ConnetionType::CT_NONE:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
-				auto ptrClient = Event::DispatcherImpl::getClientConnection(iSerialNum);
+				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 				if (ptrClient == nullptr)
 				{
 					return false;
@@ -283,9 +283,9 @@ namespace Network {
 			}
 			break;
 		}
-		case APie::ConnetionType::CT_SERVER:
+		case apie::ConnetionType::CT_SERVER:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -294,9 +294,9 @@ namespace Network {
 			iThreadId = ptrConnection->getTId();
 			break;
 		}
-		case APie::ConnetionType::CT_CLIENT:
+		case apie::ConnetionType::CT_CLIENT:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getClientConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -359,15 +359,15 @@ namespace Network {
 		//return APie::RPC::RpcClientSingleton::get().call(controller, server, ::rpc_msg::RPC_DeMultiplexer_Forward, args, rpcCB);
 	}
 
-	bool OutputStream::sendCommand(ConnetionType type, uint64_t iSerialNum, APie::Command& cmd)
+	bool OutputStream::sendCommand(ConnetionType type, uint64_t iSerialNum, apie::Command& cmd)
 	{
 		uint32_t iThreadId = 0;
 
 		switch (type)
 		{
-		case APie::ConnetionType::CT_SERVER:
+		case apie::ConnetionType::CT_SERVER:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -376,9 +376,9 @@ namespace Network {
 			iThreadId = ptrConnection->getTId();
 			break;
 		}
-		case APie::ConnetionType::CT_CLIENT:
+		case apie::ConnetionType::CT_CLIENT:
 		{
-			auto ptrConnection = Event::DispatcherImpl::getClientConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
 			if (ptrConnection == nullptr)
 			{
 				return false;

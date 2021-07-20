@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <type_traits>
 
-namespace APie {
+namespace apie {
 /**
  * Convert an int based enum to an int.
  */

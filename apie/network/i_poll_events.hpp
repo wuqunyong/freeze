@@ -22,7 +22,7 @@
  
 #include "../common/pure.h"
 
-namespace APie
+namespace apie
 {
  
 	struct EndPoint

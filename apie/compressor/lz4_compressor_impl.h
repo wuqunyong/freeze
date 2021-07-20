@@ -6,8 +6,8 @@
 
 #include "compressor.h"
 
-namespace APie {
-namespace Compressor {
+namespace apie {
+namespace compressor {
 
 
 class LZ4CompressorImpl : public Compressor {

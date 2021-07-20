@@ -13,7 +13,7 @@
 
 #include "apie/proto/init.h"
 
-using namespace APie;
+using namespace apie;
 
 std::mutex ClientProxy::m_sync;
 std::map<uint64_t, std::shared_ptr<ClientProxy>> ClientProxy::m_clientProxy;
@@ -41,7 +41,7 @@ ClientProxy::ClientProxy()
 		}
 		this->addReconnectTimer(3000);
 	};
-	this->m_reconnectTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(reconnectCb);
+	this->m_reconnectTimer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(reconnectCb);
 
 	auto heartbeatCb = [this]() {
 		if (this->m_heartbeatCb)
@@ -49,7 +49,7 @@ ClientProxy::ClientProxy()
 			this->m_heartbeatCb(this);
 		}
 	};
-	this->m_heartbeatTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(heartbeatCb);
+	this->m_heartbeatTimer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(heartbeatCb);
 }
 
 ClientProxy::~ClientProxy()
@@ -174,7 +174,7 @@ void ClientProxy::setHadEstablished(uint32_t value)
 	this->m_hadEstablished = value;
 }
 
-Event::TimerPtr& ClientProxy::reconnectTimer()
+event_ns::TimerPtr& ClientProxy::reconnectTimer()
 {
 	return m_reconnectTimer;
 }
@@ -193,11 +193,11 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 
 	if (this->m_maskFlag == 0)
 	{
-		APie::Network::OutputStream::sendMsg(this->m_curSerialNum, iOpcode, msg, APie::ConnetionType::CT_CLIENT);
+		apie::network::OutputStream::sendMsg(this->m_curSerialNum, iOpcode, msg, apie::ConnetionType::CT_CLIENT);
 	}
 	else
 	{
-		APie::Network::OutputStream::sendMsgByFlag(this->m_curSerialNum, iOpcode, msg, this->m_maskFlag, APie::ConnetionType::CT_CLIENT);
+		apie::network::OutputStream::sendMsgByFlag(this->m_curSerialNum, iOpcode, msg, this->m_maskFlag, apie::ConnetionType::CT_CLIENT);
 	}
 	return 0;
 }
@@ -275,7 +275,7 @@ int ClientProxy::sendConnect()
 
 	if (m_tId == 0)
 	{
-		auto ptrThread = APie::CtxSingleton::get().chooseIOThread();
+		auto ptrThread = apie::CtxSingleton::get().chooseIOThread();
 		if (ptrThread == NULL)
 		{
 			delete ptr;
@@ -284,7 +284,7 @@ int ClientProxy::sendConnect()
 		m_tId = ptrThread->getTId();
 	}
 
-	auto ptrIOThread = APie::CtxSingleton::get().getThreadById(m_tId);
+	auto ptrIOThread = apie::CtxSingleton::get().getThreadById(m_tId);
 	if (ptrIOThread == NULL)
 	{
 		delete ptr;
@@ -303,14 +303,14 @@ int ClientProxy::sendConnect()
 
 void ClientProxy::sendClose()
 {
-	APie::CloseLocalClient *ptr = new APie::CloseLocalClient;
+	apie::CloseLocalClient *ptr = new apie::CloseLocalClient;
 	ptr->iSerialNum = this->m_curSerialNum;
 
 	Command cmd;
 	cmd.type = Command::close_local_client;
 	cmd.args.close_local_client.ptrData = ptr;
 
-	auto ptrIOThread = APie::CtxSingleton::get().getThreadById(m_tId);
+	auto ptrIOThread = apie::CtxSingleton::get().getThreadById(m_tId);
 	if (ptrIOThread == NULL)
 	{
 		delete ptr;
@@ -330,7 +330,7 @@ void ClientProxy::close()
 
 uint64_t ClientProxy::generatorId()
 {
-	uint64_t iSerialNum = APie::Event::DispatcherImpl::generatorSerialNum();
+	uint64_t iSerialNum = apie::event_ns::DispatcherImpl::generatorSerialNum();
 	return iSerialNum;
 }
 

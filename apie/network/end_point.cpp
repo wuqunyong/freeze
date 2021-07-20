@@ -14,7 +14,7 @@
 #include "apie/service/service_manager.h"
 #include "apie/pub_sub/pubsub_manager.h"
 
-namespace APie{
+namespace apie{
 
 void SelfRegistration::init()
 {
@@ -35,7 +35,7 @@ void SelfRegistration::init()
 
 void SelfRegistration::registerEndpoint()
 {
-	auto identityType = APie::CtxSingleton::get().getServerType();
+	auto identityType = apie::CtxSingleton::get().getServerType();
 
 	std::set<uint32_t> needRegister;
 	needRegister.insert(::common::EndPointType::EPT_Login_Server);
@@ -49,7 +49,7 @@ void SelfRegistration::registerEndpoint()
 		return;
 	}
 
-	if (APie::CtxSingleton::get().getConfigs()->service_registry.address.empty())
+	if (apie::CtxSingleton::get().getConfigs()->service_registry.address.empty())
 	{
 		std::stringstream ss;
 		ss << "service_registry empty";
@@ -58,29 +58,29 @@ void SelfRegistration::registerEndpoint()
 		PANIC_ABORT(ss.str().c_str());
 	}
 
-	std::string ip = APie::CtxSingleton::get().getConfigs()->service_registry.address;
-	uint16_t port = APie::CtxSingleton::get().getConfigs()->service_registry.port_value;
-	std::string registryAuth = APie::CtxSingleton::get().getConfigs()->service_registry.auth;
-	uint16_t type = APie::CtxSingleton::get().getConfigs()->service_registry.type;
+	std::string ip = apie::CtxSingleton::get().getConfigs()->service_registry.address;
+	uint16_t port = apie::CtxSingleton::get().getConfigs()->service_registry.port_value;
+	std::string registryAuth = apie::CtxSingleton::get().getConfigs()->service_registry.auth;
+	uint16_t type = apie::CtxSingleton::get().getConfigs()->service_registry.type;
 	
 	uint32_t maskFlag = 0;
 
 	auto ptrSelf = this->shared_from_this();
-	auto ptrClient = APie::ClientProxy::createClientProxy();
-	auto connectCb = [ptrSelf, registryAuth](APie::ClientProxy* ptrClient, uint32_t iResult) {
+	auto ptrClient = apie::ClientProxy::createClientProxy();
+	auto connectCb = [ptrSelf, registryAuth](apie::ClientProxy* ptrClient, uint32_t iResult) {
 		if (iResult == 0)
 		{
 			ptrSelf->sendRegister(ptrClient, registryAuth);
-			ptrSelf->setState(APie::SelfRegistration::Registering);
+			ptrSelf->setState(apie::SelfRegistration::Registering);
 		}
 		return true;
 	};
-	ptrClient->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
+	ptrClient->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
 
-	auto heartbeatCb = [ptrSelf, registryAuth](APie::ClientProxy *ptrClient) {
+	auto heartbeatCb = [ptrSelf, registryAuth](apie::ClientProxy *ptrClient) {
 		ptrClient->addHeartbeatTimer(3000);
 
-		if (ptrSelf->state() != APie::SelfRegistration::Registered)
+		if (ptrSelf->state() != apie::SelfRegistration::Registered)
 		{
 			ptrSelf->sendRegister(ptrClient, registryAuth);
 		}
@@ -100,15 +100,15 @@ void SelfRegistration::unregisterEndpoint()
 
 }
 
-void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string registryAuth)
+void SelfRegistration::sendRegister(apie::ClientProxy* ptrClient, std::string registryAuth)
 {
-	uint32_t realm = APie::CtxSingleton::get().getServerRealm();
-	uint32_t type = APie::CtxSingleton::get().getServerType();
-	uint32_t id = APie::CtxSingleton::get().getServerId();
-	std::string auth = APie::CtxSingleton::get().getConfigs()->identify.auth;
-	std::string ip = APie::CtxSingleton::get().getConfigs()->identify.ip;
-	uint32_t port = APie::CtxSingleton::get().getConfigs()->identify.port;
-	uint32_t codec_type = APie::CtxSingleton::get().getConfigs()->identify.codec_type;
+	uint32_t realm = apie::CtxSingleton::get().getServerRealm();
+	uint32_t type = apie::CtxSingleton::get().getServerType();
+	uint32_t id = apie::CtxSingleton::get().getServerId();
+	std::string auth = apie::CtxSingleton::get().getConfigs()->identify.auth;
+	std::string ip = apie::CtxSingleton::get().getConfigs()->identify.ip;
+	uint32_t port = apie::CtxSingleton::get().getConfigs()->identify.port;
+	uint32_t codec_type = apie::CtxSingleton::get().getConfigs()->identify.codec_type;
 
 	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
 	request.mutable_instance()->set_realm(realm);
@@ -125,7 +125,7 @@ void SelfRegistration::sendRegister(APie::ClientProxy* ptrClient, std::string re
 	ptrClient->sendMsg(::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, request);
 }
 
-void SelfRegistration::sendHeartbeat(APie::ClientProxy* ptrClient)
+void SelfRegistration::sendHeartbeat(apie::ClientProxy* ptrClient)
 {
 	::service_discovery::MSG_REQUEST_HEARTBEAT request;
 
@@ -247,7 +247,7 @@ void EndPointMgr::addRoute(const EndPoint& point, uint64_t iSerialNum)
 {
 	EstablishedState state;
 	state.iSerialNum = iSerialNum;
-	state.iLastHeartbeat = APie::Ctx::getCurSeconds();
+	state.iLastHeartbeat = apie::Ctx::getCurSeconds();
 
 	m_establishedPoints[point] = state;
 	m_reversePoints[iSerialNum] = point;
@@ -279,7 +279,7 @@ void EndPointMgr::updateRouteHeartbeat(uint64_t iSerialNum)
 		return;
 	}
 
-	auto iCurTime = APie::Ctx::getCurSeconds();
+	auto iCurTime = apie::Ctx::getCurSeconds();
 	updateIte->second.iLastHeartbeat = iCurTime;
 }
 
@@ -314,7 +314,7 @@ void SelfRegistration::handleRespRegisterInstance(uint64_t iSerialNum, const std
 	else
 	{
 		ASYNC_PIE_LOG("SelfRegistration/handleRespRegisterInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-		APie::CtxSingleton::get().getEndpoint()->setState(APie::SelfRegistration::Registered);
+		apie::CtxSingleton::get().getEndpoint()->setState(apie::SelfRegistration::Registered);
 	}
 }
 
@@ -377,7 +377,7 @@ void SelfRegistration::onClientPeerClose(const std::shared_ptr<::pubsub::CLIENT_
 	ASYNC_PIE_LOG("SelfRegistration/onClientPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	uint64_t iSerialNum = msg->serial_num();
-	auto clientProxy = APie::ClientProxy::findClientProxy(iSerialNum);
+	auto clientProxy = apie::ClientProxy::findClientProxy(iSerialNum);
 	if (clientProxy)
 	{
 		clientProxy->setHadEstablished(ClientProxy::CONNECT_CLOSE);

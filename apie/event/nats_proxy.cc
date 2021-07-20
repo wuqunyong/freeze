@@ -29,8 +29,8 @@
 
 #include "apie/rpc/server/rpc_server_manager.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase) 
 {
@@ -182,17 +182,17 @@ NatsManager::~NatsManager()
 
 bool NatsManager::init()
 {
-	auto bEnable = APie::CtxSingleton::get().getConfigs()->nats.enable;
+	auto bEnable = apie::CtxSingleton::get().getConfigs()->nats.enable;
 	if (!bEnable)
 	{
 		return true;
 	}
 
-	uint32_t realm = APie::CtxSingleton::get().getServerRealm();
-	uint32_t id = APie::CtxSingleton::get().getServerId();
-	uint32_t type = APie::CtxSingleton::get().getServerType();
+	uint32_t realm = apie::CtxSingleton::get().getServerRealm();
+	uint32_t id = apie::CtxSingleton::get().getServerId();
+	uint32_t type = apie::CtxSingleton::get().getServerType();
 
-	for (const auto& elems : APie::CtxSingleton::get().getConfigs()->nats.connections)
+	for (const auto& elems : apie::CtxSingleton::get().getConfigs()->nats.connections)
 	{
 		auto iType = elems.type;
 		auto sServer = elems.nats_server;
@@ -216,7 +216,7 @@ bool NatsManager::init()
 		}
 	}
 
-	interval_timer_ = APie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->createTimer([this]() -> void { runIntervalCallbacks(); });
+	interval_timer_ = apie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->createTimer([this]() -> void { runIntervalCallbacks(); });
 	interval_timer_->enableTimer(std::chrono::milliseconds(2000));
 
 	return true;
@@ -230,8 +230,8 @@ std::shared_ptr<NatsManager::PrxoyNATSConnector> NatsManager::createConnection(u
 		return nullptr;
 	}
 
-	std::string channel = APie::Event::NatsManager::GetTopicChannel(realm, serverType, serverId);
-	struct event_base* ptrBase = &(APie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->base());
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(realm, serverType, serverId);
+	struct event_base* ptrBase = &(apie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->base());
 	int32_t iRC = sharedPtr->Connect(ptrBase, channel);
 	if (iRC != 0)
 	{
@@ -263,7 +263,7 @@ bool NatsManager::isConnect(E_NatsType type)
 {
 	switch (type)
 	{
-	case APie::Event::NatsManager::E_NT_Realm:
+	case apie::event_ns::NatsManager::E_NT_Realm:
 	{
 		if (nats_realm == nullptr)
 		{
@@ -285,7 +285,7 @@ int32_t NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel,
 {
 	switch (type)
 	{
-	case APie::Event::NatsManager::E_NT_Realm:
+	case apie::event_ns::NatsManager::E_NT_Realm:
 	{
 		if (nats_realm == nullptr)
 		{
@@ -310,7 +310,7 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 	std::thread::id iThreadId = std::this_thread::get_id();
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|threadid:%d|type:%d|%s", iThreadId, type, msg->ShortDebugString().c_str());
 
-	if (APie::CtxSingleton::get().getLogicThread() == nullptr)
+	if (apie::CtxSingleton::get().getLogicThread() == nullptr)
 	{
 		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|LogicThread null|threadid:%d", iThreadId);
 		return;
@@ -338,10 +338,10 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 
 	switch (type)
 	{
-	case APie::Event::NatsManager::E_NT_Realm:
+	case apie::event_ns::NatsManager::E_NT_Realm:
 	{
 		::nats_msg::NATS_MSG_PRXOY* m = msg.release();
-		APie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+		apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
 			[m, this]() mutable { Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>(m)); }
 		);
 		break;
@@ -358,14 +358,14 @@ void NatsManager::runIntervalCallbacks()
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
 
-	bool enable = APie::CtxSingleton::get().getConfigs()->metrics.enable;
+	bool enable = apie::CtxSingleton::get().getConfigs()->metrics.enable;
 	if (enable)
 	{
 		MetricData* ptrData = new MetricData;
 		ptrData->sMetric = "queue";
 
-		auto iType = APie::CtxSingleton::get().getServerType();
-		auto iId = APie::CtxSingleton::get().getServerId();
+		auto iType = apie::CtxSingleton::get().getServerType();
+		auto iId = apie::CtxSingleton::get().getServerId();
 
 		ptrData->tag["server_type"] = std::to_string(iType);
 		ptrData->tag["server_id"] = std::to_string(iId);
@@ -400,7 +400,7 @@ void NatsManager::runIntervalCallbacks()
 		command.type = Command::metric_data;
 		command.args.metric_data.ptrData = ptrData;
 
-		auto ptrMetric = APie::CtxSingleton::get().getMetricsThread();
+		auto ptrMetric = apie::CtxSingleton::get().getMetricsThread();
 		if (ptrMetric != nullptr)
 		{
 			ptrMetric->push(command);

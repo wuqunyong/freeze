@@ -27,8 +27,8 @@
 #include "../network/logger.h"
 #include "apie/proto/init.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 		class NatsManager;
 
@@ -143,7 +143,7 @@ namespace Event {
 					return iRC;
 				}
 
-				std::string sSub = APie::Event::NatsManager::GetCombineTopicChannel(sub_topic_, channel);
+				std::string sSub = apie::event_ns::NatsManager::GetCombineTopicChannel(sub_topic_, channel);
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
@@ -212,7 +212,7 @@ namespace Event {
 					return 1;
 				}
 
-				std::string sPub = APie::Event::NatsManager::GetCombineTopicChannel(pub_topic_, channel);
+				std::string sPub = apie::event_ns::NatsManager::GetCombineTopicChannel(pub_topic_, channel);
 
 				auto serialized_msg = msg.SerializeAsString();
 				auto nats_status = natsConnection_Publish(nats_connection_, sPub.c_str(), serialized_msg.c_str(), serialized_msg.size());
@@ -285,7 +285,7 @@ namespace Event {
 
 		class NatsManager {
 		public:
-			using PrxoyNATSConnector = APie::Event::NATSConnector<::nats_msg::NATS_MSG_PRXOY>;
+			using PrxoyNATSConnector = apie::event_ns::NATSConnector<::nats_msg::NATS_MSG_PRXOY>;
 
 			NatsManager();
 			~NatsManager();

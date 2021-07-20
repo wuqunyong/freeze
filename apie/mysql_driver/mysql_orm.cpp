@@ -11,7 +11,7 @@ bool DeclarativeBase::initMetaData(MysqlTable& table)
 
 bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string& name)
 {
-	auto ptrFactory = APie::DAOFactoryTypeSingleton::get().getDAOFactory(type);
+	auto ptrFactory = apie::DAOFactoryTypeSingleton::get().getDAOFactory(type);
 	if (ptrFactory == nullptr)
 	{
 		return false;

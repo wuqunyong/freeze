@@ -12,8 +12,8 @@
 
 #include "../singleton/threadsafe_singleton.h"
 
-namespace APie {
-namespace Crypto {
+namespace apie {
+namespace crypto {
 
 class Utility {
 public:

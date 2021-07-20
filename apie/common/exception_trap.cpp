@@ -306,7 +306,7 @@ LONG WINAPI ExceptionFilter(EXCEPTION_POINTERS* p)
 	return EXCEPTION_EXECUTE_HANDLER;
 }
 
-namespace APie {
+namespace apie {
 	void ExceptionTrap()
 	{
 		SetUnhandledExceptionFilter(ExceptionFilter);
@@ -315,7 +315,7 @@ namespace APie {
 
 #else
 
-namespace APie {
+namespace apie {
 	std::string generateBackTrace()
 	{
 		int maxFrames = 128;

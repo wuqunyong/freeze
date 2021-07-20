@@ -30,8 +30,8 @@
 #include <vector>
 
 
-namespace APie {
-namespace Common {
+namespace apie {
+namespace common {
 
 /**
  * @brief Get file content as string.

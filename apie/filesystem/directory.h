@@ -4,8 +4,8 @@
 #include "../network/windows_platform.h"
 
 
-namespace APie {
-namespace Filesystem {
+namespace apie {
+namespace filesystem {
 
 
 class Directory {

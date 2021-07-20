@@ -24,7 +24,7 @@
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
 
-namespace APie {
+namespace apie {
 
 ServerConnection::ServerConnection(uint32_t tid, uint64_t iSerialNum, bufferevent *bev, ProtocolType iType) :
 	tid_(tid)
@@ -77,7 +77,7 @@ void ServerConnection::close(std::string sInfo, uint32_t iCode, uint32_t iActive
 
 	this->sendCloseCmd(iCode, sInfo, iActive);
 
-	Event::DispatcherImpl::delConnection(this->iSerialNum);
+	event_ns::DispatcherImpl::delConnection(this->iSerialNum);
 }
 
 ServerConnection::~ServerConnection()
@@ -162,7 +162,7 @@ void ServerConnection::readPB()
 			{
 				if (this->getSessionKey().has_value())
 				{
-					sBody = APie::Crypto::Utility::decode_rc4(this->getSessionKey().value(), sBody);
+					sBody = apie::crypto::Utility::decode_rc4(this->getSessionKey().value(), sBody);
 				}
 				else
 				{
@@ -175,7 +175,7 @@ void ServerConnection::readPB()
 
 			if (head.iFlags & PH_COMPRESSED)
 			{
-				Decompressor::LZ4DecompressorImpl decompressor;
+				decompressor::LZ4DecompressorImpl decompressor;
 				auto optDate = decompressor.decompress(sBody);
 				if (!optDate.has_value())
 				{
@@ -216,7 +216,7 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 		command.type = Command::pb_forward;
 		command.args.pb_forward.ptrData = itemObjPtr;
 
-		auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
+		auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
 		if (ptrLogic == nullptr)
 		{
 			delete itemObjPtr;
@@ -263,7 +263,7 @@ void ServerConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& 
 	command.type = Command::pb_reqeust;
 	command.args.pb_reqeust.ptrData = itemObjPtr;
 
-	auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
+	auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
 	if (ptrLogic == nullptr)
 	{
 		delete itemObjPtr;
@@ -428,7 +428,7 @@ void ServerConnection::sendCloseCmd(uint32_t iResult, const std::string& sInfo, 
 	cmd.args.server_peer_close.ptrData->iSerialNum = this->iSerialNum;
 	cmd.args.server_peer_close.ptrData->sInfo = sInfo;
 	cmd.args.server_peer_close.ptrData->iActive = iActive;
-	APie::CtxSingleton::get().getLogicThread()->push(cmd);
+	apie::CtxSingleton::get().getLogicThread()->push(cmd);
 }
 
 void ServerConnection::handleClose()
@@ -440,14 +440,14 @@ void ServerConnection::handleClose()
 
 void ServerConnection::sendCloseLocalServer(uint64_t iSerialNum)
 {
-	APie::CloseLocalServer *ptr = new APie::CloseLocalServer;
+	apie::CloseLocalServer *ptr = new apie::CloseLocalServer;
 	ptr->iSerialNum = iSerialNum;
 
 	Command cmd;
 	cmd.type = Command::close_local_server;
 	cmd.args.close_local_server.ptrData = ptr;
 
-	auto ptrConnection = Event::DispatcherImpl::getConnection(iSerialNum);
+	auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 	if (ptrConnection == nullptr)
 	{
 		delete ptr;

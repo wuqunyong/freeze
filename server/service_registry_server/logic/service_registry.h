@@ -11,7 +11,7 @@
 #include "apie.h"
 
 
-namespace APie {
+namespace apie {
 
 	struct RegisteredEndPoint
 	{
@@ -67,7 +67,7 @@ namespace APie {
 		uint64_t m_version = 0;
 		::service_discovery::RegistryStatus m_status = service_discovery::RS_Learning;
 		uint64_t m_iStatusCheckTime = 0;
-		Event::TimerPtr m_updateTimer;
+		event_ns::TimerPtr m_updateTimer;
 	};
 
 

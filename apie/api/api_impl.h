@@ -6,8 +6,8 @@
 #include "../api/api.h"
 #include "../event/timer.h"
 
-namespace APie {
-namespace Api {
+namespace apie {
+namespace api {
 
 /**
  * Implementation of Api::Api
@@ -17,7 +17,7 @@ public:
   Impl();
 
   // Api::Api
-  Event::DispatcherPtr allocateDispatcher(Event::EThreadType type, uint32_t tid) override;
+  event_ns::DispatcherPtr allocateDispatcher(event_ns::EThreadType type, uint32_t tid) override;
 };
 
 } // namespace Api

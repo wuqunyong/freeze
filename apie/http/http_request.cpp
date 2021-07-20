@@ -16,7 +16,7 @@ extern "C"
 
 using namespace std;
 
-namespace APie
+namespace apie
 {
 
     HttpRequest::HttpRequest()

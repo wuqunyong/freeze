@@ -9,8 +9,8 @@
 #include <unordered_set>
 #include <vector>
 
-namespace APie {
-namespace Common {
+namespace apie {
+namespace common {
 
 	struct xyBresenham
 	{

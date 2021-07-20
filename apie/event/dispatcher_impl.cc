@@ -46,8 +46,8 @@
 
 
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 std::atomic<uint64_t> DispatcherImpl::serial_num_(0);
 std::mutex DispatcherImpl::connecton_sync_;
@@ -100,8 +100,8 @@ void DispatcherImpl::clearDeferredDeleteList() {
   deferred_deleting_ = false;
 }
 
-Network::ListenerPtr DispatcherImpl::createListener(Network::ListenerCbPtr cb, Network::ListenerConfig config) {
-  return Network::ListenerPtr{new Network::ListenerImpl(*this, cb, config)};
+network::ListenerPtr DispatcherImpl::createListener(network::ListenerCbPtr cb, network::ListenerConfig config) {
+  return network::ListenerPtr{new network::ListenerImpl(*this, cb, config)};
 }
 
 TimerPtr DispatcherImpl::createTimer(TimerCb cb) {
@@ -126,7 +126,7 @@ void DispatcherImpl::exit()
 
 	switch (type_)
 	{
-	case APie::Event::EThreadType::TT_Logic:
+	case apie::event_ns::EThreadType::TT_Logic:
 	{
 		RedisClientFactorySingleton::get().destroy();
 		break;
@@ -175,14 +175,14 @@ std::atomic<bool>& DispatcherImpl::terminating()
 
 void DispatcherImpl::runIntervalCallbacks()
 {
-	bool enable = APie::CtxSingleton::get().getConfigs()->metrics.enable;
+	bool enable = apie::CtxSingleton::get().getConfigs()->metrics.enable;
 	if (enable)
 	{
 		MetricData *ptrData = new MetricData;
 		ptrData->sMetric = "queue";
 
-		auto iType = APie::CtxSingleton::get().getServerType();
-		auto iId = APie::CtxSingleton::get().getServerId();
+		auto iType = apie::CtxSingleton::get().getServerType();
+		auto iId = apie::CtxSingleton::get().getServerId();
 
 		ptrData->tag["server_type"] = std::to_string(iType);
 		ptrData->tag["server_id"] = std::to_string(iId);
@@ -236,7 +236,7 @@ void DispatcherImpl::runIntervalCallbacks()
 		command.type = Command::metric_data;
 		command.args.metric_data.ptrData = ptrData;
 
-		auto ptrMetric = APie::CtxSingleton::get().getMetricsThread();
+		auto ptrMetric = apie::CtxSingleton::get().getMetricsThread();
 		if (ptrMetric != nullptr)
 		{
 			ptrMetric->push(command);
@@ -245,7 +245,7 @@ void DispatcherImpl::runIntervalCallbacks()
 
 	switch (type_)
 	{
-	case APie::Event::EThreadType::TT_Logic:
+	case apie::event_ns::EThreadType::TT_Logic:
 	{
 		apie::rpc::RPCClientManagerSingleton::get().handleTimeout();
 		break;
@@ -280,7 +280,7 @@ void DispatcherImpl::runPostCallbacks() {
 
 void DispatcherImpl::handleCommand()
 {
-	time_t iCurTime = APie::Ctx::getCurSeconds();
+	time_t iCurTime = apie::Ctx::getCurSeconds();
 	size_t iLoopCount = mailbox_.size();
 	if (iLoopCount > m_maxMailboxStats)
 	{
@@ -580,13 +580,13 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 {
 	switch (itemPtr->type)
 	{
-	case APie::ConnetionType::CT_SERVER:
+	case apie::ConnetionType::CT_SERVER:
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 		apie::service::ServiceHandlerSingleton::get().server.onMessage(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->ptrMsg);
 		break;
 	}
-	case APie::ConnetionType::CT_CLIENT:
+	case apie::ConnetionType::CT_CLIENT:
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 		apie::service::ServiceHandlerSingleton::get().client.onMessage(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->ptrMsg);
@@ -606,7 +606,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 {
 	switch (itemPtr->type)
 	{
-	case APie::ConnetionType::CT_SERVER:
+	case apie::ConnetionType::CT_SERVER:
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 
@@ -622,7 +622,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 		defaultHandler(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->sMsg);
 		break;
 	}
-	case APie::ConnetionType::CT_CLIENT:
+	case apie::ConnetionType::CT_CLIENT:
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 
@@ -693,7 +693,7 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 		std::string sBody = itemPtr->sBody;
 		if (itemPtr->head.iFlags & PH_COMPRESSED)
 		{
-			Compressor::LZ4CompressorImpl compressor;
+			compressor::LZ4CompressorImpl compressor;
 			auto optData = compressor.compress(sBody, 0);
 			if (!optData.has_value())
 			{
@@ -710,7 +710,7 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 		{
 			if (ptrConnection->getSessionKey().has_value())
 			{
-				sBody = APie::Crypto::Utility::encode_rc4(ptrConnection->getSessionKey().value(), sBody);
+				sBody = apie::crypto::Utility::encode_rc4(ptrConnection->getSessionKey().value(), sBody);
 			}
 			else
 			{
@@ -738,7 +738,7 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 		std::string sBody = itemPtr->sBody;
 		if (itemPtr->head.iFlags & PH_COMPRESSED)
 		{
-			Compressor::LZ4CompressorImpl compressor;
+			compressor::LZ4CompressorImpl compressor;
 			auto optData = compressor.compress(sBody, 0);
 			if (!optData.has_value())
 			{
@@ -755,7 +755,7 @@ void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 		{
 			if (ptrConnection->getSessionKey().has_value())
 			{
-				sBody = APie::Crypto::Utility::encode_rc4(ptrConnection->getSessionKey().value(), sBody);
+				sBody = apie::crypto::Utility::encode_rc4(ptrConnection->getSessionKey().value(), sBody);
 			}
 			else
 			{
@@ -784,7 +784,7 @@ void DispatcherImpl::handleDial(DialParameters* ptrCmd)
 
 void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 {
-	auto clientProxy = APie::ClientProxy::findClientProxy(ptrCmd->iSerialNum);
+	auto clientProxy = apie::ClientProxy::findClientProxy(ptrCmd->iSerialNum);
 	if (clientProxy)
 	{
 		clientProxy->setLocalIp(ptrCmd->sLocalIp);
@@ -799,7 +799,7 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 
 void DispatcherImpl::handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd)
 {
-	auto ptrServer = APie::Event::DispatcherImpl::getConnection(ptrCmd->iSerialNum);
+	auto ptrServer = apie::event_ns::DispatcherImpl::getConnection(ptrCmd->iSerialNum);
 	if (ptrServer != nullptr)
 	{
 		ptrServer->handleSetServerSessionAttr(ptrCmd);
@@ -814,7 +814,7 @@ void DispatcherImpl::handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd)
 
 void DispatcherImpl::handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd)
 {
-	auto ptrClient = APie::Event::DispatcherImpl::getClientConnection(ptrCmd->iSerialNum);
+	auto ptrClient = apie::event_ns::DispatcherImpl::getClientConnection(ptrCmd->iSerialNum);
 	if (ptrClient != nullptr)
 	{
 		ptrClient->handleSetClientSessionAttr(ptrCmd);
@@ -836,7 +836,7 @@ void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 
 	::pubsub::LOGIC_CMD msg;
 
-	std::vector<std::string> fields = APie::SplitString(cmd, "|", APie::TRIM_WHITESPACE, APie::SPLIT_WANT_ALL);
+	std::vector<std::string> fields = apie::SplitString(cmd, "|", apie::TRIM_WHITESPACE, apie::SPLIT_WANT_ALL);
 	auto firstIte = fields.begin();
 	if (firstIte != fields.end())
 	{
@@ -871,12 +871,12 @@ void DispatcherImpl::handleClientPeerClose(ClientPeerClose* ptrCmd)
 
 void DispatcherImpl::handleCloseLocalClient(CloseLocalClient* ptrCmd)
 {
-	APie::Event::DispatcherImpl::delClientConnection(ptrCmd->iSerialNum);
+	apie::event_ns::DispatcherImpl::delClientConnection(ptrCmd->iSerialNum);
 }
 
 void DispatcherImpl::handleCloseLocalServer(CloseLocalServer* ptrCmd)
 {
-	auto ptrServer = APie::Event::DispatcherImpl::getConnection(ptrCmd->iSerialNum);
+	auto ptrServer = apie::event_ns::DispatcherImpl::getConnection(ptrCmd->iSerialNum);
 	if (ptrServer != nullptr)
 	{
 		std::stringstream ss;
@@ -884,7 +884,7 @@ void DispatcherImpl::handleCloseLocalServer(CloseLocalServer* ptrCmd)
 			<< ",address:" << ptrServer->ip() << "->" << ptrServer->peerIp();
 		ASYNC_PIE_LOG("DispatcherImpl/handleCloseLocalServer", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 	}
-	APie::Event::DispatcherImpl::delConnection(ptrCmd->iSerialNum);
+	apie::event_ns::DispatcherImpl::delConnection(ptrCmd->iSerialNum);
 }
 
 void DispatcherImpl::handleServerPeerClose(ServerPeerClose* ptrCmd)
@@ -907,7 +907,7 @@ void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
 
 	try {
 		CtxSingleton::get().getEndpoint()->init();
-		APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Start);
+		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Start);
 	}
 	catch (YAML::InvalidNode& e) {
 		std::stringstream ss;
@@ -932,8 +932,8 @@ void DispatcherImpl::handleLogicExit(uint32_t iThreadId)
 		return;
 	}
 
-	APie::Event::NatsSingleton::get().destroy();
-	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Exit);
+	apie::event_ns::NatsSingleton::get().destroy();
+	apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Exit);
 
 	terminating_ = true;
 }
@@ -1007,8 +1007,8 @@ void DispatcherImpl::handleMetric(MetricData* ptrCmd)
 
 					uint64_t iCurTime = nanoseconds.count();
 
-					std::string ip = APie::CtxSingleton::get().getConfigs()->metrics.ip;
-					uint16_t port = APie::CtxSingleton::get().getConfigs()->metrics.udp_port;
+					std::string ip = apie::CtxSingleton::get().getConfigs()->metrics.ip;
+					uint16_t port = apie::CtxSingleton::get().getConfigs()->metrics.udp_port;
 
 					if (ptrField != nullptr)
 					{

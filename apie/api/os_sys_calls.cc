@@ -5,8 +5,8 @@
 
 #include "../network/windows_platform.h"
 
-namespace APie {
-namespace Api {
+namespace apie {
+namespace api {
 
 uint32_t OsSysCalls::getCurProcessId()
 {

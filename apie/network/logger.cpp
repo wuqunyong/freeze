@@ -83,17 +83,17 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 	std::string logFileName;
 
 	LogFile* ptrFile = NULL;
-	bool bMerge = APie::CtxSingleton::get().getConfigs()->log.merge;
+	bool bMerge = apie::CtxSingleton::get().getConfigs()->log.merge;
 	if (bMerge && !ignoreMerge)
 	{
 		bMergeFlag = true;
-		logFileName = APie::CtxSingleton::get().getConfigs()->log.name + "-" + APie::Ctx::logPostfix();
+		logFileName = apie::CtxSingleton::get().getConfigs()->log.name + "-" + apie::Ctx::logPostfix();
 		ptrFile = getCacheFile(logFileName, PIE_CYCLE_DAY);
 	}
 	else
 	{
 		std::string tmpFile(file);
-		logFileName = tmpFile + "-" + APie::Ctx::logPostfix();
+		logFileName = tmpFile + "-" + apie::Ctx::logPostfix();
 		ptrFile = getCacheFile(logFileName, cycle);
 	}
 		
@@ -104,7 +104,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 	}
 	
 	char timebuf[64]={'\0'};
-	time_t now = APie::Ctx::getCurSeconds();
+	time_t now = apie::Ctx::getCurSeconds();
 	strftime(timebuf, sizeof(timebuf), "%Y-%m-%d %H:%M:%S",localtime(&now));
 
 	struct timeval tp;
@@ -122,7 +122,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 	}
 	fflush(ptrFile->pFile);
 
-	bool bShowConsole = APie::CtxSingleton::get().getConfigs()->log.show_console;
+	bool bShowConsole = apie::CtxSingleton::get().getConfigs()->log.show_console;
 	if (bShowConsole || level >= PIE_ERROR)
 	{
 #ifdef WIN32
@@ -161,7 +161,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 #else
-		bool bDaemon = APie::CtxSingleton::get().isDaemon();
+		bool bDaemon = apie::CtxSingleton::get().isDaemon();
 		if (!bDaemon)
 		{
 			printf("%s|%llu|%s|TAG:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
@@ -176,7 +176,7 @@ void pieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	va_list ap;
 	char msg[PIE_MAX_LOGMSG_LEN];
 
-	int iConfigLogLevel = APie::CtxSingleton::get().getConfigs()->log.level;
+	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
 	if ((level&0xff) < iConfigLogLevel)
 	{
 		return;
@@ -194,7 +194,7 @@ void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	va_list ap;
 	char msg[PIE_MAX_LOGMSG_LEN] = {'\0'};
 
-	int iConfigLogLevel = APie::CtxSingleton::get().getConfigs()->log.level;
+	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
 	if ((level&0xff) < iConfigLogLevel)
 	{
 		return;
@@ -204,23 +204,23 @@ void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	vsnprintf(msg, sizeof(msg), fmt, ap);
 	va_end(ap);
 
-	if (NULL == APie::CtxSingleton::get().getLogThread())
+	if (NULL == apie::CtxSingleton::get().getLogThread())
 	{
 		pieLogRaw(file, cycle, level, msg, false);
 		return;
 	}
 
-	APie::LogCmd* ptrCmd = new APie::LogCmd;
+	apie::LogCmd* ptrCmd = new apie::LogCmd;
 	ptrCmd->sFile = file;
 	ptrCmd->iCycle = cycle;
 	ptrCmd->iLevel = level;
 	ptrCmd->sMsg = msg;
 	ptrCmd->bIgnoreMore = false;
 
-	APie::Command cmd;
-	cmd.type = APie::Command::async_log;
+	apie::Command cmd;
+	cmd.type = apie::Command::async_log;
 	cmd.args.async_log.ptrData = ptrCmd;
-	APie::CtxSingleton::get().getLogThread()->push(cmd);
+	apie::CtxSingleton::get().getLogThread()->push(cmd);
 }
 
 void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...)
@@ -228,7 +228,7 @@ void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *
 	va_list ap;
 	char msg[PIE_MAX_LOGMSG_LEN] = { '\0' };
 
-	int iConfigLogLevel = APie::CtxSingleton::get().getConfigs()->log.level;
+	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
 	if ((level & 0xff) < iConfigLogLevel)
 	{
 		return;
@@ -238,23 +238,23 @@ void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *
 	vsnprintf(msg, sizeof(msg), fmt, ap);
 	va_end(ap);
 
-	if (NULL == APie::CtxSingleton::get().getLogThread())
+	if (NULL == apie::CtxSingleton::get().getLogThread())
 	{
 		pieLogRaw(file, cycle, level, msg, true);
 		return;
 	}
 
-	APie::LogCmd* ptrCmd = new APie::LogCmd;
+	apie::LogCmd* ptrCmd = new apie::LogCmd;
 	ptrCmd->sFile = file;
 	ptrCmd->iCycle = cycle;
 	ptrCmd->iLevel = level;
 	ptrCmd->sMsg = msg;
 	ptrCmd->bIgnoreMore = true;
 
-	APie::Command cmd;
-	cmd.type = APie::Command::async_log;
+	apie::Command cmd;
+	cmd.type = apie::Command::async_log;
 	cmd.args.async_log.ptrData = ptrCmd;
-	APie::CtxSingleton::get().getLogThread()->push(cmd);
+	apie::CtxSingleton::get().getLogThread()->push(cmd);
 }
 
 LogFile* openFile(std::string file, int cycle)
@@ -263,7 +263,7 @@ LogFile* openFile(std::string file, int cycle)
 
 	std::string sFile;
 
-	std::string sCurPath = APie::Filesystem::Directory::getCWD();
+	std::string sCurPath = apie::filesystem::Directory::getCWD();
 	
 	//TODO
 	//std::string sLogPrefix = "app";
@@ -277,7 +277,7 @@ LogFile* openFile(std::string file, int cycle)
 	sFile.append(file);
 #endif
 	
-	APie::ReplaceStrAll(sFile,"\\","/");
+	apie::ReplaceStrAll(sFile,"\\","/");
 
 	std::string::size_type pos = sFile.rfind ("/");
 	if (pos == std::string::npos) 
@@ -288,8 +288,8 @@ LogFile* openFile(std::string file, int cycle)
 	std::string sPath = sFile.substr(0, pos);
 	std::string sFileName = sFile.substr(pos + 1);
 
-	APie::Filesystem::Directory::createDirectory(sPath.c_str());
-	time_t now = APie::Ctx::getCurSeconds();
+	apie::filesystem::Directory::createDirectory(sPath.c_str());
+	time_t now = apie::Ctx::getCurSeconds();
 	struct tm * timeinfo;
 	timeinfo = localtime(&now);
 
@@ -333,13 +333,13 @@ void closeFile(LogFile* ptrFile)
 
 void moveFile(std::string from, std::string to)
 {
-	time_t now = APie::Ctx::getCurSeconds();
+	time_t now = apie::Ctx::getCurSeconds();
 	char curDate[64] = { '\0' };
 	strftime(curDate, sizeof(curDate), "%Y-%m-%d", localtime(&now));
 	to.append(curDate);
-	APie::Filesystem::Directory::createDirectory(to.c_str());
+	apie::filesystem::Directory::createDirectory(to.c_str());
 
-	std::string baseName = APie::Filesystem::Directory::basename(from.c_str());
+	std::string baseName = apie::filesystem::Directory::basename(from.c_str());
 	char filePostfix[64] = { '\0' };
 	strftime(filePostfix, sizeof(filePostfix), "backup-%Y%m%d-%H%M", localtime(&now));
 	std::string sNewFileName;
@@ -379,7 +379,7 @@ void checkRotate()
 			++ite;
 			cacheMap.erase(o);
 
-			std::string toDir = APie::CtxSingleton::get().getConfigs()->log.backup;
+			std::string toDir = apie::CtxSingleton::get().getConfigs()->log.backup;
 #ifdef WIN32
 			toDir = "D:/backup";
 #endif
@@ -435,14 +435,14 @@ bool isChangeFile(LogFile* ptrFile, int cycle)
 	struct stat statInfo;
 	if (0 == fstat(fileFd, &statInfo))
 	{
-		int32_t iSize = APie::CtxSingleton::get().getConfigs()->log.split_size;
+		int32_t iSize = apie::CtxSingleton::get().getConfigs()->log.split_size;
 		if (statInfo.st_size > iSize *1240 * 1240)
 		{
 			return true;
 		}
 	}
 
-	time_t now = APie::Ctx::getCurSeconds();
+	time_t now = apie::Ctx::getCurSeconds();
 	struct tm * timeinfo;
 	timeinfo = localtime(&now);
 

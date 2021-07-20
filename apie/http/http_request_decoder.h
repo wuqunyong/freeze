@@ -11,7 +11,7 @@ extern "C"
 #include "http_parser_impl.h"
 #include "http_request.h"
 
-namespace APie
+namespace apie
 {
     class HttpRequest;
 

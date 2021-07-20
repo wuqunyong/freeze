@@ -66,7 +66,7 @@ bool RPCServerManager::createRPCServer(
 	return true;
 }
 
-using RPCServerManagerSingleton = APie::ThreadSafeSingleton<RPCServerManager>;
+using RPCServerManagerSingleton = apie::ThreadSafeSingleton<RPCServerManager>;
 
 
 }  

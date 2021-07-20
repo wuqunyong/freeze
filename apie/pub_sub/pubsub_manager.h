@@ -122,7 +122,7 @@ std::shared_ptr<PubSub<T>> PubSubManager::getOrCreateObj(uint32_t topic)
 }
 
 
-using PubSubManagerSingleton = APie::ThreadSafeSingleton<PubSubManager>;
+using PubSubManagerSingleton = apie::ThreadSafeSingleton<PubSubManager>;
 
 
 }

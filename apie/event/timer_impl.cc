@@ -6,8 +6,8 @@
 
 #include "../network/ctx.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 	std::atomic<uint32_t> TimerImpl::s_callCount = 0;
 
@@ -50,7 +50,7 @@ std::shared_ptr<EphemeralTimer> EphemeralTimerMgr::createEphemeralTimer(TimerCb 
 		this->deleteEphemeralTimer(iId);
 	};
 	auto ptrTimer = std::make_shared<EphemeralTimer>();
-	ptrTimer->m_timer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
+	ptrTimer->m_timer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
 	ptrTimer->m_id = iId;
 
 	m_ephemeralCache[iId] = ptrTimer;

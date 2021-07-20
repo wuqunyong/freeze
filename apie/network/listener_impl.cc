@@ -12,8 +12,8 @@
 #include "event2/listener.h"
 #include "logger.h"
 
-namespace APie {
-namespace Network {
+namespace apie {
+namespace network {
 
 void ListenerImpl::listenCallback(evconnlistener*, evutil_socket_t fd, sockaddr* remote_addr, int remote_addr_len, void* arg) {
   ListenerImpl* listener = static_cast<ListenerImpl*>(arg);
@@ -33,7 +33,7 @@ void ListenerImpl::errorCallback(evconnlistener* listener, void* context) {
 }
 
 
-ListenerImpl::ListenerImpl(Event::DispatcherImpl& dispatcher, ListenerCbPtr cb, Network::ListenerConfig config) :
+ListenerImpl::ListenerImpl(event_ns::DispatcherImpl& dispatcher, ListenerCbPtr cb, network::ListenerConfig config) :
 	dispatcher_(dispatcher),
 	cb_(cb),
 	config_(config),
@@ -46,7 +46,7 @@ ListenerImpl::~ListenerImpl()
 
 }
 
-void ListenerImpl::setupServerSocket(Event::DispatcherImpl& dispatcher) {
+void ListenerImpl::setupServerSocket(event_ns::DispatcherImpl& dispatcher) {
 	memset(&listener_add_, 0, sizeof(listener_add_));
 	listener_add_.sin_family = AF_INET;
 	

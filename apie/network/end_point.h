@@ -15,9 +15,7 @@
 #include "apie/proto/init.h"
 
 
-
-
-namespace APie
+namespace apie
 {
 	class SelfRegistration : public std::enable_shared_from_this<SelfRegistration>
 	{
@@ -38,8 +36,8 @@ namespace APie
 		void setState(State state);
 		State state();
 
-		void sendRegister(APie::ClientProxy* ptrClient, std::string registryAuth);
-		void sendHeartbeat(APie::ClientProxy* ptrClient);
+		void sendRegister(apie::ClientProxy* ptrClient, std::string registryAuth);
+		void sendHeartbeat(apie::ClientProxy* ptrClient);
 
 	public:
 		static void handleRespRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response);

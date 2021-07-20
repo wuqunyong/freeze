@@ -8,8 +8,8 @@
 #include <string>
 
 
-namespace APie {
-namespace Common {
+namespace apie {
+namespace common {
 
 	// Bresenham Line Algorithm
 	std::vector<xyBresenham> BresenhamLine(int x1, int y1, int x2, int y2)

@@ -3,8 +3,8 @@
 #include <functional>
 #include <memory>
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 /**
  * Callback invoked when a signal event fires.

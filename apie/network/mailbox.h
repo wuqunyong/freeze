@@ -6,7 +6,7 @@
 
 #include "../network/signaler.h"
 
-namespace APie
+namespace apie
 {
 	typedef void (event_cb)(evutil_socket_t, short, void*);
 

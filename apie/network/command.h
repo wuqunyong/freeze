@@ -40,7 +40,7 @@
 
 #include "../serialization/protocol_head.h"
 
-namespace APie
+namespace apie
 {
 	struct PassiveConnect
 	{

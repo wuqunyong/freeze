@@ -3,11 +3,11 @@
 #include "../../common/opcodes.h"
 
 
-namespace APie {
+namespace apie {
 
 apie::status::Status SceneMgr::init()
 {
-	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Scene_Server });
+	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Scene_Server });
 	if (!bResult)
 	{
 		return {apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
@@ -26,7 +26,7 @@ apie::status::Status SceneMgr::init()
 
 apie::status::Status SceneMgr::start()
 {
-	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
+	apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 
 	return { apie::status::StatusCode::OK, "" };
 }
@@ -74,7 +74,7 @@ void SceneMgr::Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::log
 	::login_msg::MSG_RESPONSE_ECHO response;
 	response.set_value1(request.value1());
 	response.set_value2(request.value2() + "|response");
-	Network::OutputStream::sendMsgToUserByGateway(roleIdentifier, APie::OP_MSG_RESPONSE_ECHO, response);
+	network::OutputStream::sendMsgToUserByGateway(roleIdentifier, apie::OP_MSG_RESPONSE_ECHO, response);
 }
 
 apie::status::Status SceneMgr::RPC_echo(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::MSG_RPC_REQUEST_ECHO>& request, std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response)

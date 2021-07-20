@@ -16,8 +16,8 @@
 #include "../network/command.h"
 
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 	enum class EThreadType
 	{
@@ -35,23 +35,23 @@ namespace Event {
 	{
 		switch (type)
 		{
-		case APie::Event::EThreadType::TT_Listen:
+		case apie::event_ns::EThreadType::TT_Listen:
 		{
 			return "TT_Listen";
 		}
-		case APie::Event::EThreadType::TT_IO:
+		case apie::event_ns::EThreadType::TT_IO:
 		{
 			return "TT_IO";
 		}
-		case APie::Event::EThreadType::TT_Logic:
+		case apie::event_ns::EThreadType::TT_Logic:
 		{
 			return "TT_Logic";
 		}
-		case APie::Event::EThreadType::TT_Log:
+		case apie::event_ns::EThreadType::TT_Log:
 		{
 			return "TT_Log";
 		}
-		case APie::Event::EThreadType::TT_Metrics:
+		case apie::event_ns::EThreadType::TT_Metrics:
 		{
 			return "TT_Metrics";
 		}
@@ -77,9 +77,9 @@ public:
 
   virtual void clearDeferredDeleteList() PURE;
 
-  virtual Network::ListenerPtr createListener(Network::ListenerCbPtr cb, Network::ListenerConfig config) PURE;
+  virtual network::ListenerPtr createListener(network::ListenerCbPtr cb, network::ListenerConfig config) PURE;
 
-  virtual Event::TimerPtr createTimer(TimerCb cb) PURE;
+  virtual event_ns::TimerPtr createTimer(TimerCb cb) PURE;
 
   virtual void deferredDelete(DeferredDeletablePtr&& to_delete) PURE;
 

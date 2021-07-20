@@ -17,10 +17,10 @@
 
 
 
-namespace APie {
+namespace apie {
 	class Command;
 
-namespace Network {
+namespace network {
 
 	class OutputStream
 	{
@@ -33,9 +33,9 @@ namespace Network {
 		static bool sendMsgToUserByGateway(const ::rpc_msg::RoleIdentifier& roleIdentifier, uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
 
-		static bool sendCommand(ConnetionType type, uint64_t iSerialNum, APie::Command& cmd);
+		static bool sendCommand(ConnetionType type, uint64_t iSerialNum, apie::Command& cmd);
 	};
 
 
-} // namespace Network
-} // namespace Envoy
+}
+}

@@ -5,15 +5,15 @@
 
 #include "../event/dispatcher_impl.h"
 
-namespace APie {
-namespace Api {
+namespace apie {
+namespace api {
 
 Impl::Impl()
 {
 }
 
-Event::DispatcherPtr Impl::allocateDispatcher(Event::EThreadType type, uint32_t tid) {
-  return std::make_unique<Event::DispatcherImpl>(type, tid);
+event_ns::DispatcherPtr Impl::allocateDispatcher(event_ns::EThreadType type, uint32_t tid) {
+  return std::make_unique<event_ns::DispatcherImpl>(type, tid);
 }
 
 

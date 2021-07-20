@@ -4,8 +4,8 @@
 
 #include "event2/event.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 SignalEventImpl::SignalEventImpl(DispatcherImpl& dispatcher, int signal_num, SignalCb cb)
     : cb_(cb) {

@@ -117,7 +117,7 @@ struct ServiceHandler
 };
 
 
-using ServiceHandlerSingleton = APie::ThreadSafeSingleton<ServiceHandler>;
+using ServiceHandlerSingleton = apie::ThreadSafeSingleton<ServiceHandler>;
 
 
 }  

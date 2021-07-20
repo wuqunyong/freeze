@@ -23,7 +23,7 @@
 #include <utility>
 #include <vector>
 
-namespace APie {
+namespace apie {
 
 	inline uint64_t StringToUnixSeconds(const std::string& time_str)
 	{

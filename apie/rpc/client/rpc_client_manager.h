@@ -59,7 +59,7 @@ auto RPCClientManager::createRPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_m
 
 
 
-using RPCClientManagerSingleton = APie::ThreadSafeSingleton<RPCClientManager>;
+using RPCClientManagerSingleton = apie::ThreadSafeSingleton<RPCClientManager>;
 
 
 

@@ -4,8 +4,8 @@
 
 #include "../event/timer_impl.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 LibeventScheduler::LibeventScheduler() : libevent_(event_base_new()) 
 {

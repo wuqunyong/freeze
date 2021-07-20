@@ -6,8 +6,8 @@
 
 #include "../common/pure.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 struct FileReadyType {
   // File is ready for reading.

@@ -17,7 +17,7 @@
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
 
-APie::ClientConnection::ClientConnection(integer_t iSerialNum, bufferevent *bev, std::string address, short port, ProtocolType type, uint32_t threadId)
+apie::ClientConnection::ClientConnection(integer_t iSerialNum, bufferevent *bev, std::string address, short port, ProtocolType type, uint32_t threadId)
 {
 	this->iSerialNum = iSerialNum;
 	this->bev = bev;
@@ -54,17 +54,17 @@ APie::ClientConnection::ClientConnection(integer_t iSerialNum, bufferevent *bev,
 	this->decoder.setConnectSession(this);
 }
 
-uint64_t APie::ClientConnection::getSerialNum()
+uint64_t apie::ClientConnection::getSerialNum()
 {
 	return this->iSerialNum;
 }
 
-uint32_t APie::ClientConnection::getTId()
+uint32_t apie::ClientConnection::getTId()
 {
 	return this->iThreadId;
 }
 
-void APie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
+void apie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 {
 	std::stringstream ss;
 	ss << "close|iSerialNum:" << this->iSerialNum 
@@ -74,10 +74,10 @@ void APie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 
 	this->sendCloseCmd(iCode, sInfo, iActive);
 
-	APie::Event::DispatcherImpl::delClientConnection(this->iSerialNum);
+	apie::event_ns::DispatcherImpl::delClientConnection(this->iSerialNum);
 }
 
-void APie::ClientConnection::sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive)
+void apie::ClientConnection::sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive)
 {
 	Command cmd;
 	cmd.type = Command::client_peer_close;
@@ -86,10 +86,10 @@ void APie::ClientConnection::sendCloseCmd(uint32_t iResult, const std::string& s
 	cmd.args.client_peer_close.ptrData->iSerialNum = this->iSerialNum;
 	cmd.args.client_peer_close.ptrData->sInfo = sInfo;
 	cmd.args.client_peer_close.ptrData->iActive = iActive;
-	APie::CtxSingleton::get().getLogicThread()->push(cmd);
+	apie::CtxSingleton::get().getLogicThread()->push(cmd);
 }
 
-void APie::ClientConnection::sendConnectResultCmd(uint32_t iResult)
+void apie::ClientConnection::sendConnectResultCmd(uint32_t iResult)
 {
 	Command cmd;
 	cmd.type = Command::dial_result;
@@ -100,18 +100,18 @@ void APie::ClientConnection::sendConnectResultCmd(uint32_t iResult)
 	if (this->bev)
 	{
 		auto iFd = bufferevent_getfd(this->bev);
-		auto ptrAddr = Network::addressFromFd(iFd);
+		auto ptrAddr = network::addressFromFd(iFd);
 		if (ptrAddr != nullptr)
 		{
-			auto ip = Network::makeFriendlyAddress(*ptrAddr);
+			auto ip = network::makeFriendlyAddress(*ptrAddr);
 			cmd.args.dial_result.ptrData->sLocalIp = ip;
 		}
 	}
 
-	APie::CtxSingleton::get().getLogicThread()->push(cmd);
+	apie::CtxSingleton::get().getLogicThread()->push(cmd);
 }
 
-APie::ClientConnection::~ClientConnection()
+apie::ClientConnection::~ClientConnection()
 {
 	if (this->bev != NULL)
 	{
@@ -120,7 +120,7 @@ APie::ClientConnection::~ClientConnection()
 	}
 }
 
-void APie::ClientConnection::readHttp()
+void apie::ClientConnection::readHttp()
 {
 	char buf[HTTP_BUF_LEN] = { 0 };
 
@@ -144,7 +144,7 @@ void APie::ClientConnection::readHttp()
 	}
 }
 
-void APie::ClientConnection::readPB()
+void apie::ClientConnection::readPB()
 {
 	while (true)
 	{
@@ -193,7 +193,7 @@ void APie::ClientConnection::readPB()
 			{
 				if (this->getSessionKey().has_value())
 				{
-					sBody = APie::Crypto::Utility::decode_rc4(this->getSessionKey().value(), sBody);
+					sBody = apie::crypto::Utility::decode_rc4(this->getSessionKey().value(), sBody);
 				}
 				else
 				{
@@ -206,7 +206,7 @@ void APie::ClientConnection::readPB()
 
 			if (head.iFlags & PH_COMPRESSED)
 			{
-				Decompressor::LZ4DecompressorImpl decompressor;
+				decompressor::LZ4DecompressorImpl decompressor;
 				auto optDate = decompressor.decompress(sBody);
 				if (!optDate.has_value())
 				{
@@ -232,7 +232,7 @@ void APie::ClientConnection::readPB()
 	}
 }
 
-void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
+void apie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
 {
 	auto optionalData = apie::service::ServiceHandlerSingleton::get().client.getType(iOpcode);
 	if (!optionalData)
@@ -247,7 +247,7 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 		command.type = Command::pb_forward;
 		command.args.pb_forward.ptrData = itemObjPtr;
 
-		auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
+		auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
 		if (ptrLogic == nullptr)
 		{
 			delete itemObjPtr;
@@ -294,7 +294,7 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	command.type = Command::pb_reqeust;
 	command.args.pb_reqeust.ptrData = itemObjPtr;
 
-	auto ptrLogic = APie::CtxSingleton::get().getLogicThread();
+	auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
 	if (ptrLogic == nullptr)
 	{
 		delete itemObjPtr;
@@ -307,7 +307,7 @@ void APie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	ptrLogic->push(command);
 }
 
-void APie::ClientConnection::readcb()
+void apie::ClientConnection::readcb()
 {
 	switch (this->iType)
 	{
@@ -326,12 +326,12 @@ void APie::ClientConnection::readcb()
 	}
 }
 
-void APie::ClientConnection::writecb()
+void apie::ClientConnection::writecb()
 {
 
 }
 
-void APie::ClientConnection::eventcb(short what)
+void apie::ClientConnection::eventcb(short what)
 {
 	if (what & BEV_EVENT_EOF)
 	{
@@ -367,13 +367,13 @@ void APie::ClientConnection::eventcb(short what)
 }
 
 
-void APie::ClientConnection::SetConnectTo(const std::string& sAddress, uint16_t iPort)
+void apie::ClientConnection::SetConnectTo(const std::string& sAddress, uint16_t iPort)
 {
 	this->sListenAddress = sAddress;
 	this->iListenPort = iPort;
 }
 
-void APie::ClientConnection::handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd)
+void apie::ClientConnection::handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd)
 {
 	if (ptrCmd == nullptr)
 	{
@@ -386,12 +386,12 @@ void APie::ClientConnection::handleSetClientSessionAttr(SetClientSessionAttr* pt
 	}
 }
 
-std::optional<std::string> APie::ClientConnection::getSessionKey()
+std::optional<std::string> apie::ClientConnection::getSessionKey()
 {
 	return m_optSessionKey;
 }
 
-void APie::ClientConnection::handleSend(const char *data, size_t size)
+void apie::ClientConnection::handleSend(const char *data, size_t size)
 {
 	if (NULL != this->bev)
 	{
@@ -411,7 +411,7 @@ void APie::ClientConnection::handleSend(const char *data, size_t size)
 	}
 }
 
-void APie::ClientConnection::handleClose()
+void apie::ClientConnection::handleClose()
 {
 	std::stringstream ss;
 	ss << "ClientConnection|active|" << "call By C_closeSocket";
@@ -420,25 +420,25 @@ void APie::ClientConnection::handleClose()
 
 static void client_readcb(struct bufferevent *bev, void *arg)
 {
-	APie::ClientConnection *ptrSession = (APie::ClientConnection *)arg;
+	apie::ClientConnection *ptrSession = (apie::ClientConnection *)arg;
 	ptrSession->readcb();
 }
 
 static void client_writecb(struct bufferevent *bev, void *arg)
 {
-	APie::ClientConnection *ptrSession = (APie::ClientConnection *)arg;
+	apie::ClientConnection *ptrSession = (apie::ClientConnection *)arg;
 	ptrSession->writecb();
 }
 
 static void client_eventcb(struct bufferevent *bev, short what, void *arg)
 {
-	APie::ClientConnection *ptrSession = (APie::ClientConnection *)arg;
+	apie::ClientConnection *ptrSession = (apie::ClientConnection *)arg;
 	ptrSession->eventcb(what);
 }
 
-std::shared_ptr<APie::ClientConnection> APie::ClientConnection::createClient(uint32_t threadId, struct event_base *base, DialParameters* ptrDial)
+std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uint32_t threadId, struct event_base *base, DialParameters* ptrDial)
 {
-	std::shared_ptr<APie::ClientConnection> ptrSharedClient(nullptr);
+	std::shared_ptr<apie::ClientConnection> ptrSharedClient(nullptr);
 
 	uint64_t iSerialNum = ptrDial->iCurSerialNum;
 	uint16_t iPort = ptrDial->iPort;
@@ -459,7 +459,7 @@ std::shared_ptr<APie::ClientConnection> APie::ClientConnection::createClient(uin
 
 		if (s.sin_addr.s_addr == INADDR_NONE)
 		{
-			APie::Network::getInAddr(&s.sin_addr, ip);
+			apie::network::getInAddr(&s.sin_addr, ip);
 		}
 
 		bev = bufferevent_socket_new(base, -1, BEV_OPT_CLOSE_ON_FREE);
@@ -519,7 +519,7 @@ std::shared_ptr<APie::ClientConnection> APie::ClientConnection::createClient(uin
 		}
 
 		ptrSharedClient.reset(ptrConnectSession);
-		APie::Event::DispatcherImpl::addClientConnection(ptrSharedClient);
+		apie::event_ns::DispatcherImpl::addClientConnection(ptrSharedClient);
 
 
 		bufferevent_setcb(bev, client_readcb, client_writecb, client_eventcb, ptrConnectSession);
@@ -542,7 +542,7 @@ std::shared_ptr<APie::ClientConnection> APie::ClientConnection::createClient(uin
 		cmd.args.dial_result.ptrData->iResult = iResult;
 		cmd.args.dial_result.ptrData->iSerialNum = iSerialNum;
 
-		APie::CtxSingleton::get().getLogicThread()->push(cmd);
+		apie::CtxSingleton::get().getLogicThread()->push(cmd);
 	}
 
 

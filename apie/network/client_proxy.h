@@ -14,14 +14,14 @@
 
 #include <google/protobuf/message.h>
 
-namespace APie
+namespace apie
 {
 	class ClientProxy : public std::enable_shared_from_this<ClientProxy>
 	{
 	public:
 		//参数：iResult:0(连接成功)
 		//返回值：true:出错后进程尝试，false:出错后调用close
-		using HandleConnectCB = std::function<bool(APie::ClientProxy* ptrClient, uint32_t iResult)>;
+		using HandleConnectCB = std::function<bool(apie::ClientProxy* ptrClient, uint32_t iResult)>;
 
 		using HeartbeatCB = std::function<void(ClientProxy* ptrClient)>;
 
@@ -66,7 +66,7 @@ namespace APie
 		bool isConnectted();
 		void setHadEstablished(uint32_t value);
 
-		Event::TimerPtr& reconnectTimer();
+		event_ns::TimerPtr& reconnectTimer();
 
 		void setLocalIp(const std::string& ip);
 
@@ -99,9 +99,9 @@ namespace APie
 		uint32_t m_hadEstablished; //当前的连接状态：0：未连接，1：已连上
 		uint32_t m_reconnectTimes;
 
-		Event::TimerPtr m_reconnectTimer;
+		event_ns::TimerPtr m_reconnectTimer;
 
-		Event::TimerPtr m_heartbeatTimer;
+		event_ns::TimerPtr m_heartbeatTimer;
 		HeartbeatCB m_heartbeatCb;
 
 		uint32_t m_tId;            //附着IO线程ID

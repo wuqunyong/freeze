@@ -21,8 +21,8 @@
 #define MKDIR(a) mkdir((a),0755)
 #endif
 
-namespace APie {
-namespace Filesystem {
+namespace apie {
+namespace filesystem {
 
 std::string Directory::sCurPath;
 

@@ -13,8 +13,8 @@
 #include <event2/util.h>
 
 
-namespace APie {
-namespace Network {
+namespace apie {
+namespace network {
 
 struct ListenerConfig
 {
@@ -63,5 +63,5 @@ public:
 };
 
 
-} // namespace Network
-} // namespace Envoy
+}
+}

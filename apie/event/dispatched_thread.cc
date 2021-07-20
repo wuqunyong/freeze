@@ -8,8 +8,8 @@
 #include "../network/logger.h"
 
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 void DispatchedThreadImpl::start(void) {
 	state_ = DTState::DTS_Running;
@@ -57,7 +57,7 @@ MySQLConnector& DispatchedThreadImpl::getMySQLConnector()
 	return mysqlConnector_;
 }
 
-void DispatchedThreadImpl::push(std::shared_ptr<Network::Listener> listener)
+void DispatchedThreadImpl::push(std::shared_ptr<network::Listener> listener)
 {
 	listener_.push_back(listener);
 }

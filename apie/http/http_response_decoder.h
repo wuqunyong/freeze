@@ -4,7 +4,7 @@
 #include "http_parser_impl.h"
 #include "http_response.h"
 
-namespace APie
+namespace apie
 {
 
     class HttpResponseDecoder : public HttpParser

@@ -6,7 +6,7 @@
 #include "../network/logger.h"
 #include "../network/ctx.h"
 
-namespace APie
+namespace apie
 {
 
 	HttpParser::HttpParser(enum http_parser_type type)

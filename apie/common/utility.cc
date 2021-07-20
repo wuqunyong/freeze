@@ -8,8 +8,8 @@
 #include <string>
 
 
-namespace APie {
-namespace Common {
+namespace apie {
+namespace common {
 
 	SystemTime RealTimeSource::systemTime()
 	{

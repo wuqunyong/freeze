@@ -22,8 +22,8 @@ extern "C" {
 void evconnlistener_free(evconnlistener*);
 }
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 namespace Libevent {
 
 /**

@@ -9,7 +9,7 @@
 #include "../common/string_utils.h"
 #include "../network/client_connection.h"
 
-namespace APie
+namespace apie
 {
     size_t HttpResponseDecoder::ms_maxHeaderSize = 80 * 1024;
     size_t HttpResponseDecoder::ms_maxBodySize = 10 * 1024 * 1024;
@@ -87,7 +87,7 @@ namespace APie
 			<< " | " << "body:" << m_response_ptr->body;
 
 		std::string tmp = ss.str();
-		APie::ReplaceStrAll(tmp, "\r\n", "@r@n");
+		apie::ReplaceStrAll(tmp, "\r\n", "@r@n");
 		ASYNC_PIE_LOG("http/recv_response", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", tmp.c_str());
 
 		Command cmd;

@@ -1,7 +1,7 @@
 #include "http_parser_settings.h"
 #include "http_parser_impl.h"
 
-namespace APie
+namespace apie
 {
 
 	HttpParserSettings::HttpParserSettings()

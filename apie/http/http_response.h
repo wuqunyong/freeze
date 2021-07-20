@@ -5,7 +5,7 @@
 
 #include "http_common.h"
 
-namespace APie
+namespace apie
 {
     class HttpResponse
     {

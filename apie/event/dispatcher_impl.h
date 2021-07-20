@@ -22,8 +22,8 @@
 #include "../network/client_connection.h"
 #include "../network/listener.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 /**
  * libevent implementation of Event::Dispatcher.
@@ -39,7 +39,7 @@ public:
   event_base& base() { return base_scheduler_.base(); }
 
   void clearDeferredDeleteList() override;
-  Network::ListenerPtr createListener(Network::ListenerCbPtr cb, Network::ListenerConfig config) override;
+  network::ListenerPtr createListener(network::ListenerCbPtr cb, network::ListenerConfig config) override;
   TimerPtr createTimer(TimerCb cb) override;
   void deferredDelete(DeferredDeletablePtr&& to_delete) override;
 
@@ -115,7 +115,7 @@ private:
   std::list<std::function<void()>> post_callbacks_;
   bool deferred_deleting_{};
 
-  APie::Mailbox<Command> mailbox_;
+  apie::Mailbox<Command> mailbox_;
   time_t i_next_check_rotate;
   time_t i_next_metric_time;
 

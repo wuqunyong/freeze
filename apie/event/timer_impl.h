@@ -10,8 +10,8 @@
 #include "../event/libevent.h"
 #include "../singleton/threadsafe_singleton.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 /**
  * libevent implementation of Timer.
@@ -40,7 +40,7 @@ public:
 
 private:
 	uint64_t m_id = 0;
-	Event::TimerPtr m_timer;
+	event_ns::TimerPtr m_timer;
 
 	friend class EphemeralTimerMgr;
 };

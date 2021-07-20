@@ -2,8 +2,8 @@
 
 #include "event2/event_struct.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 /**
  * Base class for libevent event implementations. The event struct is embedded inside of this class

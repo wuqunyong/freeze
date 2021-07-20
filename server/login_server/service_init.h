@@ -10,7 +10,7 @@
 
 #include "apie.h"
 
-namespace APie {
+namespace apie {
 
 apie::status::Status initHook();
 apie::status::Status startHook();

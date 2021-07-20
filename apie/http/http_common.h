@@ -9,7 +9,7 @@ extern "C"
 struct http_parser;    
 }
 
-namespace APie
+namespace apie
 {
 
     class HttpRequest;

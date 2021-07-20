@@ -17,7 +17,7 @@
 #include "apie/proto/init.h"
 
 
-namespace APie {
+namespace apie {
 
 	class DAOFactory
 	{

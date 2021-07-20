@@ -18,7 +18,7 @@
 
 #include "yaml-cpp/yaml.h"
 
-namespace APie
+namespace apie
 {
     //  Context object encapsulates all the global state associated with
     //  the library.
@@ -44,15 +44,15 @@ namespace APie
 
 		void resetYamlNode(YAML::Node node);
 
-		std::shared_ptr<Event::DispatchedThreadImpl> chooseIOThread();
-		std::shared_ptr<Event::DispatchedThreadImpl> getLogicThread();
-		std::shared_ptr<Event::DispatchedThreadImpl> getLogThread();
-		std::shared_ptr<Event::DispatchedThreadImpl> getMetricsThread();
-		std::shared_ptr<Event::DispatchedThreadImpl> getNatsThread();
+		std::shared_ptr<event_ns::DispatchedThreadImpl> chooseIOThread();
+		std::shared_ptr<event_ns::DispatchedThreadImpl> getLogicThread();
+		std::shared_ptr<event_ns::DispatchedThreadImpl> getLogThread();
+		std::shared_ptr<event_ns::DispatchedThreadImpl> getMetricsThread();
+		std::shared_ptr<event_ns::DispatchedThreadImpl> getNatsThread();
 
 		//std::shared_ptr<Event::DispatchedThreadImpl> getDBThread();
 
-		std::shared_ptr<Event::DispatchedThreadImpl> getThreadById(uint32_t id);
+		std::shared_ptr<event_ns::DispatchedThreadImpl> getThreadById(uint32_t id);
 
 		std::string launchTime();
 
@@ -88,16 +88,16 @@ namespace APie
 
 		std::shared_ptr<APieConfig> loadConfigs();
 
-		typedef std::vector<std::shared_ptr<Event::DispatchedThreadImpl>> ThreadVec;
-		std::map<Event::EThreadType, ThreadVec> thread_;
+		typedef std::vector<std::shared_ptr<event_ns::DispatchedThreadImpl>> ThreadVec;
+		std::map<event_ns::EThreadType, ThreadVec> thread_;
 
-		std::shared_ptr<Event::DispatchedThreadImpl> logic_thread_;
-		std::shared_ptr<Event::DispatchedThreadImpl> log_thread_;
-		std::shared_ptr<Event::DispatchedThreadImpl> metrics_thread_;
+		std::shared_ptr<event_ns::DispatchedThreadImpl> logic_thread_;
+		std::shared_ptr<event_ns::DispatchedThreadImpl> log_thread_;
+		std::shared_ptr<event_ns::DispatchedThreadImpl> metrics_thread_;
 		//std::shared_ptr<Event::DispatchedThreadImpl> db_thread_;
-		std::shared_ptr<Event::DispatchedThreadImpl> nats_thread_;
+		std::shared_ptr<event_ns::DispatchedThreadImpl> nats_thread_;
 
-		std::map<uint32_t, std::shared_ptr<Event::DispatchedThreadImpl>> thread_id_;
+		std::map<uint32_t, std::shared_ptr<event_ns::DispatchedThreadImpl>> thread_id_;
 
 		std::string m_launchTime;
 

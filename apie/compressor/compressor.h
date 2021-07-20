@@ -5,8 +5,8 @@
 
 #include "../common/pure.h"
 
-namespace APie {
-namespace Compressor {
+namespace apie {
+namespace compressor {
 
 
 /**

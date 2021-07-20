@@ -24,7 +24,7 @@
 #include "../network/object.hpp"
 
 
-namespace APie {
+namespace apie {
 	object_t::object_t(uint32_t tid) :
 		tid_(tid)
 	{

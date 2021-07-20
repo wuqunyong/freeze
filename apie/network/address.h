@@ -14,8 +14,8 @@
 
 
 
-namespace APie {
-namespace Network {
+namespace apie {
+namespace network {
 
 std::shared_ptr<sockaddr_in> addressFromFd(evutil_socket_t fd);
 std::shared_ptr<sockaddr_in> peerAddressFromFd(evutil_socket_t fd);

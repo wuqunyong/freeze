@@ -1,10 +1,10 @@
 #include "service_registry.h"
 
-namespace APie {
+namespace apie {
 
 apie::status::Status ServiceRegistry::init()
 {
-	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Service_Registry });
+	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Service_Registry });
 	if (!bResult)
 	{
 		return {apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
@@ -33,17 +33,17 @@ apie::status::Status ServiceRegistry::init()
 
 apie::status::Status ServiceRegistry::start()
 {
-	m_id = "id_" + APie::CtxSingleton::get().launchTime();
-	m_serviceTimeout = APie::CtxSingleton::get().getConfigs()->service_timeout;
+	m_id = "id_" + apie::CtxSingleton::get().launchTime();
+	m_serviceTimeout = apie::CtxSingleton::get().getConfigs()->service_timeout;
 
 	auto timerCb = [this]() {
 		this->update();
 		this->addUpdateTimer(1000);
 	};
-	this->m_updateTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
+	this->m_updateTimer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
 	this->addUpdateTimer(1000);
 
-	APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
+	apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 
 	return { apie::status::StatusCode::OK, "" };
 }
@@ -97,9 +97,9 @@ void ServiceRegistry::update()
 
 	if (this->m_status == service_discovery::RS_Learning)
 	{
-		auto iDuration = APie::CtxSingleton::get().getConfigs()->service_learning_duration;
+		auto iDuration = apie::CtxSingleton::get().getConfigs()->service_learning_duration;
 
-		auto iCurTime = APie::CtxSingleton::get().getCurSeconds();
+		auto iCurTime = apie::CtxSingleton::get().getCurSeconds();
 		if (m_iStatusCheckTime == 0)
 		{
 			m_iStatusCheckTime = iCurTime;
@@ -115,7 +115,7 @@ void ServiceRegistry::update()
 
 bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance)
 {
-	auto curTime = APie::CtxSingleton::get().getCurSeconds();
+	auto curTime = apie::CtxSingleton::get().getCurSeconds();
 
 	EndPoint point;
 	point.realm = instance.realm();
@@ -152,7 +152,7 @@ bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 
 bool ServiceRegistry::updateHeartbeat(uint64_t iSerialNum)
 {
-	auto curTime = APie::CtxSingleton::get().getCurSeconds();
+	auto curTime = apie::CtxSingleton::get().getCurSeconds();
 
 	auto findIte = m_registered.find(iSerialNum);
 	if (findIte != m_registered.end())
@@ -187,7 +187,7 @@ bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 
 void ServiceRegistry::checkTimeout()
 {
-	auto curTime = APie::CtxSingleton::get().getCurSeconds();
+	auto curTime = apie::CtxSingleton::get().getCurSeconds();
 
 	std::vector<uint64_t> delSerial;
 	for (const auto& items : m_registered)
@@ -232,7 +232,7 @@ void ServiceRegistry::broadcast()
 
 	for (const auto& items : m_registered)
 	{
-		APie::Network::OutputStream::sendMsg(items.first, ::opcodes::OPCODE_ID::OP_DISCOVERY_MSG_NOTICE_INSTANCE, notice);
+		apie::network::OutputStream::sendMsg(items.first, ::opcodes::OPCODE_ID::OP_DISCOVERY_MSG_NOTICE_INSTANCE, notice);
 	}
 }
 
@@ -253,7 +253,7 @@ apie::status::Status  ServiceRegistry::handleRequestRegisterInstance(uint64_t iS
 	std::stringstream ss;
 	ss << "iSerialNum:" << iSerialNum << ",request:" << request->ShortDebugString();
 
-	auto auth = APie::CtxSingleton::get().identify().auth;
+	auto auth = apie::CtxSingleton::get().identify().auth;
 	if (!auth.empty() && auth != request->auth())
 	{
 		response->set_status_code(opcodes::SC_Discovery_AuthError);
@@ -280,7 +280,7 @@ apie::status::Status  ServiceRegistry::handleRequestRegisterInstance(uint64_t iS
 	auto cb = [](){
 		ServiceRegistrySingleton::get().broadcast();
 	};
-	APie::CtxSingleton::get().getLogicThread()->dispatcher().post(cb);
+	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(cb);
 
 	return { apie::status::StatusCode::OK, "" };
 }

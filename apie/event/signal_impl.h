@@ -5,8 +5,8 @@
 #include "../event/dispatcher_impl.h"
 #include "../event/event_impl_base.h"
 
-namespace APie {
-namespace Event {
+namespace apie {
+namespace event_ns {
 
 /**
  * libevent implementation of Event::SignalEvent.

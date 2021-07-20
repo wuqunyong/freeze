@@ -13,7 +13,7 @@
 
 #include "../common/string_utils.h"
 
-namespace APie
+namespace apie
 {
     size_t HttpRequestDecoder::ms_maxHeaderSize = 80 * 1024;
     size_t HttpRequestDecoder::ms_maxBodySize = 10 * 1024 * 1024;
@@ -123,10 +123,10 @@ namespace APie
 			<< " | " << "body:" << m_request_ptr->body;
 
 		std::string tmp = ss.str();
-		APie::ReplaceStrAll(tmp, "\r\n", "@r@n");
+		apie::ReplaceStrAll(tmp, "\r\n", "@r@n");
 		ASYNC_PIE_LOG("http/request", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", tmp.c_str());
 
-		char* ptrDecode = APie::URLDecode(m_request_ptr->query.c_str());
+		char* ptrDecode = apie::URLDecode(m_request_ptr->query.c_str());
 		if (ptrDecode != NULL)
 		{
 			m_request_ptr->query = ptrDecode;
@@ -153,7 +153,7 @@ namespace APie
 		httpHead.insert(Headers_t::value_type("Connection", "close"));
 
 		std::stringstream ss;
-		ss << "parse error|" << APie::Ctx::getCurSeconds() << std::endl;
+		ss << "parse error|" << apie::Ctx::getCurSeconds() << std::endl;
 		HttpResponse response(error.statusCode, httpHead, ss.str());
 		std::string responseContent = response.dump();
 		m_session_ptr->handleSend(responseContent.data(), responseContent.size());
