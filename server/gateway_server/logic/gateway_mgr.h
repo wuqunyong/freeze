@@ -13,9 +13,7 @@
 #include "../../../pb_msg/business/login_msg.pb.h"
 #include "../../../pb_msg/business/rpc_login.pb.h"
 
-#include "../../../pb_msg/core/nats_msg.pb.h"
-
-namespace APie {
+namespace apie {
 
 	class GatewayRole;
 
@@ -30,9 +28,9 @@ namespace APie {
 	class GatewayMgr
 	{
 	public:
-		std::tuple<uint32_t, std::string> init();
-		std::tuple<uint32_t, std::string> start();
-		std::tuple<uint32_t, std::string> ready();
+		apie::status::Status init();
+		apie::status::Status start();
+		apie::status::Status ready();
 		void exit();
 
 		std::shared_ptr<GatewayRole> findGatewayRoleById(uint64_t iRoleId);
@@ -48,7 +46,7 @@ namespace APie {
 
 	public:
 		// CMD
-		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
+		static void onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
 		
 		static void onMysqlInsertToDbORM(::pubsub::LOGIC_CMD& cmd);
 		static void onMysqlDeleteFromDbORM(::pubsub::LOGIC_CMD& cmd);
@@ -59,21 +57,24 @@ namespace APie {
 		
 
 		// RPC
-		static std::tuple<uint32_t, std::string> RPC_handleDeMultiplexerForward(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::rpc_msg::PRC_DeMultiplexer_Forward_Args& request);
-		static std::tuple<uint32_t, std::string> RPC_handleLoginPending(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::rpc_login::L2G_LoginPendingRequest& request);
+		static apie::status::Status RPC_handleLoginPending(
+			const ::rpc_msg::CLIENT_IDENTIFIER& context, const std::shared_ptr<rpc_login::L2G_LoginPendingRequest>& request, std::shared_ptr<rpc_login::L2G_LoginPendingResponse>& response);
 
 		
 
 		// PubSub
-		static void onServerPeerClose(uint64_t topic, ::google::protobuf::Message& msg);
+		static void onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg);
 
 
 		// CLIENT OPCODE
 		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
 
-		static void handleRequestClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_CLIENT_LOGIN& request);
-		static void handleRequestHandshakeInit(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_HANDSHAKE_INIT& request);
-		static void handleRequestHandshakeEstablished(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED& request);
+		static apie::status::Status handleRequestClientLogin(
+			uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response);
+		static apie::status::Status handleRequestHandshakeInit(
+			uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>& response);
+		static apie::status::Status handleRequestHandshakeEstablished(
+			uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>& response);
 		
 
 	private:

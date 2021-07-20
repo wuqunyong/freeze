@@ -42,7 +42,7 @@ namespace apie {
 		static void RPC_echoCb(const apie::status::Status& status, const std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response);
 
 	private:
-		std::array<int, 5> a;
+
 	};
 
 	using LoginMgrSingleton = ThreadSafeSingleton<LoginMgr>;

@@ -1,7 +1,7 @@
 #include "gateway_role.h"
 #include "gateway_mgr.h"
 
-namespace APie {
+namespace apie {
 
 std::shared_ptr<GatewayRole> GatewayRole::createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum)
 {
@@ -48,8 +48,8 @@ uint32_t GatewayRole::getMaskFlag()
 
 bool GatewayRole::addRequestPerUnit(uint64_t iValue)
 {
-	auto iCurTime = APie::CtxSingleton::get().getCurSeconds();
-	uint32_t iLimit = APie::CtxSingleton::get().yamlAs<uint32_t>({ "limited", "requests_per_unit" }, 0);
+	auto iCurTime = apie::CtxSingleton::get().getCurSeconds();
+	uint32_t iLimit = apie::CtxSingleton::get().getConfigs()->limited.requests_per_unit;
 
 	if (iCurTime > m_iRequestUnitExpiresAt)
 	{
@@ -58,7 +58,7 @@ bool GatewayRole::addRequestPerUnit(uint64_t iValue)
 
 	if (m_iRequestUnitExpiresAt == 0)
 	{
-		uint32_t iDuration = APie::CtxSingleton::get().yamlAs<uint32_t>({ "limited", "uint" }, 60);
+		uint32_t iDuration = apie::CtxSingleton::get().getConfigs()->limited.uint;
 		m_iRequestUnitExpiresAt = iCurTime + iDuration;
 	}
 

@@ -1,6 +1,6 @@
 identify:
   realm: 1
-  type: 4
+  type: 3
   id: 1
   auth: "hello"
   ip: "127.0.0.1"

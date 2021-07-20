@@ -12,7 +12,7 @@
 #include "apie.h"
 
 
-namespace APie {
+namespace apie {
 
 	class GatewayRole : public std::enable_shared_from_this<GatewayRole>
 	{
