@@ -1,17 +1,15 @@
-#include "../network/output_stream.h"
-
+#include "apie/network/output_stream.h"
 
 #include <array>
 #include <cstdint>
 #include <string>
 #include <assert.h>
 
-#include "../event/dispatcher_impl.h"
-#include "../network/ctx.h"
-#include "../serialization/protocol_head.h"
-#include "../rpc/client/rpc_client.h"
-
-#include "command.h"
+#include "apie/event/dispatcher_impl.h"
+#include "apie/network/ctx.h"
+#include "apie/serialization/protocol_head.h"
+#include "apie/rpc/client/rpc_client.h"
+#include "apie/network/command.h"
 
 namespace apie {
 namespace network {

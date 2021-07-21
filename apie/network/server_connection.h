@@ -4,12 +4,12 @@
 #include <string>
 #include <optional>
 
+#include <event2/bufferevent.h>
+
 #include "apie/network/i_poll_events.hpp"
 #include "apie/network/object.hpp"
-
 #include "apie/http/http_request_decoder.h"
 
-#include <event2/bufferevent.h>
 
 
 namespace apie

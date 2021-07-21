@@ -5,12 +5,10 @@
 
 #include "apie/rpc/client/rpc_client_base.h"
 #include "apie/rpc/client/rpc_client_contex.h"
-
 #include "apie/status/status.h"
 #include "apie/network/ctx.h"
 #include "apie/event/nats_proxy.h"
 #include "apie/common/protobuf_factory.h"
-
 #include "apie/network/ctx.h"
 
 namespace apie {

@@ -5,19 +5,15 @@
 #include <vector>
 #include <functional>
 #include <optional>
-
 #include <stdlib.h>
 
 #include <event2/util.h>
 #include <google/protobuf/message.h>
 
 #include "apie/network/server_connection.h"
-
 #include "apie/http/http_request.h"
 #include "apie/http/http_response.h"
-
 #include "apie/network/i_poll_events.hpp"
-
 #include "apie/serialization/protocol_head.h"
 
 namespace apie

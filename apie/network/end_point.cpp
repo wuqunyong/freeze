@@ -1,16 +1,12 @@
 #include "apie/network/end_point.h"
 
-#include "apie/network/ctx.h"
-#include "apie/network/client_proxy.h"
-
-#include "apie/proto/init.h"
-
-
-#include "apie/rpc/init.h"
-
-#include "apie/network/output_stream.h"
 #include <sstream>
 
+#include "apie/network/ctx.h"
+#include "apie/network/client_proxy.h"
+#include "apie/proto/init.h"
+#include "apie/rpc/init.h"
+#include "apie/network/output_stream.h"
 #include "apie/service/service_manager.h"
 #include "apie/pub_sub/pubsub_manager.h"
 

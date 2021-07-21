@@ -5,12 +5,12 @@
 #include <string>
 #include <stdexcept>
 
+#include <event2/util.h>
+
 #include "apie/common/pure.h"
 #include "apie/event/libevent.h"
-
 #include "apie/network/i_poll_events.hpp"
 
-#include <event2/util.h>
 
 
 namespace apie {

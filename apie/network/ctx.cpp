@@ -7,19 +7,6 @@
 #include <chrono>
 #include <tuple> 
 
-#include "nats/nats.h"
-
-#include "apie/network/ctx.h"
-#include "apie/network/address.h"
-#include "apie/network/client_proxy.h"
-
-#include "apie/common/exception_trap.h"
-
-#include "apie/api/hook.h"
-
-#include "apie/event/nats_proxy.h"
-
-
 #ifdef WIN32
 #define SLEEP_MS(ms) Sleep(ms)
 #else
@@ -49,14 +36,24 @@
 sigset_t g_SigSet;
 #endif
 
+
+#include "nats/nats.h"
+
+
+#include "apie/network/ctx.h"
+#include "apie/network/address.h"
+#include "apie/network/client_proxy.h"
 #include "apie/network/logger.h"
 #include "apie/network/i_poll_events.hpp"
-#include "apie/common/string_utils.h"
-#include "apie/api/os_sys_calls.h"
-
-#include "apie/redis_driver/redis_client.h"
+#include "apie/common/exception_trap.h"
 #include "apie/common/file.h"
 #include "apie/common/enum_to_int.h"
+#include "apie/common/string_utils.h"
+#include "apie/api/hook.h"
+#include "apie/event/nats_proxy.h"
+#include "apie/api/os_sys_calls.h"
+#include "apie/redis_driver/redis_client.h"
+
 
 namespace apie {
 

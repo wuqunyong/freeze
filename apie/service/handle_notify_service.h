@@ -4,7 +4,6 @@
 #include <string>
 #include <functional>
 
-
 #include "apie/status/status.h"
 #include "apie/service/service_base.h"
 

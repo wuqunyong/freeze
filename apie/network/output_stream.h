@@ -1,18 +1,15 @@
 #pragma once
 
-
 #include <array>
 #include <cstdint>
 #include <string>
 
-#include "apie/network/address.h"
-#include "apie/network/windows_platform.h"
-
-#include "apie/network/i_poll_events.hpp"
-
 #include <event2/util.h>
 #include <google/protobuf/message.h>
 
+#include "apie/network/address.h"
+#include "apie/network/windows_platform.h"
+#include "apie/network/i_poll_events.hpp"
 #include "apie/proto/init.h"
 
 

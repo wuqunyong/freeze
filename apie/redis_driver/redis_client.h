@@ -16,7 +16,6 @@
 
 #include "apie/singleton/threadsafe_singleton.h"
 #include "apie/event/timer.h"
-
 #include "apie/proto/init.h"
 
 

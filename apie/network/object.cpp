@@ -1,7 +1,8 @@
+#include "apie/network/object.hpp"
+
 #include <string.h>
 #include <stdarg.h>
 
-#include "apie/network/object.hpp"
 
 
 namespace apie {

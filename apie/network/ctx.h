@@ -6,17 +6,16 @@
 #include <memory>
 #include <atomic>
 
+#include "yaml-cpp/yaml.h"
+
 #include "apie/singleton/threadsafe_singleton.h"
 #include "apie/event/dispatched_thread.h"
 #include "apie/network/platform_impl.h"
 #include "apie/network/i_poll_events.hpp"
 #include "apie/network/end_point.h"
-
 #include "apie/configs/configs.h"
-
 #include "apie/proto/init.h"
 
-#include "yaml-cpp/yaml.h"
 
 namespace apie
 {

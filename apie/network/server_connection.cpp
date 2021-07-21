@@ -2,21 +2,18 @@
 
 #include <sstream>
 #include <iostream>
-
-#include <event2/buffer.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
 
+#include <event2/buffer.h>
+
 #include "apie/serialization/protocol_head.h"
 #include "apie/event/dispatcher_impl.h"
 #include "apie/network/ctx.h"
-
 #include "apie/decompressor/lz4_decompressor_impl.h"
-
 #include "apie/network/command.h"
 #include "apie/crypto/crypto_utility.h"
-
 #include "apie/service/service_manager.h"
 #include "apie/network/logger.h"
 #include "apie/common/protobuf_factory.h"

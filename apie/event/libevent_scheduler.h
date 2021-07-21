@@ -1,11 +1,10 @@
 #pragma once
 
+#include "event2/event.h"
+
 #include "apie/event/dispatcher.h"
 #include "apie/event/timer.h"
-
 #include "apie/event/libevent.h"
-
-#include "event2/event.h"
 
 namespace apie {
 namespace event_ns {

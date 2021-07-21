@@ -8,11 +8,11 @@
 #include <functional>
 #include <map>
 
-#include "apie/network/i_poll_events.hpp"
+#include <google/protobuf/message.h>
 
+#include "apie/network/i_poll_events.hpp"
 #include "apie/event/timer.h"
 
-#include <google/protobuf/message.h>
 
 namespace apie
 {

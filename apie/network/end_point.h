@@ -2,16 +2,13 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-
 #include <string>
 #include <vector>
 #include <optional>
 
 #include "apie/network/i_poll_events.hpp"
 #include "apie/network/client_proxy.h"
-
 #include "apie/singleton/threadsafe_singleton.h"
-
 #include "apie/proto/init.h"
 
 

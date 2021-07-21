@@ -1,4 +1,5 @@
 #include "apie/mysql_driver/mysql_orm.h"
+
 #include "apie/mysql_driver/dao_factory.h"
 #include "apie/network/logger.h"
 

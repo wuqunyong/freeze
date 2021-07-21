@@ -1,8 +1,9 @@
 #include "apie/event/signal_impl.h"
 
+#include "event2/event.h"
+
 #include "apie/event/dispatcher_impl.h"
 
-#include "event2/event.h"
 
 namespace apie {
 namespace event_ns {

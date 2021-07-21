@@ -9,6 +9,10 @@
 #include <cassert>
 #include <assert.h>
 
+#include "event2/event.h"
+#include "influxdb.hpp"
+
+
 #include "apie/event/libevent_scheduler.h"
 #include "apie/event/signal_impl.h"
 #include "apie/event/timer_impl.h"
@@ -26,23 +30,19 @@
 #include "apie/api/hook.h"
 
 #include "apie/common/string_utils.h"
+#include "apie/common/enum_to_int.h"
 
 #include "apie/rpc/client/rpc_client.h"
 #include "apie/rpc/server/rpc_server.h"
+#include "apie/rpc/client/rpc_client_manager.h"
 
-#include "event2/event.h"
-#include "influxdb.hpp"
 #include "apie/compressor/lz4_compressor_impl.h"
 #include "apie/crypto/crypto_utility.h"
 #include "apie/redis_driver/redis_client.h"
-
 #include "apie/service/service_manager.h"
-#include "apie/rpc/client/rpc_client_manager.h"
 #include "apie/event/nats_proxy.h"
-
-#include "apie/service/service_manager.h"
 #include "apie/pub_sub/pubsub_manager.h"
-#include "apie/common/enum_to_int.h"
+
 
 
 

@@ -5,11 +5,11 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "event2/listener.h"
+
 #include "apie/common/empty_string.h"
 #include "apie/event/dispatcher_impl.h"
 #include "apie/event/file_event_impl.h"
-
-#include "event2/listener.h"
 #include "apie/network/logger.h"
 
 namespace apie {

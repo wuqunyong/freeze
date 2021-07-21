@@ -1,11 +1,12 @@
 #include "apie/common/file.h"
-#include "apie/network/logger.h"
 
 #include <errno.h>
 #include <stddef.h>
 #include <fstream>
 #include <string>
 #include <sstream>
+
+#include "apie/network/logger.h"
 
 namespace apie {
 namespace common {

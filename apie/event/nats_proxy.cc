@@ -1,15 +1,14 @@
-#include "nats_proxy.h"
+#include "apie/event/nats_proxy.h"
+
+#include "../influxdb-cpp/influxdb.hpp"
 #include "nats/adapters/libevent.h"
+
 
 #include "apie/rpc/server/rpc_server.h"
 #include "apie/rpc/client/rpc_client.h"
-
-#include "../influxdb-cpp/influxdb.hpp"
-
 #include "apie/rpc/client/rpc_client_manager.h"
-#include "apie/status/status.h"
-
 #include "apie/rpc/server/rpc_server_manager.h"
+#include "apie/status/status.h"
 #include "apie/forward/forward_manager.h"
 
 namespace apie {

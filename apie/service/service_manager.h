@@ -10,7 +10,6 @@
 #include <google/protobuf/message.h>
 
 #include "apie/singleton/threadsafe_singleton.h"
-
 #include "apie/service/handle_notify_service.h"
 #include "apie/service/handle_request_service.h"
 #include "apie/service/service_base.h"

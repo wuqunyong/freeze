@@ -4,13 +4,11 @@
 #include <cstdint>
 #include <string>
 
-#include "apie/network/address.h"
-#include "apie/network/windows_platform.h"
-
-#include "apie/proto/init.h"
-
 #include <event2/util.h>
 
+#include "apie/network/address.h"
+#include "apie/network/windows_platform.h"
+#include "apie/proto/init.h"
 #include "apie/rpc/client/rpc_client_manager.h"
 
 namespace apie {
