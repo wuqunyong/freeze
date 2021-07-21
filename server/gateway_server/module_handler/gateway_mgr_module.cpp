@@ -36,7 +36,7 @@ void GatewayMgrModule::ready()
 {
 	// RPC
 	auto& rpc = apie::rpc::RPCServerManagerSingleton::get();
-	rpc.createRPCServer<::rpc_login::L2G_LoginPendingRequest, ::rpc_login::L2G_LoginPendingResponse>(rpc_msg::RPC_L2G_LoginPending, GatewayMgrModule::RPC_handleLoginPending);
+	rpc.createRPCServer<::rpc_login::L2G_LoginPendingRequest, ::rpc_login::L2G_LoginPendingResponse>(rpc_msg::RPC_L2G_LoginPending, GatewayMgrModule::RPC_loginPending);
 
 
 	// CLIENT OPCODE
@@ -100,8 +100,8 @@ void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role,
 	}
 }
 
-apie::status::Status GatewayMgrModule::RPC_handleLoginPending(
-	const ::rpc_msg::CLIENT_IDENTIFIER& context, const std::shared_ptr<rpc_login::L2G_LoginPendingRequest>& request, std::shared_ptr<rpc_login::L2G_LoginPendingResponse>& response)
+apie::status::Status GatewayMgrModule::RPC_loginPending(
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_login::L2G_LoginPendingRequest>& request, std::shared_ptr<rpc_login::L2G_LoginPendingResponse>& response)
 {
 	auto curTime = apie::Ctx::getCurSeconds();
 

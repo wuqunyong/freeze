@@ -37,8 +37,8 @@ namespace apie {
 		
 
 		// RPC
-		static apie::status::Status RPC_handleLoginPending(
-			const ::rpc_msg::CLIENT_IDENTIFIER& context, const std::shared_ptr<rpc_login::L2G_LoginPendingRequest>& request, std::shared_ptr<rpc_login::L2G_LoginPendingResponse>& response);
+		static apie::status::Status RPC_loginPending(
+			const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_login::L2G_LoginPendingRequest>& request, std::shared_ptr<rpc_login::L2G_LoginPendingResponse>& response);
 
 
 		// CLIENT OPCODE
