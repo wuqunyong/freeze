@@ -19,17 +19,17 @@ void GatewayMgrModule::init()
 	// PUBSUB
 	auto& pubsub = apie::pubsub::PubSubManagerSingleton::get();
 	pubsub.subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, GatewayMgrModule::PubSub_logicCmd);
-	pubsub.subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, GatewayMgrModule::onServerPeerClose);
+	pubsub.subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, GatewayMgrModule::PubSub_serverPeerClose);
 
 	// CMD
 	LogicCmdHandlerSingleton::get().init();
-	LogicCmdHandlerSingleton::get().registerOnCmd("insert_to_db", "mysql_insert_to_db_orm", GatewayMgrModule::onMysqlInsertToDbORM);
-	LogicCmdHandlerSingleton::get().registerOnCmd("delete_from_db", "mysql_delete_from_db_orm", GatewayMgrModule::onMysqlDeleteFromDbORM);
-	LogicCmdHandlerSingleton::get().registerOnCmd("update_to_db", "mysql_update_to_db_orm", GatewayMgrModule::onMysqlUpdateToDbORM);
-	LogicCmdHandlerSingleton::get().registerOnCmd("load_from_db", "mysql_load_from_db_orm", GatewayMgrModule::onMysqlLoadFromDbORM);
-	LogicCmdHandlerSingleton::get().registerOnCmd("query_from_db", "mysql_query_from_db_orm", GatewayMgrModule::onMysqlQueryFromDbORM);
+	LogicCmdHandlerSingleton::get().registerOnCmd("insert_to_db", "mysql_insert_to_db_orm", GatewayMgrModule::Cmd_insertToDbORM);
+	LogicCmdHandlerSingleton::get().registerOnCmd("delete_from_db", "mysql_delete_from_db_orm", GatewayMgrModule::Cmd_deleteFromDbORM);
+	LogicCmdHandlerSingleton::get().registerOnCmd("update_to_db", "mysql_update_to_db_orm", GatewayMgrModule::Cmd_updateToDbORM);
+	LogicCmdHandlerSingleton::get().registerOnCmd("load_from_db", "mysql_load_from_db_orm", GatewayMgrModule::Cmd_loadFromDbORM);
+	LogicCmdHandlerSingleton::get().registerOnCmd("query_from_db", "mysql_query_from_db_orm", GatewayMgrModule::Cmd_queryFromDbORM);
 	
-	LogicCmdHandlerSingleton::get().registerOnCmd("nats_publish", "nats_publish", GatewayMgrModule::onNatsPublish);
+	LogicCmdHandlerSingleton::get().registerOnCmd("nats_publish", "nats_publish", GatewayMgrModule::Cmd_natsPublish);
 }
 
 void GatewayMgrModule::ready()
@@ -131,7 +131,7 @@ void GatewayMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD
 	handlerOpt.value()(*msg);
 }
 
-void GatewayMgrModule::onMysqlLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
+void GatewayMgrModule::Cmd_loadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 {
 	if (cmd.params_size() < 1)
 	{
@@ -162,7 +162,7 @@ void GatewayMgrModule::onMysqlLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	LoadFromDb<ModelUser>(server, user, cb);
 }
 
-void GatewayMgrModule::onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd)
+void GatewayMgrModule::Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 {
 	if (cmd.params_size() < 2)
 	{
@@ -196,7 +196,7 @@ void GatewayMgrModule::onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	LoadFromDbByFilter<ModelUser>(server, user, cb);
 }
 
-void GatewayMgrModule::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
+void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 {
 	if (cmd.params_size() < 5)
 	{
@@ -223,7 +223,7 @@ void GatewayMgrModule::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
 
 }
 
-void GatewayMgrModule::onMysqlUpdateToDbORM(::pubsub::LOGIC_CMD& cmd)
+void GatewayMgrModule::Cmd_updateToDbORM(::pubsub::LOGIC_CMD& cmd)
 {
 	if (cmd.params_size() < 2)
 	{
@@ -257,7 +257,7 @@ void GatewayMgrModule::onMysqlUpdateToDbORM(::pubsub::LOGIC_CMD& cmd)
 	UpdateToDb<ModelUser>(server, user, cb);
 }
 
-void GatewayMgrModule::onMysqlInsertToDbORM(::pubsub::LOGIC_CMD& cmd)
+void GatewayMgrModule::Cmd_insertToDbORM(::pubsub::LOGIC_CMD& cmd)
 {
 	if (cmd.params_size() < 2)
 	{
@@ -290,7 +290,7 @@ void GatewayMgrModule::onMysqlInsertToDbORM(::pubsub::LOGIC_CMD& cmd)
 	InsertToDb<ModelUser>(server, user, cb);
 }
 
-void GatewayMgrModule::onMysqlDeleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
+void GatewayMgrModule::Cmd_deleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
 {
 	if (cmd.params_size() < 1)
 	{
@@ -443,7 +443,7 @@ apie::status::Status GatewayMgrModule::handleRequestHandshakeEstablished(
 	return { apie::status::StatusCode::OK, "" };;
 }
 
-void GatewayMgrModule::onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg)
+void GatewayMgrModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg)
 {
 	std::stringstream ss;
 

@@ -24,16 +24,16 @@ namespace apie {
 	public:
 		// PUBSUB
 		static void PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
-		static void onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg);
+		static void PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg);
 
 
 		// CMD
-		static void onMysqlInsertToDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onMysqlDeleteFromDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onMysqlUpdateToDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onMysqlLoadFromDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onNatsPublish(::pubsub::LOGIC_CMD& cmd);
+		static void Cmd_insertToDbORM(::pubsub::LOGIC_CMD& cmd);
+		static void Cmd_deleteFromDbORM(::pubsub::LOGIC_CMD& cmd);
+		static void Cmd_updateToDbORM(::pubsub::LOGIC_CMD& cmd);
+		static void Cmd_loadFromDbORM(::pubsub::LOGIC_CMD& cmd);
+		static void Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd);
+		static void Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd);
 		
 
 		// RPC
