@@ -7,12 +7,14 @@ namespace apie {
 void ServiceRegistryModule::init()
 {
 	// PUBSUB
-	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, ServiceRegistryModule::PubSub_logicCmd);
-	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, ServiceRegistryModule::PubSub_serverPeerClose);
+	auto& pubsub = apie::pubsub::PubSubManagerSingleton::get();
+	pubsub.subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, ServiceRegistryModule::PubSub_logicCmd);
+	pubsub.subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, ServiceRegistryModule::PubSub_serverPeerClose);
 
 	// CMD
-	LogicCmdHandlerSingleton::get().init();
-	LogicCmdHandlerSingleton::get().registerOnCmd("provider", "show_provider", ServiceRegistryModule::Cmd_showProvider);
+	auto& cmd = LogicCmdHandlerSingleton::get();
+	cmd.init();
+	cmd.registerOnCmd("provider", "show_provider", ServiceRegistryModule::Cmd_showProvider);
 
 	// Inner Protocols		
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;

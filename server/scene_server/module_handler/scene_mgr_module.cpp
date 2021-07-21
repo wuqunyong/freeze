@@ -12,7 +12,8 @@ void SceneMgrModule::init()
 	pubsub.subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, SceneMgrModule::PubSub_logicCmd);
 
 	// CMD
-	LogicCmdHandlerSingleton::get().init();
+	auto& cmd = LogicCmdHandlerSingleton::get();
+	cmd.init();
 }
 
 void SceneMgrModule::ready()

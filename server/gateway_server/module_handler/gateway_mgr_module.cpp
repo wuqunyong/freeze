@@ -22,14 +22,14 @@ void GatewayMgrModule::init()
 	pubsub.subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, GatewayMgrModule::PubSub_serverPeerClose);
 
 	// CMD
-	LogicCmdHandlerSingleton::get().init();
-	LogicCmdHandlerSingleton::get().registerOnCmd("insert_to_db", "mysql_insert_to_db_orm", GatewayMgrModule::Cmd_insertToDbORM);
-	LogicCmdHandlerSingleton::get().registerOnCmd("delete_from_db", "mysql_delete_from_db_orm", GatewayMgrModule::Cmd_deleteFromDbORM);
-	LogicCmdHandlerSingleton::get().registerOnCmd("update_to_db", "mysql_update_to_db_orm", GatewayMgrModule::Cmd_updateToDbORM);
-	LogicCmdHandlerSingleton::get().registerOnCmd("load_from_db", "mysql_load_from_db_orm", GatewayMgrModule::Cmd_loadFromDbORM);
-	LogicCmdHandlerSingleton::get().registerOnCmd("query_from_db", "mysql_query_from_db_orm", GatewayMgrModule::Cmd_queryFromDbORM);
-	
-	LogicCmdHandlerSingleton::get().registerOnCmd("nats_publish", "nats_publish", GatewayMgrModule::Cmd_natsPublish);
+	auto& cmd = LogicCmdHandlerSingleton::get();
+	cmd.init();
+	cmd.registerOnCmd("insert_to_db", "mysql_insert_to_db_orm", GatewayMgrModule::Cmd_insertToDbORM);
+	cmd.registerOnCmd("delete_from_db", "mysql_delete_from_db_orm", GatewayMgrModule::Cmd_deleteFromDbORM);
+	cmd.registerOnCmd("update_to_db", "mysql_update_to_db_orm", GatewayMgrModule::Cmd_updateToDbORM);
+	cmd.registerOnCmd("load_from_db", "mysql_load_from_db_orm", GatewayMgrModule::Cmd_loadFromDbORM);
+	cmd.registerOnCmd("query_from_db", "mysql_query_from_db_orm", GatewayMgrModule::Cmd_queryFromDbORM);
+	cmd.registerOnCmd("nats_publish", "nats_publish", GatewayMgrModule::Cmd_natsPublish);
 }
 
 void GatewayMgrModule::ready()
