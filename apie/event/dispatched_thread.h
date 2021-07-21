@@ -5,13 +5,13 @@
 #include <utility>
 #include <thread>
 
-#include "../api/api.h"
-#include "../event/dispatcher.h"
-#include "../event/timer.h"
-#include "../event/dispatcher_impl.h"
-#include "../network/listener.h"
-#include "../network/command.h"
-#include "../mysql_driver/mysql_connector.h"
+#include "apie/api/api.h"
+#include "apie/event/dispatcher.h"
+#include "apie/event/timer.h"
+#include "apie/event/dispatcher_impl.h"
+#include "apie/network/listener.h"
+#include "apie/network/command.h"
+#include "apie/mysql_driver/mysql_connector.h"
 
 namespace apie {
 namespace event_ns {

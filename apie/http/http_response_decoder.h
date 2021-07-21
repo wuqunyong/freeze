@@ -1,8 +1,8 @@
 #pragma once
 
-#include "http_common.h"
-#include "http_parser_impl.h"
-#include "http_response.h"
+#include "apie/http/http_common.h"
+#include "apie/http/http_parser_impl.h"
+#include "apie/http/http_response.h"
 
 namespace apie
 {

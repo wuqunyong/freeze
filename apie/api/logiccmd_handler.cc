@@ -1,4 +1,4 @@
-#include "logiccmd_handler.h"
+#include "apie/api/logiccmd_handler.h"
 
 #include <chrono>
 #include <string>
@@ -6,8 +6,8 @@
 #include <sstream>
 #include <algorithm> 
 
-#include "../network/logger.h"
-#include "../common/file.h"
+#include "apie/network/logger.h"
+#include "apie/common/file.h"
 
 
 namespace apie {

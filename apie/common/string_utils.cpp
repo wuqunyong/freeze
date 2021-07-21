@@ -7,7 +7,7 @@
 //   String helper functions.
 //
 
-#include "string_utils.h"
+#include "apie/common/string_utils.h"
 
 #include <algorithm>
 #include <stdlib.h>

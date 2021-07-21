@@ -1,17 +1,17 @@
 #include <string>
 #include <sstream>
 
-#include "http_request_decoder.h"
+#include "apie/http/http_request_decoder.h"
 
-#include "http_parser_impl.h"
-#include "http_request.h"
+#include "apie/http/http_parser_impl.h"
+#include "apie/http/http_request.h"
 
-#include "../network/server_connection.h"
-#include "../network/command.h"
-#include "../network/ctx.h"
-#include "../network/logger.h"
+#include "apie/network/server_connection.h"
+#include "apie/network/command.h"
+#include "apie/network/ctx.h"
+#include "apie/network/logger.h"
 
-#include "../common/string_utils.h"
+#include "apie/common/string_utils.h"
 
 namespace apie
 {

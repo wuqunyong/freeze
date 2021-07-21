@@ -1,9 +1,9 @@
-#include "os_sys_calls.h"
+#include "apie/api/os_sys_calls.h"
 
 #include <chrono>
 #include <string>
 
-#include "../network/windows_platform.h"
+#include "apie/network/windows_platform.h"
 
 namespace apie {
 namespace api {

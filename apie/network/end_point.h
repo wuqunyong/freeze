@@ -7,10 +7,10 @@
 #include <vector>
 #include <optional>
 
-#include "../network/i_poll_events.hpp"
-#include "../network/client_proxy.h"
+#include "apie/network/i_poll_events.hpp"
+#include "apie/network/client_proxy.h"
 
-#include "../singleton/threadsafe_singleton.h"
+#include "apie/singleton/threadsafe_singleton.h"
 
 #include "apie/proto/init.h"
 

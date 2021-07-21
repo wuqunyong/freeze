@@ -14,7 +14,7 @@
 #include <memory>
 #include <string>
 
-#include "../singleton/threadsafe_singleton.h"
+#include "apie/singleton/threadsafe_singleton.h"
 
 namespace apie {
 namespace api {

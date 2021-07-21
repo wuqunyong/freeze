@@ -3,7 +3,7 @@
 #include <string>
 #include <optional>
 
-#include "../common/pure.h"
+#include "apie/common/pure.h"
 
 namespace apie {
 namespace decompressor {

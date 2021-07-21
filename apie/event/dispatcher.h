@@ -6,14 +6,14 @@
 #include <string>
 #include <vector>
 
-#include "../common/time.h"
-#include "../event/file_event.h"
-#include "../event/signal.h"
-#include "../event/timer.h"
-#include "../event/deferred_deletable.h"
+#include "apie/common/time.h"
+#include "apie/event/file_event.h"
+#include "apie/event/signal.h"
+#include "apie/event/timer.h"
+#include "apie/event/deferred_deletable.h"
 
-#include "../network/listener.h"
-#include "../network/command.h"
+#include "apie/network/listener.h"
+#include "apie/network/command.h"
 
 
 namespace apie {

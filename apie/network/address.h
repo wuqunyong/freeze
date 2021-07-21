@@ -7,8 +7,8 @@
 #include <memory>
 #include <cstring>
 
-#include "../network/address.h"
-#include "../network/windows_platform.h"
+#include "apie/network/address.h"
+#include "apie/network/windows_platform.h"
 
 #include <event2/util.h>
 

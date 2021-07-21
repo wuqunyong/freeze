@@ -8,7 +8,7 @@
 #include <vector>
 #include <map>
 
-#include "byte_buffer.h"
+#include "apie/serialization/byte_buffer.h"
 
 // Last bit for an expanded message without compression.
 const uint8_t PH_DEFAULT = 0b0u;

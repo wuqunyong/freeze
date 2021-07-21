@@ -4,7 +4,7 @@
 #include <functional>
 #include <memory>
 
-#include "../common/pure.h"
+#include "apie/common/pure.h"
 
 namespace apie {
 namespace event_ns {

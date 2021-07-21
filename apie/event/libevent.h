@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../common/c_smart_ptr.h"
+#include "apie/common/c_smart_ptr.h"
 
 struct event_base;
 extern "C" {

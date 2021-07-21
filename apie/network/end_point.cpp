@@ -1,14 +1,14 @@
-#include "end_point.h"
+#include "apie/network/end_point.h"
 
-#include "ctx.h"
-#include "client_proxy.h"
+#include "apie/network/ctx.h"
+#include "apie/network/client_proxy.h"
 
 #include "apie/proto/init.h"
 
 
-#include "../rpc/init.h"
+#include "apie/rpc/init.h"
 
-#include "output_stream.h"
+#include "apie/network/output_stream.h"
 #include <sstream>
 
 #include "apie/service/service_manager.h"

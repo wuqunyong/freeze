@@ -1,4 +1,4 @@
-#include "hook.h"
+#include "apie/api/hook.h"
 
 #include <chrono>
 #include <string>
@@ -6,7 +6,7 @@
 #include <sstream>
 #include <algorithm> 
 
-#include "../network/logger.h"
+#include "apie/network/logger.h"
 #include "apie/common/enum_to_int.h"
 
 namespace apie {

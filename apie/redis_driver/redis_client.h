@@ -14,8 +14,8 @@
 
 #include <cpp_redis/cpp_redis>
 
-#include "../singleton/threadsafe_singleton.h"
-#include "../event/timer.h"
+#include "apie/singleton/threadsafe_singleton.h"
+#include "apie/event/timer.h"
 
 #include "apie/proto/init.h"
 

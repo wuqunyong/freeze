@@ -1,10 +1,10 @@
 #include "exception_trap.h"
 
-#include "../network/windows_platform.h"
-#include "../network/logger.h"
+#include "apie/network/windows_platform.h"
+#include "apie/network/logger.h"
 
 #ifdef WIN32
-#include "../apie.h"
+#include "apie/apie.h"
 #include <ImageHlp.h>
 
 #pragma comment( lib, "dbghelp.lib" )
@@ -316,6 +316,7 @@ namespace apie {
 #else
 
 namespace apie {
+
 	std::string generateBackTrace()
 	{
 		int maxFrames = 128;

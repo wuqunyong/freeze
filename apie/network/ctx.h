@@ -6,13 +6,13 @@
 #include <memory>
 #include <atomic>
 
-#include "../singleton/threadsafe_singleton.h"
-#include "../event/dispatched_thread.h"
-#include "../network/platform_impl.h"
-#include "../network/i_poll_events.hpp"
-#include "../network/end_point.h"
+#include "apie/singleton/threadsafe_singleton.h"
+#include "apie/event/dispatched_thread.h"
+#include "apie/network/platform_impl.h"
+#include "apie/network/i_poll_events.hpp"
+#include "apie/network/end_point.h"
 
-#include "../configs/configs.h"
+#include "apie/configs/configs.h"
 
 #include "apie/proto/init.h"
 

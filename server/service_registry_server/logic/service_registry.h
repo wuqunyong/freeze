@@ -10,7 +10,6 @@
 
 #include "apie.h"
 
-
 namespace apie {
 
 	struct RegisteredEndPoint

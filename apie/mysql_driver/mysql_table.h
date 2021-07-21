@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../network/windows_platform.h"
+#include "apie/network/windows_platform.h"
 
 #include <stdint.h>
 #include <stddef.h>
@@ -13,7 +13,7 @@
 
 #include <mysql.h>
 
-#include "mysql_field.h"
+#include "apie/mysql_driver/mysql_field.h"
 
 class MySQLConnector;
 

@@ -1,4 +1,4 @@
-#include "lz4_decompressor_impl.h"
+#include "apie/decompressor/lz4_decompressor_impl.h"
 
 namespace apie {
 namespace decompressor {

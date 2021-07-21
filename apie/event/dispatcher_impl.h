@@ -8,19 +8,19 @@
 #include <atomic>
 #include <map>
 
-#include "../api/api.h"
-#include "../common/time.h"
-#include "../event/deferred_deletable.h"
-#include "../event/dispatcher.h"
-#include "../event/libevent.h"
-#include "../event/libevent_scheduler.h"
+#include "apie/api/api.h"
+#include "apie/common/time.h"
+#include "apie/event/deferred_deletable.h"
+#include "apie/event/dispatcher.h"
+#include "apie/event/libevent.h"
+#include "apie/event/libevent_scheduler.h"
 
-#include "../network/object.hpp"
-#include "../network/mailbox.h"
-#include "../network/command.h"
-#include "../network/server_connection.h"
-#include "../network/client_connection.h"
-#include "../network/listener.h"
+#include "apie/network/object.hpp"
+#include "apie/network/mailbox.h"
+#include "apie/network/command.h"
+#include "apie/network/server_connection.h"
+#include "apie/network/client_connection.h"
+#include "apie/network/listener.h"
 
 namespace apie {
 namespace event_ns {

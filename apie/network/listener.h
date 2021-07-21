@@ -5,10 +5,10 @@
 #include <string>
 #include <stdexcept>
 
-#include "../common/pure.h"
-#include "../event/libevent.h"
+#include "apie/common/pure.h"
+#include "apie/event/libevent.h"
 
-#include "i_poll_events.hpp"
+#include "apie/network/i_poll_events.hpp"
 
 #include <event2/util.h>
 

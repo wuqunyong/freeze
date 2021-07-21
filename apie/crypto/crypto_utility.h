@@ -10,7 +10,7 @@
 #include <openssl/err.h>
 #include <openssl/rc4.h>
 
-#include "../singleton/threadsafe_singleton.h"
+#include "apie/singleton/threadsafe_singleton.h"
 
 namespace apie {
 namespace crypto {

@@ -1,15 +1,15 @@
-#include "client_connection.h"
+#include "apie/network/client_connection.h"
 
 #include <sstream>
 #include <iostream>
 
-#include "ctx.h"
+#include "apie/network/ctx.h"
 
-#include "../serialization/protocol_head.h"
-#include "logger.h"
-#include "address.h"
-#include "../decompressor/lz4_decompressor_impl.h"
-#include "../crypto/crypto_utility.h"
+#include "apie/serialization/protocol_head.h"
+#include "apie/network/logger.h"
+#include "apie/network/address.h"
+#include "apie/decompressor/lz4_decompressor_impl.h"
+#include "apie/crypto/crypto_utility.h"
 
 #include "apie/service/service_manager.h"
 #include "apie/common/protobuf_factory.h"

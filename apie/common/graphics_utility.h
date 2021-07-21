@@ -20,5 +20,6 @@ namespace common {
 
 	// Bresenham Line Algorithm
 	extern std::vector<xyBresenham> BresenhamLine(int x1, int y1, int x2, int y2);
+
 }
-} // namespace APie
+}

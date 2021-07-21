@@ -1,15 +1,15 @@
-#include "client_proxy.h"
+#include "apie/network/client_proxy.h"
 
 #include <assert.h>
 #include <iostream>
 #include <sstream>
 
 
-#include "ctx.h"
-#include "command.h"
-#include "logger.h"
-#include "output_stream.h"
-#include "../event/dispatcher_impl.h"
+#include "apie/network/ctx.h"
+#include "apie/network/command.h"
+#include "apie/network/logger.h"
+#include "apie/network/output_stream.h"
+#include "apie/event/dispatcher_impl.h"
 
 #include "apie/proto/init.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../network/windows_platform.h"
+#include "apie/network/windows_platform.h"
 
 #include <stdio.h>
 #include <time.h>
@@ -16,9 +16,9 @@
 
 #include <google/protobuf/message.h>
 
-#include "mysql_table.h"
-#include "mysql_connector.h"
-#include "result_set.h"
+#include "apie/mysql_driver/mysql_table.h"
+#include "apie/mysql_driver/mysql_connector.h"
+#include "apie/mysql_driver/result_set.h"
 
 #include "apie/proto/init.h"
 

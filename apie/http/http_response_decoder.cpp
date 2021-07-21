@@ -1,13 +1,13 @@
-#include "http_response_decoder.h"
+#include "apie/http/http_response_decoder.h"
 
 
-#include "../network/server_connection.h"
-#include "../network/command.h"
-#include "../network/ctx.h"
-#include "../network/logger.h"
+#include "apie/network/server_connection.h"
+#include "apie/network/command.h"
+#include "apie/network/ctx.h"
+#include "apie/network/logger.h"
 
-#include "../common/string_utils.h"
-#include "../network/client_connection.h"
+#include "apie/common/string_utils.h"
+#include "apie/network/client_connection.h"
 
 namespace apie
 {

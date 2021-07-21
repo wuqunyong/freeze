@@ -6,11 +6,11 @@
 
 #include <event2/bufferevent.h>
 
-#include "windows_platform.h"
-#include "i_poll_events.hpp"
-#include "command.h"
+#include "apie/network/windows_platform.h"
+#include "apie/network/i_poll_events.hpp"
+#include "apie/network/command.h"
 
-#include "../http/http_response_decoder.h"
+#include "apie/http/http_response_decoder.h"
 
 
 namespace apie

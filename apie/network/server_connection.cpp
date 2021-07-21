@@ -1,4 +1,4 @@
-#include "../network/server_connection.h"
+#include "apie/network/server_connection.h"
 
 #include <sstream>
 #include <iostream>
@@ -8,14 +8,14 @@
 #include <string.h>
 #include <errno.h>
 
-#include "../serialization/protocol_head.h"
-#include "../event/dispatcher_impl.h"
-#include "../network/ctx.h"
+#include "apie/serialization/protocol_head.h"
+#include "apie/event/dispatcher_impl.h"
+#include "apie/network/ctx.h"
 
-#include "../decompressor/lz4_decompressor_impl.h"
+#include "apie/decompressor/lz4_decompressor_impl.h"
 
-#include "command.h"
-#include "../crypto/crypto_utility.h"
+#include "apie/network/command.h"
+#include "apie/crypto/crypto_utility.h"
 
 #include "apie/service/service_manager.h"
 #include "apie/network/logger.h"

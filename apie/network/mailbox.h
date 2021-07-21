@@ -4,7 +4,7 @@
 #include <deque>
 #include <mutex>
 
-#include "../network/signaler.h"
+#include "apie/network/signaler.h"
 
 namespace apie
 {

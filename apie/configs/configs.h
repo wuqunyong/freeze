@@ -6,7 +6,6 @@
 #include <memory>
 
 
-
 namespace apie {
 
 	struct APieConfig_Identify

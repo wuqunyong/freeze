@@ -1,16 +1,16 @@
-#include "../network/listener_impl.h"
+#include "apie/network/listener_impl.h"
 
 #include <string>
 #include <sstream>
 #include <iostream>
 #include <stdexcept>
 
-#include "../common/empty_string.h"
-#include "../event/dispatcher_impl.h"
-#include "../event/file_event_impl.h"
+#include "apie/common/empty_string.h"
+#include "apie/event/dispatcher_impl.h"
+#include "apie/event/file_event_impl.h"
 
 #include "event2/listener.h"
-#include "logger.h"
+#include "apie/network/logger.h"
 
 namespace apie {
 namespace network {

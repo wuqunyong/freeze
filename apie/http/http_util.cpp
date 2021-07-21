@@ -1,10 +1,10 @@
-#include "http_util.h"
+#include "apie/http/http_util.h"
 
 #include <vector>
 #include <string>
 #include <cstring>
 
-#include "string_util.h"
+#include "apie/http/string_util.h"
 
 
 extern "C"

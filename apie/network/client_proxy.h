@@ -8,9 +8,9 @@
 #include <functional>
 #include <map>
 
-#include "i_poll_events.hpp"
+#include "apie/network/i_poll_events.hpp"
 
-#include "../event/timer.h"
+#include "apie/event/timer.h"
 
 #include <google/protobuf/message.h>
 

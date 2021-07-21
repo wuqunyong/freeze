@@ -1,6 +1,6 @@
-#include "mysql_table.h"
+#include "apie/mysql_driver/mysql_table.h"
 
-#include "mysql_orm.h"
+#include "apie/mysql_driver/mysql_orm.h"
 
 void MysqlTable::setDb(std::string dbName)
 {

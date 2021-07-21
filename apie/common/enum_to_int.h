@@ -4,6 +4,7 @@
 #include <type_traits>
 
 namespace apie {
+
 /**
  * Convert an int based enum to an int.
  */
@@ -21,4 +22,4 @@ constexpr auto toUnderlyingType(T value) noexcept
 	return static_cast<typename std::underlying_type<T>::type>(value);
 }
 
-} // namespace Envoy
+}

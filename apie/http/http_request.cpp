@@ -9,10 +9,10 @@ extern "C"
 #include "../../third_party/http-parser/http_parser.h"  
 }
 
-#include "http_util.h"
-#include "string_util.h"
+#include "apie/http/http_util.h"
+#include "apie/http/string_util.h"
 
-#include "../network/logger.h"
+#include "apie/network/logger.h"
 
 using namespace std;
 

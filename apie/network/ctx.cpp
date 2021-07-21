@@ -7,15 +7,17 @@
 #include <chrono>
 #include <tuple> 
 
-#include "../network/ctx.h"
-#include "../network/address.h"
-#include "../network/client_proxy.h"
+#include "nats/nats.h"
 
-#include "../common/exception_trap.h"
+#include "apie/network/ctx.h"
+#include "apie/network/address.h"
+#include "apie/network/client_proxy.h"
 
-#include "../api/hook.h"
+#include "apie/common/exception_trap.h"
 
-#include "../event/nats_proxy.h"
+#include "apie/api/hook.h"
+
+#include "apie/event/nats_proxy.h"
 
 
 #ifdef WIN32
@@ -47,14 +49,13 @@
 sigset_t g_SigSet;
 #endif
 
-#include "logger.h"
-#include "i_poll_events.hpp"
-#include "../common/string_utils.h"
-#include "../api/os_sys_calls.h"
+#include "apie/network/logger.h"
+#include "apie/network/i_poll_events.hpp"
+#include "apie/common/string_utils.h"
+#include "apie/api/os_sys_calls.h"
 
-#include "../redis_driver/redis_client.h"
-#include "../common/file.h"
-#include "nats/nats.h"
+#include "apie/redis_driver/redis_client.h"
+#include "apie/common/file.h"
 #include "apie/common/enum_to_int.h"
 
 namespace apie {

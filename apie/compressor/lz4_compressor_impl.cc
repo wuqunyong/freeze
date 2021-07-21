@@ -1,4 +1,4 @@
-#include "lz4_compressor_impl.h"
+#include "apie/compressor/lz4_compressor_impl.h"
 
 namespace apie {
 namespace compressor {

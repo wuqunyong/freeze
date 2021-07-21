@@ -1,11 +1,11 @@
-#include "../event/dispatched_thread.h"
+#include "apie/event/dispatched_thread.h"
 
 #include <chrono>
 #include <memory>
 
-#include "../common/time.h"
-#include "../event/dispatcher.h"
-#include "../network/logger.h"
+#include "apie/common/time.h"
+#include "apie/event/dispatcher.h"
+#include "apie/network/logger.h"
 
 
 namespace apie {

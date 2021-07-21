@@ -11,9 +11,9 @@
 #include <functional>
 #include <optional>
 
-#include "mysql_orm.h"
+#include "apie/mysql_driver/mysql_orm.h"
 
-#include "../singleton/threadsafe_singleton.h"
+#include "apie/singleton/threadsafe_singleton.h"
 #include "apie/proto/init.h"
 
 

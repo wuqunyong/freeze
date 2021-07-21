@@ -5,10 +5,10 @@
 #include <cstdint>
 #include <string>
 
-#include "../network/address.h"
-#include "../network/windows_platform.h"
+#include "apie/network/address.h"
+#include "apie/network/windows_platform.h"
 
-#include "i_poll_events.hpp"
+#include "apie/network/i_poll_events.hpp"
 
 #include <event2/util.h>
 #include <google/protobuf/message.h>

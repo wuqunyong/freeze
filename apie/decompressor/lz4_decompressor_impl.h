@@ -4,7 +4,7 @@
 #include <lz4hc.h>
 #include <lz4frame.h>
 
-#include "decompressor.h"
+#include "apie/decompressor/decompressor.h"
 
 namespace apie {
 namespace decompressor {

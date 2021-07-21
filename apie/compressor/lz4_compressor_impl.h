@@ -4,7 +4,7 @@
 #include <lz4hc.h>
 #include <lz4frame.h>
 
-#include "compressor.h"
+#include "apie/compressor/compressor.h"
 
 namespace apie {
 namespace compressor {

@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef WIN32
-#include "../network/windows_platform.h"
+#include "apie/network/windows_platform.h"
 #else
 #include <unistd.h>
 #include <pthread.h>
@@ -14,9 +14,9 @@
 
 #include <mysql.h>
 
-#include "result_set.h"
-#include "mysql_table.h"
-#include "mysql_field.h"
+#include "apie/mysql_driver/result_set.h"
+#include "apie/mysql_driver/mysql_table.h"
+#include "apie/mysql_driver/mysql_field.h"
 
 struct MySQLConnectOptions
 {

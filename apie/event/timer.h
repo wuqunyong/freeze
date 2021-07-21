@@ -4,8 +4,8 @@
 #include <functional>
 #include <memory>
 
-#include "../common/pure.h"
-#include "../common/time.h"
+#include "apie/common/pure.h"
+#include "apie/common/time.h"
 
 namespace apie {
 namespace event_ns {

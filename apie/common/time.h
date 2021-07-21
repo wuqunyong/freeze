@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-#include "../common/pure.h"
+#include "apie/common/pure.h"
 
 namespace apie {
 
@@ -33,4 +33,4 @@ public:
   virtual MonotonicTime monotonicTime() PURE;
 };
 
-} // namespace Envoy
+} 

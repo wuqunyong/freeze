@@ -1,4 +1,4 @@
-#include "command.h"
+#include "apie/network/command.h"
 
 void apie::deallocateCommand(Command* cmd)
 {

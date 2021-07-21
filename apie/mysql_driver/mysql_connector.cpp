@@ -1,10 +1,10 @@
-#include "mysql_connector.h"
+#include "apie/mysql_driver/mysql_connector.h"
 
 #include <stdio.h>
 
 #include <sstream>
 #include <string>
-#include "../network/logger.h"
+#include "apie/network/logger.h"
 
 
 MySQLConnector::MySQLConnector()

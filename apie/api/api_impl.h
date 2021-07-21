@@ -3,8 +3,8 @@
 #include <chrono>
 #include <string>
 
-#include "../api/api.h"
-#include "../event/timer.h"
+#include "apie/api/api.h"
+#include "apie/event/timer.h"
 
 namespace apie {
 namespace api {

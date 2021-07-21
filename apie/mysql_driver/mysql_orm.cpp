@@ -1,6 +1,6 @@
-#include "mysql_orm.h"
-#include "dao_factory.h"
-#include "../network/logger.h"
+#include "apie/mysql_driver/mysql_orm.h"
+#include "apie/mysql_driver/dao_factory.h"
+#include "apie/network/logger.h"
 
 
 bool DeclarativeBase::initMetaData(MysqlTable& table)

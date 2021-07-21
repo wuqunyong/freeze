@@ -4,11 +4,11 @@
 #include <map>
 #include <atomic>
 
-#include "../event/timer.h"
+#include "apie/event/timer.h"
 
-#include "../event/event_impl_base.h"
-#include "../event/libevent.h"
-#include "../singleton/threadsafe_singleton.h"
+#include "apie/event/event_impl_base.h"
+#include "apie/event/libevent.h"
+#include "apie/singleton/threadsafe_singleton.h"
 
 namespace apie {
 namespace event_ns {
