@@ -18,9 +18,6 @@ apie::status::Status SceneMgr::init()
 	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, SceneMgr::onLogicCommnad);
 
 
-	// RPC
-
-
 	return { apie::status::StatusCode::OK, "" };
 }
 
@@ -33,12 +30,14 @@ apie::status::Status SceneMgr::start()
 
 apie::status::Status SceneMgr::ready()
 {
-	// CLIENT OPCODE
-	//auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
-	//forwardHandler.server.bind(::APie::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho);
+	// RPC
+	auto& rpc = apie::rpc::RPCServerManagerSingleton::get();
+	rpc.createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_EchoTest, SceneMgr::RPC_echo);
 
-	apie::rpc::RPCServerManagerSingleton::get().createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_EchoTest, SceneMgr::RPC_echo);
 
+	// FORWARD
+	auto& mux = apie::forward::ForwardManagerSingleton::get();
+	mux.createService<::login_msg::MSG_REQUEST_ECHO, ::apie::OP_MSG_RESPONSE_ECHO, ::login_msg::MSG_RESPONSE_ECHO>(::apie::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho);
 
 	std::stringstream ss;
 	ss << "Server Ready!";
@@ -65,15 +64,16 @@ void SceneMgr::onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
 	handlerOpt.value()(*msg);
 }
 
-void SceneMgr::Forward_handlEcho(::rpc_msg::RoleIdentifier roleIdentifier, ::login_msg::MSG_REQUEST_ECHO request)
+apie::status::Status SceneMgr::Forward_handlEcho(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::MSG_REQUEST_ECHO>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ECHO>& response)
 {
-	PIE_LOG("SceneMgr/Forward_handlEcho", PIE_CYCLE_DAY, PIE_NOTICE, "%s", request.DebugString().c_str());
+	PIE_LOG("SceneMgr/Forward_handlEcho", PIE_CYCLE_DAY, PIE_NOTICE, "%s", request->DebugString().c_str());
 
 	//uint64_t iCurMS = Ctx::getCurMilliseconds();
 
-	::login_msg::MSG_RESPONSE_ECHO response;
-	response.set_value1(request.value1());
-	response.set_value2(request.value2() + "|response");
+	response->set_value1(request->value1());
+	response->set_value2(request->value2() + "|response");
+
+	return { apie::status::StatusCode::OK, "" };
 }
 
 apie::status::Status SceneMgr::RPC_echo(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::MSG_RPC_REQUEST_ECHO>& request, std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response)

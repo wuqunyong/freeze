@@ -210,6 +210,10 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 	server.set_realm(1);
 	server.set_type(4);
 	server.set_id(1);
+
+	::rpc_msg::RoleIdentifier role;
+
+	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, opcodes, msg);
 }
 
 apie::status::Status GatewayMgr::RPC_handleLoginPending(

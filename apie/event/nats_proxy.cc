@@ -28,6 +28,7 @@
 #include "apie/status/status.h"
 
 #include "apie/rpc/server/rpc_server_manager.h"
+#include "apie/forward/forward_manager.h"
 
 namespace apie {
 namespace event_ns {
@@ -427,6 +428,12 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 
 		apie::status::Status status((apie::status::StatusCode)(response.status().code()), response.status().msg());
 		apie::rpc::RPCClientManagerSingleton::get().handleResponse(response.client().seq_id(), status, response.result_data());
+		return;
+	}
+
+	if (msg->has_multiplexer_forward())
+	{
+		apie::forward::ForwardManagerSingleton::get().onForwardMuxMessage(msg->multiplexer_forward().role(), msg->multiplexer_forward().opcodes(), msg->multiplexer_forward().body_msg());
 		return;
 	}
 

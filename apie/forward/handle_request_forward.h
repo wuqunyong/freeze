@@ -56,7 +56,7 @@ private:
 	void sendResponse(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<Response>& response);
 
 	ServiceCallback service_callback_;
-	std::function<void(uint64_t serial_num, const std::shared_ptr<Request>&)> request_callback_;
+	std::function<void(const ::rpc_msg::RoleIdentifier&, const std::shared_ptr<Request>&)> request_callback_;
 
 	uint32_t responseOpcode_ = responseOpcode;
 };
