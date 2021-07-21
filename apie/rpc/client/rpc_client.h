@@ -111,7 +111,7 @@ bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request_ptr)
 	}
 
 	bool bResult = false;
-	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(request.server().stub().realm(), request.server().stub().type(), request.server().stub().id());
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(request.server().stub());
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
 	(*nats_msg.mutable_rpc_request()) = request;

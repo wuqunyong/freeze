@@ -100,8 +100,7 @@ void HandleRequestForward<Request, responseOpcode, Response>::sendResponse(const
 	demux.set_opcodes(responseOpcode);
 	demux.set_body_msg(response->SerializeAsString());
 
-	bool bResult = false;
-	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(role.gw_id().realm(), role.gw_id().type(), role.gw_id().id());
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(role.gw_id());
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
 	(*nats_msg.mutable_demultiplexer_forward()) = demux;

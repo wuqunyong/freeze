@@ -100,7 +100,7 @@ void RPCServer<Request, Response>::sendResponse(const ::rpc_msg::RPC_REQUEST& co
 {
 	std::cout << context.ShortDebugString() << response_ptr->ShortDebugString() << std::endl;
 
-	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(context.client().stub().realm(), context.client().stub().type(), context.client().stub().id());
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(context.client().stub());
 
 	::rpc_msg::CHANNEL server = apie::Ctx::getThisChannel();
 

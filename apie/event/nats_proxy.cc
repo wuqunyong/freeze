@@ -450,6 +450,12 @@ std::string NatsManager::GetTopicChannel(uint32_t realm, uint32_t type, uint32_t
 	return channel;
 }
 
+std::string NatsManager::GetTopicChannel(const ::rpc_msg::CHANNEL& channel)
+{
+	return GetTopicChannel(channel.realm(), channel.type(), channel.id());
+}
+
+
 std::string NatsManager::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
 {
 	std::string topic = domains + "/" + channel;

@@ -305,6 +305,8 @@ namespace event_ns {
 
 		public:
 			static std::string GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id);
+			static std::string GetTopicChannel(const ::rpc_msg::CHANNEL& channel);
+
 			static std::string GetCombineTopicChannel(const std::string& domains, const std::string& channel);
 
 			static std::string GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest);

@@ -48,7 +48,7 @@ bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rp
 	mux.set_body_msg(msg);
 
 	bool bResult = false;
-	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(server.realm(), server.type(), server.id());
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(server);
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
 	(*nats_msg.mutable_multiplexer_forward()) = mux;
