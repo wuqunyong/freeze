@@ -1,5 +1,7 @@
 #include "service_registry.h"
 
+#include "../module_handler/service_registry_module.h"
+
 namespace apie {
 
 apie::status::Status ServiceRegistry::init()
@@ -10,23 +12,7 @@ apie::status::Status ServiceRegistry::init()
 		return {apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
 	}
 
-	// CMD
-	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, ServiceRegistry::onLogicCommnad);
-
-	LogicCmdHandlerSingleton::get().init();
-	LogicCmdHandlerSingleton::get().registerOnCmd("provider", "show_provider", ServiceRegistry::onShowProvider);
-
-	// RPC
-
-
-	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	server.createService<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, ::service_discovery::MSG_RESP_REGISTER_INSTANCE>(
-		::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistry::handleRequestRegisterInstance);
-	server.createService<::service_discovery::MSG_REQUEST_HEARTBEAT, opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, ::service_discovery::MSG_RESP_HEARTBEAT>(
-		::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistry::handleRequestHeartbeat);
-
-
-	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, ServiceRegistry::onServerPeerClose);
+	ServiceRegistryModule::init();
 
 	return { apie::status::StatusCode::OK, "" };
 }
@@ -50,6 +36,8 @@ apie::status::Status ServiceRegistry::start()
 
 apie::status::Status ServiceRegistry::ready()
 {
+	ServiceRegistryModule::ready();
+
 	std::stringstream ss;
 	ss << "Server Ready!";
 	std::cout << ss.str() << std::endl;
@@ -61,19 +49,6 @@ apie::status::Status ServiceRegistry::ready()
 void ServiceRegistry::exit()
 {
 	this->disableUpdateTimer();
-}
-
-void ServiceRegistry::onShowProvider(::pubsub::LOGIC_CMD& cmd)
-{
-	std::stringstream ss;
-	for (const auto& items : ServiceRegistrySingleton::get().registered())
-	{
-		ss << "--> " << "addTime:" << items.second.addTime << "|modifiedTime:" << items.second.modifyTime << "|node:" << items.second.instance.ShortDebugString() << std::endl;
-	}
-
-	ASYNC_PIE_LOG("show_provider:\n%s", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-	std::cout << "show_provider:\n" << ss.str() << std::flush;
-
 }
 
 void ServiceRegistry::addUpdateTimer(uint64_t interval)
@@ -236,91 +211,6 @@ void ServiceRegistry::broadcast()
 	}
 }
 
-void ServiceRegistry::onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
-{
-	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(msg->cmd());
-	if (!handlerOpt.has_value())
-	{
-		return;
-	}
-
-	handlerOpt.value()(*msg);
-}
-
-apie::status::Status  ServiceRegistry::handleRequestRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
-	std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response)
-{
-	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",request:" << request->ShortDebugString();
-
-	auto auth = apie::CtxSingleton::get().identify().auth;
-	if (!auth.empty() && auth != request->auth())
-	{
-		response->set_status_code(opcodes::SC_Discovery_AuthError);
-
-		ss << ",auth:error";
-		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
-		return { apie::status::StatusCode::OK, "" };
-	}
-
-	bool bResult = ServiceRegistrySingleton::get().updateInstance(iSerialNum, request->instance());
-	if (!bResult)
-	{
-		response->set_status_code(opcodes::SC_Discovery_DuplicateNode);
-
-		ss << ",node:duplicate";
-		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
-		return { apie::status::StatusCode::OK, "" };
-	}
-	
-	ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
-
-	response->set_status_code(::opcodes::StatusCode::SC_Ok);
-
-	auto cb = [](){
-		ServiceRegistrySingleton::get().broadcast();
-	};
-	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(cb);
-
-	return { apie::status::StatusCode::OK, "" };
-}
-
-
-apie::status::Status  ServiceRegistry::handleRequestHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
-		std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
-{
-	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",request:" << request->ShortDebugString();
-
-	response->set_status_code(opcodes::SC_Ok);
-
-	bool bResult = ServiceRegistrySingleton::get().updateHeartbeat(iSerialNum);
-	if (!bResult)
-	{
-		response->set_status_code(opcodes::SC_Discovery_Unregistered);
-
-		ss << "node:Unregistered";
-		ASYNC_PIE_LOG("SelfRegistration/handleRequestHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
-		return { apie::status::StatusCode::OK, "" };
-	}
-
-	return { apie::status::StatusCode::OK, "" };
-}
-
-
-void ServiceRegistry::onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg)
-{
-	std::stringstream ss;
-	ss << "topic:"<< ",refMsg:" << msg->ShortDebugString();
-	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-
-	uint64_t iSerialNum = msg->serial_num();
-	bool bChanged = ServiceRegistrySingleton::get().deleteBySerialNum(iSerialNum);
-	if (bChanged)
-	{
-		ServiceRegistrySingleton::get().broadcast();
-	}
-}
 
 }
 

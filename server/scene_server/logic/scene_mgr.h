@@ -21,21 +21,6 @@ namespace apie {
 		apie::status::Status ready();
 		void exit();
 
-	public:
-		// CMD
-		static void onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
-
-
-		// RPC
-		static apie::status::Status RPC_echo(
-			const ::rpc_msg::CLIENT_IDENTIFIER&, const std::shared_ptr<rpc_msg::MSG_RPC_REQUEST_ECHO>& request, std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response);
-
-
-		// FORWARD
-		static apie::status::Status Forward_handlEcho(
-			const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::MSG_REQUEST_ECHO>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ECHO>& response);
-
-
 	private:
 
 	};

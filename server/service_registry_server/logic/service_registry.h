@@ -29,21 +29,6 @@ namespace apie {
 		void exit();
 
 	public:
-		// CMD
-		static void onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
-
-		static void onShowProvider(::pubsub::LOGIC_CMD& cmd);
-
-		// Inner Protocols		
-		static apie::status::Status handleRequestRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request, 
-			std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response);
-		static apie::status::Status handleRequestHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
-			std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response);
-
-
-		static void onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg);
-
-	public:
 		void update();
 
 		bool updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance);
@@ -69,9 +54,6 @@ namespace apie {
 		uint64_t m_iStatusCheckTime = 0;
 		event_ns::TimerPtr m_updateTimer;
 	};
-
-
-	//typedef APie::ThreadSafeSingleton<ServiceRegistry> ServiceRegistrySingleton;
 
 	using ServiceRegistrySingleton = ThreadSafeSingleton<ServiceRegistry>;
 }

@@ -17,6 +17,9 @@
     <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
       <Filter>pb_msg\business</Filter>
     </ClInclude>
+    <ClInclude Include="module_handler\gateway_mgr_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -32,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
       <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="module_handler\gateway_mgr_module.cpp">
+      <Filter>module_handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +55,9 @@
     </Filter>
     <Filter Include="pb_msg\business">
       <UniqueIdentifier>{30312d97-04c5-43ff-b056-27682ceec89f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="module_handler">
+      <UniqueIdentifier>{7875f92d-d7c5-48ab-a0bc-466ff4169fa0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -20,6 +20,9 @@
     <ClInclude Include="..\common\dao\model_account_name.h">
       <Filter>common\dao</Filter>
     </ClInclude>
+    <ClInclude Include="module_handler\login_mgr_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -32,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
       <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="module_handler\login_mgr_module.cpp">
+      <Filter>module_handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +55,9 @@
     </Filter>
     <Filter Include="pb_msg\business">
       <UniqueIdentifier>{737af177-610d-45a9-8494-5e400ec87d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="module_handler">
+      <UniqueIdentifier>{fbc7e580-3d21-46ad-bd8f-eecd3c57e411}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

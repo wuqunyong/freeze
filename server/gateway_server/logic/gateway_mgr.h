@@ -44,39 +44,6 @@ namespace apie {
 		bool addGatewayRole(std::shared_ptr<GatewayRole> ptrGatewayRole);
 		bool removeGateWayRole(uint64_t iRoleId);
 
-	public:
-		// CMD
-		static void onLogicCommnad(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
-		
-		static void onMysqlInsertToDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onMysqlDeleteFromDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onMysqlUpdateToDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onMysqlLoadFromDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onMysqlQueryFromDbORM(::pubsub::LOGIC_CMD& cmd);
-		static void onNatsPublish(::pubsub::LOGIC_CMD& cmd);
-		
-
-		// RPC
-		static apie::status::Status RPC_handleLoginPending(
-			const ::rpc_msg::CLIENT_IDENTIFIER& context, const std::shared_ptr<rpc_login::L2G_LoginPendingRequest>& request, std::shared_ptr<rpc_login::L2G_LoginPendingResponse>& response);
-
-		
-
-		// PubSub
-		static void onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg);
-
-
-		// CLIENT OPCODE
-		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
-		static void handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg);
-
-		static apie::status::Status handleRequestClientLogin(
-			uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response);
-		static apie::status::Status handleRequestHandshakeInit(
-			uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>& response);
-		static apie::status::Status handleRequestHandshakeEstablished(
-			uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>& response);
-		
 
 	private:
 		std::map<uint64_t, std::shared_ptr<GatewayRole>> m_serialNumMap; // key:serialNum, value:shared_ptr

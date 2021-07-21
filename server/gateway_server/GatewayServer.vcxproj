@@ -131,6 +131,7 @@
     <ClInclude Include="..\common\dao\model_user.h" />
     <ClInclude Include="logic\gateway_mgr.h" />
     <ClInclude Include="logic\gateway_role.h" />
+    <ClInclude Include="module_handler\gateway_mgr_module.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +140,7 @@
     <ClCompile Include="logic\gateway_mgr.cpp" />
     <ClCompile Include="logic\gateway_role.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="module_handler\gateway_mgr_module.cpp" />
     <ClCompile Include="service_init.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

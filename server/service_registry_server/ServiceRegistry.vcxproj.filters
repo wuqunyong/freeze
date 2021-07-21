@@ -6,16 +6,25 @@
     <ClCompile Include="logic\service_registry.cpp">
       <Filter>logic</Filter>
     </ClCompile>
+    <ClCompile Include="module_handler\service_registry_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="service_init.h" />
     <ClInclude Include="logic\service_registry.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="module_handler\service_registry_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
       <UniqueIdentifier>{7a2ca89d-ae6f-4fa0-bfe8-c77308961d6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="module_handler">
+      <UniqueIdentifier>{1de6d486-2aec-4bfd-9f1e-cb4c4e063f16}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
