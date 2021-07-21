@@ -164,6 +164,17 @@ uint64_t Ctx::getCurSeconds()
 	return seconds.count();
 }
 
+::rpc_msg::CHANNEL Ctx::getThisChannel()
+{
+	::rpc_msg::CHANNEL cur;
+	cur.set_realm(apie::CtxSingleton::get().identify().realm);
+	cur.set_type(apie::CtxSingleton::get().identify().type);
+	cur.set_id(apie::CtxSingleton::get().identify().id);
+
+	return cur;
+}
+
+
 uint32_t Ctx::generateHash(EndPoint point)
 {
 	//Time33

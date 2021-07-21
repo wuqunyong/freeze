@@ -9,6 +9,7 @@
 #include "apie/proto/init.h"
 #include "apie/network/ctx.h"
 #include "apie/event/nats_proxy.h"
+#include "apie/common/enum_to_int.h"
 
 namespace apie {
 namespace rpc {
@@ -101,17 +102,13 @@ void RPCServer<Request, Response>::sendResponse(const ::rpc_msg::RPC_REQUEST& co
 
 	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(context.client().stub().realm(), context.client().stub().type(), context.client().stub().id());
 
-	::rpc_msg::CHANNEL server;
-	server.set_realm(apie::CtxSingleton::get().identify().realm);
-	server.set_type(apie::CtxSingleton::get().identify().type);
-	server.set_id(apie::CtxSingleton::get().identify().id);
+	::rpc_msg::CHANNEL server = apie::Ctx::getThisChannel();
 
 	::rpc_msg::RPC_RESPONSE response;
 	*response.mutable_client() = context.client();
 	*response.mutable_server()->mutable_stub() = server;
 
-
-	response.mutable_status()->set_code(1);
+	response.mutable_status()->set_code(apie::toUnderlyingType(apie::status::StatusCode::OK));
 	response.set_result_data(response_ptr->SerializeAsString());
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;

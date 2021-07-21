@@ -58,7 +58,7 @@ bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rp
 		bResult = true;
 	}
 
-	return true;
+	return bResult;
 }
 
 void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)

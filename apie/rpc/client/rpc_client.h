@@ -84,11 +84,7 @@ bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request_ptr)
 {
 	auto seq_num = manager_.nextSeqNum();
 
-	::rpc_msg::CHANNEL client;
-	client.set_type(apie::CtxSingleton::get().identify().type);
-	client.set_id(apie::CtxSingleton::get().identify().id);
-	client.set_realm(apie::CtxSingleton::get().identify().realm);
-
+	::rpc_msg::CHANNEL client = apie::Ctx::getThisChannel();
 
 	::rpc_msg::RPC_REQUEST request;
 	*request.mutable_client()->mutable_stub() = client;
@@ -125,7 +121,7 @@ bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request_ptr)
 		bResult = true;
 	}
 
-	return true;
+	return bResult;
 }
 
 

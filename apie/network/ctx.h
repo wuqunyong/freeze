@@ -79,6 +79,7 @@ namespace apie
 		
 		static uint64_t getCurMilliseconds();
 		static uint64_t getCurSeconds();
+		static ::rpc_msg::CHANNEL getThisChannel();
 
     private:
 		void daemonize();

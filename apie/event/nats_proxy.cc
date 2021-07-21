@@ -303,6 +303,10 @@ int32_t NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel,
 		break;
 	}
 
+	std::stringstream ss;
+	ss << "invalid type:" << type;
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
+
 	return 101;
 }
 

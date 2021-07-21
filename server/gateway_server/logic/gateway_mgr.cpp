@@ -212,6 +212,7 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 	server.set_id(1);
 
 	::rpc_msg::RoleIdentifier role;
+	*role.mutable_gw_id() = apie::Ctx::getThisChannel();
 
 	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, opcodes, msg);
 }
@@ -328,8 +329,14 @@ void GatewayMgr::onNatsPublish(::pubsub::LOGIC_CMD& cmd)
 	std::string name = cmd.params()[3];
 	std::string info = cmd.params()[4];
 
-	::nats_msg::NATS_MSG_PRXOY nats_msg;
-	apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
+	//::nats_msg::NATS_MSG_PRXOY nats_msg;
+	//apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
+
+	::login_msg::MSG_REQUEST_ECHO request;
+	request.set_value1(100);
+	request.set_value2("hello world");
+
+	GatewayMgr::handleDefaultOpcodes(0, ::apie::OP_MSG_REQUEST_ECHO, request.SerializeAsString());
 
 }
 

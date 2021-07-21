@@ -42,7 +42,7 @@ redis_clients:
     port: 6379
     passwd: ""
 nats:               # nats
-  enable: false                # 是否连接, 默认false
+  enable: true                # 是否连接, 默认false
   connections:
   - subscription:
       type: 1

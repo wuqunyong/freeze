@@ -7,6 +7,8 @@
 #include "apie/proto/init.h"
 #include "apie/status/status.h"
 #include "apie/network/output_stream.h"
+#include "apie/network/logger.h"
+#include "apie/event/nats_proxy.h"
 
 namespace apie {
 namespace forward {
@@ -91,6 +93,19 @@ void HandleRequestForward<Request, responseOpcode, Response>::handleRequest(cons
 template <typename Request, uint32_t responseOpcode, typename Response>
 void HandleRequestForward<Request, responseOpcode, Response>::sendResponse(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<Response>& response)
 {
+	std::cout << "HandleRequestForward:sendResponse|" << response->ShortDebugString() << std::endl;
+
+	::rpc_msg::PRC_DeMultiplexer_Forward demux;
+	*demux.mutable_role() = role;
+	demux.set_opcodes(responseOpcode);
+	demux.set_body_msg(response->SerializeAsString());
+
+	bool bResult = false;
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(role.gw_id().realm(), role.gw_id().type(), role.gw_id().id());
+
+	::nats_msg::NATS_MSG_PRXOY nats_msg;
+	(*nats_msg.mutable_demultiplexer_forward()) = demux;
+	apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 }
 
 
