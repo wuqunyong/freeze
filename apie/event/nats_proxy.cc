@@ -441,6 +441,12 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 		return;
 	}
 
+	if (msg->has_demultiplexer_forward())
+	{
+		apie::forward::ForwardManagerSingleton::get().onForwardDemuxMessage(msg->demultiplexer_forward().role(), msg->demultiplexer_forward().opcodes(), msg->demultiplexer_forward().body_msg());
+		return;
+	}
+
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "Handle_Subscribe invalid params|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
 }
 

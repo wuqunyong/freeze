@@ -95,6 +95,9 @@ apie::status::Status GatewayMgr::ready()
 	server.createService<::login_msg::MSG_REQUEST_HANDSHAKE_INIT, apie::OP_MSG_RESPONSE_HANDSHAKE_INIT, ::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>(::apie::OP_MSG_REQUEST_HANDSHAKE_INIT, GatewayMgr::handleRequestHandshakeInit);
 	server.createService<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED, apie::OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, ::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>(::apie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, GatewayMgr::handleRequestHandshakeEstablished);
 
+	// FORWARD
+	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgr::handleDemuxForward);
+
 
 	std::stringstream ss;
 	ss << "Server Ready!";
@@ -206,6 +209,15 @@ bool GatewayMgr::removeGateWayRole(uint64_t iRoleId)
 
 void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {	
+	//auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleBySerialNum(serialNum);
+	//if (ptrGatewayRole == nullptr)
+	//{
+	//	ASYNC_PIE_LOG("handleDefaultOpcodes", PIE_CYCLE_DAY, PIE_ERROR, "Not Login|serialNum:%lld|opcodes:%d", serialNum, opcodes);
+	//	return;
+	//}
+
+	//uint64_t iUserId = ptrGatewayRole->getRoleId();
+
 	::rpc_msg::CHANNEL server;
 	server.set_realm(1);
 	server.set_type(4);
@@ -213,8 +225,30 @@ void GatewayMgr::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, cons
 
 	::rpc_msg::RoleIdentifier role;
 	*role.mutable_gw_id() = apie::Ctx::getThisChannel();
+	role.set_user_id(100);
 
 	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, opcodes, msg);
+}
+
+void GatewayMgr::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)
+{
+	uint64_t iRoleId = role.user_id();
+	auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleById(iRoleId);
+	if (ptrGatewayRole == nullptr)
+	{
+		return;
+	}
+
+	uint64_t iSerialNum = ptrGatewayRole->getSerailNum();
+	uint32_t iMaskFlag = ptrGatewayRole->getMaskFlag();
+	if (iMaskFlag == 0)
+	{
+		network::OutputStream::sendMsgByStr(iSerialNum, opcode, msg, apie::ConnetionType::CT_SERVER);
+	}
+	else
+	{
+		network::OutputStream::sendMsgByStrByFlag(iSerialNum, opcode, msg, iMaskFlag, apie::ConnetionType::CT_SERVER);
+	}
 }
 
 apie::status::Status GatewayMgr::RPC_handleLoginPending(

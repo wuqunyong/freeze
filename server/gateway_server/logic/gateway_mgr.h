@@ -68,6 +68,7 @@ namespace apie {
 
 		// CLIENT OPCODE
 		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		static void handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg);
 
 		static apie::status::Status handleRequestClientLogin(
 			uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response);

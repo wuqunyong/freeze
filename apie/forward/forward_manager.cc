@@ -102,6 +102,21 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 	find_ite->second(role, newMsg);
 }
 
+void ForwardManager::setDemuxCallback(DemuxCallback func)
+{
+	demux_callback_ = func;
+}
+
+void ForwardManager::onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)
+{
+	if (!demux_callback_)
+	{
+		return;
+	}
+
+	demux_callback_(role, opcode, msg);
+}
+
 
 }  
 }
