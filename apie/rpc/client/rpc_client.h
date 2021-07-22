@@ -26,6 +26,9 @@ public:
 	template <typename Request, typename Response>
 	friend bool RPC_Call(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const Request& params, const typename RPCClient<Request, Response>::CallbackType& calllback);
 
+	template <typename Request, typename Response>
+	friend bool RPC_CallWithContext(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const Request& params, const typename RPCClient<Request, Response>::CallbackType& calllback);
+
 	RPCClient(RPCClientManager& manager, const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
 		: RPCClientBase(opcode),
 		manager_(manager),
@@ -33,6 +36,15 @@ public:
 		context_(server)
 	{
 	}
+
+	RPCClient(RPCClientManager& manager, const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
+		: RPCClientBase(opcode),
+		manager_(manager),
+		callback_(callback),
+		context_(context)
+	{
+	}
+
 
 	RPCClient() = delete;
 

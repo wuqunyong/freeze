@@ -147,8 +147,8 @@ void GatewayMgrModule::Cmd_loadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto cb = [](rpc_msg::STATUS status, ModelUser user, uint32_t iRows) {
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto cb = [](status::Status status, ModelUser user, uint32_t iRows) {
+		if (!status.ok())
 		{
 			return;
 		}
@@ -181,8 +181,8 @@ void GatewayMgrModule::Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto cb = [](rpc_msg::STATUS status, std::vector<ModelUser>& userList) {
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto cb = [](status::Status status, std::vector<ModelUser>& userList) {
+		if (!status.ok())
 		{
 			return;
 		}
@@ -242,8 +242,8 @@ void GatewayMgrModule::Cmd_updateToDbORM(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto cb = [](status::Status status, bool result, uint64_t affectedRows) {
+		if (!status.ok())
 		{
 			return;
 		}
@@ -275,8 +275,8 @@ void GatewayMgrModule::Cmd_insertToDbORM(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) {
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto cb = [](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
+		if (!status.ok())
 		{
 			return;
 		}
@@ -305,8 +305,8 @@ void GatewayMgrModule::Cmd_deleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto cb = [](status::Status status, bool result, uint64_t affectedRows) {
+		if (!status.ok())
 		{
 			return;
 		}
@@ -333,11 +333,11 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto cb = [iSerialNum, request](rpc_msg::STATUS status, ModelUser user, uint32_t iRows) {
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto cb = [iSerialNum, request](status::Status status, ModelUser user, uint32_t iRows) {
+		if (!status.ok())
 		{
 			::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
-			response.set_status_code(status.code());
+			response.set_status_code(apie::toUnderlyingType(status.errorCode()));
 			response.set_user_id(request->user_id());
 			response.set_version(request->version());
 			network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
@@ -345,7 +345,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 		}
 
 		::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
-		response.set_status_code(status.code());
+		response.set_status_code(apie::toUnderlyingType(status.errorCode()));
 		response.set_user_id(request->user_id());
 		response.set_version(request->version());
 		if (iRows == 0)

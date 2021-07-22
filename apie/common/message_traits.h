@@ -35,7 +35,7 @@ constexpr bool HasDbSerializer<T>::value;
 template <typename T>
 struct LoadFromDbCallback_
 {
-	using ReplyCallback = std::function<void(rpc_msg::STATUS, T& dbObj, uint32_t iRows)>;
+	using ReplyCallback = std::function<void(apie::status::Status, T& dbObj, uint32_t iRows)>;
 }; 
 
 template <typename T>
@@ -45,7 +45,7 @@ using LoadFromDbReplyCB = typename LoadFromDbCallback_<T>::ReplyCallback;
 template <typename ...Ts>
 struct LoadFromDbMultiCallback_
 {
-	using ReplyCallback = std::function<void(const rpc_msg::STATUS& status, std::tuple<Ts...>& tupleData, std::array<uint32_t, sizeof...(Ts)>& rows)>;
+	using ReplyCallback = std::function<void(const apie::status::Status& status, std::tuple<Ts...>& tupleData, std::array<uint32_t, sizeof...(Ts)>& rows)>;
 };
 
 template <typename ...Ts>
@@ -54,7 +54,7 @@ using LoadFromDbMultiReplyCB = typename LoadFromDbMultiCallback_<Ts...>::ReplyCa
 template <typename T>
 struct LoadFromDbByFilterCallback_
 {
-	using ReplyCallback = std::function<void(rpc_msg::STATUS, std::vector<T>& dbObjList)>;
+	using ReplyCallback = std::function<void(apie::status::Status, std::vector<T>& dbObjList)>;
 };
 
 template <typename T>
@@ -62,9 +62,9 @@ using LoadFromDbByFilterCB = typename LoadFromDbByFilterCallback_<T>::ReplyCallb
 
 
 
-using InsertToDbCB = std::function<void(rpc_msg::STATUS, bool result, uint64_t affectedRows, uint64_t insertId)>;
-using UpdateToDbCB = std::function<void(rpc_msg::STATUS, bool result, uint64_t affectedRows)>;
-using DeleteFromDbCB = std::function<void(rpc_msg::STATUS, bool result, uint64_t affectedRows)>;
+using InsertToDbCB = std::function<void(apie::status::Status, bool result, uint64_t affectedRows, uint64_t insertId)>;
+using UpdateToDbCB = std::function<void(apie::status::Status, bool result, uint64_t affectedRows)>;
+using DeleteFromDbCB = std::function<void(apie::status::Status, bool result, uint64_t affectedRows)>;
 
 template <typename T>
 typename std::enable_if<std::is_base_of<DeclarativeBase, T>::value, bool>::type
@@ -75,7 +75,7 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 	mysql_proxy_msg::MysqlInsertRequest insertRequest = dbObj.generateInsert();
 	dbObj.dirtyReset();
 
-	auto insertCB = [cb](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlDescribeResponse>& response) mutable {
+	auto insertCB = [cb](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlInsertResponse>& response) mutable {
 		if (!status.ok())
 		{
 			if (cb)
@@ -137,8 +137,8 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 
 	if (updateRequest.fields_size() == 0)
 	{
-		rpc_msg::STATUS status;
-		status.set_code(::rpc_msg::CODE_DirtyFlagZero);
+		apie::status::Status status;
+		status.setErrorCode(apie::status::StatusCode::DirtyFlagZero);
 
 		if (cb)
 		{
@@ -229,8 +229,10 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 	mysql_proxy_msg::MysqlQueryRequestByFilter queryRequest;
 	queryRequest = dbObj.generateQueryByFilter();
 
-	auto queryCB = [dbObj, cb, ptrTuple](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-	{
+	apie::rpc::RPCClientContext context(server);
+	context.setType(rpc::RPCClientContext::Type::SERVER_STREAMING);
+	
+	auto queryCB = [dbObj, cb, ptrTuple](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response) mutable {
 		auto& result = std::get<0>(*ptrTuple);
 		auto& hasError = std::get<1>(*ptrTuple);
 		if (hasError)
@@ -238,7 +240,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			return;
 		}
 
-		if (status.code() != ::rpc_msg::CODE_Ok)
+		if (!status.ok())
 		{
 			hasError = true;
 			if (cb)
@@ -248,29 +250,16 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			return;
 		}
 
-		rpc_msg::STATUS newStatus;
-		newStatus.set_code(::rpc_msg::CODE_Ok);
-
-		::mysql_proxy_msg::MysqlQueryResponse response;
-		if (!response.ParseFromString(replyData))
-		{
-			hasError = true;
-			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			if (cb)
-			{
-				cb(newStatus, result);
-			}
-			return;
-		}
-
 		std::stringstream ss;
-		ss << response.ShortDebugString();
+		ss << response->ShortDebugString();
 		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-		bool bResult = dbObj.loadFromPbCheck(response);
+		apie::status::Status newStatus;
+
+		bool bResult = dbObj.loadFromPbCheck(*response);
 		if (!bResult)
 		{
-			newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
+			newStatus.setErrorCode(apie::status::StatusCode::LoadFromDbError);
 			if (cb)
 			{
 				cb(newStatus, result);
@@ -279,7 +268,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 		}
 
 		uint32_t iRowCount = 0;
-		for (auto& rowData : response.table().rows())
+		for (auto& rowData : response->table().rows())
 		{
 			typename std::remove_reference<decltype(dbObj)>::type newObj;
 
@@ -287,7 +276,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			result.push_back(newObj);
 		}
 
-		if (!status.has_more())
+		if (!status.hasMore())
 		{
 			if (cb)
 			{
@@ -295,8 +284,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			}
 		}
 	};
-	return false;
-	//return APie::RPC::RpcClientSingleton::get().callByRouteWithServerStream(server, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
+	return apie::rpc::RPC_CallWithContext<::mysql_proxy_msg::MysqlQueryRequestByFilter, ::mysql_proxy_msg::MysqlQueryResponse>(context, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
 }
 
 template<class Tuple, std::size_t N>
@@ -397,9 +385,8 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 	auto tupleData = std::make_tuple(args...);
 	std::array<uint32_t, tupleSize> tupleRows = {0};
 
-	auto queryCB = [cb, tupleData, tupleRows](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-	{
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto queryCB = [cb, tupleData, tupleRows](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlMulitQueryResponse>& response) mutable {
+		if (!status.ok())
 		{
 			if (cb)
 			{
@@ -408,28 +395,16 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 			return;
 		}
 
-		rpc_msg::STATUS newStatus;
-		newStatus.set_code(::rpc_msg::CODE_Ok);
-
-		::mysql_proxy_msg::MysqlMulitQueryResponse response;
-		if (!response.ParseFromString(replyData))
-		{
-			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			if (cb)
-			{
-				cb(newStatus, tupleData, tupleRows);
-			}
-			return;
-		}
+		apie::status::Status newStatus;
 
 		std::stringstream ss;
-		ss << response.ShortDebugString();
+		ss << response->ShortDebugString();
 		ASYNC_PIE_LOG("mysql_multi_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 
-		if (response.results_size() != std::tuple_size<decltype(tupleData)>::value)
+		if (response->results_size() != std::tuple_size<decltype(tupleData)>::value)
 		{
-			newStatus.set_code(::rpc_msg::CODE_NotMatchedResultError);
+			newStatus.setErrorCode(apie::status::StatusCode::NotMatchedResultError);
 			if (cb)
 			{
 				cb(newStatus, tupleData, tupleRows);
@@ -438,14 +413,14 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 		}
 
 		std::map<uint32_t, std::tuple<bool, uint32_t>> loadResult;  // value: error,rows
-		TupleDynamic<decltype(tupleData), std::tuple_size<decltype(tupleData)>::value>::load(tupleData, response, loadResult);
+		TupleDynamic<decltype(tupleData), std::tuple_size<decltype(tupleData)>::value>::load(tupleData, *response, loadResult);
 
 		for (const auto& elems : loadResult)
 		{
 			tupleRows[elems.first] = std::get<1>(elems.second);
 			if (!std::get<0>(elems.second))
 			{
-				newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
+				newStatus.setErrorCode(apie::status::StatusCode::LoadFromDbError);
 			}
 		}
 
@@ -454,8 +429,7 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 			cb(newStatus, tupleData, tupleRows);
 		}
 	};
-	return false;
-	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlMultiQuery, queryRequest, queryCB);
+	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlMultiQueryRequest, ::mysql_proxy_msg::MysqlUpdateResponse>(server, ::rpc_msg::RPC_MysqlMultiQuery, queryRequest, queryCB);
 }
 
 

@@ -28,9 +28,14 @@ public:
 		code_ = code;
 	}
 
-	StatusCode error_code() const { return code_; }
+	void setHasMore(bool flag)
+	{
+		has_more_ = flag;
+	}
 
-	std::string error_message() const { return error_message_; }
+	StatusCode errorCode() const { return code_; }
+	std::string errorMessage() const { return error_message_; }
+	bool hasMore() const { return has_more_; }
 
 	bool ok() const { return code_ == StatusCode::OK; }
 	bool isAsync() const { return code_ == StatusCode::OK_ASYNC; }
@@ -38,6 +43,7 @@ public:
 private:
 	StatusCode code_;
 	std::string error_message_;
+	bool has_more_ = false;
 };
 
 

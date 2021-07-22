@@ -22,6 +22,8 @@ public:
 	::rpc_msg::CHANNEL getServerId();
 	uint32_t timeoutMs();
 
+	void setType(Type type);
+
 private:
 	::rpc_msg::CHANNEL client_id_;
 	::rpc_msg::CHANNEL server_id_;

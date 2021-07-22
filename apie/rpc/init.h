@@ -21,6 +21,15 @@ namespace rpc {
 		return rpcObj->sendRequest(params);
 	}
 
+	template <typename Request, typename Response>
+	bool RPC_CallWithContext(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const Request& params, const typename RPCClient<Request, Response>::CallbackType& calllback)
+	{
+		auto rpcObj = RPCClientManagerSingleton::get().createRPCClient<Request, Response>(context, opcode, calllback);
+		return rpcObj->sendRequest(params);
+	}
+
+
+
 	void RPC_AsyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore, uint32_t offset);
 
 }

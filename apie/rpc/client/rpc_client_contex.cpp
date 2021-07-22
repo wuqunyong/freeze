@@ -23,6 +23,11 @@ uint32_t RPCClientContext::timeoutMs()
 	return timeout_ms_;
 }
 
+void RPCClientContext::setType(Type type)
+{
+	type_ = type;
+}
+
 }
 }
 

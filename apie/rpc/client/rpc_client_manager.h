@@ -32,6 +32,11 @@ public:
 	auto createRPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
 		->std::shared_ptr<RPCClient<Request, Response>>;
 
+	template <typename Request, typename Response>
+	auto createRPCClient(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
+		->std::shared_ptr<RPCClient<Request, Response>>;
+
+
 	uint64_t nextSeqNum();
 	bool addPendingRequests(uint64_t seq_num, const std::shared_ptr<RPCClientBase>& ptr_request);
 	void removePendingRequests(uint64_t seq_num);
@@ -57,6 +62,13 @@ auto RPCClientManager::createRPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_m
 	return client_ptr;
 }
 
+template <typename Request, typename Response>
+auto RPCClientManager::createRPCClient(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
+->std::shared_ptr<RPCClient<Request, Response>>
+{
+	auto client_ptr = std::make_shared<RPCClient<Request, Response>>(*this, context, opcode, calllback);
+	return client_ptr;
+}
 
 
 using RPCClientManagerSingleton = apie::ThreadSafeSingleton<RPCClientManager>;
