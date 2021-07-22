@@ -1,29 +1,28 @@
 #include "service_init.h"
 
-#include "apie.h"
 #include "logic/dbproxy_mgr.h"
 
-namespace APie {
+namespace apie {
 
-std::tuple<uint32_t, std::string> initHook()
+apie::status::Status initHook()
 {
 	return DBProxyMgrSingleton::get().init();
 }
 
-std::tuple<uint32_t, std::string> startHook()
+apie::status::Status startHook()
 {
 	return DBProxyMgrSingleton::get().start();
 }
 
-std::tuple<uint32_t, std::string> readyHook()
+apie::status::Status readyHook()
 {
 	return DBProxyMgrSingleton::get().ready();
 }
 
-std::tuple<uint32_t, std::string> exitHook()
+apie::status::Status exitHook()
 {
 	DBProxyMgrSingleton::get().exit();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
 }

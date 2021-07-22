@@ -58,13 +58,12 @@ apie::status::Status GatewayMgr::start()
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(apie::toUnderlyingType(dbType));
+	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	bool bResult = RegisterRequiredTable(server, { {ModelUser::getFactoryName(), ModelUser::createMethod} }, ptrReadyCb);
+	bool bResult = RegisterRequiredTable(server, dbType, { {ModelUser::getFactoryName(), ModelUser::createMethod} }, ptrReadyCb);
 	if (bResult)
 	{
-		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 		return { apie::status::StatusCode::OK, "" };
 	}
 	else

@@ -1,6 +1,6 @@
 identify:
   realm: 1
-  type: 6
+  type: 5
   id: 1
   auth: "hello"
   ip: "127.0.0.1"
@@ -40,7 +40,7 @@ mysql:
   passwd: "root"
   db: "apie_account"
 nats:               # nats
-  enable: false                # 是否连接, 默认false
+  enable: true                # 是否连接, 默认false
   connections:
   - subscription:
       type: 1

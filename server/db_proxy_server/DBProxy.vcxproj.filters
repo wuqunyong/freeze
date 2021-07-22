@@ -8,9 +8,6 @@
     <ClInclude Include="logic\table_cache_mgr.h">
       <Filter>logic</Filter>
     </ClInclude>
-    <ClInclude Include="logic\table_records_cache_mgr.h">
-      <Filter>logic</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\dao\model_user.h">
       <Filter>common\dao</Filter>
     </ClInclude>
@@ -19,6 +16,9 @@
     </ClInclude>
     <ClInclude Include="..\common\dao\model_account_name.h">
       <Filter>common\dao</Filter>
+    </ClInclude>
+    <ClInclude Include="module_handler\dbproxy_mgr_module.h">
+      <Filter>module_handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -30,8 +30,8 @@
     <ClCompile Include="logic\table_cache_mgr.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="logic\table_records_cache_mgr.cpp">
-      <Filter>logic</Filter>
+    <ClCompile Include="module_handler\dbproxy_mgr_module.cpp">
+      <Filter>module_handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +43,9 @@
     </Filter>
     <Filter Include="common\dao">
       <UniqueIdentifier>{08d230ae-8eee-4128-af51-b760fe2b90b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="module_handler">
+      <UniqueIdentifier>{106c1c08-5d2f-45a7-982b-4282ecf6641d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

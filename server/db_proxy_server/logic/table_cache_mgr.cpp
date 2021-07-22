@@ -1,6 +1,6 @@
 #include "table_cache_mgr.h"
 
-namespace APie {
+namespace apie {
 
 std::shared_ptr<MysqlTable> TableCacheMgr::getTable(const std::string name)
 {

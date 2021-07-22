@@ -8,11 +8,13 @@
 #include <algorithm>
 #include <tuple>
 
-namespace APie {
+#include "apie.h"
 
-std::tuple<uint32_t, std::string> initHook();
-std::tuple<uint32_t, std::string> startHook();
-std::tuple<uint32_t, std::string> readyHook();
-std::tuple<uint32_t, std::string> exitHook();
+namespace apie {
+
+apie::status::Status initHook();
+apie::status::Status startHook();
+apie::status::Status readyHook();
+apie::status::Status exitHook();
 
 }

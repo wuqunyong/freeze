@@ -229,9 +229,8 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>(server, rpc_msg::RPC_MysqlDescTable, args, rpcCB);
 }
 
-bool RegisterRequiredTable(const ::rpc_msg::CHANNEL& server, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb)
+bool RegisterRequiredTable(const ::rpc_msg::CHANNEL& server, DeclarativeBase::DBType type, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb)
 {
-	auto type = static_cast<DeclarativeBase::DBType>(server.type());
 	for (const auto& items : loadTables)
 	{
 		DAOFactoryTypeSingleton::get().registerRequiredTable(type, items.first, items.second);
