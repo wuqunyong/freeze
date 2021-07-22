@@ -59,7 +59,7 @@ void RPCClientManager::handleTimeout()
 				return;
 
 			//  Trigger the timer.
-			auto findIte = pending_requests_.find(it->first);
+			auto findIte = pending_requests_.find(it->second.id_);
 			if (findIte != pending_requests_.end())
 			{
 				status::Status status(status::StatusCode::TIMEOUT, "timeout");
