@@ -56,7 +56,12 @@ apie::status::Status GatewayMgr::start()
 
 	};
 
-	bool bResult = RegisterRequiredTable(dbType, 1, { {ModelUser::getFactoryName(), ModelUser::createMethod} }, ptrReadyCb);
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(apie::toUnderlyingType(dbType));
+	server.set_id(1);
+
+	bool bResult = RegisterRequiredTable(server, { {ModelUser::getFactoryName(), ModelUser::createMethod} }, ptrReadyCb);
 	if (bResult)
 	{
 		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);

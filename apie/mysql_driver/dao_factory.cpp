@@ -4,6 +4,7 @@
 #include "apie/network/ctx.h"
 #include "apie/network/logger.h"
 #include "apie/rpc/client/rpc_client.h"
+#include "apie/rpc/init.h"
 #include "apie/event/timer_impl.h"
 
 namespace apie {
@@ -98,7 +99,7 @@ std::optional<std::map<std::string, DAOFactory::TCreateMethod>> DAOFactoryType::
 	return std::nullopt;
 }
 
-std::shared_ptr<DeclarativeBase> DAOFactoryType::getCreateFunc(DeclarativeBase::DBType type, const std::string& name)
+std::shared_ptr<DeclarativeBase> DAOFactoryType::createDAO(DeclarativeBase::DBType type, const std::string& name)
 {
 	switch (type)
 	{
@@ -167,9 +168,8 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 	}
 
 	iCallCount = iCallCount + 1;
-	auto rpcCB = [server, dbType, tables, cb, recallObj, iCallCount](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-	{
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto rpcCB = [server, dbType, tables, cb, recallObj, iCallCount](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlDescribeResponse>& response) {
+		if (!status.ok())
 		{
 			//ReSend
 			std::stringstream ss;
@@ -185,31 +185,22 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 			return;
 		}
 
-		::mysql_proxy_msg::MysqlDescribeResponse response;
-		if (!response.ParseFromString(replyData))
-		{
-			std::stringstream ss;
-			ss << "response parse error";
-			cb(false, ss.str(), iCallCount);
-			return;
-		}
-
 		std::stringstream ss;
-		ss << response.ShortDebugString();
+		ss << response->ShortDebugString();
 		ASYNC_PIE_LOG("mysql_desc", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-		if (!response.result())
+		if (!response->result())
 		{
-			cb(false, response.error_info(), iCallCount);
+			cb(false, response->error_info(), iCallCount);
 			return;
 		}
 
-		for (auto tableData : response.tables())
+		for (auto tableData : response->tables())
 		{
 			MysqlTable table;
 			table = DeclarativeBase::convertFrom(tableData.second);
 
-			auto ptrDaoBase = DAOFactoryTypeSingleton::get().getCreateFunc(dbType, tableData.first);
+			auto ptrDaoBase = DAOFactoryTypeSingleton::get().createDAO(dbType, tableData.first);
 			if (ptrDaoBase == nullptr)
 			{
 				std::stringstream ss;
@@ -233,14 +224,14 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 			DAOFactoryTypeSingleton::get().addLoadedTable(dbType, tableData.first, table);
 		}
 
-		cb(true, response.error_info(), iCallCount);
+		cb(true, response->error_info(), iCallCount);
 	};
-	return false;
-	//return RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDescTable, args, rpcCB);
+	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>(server, rpc_msg::RPC_MysqlDescTable, args, rpcCB);
 }
 
-bool RegisterRequiredTable(DeclarativeBase::DBType type, uint32_t iServerId, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb)
+bool RegisterRequiredTable(const ::rpc_msg::CHANNEL& server, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb)
 {
+	auto type = static_cast<DeclarativeBase::DBType>(server.type());
 	for (const auto& items : loadTables)
 	{
 		DAOFactoryTypeSingleton::get().registerRequiredTable(type, items.first, items.second);
@@ -249,30 +240,9 @@ bool RegisterRequiredTable(DeclarativeBase::DBType type, uint32_t iServerId, con
 	auto requiredTableOpt = DAOFactoryTypeSingleton::get().getRequiredTable(type);
 	if (!requiredTableOpt.has_value())
 	{
-		cb(true,"", 0);
+		cb(true, "", 0);
 		return true;
 	}
-
-
-	::rpc_msg::CHANNEL server;
-	switch (type)
-	{
-	case DeclarativeBase::DBType::DBT_Account:
-	{
-		server.set_type(common::EPT_DB_ACCOUNT_Proxy);
-		break;
-	}
-	case DeclarativeBase::DBType::DBT_Role:
-	{
-		server.set_type(common::EPT_DB_ROLE_Proxy);
-		break;
-	}
-	default:
-	{
-		return false;
-	}
-	}
-	server.set_id(iServerId);
 
 	std::vector<std::string> tables;
 	for (const auto& items : requiredTableOpt.value())

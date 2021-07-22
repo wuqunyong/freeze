@@ -8,6 +8,7 @@
 
 #include "service_init.h"
 
+
 int main(int argc, char **argv)
 {
 	std::string configFile = argv[1];

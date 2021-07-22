@@ -49,6 +49,7 @@ std::shared_ptr<EphemeralTimer> EphemeralTimerMgr::createEphemeralTimer(TimerCb 
 		cb();
 		this->deleteEphemeralTimer(iId);
 	};
+
 	auto ptrTimer = std::make_shared<EphemeralTimer>();
 	ptrTimer->m_timer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
 	ptrTimer->m_id = iId;
