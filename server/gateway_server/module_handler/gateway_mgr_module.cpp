@@ -48,12 +48,6 @@ void GatewayMgrModule::ready()
 
 	// FORWARD
 	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgrModule::handleDemuxForward);
-
-
-	std::stringstream ss;
-	ss << "Server Ready!";
-	std::cout << ss.str() << std::endl;
-	ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 }
 
 void GatewayMgrModule::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
