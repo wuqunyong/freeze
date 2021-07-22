@@ -1220,8 +1220,6 @@ class STATUS :
   enum : int {
     kMsgFieldNumber = 2,
     kCodeFieldNumber = 1,
-    kHasMoreFieldNumber = 3,
-    kOffsetFieldNumber = 4,
   };
   // string msg = 2;
   void clear_msg();
@@ -1248,24 +1246,6 @@ class STATUS :
   void _internal_set_code(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // bool has_more = 3;
-  void clear_has_more();
-  bool has_more() const;
-  void set_has_more(bool value);
-  private:
-  bool _internal_has_more() const;
-  void _internal_set_has_more(bool value);
-  public:
-
-  // uint32 offset = 4;
-  void clear_offset();
-  ::PROTOBUF_NAMESPACE_ID::uint32 offset() const;
-  void set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_offset() const;
-  void _internal_set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value);
-  public:
-
   // @@protoc_insertion_point(class_scope:rpc_msg.STATUS)
  private:
   class _Internal;
@@ -1273,8 +1253,6 @@ class STATUS :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_;
   ::PROTOBUF_NAMESPACE_ID::uint32 code_;
-  bool has_more_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 offset_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
 };
@@ -2797,46 +2775,6 @@ inline void STATUS::set_allocated_msg(std::string* msg) {
   }
   msg_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), msg);
   // @@protoc_insertion_point(field_set_allocated:rpc_msg.STATUS.msg)
-}
-
-// bool has_more = 3;
-inline void STATUS::clear_has_more() {
-  has_more_ = false;
-}
-inline bool STATUS::_internal_has_more() const {
-  return has_more_;
-}
-inline bool STATUS::has_more() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.STATUS.has_more)
-  return _internal_has_more();
-}
-inline void STATUS::_internal_set_has_more(bool value) {
-  
-  has_more_ = value;
-}
-inline void STATUS::set_has_more(bool value) {
-  _internal_set_has_more(value);
-  // @@protoc_insertion_point(field_set:rpc_msg.STATUS.has_more)
-}
-
-// uint32 offset = 4;
-inline void STATUS::clear_offset() {
-  offset_ = 0u;
-}
-inline ::PROTOBUF_NAMESPACE_ID::uint32 STATUS::_internal_offset() const {
-  return offset_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::uint32 STATUS::offset() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.STATUS.offset)
-  return _internal_offset();
-}
-inline void STATUS::_internal_set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  
-  offset_ = value;
-}
-inline void STATUS::set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _internal_set_offset(value);
-  // @@protoc_insertion_point(field_set:rpc_msg.STATUS.offset)
 }
 
 // -------------------------------------------------------------------

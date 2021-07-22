@@ -144,6 +144,7 @@ void GatewayMgrModule::Cmd_loadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
@@ -178,6 +179,7 @@ void GatewayMgrModule::Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	user.markFilter({ 1, 2 });
 
 	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
@@ -239,6 +241,7 @@ void GatewayMgrModule::Cmd_updateToDbORM(::pubsub::LOGIC_CMD& cmd)
 	user.markDirty({ 2 });
 
 	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
@@ -272,6 +275,7 @@ void GatewayMgrModule::Cmd_insertToDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
@@ -302,6 +306,7 @@ void GatewayMgrModule::Cmd_deleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
@@ -330,6 +335,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 	}
 
 	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 

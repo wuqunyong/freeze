@@ -56,7 +56,7 @@ public:
 	void handleRequest(const ::rpc_msg::RPC_REQUEST& context, const std::shared_ptr<Request>& request);
 
 private:
-	void sendResponse(const ::rpc_msg::RPC_REQUEST& context, const std::shared_ptr<Response>& response);
+	void sendResponse(const apie::status::Status& status, const ::rpc_msg::RPC_REQUEST& context, const std::shared_ptr<Response>& response);
 
 	ServiceCallback service_callback_;
 	std::function<void(const ::rpc_msg::RPC_REQUEST&, const std::shared_ptr<Request>&)> request_callback_;
@@ -83,20 +83,17 @@ void RPCServer<Request, Response>::handleRequest(const ::rpc_msg::RPC_REQUEST& c
 		return;
 	}
 
-
-	if (status.ok())
+	if (!context.client().required_reply())
 	{
-		if (!context.client().required_reply())
-		{
-			return;
-		}
-
-		sendResponse(context, response);
+		return;
 	}
+
+	sendResponse(status, context, response);
+	
 }
 
 template <typename Request, typename Response>
-void RPCServer<Request, Response>::sendResponse(const ::rpc_msg::RPC_REQUEST& context, const std::shared_ptr<Response>& response_ptr)
+void RPCServer<Request, Response>::sendResponse(const apie::status::Status& status, const ::rpc_msg::RPC_REQUEST& context, const std::shared_ptr<Response>& response_ptr)
 {
 	std::cout << context.ShortDebugString() << response_ptr->ShortDebugString() << std::endl;
 
@@ -108,7 +105,9 @@ void RPCServer<Request, Response>::sendResponse(const ::rpc_msg::RPC_REQUEST& co
 	*response.mutable_client() = context.client();
 	*response.mutable_server()->mutable_stub() = server;
 
-	response.mutable_status()->set_code(apie::toUnderlyingType(apie::status::StatusCode::OK));
+	response.mutable_status()->set_code(apie::toUnderlyingType(status.errorCode()));
+	response.mutable_status()->set_msg(status.errorMessage());
+
 	response.set_result_data(response_ptr->SerializeAsString());
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;

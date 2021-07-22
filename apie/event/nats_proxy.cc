@@ -413,7 +413,7 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 		auto code = static_cast<apie::status::StatusCode>(response.status().code());
 
 		apie::status::Status status(code, response.status().msg());
-		status.setHasMore(response.status().has_more());
+		status.setHasMore(response.has_more());
 
 		apie::rpc::RPCClientManagerSingleton::get().handleResponse(response.client().seq_id(), status, response.result_data());
 		return;
