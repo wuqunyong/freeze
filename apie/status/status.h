@@ -23,6 +23,11 @@ public:
 	{
 	}
 
+	void setErrorCode(StatusCode code)
+	{
+		code_ = code;
+	}
+
 	StatusCode error_code() const { return code_; }
 
 	std::string error_message() const { return error_message_; }

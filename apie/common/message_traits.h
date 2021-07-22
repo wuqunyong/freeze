@@ -9,6 +9,7 @@
 
 #include "apie/mysql_driver/mysql_orm.h"
 #include "apie/mysql_driver/dao_factory.h"
+#include "apie/rpc/init.h"
 
 
 namespace apie {
@@ -74,9 +75,8 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 	mysql_proxy_msg::MysqlInsertRequest insertRequest = dbObj.generateInsert();
 	dbObj.dirtyReset();
 
-	auto insertCB = [cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-	{
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto insertCB = [cb](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlDescribeResponse>& response) mutable {
+		if (!status.ok())
 		{
 			if (cb)
 			{
@@ -85,32 +85,16 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 			return;
 		}
 
-		rpc_msg::STATUS newStatus;
-		newStatus.set_code(::rpc_msg::CODE_Ok);
-
-		::mysql_proxy_msg::MysqlInsertResponse response;
-		if (!response.ParseFromString(replyData))
-		{
-			newStatus.set_code(::rpc_msg::CODE_ParseError);
-
-			if (cb)
-			{
-				cb(newStatus, false, 0, 0);
-			}
-			return;
-		}
-
 		std::stringstream ss;
-		ss << response.ShortDebugString();
+		ss << response->ShortDebugString();
 		ASYNC_PIE_LOG("mysql_insert", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 		if (cb)
 		{
-			cb(newStatus, response.result(), response.affected_rows(), response.insert_id());
+			cb(status, response->result(), response->affected_rows(), response->insert_id());
 		}
 	};
-	return false;
-	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
+	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlInsertRequest, ::mysql_proxy_msg::MysqlInsertResponse>(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
 }
 
 
@@ -120,9 +104,8 @@ DeleteFromDb(::rpc_msg::CHANNEL server, T& dbObj, DeleteFromDbCB cb)
 {
 	mysql_proxy_msg::MysqlDeleteRequest deleteRequest = dbObj.generateDelete();
 
-	auto deleteCB = [cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-	{
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto deleteCB = [cb](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlDeleteResponse>& response) mutable {
+		if (!status.ok())
 		{
 			if (cb)
 			{
@@ -131,31 +114,17 @@ DeleteFromDb(::rpc_msg::CHANNEL server, T& dbObj, DeleteFromDbCB cb)
 			return;
 		}
 
-		rpc_msg::STATUS newStatus;
-		newStatus.set_code(::rpc_msg::CODE_Ok);
-
-		::mysql_proxy_msg::MysqlDeleteResponse response;
-		if (!response.ParseFromString(replyData))
-		{
-			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			if (cb)
-			{
-				cb(newStatus, false, 0);
-			}
-			return;
-		}
 
 		std::stringstream ss;
-		ss << response.ShortDebugString();
+		ss << response->ShortDebugString();
 		ASYNC_PIE_LOG("mysql_delete", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 		if (cb)
 		{
-			cb(newStatus, response.result(), response.affected_rows());
+			cb(status, response->result(), response->affected_rows());
 		}
 	};
-	return false;
-	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlDelete, deleteRequest, deleteCB);
+	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlDeleteRequest, ::mysql_proxy_msg::MysqlDeleteResponse>(server, ::rpc_msg::RPC_MysqlDelete, deleteRequest, deleteCB);
 }
 
 
@@ -178,43 +147,27 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 		return false;
 	}
 
-	auto updateCB = [cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-	{
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto updateCB = [cb](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlUpdateResponse>& response) mutable {
+		if (!status.ok())
 		{
 			if (cb)
 			{
 				cb(status, false, 0);
 			}
-			
-			return;
-		}
 
-		rpc_msg::STATUS newStatus;
-		newStatus.set_code(::rpc_msg::CODE_Ok);
-
-		::mysql_proxy_msg::MysqlUpdateResponse response;
-		if (!response.ParseFromString(replyData))
-		{
-			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			if (cb)
-			{
-				cb(newStatus, false, 0);
-			}
 			return;
 		}
 
 		std::stringstream ss;
-		ss << response.ShortDebugString();
+		ss << response->ShortDebugString();
 		ASYNC_PIE_LOG("mysql_update", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 		if (cb)
 		{
-			cb(newStatus, response.result(), response.affected_rows());
+			cb(status, response->result(), response->affected_rows());
 		}
 	};
-	return false;
-	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlUpdate, updateRequest, updateCB);
+	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlUpdateRequest, ::mysql_proxy_msg::MysqlUpdateResponse>(server, ::rpc_msg::RPC_MysqlUpdate, updateRequest, updateCB);
 }
 
 
@@ -225,9 +178,8 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 	mysql_proxy_msg::MysqlQueryRequest queryRequest;
 	queryRequest = dbObj.generateQuery();
 
-	auto queryCB = [dbObj, cb](const rpc_msg::STATUS& status, const std::string& replyData) mutable
-	{
-		if (status.code() != ::rpc_msg::CODE_Ok)
+	auto queryCB = [dbObj, cb](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response) mutable {
+		if (!status.ok())
 		{
 			if (cb)
 			{
@@ -236,34 +188,15 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 			return;
 		}
 
-		rpc_msg::STATUS newStatus;
-		newStatus.set_code(::rpc_msg::CODE_Ok);
-
-		::mysql_proxy_msg::MysqlQueryResponse response;
-		if (!response.ParseFromString(replyData))
-		{
-			newStatus.set_code(::rpc_msg::CODE_ParseError);
-			if (cb)
-			{
-				cb(newStatus, dbObj, 0);
-			}
-			return;
-		}
-
 		std::stringstream ss;
-		ss << response.ShortDebugString();
+		ss << response->ShortDebugString();
 		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
-		//bool bResult = dbObj.loadFromPb(response);
-		//if (!bResult)
-		//{
-		//	newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
-		//}
-
-		bool bResult = dbObj.loadFromPbCheck(response);
+		apie::status::Status newStatus;
+		bool bResult = dbObj.loadFromPbCheck(*response);
 		if (!bResult)
 		{
-			newStatus.set_code(::rpc_msg::CODE_LoadFromDbError);
+			newStatus.setErrorCode(apie::status::StatusCode::LoadFromDbError);
 			if (cb)
 			{
 				cb(newStatus, dbObj, 0);
@@ -271,8 +204,8 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 			return;
 		}
 
-		uint32_t iRowCount = response.table().rows_size();
-		for (auto& rowData : response.table().rows())
+		uint32_t iRowCount = response->table().rows_size();
+		for (auto& rowData : response->table().rows())
 		{
 			dbObj.loadFromPb(rowData);
 			break;
@@ -280,11 +213,10 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 
 		if (cb)
 		{
-			cb(newStatus, dbObj, iRowCount);
+			cb(status, dbObj, iRowCount);
 		}
 	};
-	return false;
-	//return APie::RPC::RpcClientSingleton::get().callByRoute(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
+	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlQueryRequest, ::mysql_proxy_msg::MysqlQueryResponse>(server, ::rpc_msg::RPC_MysqlQuery, queryRequest, queryCB);
 }
 
 template <typename T>
