@@ -6,7 +6,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "../base/macros.h"
+#include "apie/base/macros.h"
 
 DEFINE_TYPE_TRAIT(HasShutdown, Shutdown)
 

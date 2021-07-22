@@ -1,8 +1,7 @@
 #include "apie/event/nats_proxy.h"
 
-#include "../influxdb-cpp/influxdb.hpp"
+#include "third_party/influxdb-cpp/influxdb.hpp"
 #include "nats/adapters/libevent.h"
-
 
 #include "apie/rpc/server/rpc_server.h"
 #include "apie/rpc/client/rpc_client.h"
