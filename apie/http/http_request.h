@@ -4,10 +4,7 @@
 #include <map>
 #include <stdint.h>
 
-extern "C"
-{
-#include "../../third_party/http-parser/http_parser.h" 
-}
+#include "third_party/http-parser/http_parser.h"
 
 #include "apie/http/http_common.h"
 

@@ -4,13 +4,9 @@
 #include <string>
 #include <cstring>
 
+#include "third_party/http-parser/http_parser.h"
+
 #include "apie/http/string_util.h"
-
-
-extern "C"
-{
-#include "../../third_party/http-parser/http_parser.h"    
-}
 
 using namespace std;
 

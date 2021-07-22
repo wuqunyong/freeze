@@ -3,10 +3,7 @@
 #include <map>
 #include <string>
 
-extern "C"
-{
-#include "../../third_party/http-parser/http_parser.h" 
-}
+#include "third_party/http-parser/http_parser.h"
 
 #include "apie/http/http_parser_impl.h"
 #include "apie/http/http_request.h"
