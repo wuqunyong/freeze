@@ -21,5 +21,7 @@ namespace rpc {
 		return rpcObj->sendRequest(params);
 	}
 
+	void RPC_AsyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore, uint32_t offset);
+
 }
 }

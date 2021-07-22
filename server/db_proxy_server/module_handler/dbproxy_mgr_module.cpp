@@ -23,13 +23,11 @@ void DBProxyMgrModule::init()
 	auto& rpc = apie::rpc::RPCServerManagerSingleton::get();
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>(rpc_msg::RPC_MysqlDescTable, DBProxyMgrModule::RPC_mysqlDescTable);
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlQueryRequest, ::mysql_proxy_msg::MysqlQueryResponse>(rpc_msg::RPC_MysqlQuery, DBProxyMgrModule::RPC_mysqlQuery);
-
-
-	//rpc.createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_MysqlInsert, DBProxyMgrModule::RPC_handleMysqlInsert);
-	//rpc.createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_MysqlUpdate, DBProxyMgrModule::RPC_handleMysqlUpdate);
-	//rpc.createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_MysqlDelete, DBProxyMgrModule::RPC_handleMysqlDelete);
-	//rpc.createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgrModule::RPC_handleMysqlQueryByFilter);
-	//rpc.createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_MysqlMultiQuery, DBProxyMgrModule::RPC_handleMysqlMultiQuery);
+	rpc.createRPCServer<::mysql_proxy_msg::MysqlInsertRequest, ::mysql_proxy_msg::MysqlInsertResponse>(rpc_msg::RPC_MysqlInsert, DBProxyMgrModule::RPC_mysqlInsert);
+	rpc.createRPCServer<::mysql_proxy_msg::MysqlUpdateRequest, ::mysql_proxy_msg::MysqlUpdateResponse>(rpc_msg::RPC_MysqlUpdate, DBProxyMgrModule::RPC_mysqlUpdate);
+	rpc.createRPCServer<::mysql_proxy_msg::MysqlDeleteRequest, ::mysql_proxy_msg::MysqlDeleteResponse>(rpc_msg::RPC_MysqlDelete, DBProxyMgrModule::RPC_mysqlDelete);
+	rpc.createRPCServer<::mysql_proxy_msg::MysqlQueryRequestByFilter, ::mysql_proxy_msg::MysqlQueryResponse>(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgrModule::RPC_mysqlQueryByFilter);
+	rpc.createRPCServer<::mysql_proxy_msg::MysqlMultiQueryRequest, ::mysql_proxy_msg::MysqlMulitQueryResponse>(rpc_msg::RPC_MysqlMultiQuery, DBProxyMgrModule::RPC_mysqlMultiQuery);
 
 }
 
@@ -61,10 +59,10 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlDescTable(
 	{
 		std::stringstream ss;
 		ss << "LogicThread Null";
-		
+
 		response->set_result(false);
 		response->set_error_info(ss.str());
-		return {apie::status::StatusCode::OK, ""};
+		return { apie::status::StatusCode::OK, "" };
 	}
 
 	for (const auto& items : request->names())
@@ -129,25 +127,23 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlQuery(
 	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> DBProxyMgrModule::RPC_handleMysqlMultiQuery(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlMultiQueryRequest& request)
+apie::status::Status DBProxyMgrModule::RPC_mysqlMultiQuery(
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlMultiQueryRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlMulitQueryResponse>& multiResponse)
 {
-	::mysql_proxy_msg::MysqlMulitQueryResponse multiResponse;
-
-
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
 	{
-		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, multiResponse.SerializeAsString());
+		return { apie::status::StatusCode::INTERNAL, "CODE_LogicThreadNull" };
 	}
 
-	for (const auto& elems : request.requests())
+	for (const auto& elems : request->requests())
 	{
 		::mysql_proxy_msg::MysqlQueryResponse response;
 
 		std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(elems.table_name());
 		if (sharedTable == nullptr)
 		{
-			return std::make_tuple(::rpc_msg::CODE_TableNameNotExistError, multiResponse.SerializeAsString());
+			return { apie::status::StatusCode::INVALID_ARGUMENT, "getTable Null" };
 		}
 
 		std::string sSQL;
@@ -155,7 +151,7 @@ std::tuple<uint32_t, std::string> DBProxyMgrModule::RPC_handleMysqlMultiQuery(co
 		response.set_sql_statement(sSQL);
 		if (!bResult)
 		{
-			return std::make_tuple(::rpc_msg::CODE_GenerateQuerySQLError, multiResponse.SerializeAsString());
+			return { apie::status::StatusCode::INTERNAL, "getMySQLConnector Error" };
 		}
 
 		std::shared_ptr<ResultSet> recordSet;
@@ -166,202 +162,199 @@ std::tuple<uint32_t, std::string> DBProxyMgrModule::RPC_handleMysqlMultiQuery(co
 		if (!bResult)
 		{
 			response.set_error_info(ptrDispatched->getMySQLConnector().getError());
-			auto ptrAdd = multiResponse.add_results();
+			auto ptrAdd = multiResponse->add_results();
 			*ptrAdd = response;
 
-			return std::make_tuple(::rpc_msg::CODE_QueryError, multiResponse.SerializeAsString());
+			return { apie::status::StatusCode::INTERNAL, "CODE_QueryError" };
 		}
 
-		auto ptrAdd = multiResponse.add_results();
+		auto ptrAdd = multiResponse->add_results();
 		*ptrAdd = response;
 	}
 
-	return std::make_tuple(::rpc_msg::CODE_Ok, multiResponse.SerializeAsString());
+	return { apie::status::StatusCode::OK, "" };
 }
 
-//std::tuple<uint32_t, std::string> DBProxyMgrModule::RPC_handleMysqlQueryByFilter(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlQueryRequestByFilter& request)
-//{
-//	::mysql_proxy_msg::MysqlQueryResponse response;
-//
-//	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
-//	if (sharedTable == nullptr)
-//	{
-//		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-//	}
-//
-//	auto ptrDispatched = CtxSingleton::get().getLogicThread();
-//	if (ptrDispatched == nullptr)
-//	{
-//		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
-//	}
-//
-//	std::string sSQL;
-//	bool bResult = sharedTable->generateQueryByFilterSQL(ptrDispatched->getMySQLConnector(), request, sSQL);
-//	response.set_sql_statement(sSQL);
-//	if (!bResult)
-//	{
-//		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
-//	}
-//
-//	std::shared_ptr<ResultSet> recordSet;
-//	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
-//
-//	response.mutable_table()->set_db(sharedTable->getDb());
-//	response.mutable_table()->set_name(sharedTable->getTable());
-//	response.set_result(bResult);
-//	if (!bResult)
-//	{
-//		response.set_error_info(ptrDispatched->getMySQLConnector().getError());
-//	}
-//
-//	if (!recordSet)
-//	{
-//		return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
-//	}
-//
-//	const uint32_t iBatchSize = 3;
-//	uint32_t iCurBatchSize = 0;
-//	uint32_t iOffset = 0;
-//
-//	do
-//	{
-//		auto optRowData = DeclarativeBase::convertToRowFrom(*sharedTable, recordSet);
-//		if (optRowData.has_value())
-//		{
-//			auto ptrAddRows = response.mutable_table()->add_rows();
-//			*ptrAddRows = optRowData.value();
-//
-//			iCurBatchSize++;
-//			if (iCurBatchSize >= iBatchSize)
-//			{
-//				iCurBatchSize = 0;
-//
-//				RPC::RpcServerSingleton::get().asyncStreamReply(client, ::rpc_msg::CODE_Ok, response.SerializeAsString(), true, iOffset);
-//				response.mutable_table()->clear_rows();
-//			}
-//		}
-//		else
-//		{
-//			break;
-//		}
-//
-//		iOffset++;
-//	} while (true);
-//
-//	RPC::RpcServerSingleton::get().asyncStreamReply(client, ::rpc_msg::CODE_Ok, response.SerializeAsString(), false, iOffset);
-//	return std::make_tuple(::rpc_msg::CODE_Ok_Async, "");
-//}
-//
-
-std::tuple<uint32_t, std::string> DBProxyMgrModule::RPC_handleMysqlInsert(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlInsertRequest& request)
+apie::status::Status DBProxyMgrModule::RPC_mysqlQueryByFilter(
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryRequestByFilter>& request, std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response)
 {
-	::mysql_proxy_msg::MysqlInsertResponse response;
-
-	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
+	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request->table_name());
 	if (sharedTable == nullptr)
 	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+		return { apie::status::StatusCode::INVALID_ARGUMENT, "getTable Null" };
 	}
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
 	{
-		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
+		return { apie::status::StatusCode::INTERNAL, "CODE_LogicThreadNull Null" };
 	}
 
 	std::string sSQL;
-	bool bResult = sharedTable->generateInsertSQL(ptrDispatched->getMySQLConnector(), request, sSQL);
-	response.set_sql_statement(sSQL);
+	bool bResult = sharedTable->generateQueryByFilterSQL(ptrDispatched->getMySQLConnector(), *request, sSQL);
+	response->set_sql_statement(sSQL);
 	if (!bResult)
 	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+		return { apie::status::StatusCode::INTERNAL, "generateQueryByFilterSQL Error" };
 	}
 
 	std::shared_ptr<ResultSet> recordSet;
 	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
-	response.set_result(bResult);
+
+	response->mutable_table()->set_db(sharedTable->getDb());
+	response->mutable_table()->set_name(sharedTable->getTable());
+	response->set_result(bResult);
 	if (!bResult)
 	{
-		response.set_error_info(ptrDispatched->getMySQLConnector().getError());
+		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
 	}
-	response.set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
-	response.set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
 
-	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+	if (!recordSet)
+	{
+		return { apie::status::StatusCode::OK, "" };
+	}
+
+	const uint32_t iBatchSize = 3;
+	uint32_t iCurBatchSize = 0;
+	uint32_t iOffset = 0;
+
+	do
+	{
+		auto optRowData = DeclarativeBase::convertToRowFrom(*sharedTable, recordSet);
+		if (optRowData.has_value())
+		{
+			auto ptrAddRows = response->mutable_table()->add_rows();
+			*ptrAddRows = optRowData.value();
+
+			iCurBatchSize++;
+			if (iCurBatchSize >= iBatchSize)
+			{
+				iCurBatchSize = 0;
+
+				apie::rpc::RPC_AsyncStreamReply(client, ::rpc_msg::CODE_Ok, response->SerializeAsString(), true, iOffset);
+				response->mutable_table()->clear_rows();
+			}
+		}
+		else
+		{
+			break;
+		}
+
+		iOffset++;
+	} while (true);
+
+	apie::rpc::RPC_AsyncStreamReply(client, ::rpc_msg::CODE_Ok, response->SerializeAsString(), false, iOffset);
+
+	return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
-std::tuple<uint32_t, std::string> DBProxyMgrModule::RPC_handleMysqlUpdate(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlUpdateRequest& request)
-{
-	::mysql_proxy_msg::MysqlUpdateResponse response;
 
-	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
+apie::status::Status DBProxyMgrModule::RPC_mysqlInsert(
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlInsertRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlInsertResponse>& response)
+{
+	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request->table_name());
 	if (sharedTable == nullptr)
 	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+		return { apie::status::StatusCode::INVALID_ARGUMENT, "CODE_TableNameNotExistError" };
 	}
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
 	{
-		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
+		return { apie::status::StatusCode::INTERNAL, "CODE_LogicThread Null" };
 	}
 
 	std::string sSQL;
-	bool bResult = sharedTable->generateUpdateSQL(ptrDispatched->getMySQLConnector(), request, sSQL);
-	response.set_sql_statement(sSQL);
+	bool bResult = sharedTable->generateInsertSQL(ptrDispatched->getMySQLConnector(), *request, sSQL);
+	response->set_sql_statement(sSQL);
 	if (!bResult)
 	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+		return { apie::status::StatusCode::INTERNAL, "generateInsertSQL Error" };
 	}
 
 	std::shared_ptr<ResultSet> recordSet;
 	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
-	response.set_result(bResult);
+	response->set_result(bResult);
 	if (!bResult)
 	{
-		response.set_error_info(ptrDispatched->getMySQLConnector().getError());
+		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
 	}
-	response.set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
-	response.set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
+	response->set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
+	response->set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
 
-	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> DBProxyMgrModule::RPC_handleMysqlDelete(const ::rpc_msg::CLIENT_IDENTIFIER& client, const ::mysql_proxy_msg::MysqlDeleteRequest& request)
+apie::status::Status DBProxyMgrModule::RPC_mysqlUpdate(
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlUpdateRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlUpdateResponse>& response)
 {
-	::mysql_proxy_msg::MysqlDeleteResponse response;
-
-	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request.table_name());
+	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request->table_name());
 	if (sharedTable == nullptr)
 	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+		return { apie::status::StatusCode::INVALID_ARGUMENT, "getTable Null" };
 	}
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
 	{
-		return std::make_tuple(::rpc_msg::CODE_LogicThreadNull, response.SerializeAsString());
+		return { apie::status::StatusCode::INTERNAL, "CODE_LogicThreadNull" };
 	}
 
 	std::string sSQL;
-	bool bResult = sharedTable->generateDeleteSQL(ptrDispatched->getMySQLConnector(), request, sSQL);
-	response.set_sql_statement(sSQL);
+	bool bResult = sharedTable->generateUpdateSQL(ptrDispatched->getMySQLConnector(), *request, sSQL);
+	response->set_sql_statement(sSQL);
 	if (!bResult)
 	{
-		return std::make_tuple(::rpc_msg::CODE_ParseError, response.SerializeAsString());
+		return { apie::status::StatusCode::INTERNAL, "generateUpdateSQL Error" };
 	}
 
 	std::shared_ptr<ResultSet> recordSet;
 	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
-	response.set_result(bResult);
+	response->set_result(bResult);
 	if (!bResult)
 	{
-		response.set_error_info(ptrDispatched->getMySQLConnector().getError());
+		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
 	}
-	response.set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
+	response->set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
+	response->set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
 
-	return std::make_tuple(::rpc_msg::CODE_Ok, response.SerializeAsString());
+	return { apie::status::StatusCode::OK, "" };
 }
+apie::status::Status DBProxyMgrModule::RPC_mysqlDelete(
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlDeleteRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlDeleteResponse>& response)
+{
+	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request->table_name());
+	if (sharedTable == nullptr)
+	{
+		return { apie::status::StatusCode::INVALID_ARGUMENT, "getTable Null" };
+	}
+
+	auto ptrDispatched = CtxSingleton::get().getLogicThread();
+	if (ptrDispatched == nullptr)
+	{
+		return { apie::status::StatusCode::INTERNAL, "getLogicThread Null" };
+	}
+
+	std::string sSQL;
+	bool bResult = sharedTable->generateDeleteSQL(ptrDispatched->getMySQLConnector(), *request, sSQL);
+	response->set_sql_statement(sSQL);
+	if (!bResult)
+	{
+		return { apie::status::StatusCode::INTERNAL, "generateDeleteSQL Error" };
+	}
+
+	std::shared_ptr<ResultSet> recordSet;
+	bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
+	response->set_result(bResult);
+	if (!bResult)
+	{
+		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
+	}
+	response->set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
+
+	return { apie::status::StatusCode::OK, "" };
+}
+
 
 }
 
