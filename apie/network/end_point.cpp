@@ -67,7 +67,7 @@ void SelfRegistration::registerEndpoint()
 		if (iResult == 0)
 		{
 			ptrSelf->sendRegister(ptrClient, registryAuth);
-			ptrSelf->setState(apie::SelfRegistration::Registering);
+			ptrSelf->setState(apie::SelfRegistration::State::Registering);
 		}
 		return true;
 	};
@@ -76,7 +76,7 @@ void SelfRegistration::registerEndpoint()
 	auto heartbeatCb = [ptrSelf, registryAuth](apie::ClientProxy *ptrClient) {
 		ptrClient->addHeartbeatTimer(3000);
 
-		if (ptrSelf->state() != apie::SelfRegistration::Registered)
+		if (ptrSelf->state() != apie::SelfRegistration::State::Registered)
 		{
 			ptrSelf->sendRegister(ptrClient, registryAuth);
 		}
@@ -310,7 +310,7 @@ void SelfRegistration::handleRespRegisterInstance(uint64_t iSerialNum, const std
 	else
 	{
 		ASYNC_PIE_LOG("SelfRegistration/handleRespRegisterInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-		apie::CtxSingleton::get().getEndpoint()->setState(apie::SelfRegistration::Registered);
+		apie::CtxSingleton::get().getEndpoint()->setState(apie::SelfRegistration::State::Registered);
 	}
 }
 

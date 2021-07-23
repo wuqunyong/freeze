@@ -17,7 +17,7 @@ namespace apie
 	class SelfRegistration : public std::enable_shared_from_this<SelfRegistration>
 	{
 	public:
-		enum State
+		enum class State
 		{
 			Unregistered = 0,
 			Registering,
@@ -49,7 +49,7 @@ namespace apie
 
 	private:
 
-		State m_state = { Unregistered };
+		State m_state = { State::Unregistered };
 		//std::shared_ptr<ClientProxy> m_ptrClient = { nullptr };
 	};
 
