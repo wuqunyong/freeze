@@ -207,6 +207,8 @@ namespace event_ns {
 					return 2;
 				}
 
+				ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Channel:%s|Publish|%s", sPub.c_str(), serialized_msg.c_str());
+
 				return 0;
 			}
 

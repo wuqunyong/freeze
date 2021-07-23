@@ -18,7 +18,7 @@ namespace rpc {
 		response.set_has_more(hasMore);
 		response.set_offset(offset);
 
-		std::string channel = apie::event_ns::NatsManager::GetTopicChannel(client.stub().realm(), client.stub().type(), client.stub().id());
+		std::string channel = apie::event_ns::NatsManager::GetTopicChannel(client.stub());
 
 		::nats_msg::NATS_MSG_PRXOY nats_msg;
 		(*nats_msg.mutable_rpc_response()) = response;

@@ -267,7 +267,6 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			return;
 		}
 
-		uint32_t iRowCount = 0;
 		for (auto& rowData : response->table().rows())
 		{
 			typename std::remove_reference<decltype(dbObj)>::type newObj;

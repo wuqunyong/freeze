@@ -28,7 +28,7 @@ private:
 	::rpc_msg::CHANNEL client_id_;
 	::rpc_msg::CHANNEL server_id_;
 	Type type_ = Type::UNARY;
-	uint32_t timeout_ms_ = 30000;
+	uint32_t timeout_ms_ = 60000;
 };
 
 

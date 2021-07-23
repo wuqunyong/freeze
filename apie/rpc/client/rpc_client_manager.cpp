@@ -85,7 +85,11 @@ void RPCClientManager::handleResponse(uint64_t seq_num, const status::Status& st
 		return;
 	}
 	find_ite->second->onMessage(status, response_data);
-	pending_requests_.erase(find_ite);
+
+	if (!status.hasMore())
+	{
+		pending_requests_.erase(find_ite);
+	}
 
 }
 
