@@ -428,7 +428,7 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 			cb(newStatus, tupleData, tupleRows);
 		}
 	};
-	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlMultiQueryRequest, ::mysql_proxy_msg::MysqlUpdateResponse>(server, ::rpc_msg::RPC_MysqlMultiQuery, queryRequest, queryCB);
+	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlMultiQueryRequest, ::mysql_proxy_msg::MysqlMulitQueryResponse>(server, ::rpc_msg::RPC_MysqlMultiQuery, queryRequest, queryCB);
 }
 
 

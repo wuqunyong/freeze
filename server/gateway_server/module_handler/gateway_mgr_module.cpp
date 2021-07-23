@@ -1,6 +1,7 @@
 #include "gateway_mgr_module.h"
 
 #include "../../common/dao/model_user.h"
+#include "../../common/dao/model_role_extra.h"
 #include "../../common/opcodes.h"
 
 #include "../logic/gateway_mgr.h"
@@ -29,6 +30,9 @@ void GatewayMgrModule::init()
 	cmd.registerOnCmd("update_to_db", "mysql_update_to_db_orm", GatewayMgrModule::Cmd_updateToDbORM);
 	cmd.registerOnCmd("load_from_db", "mysql_load_from_db_orm", GatewayMgrModule::Cmd_loadFromDbORM);
 	cmd.registerOnCmd("query_from_db", "mysql_query_from_db_orm", GatewayMgrModule::Cmd_queryFromDbORM);
+	cmd.registerOnCmd("mulit_load_from_db", "mysql_mulit_load_from_db_orm", GatewayMgrModule::Cmd_multiLoadFromDbORM);
+
+
 	cmd.registerOnCmd("nats_publish", "nats_publish", GatewayMgrModule::Cmd_natsPublish);
 }
 
@@ -191,6 +195,47 @@ void GatewayMgrModule::Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	};
 	LoadFromDbByFilter<ModelUser>(server, user, cb);
 }
+
+void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
+{
+	if (cmd.params_size() < 1)
+	{
+		return;
+	}
+
+	uint64_t userId = std::stoull(cmd.params()[0]);
+
+	ModelUser user;
+	user.fields.user_id = userId;
+	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+	if (!bResult)
+	{
+		return;
+	}
+
+	ModelRoleExtra roleExtra;
+	roleExtra.fields.user_id = userId;
+	bResult = roleExtra.bindTable(DeclarativeBase::DBType::DBT_Role, ModelRoleExtra::getFactoryName());
+	if (!bResult)
+	{
+		return;
+	}
+
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ROLE_Proxy);
+	server.set_id(1);
+
+	auto multiCb = [](status::Status status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, std::array<uint32_t, 2>& tupleRows) {
+		if (!status.ok())
+		{
+			return;
+		}
+	};
+	bResult = Multi_LoadFromDb(multiCb, server, user, roleExtra);
+}
+
 
 void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 {

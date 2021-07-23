@@ -1,6 +1,8 @@
 #include "gateway_mgr.h"
 
 #include "../../common/dao/model_user.h"
+#include "../../common/dao/model_role_extra.h"
+
 #include "../../common/opcodes.h"
 
 #include "gateway_role.h"
@@ -61,7 +63,11 @@ apie::status::Status GatewayMgr::start()
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	bool bResult = RegisterRequiredTable(server, dbType, { {ModelUser::getFactoryName(), ModelUser::createMethod} }, ptrReadyCb);
+	std::map<std::string, DAOFactory::TCreateMethod> loadTables;
+	loadTables.insert(std::make_pair(ModelUser::getFactoryName(), ModelUser::createMethod));
+	loadTables.insert(std::make_pair(ModelRoleExtra::getFactoryName(), ModelRoleExtra::createMethod));
+
+	bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
 	if (bResult)
 	{
 		return { apie::status::StatusCode::OK, "" };

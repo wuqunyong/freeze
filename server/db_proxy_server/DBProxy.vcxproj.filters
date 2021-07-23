@@ -20,6 +20,9 @@
     <ClInclude Include="module_handler\dbproxy_mgr_module.h">
       <Filter>module_handler</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\dao\model_role_extra.h">
+      <Filter>common\dao</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

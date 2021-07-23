@@ -33,8 +33,10 @@ namespace apie {
 		static void Cmd_updateToDbORM(::pubsub::LOGIC_CMD& cmd);
 		static void Cmd_loadFromDbORM(::pubsub::LOGIC_CMD& cmd);
 		static void Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd);
+		static void Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd);
+
 		static void Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd);
-		
+
 
 		// RPC
 		static apie::status::Status RPC_loginPending(

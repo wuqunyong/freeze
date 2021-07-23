@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dao", "dao", "{194FF2C4-6DC
 	ProjectSection(SolutionItems) = preProject
 		server\common\dao\model_account.h = server\common\dao\model_account.h
 		server\common\dao\model_account_name.h = server\common\dao\model_account_name.h
+		server\common\dao\model_role_extra.h = server\common\dao\model_role_extra.h
 		server\common\dao\model_user.h = server\common\dao\model_user.h
 	EndProjectSection
 EndProject
