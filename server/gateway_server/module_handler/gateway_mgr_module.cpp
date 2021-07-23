@@ -138,10 +138,8 @@ void GatewayMgrModule::Cmd_loadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 
 	uint64_t userId = std::stoull(cmd.params()[0]);
 
-	ModelUser user;
-	user.fields.user_id = userId;
-
-	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+	ModelUser user(userId);
+	bool bResult = user.checkInvalid();
 	if (!bResult)
 	{
 		return;
@@ -205,22 +203,6 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 
 	uint64_t userId = std::stoull(cmd.params()[0]);
 
-	ModelUser user;
-	user.fields.user_id = userId;
-	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
-	if (!bResult)
-	{
-		return;
-	}
-
-	ModelRoleExtra roleExtra;
-	roleExtra.fields.user_id = userId;
-	bResult = roleExtra.bindTable(DeclarativeBase::DBType::DBT_Role, ModelRoleExtra::getFactoryName());
-	if (!bResult)
-	{
-		return;
-	}
-
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
@@ -233,7 +215,7 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 			return;
 		}
 	};
-	bResult = Multi_LoadFromDb(multiCb, server, user, roleExtra);
+	Multi_LoadFromDb(multiCb, server, ModelUser(userId), ModelRoleExtra(userId));
 }
 
 
@@ -275,10 +257,9 @@ void GatewayMgrModule::Cmd_updateToDbORM(::pubsub::LOGIC_CMD& cmd)
 	uint32_t level = std::stoul(cmd.params()[1]);
 
 
-	ModelUser user;
-	user.fields.user_id = userId;
+	ModelUser user(userId);
 	user.fields.level = level;
-	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+	bool bResult = user.checkInvalid();
 	if (!bResult)
 	{
 		return;
@@ -310,10 +291,9 @@ void GatewayMgrModule::Cmd_insertToDbORM(::pubsub::LOGIC_CMD& cmd)
 	uint32_t level = std::stoul(cmd.params()[1]);
 
 
-	ModelUser user;
-	user.fields.user_id = userId;
+	ModelUser user(userId);
 	user.fields.level = level;
-	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+	bool bResult = user.checkInvalid();
 	if (!bResult)
 	{
 		return;
@@ -342,9 +322,8 @@ void GatewayMgrModule::Cmd_deleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
 
 	uint64_t userId = std::stoull(cmd.params()[0]);
 
-	ModelUser user;
-	user.fields.user_id = userId;
-	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+	ModelUser user(userId);
+	bool bResult = user.checkInvalid();
 	if (!bResult)
 	{
 		return;

@@ -363,7 +363,7 @@ struct TupleDynamic<Tuple, 1> {
 
 template <typename... Ts>
 typename std::enable_if<std::conjunction_v<std::is_base_of<DeclarativeBase, Ts>...>, bool>::type
-Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts&... args)
+Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts&&... args)
 {	
 	static_assert((sizeof...(Ts)) > 0, "sizeof...(Ts) must > 0");
 	static_assert((sizeof...(Ts)) < 20, "sizeof...(Ts) must < 20");

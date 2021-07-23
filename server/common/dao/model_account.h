@@ -15,12 +15,12 @@ namespace apie {
 
 	class ModelAccount : public DeclarativeBase {
 	public:
-		PACKED_STRUCT(struct db_fields {
+		struct db_fields {
 			uint64_t account_id = 0;
 			uint32_t db_id = 0;
 			int64_t register_time = 0;
 			int64_t modified_time = 0;
-		});
+		};
 
 		enum Fields
 		{
@@ -57,6 +57,13 @@ namespace apie {
 			};
 
 			return layout;
+		}
+
+		ModelAccount() = default;
+		ModelAccount(uint64_t account_id)
+		{
+			this->fields.account_id = account_id;
+			this->bindTable(DeclarativeBase::DBType::DBT_Account, getFactoryName());
 		}
 
 		static std::shared_ptr<DeclarativeBase> createMethod()

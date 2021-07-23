@@ -51,6 +51,13 @@ namespace apie {
 			return layout;
 		}
 
+		ModelRoleExtra() = default;
+		ModelRoleExtra(uint64_t user_id)
+		{
+			this->fields.user_id = user_id;
+			this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
+		}
+
 		static std::shared_ptr<DeclarativeBase> createMethod()
 		{
 			return std::make_shared<ModelRoleExtra>();

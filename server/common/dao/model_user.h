@@ -15,7 +15,7 @@ namespace apie {
 
 	class ModelUser : public DeclarativeBase {
 	public:
-		PACKED_STRUCT(struct db_fields {
+		struct db_fields {
 			uint64_t user_id;
 			uint64_t game_id = 1;
 			uint32_t level = 2;
@@ -23,7 +23,7 @@ namespace apie {
 			int64_t login_time = 2;
 			int64_t offline_time = 3;
 			std::string name = "hello";
-		});
+		};
 
 		enum Fields
 		{
@@ -69,6 +69,13 @@ namespace apie {
 			};
 
 			return layout;
+		}
+
+		ModelUser() = default;
+		ModelUser(uint64_t user_id)
+		{
+			this->fields.user_id = user_id;
+			this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
 		}
 
 		static std::shared_ptr<DeclarativeBase> createMethod()
