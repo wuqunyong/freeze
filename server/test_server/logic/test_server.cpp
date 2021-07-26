@@ -1,13 +1,12 @@
-#include "test_server.h"
+#include "logic/test_server.h"
 
 #include "json/json.h"
 
 #include "../../apie/redis_driver/redis_client.h"
 #include "../../common/opcodes.h"
 
-
-#include "test_runner.h"
-#include "../module_handler/test_server_module.h"
+#include "logic/test_runner.h"
+#include "module_handler/test_server_module.h"
 
 namespace apie {
 

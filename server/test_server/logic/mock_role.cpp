@@ -1,10 +1,10 @@
-#include "mock_role.h"
+#include "logic/mock_role.h"
 
 #include <functional>
-#include "test_server.h"
+
+#include "logic/test_server.h"
 
 #include "../../common/opcodes.h"
-#include "../../apie/common/file.h"
 
 namespace apie {
 

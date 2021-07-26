@@ -13,10 +13,11 @@
 #include "../../pb_msg/business/login_msg.pb.h"
 #include "../../pb_msg/business/role_server_msg.pb.h"
 
-#include "mock_role.h"
+#include "logic/mock_role.h"
 
 
 namespace apie {
+
 
 class TestServerMgr
 {

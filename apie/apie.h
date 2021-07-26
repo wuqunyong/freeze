@@ -21,6 +21,7 @@
 #include "apie/common/exception_trap.h"
 #include "apie/common/graphics_utility.h"
 #include "apie/common/enum_to_int.h"
+#include "apie/common/file.h"
 
 #include "apie/crypto/crypto_utility.h"
 

@@ -1,4 +1,4 @@
-#include "logout_test_case.h"
+#include "logic/task/logout_test_case.h"
 
 #include "../../../common/opcodes.h"
 

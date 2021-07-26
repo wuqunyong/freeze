@@ -1,13 +1,12 @@
-#include "test_server_module.h"
+#include "module_handler/test_server_module.h"
 
 #include "json/json.h"
 
 #include "../../apie/redis_driver/redis_client.h"
 #include "../../common/opcodes.h"
 
-
-#include "../logic/test_runner.h"
-#include "../logic/test_server.h"
+#include "logic/test_runner.h"
+#include "logic/test_server.h"
 
 namespace apie {
 
@@ -33,7 +32,6 @@ void TestServerModule::init()
 	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, "login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED");
 
 }
-
 
 void TestServerModule::ready()
 {
@@ -119,6 +117,7 @@ void TestServerModule::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes
 	ptrMockRole->handlePendingResponse(serialNum, opcodes, msg);
 	ptrMockRole->handlePendingNotify(serialNum, opcodes, msg);
 }
+
 
 }
 

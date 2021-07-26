@@ -12,9 +12,10 @@
 
 #include "apie.h"
 
-#include "mock_role.h"
-#include "test_case.h"
 #include "json/json.h"
+
+#include "logic/mock_role.h"
+#include "logic/test_case.h"
 
 namespace apie {
 

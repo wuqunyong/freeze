@@ -1,8 +1,8 @@
-#include "test_runner.h"
+#include "logic/test_runner.h"
 
-#include "task/login_test_case.h"
-#include "task/echo_test_case.h"
-#include "task/logout_test_case.h"
+#include "logic/task/login_test_case.h"
+#include "logic/task/echo_test_case.h"
+#include "logic/task/logout_test_case.h"
 
 namespace apie {
 	TestRunner::TestRunner()

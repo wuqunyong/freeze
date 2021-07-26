@@ -11,8 +11,9 @@
 #include <set>
 
 #include "apie.h"
-#include "../mock_role.h"
-#include "../test_case.h"
+
+#include "logic/mock_role.h"
+#include "logic/test_case.h"
 
 
 namespace apie {

@@ -12,7 +12,7 @@
 
 #include "apie.h"
 
-#include "test_suite.h"
+#include "logic/test_suite.h"
 
 namespace apie {
 

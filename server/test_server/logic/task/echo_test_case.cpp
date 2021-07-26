@@ -1,4 +1,4 @@
-#include "echo_test_case.h"
+#include "logic/task/echo_test_case.h"
 
 #include "../../../common/opcodes.h"
 
