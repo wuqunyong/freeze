@@ -116,7 +116,7 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 		{
 			auto iAccountId = request->account_id();
 
-			auto curTime = time(NULL);
+			auto curTime = apie::Ctx::getCurSeconds();
 			account.fields.modified_time = curTime;
 
 			account.markDirty({ ModelAccount::modified_time });
@@ -136,19 +136,17 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 			server.set_type(gatewayOpt.value().type());
 			server.set_id(gatewayOpt.value().id());
 
-			auto rpcCB = [iSerialNum, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) {
+			auto rpcCB = [iSerialNum, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) mutable {
 				if (!status.ok())
 				{
+					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+					network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 					return;
 				}
 
-				std::stringstream ss;
-				ss << "RPC_echoCb:" << responsePtr->ShortDebugString();
-				
 				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			};
 			apie::rpc::RPC_Call<::rpc_login::L2G_LoginPendingRequest, rpc_login::L2G_LoginPendingResponse>(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
-
 			return;
 		}
 
@@ -173,19 +171,19 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 				return;
 			}
+
 			::rpc_msg::CHANNEL server;
 			server.set_realm(apie::Ctx::getThisChannel().realm());
 			server.set_type(gatewayOpt.value().type());
 			server.set_id(gatewayOpt.value().id());
 
-			auto rpcCB = [iSerialNum, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) {
+			auto rpcCB = [iSerialNum, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) mutable {
 				if (!status.ok())
 				{
+					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+					network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 					return;
 				}
-
-				std::stringstream ss;
-				ss << "RPC_echoCb:" << responsePtr->ShortDebugString();
 
 				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			};
