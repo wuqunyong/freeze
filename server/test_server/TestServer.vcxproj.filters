@@ -36,6 +36,9 @@
     <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
       <Filter>pb_msg\business</Filter>
     </ClCompile>
+    <ClCompile Include="module_handler\test_server_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="service_init.h" />
@@ -72,6 +75,9 @@
     <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
       <Filter>pb_msg\business</Filter>
     </ClInclude>
+    <ClInclude Include="module_handler\test_server_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -85,6 +91,9 @@
     </Filter>
     <Filter Include="pb_msg\business">
       <UniqueIdentifier>{320bb5ec-ca4b-4e64-8cfa-1c3d3955af42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="module_handler">
+      <UniqueIdentifier>{04e92ebe-a2b5-47ea-98ad-3c5e934bfce6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -34,14 +34,6 @@ public:
 	std::optional<uint64_t> findRoleIdBySerialNum(uint64_t iSerialNum);
 	void removeSerialNum(uint64_t iSerialNum);
 
-public:
-	static void PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
-
-	static void Cmd_client(::pubsub::LOGIC_CMD& cmd);
-	static void Cmd_autoTest(::pubsub::LOGIC_CMD& cmd);
-
-	static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
-
 
 public:
 	std::shared_ptr<ClientProxy> m_ptrClientProxy;

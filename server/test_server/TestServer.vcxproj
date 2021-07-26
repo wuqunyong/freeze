@@ -30,6 +30,7 @@
     <ClCompile Include="logic\test_runner.cpp" />
     <ClCompile Include="logic\test_server.cpp" />
     <ClCompile Include="logic\test_suite.cpp" />
+    <ClCompile Include="module_handler\test_server_module.cpp" />
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="test_client.cpp" />
   </ItemGroup>
@@ -45,6 +46,7 @@
     <ClInclude Include="logic\test_runner.h" />
     <ClInclude Include="logic\test_server.h" />
     <ClInclude Include="logic\test_suite.h" />
+    <ClInclude Include="module_handler\test_server_module.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

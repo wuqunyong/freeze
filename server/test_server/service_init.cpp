@@ -1,6 +1,5 @@
 #include "service_init.h"
 
-#include "apie.h"
 #include "logic/test_server.h"
 
 namespace apie {
