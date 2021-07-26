@@ -341,10 +341,8 @@ void GatewayMgrModule::Cmd_deleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
 apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 	uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response)
 {
-	ModelUser user;
-	user.fields.user_id = request->user_id();
-
-	bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
+	ModelUser user(request->user_id());
+	bool bResult = user.checkInvalid();
 	if (!bResult)
 	{
 		response->set_status_code(opcodes::SC_BindTable_Error);
@@ -358,7 +356,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto cb = [iSerialNum, request](status::Status status, ModelUser user, uint32_t iRows) {
+	auto cb = [iSerialNum, request, server](status::Status status, ModelUser user, uint32_t iRows) {
 		if (!status.ok())
 		{
 			::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
@@ -376,6 +374,14 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 		if (iRows == 0)
 		{
 			response.set_is_newbie(true);
+
+			auto cb = [](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
+				if (!status.ok())
+				{
+					return;
+				}
+			};
+			InsertToDb<ModelUser>(server, user, cb);
 		} 
 		else
 		{
