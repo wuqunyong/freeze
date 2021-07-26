@@ -1,8 +1,8 @@
-#include "scene_mgr.h"
+#include "logic/scene_mgr.h"
 
 #include "../../common/opcodes.h"
 
-#include "../module_handler/scene_mgr_module.h"
+#include "module_handler/scene_mgr_module.h"
 
 namespace apie {
 

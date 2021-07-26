@@ -1,16 +1,12 @@
-#include "gateway_mgr.h"
+#include "logic/gateway_mgr.h"
 
 #include "../../common/dao/model_user.h"
 #include "../../common/dao/model_role_extra.h"
-
 #include "../../common/opcodes.h"
 
-#include "gateway_role.h"
+#include "logic/gateway_role.h"
 
-#include "../../apie/common/message_traits.h"
-#include "../../apie/common/file.h"
-
-#include "../module_handler/gateway_mgr_module.h"
+#include "module_handler/gateway_mgr_module.h"
 
 
 namespace apie {

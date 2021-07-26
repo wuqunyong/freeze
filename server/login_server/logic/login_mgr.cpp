@@ -1,10 +1,10 @@
-#include "login_mgr.h"
+#include "logic/login_mgr.h"
 
 #include "../../common/dao/model_account.h"
 #include "../../common/dao/model_account_name.h"
 #include "../../common/opcodes.h"
 
-#include "../module_handler/login_mgr_module.h"
+#include "module_handler/login_mgr_module.h"
 
 
 namespace apie {

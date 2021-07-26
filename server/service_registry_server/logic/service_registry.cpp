@@ -1,6 +1,6 @@
-#include "service_registry.h"
+#include "logic/service_registry.h"
 
-#include "../module_handler/service_registry_module.h"
+#include "module_handler/service_registry_module.h"
 
 namespace apie {
 

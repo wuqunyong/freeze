@@ -1,8 +1,8 @@
-#include "dbproxy_mgr.h"
+#include "logic/dbproxy_mgr.h"
 
-#include "table_cache_mgr.h"
+#include "logic/table_cache_mgr.h"
 
-#include "../module_handler/dbproxy_mgr_module.h"
+#include "module_handler/dbproxy_mgr_module.h"
 
 #include "../../common/dao/model_account.h"
 #include "../../common/dao/model_account_name.h"
