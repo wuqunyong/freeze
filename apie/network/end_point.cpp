@@ -352,15 +352,17 @@ void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const std::shar
 
 void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
 {
-	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",response:" << response->ShortDebugString();
 	if (response->status_code() == opcodes::StatusCode::SC_Ok)
 	{
-		//ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+		return;
 	}
 	else
 	{
+		std::stringstream ss;
+		ss << "iSerialNum:" << iSerialNum << ",response:" << response->ShortDebugString();
 		ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+
+		apie::CtxSingleton::get().getEndpoint()->setState(apie::SelfRegistration::State::Unregistered);
 	}
 }
 

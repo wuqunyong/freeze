@@ -31,13 +31,14 @@ void ServiceRegistryModule::ready()
 void ServiceRegistryModule::Cmd_showProvider(::pubsub::LOGIC_CMD& cmd)
 {
 	std::stringstream ss;
+	ss << std::endl;
 	for (const auto& items : ServiceRegistrySingleton::get().registered())
 	{
 		ss << "--> " << "addTime:" << items.second.addTime << "|modifiedTime:" << items.second.modifyTime << "|node:" << items.second.instance.ShortDebugString() << std::endl;
 	}
 
-	ASYNC_PIE_LOG("show_provider:\n%s", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-	std::cout << "show_provider:\n" << ss.str() << std::flush;
+	ASYNC_PIE_LOG("show_provider:%s", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	std::cout << "show_provider:" << ss.str() << std::flush;
 
 }
 
