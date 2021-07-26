@@ -25,7 +25,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="service_init.cpp" />
     <ClCompile Include="logic\login_mgr.cpp">
       <Filter>logic</Filter>
@@ -39,6 +38,7 @@
     <ClCompile Include="module_handler\login_mgr_module.cpp">
       <Filter>module_handler</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">

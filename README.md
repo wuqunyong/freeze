@@ -1,26 +1,5 @@
 [# Welcome to APie!](https://github.com/wuqunyong/APie)
 
-# Docker安装
-## 拉取环境镜像
-```shell
-    docker pull wuqunyong/apie-env
-```
-## 运行容器
-```shell
-    docker run -i -t wuqunyong/apie-env /bin/bash
-```
-## 编译
-```shell
-scl enable devtoolset-8 bash
-cd /root/
-git clone https://github.com/wuqunyong/APie.git
-cd /root/APie/
-chmod +x ./bootstrap.sh
-./bootstrap.sh
-./configure
-make rpm
-```
-
 # CentOS 7 x64安装
 ## 依赖
 
@@ -180,45 +159,49 @@ mysqladmin -u root -p version
 #include <vector>
 #include <algorithm>
 #include <tuple>
+
 #include "apie.h"
 
-#include "../../SharedDir/opcodes.h"
-#include "../../PBMsg/BusinessMsg/login_msg.pb.h"
-#include "../../PBMsg/BusinessMsg/rpc_login.pb.h"
+#include "../common/opcodes.h"
+#include "../common/dao/model_account.h"
+#include "../common/dao/model_account_name.h"
+#include "../pb_msg/business/login_msg.pb.h"
+#include "../pb_msg/business/rpc_login.pb.h"
 
-void handleAccountLogin(uint64_t iSerialNum, const ::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L& request)
+apie::status::Status initHook()
 {
-	::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
-	response.set_status_code(opcodes::SC_Ok);
-	response.set_account_id(request.account_id());
-	APie::Network::OutputStream::sendMsg(iSerialNum, APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Login_Server });
+	if (!bResult)
+	{
+		return { apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
+	}
+	return {apie::status::StatusCode::OK, ""};
 }
 
-
-std::tuple<uint32_t, std::string> initHook()
+apie::status::Status startHook()
 {
-	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
+	return {apie::status::StatusCode::OK, ""};
 }
 
-std::tuple<uint32_t, std::string> startHook()
+apie::status::Status handleAccount(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>& response)
 {
-	APie::Hook::HookRegistrySingleton::get().triggerHook(APie::Hook::HookPoint::HP_Ready);
-	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
+	response->set_account_id(request->account_id());
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> readyHook()
+apie::status::Status readyHook()
 {
-	// CLIENT OPCODE
-	APie::Api::PBHandler& serverPB = APie::Api::OpcodeHandlerSingleton::get().server;
-	serverPB.bind(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, handleAccountLogin);
+	auto& server = apie::service::ServiceHandlerSingleton::get().server;
+	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, ::apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, handleAccount);
 
-	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
+	return {apie::status::StatusCode::OK, ""};
 }
 
-std::tuple<uint32_t, std::string> exitHook()
+apie::status::Status exitHook()
 {
-	return std::make_tuple(APie::Hook::HookResult::HR_Ok, "");
+	return {apie::status::StatusCode::OK, ""};
 }
+
 
 int main(int argc, char **argv)
 {
@@ -229,259 +212,17 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Init, initHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Start, startHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Ready, readyHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Exit, exitHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Init, initHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Start, startHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Ready, readyHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Exit, exitHook);
 
-	APie::CtxSingleton::get().init(configFile);
-	APie::CtxSingleton::get().start();
-	APie::CtxSingleton::get().waitForShutdown();
+	apie::CtxSingleton::get().init(configFile);
+	apie::CtxSingleton::get().start();
+	apie::CtxSingleton::get().waitForShutdown();
 
-	return 0;
-}
-```
-
-[配置文件模板](https://github.com/wuqunyong/APie/blob/master/conf/template.yaml)
-
-
-# MysqlORM Demo
-```cpp
-namespace APie {
-
-	class ModelUser : public DeclarativeBase {
-	public:
-		PACKED_STRUCT(struct db_fields {
-			uint64_t user_id;
-			uint64_t game_id = 1;
-			uint32_t level = 2;
-			int64_t register_time = 1;
-			int64_t login_time = 2;
-			int64_t offline_time = 3;
-			std::string name = "hello";
-			std::string role_info;
-		});
-
-		virtual void* layoutAddress() override
-		{
-			return &fields;
-		}
-
-		virtual std::vector<uint32_t> layoutOffset() override
-		{
-			std::vector<uint32_t> layout = {
-				offsetof(db_fields, user_id),
-				offsetof(db_fields, game_id),
-				offsetof(db_fields, level),
-				offsetof(db_fields, register_time),
-				offsetof(db_fields, login_time),
-				offsetof(db_fields, offline_time),
-				offsetof(db_fields, name),
-				offsetof(db_fields, role_info),
-			};
-
-			return layout;
-		}
-
-		virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override
-		{
-			std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout = {
-				get_field_type(fields.user_id),
-				get_field_type(fields.game_id),
-				get_field_type(fields.level),
-				get_field_type(fields.register_time),
-				get_field_type(fields.login_time),
-				get_field_type(fields.offline_time),
-				get_field_type(fields.name),
-				get_field_type(fields.role_info),
-			};
-
-			return layout;
-		}
-
-		static std::shared_ptr<DeclarativeBase> createMethod()
-		{
-			return std::make_shared<ModelUser>();
-		}
-
-		static std::string getFactoryName() 
-		{ 
-			return "role_base"; 
-		}
-
-	public:
-		db_fields fields;
-	};
-
-
+    return 0;
 }
 
-
-///////////////////////////////
-
-	if (command.cmd() == "load_from_db")
-	{
-		if (command.params_size() < 1)
-		{
-			return;
-		}
-
-		uint64_t userId = std::stoull(command.params()[0]);
-
-		ModelUser user;
-		user.fields.user_id = userId;
-
-		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
-
-		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
-		server.set_id(1);
-
-		auto cb = [](rpc_msg::STATUS status, ModelUser user, uint32_t iRows) {
-			if (status.code() != ::rpc_msg::CODE_Ok)
-			{
-				return;
-			}
-		};
-		LoadFromDb<ModelUser>(server, user, cb);
-	}
-	else if (command.cmd() == "load_from_db_by_filter")
-	{
-		if (command.params_size() < 2)
-		{
-			return;
-		}
-
-		uint64_t gameId = std::stoull(command.params()[0]);
-		uint32_t level = std::stoull(command.params()[1]);
-
-
-		ModelUser user;
-		user.fields.game_id = gameId;
-		user.fields.level = level;
-		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
-		user.markFilter({ 1, 2 });
-
-		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
-		server.set_id(1);
-
-		auto cb = [](rpc_msg::STATUS status, std::vector<ModelUser>& userList) {
-			if (status.code() != ::rpc_msg::CODE_Ok)
-			{
-				return;
-			}
-		};
-		LoadFromDbByFilter<ModelUser>(server, user, cb);
-	}
-	else if (command.cmd() == "mysql_insert_orm")
-	{
-		if (command.params_size() < 2)
-		{
-			return;
-		}
-
-		uint64_t userId = std::stoull(command.params()[0]);
-		uint32_t level = std::stoull(command.params()[1]);
-
-
-		ModelUser user;
-		user.fields.user_id = userId;
-		user.fields.level = level;
-		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
-
-		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
-		server.set_id(1);
-
-		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows, uint64_t insertId) {
-			if (status.code() != ::rpc_msg::CODE_Ok)
-			{
-				return;
-			}
-		};
-		InsertToDb<ModelUser>(server, user, cb);
-	}
-	else if (command.cmd() == "mysql_update_orm")
-	{
-		if (command.params_size() < 2)
-		{
-			return;
-		}
-
-		uint64_t userId = std::stoull(command.params()[0]);
-		uint32_t level = std::stoull(command.params()[1]);
-
-
-		ModelUser user;
-		user.fields.user_id = userId;
-		user.fields.level = level;
-		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
-		user.markDirty({ 2 });
-
-		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
-		server.set_id(1);
-
-		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
-			if (status.code() != ::rpc_msg::CODE_Ok)
-			{
-				return;
-			}
-		};
-		UpdateToDb<ModelUser>(server, user, cb);
-	}
-	else if (command.cmd() == "mysql_delete_orm")
-	{
-		if (command.params_size() < 1)
-		{
-			return;
-		}
-
-		uint64_t userId = std::stoull(command.params()[0]);
-
-		ModelUser user;
-		user.fields.user_id = userId;
-		bool bResult = user.bindTable(DeclarativeBase::DBType::DBT_Role, ModelUser::getFactoryName());
-
-		::rpc_msg::CHANNEL server;
-		server.set_type(common::EPT_DB_Proxy);
-		server.set_id(1);
-
-		auto cb = [](rpc_msg::STATUS status, bool result, uint64_t affectedRows) {
-			if (status.code() != ::rpc_msg::CODE_Ok)
-			{
-				return;
-			}
-		};
-		DeleteFromDb<ModelUser>(server, user, cb);
-	}
-
 ```
 
-# 协议注册
-
- - GatewayServer(直连)
-```
- 	Api::PBHandler& serverPB = Api::OpcodeHandlerSingleton::get().server;
-	serverPB.setDefaultFunc(GatewayMgr::handleDefaultOpcodes);
-	serverPB.bind(::opcodes::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgr::handleRequestClientLogin);
-```
-- SceneServer(非直连，默认转发目的)
-```
-	auto& forwardHandler = APie::Api::ForwardHandlerSingleton::get();
-	forwardHandler.server.bind(::opcodes::OP_MSG_REQUEST_ECHO, SceneMgr::Forward_handlEcho);
-```
-- 其他
-通过RPC转发
-
-# 服务监控
-![enter image description here](https://github.com/wuqunyong/APie/blob/master/docs/qps.png)
-![enter image description here](https://github.com/wuqunyong/APie/blob/master/docs/cpu.png)
-
-# 压测
-```
-TestServer.exe ../../conf/test_client.yaml
-```
-![enter image description here](https://github.com/wuqunyong/APie/blob/master/docs/auto_test.png)
-![enter image description here](https://github.com/wuqunyong/APie/blob/master/docs/auto_test_config.png)
