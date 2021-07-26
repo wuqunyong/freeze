@@ -56,23 +56,23 @@ void GatewayMgrModule::ready()
 
 void GatewayMgrModule::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {	
-	//auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleBySerialNum(serialNum);
-	//if (ptrGatewayRole == nullptr)
-	//{
-	//	ASYNC_PIE_LOG("handleDefaultOpcodes", PIE_CYCLE_DAY, PIE_ERROR, "Not Login|serialNum:%lld|opcodes:%d", serialNum, opcodes);
-	//	return;
-	//}
+	auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleBySerialNum(serialNum);
+	if (ptrGatewayRole == nullptr)
+	{
+		ASYNC_PIE_LOG("handleDefaultOpcodes", PIE_CYCLE_DAY, PIE_ERROR, "Not Login|serialNum:%lld|opcodes:%d", serialNum, opcodes);
+		return;
+	}
 
-	//uint64_t iUserId = ptrGatewayRole->getRoleId();
+	uint64_t iUserId = ptrGatewayRole->getRoleId();
 
 	::rpc_msg::CHANNEL server;
-	server.set_realm(1);
+	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(4);
 	server.set_id(1);
 
 	::rpc_msg::RoleIdentifier role;
 	*role.mutable_gw_id() = apie::Ctx::getThisChannel();
-	role.set_user_id(100);
+	role.set_user_id(iUserId);
 
 	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, opcodes, msg);
 }

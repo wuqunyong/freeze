@@ -34,7 +34,7 @@ redis_clients:
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
   start: 1
-  stop: 500
+  stop: 2
   ramp_up_interval_ms: 10000
   ramp_up_nums: 50
   task_suite:
@@ -44,7 +44,7 @@ auto_test:               # 自动化测试
       loop_interval_ms: 10
   - task_case:
       case_type: 2
-      loop_count: 100
+      loop_count: 1
       loop_interval_ms: 100
   - task_case:
       case_type: 3
