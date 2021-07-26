@@ -2,7 +2,6 @@
 
 #include "json/json.h"
 
-#include "../../apie/redis_driver/redis_client.h"
 #include "../../common/opcodes.h"
 
 #include "logic/test_runner.h"

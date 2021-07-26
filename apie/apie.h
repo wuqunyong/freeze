@@ -50,6 +50,8 @@
 
 #include "apie/pub_sub/pubsub_manager.h"
 
+#include "apie/redis_driver/redis_client.h"
+
 #include "apie/rpc/init.h"
 #include "apie/rpc/client/rpc_client.h"
 #include "apie/rpc/client/rpc_client_manager.h"
