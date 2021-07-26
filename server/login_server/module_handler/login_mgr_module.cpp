@@ -65,11 +65,9 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 	bool bResult = accountData.checkInvalid();
 	if (!bResult)
 	{
-		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
-		response.set_status_code(opcodes::SC_BindTable_Error);
-		response.set_account_id(request->account_id());
-		network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
-		return { apie::status::StatusCode::OK_ASYNC, "" };
+		response->set_status_code(opcodes::SC_BindTable_Error);
+		response->set_account_id(request->account_id());
+		return { apie::status::StatusCode::OK, "" };
 	}
 
 	::rpc_msg::CHANNEL server;
