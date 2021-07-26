@@ -166,7 +166,9 @@ void MockRole::handleMsg(::pubsub::LOGIC_CMD& msg)
 	auto handler = this->findHandler(sCmd);
 	if (handler == nullptr)
 	{
-		std::cout << "invalid cmd:" << sCmd << std::endl;
+		std::stringstream ss;
+		ss << "invalid cmd:" << sCmd << std::endl;
+		PIE_LOG("MockRole/handleMsg", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 	
