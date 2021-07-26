@@ -93,8 +93,6 @@ void HandleRequestForward<Request, responseOpcode, Response>::handleRequest(cons
 template <typename Request, uint32_t responseOpcode, typename Response>
 void HandleRequestForward<Request, responseOpcode, Response>::sendResponse(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<Response>& response)
 {
-	std::cout << "HandleRequestForward:sendResponse|" << response->ShortDebugString() << std::endl;
-
 	::rpc_msg::PRC_DeMultiplexer_Forward demux;
 	*demux.mutable_role() = role;
 	demux.set_opcodes(responseOpcode);

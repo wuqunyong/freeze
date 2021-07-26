@@ -95,8 +95,6 @@ void RPCServer<Request, Response>::handleRequest(const ::rpc_msg::RPC_REQUEST& c
 template <typename Request, typename Response>
 void RPCServer<Request, Response>::sendResponse(const apie::status::Status& status, const ::rpc_msg::RPC_REQUEST& context, const std::shared_ptr<Response>& response_ptr)
 {
-	std::cout << context.ShortDebugString() << response_ptr->ShortDebugString() << std::endl;
-
 	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(context.client().stub());
 
 	::rpc_msg::CHANNEL server = apie::Ctx::getThisChannel();
