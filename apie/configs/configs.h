@@ -124,6 +124,30 @@ namespace apie {
 		uint32_t uint = 60;
 	};
 
+	struct APieConfig_TaskCase
+	{
+		uint32_t case_type = 0;
+		uint32_t loop_count = 1;
+		uint32_t loop_interval_ms = 0;
+	};
+
+	struct APieConfig_TaskSuite
+	{
+		APieConfig_TaskCase task_case;
+	};
+
+	struct APieConfig_AutoTest
+	{
+		bool enable = false;
+		uint32_t start = 0;
+		uint32_t stop = 0;
+		uint32_t ramp_up_interval = 1000;
+		uint32_t ramp_up_nums = 100;
+		uint32_t loop_count = 1;
+
+		std::vector<APieConfig_TaskSuite> task_suite;
+	};
+
 
 	struct APieConfig
 	{
@@ -143,6 +167,7 @@ namespace apie {
 		APieConfig_Nats nats;
 		APieConfig_Etcd etcd;
 		APieConfig_Limited limited;
+		APieConfig_AutoTest auto_test;
 	};
 
 } 

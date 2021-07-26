@@ -3,27 +3,27 @@
 #include "apie.h"
 #include "logic/test_server.h"
 
-namespace APie {
+namespace apie {
 
-std::tuple<uint32_t, std::string> initHook()
+apie::status::Status initHook()
 {
 	return TestServerMgrSingleton::get().init();
 }
 
-std::tuple<uint32_t, std::string> startHook()
+apie::status::Status startHook()
 {
 	return TestServerMgrSingleton::get().start();
 }
 
-std::tuple<uint32_t, std::string> readyHook()
+apie::status::Status readyHook()
 {
 	return TestServerMgrSingleton::get().ready();
 }
 
-std::tuple<uint32_t, std::string> exitHook()
+apie::status::Status exitHook()
 {
 	TestServerMgrSingleton::get().exit();
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
 }

@@ -16,14 +16,14 @@
 #include "mock_role.h"
 
 
-namespace APie {
+namespace apie {
 
 	class TestServerMgr
 	{
 	public:
-		std::tuple<uint32_t, std::string> init();
-		std::tuple<uint32_t, std::string> start();
-		std::tuple<uint32_t, std::string> ready();
+		apie::status::Status init();
+		apie::status::Status start();
+		apie::status::Status ready();
 		void exit();
 
 		void addMockRole(std::shared_ptr<MockRole> ptrMockRole);
@@ -35,7 +35,7 @@ namespace APie {
 		void removeSerialNum(uint64_t iSerialNum);
 
 	public:
-		static void onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg);
+		static void PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
 		static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
 
 		//static void handleResponseClientLogin(uint64_t iSerialNum, const ::login_msg::MSG_RESPONSE_CLIENT_LOGIN& response);

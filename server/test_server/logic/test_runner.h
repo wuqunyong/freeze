@@ -14,7 +14,7 @@
 
 #include "test_suite.h"
 
-namespace APie {
+namespace apie {
 
 	class TestRunner
 	{
@@ -43,7 +43,7 @@ namespace APie {
 		bool m_init = false;
 		bool m_enable = false;
 		bool m_done = false;
-		Event::TimerPtr m_runTimer;
+		event_ns::TimerPtr m_runTimer;
 	};
 
 

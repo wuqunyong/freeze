@@ -1,7 +1,7 @@
 #include "test_case.h"
 
 
-namespace APie {
+namespace apie {
 	TestCase::TestCase(MockRole& role, uint32_t type) :
 		m_role(role),
 		m_type(type)

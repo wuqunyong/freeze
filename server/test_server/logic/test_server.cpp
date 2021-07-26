@@ -8,22 +8,21 @@
 
 #include "test_runner.h"
 
-namespace APie {
+namespace apie {
 
 
-std::tuple<uint32_t, std::string> TestServerMgr::init()
+	apie::status::Status TestServerMgr::init()
 {
-	auto bResult = APie::CtxSingleton::get().checkIsValidServerType({ common::EPT_Test_Client });
+	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Test_Client });
 	if (!bResult)
 	{
-		return std::make_tuple(Hook::HookResult::HR_Error, "invalid Type");
+		return { apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
 	}
 
-	APie::RPC::rpcInit();
 
-	APie::PubSubSingleton::get().subscribe(::pubsub::PUB_TOPIC::PT_LogicCmd, TestServerMgr::onLogicCommnad);
+	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, TestServerMgr::PubSub_logicCmd);
 	
-	Api::OpcodeHandlerSingleton::get().client.setDefaultFunc(TestServerMgr::handleDefaultOpcodes);
+	apie::service::ServiceHandlerSingleton::get().client.setDefaultFunc(TestServerMgr::handleDefaultOpcodes);
 
 	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, "login_msg.MSG_RESPONSE_ACCOUNT_LOGIN_L");
 	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_CLIENT_LOGIN, "login_msg.MSG_RESPONSE_CLIENT_LOGIN");
@@ -31,42 +30,42 @@ std::tuple<uint32_t, std::string> TestServerMgr::init()
 	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_HANDSHAKE_INIT, "login_msg.MSG_RESPONSE_HANDSHAKE_INIT");
 	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, "login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED");
 
-	//Api::OpcodeHandlerSingleton::get().client.bind(::APie::OP_MSG_RESPONSE_CLIENT_LOGIN, TestServerMgr::handleResponseClientLogin, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN::default_instance());
-	//Api::OpcodeHandlerSingleton::get().client.bind(::APie::OP_MSG_RESPONSE_ECHO, TestServerMgr::handleResponseEcho, ::login_msg::MSG_RESPONSE_ECHO::default_instance());
+	//Api::OpcodeHandlerSingleton::get().client.bind(::apie::OP_MSG_RESPONSE_CLIENT_LOGIN, TestServerMgr::handleResponseClientLogin, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN::default_instance());
+	//Api::OpcodeHandlerSingleton::get().client.bind(::apie::OP_MSG_RESPONSE_ECHO, TestServerMgr::handleResponseEcho, ::login_msg::MSG_RESPONSE_ECHO::default_instance());
 
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> TestServerMgr::start()
+	apie::status::Status TestServerMgr::start()
 {
-	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "clients", "socket_address", "address" }, "");
-	uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "port_value" }, 0);
-	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "type" }, 0);
-	uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "mask_flag" }, 0);
+		std::string ip = apie::CtxSingleton::get().getConfigs()->clients.socket_address.address;
+		uint16_t port = apie::CtxSingleton::get().getConfigs()->clients.socket_address.port_value;
+		uint16_t type = apie::CtxSingleton::get().getConfigs()->clients.socket_address.type;
+		uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->clients.socket_address.mask_flag;
 
-	m_ptrClientProxy = APie::ClientProxy::createClientProxy();
-	auto connectCb = [](APie::ClientProxy* ptrClient, uint32_t iResult) {
+	m_ptrClientProxy = apie::ClientProxy::createClientProxy();
+	auto connectCb = [](apie::ClientProxy* ptrClient, uint32_t iResult) {
 		if (iResult == 0)
 		{
-			APie::Hook::HookRegistrySingleton::get().triggerHook(Hook::HookPoint::HP_Ready);
+			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 		}
 		return true;
 	};
-	m_ptrClientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
+	m_ptrClientProxy->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
 	m_ptrClientProxy->addReconnectTimer(60000);
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
-std::tuple<uint32_t, std::string> TestServerMgr::ready()
+	apie::status::Status TestServerMgr::ready()
 {
 	std::stringstream ss;
 	ss << "Server Ready!";
 	std::cout << ss.str() << std::endl;
 	ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	return std::make_tuple(Hook::HookResult::HR_Ok, "");
+	return { apie::status::StatusCode::OK, "" };
 }
 
 void TestServerMgr::exit()
@@ -116,9 +115,10 @@ void TestServerMgr::removeSerialNum(uint64_t iSerialNum)
 	m_serialNumRole.erase(iSerialNum);
 }
 
-void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& msg)
+
+void TestServerMgr::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
 {
-	auto& command = dynamic_cast<::pubsub::LOGIC_CMD&>(msg);
+	auto& command = *msg;
 
 	if (command.cmd() == "login")
 	{
@@ -132,7 +132,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		request.set_version(std::stoi(command.params()[1]));
 		request.set_session_key(command.params()[2]);
 
-		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::apie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 
 		std::cout << "send|iSerialNum:" << TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum() << "|request:" << request.ShortDebugString() << std::endl;
 	}
@@ -149,7 +149,7 @@ void TestServerMgr::onLogicCommnad(uint64_t topic, ::google::protobuf::Message& 
 		request.set_value1(iCurMS);
 		request.set_value2(command.params()[0]);
 
-		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::APie::OP_MSG_REQUEST_ECHO, request);
+		TestServerMgrSingleton::get().m_ptrClientProxy->sendMsg(::apie::OP_MSG_REQUEST_ECHO, request);
 
 		std::cout << "send|iSerialNum:" << TestServerMgrSingleton::get().m_ptrClientProxy->getSerialNum() << "|request:" << request.ShortDebugString() << std::endl;
 	}

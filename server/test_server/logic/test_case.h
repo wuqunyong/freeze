@@ -14,7 +14,7 @@
 #include "mock_role.h"
 
 
-namespace APie {
+namespace apie {
 
 	enum ETestCaseType
 	{

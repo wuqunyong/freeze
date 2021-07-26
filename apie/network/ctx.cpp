@@ -343,6 +343,52 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 		tmpPtrConfig->limited.uint = node_["limited"]["uint"].as<uint32_t>(60);
 	}
 
+	if (node_["auto_test"])
+	{
+		tmpPtrConfig->auto_test.enable = node_["auto_test"]["enable"].as<bool>(false);
+		tmpPtrConfig->auto_test.start = node_["auto_test"]["start"].as<uint32_t>(0);
+		tmpPtrConfig->auto_test.stop = node_["auto_test"]["stop"].as<uint32_t>(0);
+		tmpPtrConfig->auto_test.ramp_up_interval = node_["auto_test"]["ramp_up_interval"].as<uint32_t>(1000);
+		tmpPtrConfig->auto_test.ramp_up_nums = node_["auto_test"]["ramp_up_nums"].as<uint32_t>(100);
+		tmpPtrConfig->auto_test.loop_count = node_["auto_test"]["loop_count"].as<uint32_t>(1);
+
+		for (const auto& item : this->node_["auto_test"]["task_suite"])
+		{
+			if (item["task_case"])
+			{
+				APieConfig_TaskSuite taskSuite;
+				taskSuite.task_case.case_type = item["task_case"].as<uint32_t>(0);
+				taskSuite.task_case.loop_count = item["loop_count"].as<uint32_t>(1);
+				taskSuite.task_case.loop_interval_ms = item["loop_interval_ms"].as<uint32_t>(10);
+				tmpPtrConfig->auto_test.task_suite.push_back(taskSuite);
+			}
+		}
+	}
+
+	struct ApieConfig_TaskCase
+	{
+		uint32_t case_type = 0;
+		uint32_t loop_count = 1;
+		uint32_t loop_interval_ms = 10;
+	};
+
+	struct APieConfig_TaskSuite
+	{
+		std::vector<ApieConfig_TaskCase> task_case;
+	};
+
+	struct APieConfig_AutoTest
+	{
+		bool enable = false;
+		uint32_t start = 0;
+		uint32_t stop = 0;
+		uint32_t ramp_up_interval = 1000;
+		uint32_t ramp_up_nums = 100;
+		uint32_t loop_count = 1;
+
+		std::vector<APieConfig_TaskSuite> task_suite;
+	};
+
 	return tmpPtrConfig;
 }
 
@@ -506,6 +552,7 @@ void Ctx::init(const std::string& configFile)
 				PANIC_ABORT(ss.str().c_str());
 			}
 		}
+
 	}
 	catch (YAML::BadFile& e) {
 		std::stringstream ss;

@@ -4,7 +4,7 @@
 #include "task/echo_test_case.h"
 #include "task/logout_test_case.h"
 
-namespace APie {
+namespace apie {
 	TestRunner::TestRunner()
 	{
 		auto runCb = [this]() {
@@ -19,7 +19,7 @@ namespace APie {
 					this->m_runTimer->enableTimer(std::chrono::milliseconds(10));
 				}
 		};
-		this->m_runTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(runCb);
+		this->m_runTimer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(runCb);
 	}
 
 	void TestRunner::init()
@@ -193,13 +193,13 @@ namespace APie {
 
 	bool TestRunner::loadConfig()
 	{
-		bool enable = APie::CtxSingleton::get().yamlAs<bool>({ "auto_test","enable" }, false);
+		bool enable = apie::CtxSingleton::get().getConfigs()->auto_test.enable;
 		if (enable)
 		{
-			m_start = APie::CtxSingleton::get().yamlAs<uint64_t>({ "auto_test","start" }, 0);
-			m_stop = APie::CtxSingleton::get().yamlAs<uint64_t>({ "auto_test","stop" }, 0);
-			m_rampUpIntervalMs = APie::CtxSingleton::get().yamlAs<uint32_t>({ "auto_test","ramp_up_interval_ms" }, 60);
-			m_rampUpNums = APie::CtxSingleton::get().yamlAs<uint32_t>({ "auto_test","ramp_up_nums" }, 100);
+			m_start = apie::CtxSingleton::get().getConfigs()->auto_test.start;
+			m_stop = apie::CtxSingleton::get().getConfigs()->auto_test.stop;
+			m_rampUpIntervalMs = apie::CtxSingleton::get().getConfigs()->auto_test.ramp_up_interval;
+			m_rampUpNums = apie::CtxSingleton::get().getConfigs()->auto_test.ramp_up_nums;
 
 			return true;
 		}

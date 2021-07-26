@@ -15,7 +15,7 @@
 #include "../test_case.h"
 
 
-namespace APie {
+namespace apie {
 
 	class LoginTestCase : public TestCase
 	{

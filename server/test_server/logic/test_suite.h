@@ -16,7 +16,7 @@
 #include "test_case.h"
 #include "json/json.h"
 
-namespace APie {
+namespace apie {
 
 	class TestSuite
 	{

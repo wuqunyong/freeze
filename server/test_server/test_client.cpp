@@ -439,7 +439,7 @@ int main(int argc, char **argv)
 	auto iR = MakeKey(9000001, 123);
 	auto sSS = SSImpl("hello", 1, iR, "world");
 
-	auto iValue = APie::toUnderlyingType(MyEnum::ME_Hehlo);
+	auto iValue = apie::toUnderlyingType(MyEnum::ME_Hehlo);
 
 	std::string plainMsg("hello");
 	std::string encryptedMsg;
@@ -461,7 +461,7 @@ int main(int argc, char **argv)
 	{
 
 		std::string content;
-		bool bResult = APie::Common::GetContent("E:\\APie\\conf\\key.pub", &content);
+		bool bResult = apie::common::GetContent("E:\\APie\\conf\\key.pub", &content);
 
 		const std::vector<uint8_t> keyDer(content.begin(), content.end());
 
@@ -471,15 +471,15 @@ int main(int argc, char **argv)
 		RSA* ptrRSA = PEM_read_bio_RSA_PUBKEY(bio.get(), NULL, NULL, NULL);
 		std::unique_ptr<RSA, decltype(RSA_free)*> rsa(ptrRSA, RSA_free);
 
-		APie::Crypto::RSAUtilitySingleton::get().encryptByPub(rsa.get(), plainMsg, &encryptedMsg);
-		APie::Crypto::RSAUtilitySingleton::get().decrypt(encryptedMsg, &decryptedMsg);
+		apie::crypto::RSAUtilitySingleton::get().encryptByPub(rsa.get(), plainMsg, &encryptedMsg);
+		apie::crypto::RSAUtilitySingleton::get().decrypt(encryptedMsg, &decryptedMsg);
 
 		ERR_clear_error();
 	}
 
 
-	APie::Crypto::RSAUtilitySingleton::get().encrypt(plainMsg, &encryptedMsg);
-	APie::Crypto::RSAUtilitySingleton::get().decrypt(encryptedMsg, &decryptedMsg);
+	apie::crypto::RSAUtilitySingleton::get().encrypt(plainMsg, &encryptedMsg);
+	apie::crypto::RSAUtilitySingleton::get().decrypt(encryptedMsg, &decryptedMsg);
 
 
 	std::string symCipher = encode_rc4("", "sssssssfsfsfsfs");
@@ -517,13 +517,13 @@ int main(int argc, char **argv)
 	}
 
 
-	auto iCurMs = APie::CtxSingleton::get().getCurMilliseconds();
+	auto iCurMs = apie::CtxSingleton::get().getCurMilliseconds();
 	for (uint32_t i = 0; i < 10000; i++)
 	{
-		iTotal += APie::CtxSingleton::get().getCurMilliseconds();
+		iTotal += apie::CtxSingleton::get().getCurMilliseconds();
 		sTotal += args.SerializeAsString();
 	}
-	auto iEndMs = APie::CtxSingleton::get().getCurMilliseconds();
+	auto iEndMs = apie::CtxSingleton::get().getCurMilliseconds();
 
 	auto iDeltaMs = iEndMs - iCurMs;
 
@@ -535,14 +535,14 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Init, APie::initHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Start, APie::startHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Ready, APie::readyHook);
-	APie::Hook::HookRegistrySingleton::get().registerHook(APie::Hook::HookPoint::HP_Exit, APie::exitHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Init, apie::initHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Start, apie::startHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Ready, apie::readyHook);
+	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Exit, apie::exitHook);
 
-	APie::CtxSingleton::get().init(configFile);
-	APie::CtxSingleton::get().start();
-	APie::CtxSingleton::get().waitForShutdown();
+	apie::CtxSingleton::get().init(configFile);
+	apie::CtxSingleton::get().start();
+	apie::CtxSingleton::get().waitForShutdown();
 
 	return 0;
 }

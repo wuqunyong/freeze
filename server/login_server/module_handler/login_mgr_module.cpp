@@ -1,4 +1,4 @@
-#include "login_mgr_module.h"
+﻿#include "login_mgr_module.h"
 
 #include "../../common/dao/model_account.h"
 #include "../../common/dao/model_account_name.h"
@@ -28,7 +28,9 @@ void LoginMgrModule::ready()
 {
 	// CLIENT OPCODE
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgrModule::handleAccountNotify);
+	//server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgrModule::handleAccountNotify);
+	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, ::apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgrModule::handleAccount);
+
 
 	return;
 }
@@ -59,7 +61,144 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 	ss << "handleAccount:" << request->ShortDebugString();
 	ASYNC_PIE_LOG("LoginMgr/handleAccount", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	return { apie::status::StatusCode::OK, "" };
+	ModelAccount accountData(request->account_id());
+	bool bResult = accountData.checkInvalid();
+	if (!bResult)
+	{
+		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
+		response.set_status_code(opcodes::SC_BindTable_Error);
+		response.set_account_id(request->account_id());
+		network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+		return { apie::status::StatusCode::OK_ASYNC, "" };
+	}
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_id(1);
+
+
+	auto cb = [iSerialNum, request, server](status::Status status, ModelAccount account, uint32_t iRows) {
+		if (!status.ok())
+		{
+			::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
+			response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+			response.set_account_id(request->account_id());
+			network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			return;
+		}
+
+		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
+		response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+		response.set_account_id(request->account_id());
+
+		auto gatewayOpt = EndPointMgrSingleton::get().modulusEndpointById(::common::EPT_Gateway_Server, request->account_id());
+		if (!gatewayOpt.has_value())
+		{
+			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
+			network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			return;
+		}
+
+		std::string ip = gatewayOpt.value().ip();
+		uint32_t port = gatewayOpt.value().port();
+		std::string sessionKey = apie::randomStr(16);
+
+		response.set_ip(ip);
+		response.set_port(port);
+		response.set_session_key(sessionKey);
+
+		::rpc_login::L2G_LoginPendingRequest rpcRequest;
+		rpcRequest.set_account_id(request->account_id());
+		rpcRequest.set_session_key(sessionKey);
+		rpcRequest.set_db_id(account.fields.db_id);
+		rpcRequest.set_version(request->version());
+
+		if (iRows != 0)
+		{
+			auto iAccountId = request->account_id();
+
+			auto curTime = time(NULL);
+			account.fields.modified_time = curTime;
+
+			account.markDirty({ ModelAccount::modified_time });
+			auto cb = [iAccountId](status::Status status, bool result, uint64_t affectedRows) {
+				if (!status.ok())
+				{
+					std::stringstream ss;
+					ss << "UpdateToDb Error|accountId:" << iAccountId;
+					ASYNC_PIE_LOG("LoginMgr/handleAccountLogin", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+					return;
+				}
+			};
+			UpdateToDb<ModelAccount>(server, account, cb);
+
+			::rpc_msg::CHANNEL server;
+			server.set_realm(apie::Ctx::getThisChannel().realm());
+			server.set_type(gatewayOpt.value().type());
+			server.set_id(gatewayOpt.value().id());
+
+			auto rpcCB = [iSerialNum, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) {
+				if (!status.ok())
+				{
+					return;
+				}
+
+				std::stringstream ss;
+				ss << "RPC_echoCb:" << responsePtr->ShortDebugString();
+				
+				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			};
+			apie::rpc::RPC_Call<::rpc_login::L2G_LoginPendingRequest, rpc_login::L2G_LoginPendingResponse>(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
+
+			return;
+		}
+
+		auto roleDBopt = EndPointMgrSingleton::get().modulusEndpointById(::common::EPT_DB_ROLE_Proxy, request->account_id());
+		if (!roleDBopt.has_value())
+		{
+			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
+			network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			return;
+		}
+
+
+		auto curTime = time(NULL);
+		account.fields.register_time = curTime;
+		account.fields.modified_time = curTime;
+		account.fields.db_id = roleDBopt.value().id();
+
+		auto cb = [iSerialNum, response, gatewayOpt, rpcRequest](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
+			if (!status.ok())
+			{
+				response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				return;
+			}
+			::rpc_msg::CHANNEL server;
+			server.set_realm(apie::Ctx::getThisChannel().realm());
+			server.set_type(gatewayOpt.value().type());
+			server.set_id(gatewayOpt.value().id());
+
+			auto rpcCB = [iSerialNum, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) {
+				if (!status.ok())
+				{
+					return;
+				}
+
+				std::stringstream ss;
+				ss << "RPC_echoCb:" << responsePtr->ShortDebugString();
+
+				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			};
+			apie::rpc::RPC_Call<::rpc_login::L2G_LoginPendingRequest, rpc_login::L2G_LoginPendingResponse>(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
+		};
+		InsertToDb<ModelAccount>(server, account, cb);
+	};
+	LoadFromDb<ModelAccount>(server, accountData, cb);
+
+
+	return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
 void LoginMgrModule::handleAccountNotify(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& notify)

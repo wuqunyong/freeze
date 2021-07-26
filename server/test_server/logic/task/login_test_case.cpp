@@ -2,7 +2,7 @@
 
 #include "../../../common/opcodes.h"
 
-namespace APie {
+namespace apie {
 	using namespace std::placeholders;
 
 	LoginTestCase::LoginTestCase(MockRole& role, uint32_t type) :

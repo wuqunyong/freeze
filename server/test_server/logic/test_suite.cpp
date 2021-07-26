@@ -4,7 +4,7 @@
 #include "../../apie/common/file.h"
 #include "test_server.h"
 
-namespace APie {
+namespace apie {
 	TestSuite::TestSuite(uint64_t iRoleId) :
 		m_roleId(iRoleId)
 	{
@@ -241,13 +241,11 @@ namespace APie {
 
 	bool TestSuite::loadConfig()
 	{
-		auto nodeObj = APie::CtxSingleton::get().yamlAs<YAML::Node>({ "auto_test", "task_suite" }, YAML::Node());
-
-		for (const auto& elems : nodeObj)
+		for (const auto& elems : apie::CtxSingleton::get().getConfigs()->auto_test.task_suite)
 		{
-			auto iType = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(elems, { "task_case", "case_type" }, 0);
-			auto iCount = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(elems, { "task_case", "loop_count" }, 1);
-			auto iInterval = APie::CtxSingleton::get().nodeYamlAs<uint32_t>(elems, { "task_case", "loop_interval_ms" }, 10);
+			auto iType = elems.task_case.case_type;
+			auto iCount = elems.task_case.case_type;
+			auto iInterval = elems.task_case.loop_interval_ms;
 
 
 			auto ptrCase = TestCaseFactory::create(*m_ptrRole, iType);

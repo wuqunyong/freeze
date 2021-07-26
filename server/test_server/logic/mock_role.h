@@ -14,7 +14,7 @@
 #include "../../pb_msg/business/login_msg.pb.h"
 
 
-namespace APie {
+namespace apie {
 
 	class MockRole;
 
@@ -147,7 +147,7 @@ namespace APie {
 		uint32_t m_id = 0;
 		uint64_t m_iRoleId;
 		std::shared_ptr<ClientProxy> m_clientProxy;
-		Event::TimerPtr m_cmdTimer;
+		event_ns::TimerPtr m_cmdTimer;
 
 		ConnectTarget m_target = CT_None;
 

@@ -6,7 +6,7 @@
 #include "../../common/opcodes.h"
 #include "../../apie/common/file.h"
 
-namespace APie {
+namespace apie {
 
 std::map<uint32_t, std::string> MockRole::s_pbReflect;
 
@@ -46,9 +46,9 @@ void MockRole::setUp()
 	this->addHandler("logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
 
 
-	this->addResponseHandler(::APie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, &MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L);
-	this->addResponseHandler(::APie::OP_MSG_RESPONSE_HANDSHAKE_INIT, &MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT);
-	this->addResponseHandler(::APie::OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, &MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED);
+	this->addResponseHandler(::apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, &MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L);
+	this->addResponseHandler(::apie::OP_MSG_RESPONSE_HANDSHAKE_INIT, &MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT);
+	this->addResponseHandler(::apie::OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, &MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED);
 
 
 	this->processCmd();
@@ -61,16 +61,16 @@ void MockRole::tearDown()
 
 void MockRole::start()
 {
-	std::string ip = APie::CtxSingleton::get().yamlAs<std::string>({ "clients", "socket_address", "address" }, "");
-	uint16_t port = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "port_value" }, 0);
-	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "type" }, 0);
-	uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "mask_flag" }, 0);
+	std::string ip = apie::CtxSingleton::get().getConfigs()->clients.socket_address.address;
+	uint16_t port = apie::CtxSingleton::get().getConfigs()->clients.socket_address.port_value;
+	uint16_t type = apie::CtxSingleton::get().getConfigs()->clients.socket_address.type;
+	uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->clients.socket_address.mask_flag;
 
-	m_clientProxy = APie::ClientProxy::createClientProxy();
+	m_clientProxy = apie::ClientProxy::createClientProxy();
 
 	std::weak_ptr<MockRole> ptrSelf = this->shared_from_this();
 
-	auto connectCb = [ptrSelf](APie::ClientProxy* ptrClient, uint32_t iResult) mutable {
+	auto connectCb = [ptrSelf](apie::ClientProxy* ptrClient, uint32_t iResult) mutable {
 		if (iResult == 0)
 		{
 			auto ptrShared = ptrSelf.lock();
@@ -81,7 +81,7 @@ void MockRole::start()
 		}
 		return true;
 	};
-	m_clientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
+	m_clientProxy->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
 	m_clientProxy->addReconnectTimer(1000);
 	m_target = CT_Login;
 
@@ -93,7 +93,7 @@ void MockRole::start()
 			ptrShared->addTimer(100);
 		}
 	};
-	this->m_cmdTimer = APie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(cmdCb);
+	this->m_cmdTimer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(cmdCb);
 	this->addTimer(100);
 }
 
@@ -423,7 +423,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 		}
 
 		std::string sType = typeOpt.value();
-		auto ptrMsg = Api::PBHandler::createMessage(sType);
+		auto ptrMsg = apie::message::ProtobufFactory::createMessage(sType);
 		if (ptrMsg == nullptr)
 		{
 			sMsg = "******createMessageError******";
@@ -595,7 +595,7 @@ void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
 	::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L request;
 	request.set_account_id(m_iRoleId);
 
-	this->sendMsg(::APie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, request);
+	this->sendMsg(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, request);
 
 	this->addPendingResponse(OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, OP_MSG_REQUEST_ACCOUNT_LOGIN_L);
 }
@@ -607,7 +607,7 @@ void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
 //	request.set_version(std::stoi(msg.params()[0]));
 //	request.set_session_key(msg.params()[1]);
 //
-//	this->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+//	this->sendMsg(::apie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 //}
 
 void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
@@ -616,7 +616,7 @@ void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
 	request.set_value1(std::stoi(msg.params()[0]));
 	request.set_value2(msg.params()[1]);
 
-	this->sendMsg(::APie::OP_MSG_REQUEST_ECHO, request);
+	this->sendMsg(::apie::OP_MSG_REQUEST_ECHO, request);
 	this->addPendingResponse(OP_MSG_RESPONSE_ECHO, OP_MSG_REQUEST_ECHO);
 }
 
@@ -659,13 +659,13 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 
 	std::string ip = response.ip();
 	uint32_t port = response.port();
-	uint16_t type = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "type" }, 0);
-	uint32_t maskFlag = APie::CtxSingleton::get().yamlAs<uint16_t>({ "clients", "socket_address", "mask_flag" }, 0);
+	uint16_t type = apie::CtxSingleton::get().getConfigs()->clients.socket_address.type;
+	uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->clients.socket_address.mask_flag;
 
 
-	m_clientProxy = APie::ClientProxy::createClientProxy();
+	m_clientProxy = apie::ClientProxy::createClientProxy();
 	std::weak_ptr<MockRole> ptrSelf = this->shared_from_this();
-	auto connectCb = [ptrSelf, response](APie::ClientProxy* ptrClient, uint32_t iResult) mutable {
+	auto connectCb = [ptrSelf, response](apie::ClientProxy* ptrClient, uint32_t iResult) mutable {
 		if (iResult == 0)
 		{
 			auto ptrShared = ptrSelf.lock();
@@ -678,7 +678,7 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 
 				::login_msg::MSG_REQUEST_HANDSHAKE_INIT request;
 				request.set_client_random(ptrShared->m_clientRandom);
-				ptrShared->sendMsg(::APie::OP_MSG_REQUEST_HANDSHAKE_INIT, request);
+				ptrShared->sendMsg(::apie::OP_MSG_REQUEST_HANDSHAKE_INIT, request);
 				ptrShared->addPendingResponse(OP_MSG_RESPONSE_HANDSHAKE_INIT, OP_MSG_REQUEST_HANDSHAKE_INIT);
 
 				ptrShared->m_account_id = response.account_id();
@@ -687,7 +687,7 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 		}
 		return true;
 	};
-	m_clientProxy->connect(ip, port, static_cast<APie::ProtocolType>(type), maskFlag, connectCb);
+	m_clientProxy->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
 	m_clientProxy->addReconnectTimer(1000);
 	m_target = CT_Gateway;
 
@@ -722,7 +722,7 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT(uint64_t serialNum, uint32_t o
 	RSA* ptrRSA = PEM_read_bio_RSA_PUBKEY(bio.get(), NULL, NULL, NULL);
 	std::unique_ptr<RSA, decltype(RSA_free)*> rsa(ptrRSA, RSA_free);
 
-	APie::Crypto::RSAUtilitySingleton::get().encryptByPub(rsa.get(), plainMsg, &encryptedMsg);
+	apie::crypto::RSAUtilitySingleton::get().encryptByPub(rsa.get(), plainMsg, &encryptedMsg);
 
 
 	this->m_sharedKey = this->m_clientRandom + response.server_random() + plainMsg;
@@ -730,17 +730,17 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT(uint64_t serialNum, uint32_t o
 
 	::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED request;
 	request.set_encrypted_key(encryptedMsg);
-	this->sendMsg(::APie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, request);
+	this->sendMsg(::apie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, request);
 	this->addPendingResponse(OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED);
 
-	APie::SetClientSessionAttr *ptr = new APie::SetClientSessionAttr;
+	apie::SetClientSessionAttr *ptr = new apie::SetClientSessionAttr;
 	ptr->iSerialNum = this->m_clientProxy->getSerialNum();
 	ptr->optKey = this->m_sharedKey;
 
 	Command cmd;
 	cmd.type = Command::set_client_session_attr;
 	cmd.args.set_client_session_attr.ptrData = ptr;
-	Network::OutputStream::sendCommand(ConnetionType::CT_CLIENT, ptr->iSerialNum, cmd);
+	network::OutputStream::sendCommand(ConnetionType::CT_CLIENT, ptr->iSerialNum, cmd);
 
 }
 
@@ -763,11 +763,11 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uin
 	::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
 	request.set_user_id(this->m_account_id);
 	request.set_session_key(this->m_session_key);
-	this->sendMsg(::APie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
+	this->sendMsg(::apie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
 	this->addPendingResponse(OP_MSG_RESPONSE_CLIENT_LOGIN, OP_MSG_REQUEST_CLIENT_LOGIN);
 
 	this->setPauseProcess(false);
-	this->addWaitResponse(::APie::OP_MSG_RESPONSE_CLIENT_LOGIN, 1);
+	this->addWaitResponse(::apie::OP_MSG_RESPONSE_CLIENT_LOGIN, 1);
 }
 
 void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
