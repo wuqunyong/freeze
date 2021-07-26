@@ -626,7 +626,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	{
 		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
 
-		auto& defaultHandler = apie::service::ServiceHandlerSingleton::get().server.getDefaultFunc();
+		auto& defaultHandler = apie::service::ServiceHandlerSingleton::get().client.getDefaultFunc();
 		if (!defaultHandler)
 		{
 			std::stringstream ss;

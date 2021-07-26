@@ -24,8 +24,38 @@ apie::status::Status LoginMgr::init()
 
 apie::status::Status LoginMgr::start()
 {
-	apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
-	return { apie::status::StatusCode::OK, "" };
+	auto dbType = DeclarativeBase::DBType::DBT_Account;
+	auto ptrReadyCb = [](bool bResul, std::string sInfo, uint64_t iCallCount) {
+		if (!bResul)
+		{
+			std::stringstream ss;
+			ss << "CallMysqlDescTable|bResul:" << bResul << ",sInfo:" << sInfo << ",iCallCount:" << iCallCount;
+
+			PANIC_ABORT(ss.str().c_str());
+		}
+
+		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
+
+	};
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_id(1);
+
+	std::map<std::string, DAOFactory::TCreateMethod> loadTables;
+	loadTables.insert(std::make_pair(ModelAccount::getFactoryName(), ModelAccount::createMethod));
+	loadTables.insert(std::make_pair(ModelAccountName::getFactoryName(), ModelAccountName::createMethod));
+
+	bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
+	if (bResult)
+	{
+		return { apie::status::StatusCode::OK, "" };
+	}
+	else
+	{
+		return { apie::status::StatusCode::HOOK_ERROR, "HR_Error" };
+	}
 }
 
 apie::status::Status LoginMgr::ready()

@@ -1,5 +1,6 @@
 identify:
-  type: 8
+  realm: 1
+  type: 7
   id: 1
 io_threads: 16
 clients:
@@ -13,7 +14,7 @@ clients:
 log:
   merge: true
   level: 0
-  show_pos: false
+  show_pos: true
   split_size: 128
   show_console: true
   backup: "/usr/local/apie/logs/backup"

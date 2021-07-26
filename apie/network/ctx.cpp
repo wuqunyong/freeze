@@ -357,9 +357,9 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 			if (item["task_case"])
 			{
 				APieConfig_TaskSuite taskSuite;
-				taskSuite.task_case.case_type = item["task_case"].as<uint32_t>(0);
-				taskSuite.task_case.loop_count = item["loop_count"].as<uint32_t>(1);
-				taskSuite.task_case.loop_interval_ms = item["loop_interval_ms"].as<uint32_t>(10);
+				taskSuite.task_case.case_type = item["task_case"]["case_type"].as<uint32_t>(0);
+				taskSuite.task_case.loop_count = item["task_case"]["loop_count"].as<uint32_t>(1);
+				taskSuite.task_case.loop_interval_ms = item["task_case"]["loop_interval_ms"].as<uint32_t>(10);
 				tmpPtrConfig->auto_test.task_suite.push_back(taskSuite);
 			}
 		}
