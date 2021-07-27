@@ -94,6 +94,9 @@ namespace apie {
 			return out;
 		}
 
+	public:
+		static cpp_redis::client::reply_callback_t WrapperFunc(cpp_redis::client::reply_callback_t cb);
+
 	private:
 		Key m_key;
 		std::string m_host;

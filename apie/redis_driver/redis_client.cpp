@@ -239,6 +239,18 @@ namespace apie {
 		m_auth = value;
 	}
 
+	cpp_redis::client::reply_callback_t RedisClient::WrapperFunc(cpp_redis::client::reply_callback_t cb)
+	{
+		auto wrapsCb = [cb](cpp_redis::reply& replyData) mutable {
+			auto funObj = [cb, replyData]() mutable {
+				cb(replyData);
+			};
+			apie::CtxSingleton::get().getLogicThread()->dispatcher().post(funObj);
+		};
+
+		return wrapsCb;
+	}
+
 
 	bool RedisClientFactory::registerClient(std::shared_ptr<RedisClient> ptrClient)
 	{
