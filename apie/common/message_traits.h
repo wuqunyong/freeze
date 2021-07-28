@@ -436,5 +436,35 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 //};
 //bResult = Multi_LoadFromDb(multiCb, server, accountData, accountData, accountData);
 
+
+template <size_t I = 0, typename... Ts>
+constexpr void Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows)
+{
+	// If we have iterated through all elements
+	if constexpr (I == sizeof...(Ts))
+	{
+		// Last case, if nothing is left to
+		// iterate, then exit the function
+		return;
+	}
+	else
+	{
+		if (rows[I] == 0)
+		{
+			auto cb = [](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
+				if (!status.ok())
+				{
+					return;
+				}
+			};
+			InsertToDb<std::tuple_element<I, std::decay<decltype(tup)>::type>::type>(server, std::get<I>(tup), cb);
+		}
+
+		// Going for next element.
+		Insert_OnNotExists<I + 1>(server, tup, rows);
+	}
+}
+
+
 }  // namespace message
 

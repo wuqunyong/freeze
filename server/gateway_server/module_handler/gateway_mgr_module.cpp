@@ -1,5 +1,7 @@
 #include "module_handler/gateway_mgr_module.h"
 
+#include <type_traits>
+
 #include "../../common/dao/model_user.h"
 #include "../../common/dao/model_role_extra.h"
 #include "../../common/opcodes.h"
@@ -189,6 +191,35 @@ void GatewayMgrModule::Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	LoadFromDbByFilter<ModelUser>(server, user, cb);
 }
 
+template <size_t I = 0, typename... Ts>
+constexpr void saveTuple(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows)
+{
+	// If we have iterated through all elements
+	if constexpr (I == sizeof...(Ts))
+	{
+		// Last case, if nothing is left to
+		// iterate, then exit the function
+		return;
+	}
+	else 
+	{
+		if (rows[I] == 0)
+		{
+			auto cb = [](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
+				if (!status.ok())
+				{
+					return;
+				}
+			};
+			InsertToDb<std::tuple_element<I, std::decay<decltype(tup)>::type>::type>(server, std::get<I>(tup), cb);
+		}
+
+		// Going for next element.
+		saveTuple<I + 1>(server, tup, rows);
+	}
+}
+
+
 void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 {
 	if (cmd.params_size() < 1)
@@ -204,11 +235,13 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto multiCb = [](status::Status status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, std::array<uint32_t, 2>& tupleRows) {
+	auto multiCb = [server](status::Status status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, std::array<uint32_t, 2>& tupleRows) {
 		if (!status.ok())
 		{
 			return;
 		}
+
+		saveTuple(server, tupleData, tupleRows);
 	};
 	Multi_LoadFromDb(multiCb, server, ModelUser(userId), ModelRoleExtra(userId));
 }
