@@ -438,7 +438,7 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 
 
 template <size_t I = 0, typename... Ts>
-constexpr void Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows)
+void Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows)
 {
 	// If we have iterated through all elements
 	if constexpr (I == sizeof...(Ts))
