@@ -67,7 +67,7 @@ using UpdateToDbCB = std::function<void(apie::status::Status, bool result, uint6
 using DeleteFromDbCB = std::function<void(apie::status::Status, bool result, uint64_t affectedRows)>;
 
 // check: [0]:pendingNum, [1]:completedNum, [2]:doneFlag
-using InsertDoneCb = std::function<void(const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& insertRows)>;
+using InsertDoneCb = std::function<void(const status::Status& status, const std::tuple<uint32_t, uint32_t>& insertRows)>;
 
 template <typename T>
 typename std::enable_if<std::is_base_of<DeclarativeBase, T>::value, bool>::type
@@ -464,7 +464,7 @@ void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tu
 		if (doneCb)
 		{
 			status::Status newStatus;
-			doneCb(newStatus, *ptrCheck);
+			doneCb(newStatus, std::make_tuple(std::get<0>(*ptrCheck), std::get<1>(*ptrCheck)));
 		}
 		return;
 	}
@@ -496,7 +496,7 @@ void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tu
 
 					if (doneCb)
 					{
-						doneCb(status, *ptrCheck);
+						doneCb(status, std::make_tuple(std::get<0>(*ptrCheck), std::get<1>(*ptrCheck)));
 					}
 
 					return;
@@ -516,7 +516,7 @@ void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tu
 
 				if (doneCb)
 				{
-					doneCb(status, *ptrCheck);
+					doneCb(status, std::make_tuple(std::get<0>(*ptrCheck), std::get<1>(*ptrCheck)));
 				}
 			};
 			InsertToDb<std::tuple_element<I, std::decay<decltype(tup)>::type>::type>(server, std::get<I>(tup), cb);

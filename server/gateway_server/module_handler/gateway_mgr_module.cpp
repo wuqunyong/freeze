@@ -303,7 +303,7 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 			return;
 		}
 
-		auto doneCb = [server, tupleData](const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& insertRows) mutable {
+		auto doneCb = [server, tupleData](const status::Status& status, const std::tuple<uint32_t, uint32_t>& insertRows) mutable {
 			if (!status.ok())
 			{
 				return;
