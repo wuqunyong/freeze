@@ -80,6 +80,7 @@ public:
 
 	void markDirty(const std::vector<uint8_t>& index);
 	bool isDirty(uint8_t index);
+	bool isDirty();
 	void dirtySet();
 	void dirtyReset();
 

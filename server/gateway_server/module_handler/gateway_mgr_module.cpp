@@ -292,7 +292,6 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 
 	uint64_t userId = std::stoull(cmd.params()[0]);
 
-
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
@@ -304,14 +303,22 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 			return;
 		}
 
-
-		auto doneCb = [](const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& check) {
+		auto doneCb = [server, tupleData](const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& insertRows) mutable {
 			if (!status.ok())
 			{
 				return;
 			}
+
+			std::get<0>(tupleData).fields.level += 10;
+			std::get<0>(tupleData).markDirty({ ModelUser::level });
+
+			std::get<1>(tupleData).fields.extra_info += "10";
+			std::get<1>(tupleData).markDirty({ ModelRoleExtra::extra_info });
+
+			Update_OnChanged(server, tupleData);
+			Update_OnChanged(server, tupleData);
 		};
-		saveTupleAux(server, tupleData, tupleRows, doneCb);
+		Insert_OnNotExists(server, tupleData, tupleRows, doneCb);
 	};
 	Multi_LoadFromDb(multiCb, server, ModelUser(userId), ModelRoleExtra(userId));
 }

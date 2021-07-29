@@ -1422,6 +1422,11 @@ bool DeclarativeBase::isDirty(uint8_t index)
 	return m_dirtyFlags.test(index);
 }
 
+bool DeclarativeBase::isDirty()
+{
+	return m_dirtyFlags.any();
+}
+
 bool DeclarativeBase::isFilter(uint8_t index)
 {
 	if (index >= m_filterFlags.size())

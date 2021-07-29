@@ -67,7 +67,7 @@ using UpdateToDbCB = std::function<void(apie::status::Status, bool result, uint6
 using DeleteFromDbCB = std::function<void(apie::status::Status, bool result, uint64_t affectedRows)>;
 
 // check: [0]:pendingNum, [1]:completedNum, [2]:doneFlag
-using InsertDoneCb = std::function<void(const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& check)>;
+using InsertDoneCb = std::function<void(const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& insertRows)>;
 
 template <typename T>
 typename std::enable_if<std::is_base_of<DeclarativeBase, T>::value, bool>::type
@@ -524,8 +524,36 @@ void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tu
 template <size_t I = 0, typename... Ts>
 void Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows, InsertDoneCb doneCb)
 {
-	std::shared_ptr<std::tuple<uint32_t, uint32_t, bool>> ptrCheck = std::make_shared<std::tuple<uint32_t, uint32_t, bool>>(0, 0, false);
-	_Insert_OnNotExists(server, tup, rows, ptrCheck, doneCb);
+	std::shared_ptr<std::tuple<uint32_t, uint32_t, bool>> ptrInsertRows = std::make_shared<std::tuple<uint32_t, uint32_t, bool>>(0, 0, false);
+	_Insert_OnNotExists(server, tup, rows, ptrInsertRows, doneCb);
+}
+
+template <size_t I = 0, typename... Ts>
+void Update_OnChanged(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup)
+{
+	// If we have iterated through all elements
+	if constexpr (I == sizeof...(Ts))
+	{
+		// Last case, if nothing is left to
+		// iterate, then exit the function
+		return;
+	}
+	else
+	{
+		if (std::get<I>(tup).isDirty())
+		{
+			auto cb = [](status::Status status, bool result, uint64_t affectedRows) {
+				if (!status.ok())
+				{
+					return;
+				}
+			};
+			UpdateToDb<std::tuple_element<I, std::decay<decltype(tup)>::type>::type>(server, std::get<I>(tup), cb);
+		}
+
+		// Going for next element.
+		Update_OnChanged<I + 1>(server, tup);
+	}
 }
 
 
