@@ -191,32 +191,95 @@ void GatewayMgrModule::Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	LoadFromDbByFilter<ModelUser>(server, user, cb);
 }
 
+
 template <size_t I = 0, typename... Ts>
-constexpr void saveTuple(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows)
+void saveTuple(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows,
+	std::shared_ptr<std::tuple<uint32_t, uint32_t, bool>> ptrCheck, std::function<void(const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& check)> doneCb)
 {
 	// If we have iterated through all elements
 	if constexpr (I == sizeof...(Ts))
 	{
 		// Last case, if nothing is left to
 		// iterate, then exit the function
+
+		if (std::get<0>(*ptrCheck) > std::get<1>(*ptrCheck))
+		{
+			return;
+		}
+
+		auto& doneFlag = std::get<2>(*ptrCheck);
+		if (doneFlag)
+		{
+			return;
+		}
+		doneFlag = true;
+
+		if (doneCb)
+		{
+			status::Status newStatus;
+			doneCb(newStatus, *ptrCheck);
+		}
 		return;
 	}
 	else 
 	{
 		if (rows[I] == 0)
 		{
-			auto cb = [](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
+			auto& pendingNum = std::get<0>(*ptrCheck);
+			pendingNum += 1;
+
+			auto cb = [ptrCheck, doneCb](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
+				auto& completedNum = std::get<1>(*ptrCheck);
+				completedNum += 1;
+
 				if (!status.ok())
 				{
+					auto& doneFlag = std::get<2>(*ptrCheck);
+					if (doneFlag)
+					{
+						return;
+					}
+					doneFlag = true;
+
+					if (doneCb)
+					{
+						doneCb(status, *ptrCheck);
+					}
+
 					return;
+				}
+
+				if (std::get<0>(*ptrCheck) > std::get<1>(*ptrCheck))
+				{
+					return;
+				}
+
+				auto& doneFlag = std::get<2>(*ptrCheck);
+				if (doneFlag)
+				{
+					return;
+				}
+				doneFlag = true;
+
+				if (doneCb)
+				{
+					doneCb(status, *ptrCheck);
 				}
 			};
 			InsertToDb<std::tuple_element<I, std::decay<decltype(tup)>::type>::type>(server, std::get<I>(tup), cb);
 		}
 
 		// Going for next element.
-		saveTuple<I + 1>(server, tup, rows);
+		saveTuple<I + 1>(server, tup, rows, ptrCheck, doneCb);
 	}
+}
+
+template <size_t I = 0, typename... Ts>
+void saveTupleAux(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows,
+	std::function<void(const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& check)> doneCb)
+{
+	std::shared_ptr<std::tuple<uint32_t, uint32_t, bool>> ptrCheck = std::make_shared<std::tuple<uint32_t, uint32_t, bool>>(0, 0, false);
+	saveTuple(server, tup, rows, ptrCheck, doneCb);
 }
 
 
@@ -241,7 +304,14 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 			return;
 		}
 
-		saveTuple(server, tupleData, tupleRows);
+
+		auto doneCb = [](const status::Status& status, const std::tuple<uint32_t, uint32_t, bool>& check) {
+			if (!status.ok())
+			{
+				return;
+			}
+		};
+		saveTupleAux(server, tupleData, tupleRows, doneCb);
 	};
 	Multi_LoadFromDb(multiCb, server, ModelUser(userId), ModelRoleExtra(userId));
 }
