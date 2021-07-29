@@ -123,6 +123,7 @@ HOOK_ERROR = 19,
 LoadFromDbError = 20,
 NotMatchedResultError = 21,
 DirtyFlagZero = 22,
+DB_InsertError = 23,
 
 /// Force users to include a default branch:
   DO_NOT_USE = -1

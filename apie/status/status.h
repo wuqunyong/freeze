@@ -28,6 +28,11 @@ public:
 		code_ = code;
 	}
 
+	void setErrorMessage(const std::string& msg)
+	{
+		error_message_ = msg;
+	}
+
 	void setHasMore(bool flag)
 	{
 		has_more_ = flag;

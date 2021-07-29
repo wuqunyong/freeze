@@ -479,8 +479,14 @@ void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tu
 				auto& completedNum = std::get<1>(*ptrCheck);
 				completedNum += 1;
 
-				if (!status.ok())
+				if (!status.ok() || !result)
 				{
+					if (!result)
+					{
+						status.setErrorCode(status::StatusCode::DB_InsertError);
+						status.setErrorMessage("DB_InsertError");
+					}
+
 					auto& doneFlag = std::get<2>(*ptrCheck);
 					if (doneFlag)
 					{
