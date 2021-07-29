@@ -297,7 +297,7 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto multiCb = [server](status::Status status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, std::array<uint32_t, 2>& tupleRows) {
+	auto multiCb = [server](status::Status status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, const std::array<uint32_t, 2>& tupleRows) {
 		if (!status.ok())
 		{
 			return;

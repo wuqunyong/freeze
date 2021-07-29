@@ -45,7 +45,7 @@ using LoadFromDbReplyCB = typename LoadFromDbCallback_<T>::ReplyCallback;
 template <typename ...Ts>
 struct LoadFromDbMultiCallback_
 {
-	using ReplyCallback = std::function<void(const apie::status::Status& status, std::tuple<Ts...>& tupleData, std::array<uint32_t, sizeof...(Ts)>& rows)>;
+	using ReplyCallback = std::function<void(const apie::status::Status& status, std::tuple<Ts...>& tupleData, const std::array<uint32_t, sizeof...(Ts)>& rows)>;
 };
 
 template <typename ...Ts>
