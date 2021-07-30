@@ -317,6 +317,8 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 
 			Update_OnChanged(server, tupleData);
 			Update_OnChanged(server, tupleData);
+
+			Update_OnForced(server, tupleData);
 		};
 		Insert_OnNotExists(server, tupleData, tupleRows, doneCb);
 	};

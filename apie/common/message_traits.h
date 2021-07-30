@@ -562,6 +562,31 @@ void Update_OnChanged(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup)
 	}
 }
 
+template <size_t I = 0, typename... Ts>
+void Update_OnForced(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup)
+{
+	// If we have iterated through all elements
+	if constexpr (I == sizeof...(Ts))
+	{
+		// Last case, if nothing is left to
+		// iterate, then exit the function
+		return;
+	}
+	else
+	{
+		std::get<I>(tup).dirtySet();
+		auto cb = [](status::Status status, bool result, uint64_t affectedRows) {
+			if (!status.ok())
+			{
+				return;
+			}
+		};
+		UpdateToDb<std::tuple_element<I, std::decay<decltype(tup)>::type>::type>(server, std::get<I>(tup), cb);	
+
+		// Going for next element.
+		Update_OnForced<I + 1>(server, tup);
+	}
+}
 
 
 }  // namespace message
