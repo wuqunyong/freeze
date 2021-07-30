@@ -142,7 +142,9 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlMultiQuery(
 		std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(elems.table_name());
 		if (sharedTable == nullptr)
 		{
-			return { apie::status::StatusCode::INVALID_ARGUMENT, "getTable Null" };
+			std::stringstream ss;
+			ss << "getTable Null|tableName:" << elems.table_name();
+			return { apie::status::StatusCode::INVALID_ARGUMENT, ss.str() };
 		}
 
 		std::string sSQL;
@@ -150,7 +152,9 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlMultiQuery(
 		response.set_sql_statement(sSQL);
 		if (!bResult)
 		{
-			return { apie::status::StatusCode::INTERNAL, "getMySQLConnector Error" };
+			std::stringstream ss;
+			ss << "generateQuerySQL Error|SQL:" << sSQL;
+			return { apie::status::StatusCode::INTERNAL, ss.str() };
 		}
 
 		std::shared_ptr<ResultSet> recordSet;
