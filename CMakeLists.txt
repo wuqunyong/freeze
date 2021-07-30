@@ -1,4 +1,3 @@
-# CMake initialisation.
 cmake_minimum_required(VERSION 3.1)
 
 message(STATUS "CMake version: ${CMAKE_VERSION}")
@@ -7,13 +6,19 @@ message(STATUS "CMake build type: ${CMAKE_BUILD_TYPE}")
 # Project name
 project(APie_Project)
 
-# set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
+
+if (WIN32)
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT") 
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+else ()
+	set(CMAKE_CXX_STANDARD 17)
+endif()
 
 
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
-set(CMAKE_VERBOSE_MAKEFILEON ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++17")
 
@@ -34,9 +39,7 @@ message(STATUS "APie_Project PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 # ----------------------------------------------------------------------------- 
 
 
-# Build LibAPie.so
-set(LIBAPIE_DIR "libapie")
-add_subdirectory(${LIBAPIE_DIR})
-add_subdirectory(server)
+add_subdirectory(apie)
+#add_subdirectory(server)
 
 
