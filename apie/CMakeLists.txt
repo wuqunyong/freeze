@@ -14,7 +14,7 @@ set(cxx-link-dirs)
 set(cxx-include-dirs ${IncludeDirs})
 set(cxx-link-dirs ${LinkDirs})
 
-message(STATUS "apie cxx-include-dirs: ${cxx-include-dirs}")
+# message(STATUS "apie cxx-include-dirs: ${cxx-include-dirs}")
 
 
 include_directories(${cxx-include-dirs})
