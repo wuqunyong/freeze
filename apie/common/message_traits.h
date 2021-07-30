@@ -94,7 +94,13 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 
 		if (cb)
 		{
-			cb(status, response->result(), response->affected_rows(), response->insert_id());
+			apie::status::Status newStatus = status;
+			if (!response->result())
+			{
+				newStatus.setErrorMessage(response->error_info());
+			}
+
+			cb(newStatus, response->result(), response->affected_rows(), response->insert_id());
 		}
 	};
 	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlInsertRequest, ::mysql_proxy_msg::MysqlInsertResponse>(server, ::rpc_msg::RPC_MysqlInsert, insertRequest, insertCB);
@@ -484,7 +490,6 @@ void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tu
 					if (!result)
 					{
 						status.setErrorCode(status::StatusCode::DB_InsertError);
-						status.setErrorMessage("DB_InsertError");
 					}
 
 					auto& doneFlag = std::get<2>(*ptrCheck);
