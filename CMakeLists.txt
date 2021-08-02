@@ -87,7 +87,7 @@ else ()
         /usr/local/protobuf/lib
         /usr/local/apie/lib)
 
-    set(LinkLibs -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lprotobuf -lyaml-cpp -lnats)
+    set(LinkLibs -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie)
 endif()
 
 

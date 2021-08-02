@@ -28,8 +28,7 @@ else ()
     set(DependenciesLinkDirs
         ${PROJECT_BINARY_DIR}/lib)
 
-	set(DependenciesLinkLibs 
-        -lapie)
+	set(DependenciesLinkLibs -lapie -lprotobuf -lyaml-cpp -lnats)
 endif()
 
 
