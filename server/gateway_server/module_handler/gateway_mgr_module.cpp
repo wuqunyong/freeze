@@ -266,7 +266,7 @@ void saveTuple(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const s
 					doneCb(status, *ptrCheck);
 				}
 			};
-			InsertToDb<std::tuple_element<I, std::decay<decltype(tup)>::type>::type>(server, std::get<I>(tup), cb);
+			InsertToDb<std::tuple_element<I, std::decay_t<decltype(tup)>>::type>(server, std::get<I>(tup), cb);
 		}
 
 		// Going for next element.
