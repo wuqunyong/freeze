@@ -147,6 +147,12 @@ void NATSConnectorBase::ErrHandler(natsConnection* nc, natsSubscription* subscri
 	}
 }
 
+std::string NATSConnectorBase::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
+{
+	std::string topic = domains + "/" + channel;
+	return topic;
+}
+
 NatsManager::NatsManager() : nats_realm(nullptr)
 {
 
@@ -444,14 +450,6 @@ std::string NatsManager::GetTopicChannel(const ::rpc_msg::CHANNEL& channel)
 {
 	return GetTopicChannel(channel.realm(), channel.type(), channel.id());
 }
-
-
-std::string NatsManager::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
-{
-	std::string topic = domains + "/" + channel;
-	return topic;
-}
-
 
 std::string NatsManager::GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest)
 {

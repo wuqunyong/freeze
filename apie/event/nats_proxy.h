@@ -27,6 +27,7 @@ namespace event_ns {
 			static void ClosedCb(natsConnection* nc, void* closure);
 			static void ErrHandler(natsConnection* nc, natsSubscription* subscription, natsStatus err, void* closure);
 
+			static std::string GetCombineTopicChannel(const std::string& domains, const std::string& channel);
 		protected:
 			NATSConnectorBase(std::string nats_server, std::unique_ptr<NATSTLSConfig> tls_config)
 				: nats_server_(nats_server), tls_config_(std::move(tls_config)) {}
@@ -125,7 +126,7 @@ namespace event_ns {
 					return iRC;
 				}
 
-				std::string sSub = apie::event_ns::NatsManager::GetCombineTopicChannel(sub_topic_, channel);
+				std::string sSub = apie::event_ns::NATSConnectorBase::GetCombineTopicChannel(sub_topic_, channel);
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
@@ -194,7 +195,7 @@ namespace event_ns {
 					return 1;
 				}
 
-				std::string sPub = apie::event_ns::NatsManager::GetCombineTopicChannel(pub_topic_, channel);
+				std::string sPub = apie::event_ns::NATSConnectorBase::GetCombineTopicChannel(pub_topic_, channel);
 
 				auto serialized_msg = msg.SerializeAsString();
 				auto nats_status = natsConnection_Publish(nats_connection_, sPub.c_str(), serialized_msg.c_str(), serialized_msg.size());
@@ -290,8 +291,6 @@ namespace event_ns {
 		public:
 			static std::string GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id);
 			static std::string GetTopicChannel(const ::rpc_msg::CHANNEL& channel);
-
-			static std::string GetCombineTopicChannel(const std::string& domains, const std::string& channel);
 
 			static std::string GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest);
 
