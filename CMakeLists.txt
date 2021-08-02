@@ -63,7 +63,6 @@ if (WIN32)
         tacopie.lib
         nats_staticd.lib)
 else ()
-	set(CMAKE_CXX_STANDARD 17)
 endif()
 
 

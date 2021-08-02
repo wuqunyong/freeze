@@ -6,11 +6,7 @@ message(STATUS "db_proxy_server CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 message(STATUS "db_proxy_server CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 
 
-
 # Set lists to empty beforehand as to not accidentally take values from parent
-set(public_headers)
-set(sources)
-set(cxx-outer-sources)
 set(pb_sources)
 
 set(DependenciesIncludeDirs)
@@ -32,7 +28,7 @@ endif()
 file(GLOB_RECURSE SOURCE_FILES ./*.cc ./*.cpp)
 
 
-add_executable(db_proxy_server ${SOURCE_FILES} ${sources} ${public_headers})
+add_executable(db_proxy_server ${SOURCE_FILES} ${pb_sources})
 target_include_directories(db_proxy_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(db_proxy_server PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(db_proxy_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})

@@ -8,8 +8,6 @@ message(STATUS "test_server CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 
 
 # Set lists to empty beforehand as to not accidentally take values from parent
-set(sources)
-set(cxx-outer-sources)
 set(pb_sources)
 
 set(DependenciesIncludeDirs)
@@ -36,7 +34,7 @@ set(pb_sources
 file(GLOB_RECURSE SOURCE_FILES ./*.cc ./*.cpp)
 
 
-add_executable(test_server ${SOURCE_FILES} ${sources} ${pb_sources})
+add_executable(test_server ${SOURCE_FILES} ${pb_sources})
 target_include_directories(test_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(test_server PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(test_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})

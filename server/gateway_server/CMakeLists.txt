@@ -8,8 +8,6 @@ message(STATUS "gateway_server CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 
 
 # Set lists to empty beforehand as to not accidentally take values from parent
-set(sources)
-set(cxx-outer-sources)
 set(pb_sources)
 
 set(DependenciesIncludeDirs)
@@ -35,7 +33,7 @@ set(pb_sources
 file(GLOB_RECURSE SOURCE_FILES ./*.cc ./*.cpp)
 
 
-add_executable(gateway_server ${SOURCE_FILES} ${sources} ${pb_sources})
+add_executable(gateway_server ${SOURCE_FILES} ${pb_sources})
 target_include_directories(gateway_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(gateway_server PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(gateway_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
