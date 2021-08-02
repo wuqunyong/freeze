@@ -23,11 +23,11 @@ public:
 	using SharedResponse = typename std::shared_ptr<Response>;
 	using CallbackType = std::function<void(const status::Status&, const SharedResponse&)>;
 
-	template <typename Request, typename Response>
-	friend bool RPC_Call(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const Request& params, const typename RPCClient<Request, Response>::CallbackType& calllback);
+	template <typename RequestT, typename ResponseT>
+	friend bool RPC_Call(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const RequestT& params, const typename RPCClient<RequestT, ResponseT>::CallbackType& calllback);
 
-	template <typename Request, typename Response>
-	friend bool RPC_CallWithContext(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const Request& params, const typename RPCClient<Request, Response>::CallbackType& calllback);
+	template <typename RequestT, typename ResponseT>
+	friend bool RPC_CallWithContext(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const RequestT& params, const typename RPCClient<RequestT, ResponseT>::CallbackType& calllback);
 
 	RPCClient(RPCClientManager& manager, const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
 		: RPCClientBase(opcode),
