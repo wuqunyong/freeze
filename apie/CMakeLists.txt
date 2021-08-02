@@ -8,17 +8,13 @@ message(STATUS "apie CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 set(public_headers)
 set(sources)
 set(cxx-outer-sources)
-set(cxx-include-dirs)
-set(cxx-link-dirs)
 
-set(cxx-include-dirs ${IncludeDirs})
-set(cxx-link-dirs ${LinkDirs})
-
-# message(STATUS "apie cxx-include-dirs: ${cxx-include-dirs}")
-
-
-include_directories(${cxx-include-dirs})
-link_directories(${cxx-link-dirs})
+#set(cxx-include-dirs)
+#set(cxx-link-dirs)
+#set(cxx-include-dirs ${IncludeDirs})
+#set(cxx-link-dirs ${LinkDirs})
+#include_directories(${cxx-include-dirs})
+#link_directories(${cxx-link-dirs})
 
 
 file(GLOB_RECURSE APIE_SOURCE ./*.cc ./*.cpp)
@@ -39,9 +35,10 @@ foreach(source ${cxx-outer-sources})
 endforeach()
 
 
-add_library(apie SHARED ${APIE_SOURCE} ${sources} ${public_headers})
-
+add_library(apie STATIC ${APIE_SOURCE} ${sources} ${public_headers})
 set_target_properties(apie PROPERTIES VERSION "1.0.0" SOVERSION "1")
+target_include_directories(apie PUBLIC ${IncludeDirs})
+target_link_directories(apie PUBLIC ${LinkDirs})
 target_link_libraries(apie ${LinkLibs})
 
 
