@@ -26,16 +26,20 @@ set(cxx-outer-sources
     third_party/jsoncpp/src/lib_json/json_value.cpp
     third_party/tinyxml2/tinyxml2.cpp)
 
-
-# -----------------------------------------------------------------------------
-# source generators
-
 foreach(source ${cxx-outer-sources})
     list(APPEND sources ${CMAKE_CURRENT_SOURCE_DIR}/../${source})
 endforeach()
 
 
-add_library(apie STATIC ${APIE_SOURCE} ${sources} ${public_headers})
+set(LibType)
+if (WIN32)
+    set(LibType STATIC)
+else ()
+	set(LibType SHARED)
+endif()
+
+
+add_library(apie ${LibType} ${APIE_SOURCE} ${sources} ${public_headers})
 set_target_properties(apie PROPERTIES VERSION "1.0.0" SOVERSION "1")
 target_include_directories(apie PUBLIC ${IncludeDirs})
 target_link_directories(apie PUBLIC ${LinkDirs})

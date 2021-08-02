@@ -47,7 +47,8 @@ if (WIN32)
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/OpenSSL-Win64/lib
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/MySQL/MySQLServer5.7/lib)
 
-	set(LinkLibs ws2_32.lib
+	set(LinkLibs
+        ws2_32.lib
         wsock32.lib
         libmysql.lib
         mysqlclient.lib
@@ -63,6 +64,30 @@ if (WIN32)
         tacopie.lib
         nats_staticd.lib)
 else ()
+    set(IncludeDirs
+        /usr/local/include
+        /usr/include/mysql
+        /usr/local/protobuf/include
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/astar
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cpp_redis/includes
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cpp_redis/tacopie/includes
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/http-parser
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/JPSPlusGoalBounding
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/jsoncpp/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyxml2
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/influxdb-cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/pb_msg
+        ${CMAKE_CURRENT_SOURCE_DIR}/apie)
+
+    set(LinkDirs
+        /usr/lib64/mysql
+        /usr/local/lib64
+        /usr/local/lib
+        /usr/local/protobuf/lib
+        /usr/local/apie/lib)
+
+    set(LinkLibs -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -lcpp_redis -ltacopie -lnats)
 endif()
 
 

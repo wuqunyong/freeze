@@ -23,6 +23,14 @@ if (WIN32)
 	set(DependenciesLinkLibs 
         apie.lib)
 else ()
+    set(DependenciesIncludeDirs
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../apie)
+
+    set(DependenciesLinkDirs
+        ${PROJECT_BINARY_DIR}/lib)
+
+	set(DependenciesLinkLibs 
+        -lapie)
 endif()
 
 
