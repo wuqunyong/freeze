@@ -36,9 +36,3 @@ add_executable(service_registry ${SOURCE_FILES} ${sources} ${public_headers})
 target_include_directories(service_registry PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(service_registry PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(service_registry PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
-
-
-message(STATUS "service_registry lib: ${PROJECT_BINARY_DIR}/lib")
-message(STATUS "service_registry CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "service_registry linkLibs: ${LinkLibs} ${DependenciesLinkLibs}")
-message(STATUS "service_registry linkDirs: ${LinkDirs} ${DependenciesLinkDirs}")
