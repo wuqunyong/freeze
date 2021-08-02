@@ -524,7 +524,7 @@ void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tu
 					doneCb(status, std::make_tuple(std::get<0>(*ptrCheck), std::get<1>(*ptrCheck)));
 				}
 			};
-			InsertToDb<std::tuple_element<I, std::decay_t<decltype(tup)>::type>>(server, std::get<I>(tup), cb);
+			InsertToDb<std::tuple_element<I, std::decay_t<decltype(tup)>>::type>(server, std::get<I>(tup), cb);
 		}
 
 		// Going for next element.
@@ -559,7 +559,7 @@ void Update_OnChanged(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup)
 					return;
 				}
 			};
-			UpdateToDb<std::tuple_element<I, std::decay_t<decltype(tup)>::type>>(server, std::get<I>(tup), cb);
+			UpdateToDb<std::tuple_element<I, std::decay_t<decltype(tup)>>::type>(server, std::get<I>(tup), cb);
 		}
 
 		// Going for next element.
@@ -586,7 +586,7 @@ void Update_OnForced(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup)
 				return;
 			}
 		};
-		UpdateToDb<std::tuple_element<I, std::decay_t<decltype(tup)>::type>>(server, std::get<I>(tup), cb);
+		UpdateToDb<std::tuple_element<I, std::decay_t<decltype(tup)>>::type>(server, std::get<I>(tup), cb);
 
 		// Going for next element.
 		Update_OnForced<I + 1>(server, tup);
