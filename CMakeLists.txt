@@ -16,8 +16,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
-set(CMAKE_INSTALL_PREFIX "/usr/local/apie")
-
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 set(IncludeDirs)
@@ -66,6 +64,8 @@ if (WIN32)
         tacopie.lib
         nats_staticd.lib)
 else ()
+    set(CMAKE_INSTALL_PREFIX "/usr/local/apie")
+
     set(IncludeDirs
         /usr/local/include
         /usr/include/mysql
