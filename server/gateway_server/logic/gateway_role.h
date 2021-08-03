@@ -39,8 +39,8 @@ namespace apie {
 		void destroy();
 
 	private:
-		uint64_t m_iSerialNum = 0;
 		uint64_t m_iRoleId = 0;
+		uint64_t m_iSerialNum = 0;
 		uint32_t m_iMaskFlag = 0;
 
 		uint64_t m_iRequests = 0;

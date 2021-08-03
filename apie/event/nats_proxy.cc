@@ -347,7 +347,7 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 
 void NatsManager::runIntervalCallbacks()
 {
-	std::thread::id iThreadId = std::this_thread::get_id();
+	//std::thread::id iThreadId = std::this_thread::get_id();
 
 	bool enable = apie::CtxSingleton::get().getConfigs()->metrics.enable;
 	if (enable)

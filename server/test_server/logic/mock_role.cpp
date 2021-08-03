@@ -491,7 +491,7 @@ void MockRole::handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const
 		{
 			uint64_t iMin = 0;
 			uint64_t iMax = 0;
-			uint64_t iAverage = 0;
+			//uint64_t iAverage = 0;
 			uint64_t iTotal = 0;
 			uint64_t iCount = 0;
 			for (auto& items : ite->second)
