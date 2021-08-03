@@ -244,7 +244,7 @@ namespace apie {
 		for (const auto& elems : apie::CtxSingleton::get().getConfigs()->auto_test.task_suite)
 		{
 			auto iType = elems.task_case.case_type;
-			auto iCount = elems.task_case.case_type;
+			auto iCount = elems.task_case.loop_count;
 			auto iInterval = elems.task_case.loop_interval_ms;
 
 
