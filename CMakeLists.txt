@@ -101,14 +101,13 @@ message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 # ----- LIBRARY ---------------------------------------------------------
 # ----------------------------------------------------------------------------- 
 
-install(TARGETS freeze
+
+add_subdirectory(apie)
+add_subdirectory(server)
+
+install(TARGETS apie
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY conf/ DESTINATION conf/
         FILES_MATCHING PATTERN "*.yaml")
-
-add_subdirectory(apie)
-add_subdirectory(server)
-
-
