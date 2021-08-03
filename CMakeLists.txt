@@ -115,4 +115,4 @@ install(DIRECTORY data/ DESTINATION data/
         FILES_MATCHING PATTERN "*.*")
 install(FILES
     "etc/apie.sh"
-    DESTINATION "scripts/apie.sh")
+    DESTINATION "scripts")
