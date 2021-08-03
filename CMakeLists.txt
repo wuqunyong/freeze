@@ -105,9 +105,14 @@ message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 add_subdirectory(apie)
 add_subdirectory(server)
 
-install(TARGETS apie
+install(TARGETS apie db_proxy_server gateway_server login_server scene_server service_registry test_server
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(DIRECTORY conf/ DESTINATION conf/
         FILES_MATCHING PATTERN "*.yaml")
+install(DIRECTORY data/ DESTINATION data/
+        FILES_MATCHING PATTERN "*.*")
+install(FILES
+    "etc/apie.sh"
+    DESTINATION "scripts/apie.sh")
