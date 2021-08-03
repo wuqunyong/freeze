@@ -16,6 +16,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
+set(CMAKE_INSTALL_PREFIX "/usr/local/apie")
+
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 set(IncludeDirs)
@@ -98,6 +100,13 @@ message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 # -----------------------------------------------------------------------------
 # ----- LIBRARY ---------------------------------------------------------
 # ----------------------------------------------------------------------------- 
+
+install(TARGETS freeze
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY conf/ DESTINATION conf/
+        FILES_MATCHING PATTERN "*.yaml")
 
 add_subdirectory(apie)
 add_subdirectory(server)
