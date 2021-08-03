@@ -10,7 +10,6 @@
 #include <google/protobuf/message.h>
 
 #include "apie/singleton/threadsafe_singleton.h"
-#include "apie/rpc/client/rpc_client.h"
 #include "apie/rpc/client/rpc_client_base.h"
 
 namespace apie {
@@ -27,14 +26,6 @@ public:
 		uint64_t id_;
 		uint64_t expire_at_;
 	};
-
-	template <typename Request, typename Response>
-	auto createRPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
-		->std::shared_ptr<RPCClient<Request, Response>>;
-
-	template <typename Request, typename Response>
-	auto createRPCClient(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
-		->std::shared_ptr<RPCClient<Request, Response>>;
 
 
 	uint64_t nextSeqNum();
@@ -53,22 +44,6 @@ private:
 	std::multimap<uint64_t, timer_info> expire_at_;
 	uint64_t last_check_timeout_at_ = 0;
 };
-
-template <typename Request, typename Response>
-auto RPCClientManager::createRPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
-	->std::shared_ptr<RPCClient<Request, Response>>
-{
-	auto client_ptr = std::make_shared<RPCClient<Request, Response>>(*this, server, opcode, calllback);
-	return client_ptr;
-}
-
-template <typename Request, typename Response>
-auto RPCClientManager::createRPCClient(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
-->std::shared_ptr<RPCClient<Request, Response>>
-{
-	auto client_ptr = std::make_shared<RPCClient<Request, Response>>(*this, context, opcode, calllback);
-	return client_ptr;
-}
 
 
 using RPCClientManagerSingleton = apie::ThreadSafeSingleton<RPCClientManager>;

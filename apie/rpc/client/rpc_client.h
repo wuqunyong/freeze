@@ -5,6 +5,7 @@
 
 #include "apie/rpc/client/rpc_client_base.h"
 #include "apie/rpc/client/rpc_client_contex.h"
+#include "apie/rpc/client/rpc_client_manager.h"
 #include "apie/status/status.h"
 #include "apie/network/ctx.h"
 #include "apie/event/nats_proxy.h"
@@ -13,8 +14,6 @@
 
 namespace apie {
 namespace rpc {
-
-class RPCClientManager;
 
 template <typename Request, typename Response>
 class RPCClient : public RPCClientBase {

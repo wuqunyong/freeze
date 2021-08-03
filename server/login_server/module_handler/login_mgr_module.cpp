@@ -232,7 +232,7 @@ void LoginMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 	server.set_type(type);
 	server.set_id(id);
 
-	//auto rpcObj = apie::rpc::RPCClientManagerSingleton::get().createRPCClient<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(server, rpc_msg::RPC_EchoTest, nullptr);
+	//auto rpcObj = apie::rpc::createRPCClient<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(server, rpc_msg::RPC_EchoTest, nullptr);
 	//rpcObj->sendRequest(params);
 
 	auto cb = [](const apie::status::Status& status, const std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response) {

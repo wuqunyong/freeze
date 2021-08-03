@@ -1,6 +1,7 @@
 #include "apie/rpc/client/rpc_client_manager.h"
 
 #include "apie/status/status.h"
+#include "apie/network/ctx.h"
 
 namespace apie {
 namespace rpc {
@@ -41,7 +42,7 @@ void RPCClientManager::removePendingRequests(uint64_t seq_num)
 
 void RPCClientManager::handleTimeout()
 {
-	uint64_t curTime = apie::CtxSingleton::get().getCurMilliseconds();
+	uint64_t curTime = apie::Ctx::getCurMilliseconds();
 
 	if (curTime > last_check_timeout_at_)
 	{
