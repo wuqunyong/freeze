@@ -113,6 +113,9 @@ install(DIRECTORY conf/ DESTINATION conf/
         FILES_MATCHING PATTERN "*.yaml")
 install(DIRECTORY data/ DESTINATION data/
         FILES_MATCHING PATTERN "*.*")
+install(DIRECTORY etc/ DESTINATION etc/
+        FILES_MATCHING PATTERN "*.pem"
+        PATTERN "*.pub")
 install(FILES
     "etc/apie.sh"
     DESTINATION "scripts")
