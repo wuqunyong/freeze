@@ -3,6 +3,7 @@ identify:
   type: 7
   id: 1
 io_threads: 16
+daemon: false
 clients:
     socket_address:
       #address: "10.0.16.59"

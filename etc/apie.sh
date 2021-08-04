@@ -34,6 +34,28 @@ SERVER_ARGS[5]=/usr/local/apie/conf/service_registry.yaml
 # This is our service name
 LOCKFILE=/var/lock/subsys/apie
 
+echo_active() {
+  [ "$BOOTUP" = "color" ] && $MOVE_TO_COL
+  echo -n "["
+  [ "$BOOTUP" = "color" ] && $SETCOLOR_SUCCESS
+  echo -n $"  ACTIVE  "
+  [ "$BOOTUP" = "color" ] && $SETCOLOR_NORMAL
+  echo -n "]"
+  echo -ne "\r"
+  return 0
+}
+
+echo_inactive() {
+  [ "$BOOTUP" = "color" ] && $MOVE_TO_COL
+  echo -n "["
+  [ "$BOOTUP" = "color" ] && $SETCOLOR_FAILURE
+  echo -n $"  INACTIVE  "
+  [ "$BOOTUP" = "color" ] && $SETCOLOR_NORMAL
+  echo -n "]"
+  echo -ne "\r"
+  return 1
+}
+
 start() {
   # pid=`pidof -o $$ -o $PPID -o %PPID -x ${PROG}`
   # if [ -n "$pid" ]; then        
@@ -63,6 +85,7 @@ start() {
 
       let "curValue++"
   done
+  echo ""
 }
 
 stop() {
@@ -72,14 +95,24 @@ stop() {
   curValue=0
   while(( $curValue<$length ))
   do
-      echo "curValue:$curValue"
-      echo "killproc:${SERVER[$curValue]}"
-      killproc ${SERVER[$curValue]} -9 
-      RETVAL=$?
-      echo "RETVAL:$RETVAL"
+      echo "curValue:$curValue ${SERVER[$curValue]} ${SERVER_ARGS[$curValue]}"
+      
+      #killproc ${SERVER[$curValue]} -9 
+      #RETVAL=$?
+      #echo "RETVAL:$RETVAL"
+      /usr/bin/ps -ef --no-headers | grep -v grep | grep ${SERVER[$curValue]}
+      if [ $? -eq 0 ];then
+        echo "killproc:${SERVER[$curValue]}"
+        killproc ${SERVER[$curValue]} -9 
+        RETVAL=$?
+        echo "RETVAL:$RETVAL"
+      else
+        echo "inactive"
+      fi
 
       let "curValue++"
   done
+  echo ""
 }
 
 # See how we were called.
@@ -104,10 +137,12 @@ case "$1" in
     do
         echo "curValue:$curValue"
         echo "status:${SERVER[$curValue]} ${SERVER_ARGS[$curValue]}"
-        status ${SERVER[$curValue]}
+        # status ${SERVER[$curValue]}
+        /usr/bin/ps -ef --no-headers | grep -v grep | grep ${SERVER[$curValue]} | grep ${SERVER_ARGS[$curValue]} && echo_active || echo_inactive
 
         let "curValue++"
     done
+    echo ""
     ;;
   *)
     echo $"Usage: $0 {start|stop|restart|status}"
