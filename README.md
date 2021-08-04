@@ -8,6 +8,7 @@
  - yaml
  - lz4
  - [cpp_redis](https://github.com/cpp-redis/cpp_redis)
+ - [nats.c](https://github.com/nats-io/nats.c)
 
 ## 安装依赖
 ```shell
