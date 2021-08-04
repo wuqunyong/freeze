@@ -77,11 +77,17 @@ start() {
   while(( $curValue<$length ))
   do
       echo "curValue:$curValue"
-      echo "start:${SERVER[$curValue]} ${SERVER_ARGS[$curValue]}"
-      `${SERVER[$curValue]} ${SERVER_ARGS[$curValue]}` && success || failure
       
-      RETVAL=$?
-      echo "RETVAL:$RETVAL"
+      /usr/bin/ps -ef --no-headers | grep -v grep | grep ${SERVER[$curValue]} | grep ${SERVER_ARGS[$curValue]}
+      if [ $? -ne 0 ];then
+        echo "start:${SERVER[$curValue]} ${SERVER_ARGS[$curValue]}"
+        `${SERVER[$curValue]} ${SERVER_ARGS[$curValue]}` && success || failure
+
+        RETVAL=$?
+        echo "RETVAL:$RETVAL"
+      else
+        echo "active"
+      fi
 
       let "curValue++"
   done
