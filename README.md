@@ -81,7 +81,18 @@ make
 # Install the library
 make install
 ```
-## 编译(CMake)
+
+### 安装nats
+```shell
+git clone https://github.com/nats-io/nats.c.git
+cd nats.c/
+mkdir build && cd build
+cmake .. -DNATS_BUILD_STREAMING=OFF
+make
+make install
+```
+
+## 编译
 ```shell
 $ mkdir build && cd build
 $ cmake ..    
