@@ -81,11 +81,12 @@ make
 # Install the library
 make install
 ```
-## 编译
+## 编译(CMake)
 ```shell
-./bootstrap.sh
-./configure
-make rpm
+$ mkdir build && cd build
+$ cmake ..    
+$ make
+$ make install
 ```
 
 ## 生成的rpm包
