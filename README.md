@@ -89,28 +89,6 @@ $ make
 $ make install
 ```
 
-## 生成的rpm包
-apie-1.0.0-1.x86_64.rpm 
-apie-debuginfo-1.0.0-1.x86_64.rpm
-
-## 安装rpm包
-```shell
-rpm -ivh --nodeps apie-1.0.0-1.x86_64.rpm
-```
-
-## 服务管理
-### 查看状态
-```shell
-service apie status
-```
-### 启动
-```shell
-service apie start
-```
-### 关闭
-```shell
-service apie stop
-```
 
 ## CentOS7 x64安装MySQL
 [# How To Install MySQL on CentOS 7](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7)
