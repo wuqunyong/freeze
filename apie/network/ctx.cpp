@@ -775,7 +775,7 @@ void Ctx::handleSigProcMask()
 {
 #ifdef WIN32
 #else
-	if (m_bDaemon) 
+	if (this->getConfigs()->daemon)
 	{
 		sigemptyset(&g_SigSet);
 		sigaddset(&g_SigSet, SIGTERM);
@@ -831,7 +831,7 @@ void Ctx::waitForShutdown()
 		}
 	}
 #else
-	if (m_bDaemon)
+	if (this->getConfigs()->daemon)
 	{
 		int actualSignal = 0;
 		int errCount = 0;
@@ -1012,10 +1012,6 @@ bool Ctx::checkIsValidServerType(std::set<uint32_t> validSet)
 	return true;
 }
 
-bool Ctx::isDaemon()
-{
-	return m_bDaemon;
-}
 
 std::string Ctx::getConfigFile()
 {

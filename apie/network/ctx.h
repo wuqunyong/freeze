@@ -66,7 +66,6 @@ namespace apie
 
 		bool checkIsValidServerType(std::set<uint32_t> validSet);
 
-		bool isDaemon();
 		std::string getConfigFile();
 		int64_t getConfigFileMTime();
 		void setConfigFileMTime(int64_t mtime);
@@ -105,7 +104,6 @@ namespace apie
 		YAML::Node node_;
 		std::mutex node_sync_;
 
-		bool m_bDaemon = true;
 		std::string m_configFile;
 		int64_t m_configFileMTime = -1;
 
