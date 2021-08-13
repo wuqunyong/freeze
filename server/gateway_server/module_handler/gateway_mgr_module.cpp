@@ -483,6 +483,8 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 		response.set_status_code(apie::toUnderlyingType(status.errorCode()));
 		response.set_user_id(request->user_id());
 		response.set_version(request->version());
+		response.set_ammo(rand() % 30 + 50);
+		response.set_grenades(rand() % 10 + 20);
 		if (iRows == 0)
 		{
 			response.set_is_newbie(true);

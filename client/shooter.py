@@ -682,7 +682,7 @@ with open(f'level{level}_data.csv', newline='') as csvfile:
 world = World()
 player, health_bar = world.process_data(world_data)
 
-
+world.player = player
 
 run = True
 while run:

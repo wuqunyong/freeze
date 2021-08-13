@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='login_msg',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x0flogin_msg.proto\x12\tlogin_msg\"\x9b\x01\n\x0fGameAccountInfo\x12\x12\n\naccount_id\x18\x01 \x01(\x04\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x14\n\x0cis_suspended\x18\x03 \x01(\x08\x12\x11\n\tis_banned\x18\x04 \x01(\x08\x12\x1a\n\x12suspension_expires\x18\x05 \x01(\x04\x12\x19\n\x11suspension_reason\x18\x06 \x01(\t\"D\n\x0fGameAccountList\x12\x31\n\rgame_accounts\x18\x01 \x03(\x0b\x32\x1a.login_msg.GameAccountInfo\"y\n\x1bMSG_REQUEST_ACCOUNT_LOGIN_L\x12\x13\n\x0bplatform_id\x18\x01 \x01(\t\x12\x12\n\nprogram_id\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x05\x12\x12\n\naccount_id\x18\x04 \x01(\x04\x12\x0c\n\x04\x61uth\x18\x05 \x01(\t\"v\n\x1cMSG_RESPONSE_ACCOUNT_LOGIN_L\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x12\n\naccount_id\x18\x02 \x01(\x04\x12\x13\n\x0bsession_key\x18\x03 \x01(\t\x12\n\n\x02ip\x18\x04 \x01(\t\x12\x0c\n\x04port\x18\x05 \x01(\x05\"3\n\x1aMSG_REQUEST_HANDSHAKE_INIT\x12\x15\n\rclient_random\x18\x01 \x01(\t\"]\n\x1bMSG_RESPONSE_HANDSHAKE_INIT\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x15\n\rserver_random\x18\x02 \x01(\t\x12\x12\n\npublic_key\x18\x03 \x01(\t\":\n!MSG_REQUEST_HANDSHAKE_ESTABLISHED\x12\x15\n\rencrypted_key\x18\x01 \x01(\x0c\"9\n\"MSG_RESPONSE_HANDSHAKE_ESTABLISHED\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\"Q\n\x18MSG_REQUEST_CLIENT_LOGIN\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\x12\x13\n\x0bsession_key\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x05\"e\n\x19MSG_RESPONSE_CLIENT_LOGIN\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\x0f\n\x07version\x18\x03 \x01(\x05\x12\x11\n\tis_newbie\x18\x04 \x01(\x08\"2\n\x10MSG_REQUEST_ECHO\x12\x0e\n\x06value1\x18\x01 \x01(\x04\x12\x0e\n\x06value2\x18\x02 \x01(\t\"3\n\x11MSG_RESPONSE_ECHO\x12\x0e\n\x06value1\x18\x01 \x01(\x04\x12\x0e\n\x06value2\x18\x02 \x01(\tb\x06proto3'
+  serialized_pb=b'\n\x0flogin_msg.proto\x12\tlogin_msg\"\x9b\x01\n\x0fGameAccountInfo\x12\x12\n\naccount_id\x18\x01 \x01(\x04\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x14\n\x0cis_suspended\x18\x03 \x01(\x08\x12\x11\n\tis_banned\x18\x04 \x01(\x08\x12\x1a\n\x12suspension_expires\x18\x05 \x01(\x04\x12\x19\n\x11suspension_reason\x18\x06 \x01(\t\"D\n\x0fGameAccountList\x12\x31\n\rgame_accounts\x18\x01 \x03(\x0b\x32\x1a.login_msg.GameAccountInfo\"y\n\x1bMSG_REQUEST_ACCOUNT_LOGIN_L\x12\x13\n\x0bplatform_id\x18\x01 \x01(\t\x12\x12\n\nprogram_id\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x05\x12\x12\n\naccount_id\x18\x04 \x01(\x04\x12\x0c\n\x04\x61uth\x18\x05 \x01(\t\"v\n\x1cMSG_RESPONSE_ACCOUNT_LOGIN_L\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x12\n\naccount_id\x18\x02 \x01(\x04\x12\x13\n\x0bsession_key\x18\x03 \x01(\t\x12\n\n\x02ip\x18\x04 \x01(\t\x12\x0c\n\x04port\x18\x05 \x01(\x05\"3\n\x1aMSG_REQUEST_HANDSHAKE_INIT\x12\x15\n\rclient_random\x18\x01 \x01(\t\"]\n\x1bMSG_RESPONSE_HANDSHAKE_INIT\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x15\n\rserver_random\x18\x02 \x01(\t\x12\x12\n\npublic_key\x18\x03 \x01(\t\":\n!MSG_REQUEST_HANDSHAKE_ESTABLISHED\x12\x15\n\rencrypted_key\x18\x01 \x01(\x0c\"9\n\"MSG_RESPONSE_HANDSHAKE_ESTABLISHED\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\"Q\n\x18MSG_REQUEST_CLIENT_LOGIN\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\x12\x13\n\x0bsession_key\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x05\"\x85\x01\n\x19MSG_RESPONSE_CLIENT_LOGIN\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\x0f\n\x07version\x18\x03 \x01(\x05\x12\x11\n\tis_newbie\x18\x04 \x01(\x08\x12\x0c\n\x04\x61mmo\x18\x05 \x01(\r\x12\x10\n\x08grenades\x18\x06 \x01(\r\"2\n\x10MSG_REQUEST_ECHO\x12\x0e\n\x06value1\x18\x01 \x01(\x04\x12\x0e\n\x06value2\x18\x02 \x01(\t\"3\n\x11MSG_RESPONSE_ECHO\x12\x0e\n\x06value1\x18\x01 \x01(\x04\x12\x0e\n\x06value2\x18\x02 \x01(\tb\x06proto3'
 )
 
 
@@ -457,6 +457,20 @@ _MSG_RESPONSE_CLIENT_LOGIN = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ammo', full_name='login_msg.MSG_RESPONSE_CLIENT_LOGIN.ammo', index=4,
+      number=5, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='grenades', full_name='login_msg.MSG_RESPONSE_CLIENT_LOGIN.grenades', index=5,
+      number=6, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -469,8 +483,8 @@ _MSG_RESPONSE_CLIENT_LOGIN = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=851,
-  serialized_end=952,
+  serialized_start=852,
+  serialized_end=985,
 )
 
 
@@ -507,8 +521,8 @@ _MSG_REQUEST_ECHO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=954,
-  serialized_end=1004,
+  serialized_start=987,
+  serialized_end=1037,
 )
 
 
@@ -545,8 +559,8 @@ _MSG_RESPONSE_ECHO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1006,
-  serialized_end=1057,
+  serialized_start=1039,
+  serialized_end=1090,
 )
 
 _GAMEACCOUNTLIST.fields_by_name['game_accounts'].message_type = _GAMEACCOUNTINFO

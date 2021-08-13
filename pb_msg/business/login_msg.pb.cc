@@ -319,6 +319,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_login_5fmsg_2eproto::offsets[]
   PROTOBUF_FIELD_OFFSET(::login_msg::MSG_RESPONSE_CLIENT_LOGIN, user_id_),
   PROTOBUF_FIELD_OFFSET(::login_msg::MSG_RESPONSE_CLIENT_LOGIN, version_),
   PROTOBUF_FIELD_OFFSET(::login_msg::MSG_RESPONSE_CLIENT_LOGIN, is_newbie_),
+  PROTOBUF_FIELD_OFFSET(::login_msg::MSG_RESPONSE_CLIENT_LOGIN, ammo_),
+  PROTOBUF_FIELD_OFFSET(::login_msg::MSG_RESPONSE_CLIENT_LOGIN, grenades_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::login_msg::MSG_REQUEST_ECHO, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -345,8 +347,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 57, -1, sizeof(::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED)},
   { 63, -1, sizeof(::login_msg::MSG_REQUEST_CLIENT_LOGIN)},
   { 71, -1, sizeof(::login_msg::MSG_RESPONSE_CLIENT_LOGIN)},
-  { 80, -1, sizeof(::login_msg::MSG_REQUEST_ECHO)},
-  { 87, -1, sizeof(::login_msg::MSG_RESPONSE_ECHO)},
+  { 82, -1, sizeof(::login_msg::MSG_REQUEST_ECHO)},
+  { 89, -1, sizeof(::login_msg::MSG_RESPONSE_ECHO)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -386,12 +388,13 @@ const char descriptor_table_protodef_login_5fmsg_2eproto[] PROTOBUF_SECTION_VARI
   "NSE_HANDSHAKE_ESTABLISHED\022\023\n\013status_code"
   "\030\001 \001(\005\"Q\n\030MSG_REQUEST_CLIENT_LOGIN\022\017\n\007us"
   "er_id\030\001 \001(\004\022\023\n\013session_key\030\002 \001(\t\022\017\n\007vers"
-  "ion\030\003 \001(\005\"e\n\031MSG_RESPONSE_CLIENT_LOGIN\022\023"
-  "\n\013status_code\030\001 \001(\005\022\017\n\007user_id\030\002 \001(\004\022\017\n\007"
-  "version\030\003 \001(\005\022\021\n\tis_newbie\030\004 \001(\010\"2\n\020MSG_"
-  "REQUEST_ECHO\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002"
-  " \001(\t\"3\n\021MSG_RESPONSE_ECHO\022\016\n\006value1\030\001 \001("
-  "\004\022\016\n\006value2\030\002 \001(\tb\006proto3"
+  "ion\030\003 \001(\005\"\205\001\n\031MSG_RESPONSE_CLIENT_LOGIN\022"
+  "\023\n\013status_code\030\001 \001(\005\022\017\n\007user_id\030\002 \001(\004\022\017\n"
+  "\007version\030\003 \001(\005\022\021\n\tis_newbie\030\004 \001(\010\022\014\n\004amm"
+  "o\030\005 \001(\r\022\020\n\010grenades\030\006 \001(\r\"2\n\020MSG_REQUEST"
+  "_ECHO\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\"3\n"
+  "\021MSG_RESPONSE_ECHO\022\016\n\006value1\030\001 \001(\004\022\016\n\006va"
+  "lue2\030\002 \001(\tb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_login_5fmsg_2eproto_deps[1] = {
 };
@@ -412,7 +415,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_log
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_login_5fmsg_2eproto_once;
 static bool descriptor_table_login_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_login_5fmsg_2eproto = {
-  &descriptor_table_login_5fmsg_2eproto_initialized, descriptor_table_protodef_login_5fmsg_2eproto, "login_msg.proto", 1065,
+  &descriptor_table_login_5fmsg_2eproto_initialized, descriptor_table_protodef_login_5fmsg_2eproto, "login_msg.proto", 1098,
   &descriptor_table_login_5fmsg_2eproto_once, descriptor_table_login_5fmsg_2eproto_sccs, descriptor_table_login_5fmsg_2eproto_deps, 12, 0,
   schemas, file_default_instances, TableStruct_login_5fmsg_2eproto::offsets,
   file_level_metadata_login_5fmsg_2eproto, 12, file_level_enum_descriptors_login_5fmsg_2eproto, file_level_service_descriptors_login_5fmsg_2eproto,
@@ -2723,15 +2726,15 @@ MSG_RESPONSE_CLIENT_LOGIN::MSG_RESPONSE_CLIENT_LOGIN(const MSG_RESPONSE_CLIENT_L
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&user_id_, &from.user_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&is_newbie_) -
-    reinterpret_cast<char*>(&user_id_)) + sizeof(is_newbie_));
+    static_cast<size_t>(reinterpret_cast<char*>(&grenades_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(grenades_));
   // @@protoc_insertion_point(copy_constructor:login_msg.MSG_RESPONSE_CLIENT_LOGIN)
 }
 
 void MSG_RESPONSE_CLIENT_LOGIN::SharedCtor() {
   ::memset(&user_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&is_newbie_) -
-      reinterpret_cast<char*>(&user_id_)) + sizeof(is_newbie_));
+      reinterpret_cast<char*>(&grenades_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(grenades_));
 }
 
 MSG_RESPONSE_CLIENT_LOGIN::~MSG_RESPONSE_CLIENT_LOGIN() {
@@ -2758,8 +2761,8 @@ void MSG_RESPONSE_CLIENT_LOGIN::Clear() {
   (void) cached_has_bits;
 
   ::memset(&user_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&is_newbie_) -
-      reinterpret_cast<char*>(&user_id_)) + sizeof(is_newbie_));
+      reinterpret_cast<char*>(&grenades_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(grenades_));
   _internal_metadata_.Clear();
 }
 
@@ -2795,6 +2798,20 @@ const char* MSG_RESPONSE_CLIENT_LOGIN::_InternalParse(const char* ptr, ::PROTOBU
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           is_newbie_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 ammo = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          ammo_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 grenades = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
+          grenades_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2848,6 +2865,18 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(4, this->_internal_is_newbie(), target);
   }
 
+  // uint32 ammo = 5;
+  if (this->ammo() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_ammo(), target);
+  }
+
+  // uint32 grenades = 6;
+  if (this->grenades() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(6, this->_internal_grenades(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -2888,6 +2917,20 @@ size_t MSG_RESPONSE_CLIENT_LOGIN::ByteSizeLong() const {
   // bool is_newbie = 4;
   if (this->is_newbie() != 0) {
     total_size += 1 + 1;
+  }
+
+  // uint32 ammo = 5;
+  if (this->ammo() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_ammo());
+  }
+
+  // uint32 grenades = 6;
+  if (this->grenades() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_grenades());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2933,6 +2976,12 @@ void MSG_RESPONSE_CLIENT_LOGIN::MergeFrom(const MSG_RESPONSE_CLIENT_LOGIN& from)
   if (from.is_newbie() != 0) {
     _internal_set_is_newbie(from._internal_is_newbie());
   }
+  if (from.ammo() != 0) {
+    _internal_set_ammo(from._internal_ammo());
+  }
+  if (from.grenades() != 0) {
+    _internal_set_grenades(from._internal_grenades());
+  }
 }
 
 void MSG_RESPONSE_CLIENT_LOGIN::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -2960,6 +3009,8 @@ void MSG_RESPONSE_CLIENT_LOGIN::InternalSwap(MSG_RESPONSE_CLIENT_LOGIN* other) {
   swap(status_code_, other->status_code_);
   swap(version_, other->version_);
   swap(is_newbie_, other->is_newbie_);
+  swap(ammo_, other->ammo_);
+  swap(grenades_, other->grenades_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata MSG_RESPONSE_CLIENT_LOGIN::GetMetadata() const {

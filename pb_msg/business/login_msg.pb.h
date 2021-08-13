@@ -1652,6 +1652,8 @@ class MSG_RESPONSE_CLIENT_LOGIN :
     kStatusCodeFieldNumber = 1,
     kVersionFieldNumber = 3,
     kIsNewbieFieldNumber = 4,
+    kAmmoFieldNumber = 5,
+    kGrenadesFieldNumber = 6,
   };
   // uint64 user_id = 2;
   void clear_user_id();
@@ -1689,6 +1691,24 @@ class MSG_RESPONSE_CLIENT_LOGIN :
   void _internal_set_is_newbie(bool value);
   public:
 
+  // uint32 ammo = 5;
+  void clear_ammo();
+  ::PROTOBUF_NAMESPACE_ID::uint32 ammo() const;
+  void set_ammo(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_ammo() const;
+  void _internal_set_ammo(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 grenades = 6;
+  void clear_grenades();
+  ::PROTOBUF_NAMESPACE_ID::uint32 grenades() const;
+  void set_grenades(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_grenades() const;
+  void _internal_set_grenades(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:login_msg.MSG_RESPONSE_CLIENT_LOGIN)
  private:
   class _Internal;
@@ -1698,6 +1718,8 @@ class MSG_RESPONSE_CLIENT_LOGIN :
   ::PROTOBUF_NAMESPACE_ID::int32 status_code_;
   ::PROTOBUF_NAMESPACE_ID::int32 version_;
   bool is_newbie_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 ammo_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 grenades_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_login_5fmsg_2eproto;
 };
@@ -3137,6 +3159,46 @@ inline void MSG_RESPONSE_CLIENT_LOGIN::_internal_set_is_newbie(bool value) {
 inline void MSG_RESPONSE_CLIENT_LOGIN::set_is_newbie(bool value) {
   _internal_set_is_newbie(value);
   // @@protoc_insertion_point(field_set:login_msg.MSG_RESPONSE_CLIENT_LOGIN.is_newbie)
+}
+
+// uint32 ammo = 5;
+inline void MSG_RESPONSE_CLIENT_LOGIN::clear_ammo() {
+  ammo_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESPONSE_CLIENT_LOGIN::_internal_ammo() const {
+  return ammo_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESPONSE_CLIENT_LOGIN::ammo() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_RESPONSE_CLIENT_LOGIN.ammo)
+  return _internal_ammo();
+}
+inline void MSG_RESPONSE_CLIENT_LOGIN::_internal_set_ammo(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  ammo_ = value;
+}
+inline void MSG_RESPONSE_CLIENT_LOGIN::set_ammo(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_ammo(value);
+  // @@protoc_insertion_point(field_set:login_msg.MSG_RESPONSE_CLIENT_LOGIN.ammo)
+}
+
+// uint32 grenades = 6;
+inline void MSG_RESPONSE_CLIENT_LOGIN::clear_grenades() {
+  grenades_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESPONSE_CLIENT_LOGIN::_internal_grenades() const {
+  return grenades_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 MSG_RESPONSE_CLIENT_LOGIN::grenades() const {
+  // @@protoc_insertion_point(field_get:login_msg.MSG_RESPONSE_CLIENT_LOGIN.grenades)
+  return _internal_grenades();
+}
+inline void MSG_RESPONSE_CLIENT_LOGIN::_internal_set_grenades(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  grenades_ = value;
+}
+inline void MSG_RESPONSE_CLIENT_LOGIN::set_grenades(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_grenades(value);
+  // @@protoc_insertion_point(field_set:login_msg.MSG_RESPONSE_CLIENT_LOGIN.grenades)
 }
 
 // -------------------------------------------------------------------

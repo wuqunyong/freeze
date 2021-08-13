@@ -246,6 +246,10 @@ def handle_MSG_RESPONSE_CLIENT_LOGIN(clientObj, sBuff):
 
     if response.status_code == 0:
         clientObj.world().accountId = response.user_id
+        clientObj.world().player.ammo = response.ammo
+        clientObj.world().player.start_ammo = response.ammo
+        clientObj.world().player.grenades = response.grenades
+
 
 class TestObj:
     def __init__(self):
