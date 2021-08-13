@@ -113,6 +113,9 @@ class Client:
         self.buff = b""
         self.registerCb = {}
 
+        self.accountId = 0
+        self.sessionKey = ""
+
     def connect(self):
         try:
             self.client.connect(self.addr)
@@ -172,6 +175,9 @@ def handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(clientObj, sBuff):
     response.ParseFromString(sBuff)
     print("response:", response)
 
+    clientObj.accountId = response.account_id
+    clientObj.sessionKey = response.session_key
+
     clientObj.client.close()
 
     clientObj.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -200,6 +206,15 @@ def handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(clientObj, sBuff):
     response.ParseFromString(sBuff)
     print("response:", response)
 
+    pbMsg = login_msg_pb2.MSG_REQUEST_CLIENT_LOGIN()
+    pbMsg.user_id = clientObj.accountId
+    pbMsg.session_key = clientObj.sessionKey
+    clientObj.send(1002, pbMsg)
+
+def handle_MSG_RESPONSE_CLIENT_LOGIN(clientObj, sBuff):
+    response = login_msg_pb2.MSG_RESPONSE_CLIENT_LOGIN()
+    response.ParseFromString(sBuff)
+    print("response:", response)
 
 
 def testPack3():
@@ -208,6 +223,7 @@ def testPack3():
     clientObj.registerHandler(1001, handle_MSG_RESPONSE_ACCOUNT_LOGIN_L)
     clientObj.registerHandler(1007, handle_MSG_RESPONSE_HANDSHAKE_INIT)
     clientObj.registerHandler(1009, handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED)
+    clientObj.registerHandler(1003, handle_MSG_RESPONSE_CLIENT_LOGIN)
 
     pbMsg = login_msg_pb2.MSG_REQUEST_ACCOUNT_LOGIN_L()
     pbMsg.platform_id = "123"
