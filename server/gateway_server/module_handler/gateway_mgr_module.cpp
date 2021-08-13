@@ -558,6 +558,7 @@ apie::status::Status GatewayMgrModule::handleRequestHandshakeEstablished(
 	auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
 	if (ptrConnection == nullptr)
 	{
+		response->set_status_code(opcodes::SC_Connection_Lost);
 		return { apie::status::StatusCode::OK, "" };
 	}
 

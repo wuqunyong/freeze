@@ -204,7 +204,7 @@ namespace crypto {
 			reinterpret_cast<const uint8_t*>(plainMsg.data()),
 			reinterpret_cast<uint8_t*>(&(*encryptedMsg)[0]),
 			m_pub_key,
-			RSA_PKCS1_OAEP_PADDING);
+			RSA_PKCS1_PADDING);
 
 		if (encrypted_size != static_cast<int>(iRSASize))
 		{
@@ -231,7 +231,7 @@ namespace crypto {
 			reinterpret_cast<const uint8_t*>(plainMsg.data()),
 			reinterpret_cast<uint8_t*>(&(*encryptedMsg)[0]),
 			ptrPubKey,
-			RSA_PKCS1_OAEP_PADDING);
+			RSA_PKCS1_PADDING);
 
 		if (encrypted_size != static_cast<int>(iRSASize))
 		{
@@ -263,7 +263,7 @@ namespace crypto {
 		int decrypted_size = RSA_private_decrypt(
 			rsa_size, reinterpret_cast<const uint8_t*>(encryptedMsg.data()),
 			reinterpret_cast<uint8_t*>(&(*decryptedMsg)[0]), m_pri_key,
-			RSA_PKCS1_OAEP_PADDING);
+			RSA_PKCS1_PADDING);
 
 		if (decrypted_size == -1) 
 		{

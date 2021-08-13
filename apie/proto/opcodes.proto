@@ -20,11 +20,14 @@ enum OPCODE_ID {
 enum StatusCode {
 	SC_Ok = 0;
 
-	SC_Discovery_AuthError = 100;
-	SC_Discovery_DuplicateNode = 101;
-	SC_Discovery_Unregistered = 102;
-	SC_Discovery_ServerListEmpty = 103;
-	SC_Discovery_InvalidPoint = 104;
+	SC_Connection_Lost = 100;
+
+
+	SC_Discovery_AuthError = 200;
+	SC_Discovery_DuplicateNode = 201;
+	SC_Discovery_Unregistered = 202;
+	SC_Discovery_ServerListEmpty = 203;
+	SC_Discovery_InvalidPoint = 204;
 	
 
 	SC_Rpc_Timeout = 300;
@@ -45,8 +48,10 @@ enum StatusCode {
 	SC_ClientProxy_BadAlloc = 404;
 	SC_ClientProxy_NoIOThread = 405;
 
-	SC_BindTable_Error = 500;
 
+	SC_BindTable_Error = 501;
+
+	
 	SC_Auth_LoadPubFileError = 600;  //加载公钥文件出错
 	SC_Auth_DecryptError = 601;
 

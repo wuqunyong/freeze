@@ -31,26 +31,26 @@ const char descriptor_table_protodef_opcodes_2eproto[] PROTOBUF_SECTION_VARIABLE
   "_MSG_NOTICE_INSTANCE\020g\022&\n\"OP_DISCOVERY_M"
   "SG_REQUEST_HEARTBEAT\020h\022#\n\037OP_DISCOVERY_M"
   "SG_RESP_HEARTBEAT\020i\022\023\n\016OP_RPC_REQUEST\020\255\002"
-  "\022\024\n\017OP_RPC_RESPONSE\020\256\002*\337\005\n\nStatusCode\022\t\n"
-  "\005SC_Ok\020\000\022\032\n\026SC_Discovery_AuthError\020d\022\036\n\032"
-  "SC_Discovery_DuplicateNode\020e\022\035\n\031SC_Disco"
-  "very_Unregistered\020f\022 \n\034SC_Discovery_Serv"
-  "erListEmpty\020g\022\035\n\031SC_Discovery_InvalidPoi"
-  "nt\020h\022\023\n\016SC_Rpc_Timeout\020\254\002\022\026\n\021SC_Rpc_Rout"
-  "eEmpty\020\255\002\022!\n\034SC_Rpc_RouteEstablishedEmpt"
-  "y\020\256\002\022!\n\034SC_Rpc_RouteSerialNumInvalid\020\257\002\022"
-  "\032\n\025SC_Rpc_RouteSendError\020\260\002\022\034\n\027SC_Rpc_No"
-  "tReceivedReply\020\261\002\022\023\n\016SC_Rpc_NotSend\020\262\002\022$"
-  "\n\037SC_Rpc_InvalidArgs_MethodsEmpty\020\263\002\022\031\n\024"
-  "SC_Rpc_Partial_Error\020\264\002\022&\n!SC_ClientProx"
-  "y_SerialNumEqualZero\020\220\003\022)\n$SC_ClientProx"
-  "y_SerialNumNotEqualZero\020\221\003\022\037\n\032SC_ClientP"
-  "roxy_Established\020\222\003\022\"\n\035SC_ClientProxy_No"
-  "tEstablished\020\223\003\022\034\n\027SC_ClientProxy_BadAll"
-  "oc\020\224\003\022\036\n\031SC_ClientProxy_NoIOThread\020\225\003\022\027\n"
-  "\022SC_BindTable_Error\020\364\003\022\035\n\030SC_Auth_LoadPu"
-  "bFileError\020\330\004\022\031\n\024SC_Auth_DecryptError\020\331\004"
-  "b\006proto3"
+  "\022\024\n\017OP_RPC_RESPONSE\020\256\002*\374\005\n\nStatusCode\022\t\n"
+  "\005SC_Ok\020\000\022\026\n\022SC_Connection_Lost\020d\022\033\n\026SC_D"
+  "iscovery_AuthError\020\310\001\022\037\n\032SC_Discovery_Du"
+  "plicateNode\020\311\001\022\036\n\031SC_Discovery_Unregiste"
+  "red\020\312\001\022!\n\034SC_Discovery_ServerListEmpty\020\313"
+  "\001\022\036\n\031SC_Discovery_InvalidPoint\020\314\001\022\023\n\016SC_"
+  "Rpc_Timeout\020\254\002\022\026\n\021SC_Rpc_RouteEmpty\020\255\002\022!"
+  "\n\034SC_Rpc_RouteEstablishedEmpty\020\256\002\022!\n\034SC_"
+  "Rpc_RouteSerialNumInvalid\020\257\002\022\032\n\025SC_Rpc_R"
+  "outeSendError\020\260\002\022\034\n\027SC_Rpc_NotReceivedRe"
+  "ply\020\261\002\022\023\n\016SC_Rpc_NotSend\020\262\002\022$\n\037SC_Rpc_In"
+  "validArgs_MethodsEmpty\020\263\002\022\031\n\024SC_Rpc_Part"
+  "ial_Error\020\264\002\022&\n!SC_ClientProxy_SerialNum"
+  "EqualZero\020\220\003\022)\n$SC_ClientProxy_SerialNum"
+  "NotEqualZero\020\221\003\022\037\n\032SC_ClientProxy_Establ"
+  "ished\020\222\003\022\"\n\035SC_ClientProxy_NotEstablishe"
+  "d\020\223\003\022\034\n\027SC_ClientProxy_BadAlloc\020\224\003\022\036\n\031SC"
+  "_ClientProxy_NoIOThread\020\225\003\022\027\n\022SC_BindTab"
+  "le_Error\020\365\003\022\035\n\030SC_Auth_LoadPubFileError\020"
+  "\330\004\022\031\n\024SC_Auth_DecryptError\020\331\004b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_opcodes_2eproto_deps[1] = {
 };
@@ -59,7 +59,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_opc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_opcodes_2eproto_once;
 static bool descriptor_table_opcodes_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_opcodes_2eproto = {
-  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 1048,
+  &descriptor_table_opcodes_2eproto_initialized, descriptor_table_protodef_opcodes_2eproto, "opcodes.proto", 1077,
   &descriptor_table_opcodes_2eproto_once, descriptor_table_opcodes_2eproto_sccs, descriptor_table_opcodes_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_opcodes_2eproto::offsets,
   file_level_metadata_opcodes_2eproto, 0, file_level_enum_descriptors_opcodes_2eproto, file_level_service_descriptors_opcodes_2eproto,
@@ -96,10 +96,11 @@ bool StatusCode_IsValid(int value) {
   switch (value) {
     case 0:
     case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
+    case 200:
+    case 201:
+    case 202:
+    case 203:
+    case 204:
     case 300:
     case 301:
     case 302:
@@ -115,7 +116,7 @@ bool StatusCode_IsValid(int value) {
     case 403:
     case 404:
     case 405:
-    case 500:
+    case 501:
     case 600:
     case 601:
       return true;
