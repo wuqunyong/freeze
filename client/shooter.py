@@ -674,7 +674,7 @@ for row in range(ROWS):
 	r = [-1] * COLS
 	world_data.append(r)
 #load in level data and create world
-with open(f'level{level}_data.csv', newline='') as csvfile:
+with open(f'data/level{level}_data.csv', newline='') as csvfile:
 	reader = csv.reader(csvfile, delimiter=',')
 	for x, row in enumerate(reader):
 		for y, tile in enumerate(row):
@@ -791,7 +791,7 @@ while run:
 				world_data = reset_level()
 				if level <= MAX_LEVELS:
 					#load in level data and create world
-					with open(f'level{level}_data.csv', newline='') as csvfile:
+					with open(f'data/level{level}_data.csv', newline='') as csvfile:
 						reader = csv.reader(csvfile, delimiter=',')
 						for x, row in enumerate(reader):
 							for y, tile in enumerate(row):
@@ -807,7 +807,7 @@ while run:
 					bg_scroll = 0
 					world_data = reset_level()
 					#load in level data and create world
-					with open(f'level{level}_data.csv', newline='') as csvfile:
+					with open(f'data/level{level}_data.csv', newline='') as csvfile:
 						reader = csv.reader(csvfile, delimiter=',')
 						for x, row in enumerate(reader):
 							for y, tile in enumerate(row):
