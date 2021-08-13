@@ -70,42 +70,6 @@ def unpackFromStreams(buffer):
     protocol.bBody = buffer[iHeadLen: iHeadLen+iBodyLen]
 
     return protocol
-    
-    
-
-def testPack1():
-    data = Protocol()
-    data.iOpcode = 100
-    data.bBody = b"hello world"
-    data.iBodyLen = len(data.bBody)
-
-    sPack = packToStreams(data)
-
-    uppackData = unpackFromStreams(sPack)
-
-def testPack2():
-    data = Protocol()
-    data.iFlags = 1
-    data.iMagic = 2
-    data.iOpcode = 100
-    data.iCheckSum = 123456
-
-    pbMsg = rpc_login_pb2.L2G_LoginPendingRequest()
-    pbMsg.account_id = 123
-    pbMsg.session_key = "hello world"
-    print("pbMsg:", pbMsg)
-
-    data.bBody = pbMsg.SerializeToString()
-    print("data:", data)
-
-
-    sPack = packToStreams(data)
-    uppackData = unpackFromStreams(sPack)
-
-    response = rpc_login_pb2.L2G_LoginPendingRequest()
-    response.ParseFromString(uppackData.bBody)
-    print("uppackData:", uppackData)
-    print("resposne:", response)
 
 class Client(threading.Thread):
     def __init__(self, world):
@@ -250,6 +214,41 @@ def handle_MSG_RESPONSE_CLIENT_LOGIN(clientObj, sBuff):
         clientObj.world().player.start_ammo = response.ammo
         clientObj.world().player.grenades = response.grenades
 
+
+
+def testPack1():
+    data = Protocol()
+    data.iOpcode = 100
+    data.bBody = b"hello world"
+    data.iBodyLen = len(data.bBody)
+
+    sPack = packToStreams(data)
+
+    uppackData = unpackFromStreams(sPack)
+
+def testPack2():
+    data = Protocol()
+    data.iFlags = 1
+    data.iMagic = 2
+    data.iOpcode = 100
+    data.iCheckSum = 123456
+
+    pbMsg = rpc_login_pb2.L2G_LoginPendingRequest()
+    pbMsg.account_id = 123
+    pbMsg.session_key = "hello world"
+    print("pbMsg:", pbMsg)
+
+    data.bBody = pbMsg.SerializeToString()
+    print("data:", data)
+
+
+    sPack = packToStreams(data)
+    uppackData = unpackFromStreams(sPack)
+
+    response = rpc_login_pb2.L2G_LoginPendingRequest()
+    response.ParseFromString(uppackData.bBody)
+    print("uppackData:", uppackData)
+    print("resposne:", response)
 
 class TestObj:
     def __init__(self):
