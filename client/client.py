@@ -3,8 +3,8 @@ import socket
 import errno
 import rsa
 
-import rpc_login_pb2
-import login_msg_pb2
+from proto import rpc_login_pb2
+from proto import login_msg_pb2
 
 # /*
 # Byte order:little-endian
