@@ -4,6 +4,11 @@ import os
 import random
 import csv
 import button
+import input_box
+import client
+
+from proto import rpc_login_pb2
+from proto import login_msg_pb2
 
 mixer.init()
 pygame.init()
@@ -14,6 +19,8 @@ SCREEN_HEIGHT = int(SCREEN_WIDTH * 0.8)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Shooter')
+
+font = pygame.font.Font(None, 30)
 
 #set framerate
 clock = pygame.time.Clock()
@@ -362,6 +369,8 @@ class Soldier(pygame.sprite.Sprite):
 class World():
 	def __init__(self):
 		self.obstacle_list = []
+		self.clientObj = client.Client(self)
+		self.accountId = 0
 
 	def process_data(self, data):
 		self.level_length = len(data[0])
@@ -645,6 +654,8 @@ start_button = button.Button(SCREEN_WIDTH // 2 - 130, SCREEN_HEIGHT // 2 - 150, 
 exit_button = button.Button(SCREEN_WIDTH // 2 - 110, SCREEN_HEIGHT // 2 + 50, exit_img, 1)
 restart_button = button.Button(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 - 50, restart_img, 2)
 
+start_input = input_box.InputBox(font, start_button.rect.topleft[0] + 30, start_button.rect.topleft[1] - 35, 200, 30)
+
 #create sprite groups
 enemy_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
@@ -681,12 +692,27 @@ while run:
 	if start_game == False:
 		#draw menu
 		screen.fill(BG)
+
+		draw_text('ID: ', font, WHITE, start_input.rect.topleft[0] - 30, start_input.rect.topleft[1])
+		start_input.update()
+		start_input.draw(screen)
+
 		#add buttons
 		if start_button.draw(screen):
-			start_game = True
-			start_intro = True
+			try:
+				id = int(start_input.text)
+
+				start_game = True
+				start_intro = True
+				world.clientObj.connect()
+				world.clientObj.start()
+				world.clientObj.sendLogin(id)
+			except ValueError:
+				print("您输入的不是数字，请再次尝试输入！")
+
 		if exit_button.draw(screen):
 			run = False
+
 	else:
 		#update background
 		draw_bg()
@@ -702,7 +728,8 @@ while run:
 		draw_text('GRENADES: ', font, WHITE, 10, 60)
 		for x in range(player.grenades):
 			screen.blit(grenade_img, (135 + (x * 15), 60))
-
+		id = 'ID: ' + str(world.accountId)
+		draw_text(id, font, WHITE, 10, 85)
 
 		player.update()
 		player.draw()

@@ -2,6 +2,8 @@ import struct
 import socket
 import errno
 import rsa
+import weakref
+import threading
 
 from proto import rpc_login_pb2
 from proto import login_msg_pb2
@@ -105,8 +107,10 @@ def testPack2():
     print("uppackData:", uppackData)
     print("resposne:", response)
 
-class Client:
-    def __init__(self):
+class Client(threading.Thread):
+    def __init__(self, world):
+        threading.Thread.__init__(self)
+
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.addr = ("127.0.0.1", 16007)
         self.alive = True
@@ -115,6 +119,13 @@ class Client:
 
         self.accountId = 0
         self.sessionKey = ""
+
+        self.world = weakref.ref(world)
+
+        self.init()
+
+    def run(self):
+        self.recv()
 
     def connect(self):
         try:
@@ -134,6 +145,7 @@ class Client:
         sPack = packToStreams(data)
         self.client.sendall(sPack)
         print("send:", sPack)
+
     def recv(self):
         while self.alive:
             try:
@@ -169,6 +181,22 @@ class Client:
         if iOpcode in self.registerCb:
             return self.registerCb[iOpcode]
         return None
+
+    def init(self):
+        self.registerHandler(1001, handle_MSG_RESPONSE_ACCOUNT_LOGIN_L)
+        self.registerHandler(1007, handle_MSG_RESPONSE_HANDSHAKE_INIT)
+        self.registerHandler(1009, handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED)
+        self.registerHandler(1003, handle_MSG_RESPONSE_CLIENT_LOGIN)
+
+    def sendLogin(self, id):
+        pbMsg = login_msg_pb2.MSG_REQUEST_ACCOUNT_LOGIN_L()
+        pbMsg.platform_id = "test"
+        pbMsg.program_id = "hello world"
+        pbMsg.version = 100
+        pbMsg.account_id = id
+        pbMsg.auth = "test"
+
+        self.send(1000, pbMsg)
 
 def handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(clientObj, sBuff):
     response = login_msg_pb2.MSG_RESPONSE_ACCOUNT_LOGIN_L()
@@ -216,9 +244,17 @@ def handle_MSG_RESPONSE_CLIENT_LOGIN(clientObj, sBuff):
     response.ParseFromString(sBuff)
     print("response:", response)
 
+    if response.status_code == 0:
+        clientObj.world().accountId = response.user_id
 
+class TestObj:
+    def __init__(self):
+        self.accountId = 0
+
+testObj = TestObj()
 def testPack3():
-    clientObj = Client()
+
+    clientObj = Client(testObj)
     clientObj.connect()
     clientObj.registerHandler(1001, handle_MSG_RESPONSE_ACCOUNT_LOGIN_L)
     clientObj.registerHandler(1007, handle_MSG_RESPONSE_HANDSHAKE_INIT)
@@ -233,8 +269,9 @@ def testPack3():
     pbMsg.auth = "test"
 
     clientObj.send(1000, pbMsg)
-    clientObj.recv()
+    clientObj.start()
+    clientObj.join()
 
 # testPack1()
 # testPack2()
-testPack3()
+# testPack3()
