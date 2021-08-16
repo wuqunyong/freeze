@@ -1,11 +1,12 @@
 import struct
 import socket
 import errno
+import os
 import rsa
 import weakref
 import threading
 import lz4.frame
-import os
+from arc4 import ARC4
 
 from proto import rpc_login_pb2
 from proto import login_msg_pb2
@@ -87,7 +88,8 @@ class Client(threading.Thread):
         self.registerCb = {}
 
         #压缩，加密
-        self.flag = PH_COMPRESSED
+        self.flag = PH_COMPRESSED | PH_CRYPTO
+        self.cipher = ''
 
         self.accountId = 0
         self.sessionKey = ""
@@ -95,6 +97,9 @@ class Client(threading.Thread):
         self.world = weakref.ref(world)
 
         self.init()
+
+    def setCipher(self, data):
+        self.cipher = data
 
     def run(self):
         self.recv()
@@ -119,6 +124,15 @@ class Client(threading.Thread):
         if self.flag & PH_COMPRESSED:
             compressedData = lz4.frame.compress(data.bBody)
             data.bBody = compressedData
+
+        if self.flag & PH_CRYPTO:
+            if len(self.cipher) > 0:
+                arc4 = ARC4(self.cipher)
+                cipherText = arc4.encrypt(data.bBody)
+                data.bBody = cipherText
+            else:
+                iFlag = ~PH_CRYPTO
+                data.iFlags = data.iFlags & iFlag
 
         sPack = packToStreams(data)
         self.client.sendall(sPack)
@@ -147,6 +161,11 @@ class Client(threading.Thread):
                 if callback is None:
                     print("unregister handler|iopcode:", protocolObj.iOpcode, "|", protocolObj)
                     continue
+
+                if protocolObj.iFlags & PH_CRYPTO:
+                    arc4 = ARC4(self.cipher)
+                    plainText = arc4.decrypt(protocolObj.bBody)
+                    protocolObj.bBody = plainText
 
                 if protocolObj.iFlags & PH_COMPRESSED:
                     outputData = lz4.frame.decompress(protocolObj.bBody)
@@ -220,6 +239,9 @@ def handle_MSG_RESPONSE_HANDSHAKE_INIT(clientObj, sBuff):
     pbMsg = login_msg_pb2.MSG_REQUEST_HANDSHAKE_ESTABLISHED()
     pbMsg.encrypted_key = encryptedMsg
     clientObj.send(1008, pbMsg)
+
+    cipher = "client" + response.server_random + plainMsg
+    clientObj.setCipher(cipher)
 
 def handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(clientObj, sBuff):
     response = login_msg_pb2.MSG_RESPONSE_HANDSHAKE_ESTABLISHED()
@@ -328,8 +350,21 @@ def testLz4():
     else:
         print("failure")
 
+def testRC4():
+    key = "123"
+    arc4 = ARC4(key)
+    input_data = b'some plain text to encrypt'
+    cipher = arc4.encrypt(input_data)
+
+    arc4Recv = ARC4(key)
+    plainText = arc4Recv.decrypt(cipher)
+    if input_data == plainText:
+        print("success")
+    else:
+        print("failure")
 
 # testPack1()
 # testPack2()
-testPack3()
+# testPack3()
 # testLz4()
+# testRC4()
