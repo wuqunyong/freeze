@@ -4,6 +4,8 @@ import errno
 import rsa
 import weakref
 import threading
+import lz4.frame
+import os
 
 from proto import rpc_login_pb2
 from proto import login_msg_pb2
@@ -25,6 +27,9 @@ from proto import login_msg_pb2
 # 4|                             Data
 # +---------------+---------------+---------------+---------------+
 # */
+
+PH_COMPRESSED = 0x01
+PH_CRYPTO = 0x02
 
 class Protocol:
     def __init__(self):
@@ -81,6 +86,9 @@ class Client(threading.Thread):
         self.buff = b""
         self.registerCb = {}
 
+        #压缩，加密
+        self.flag = PH_COMPRESSED
+
         self.accountId = 0
         self.sessionKey = ""
 
@@ -90,6 +98,7 @@ class Client(threading.Thread):
 
     def run(self):
         self.recv()
+        print("run线程退出")
 
     def connect(self):
         try:
@@ -101,14 +110,22 @@ class Client(threading.Thread):
         print("pbMsg:", pbMsg)
 
         data = Protocol()
-        data.iFlags = 0
+        data.iFlags = self.flag
         data.iMagic = 0
         data.iOpcode = iOpcode
         data.iCheckSum = 0
         data.bBody = pbMsg.SerializeToString()
+
+        if self.flag & PH_COMPRESSED:
+            compressedData = lz4.frame.compress(data.bBody)
+            data.bBody = compressedData
+
         sPack = packToStreams(data)
         self.client.sendall(sPack)
         print("send:", sPack)
+
+    def passiveClose(self):
+        self.alive = False
 
     def recv(self):
         while self.alive:
@@ -117,6 +134,10 @@ class Client(threading.Thread):
                 self.buff += sBuff
 
                 print("recv:", sBuff)
+
+                if len(sBuff) == 0:
+                    self.passiveClose()
+                    continue
 
                 protocolObj = unpackFromStreams(self.buff)
                 iTotalLen = 12 + protocolObj.iBodyLen
@@ -255,14 +276,10 @@ class TestObj:
         self.accountId = 0
 
 testObj = TestObj()
-def testPack3():
 
+def testPack3():
     clientObj = Client(testObj)
     clientObj.connect()
-    clientObj.registerHandler(1001, handle_MSG_RESPONSE_ACCOUNT_LOGIN_L)
-    clientObj.registerHandler(1007, handle_MSG_RESPONSE_HANDSHAKE_INIT)
-    clientObj.registerHandler(1009, handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED)
-    clientObj.registerHandler(1003, handle_MSG_RESPONSE_CLIENT_LOGIN)
 
     pbMsg = login_msg_pb2.MSG_REQUEST_ACCOUNT_LOGIN_L()
     pbMsg.platform_id = "123"
@@ -275,6 +292,21 @@ def testPack3():
     clientObj.start()
     clientObj.join()
 
+def testLz4():
+    # input_data = 20 * 128 * os.urandom(1024)  # Read 20 * 128kb
+    #input_data = b'\n\x03123\x12\x0bhello world\x18d \xf1\x02*\x04test'
+    input_data = "hello world".encode()
+    #out b'\x1d\x00\x00\x00\xf0\x0e\n\x03123\x12\x0bhello world\x18d \xf1\x02*\x04test'
+
+    compressed_data = lz4.frame.compress(input_data)
+    output_data = lz4.frame.decompress(compressed_data)
+    if input_data == output_data:
+        print("success")
+    else:
+        print("failure")
+
+
 # testPack1()
 # testPack2()
-# testPack3()
+testPack3()
+# testLz4()
