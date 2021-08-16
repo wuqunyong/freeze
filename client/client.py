@@ -147,6 +147,11 @@ class Client(threading.Thread):
                 if callback is None:
                     print("unregister handler|iopcode:", protocolObj.iOpcode, "|", protocolObj)
                     continue
+
+                if protocolObj.iFlags & PH_COMPRESSED:
+                    outputData = lz4.frame.decompress(protocolObj.bBody)
+                    protocolObj.bBody = outputData
+
                 callback(self, protocolObj.bBody)
 
                 # response = login_msg_pb2.MSG_RESPONSE_ACCOUNT_LOGIN_L()
@@ -172,6 +177,8 @@ class Client(threading.Thread):
         self.registerHandler(1007, handle_MSG_RESPONSE_HANDSHAKE_INIT)
         self.registerHandler(1009, handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED)
         self.registerHandler(1003, handle_MSG_RESPONSE_CLIENT_LOGIN)
+
+        self.registerHandler(1005, handle_MSG_RESPONSE_ECHO)
 
     def sendLogin(self, id):
         pbMsg = login_msg_pb2.MSG_REQUEST_ACCOUNT_LOGIN_L()
@@ -235,6 +242,15 @@ def handle_MSG_RESPONSE_CLIENT_LOGIN(clientObj, sBuff):
         clientObj.world().player.start_ammo = response.ammo
         clientObj.world().player.grenades = response.grenades
 
+        pbMsg = login_msg_pb2.MSG_REQUEST_ECHO()
+        pbMsg.value1 = 123456
+        pbMsg.value2 = "hello world"
+        clientObj.send(1004, pbMsg)
+
+def handle_MSG_RESPONSE_ECHO(clientObj, sBuff):
+    response = login_msg_pb2.MSG_RESPONSE_ECHO()
+    response.ParseFromString(sBuff)
+    print("response:", response)
 
 
 def testPack1():
@@ -271,11 +287,18 @@ def testPack2():
     print("uppackData:", uppackData)
     print("resposne:", response)
 
-class TestObj:
+class TestPlayer:
+    def __init__(self):
+        self.ammo = 0
+        self.start_ammo = 0
+        self.grenades = 0
+
+class TestWorld:
     def __init__(self):
         self.accountId = 0
 
-testObj = TestObj()
+testObj = TestWorld()
+testObj.player = TestPlayer()
 
 def testPack3():
     clientObj = Client(testObj)
