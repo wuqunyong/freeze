@@ -220,7 +220,11 @@ void apie::ClientConnection::readPB()
 				sBody = optDate.value();
 			}
 
-			this->recv(this->iSerialNum, head.iOpcode, sBody);
+			MessageInfo info;
+			info.iSessionId = this->iSerialNum;
+			info.iOpcode = head.iOpcode;
+			this->recv(info, sBody);
+
 		} while (false);
 
 
@@ -232,15 +236,14 @@ void apie::ClientConnection::readPB()
 	}
 }
 
-void apie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr)
+void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 {
-	auto optionalData = apie::service::ServiceHandlerSingleton::get().client.getType(iOpcode);
+	auto optionalData = apie::service::ServiceHandlerSingleton::get().client.getType(info.iOpcode);
 	if (!optionalData)
 	{
 		PBForward *itemObjPtr = new PBForward;
 		itemObjPtr->type = ConnetionType::CT_CLIENT;
-		itemObjPtr->iSerialNum = this->iSerialNum;
-		itemObjPtr->iOpcode = iOpcode;
+		itemObjPtr->info = info;
 		itemObjPtr->sMsg = requestStr;
 
 		Command command;
@@ -253,7 +256,7 @@ void apie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 			delete itemObjPtr;
 
 			std::stringstream ss;
-			ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode;
+			ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
 			ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
@@ -267,7 +270,7 @@ void apie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	if (ptrMsg == nullptr)
 	{
 		std::stringstream ss;
-		ss << "createMessage error|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|sType:" << sType;
+		ss << "createMessage error|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
 		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
@@ -277,7 +280,7 @@ void apie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 	if (!bResult)
 	{
 		std::stringstream ss;
-		ss << "ParseFromString error|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|sType:" << sType;
+		ss << "ParseFromString error|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
 		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
@@ -286,8 +289,7 @@ void apie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 
 	PBRequest *itemObjPtr = new PBRequest;
 	itemObjPtr->type = ConnetionType::CT_CLIENT;
-	itemObjPtr->iSerialNum = this->iSerialNum;
-	itemObjPtr->iOpcode = iOpcode;
+	itemObjPtr->info = info;
 	itemObjPtr->ptrMsg = newMsg;
 
 	Command command;
@@ -300,7 +302,7 @@ void apie::ClientConnection::recv(uint64_t iSerialNum, uint32_t iOpcode, std::st
 		delete itemObjPtr;
 
 		std::stringstream ss;
-		ss << "getLogicThread null|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode;
+		ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
 		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}

@@ -10,7 +10,6 @@
 #include <event2/util.h>
 #include <google/protobuf/message.h>
 
-#include "apie/network/server_connection.h"
 #include "apie/http/http_request.h"
 #include "apie/http/http_response.h"
 #include "apie/network/i_poll_events.hpp"
@@ -27,19 +26,24 @@ namespace apie
 		uint32_t iMaskFlag = 0;
 	};
 
+	struct MessageInfo
+	{
+		uint64_t iSessionId = 0;
+		uint32_t iOpcode = 0;
+		uint32_t iSeqNum = 0;
+	};
+
 	struct PBRequest
 	{
 		ConnetionType type;
-		uint64_t iSerialNum;
-		uint32_t iOpcode;
+		MessageInfo info;
 		std::shared_ptr<::google::protobuf::Message> ptrMsg;
 	};
 
 	struct PBForward
 	{
 		ConnetionType type;
-		uint64_t iSerialNum;
-		uint32_t iOpcode;
+		MessageInfo info;
 		std::string sMsg;
 	};
 

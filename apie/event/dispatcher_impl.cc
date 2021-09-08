@@ -582,20 +582,20 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 	{
 	case apie::ConnetionType::CT_SERVER:
 	{
-		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
-		apie::service::ServiceHandlerSingleton::get().server.onMessage(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->ptrMsg);
+		m_pbStats[itemPtr->info.iOpcode] = m_pbStats[itemPtr->info.iOpcode] + 1;
+		apie::service::ServiceHandlerSingleton::get().server.onMessage(itemPtr->info.iSessionId, itemPtr->info.iOpcode, itemPtr->ptrMsg);
 		break;
 	}
 	case apie::ConnetionType::CT_CLIENT:
 	{
-		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
-		apie::service::ServiceHandlerSingleton::get().client.onMessage(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->ptrMsg);
+		m_pbStats[itemPtr->info.iOpcode] = m_pbStats[itemPtr->info.iOpcode] + 1;
+		apie::service::ServiceHandlerSingleton::get().client.onMessage(itemPtr->info.iSessionId, itemPtr->info.iOpcode, itemPtr->ptrMsg);
 		break;
 	}
 	default:
 	{
 		std::stringstream ss;
-		ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->iOpcode << "| invalid type";
+		ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "| invalid type";
 		ASYNC_PIE_LOG("DispatcherImpl/handlePBRequest", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 		break;
 	}
@@ -608,40 +608,40 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	{
 	case apie::ConnetionType::CT_SERVER:
 	{
-		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
+		m_pbStats[itemPtr->info.iOpcode] = m_pbStats[itemPtr->info.iOpcode] + 1;
 
 		auto& defaultHandler = apie::service::ServiceHandlerSingleton::get().server.getDefaultFunc();
 		if (!defaultHandler)
 		{
 			std::stringstream ss;
-			ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->iOpcode << "|unregister";
+			ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "|unregister";
 			ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
 
-		defaultHandler(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->sMsg);
+		defaultHandler(itemPtr->info.iSessionId, itemPtr->info.iOpcode, itemPtr->sMsg);
 		break;
 	}
 	case apie::ConnetionType::CT_CLIENT:
 	{
-		m_pbStats[itemPtr->iOpcode] = m_pbStats[itemPtr->iOpcode] + 1;
+		m_pbStats[itemPtr->info.iOpcode] = m_pbStats[itemPtr->info.iOpcode] + 1;
 
 		auto& defaultHandler = apie::service::ServiceHandlerSingleton::get().client.getDefaultFunc();
 		if (!defaultHandler)
 		{
 			std::stringstream ss;
-			ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->iOpcode << "|unregister";
+			ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "|unregister";
 			ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 			return;
 		}
 
-		defaultHandler(itemPtr->iSerialNum, itemPtr->iOpcode, itemPtr->sMsg);
+		defaultHandler(itemPtr->info.iSessionId, itemPtr->info.iOpcode, itemPtr->sMsg);
 		break;
 	}
 	default:
 	{
 		std::stringstream ss;
-		ss << "iSerialNum:" << itemPtr->iSerialNum << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->iOpcode << "| invalid type";
+		ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "| invalid type";
 		ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		break;
 	}

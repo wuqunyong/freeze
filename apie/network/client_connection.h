@@ -46,7 +46,7 @@ namespace apie
 	private:
 		void readHttp();
 		void readPB();
-		void recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr);
+		void recv(MessageInfo info, std::string& requestStr);
 
 
 		void sendCloseCmd(uint32_t iResult, const std::string& sInfo, uint32_t iActive);

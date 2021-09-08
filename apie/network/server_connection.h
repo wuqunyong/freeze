@@ -8,7 +8,9 @@
 
 #include "apie/network/i_poll_events.hpp"
 #include "apie/network/object.hpp"
+#include "apie/network/command.h"
 #include "apie/http/http_request_decoder.h"
+
 
 
 
@@ -56,7 +58,7 @@ namespace apie
 
 		void readHttp();
 		void readPB();
-		void recv(uint64_t iSerialNum, uint32_t iOpcode, std::string& requestStr);
+		void recv(MessageInfo info, std::string& requestStr);
 
     private:
 		uint32_t tid_;
