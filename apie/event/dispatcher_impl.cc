@@ -583,13 +583,13 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 	case apie::ConnetionType::CT_SERVER:
 	{
 		m_pbStats[itemPtr->info.iOpcode] = m_pbStats[itemPtr->info.iOpcode] + 1;
-		apie::service::ServiceHandlerSingleton::get().server.onMessage(itemPtr->info.iSessionId, itemPtr->info.iOpcode, itemPtr->ptrMsg);
+		apie::service::ServiceHandlerSingleton::get().server.onMessage(itemPtr->info, itemPtr->ptrMsg);
 		break;
 	}
 	case apie::ConnetionType::CT_CLIENT:
 	{
 		m_pbStats[itemPtr->info.iOpcode] = m_pbStats[itemPtr->info.iOpcode] + 1;
-		apie::service::ServiceHandlerSingleton::get().client.onMessage(itemPtr->info.iSessionId, itemPtr->info.iOpcode, itemPtr->ptrMsg);
+		apie::service::ServiceHandlerSingleton::get().client.onMessage(itemPtr->info, itemPtr->ptrMsg);
 		break;
 	}
 	default:
@@ -619,7 +619,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 			return;
 		}
 
-		defaultHandler(itemPtr->info.iSessionId, itemPtr->info.iOpcode, itemPtr->sMsg);
+		defaultHandler(itemPtr->info, itemPtr->sMsg);
 		break;
 	}
 	case apie::ConnetionType::CT_CLIENT:
@@ -635,7 +635,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 			return;
 		}
 
-		defaultHandler(itemPtr->info.iSessionId, itemPtr->info.iOpcode, itemPtr->sMsg);
+		defaultHandler(itemPtr->info, itemPtr->sMsg);
 		break;
 	}
 	default:

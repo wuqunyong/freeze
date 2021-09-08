@@ -222,6 +222,7 @@ void apie::ClientConnection::readPB()
 
 			MessageInfo info;
 			info.iSessionId = this->iSerialNum;
+			info.iSeqNum = head.iSeqNum;
 			info.iOpcode = head.iOpcode;
 			this->recv(info, sBody);
 

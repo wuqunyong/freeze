@@ -14,6 +14,8 @@
 #include "apie/service/handle_request_service.h"
 #include "apie/service/service_base.h"
 
+#include "apie/network/command.h"
+
 namespace apie {
 namespace service {
 
@@ -21,7 +23,7 @@ namespace service {
 class ServiceManager {
 public:
 	using ServiceCallback = std::function<void(uint64_t, const std::shared_ptr<::google::protobuf::Message>&)>;
-	using HandleMuxFunction = std::function<void(uint64_t, uint32_t opcodes, const std::string& msg)>;
+	using HandleMuxFunction = std::function<void(MessageInfo info, const std::string& msg)>;
 
 	ServiceManager();
 	virtual ~ServiceManager();
@@ -38,7 +40,7 @@ public:
 	bool createService(uint32_t opcode, const typename HandleNotifyService<Notify>::ServiceCallback& service_calllback);
 
 	template <typename T>
-	void onMessage(uint64_t serial_num, uint32_t opcode, const std::shared_ptr<T>& message);
+	void onMessage(MessageInfo info, const std::shared_ptr<T>& message);
 
 	HandleMuxFunction& getDefaultFunc();
 	void setDefaultFunc(HandleMuxFunction func);
@@ -97,16 +99,16 @@ bool ServiceManager::createService(
 }
 
 template <typename T>
-void ServiceManager::onMessage(uint64_t serial_num, uint32_t opcode, const std::shared_ptr<T>& message)
+void ServiceManager::onMessage(MessageInfo info, const std::shared_ptr<T>& message)
 {
-	auto find_ite = func_.find(opcode);
+	auto find_ite = func_.find(info.iOpcode);
 	if (find_ite == func_.end())
 	{
 		//TODO
 		return;
 	}
 
-	find_ite->second(serial_num, message);
+	find_ite->second(info.iSessionId, message);
 }
 
 struct ServiceHandler

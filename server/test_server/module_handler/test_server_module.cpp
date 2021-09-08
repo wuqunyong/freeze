@@ -97,9 +97,9 @@ void TestServerModule::Cmd_autoTest(::pubsub::LOGIC_CMD& cmd)
 	TestRunnerMgrSingleton::get().run();
 }
 
-void TestServerModule::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string& msg)
 {
-	auto iRoleIdOpt = TestServerMgrSingleton::get().findRoleIdBySerialNum(serialNum);
+	auto iRoleIdOpt = TestServerMgrSingleton::get().findRoleIdBySerialNum(info.iSessionId);
 	if (!iRoleIdOpt.has_value())
 	{
 		return;
@@ -112,9 +112,9 @@ void TestServerModule::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes
 		return;
 	}
 
-	ptrMockRole->handleResponse(serialNum, opcodes, msg);
-	ptrMockRole->handlePendingResponse(serialNum, opcodes, msg);
-	ptrMockRole->handlePendingNotify(serialNum, opcodes, msg);
+	ptrMockRole->handleResponse(info.iSessionId, info.iOpcode, msg);
+	ptrMockRole->handlePendingResponse(info.iSessionId, info.iOpcode, msg);
+	ptrMockRole->handlePendingNotify(info.iSessionId, info.iOpcode, msg);
 }
 
 

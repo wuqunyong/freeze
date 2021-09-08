@@ -31,7 +31,7 @@ public:
 	static void Cmd_client(::pubsub::LOGIC_CMD& cmd);
 	static void Cmd_autoTest(::pubsub::LOGIC_CMD& cmd);
 
-	static void handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+	static void handleDefaultOpcodes(MessageInfo info, const std::string& msg);
 };
 
 

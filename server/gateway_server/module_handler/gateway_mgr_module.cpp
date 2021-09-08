@@ -51,12 +51,12 @@ void GatewayMgrModule::ready()
 	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgrModule::handleDemuxForward);
 }
 
-void GatewayMgrModule::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void GatewayMgrModule::handleDefaultOpcodes(MessageInfo info, const std::string& msg)
 {	
-	auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleBySerialNum(serialNum);
+	auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleBySerialNum(info.iSessionId);
 	if (ptrGatewayRole == nullptr)
 	{
-		ASYNC_PIE_LOG("handleDefaultOpcodes", PIE_CYCLE_DAY, PIE_ERROR, "Not Login|serialNum:%lld|opcodes:%d", serialNum, opcodes);
+		ASYNC_PIE_LOG("handleDefaultOpcodes", PIE_CYCLE_DAY, PIE_ERROR, "Not Login|serialNum:%lld|opcodes:%d", info.iSessionId, info.iOpcode);
 		return;
 	}
 
@@ -71,7 +71,7 @@ void GatewayMgrModule::handleDefaultOpcodes(uint64_t serialNum, uint32_t opcodes
 	*role.mutable_gw_id() = apie::Ctx::getThisChannel();
 	role.set_user_id(iUserId);
 
-	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, opcodes, msg);
+	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, info.iOpcode, msg);
 }
 
 void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)
@@ -349,7 +349,9 @@ void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 	request.set_value1(100);
 	request.set_value2("hello world");
 
-	GatewayMgrModule::handleDefaultOpcodes(0, ::apie::OP_MSG_REQUEST_ECHO, request.SerializeAsString());
+	MessageInfo msgInfo;
+	msgInfo.iOpcode = ::apie::OP_MSG_REQUEST_ECHO;
+	GatewayMgrModule::handleDefaultOpcodes(msgInfo, request.SerializeAsString());
 
 }
 
