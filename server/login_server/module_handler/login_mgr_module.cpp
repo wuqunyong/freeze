@@ -29,8 +29,9 @@ void LoginMgrModule::ready()
 	// CLIENT OPCODE
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
 	//server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgrModule::handleAccountNotify);
-	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, ::apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgrModule::handleAccount);
 
+	using namespace ::login_msg;
+	S_REGISTER_SERVICE(ACCOUNT_LOGIN_L, LoginMgrModule::handleAccount);
 
 	return;
 }

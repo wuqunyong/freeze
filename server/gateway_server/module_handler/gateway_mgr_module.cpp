@@ -43,9 +43,11 @@ void GatewayMgrModule::ready()
 	// CLIENT OPCODE
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
 	server.setDefaultFunc(GatewayMgrModule::handleDefaultOpcodes);
-	server.createService<::login_msg::MSG_REQUEST_CLIENT_LOGIN, apie::OP_MSG_RESPONSE_CLIENT_LOGIN, ::login_msg::MSG_RESPONSE_CLIENT_LOGIN>(::apie::OP_MSG_REQUEST_CLIENT_LOGIN, GatewayMgrModule::handleRequestClientLogin);
-	server.createService<::login_msg::MSG_REQUEST_HANDSHAKE_INIT, apie::OP_MSG_RESPONSE_HANDSHAKE_INIT, ::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>(::apie::OP_MSG_REQUEST_HANDSHAKE_INIT, GatewayMgrModule::handleRequestHandshakeInit);
-	server.createService<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED, apie::OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, ::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>(::apie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, GatewayMgrModule::handleRequestHandshakeEstablished);
+
+	using namespace ::login_msg;
+	S_REGISTER_SERVICE(CLIENT_LOGIN, GatewayMgrModule::handleRequestClientLogin);
+	S_REGISTER_SERVICE(HANDSHAKE_INIT, GatewayMgrModule::handleRequestHandshakeInit);
+	S_REGISTER_SERVICE(HANDSHAKE_ESTABLISHED, GatewayMgrModule::handleRequestHandshakeEstablished);
 
 	// FORWARD
 	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgrModule::handleDemuxForward);

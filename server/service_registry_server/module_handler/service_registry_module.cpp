@@ -18,10 +18,15 @@ void ServiceRegistryModule::init()
 
 	// Inner Protocols		
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	server.createService<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, opcodes::OP_DISCOVERY_MSG_RESP_REGISTER_INSTANCE, ::service_discovery::MSG_RESP_REGISTER_INSTANCE>(
-		::opcodes::OP_DISCOVERY_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistryModule::handleRequestRegisterInstance);
-	server.createService<::service_discovery::MSG_REQUEST_HEARTBEAT, opcodes::OP_DISCOVERY_MSG_RESP_HEARTBEAT, ::service_discovery::MSG_RESP_HEARTBEAT>(
-		::opcodes::OP_DISCOVERY_MSG_REQUEST_HEARTBEAT, ServiceRegistryModule::handleRequestHeartbeat);
+
+	using namespace ::service_discovery;
+	//S_REGISTER_SERVICE(REGISTER_INSTANCE, ServiceRegistryModule::handleRequestRegisterInstance);
+	//S_REGISTER_SERVICE(HEARTBEAT, ServiceRegistryModule::handleRequestHeartbeat);
+
+	server.createService<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, opcodes::OP_MSG_RESP_REGISTER_INSTANCE, ::service_discovery::MSG_RESP_REGISTER_INSTANCE>(
+		::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistryModule::handleRequestRegisterInstance);
+	server.createService<::service_discovery::MSG_REQUEST_HEARTBEAT, opcodes::OP_MSG_RESP_HEARTBEAT, ::service_discovery::MSG_RESP_HEARTBEAT>(
+		::opcodes::OP_MSG_REQUEST_HEARTBEAT, ServiceRegistryModule::handleRequestHeartbeat);
 }
 
 void ServiceRegistryModule::ready()

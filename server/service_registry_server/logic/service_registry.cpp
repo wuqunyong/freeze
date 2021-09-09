@@ -207,7 +207,7 @@ void ServiceRegistry::broadcast()
 
 	for (const auto& items : m_registered)
 	{
-		apie::network::OutputStream::sendMsg(items.first, ::opcodes::OPCODE_ID::OP_DISCOVERY_MSG_NOTICE_INSTANCE, notice);
+		apie::network::OutputStream::sendMsg(items.first, ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE, notice);
 	}
 }
 
