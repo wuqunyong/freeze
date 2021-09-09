@@ -14,7 +14,16 @@
 namespace apie {
 namespace network {
 
-	bool OutputStream::sendMsg(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type)
+	bool OutputStream::sendMsg(uint64_t iSessionId, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type)
+	{
+		MessageInfo info;
+		info.iSessionId = iSessionId;
+		info.iOpcode = iOpcode;
+
+		return sendMsgRaw(info, msg, type);
+	}
+
+	bool OutputStream::sendMsgRaw(MessageInfo info, const ::google::protobuf::Message& msg, ConnetionType type)
 	{
 		uint32_t iThreadId = 0;
 		
@@ -22,10 +31,10 @@ namespace network {
 		{
 		case apie::ConnetionType::CT_NONE:
 		{
-			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
 			if (ptrConnection == nullptr)
 			{
-				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
+				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
 				if (ptrClient == nullptr)
 				{
 					return false;
@@ -45,7 +54,7 @@ namespace network {
 		}
 		case apie::ConnetionType::CT_SERVER:
 		{
-			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -56,7 +65,7 @@ namespace network {
 		}
 		case apie::ConnetionType::CT_CLIENT:
 		{
-			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -76,12 +85,13 @@ namespace network {
 		}
 
 		ProtocolHead head;
-		head.iOpcode = iOpcode;
+		head.iSeqNum = info.iSeqNum;
+		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
 
 		SendData *itemObjPtr = new SendData;
 		itemObjPtr->type = type;
-		itemObjPtr->iSerialNum = iSerialNum;
+		itemObjPtr->iSerialNum = info.iSessionId;
 		itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(ProtocolHead));
 		itemObjPtr->sData.append(msg.SerializeAsString());
 
