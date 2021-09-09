@@ -19,8 +19,8 @@ void SceneMgrModule::init()
 void SceneMgrModule::ready()
 {
 	// RPC
-	auto& rpc = apie::rpc::RPCServerManagerSingleton::get();
-	rpc.createRPCServer<rpc_msg::MSG_RPC_REQUEST_ECHO, rpc_msg::MSG_RPC_RESPONSE_ECHO>(rpc_msg::RPC_EchoTest, SceneMgrModule::RPC_echo);
+	using namespace ::rpc_msg;
+	INTRA_REGISTER_RPC(EchoTest, SceneMgrModule::RPC_echoTest);
 
 
 	// FORWARD
@@ -49,7 +49,7 @@ apie::status::Status SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifie
 	return { apie::status::StatusCode::OK, "" };
 }
 
-apie::status::Status SceneMgrModule::RPC_echo(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::MSG_RPC_REQUEST_ECHO>& request, std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response)
+apie::status::Status SceneMgrModule::RPC_echoTest(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::RPC_EchoTestRequest>& request, std::shared_ptr<rpc_msg::RPC_EchoTestResponse>& response)
 {
 	PIE_LOG("SceneMgr/RPC_echo", PIE_CYCLE_DAY, PIE_NOTICE, "%s", request->DebugString().c_str());
 

@@ -65,14 +65,14 @@ class PRC_DeMultiplexer_ForwardDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PRC_DeMultiplexer_Forward> _instance;
 } _PRC_DeMultiplexer_Forward_default_instance_;
-class MSG_RPC_REQUEST_ECHODefaultTypeInternal {
+class RPC_EchoTestRequestDefaultTypeInternal {
  public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_RPC_REQUEST_ECHO> _instance;
-} _MSG_RPC_REQUEST_ECHO_default_instance_;
-class MSG_RPC_RESPONSE_ECHODefaultTypeInternal {
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RPC_EchoTestRequest> _instance;
+} _RPC_EchoTestRequest_default_instance_;
+class RPC_EchoTestResponseDefaultTypeInternal {
  public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_RPC_RESPONSE_ECHO> _instance;
-} _MSG_RPC_RESPONSE_ECHO_default_instance_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RPC_EchoTestResponse> _instance;
+} _RPC_EchoTestResponse_default_instance_;
 }  // namespace rpc_msg
 static void InitDefaultsscc_info_CHANNEL_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -131,34 +131,6 @@ static void InitDefaultsscc_info_ClientMessageInfo_rpc_5fmsg_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ClientMessageInfo_rpc_5fmsg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ClientMessageInfo_rpc_5fmsg_2eproto}, {}};
 
-static void InitDefaultsscc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::rpc_msg::_MSG_RPC_REQUEST_ECHO_default_instance_;
-    new (ptr) ::rpc_msg::MSG_RPC_REQUEST_ECHO();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::rpc_msg::MSG_RPC_REQUEST_ECHO::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto}, {}};
-
-static void InitDefaultsscc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::rpc_msg::_MSG_RPC_RESPONSE_ECHO_default_instance_;
-    new (ptr) ::rpc_msg::MSG_RPC_RESPONSE_ECHO();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::rpc_msg::MSG_RPC_RESPONSE_ECHO::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto}, {}};
-
 static void InitDefaultsscc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -173,6 +145,34 @@ static void InitDefaultsscc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto}, {
       &scc_info_RoleIdentifier_rpc_5fmsg_2eproto.base,}};
+
+static void InitDefaultsscc_info_RPC_EchoTestRequest_rpc_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::rpc_msg::_RPC_EchoTestRequest_default_instance_;
+    new (ptr) ::rpc_msg::RPC_EchoTestRequest();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::rpc_msg::RPC_EchoTestRequest::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RPC_EchoTestRequest_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RPC_EchoTestRequest_rpc_5fmsg_2eproto}, {}};
+
+static void InitDefaultsscc_info_RPC_EchoTestResponse_rpc_5fmsg_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::rpc_msg::_RPC_EchoTestResponse_default_instance_;
+    new (ptr) ::rpc_msg::RPC_EchoTestResponse();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::rpc_msg::RPC_EchoTestResponse::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RPC_EchoTestResponse_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RPC_EchoTestResponse_rpc_5fmsg_2eproto}, {}};
 
 static void InitDefaultsscc_info_RPC_Multiplexer_Forward_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -363,19 +363,19 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward, opcodes_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward, body_msg_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_REQUEST_ECHO, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_EchoTestRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_REQUEST_ECHO, value1_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_REQUEST_ECHO, value2_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_EchoTestRequest, value1_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_EchoTestRequest, value2_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_RESPONSE_ECHO, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_EchoTestResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_RESPONSE_ECHO, value1_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::MSG_RPC_RESPONSE_ECHO, value2_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_EchoTestResponse, value1_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_EchoTestResponse, value2_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::rpc_msg::CHANNEL)},
@@ -389,8 +389,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 62, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
   { 73, -1, sizeof(::rpc_msg::RPC_Multiplexer_Forward)},
   { 81, -1, sizeof(::rpc_msg::PRC_DeMultiplexer_Forward)},
-  { 89, -1, sizeof(::rpc_msg::MSG_RPC_REQUEST_ECHO)},
-  { 96, -1, sizeof(::rpc_msg::MSG_RPC_RESPONSE_ECHO)},
+  { 89, -1, sizeof(::rpc_msg::RPC_EchoTestRequest)},
+  { 96, -1, sizeof(::rpc_msg::RPC_EchoTestResponse)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -405,8 +405,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RPC_RESPONSE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RPC_Multiplexer_Forward_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_PRC_DeMultiplexer_Forward_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_MSG_RPC_REQUEST_ECHO_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_MSG_RPC_RESPONSE_ECHO_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RPC_EchoTestRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_msg::_RPC_EchoTestResponse_default_instance_),
 };
 
 const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -437,28 +437,28 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "c_msg.ClientMessageInfo\022\020\n\010body_msg\030\003 \001("
   "\014\"e\n\031PRC_DeMultiplexer_Forward\022%\n\004role\030\001"
   " \001(\0132\027.rpc_msg.RoleIdentifier\022\017\n\007opcodes"
-  "\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014\"6\n\024MSG_RPC_REQU"
-  "EST_ECHO\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t"
-  "\"7\n\025MSG_RPC_RESPONSE_ECHO\022\016\n\006value1\030\001 \001("
-  "\004\022\016\n\006value2\030\002 \001(\t*\356\001\n\013RPC_OPCODES\022\014\n\010RPC"
-  "_None\020\000\022\020\n\014RPC_EchoTest\020\001\022\027\n\022RPC_MysqlDe"
-  "scTable\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022\024\n\017RPC_M"
-  "ysqlInsert\020\223\003\022\024\n\017RPC_MysqlUpdate\020\224\003\022\024\n\017R"
-  "PC_MysqlDelete\020\225\003\022\033\n\026RPC_MysqlQueryByFil"
-  "ter\020\226\003\022\030\n\023RPC_MysqlMultiQuery\020\227\003\022\030\n\023OP_R"
-  "PC_LoginPending\020\351\007*\343\003\n\010RPC_CODE\022\013\n\007CODE_"
-  "Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Timeout\020"
-  "d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_ParseErro"
-  "r\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031CODE_Ro"
-  "uteNotLinkToServer\020h\022\037\n\033CODE_RouteSendTo"
-  "ServerError\020i\022\031\n\025CODE_OpcodeUnregister\020j"
-  "\022\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE_LogicT"
-  "hreadNull\020l\022\031\n\025CODE_NotReceivedReply\020m\022\020"
-  "\n\014CODE_NotSend\020n\022\030\n\024CODE_LoadFromDbError"
-  "\020o\022\026\n\022CODE_DirtyFlagZero\020p\022\023\n\017CODE_Query"
-  "Error\020q\022\037\n\033CODE_TableNameNotExistError\020r"
-  "\022\036\n\032CODE_GenerateQuerySQLError\020s\022\036\n\032CODE"
-  "_NotMatchedResultError\020tb\006proto3"
+  "\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014\"5\n\023RPC_EchoTest"
+  "Request\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\""
+  "6\n\024RPC_EchoTestResponse\022\016\n\006value1\030\001 \001(\004\022"
+  "\016\n\006value2\030\002 \001(\t*\362\001\n\013RPC_OPCODES\022\014\n\010RPC_N"
+  "one\020\000\022\027\n\022RPC_MysqlDescTable\020\221\003\022\023\n\016RPC_My"
+  "sqlQuery\020\222\003\022\024\n\017RPC_MysqlInsert\020\223\003\022\024\n\017RPC"
+  "_MysqlUpdate\020\224\003\022\024\n\017RPC_MysqlDelete\020\225\003\022\033\n"
+  "\026RPC_MysqlQueryByFilter\020\226\003\022\030\n\023RPC_MysqlM"
+  "ultiQuery\020\227\003\022\024\n\017OP_RPC_EchoTest\020\351\007\022\030\n\023OP"
+  "_RPC_LoginPending\020\321\017*\343\003\n\010RPC_CODE\022\013\n\007COD"
+  "E_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Timeou"
+  "t\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_ParseEr"
+  "ror\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031CODE_"
+  "RouteNotLinkToServer\020h\022\037\n\033CODE_RouteSend"
+  "ToServerError\020i\022\031\n\025CODE_OpcodeUnregister"
+  "\020j\022\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE_Logi"
+  "cThreadNull\020l\022\031\n\025CODE_NotReceivedReply\020m"
+  "\022\020\n\014CODE_NotSend\020n\022\030\n\024CODE_LoadFromDbErr"
+  "or\020o\022\026\n\022CODE_DirtyFlagZero\020p\022\023\n\017CODE_Que"
+  "ryError\020q\022\037\n\033CODE_TableNameNotExistError"
+  "\020r\022\036\n\032CODE_GenerateQuerySQLError\020s\022\036\n\032CO"
+  "DE_NotMatchedResultError\020tb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -467,9 +467,9 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
   &scc_info_CLIENT_IDENTIFIER_rpc_5fmsg_2eproto.base,
   &scc_info_CONTROLLER_rpc_5fmsg_2eproto.base,
   &scc_info_ClientMessageInfo_rpc_5fmsg_2eproto.base,
-  &scc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto.base,
-  &scc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto.base,
   &scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto.base,
+  &scc_info_RPC_EchoTestRequest_rpc_5fmsg_2eproto.base,
+  &scc_info_RPC_EchoTestResponse_rpc_5fmsg_2eproto.base,
   &scc_info_RPC_Multiplexer_Forward_rpc_5fmsg_2eproto.base,
   &scc_info_RPC_REQUEST_rpc_5fmsg_2eproto.base,
   &scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto.base,
@@ -480,7 +480,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1952,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1954,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 13, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 13, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -496,7 +496,6 @@ const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RPC_OPCODES_descriptor() {
 bool RPC_OPCODES_IsValid(int value) {
   switch (value) {
     case 0:
-    case 1:
     case 401:
     case 402:
     case 403:
@@ -505,6 +504,7 @@ bool RPC_OPCODES_IsValid(int value) {
     case 406:
     case 407:
     case 1001:
+    case 2001:
       return true;
     default:
       return false;
@@ -3465,18 +3465,18 @@ void PRC_DeMultiplexer_Forward::InternalSwap(PRC_DeMultiplexer_Forward* other) {
 
 // ===================================================================
 
-void MSG_RPC_REQUEST_ECHO::InitAsDefaultInstance() {
+void RPC_EchoTestRequest::InitAsDefaultInstance() {
 }
-class MSG_RPC_REQUEST_ECHO::_Internal {
+class RPC_EchoTestRequest::_Internal {
  public:
 };
 
-MSG_RPC_REQUEST_ECHO::MSG_RPC_REQUEST_ECHO()
+RPC_EchoTestRequest::RPC_EchoTestRequest()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  // @@protoc_insertion_point(constructor:rpc_msg.RPC_EchoTestRequest)
 }
-MSG_RPC_REQUEST_ECHO::MSG_RPC_REQUEST_ECHO(const MSG_RPC_REQUEST_ECHO& from)
+RPC_EchoTestRequest::RPC_EchoTestRequest(const RPC_EchoTestRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
@@ -3485,35 +3485,35 @@ MSG_RPC_REQUEST_ECHO::MSG_RPC_REQUEST_ECHO(const MSG_RPC_REQUEST_ECHO& from)
     value2_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.value2_);
   }
   value1_ = from.value1_;
-  // @@protoc_insertion_point(copy_constructor:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  // @@protoc_insertion_point(copy_constructor:rpc_msg.RPC_EchoTestRequest)
 }
 
-void MSG_RPC_REQUEST_ECHO::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto.base);
+void RPC_EchoTestRequest::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RPC_EchoTestRequest_rpc_5fmsg_2eproto.base);
   value2_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   value1_ = PROTOBUF_ULONGLONG(0);
 }
 
-MSG_RPC_REQUEST_ECHO::~MSG_RPC_REQUEST_ECHO() {
-  // @@protoc_insertion_point(destructor:rpc_msg.MSG_RPC_REQUEST_ECHO)
+RPC_EchoTestRequest::~RPC_EchoTestRequest() {
+  // @@protoc_insertion_point(destructor:rpc_msg.RPC_EchoTestRequest)
   SharedDtor();
 }
 
-void MSG_RPC_REQUEST_ECHO::SharedDtor() {
+void RPC_EchoTestRequest::SharedDtor() {
   value2_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-void MSG_RPC_REQUEST_ECHO::SetCachedSize(int size) const {
+void RPC_EchoTestRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const MSG_RPC_REQUEST_ECHO& MSG_RPC_REQUEST_ECHO::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MSG_RPC_REQUEST_ECHO_rpc_5fmsg_2eproto.base);
+const RPC_EchoTestRequest& RPC_EchoTestRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RPC_EchoTestRequest_rpc_5fmsg_2eproto.base);
   return *internal_default_instance();
 }
 
 
-void MSG_RPC_REQUEST_ECHO::Clear() {
-// @@protoc_insertion_point(message_clear_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+void RPC_EchoTestRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:rpc_msg.RPC_EchoTestRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -3523,7 +3523,7 @@ void MSG_RPC_REQUEST_ECHO::Clear() {
   _internal_metadata_.Clear();
 }
 
-const char* MSG_RPC_REQUEST_ECHO::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* RPC_EchoTestRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
@@ -3542,7 +3542,7 @@ const char* MSG_RPC_REQUEST_ECHO::_InternalParse(const char* ptr, ::PROTOBUF_NAM
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_value2();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc_msg.MSG_RPC_REQUEST_ECHO.value2"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc_msg.RPC_EchoTestRequest.value2"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -3566,9 +3566,9 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* MSG_RPC_REQUEST_ECHO::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* RPC_EchoTestRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.RPC_EchoTestRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3583,7 +3583,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_value2().data(), static_cast<int>(this->_internal_value2().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rpc_msg.MSG_RPC_REQUEST_ECHO.value2");
+      "rpc_msg.RPC_EchoTestRequest.value2");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_value2(), target);
   }
@@ -3592,12 +3592,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.RPC_EchoTestRequest)
   return target;
 }
 
-size_t MSG_RPC_REQUEST_ECHO::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+size_t RPC_EchoTestRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rpc_msg.RPC_EchoTestRequest)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3627,23 +3627,23 @@ size_t MSG_RPC_REQUEST_ECHO::ByteSizeLong() const {
   return total_size;
 }
 
-void MSG_RPC_REQUEST_ECHO::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+void RPC_EchoTestRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.RPC_EchoTestRequest)
   GOOGLE_DCHECK_NE(&from, this);
-  const MSG_RPC_REQUEST_ECHO* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MSG_RPC_REQUEST_ECHO>(
+  const RPC_EchoTestRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RPC_EchoTestRequest>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.RPC_EchoTestRequest)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.MSG_RPC_REQUEST_ECHO)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.RPC_EchoTestRequest)
     MergeFrom(*source);
   }
 }
 
-void MSG_RPC_REQUEST_ECHO::MergeFrom(const MSG_RPC_REQUEST_ECHO& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+void RPC_EchoTestRequest::MergeFrom(const RPC_EchoTestRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.RPC_EchoTestRequest)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3658,25 +3658,25 @@ void MSG_RPC_REQUEST_ECHO::MergeFrom(const MSG_RPC_REQUEST_ECHO& from) {
   }
 }
 
-void MSG_RPC_REQUEST_ECHO::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+void RPC_EchoTestRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.RPC_EchoTestRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MSG_RPC_REQUEST_ECHO::CopyFrom(const MSG_RPC_REQUEST_ECHO& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.MSG_RPC_REQUEST_ECHO)
+void RPC_EchoTestRequest::CopyFrom(const RPC_EchoTestRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.RPC_EchoTestRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MSG_RPC_REQUEST_ECHO::IsInitialized() const {
+bool RPC_EchoTestRequest::IsInitialized() const {
   return true;
 }
 
-void MSG_RPC_REQUEST_ECHO::InternalSwap(MSG_RPC_REQUEST_ECHO* other) {
+void RPC_EchoTestRequest::InternalSwap(RPC_EchoTestRequest* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   value2_.Swap(&other->value2_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -3684,25 +3684,25 @@ void MSG_RPC_REQUEST_ECHO::InternalSwap(MSG_RPC_REQUEST_ECHO* other) {
   swap(value1_, other->value1_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata MSG_RPC_REQUEST_ECHO::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata RPC_EchoTestRequest::GetMetadata() const {
   return GetMetadataStatic();
 }
 
 
 // ===================================================================
 
-void MSG_RPC_RESPONSE_ECHO::InitAsDefaultInstance() {
+void RPC_EchoTestResponse::InitAsDefaultInstance() {
 }
-class MSG_RPC_RESPONSE_ECHO::_Internal {
+class RPC_EchoTestResponse::_Internal {
  public:
 };
 
-MSG_RPC_RESPONSE_ECHO::MSG_RPC_RESPONSE_ECHO()
+RPC_EchoTestResponse::RPC_EchoTestResponse()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  // @@protoc_insertion_point(constructor:rpc_msg.RPC_EchoTestResponse)
 }
-MSG_RPC_RESPONSE_ECHO::MSG_RPC_RESPONSE_ECHO(const MSG_RPC_RESPONSE_ECHO& from)
+RPC_EchoTestResponse::RPC_EchoTestResponse(const RPC_EchoTestResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
@@ -3711,35 +3711,35 @@ MSG_RPC_RESPONSE_ECHO::MSG_RPC_RESPONSE_ECHO(const MSG_RPC_RESPONSE_ECHO& from)
     value2_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.value2_);
   }
   value1_ = from.value1_;
-  // @@protoc_insertion_point(copy_constructor:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  // @@protoc_insertion_point(copy_constructor:rpc_msg.RPC_EchoTestResponse)
 }
 
-void MSG_RPC_RESPONSE_ECHO::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto.base);
+void RPC_EchoTestResponse::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RPC_EchoTestResponse_rpc_5fmsg_2eproto.base);
   value2_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   value1_ = PROTOBUF_ULONGLONG(0);
 }
 
-MSG_RPC_RESPONSE_ECHO::~MSG_RPC_RESPONSE_ECHO() {
-  // @@protoc_insertion_point(destructor:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+RPC_EchoTestResponse::~RPC_EchoTestResponse() {
+  // @@protoc_insertion_point(destructor:rpc_msg.RPC_EchoTestResponse)
   SharedDtor();
 }
 
-void MSG_RPC_RESPONSE_ECHO::SharedDtor() {
+void RPC_EchoTestResponse::SharedDtor() {
   value2_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-void MSG_RPC_RESPONSE_ECHO::SetCachedSize(int size) const {
+void RPC_EchoTestResponse::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const MSG_RPC_RESPONSE_ECHO& MSG_RPC_RESPONSE_ECHO::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MSG_RPC_RESPONSE_ECHO_rpc_5fmsg_2eproto.base);
+const RPC_EchoTestResponse& RPC_EchoTestResponse::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RPC_EchoTestResponse_rpc_5fmsg_2eproto.base);
   return *internal_default_instance();
 }
 
 
-void MSG_RPC_RESPONSE_ECHO::Clear() {
-// @@protoc_insertion_point(message_clear_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+void RPC_EchoTestResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:rpc_msg.RPC_EchoTestResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -3749,7 +3749,7 @@ void MSG_RPC_RESPONSE_ECHO::Clear() {
   _internal_metadata_.Clear();
 }
 
-const char* MSG_RPC_RESPONSE_ECHO::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* RPC_EchoTestResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
@@ -3768,7 +3768,7 @@ const char* MSG_RPC_RESPONSE_ECHO::_InternalParse(const char* ptr, ::PROTOBUF_NA
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_value2();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc_msg.MSG_RPC_RESPONSE_ECHO.value2"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc_msg.RPC_EchoTestResponse.value2"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -3792,9 +3792,9 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* MSG_RPC_RESPONSE_ECHO::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* RPC_EchoTestResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  // @@protoc_insertion_point(serialize_to_array_start:rpc_msg.RPC_EchoTestResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3809,7 +3809,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_value2().data(), static_cast<int>(this->_internal_value2().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rpc_msg.MSG_RPC_RESPONSE_ECHO.value2");
+      "rpc_msg.RPC_EchoTestResponse.value2");
     target = stream->WriteStringMaybeAliased(
         2, this->_internal_value2(), target);
   }
@@ -3818,12 +3818,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  // @@protoc_insertion_point(serialize_to_array_end:rpc_msg.RPC_EchoTestResponse)
   return target;
 }
 
-size_t MSG_RPC_RESPONSE_ECHO::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+size_t RPC_EchoTestResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rpc_msg.RPC_EchoTestResponse)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3853,23 +3853,23 @@ size_t MSG_RPC_RESPONSE_ECHO::ByteSizeLong() const {
   return total_size;
 }
 
-void MSG_RPC_RESPONSE_ECHO::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+void RPC_EchoTestResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:rpc_msg.RPC_EchoTestResponse)
   GOOGLE_DCHECK_NE(&from, this);
-  const MSG_RPC_RESPONSE_ECHO* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MSG_RPC_RESPONSE_ECHO>(
+  const RPC_EchoTestResponse* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RPC_EchoTestResponse>(
           &from);
   if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_msg.RPC_EchoTestResponse)
     ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_msg.RPC_EchoTestResponse)
     MergeFrom(*source);
   }
 }
 
-void MSG_RPC_RESPONSE_ECHO::MergeFrom(const MSG_RPC_RESPONSE_ECHO& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+void RPC_EchoTestResponse::MergeFrom(const RPC_EchoTestResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:rpc_msg.RPC_EchoTestResponse)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -3884,25 +3884,25 @@ void MSG_RPC_RESPONSE_ECHO::MergeFrom(const MSG_RPC_RESPONSE_ECHO& from) {
   }
 }
 
-void MSG_RPC_RESPONSE_ECHO::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+void RPC_EchoTestResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:rpc_msg.RPC_EchoTestResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MSG_RPC_RESPONSE_ECHO::CopyFrom(const MSG_RPC_RESPONSE_ECHO& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.MSG_RPC_RESPONSE_ECHO)
+void RPC_EchoTestResponse::CopyFrom(const RPC_EchoTestResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rpc_msg.RPC_EchoTestResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MSG_RPC_RESPONSE_ECHO::IsInitialized() const {
+bool RPC_EchoTestResponse::IsInitialized() const {
   return true;
 }
 
-void MSG_RPC_RESPONSE_ECHO::InternalSwap(MSG_RPC_RESPONSE_ECHO* other) {
+void RPC_EchoTestResponse::InternalSwap(RPC_EchoTestResponse* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   value2_.Swap(&other->value2_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
@@ -3910,7 +3910,7 @@ void MSG_RPC_RESPONSE_ECHO::InternalSwap(MSG_RPC_RESPONSE_ECHO* other) {
   swap(value1_, other->value1_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata MSG_RPC_RESPONSE_ECHO::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata RPC_EchoTestResponse::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -3951,11 +3951,11 @@ template<> PROTOBUF_NOINLINE ::rpc_msg::RPC_Multiplexer_Forward* Arena::CreateMa
 template<> PROTOBUF_NOINLINE ::rpc_msg::PRC_DeMultiplexer_Forward* Arena::CreateMaybeMessage< ::rpc_msg::PRC_DeMultiplexer_Forward >(Arena* arena) {
   return Arena::CreateInternal< ::rpc_msg::PRC_DeMultiplexer_Forward >(arena);
 }
-template<> PROTOBUF_NOINLINE ::rpc_msg::MSG_RPC_REQUEST_ECHO* Arena::CreateMaybeMessage< ::rpc_msg::MSG_RPC_REQUEST_ECHO >(Arena* arena) {
-  return Arena::CreateInternal< ::rpc_msg::MSG_RPC_REQUEST_ECHO >(arena);
+template<> PROTOBUF_NOINLINE ::rpc_msg::RPC_EchoTestRequest* Arena::CreateMaybeMessage< ::rpc_msg::RPC_EchoTestRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::rpc_msg::RPC_EchoTestRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::rpc_msg::MSG_RPC_RESPONSE_ECHO* Arena::CreateMaybeMessage< ::rpc_msg::MSG_RPC_RESPONSE_ECHO >(Arena* arena) {
-  return Arena::CreateInternal< ::rpc_msg::MSG_RPC_RESPONSE_ECHO >(arena);
+template<> PROTOBUF_NOINLINE ::rpc_msg::RPC_EchoTestResponse* Arena::CreateMaybeMessage< ::rpc_msg::RPC_EchoTestResponse >(Arena* arena) {
+  return Arena::CreateInternal< ::rpc_msg::RPC_EchoTestResponse >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

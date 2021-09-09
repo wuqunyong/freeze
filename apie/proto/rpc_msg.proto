@@ -6,7 +6,6 @@ package rpc_msg;
 
 enum RPC_OPCODES {
 	RPC_None = 0;
-	RPC_EchoTest = 1;
 
 	RPC_MysqlDescTable = 401;
 	RPC_MysqlQuery = 402;
@@ -16,7 +15,8 @@ enum RPC_OPCODES {
 	RPC_MysqlQueryByFilter = 406;
 	RPC_MysqlMultiQuery = 407;
 
-	OP_RPC_LoginPending = 1001;
+	OP_RPC_EchoTest = 1001;
+	OP_RPC_LoginPending = 2001;
 }
 
 enum RPC_CODE {
@@ -122,14 +122,13 @@ message PRC_DeMultiplexer_Forward
 	bytes body_msg = 3;
 }
 
-
-message MSG_RPC_REQUEST_ECHO
+message RPC_EchoTestRequest
 {
 	uint64 value1 = 1;
 	string value2 = 2;
 }
 
-message MSG_RPC_RESPONSE_ECHO
+message RPC_EchoTestResponse
 {
 	uint64 value1 = 1;
 	string value2 = 2;

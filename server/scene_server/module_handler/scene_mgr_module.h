@@ -25,8 +25,8 @@ namespace apie {
 
 
 		// RPC
-		static apie::status::Status RPC_echo(
-			const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::MSG_RPC_REQUEST_ECHO>& request, std::shared_ptr<rpc_msg::MSG_RPC_RESPONSE_ECHO>& response);
+		static apie::status::Status RPC_echoTest(
+			const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::RPC_EchoTestRequest>& request, std::shared_ptr<rpc_msg::RPC_EchoTestResponse>& response);
 
 
 		// FORWARD
