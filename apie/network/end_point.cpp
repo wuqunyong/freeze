@@ -16,9 +16,9 @@ void SelfRegistration::init()
 {
 	//ServiceRegistry
 	auto& client = apie::service::ServiceHandlerSingleton::get().client;
-	client.createService<::service_discovery::MSG_RESP_REGISTER_INSTANCE>(::opcodes::OP_MSG_RESP_REGISTER_INSTANCE, SelfRegistration::handleRespRegisterInstance);
+	client.createService<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>(::opcodes::OP_MSG_RESPONSE_REGISTER_INSTANCE, SelfRegistration::handleRespRegisterInstance);
 	client.createService<::service_discovery::MSG_NOTICE_INSTANCE>(::opcodes::OP_MSG_NOTICE_INSTANCE, SelfRegistration::handleNoticeInstance);
-	client.createService<::service_discovery::MSG_RESP_HEARTBEAT>(::opcodes::OP_MSG_RESP_HEARTBEAT, SelfRegistration::handleRespHeartbeat);
+	client.createService<::service_discovery::MSG_RESPONSE_HEARTBEAT>(::opcodes::OP_MSG_RESPONSE_HEARTBEAT, SelfRegistration::handleRespHeartbeat);
 
 
 	//PubSub
@@ -297,7 +297,7 @@ void EndPointMgr::clear()
 }
 
 
-void SelfRegistration::handleRespRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response)
+void SelfRegistration::handleRespRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>& response)
 {
 	std::stringstream ss;
 	ss << "iSerialNum:" << info.iSessionId << ",response:" << response->ShortDebugString();
@@ -350,7 +350,7 @@ void SelfRegistration::handleNoticeInstance(MessageInfo info, const std::shared_
 }
 
 
-void SelfRegistration::handleRespHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
+void SelfRegistration::handleRespHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESPONSE_HEARTBEAT>& response)
 {
 	if (response->status_code() == opcodes::StatusCode::SC_Ok)
 	{

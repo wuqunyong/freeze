@@ -39,9 +39,9 @@ namespace apie
 		void sendHeartbeat(apie::ClientProxy* ptrClient);
 
 	public:
-		static void handleRespRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response);
+		static void handleRespRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>& response);
 		static void handleNoticeInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_NOTICE_INSTANCE>& notice);
-		static void handleRespHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response);
+		static void handleRespHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESPONSE_HEARTBEAT>& response);
 		
 
 		static void onClientPeerClose(const std::shared_ptr<::pubsub::CLIENT_PEER_CLOSE>& msg);

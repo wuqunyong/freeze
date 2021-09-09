@@ -18,14 +18,9 @@ void ServiceRegistryModule::init()
 
 	// Inner Protocols		
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-
-	using namespace ::service_discovery;
-	//S_REGISTER_SERVICE(REGISTER_INSTANCE, ServiceRegistryModule::handleRequestRegisterInstance);
-	//S_REGISTER_SERVICE(HEARTBEAT, ServiceRegistryModule::handleRequestHeartbeat);
-
-	server.createService<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, opcodes::OP_MSG_RESP_REGISTER_INSTANCE, ::service_discovery::MSG_RESP_REGISTER_INSTANCE>(
+	server.createService<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, opcodes::OP_MSG_RESPONSE_REGISTER_INSTANCE, ::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>(
 		::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistryModule::handleRequestRegisterInstance);
-	server.createService<::service_discovery::MSG_REQUEST_HEARTBEAT, opcodes::OP_MSG_RESP_HEARTBEAT, ::service_discovery::MSG_RESP_HEARTBEAT>(
+	server.createService<::service_discovery::MSG_REQUEST_HEARTBEAT, opcodes::OP_MSG_RESPONSE_HEARTBEAT, ::service_discovery::MSG_RESPONSE_HEARTBEAT>(
 		::opcodes::OP_MSG_REQUEST_HEARTBEAT, ServiceRegistryModule::handleRequestHeartbeat);
 }
 
@@ -58,7 +53,7 @@ void ServiceRegistryModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGI
 }
 
 apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
-	std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response)
+	std::shared_ptr<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>& response)
 {
 	std::stringstream ss;
 	ss << "iSerialNum:" << info.iSessionId << ",request:" << request->ShortDebugString();
@@ -97,7 +92,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 
 
 apie::status::Status  ServiceRegistryModule::handleRequestHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
-		std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
+		std::shared_ptr<::service_discovery::MSG_RESPONSE_HEARTBEAT>& response)
 {
 	std::stringstream ss;
 	ss << "iSerialNum:" << info.iSessionId << ",request:" << request->ShortDebugString();
