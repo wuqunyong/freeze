@@ -72,7 +72,7 @@ void GatewayMgrModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 	*role.mutable_gw_id() = apie::Ctx::getThisChannel();
 	role.set_user_id(iUserId);
 
-	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, info.iOpcode, msg);
+	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, info, msg);
 }
 
 void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)

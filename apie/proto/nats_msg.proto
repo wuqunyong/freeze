@@ -14,7 +14,7 @@ message NATS_MSG_PRXOY
 	oneof msg {
 		rpc_msg.RPC_REQUEST rpc_request = 100;
 		rpc_msg.RPC_RESPONSE rpc_response = 101;
-		rpc_msg.PRC_Multiplexer_Forward multiplexer_forward = 102; 
+		rpc_msg.RPC_Multiplexer_Forward multiplexer_forward = 102; 
 		rpc_msg.PRC_DeMultiplexer_Forward demultiplexer_forward = 103; 
 	}
 }

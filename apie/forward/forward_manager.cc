@@ -40,11 +40,13 @@ void ForwardManager::destroy()
 	service_.clear();
 }
 
-bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)
+bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg)
 {
-	::rpc_msg::PRC_Multiplexer_Forward mux;
+	::rpc_msg::RPC_Multiplexer_Forward mux;
 	*mux.mutable_role() = role;
-	mux.set_opcodes(opcode);
+	mux.mutable_info()->set_opcodes(info.iOpcode);
+	mux.mutable_info()->set_seq_num(info.iSeqNum);
+	*(mux.mutable_role()->mutable_info()) = mux.info();
 	mux.set_body_msg(msg);
 
 	bool bResult = false;
@@ -61,13 +63,13 @@ bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rp
 	return bResult;
 }
 
-void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)
+void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg)
 {
-	auto typeOpt = this->getType(opcode);
+	auto typeOpt = this->getType(info.iOpcode);
 	if (!typeOpt.has_value())
 	{
 		std::stringstream ss;
-		ss << "unregister|iOpcode:" << opcode;
+		ss << "unregister|iOpcode:" << info.iOpcode;
 		ASYNC_PIE_LOG("ForwardManager/onMessage", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
@@ -77,7 +79,7 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 	if (ptrMsg == nullptr)
 	{
 		std::stringstream ss;
-		ss << "createMessage null|iOpcode:" << opcode << "|sType:" << sType;
+		ss << "createMessage null|iOpcode:" << info.iOpcode << "|sType:" << sType;
 		ASYNC_PIE_LOG("ForwardManager/onMessage", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
@@ -87,12 +89,12 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 	if (!bResult)
 	{
 		std::stringstream ss;
-		ss << "ParseFromString error|iOpcode:" << opcode << "|sType:" << sType;
+		ss << "ParseFromString error|iOpcode:" << info.iOpcode << "|sType:" << sType;
 		ASYNC_PIE_LOG("ForwardManager/onMessage", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
 		return;
 	}
 
-	auto find_ite = func_.find(opcode);
+	auto find_ite = func_.find(info.iOpcode);
 	if (find_ite == func_.end())
 	{
 		//TODO

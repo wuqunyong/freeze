@@ -427,7 +427,10 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 
 	if (msg->has_multiplexer_forward())
 	{
-		apie::forward::ForwardManagerSingleton::get().onForwardMuxMessage(msg->multiplexer_forward().role(), msg->multiplexer_forward().opcodes(), msg->multiplexer_forward().body_msg());
+		MessageInfo info;
+		info.iOpcode = msg->multiplexer_forward().info().opcodes();
+		info.iSeqNum = msg->multiplexer_forward().info().seq_num();
+		apie::forward::ForwardManagerSingleton::get().onForwardMuxMessage(msg->multiplexer_forward().role(), info, msg->multiplexer_forward().body_msg());
 		return;
 	}
 

@@ -216,19 +216,19 @@ class NATS_MSG_PRXOY :
   ::rpc_msg::RPC_RESPONSE* _internal_mutable_rpc_response();
   public:
 
-  // .rpc_msg.PRC_Multiplexer_Forward multiplexer_forward = 102;
+  // .rpc_msg.RPC_Multiplexer_Forward multiplexer_forward = 102;
   bool has_multiplexer_forward() const;
   private:
   bool _internal_has_multiplexer_forward() const;
   public:
   void clear_multiplexer_forward();
-  const ::rpc_msg::PRC_Multiplexer_Forward& multiplexer_forward() const;
-  ::rpc_msg::PRC_Multiplexer_Forward* release_multiplexer_forward();
-  ::rpc_msg::PRC_Multiplexer_Forward* mutable_multiplexer_forward();
-  void set_allocated_multiplexer_forward(::rpc_msg::PRC_Multiplexer_Forward* multiplexer_forward);
+  const ::rpc_msg::RPC_Multiplexer_Forward& multiplexer_forward() const;
+  ::rpc_msg::RPC_Multiplexer_Forward* release_multiplexer_forward();
+  ::rpc_msg::RPC_Multiplexer_Forward* mutable_multiplexer_forward();
+  void set_allocated_multiplexer_forward(::rpc_msg::RPC_Multiplexer_Forward* multiplexer_forward);
   private:
-  const ::rpc_msg::PRC_Multiplexer_Forward& _internal_multiplexer_forward() const;
-  ::rpc_msg::PRC_Multiplexer_Forward* _internal_mutable_multiplexer_forward();
+  const ::rpc_msg::RPC_Multiplexer_Forward& _internal_multiplexer_forward() const;
+  ::rpc_msg::RPC_Multiplexer_Forward* _internal_mutable_multiplexer_forward();
   public:
 
   // .rpc_msg.PRC_DeMultiplexer_Forward demultiplexer_forward = 103;
@@ -264,7 +264,7 @@ class NATS_MSG_PRXOY :
     MsgUnion() {}
     ::rpc_msg::RPC_REQUEST* rpc_request_;
     ::rpc_msg::RPC_RESPONSE* rpc_response_;
-    ::rpc_msg::PRC_Multiplexer_Forward* multiplexer_forward_;
+    ::rpc_msg::RPC_Multiplexer_Forward* multiplexer_forward_;
     ::rpc_msg::PRC_DeMultiplexer_Forward* demultiplexer_forward_;
   } msg_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -371,7 +371,7 @@ inline ::rpc_msg::RPC_RESPONSE* NATS_MSG_PRXOY::mutable_rpc_response() {
   return _internal_mutable_rpc_response();
 }
 
-// .rpc_msg.PRC_Multiplexer_Forward multiplexer_forward = 102;
+// .rpc_msg.RPC_Multiplexer_Forward multiplexer_forward = 102;
 inline bool NATS_MSG_PRXOY::_internal_has_multiplexer_forward() const {
   return msg_case() == kMultiplexerForward;
 }
@@ -381,36 +381,36 @@ inline bool NATS_MSG_PRXOY::has_multiplexer_forward() const {
 inline void NATS_MSG_PRXOY::set_has_multiplexer_forward() {
   _oneof_case_[0] = kMultiplexerForward;
 }
-inline ::rpc_msg::PRC_Multiplexer_Forward* NATS_MSG_PRXOY::release_multiplexer_forward() {
+inline ::rpc_msg::RPC_Multiplexer_Forward* NATS_MSG_PRXOY::release_multiplexer_forward() {
   // @@protoc_insertion_point(field_release:nats_msg.NATS_MSG_PRXOY.multiplexer_forward)
   if (_internal_has_multiplexer_forward()) {
     clear_has_msg();
-      ::rpc_msg::PRC_Multiplexer_Forward* temp = msg_.multiplexer_forward_;
+      ::rpc_msg::RPC_Multiplexer_Forward* temp = msg_.multiplexer_forward_;
     msg_.multiplexer_forward_ = nullptr;
     return temp;
   } else {
     return nullptr;
   }
 }
-inline const ::rpc_msg::PRC_Multiplexer_Forward& NATS_MSG_PRXOY::_internal_multiplexer_forward() const {
+inline const ::rpc_msg::RPC_Multiplexer_Forward& NATS_MSG_PRXOY::_internal_multiplexer_forward() const {
   return _internal_has_multiplexer_forward()
       ? *msg_.multiplexer_forward_
-      : *reinterpret_cast< ::rpc_msg::PRC_Multiplexer_Forward*>(&::rpc_msg::_PRC_Multiplexer_Forward_default_instance_);
+      : *reinterpret_cast< ::rpc_msg::RPC_Multiplexer_Forward*>(&::rpc_msg::_RPC_Multiplexer_Forward_default_instance_);
 }
-inline const ::rpc_msg::PRC_Multiplexer_Forward& NATS_MSG_PRXOY::multiplexer_forward() const {
+inline const ::rpc_msg::RPC_Multiplexer_Forward& NATS_MSG_PRXOY::multiplexer_forward() const {
   // @@protoc_insertion_point(field_get:nats_msg.NATS_MSG_PRXOY.multiplexer_forward)
   return _internal_multiplexer_forward();
 }
-inline ::rpc_msg::PRC_Multiplexer_Forward* NATS_MSG_PRXOY::_internal_mutable_multiplexer_forward() {
+inline ::rpc_msg::RPC_Multiplexer_Forward* NATS_MSG_PRXOY::_internal_mutable_multiplexer_forward() {
   if (!_internal_has_multiplexer_forward()) {
     clear_msg();
     set_has_multiplexer_forward();
-    msg_.multiplexer_forward_ = CreateMaybeMessage< ::rpc_msg::PRC_Multiplexer_Forward >(
+    msg_.multiplexer_forward_ = CreateMaybeMessage< ::rpc_msg::RPC_Multiplexer_Forward >(
         GetArenaNoVirtual());
   }
   return msg_.multiplexer_forward_;
 }
-inline ::rpc_msg::PRC_Multiplexer_Forward* NATS_MSG_PRXOY::mutable_multiplexer_forward() {
+inline ::rpc_msg::RPC_Multiplexer_Forward* NATS_MSG_PRXOY::mutable_multiplexer_forward() {
   // @@protoc_insertion_point(field_mutable:nats_msg.NATS_MSG_PRXOY.multiplexer_forward)
   return _internal_mutable_multiplexer_forward();
 }

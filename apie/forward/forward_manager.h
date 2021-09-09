@@ -19,6 +19,7 @@
 #include "apie/proto/init.h"
 #include "apie/event/nats_proxy.h"
 #include "apie/common/protobuf_factory.h"
+#include "apie/network/command.h"
 
 namespace apie {
 namespace forward {
@@ -43,9 +44,9 @@ public:
 	template <typename Notify>
 	bool createService(uint32_t opcode, const typename HandleNotifyForward<Notify>::ServiceCallback& service_calllback);
 
-	bool sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg);
+	bool sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg);
 
-	void onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg);
+	void onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg);
 
 	void setDemuxCallback(DemuxCallback func);
 	void onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg);

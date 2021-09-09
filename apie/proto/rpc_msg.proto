@@ -57,10 +57,17 @@ message CONTROLLER
 	bool server_stream = 3;
 }
 
+message ClientMessageInfo
+{
+	uint32 opcodes = 1;
+	uint32 seq_num = 2;
+}
+
 message RoleIdentifier
 {
 	uint64 user_id = 1;
 	CHANNEL gw_id = 2;
+	ClientMessageInfo info = 3;
 }
 
 message CLIENT_IDENTIFIER
@@ -100,10 +107,10 @@ message RPC_RESPONSE
 	bytes result_data = 6;
 }
 
-message PRC_Multiplexer_Forward
+message RPC_Multiplexer_Forward
 {
 	RoleIdentifier role = 1;
-	uint32 opcodes = 2;
+	ClientMessageInfo info = 2;
 	bytes body_msg = 3;
 }
 
