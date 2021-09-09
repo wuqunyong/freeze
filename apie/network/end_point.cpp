@@ -297,10 +297,10 @@ void EndPointMgr::clear()
 }
 
 
-void SelfRegistration::handleRespRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response)
+void SelfRegistration::handleRespRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",response:" << response->ShortDebugString();
+	ss << "iSerialNum:" << info.iSessionId << ",response:" << response->ShortDebugString();
 
 	if (response->status_code() != opcodes::StatusCode::SC_Ok)
 	{
@@ -314,10 +314,10 @@ void SelfRegistration::handleRespRegisterInstance(uint64_t iSerialNum, const std
 	}
 }
 
-void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_NOTICE_INSTANCE>& notice)
+void SelfRegistration::handleNoticeInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_NOTICE_INSTANCE>& notice)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",notice:" << notice->ShortDebugString();
+	ss << "iSerialNum:" << info.iSessionId << ",notice:" << notice->ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/handleNoticeInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
 	switch (notice->mode())
@@ -350,7 +350,7 @@ void SelfRegistration::handleNoticeInstance(uint64_t iSerialNum, const std::shar
 }
 
 
-void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
+void SelfRegistration::handleRespHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
 {
 	if (response->status_code() == opcodes::StatusCode::SC_Ok)
 	{
@@ -359,7 +359,7 @@ void SelfRegistration::handleRespHeartbeat(uint64_t iSerialNum, const std::share
 	else
 	{
 		std::stringstream ss;
-		ss << "iSerialNum:" << iSerialNum << ",response:" << response->ShortDebugString();
+		ss << "iSerialNum:" << info.iSessionId << ",response:" << response->ShortDebugString();
 		ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
 
 		apie::CtxSingleton::get().getEndpoint()->setState(apie::SelfRegistration::State::Unregistered);

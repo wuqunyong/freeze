@@ -55,7 +55,7 @@ void LoginMgrModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SERV
 	ASYNC_PIE_LOG("LoginMgr/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 }
 
-apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>& response)
+apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>& response)
 {
 	std::stringstream ss;
 	ss << "handleAccount:" << request->ShortDebugString();
@@ -76,13 +76,13 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 	server.set_id(1);
 
 
-	auto cb = [iSerialNum, request, server](status::Status status, ModelAccount account, uint32_t iRows) {
+	auto cb = [info, request, server](status::Status status, ModelAccount account, uint32_t iRows) {
 		if (!status.ok())
 		{
 			::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
 			response.set_status_code(apie::toUnderlyingType(status.errorCode()));
 			response.set_account_id(request->account_id());
-			network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			return;
 		}
 
@@ -94,7 +94,7 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 		if (!gatewayOpt.has_value())
 		{
 			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
-			network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			return;
 		}
 
@@ -136,15 +136,15 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 			server.set_type(gatewayOpt.value().type());
 			server.set_id(gatewayOpt.value().id());
 
-			auto rpcCB = [iSerialNum, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) mutable {
+			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) mutable {
 				if (!status.ok())
 				{
 					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
-					network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+					network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 					return;
 				}
 
-				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			};
 			apie::rpc::RPC_Call<::rpc_login::L2G_LoginPendingRequest, rpc_login::L2G_LoginPendingResponse>(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
 			return;
@@ -154,7 +154,7 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 		if (!roleDBopt.has_value())
 		{
 			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
-			network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			return;
 		}
 
@@ -164,11 +164,11 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 		account.fields.modified_time = curTime;
 		account.fields.db_id = roleDBopt.value().id();
 
-		auto cb = [iSerialNum, response, gatewayOpt, rpcRequest](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
+		auto cb = [info, response, gatewayOpt, rpcRequest](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
 			if (!status.ok())
 			{
 				response.set_status_code(apie::toUnderlyingType(status.errorCode()));
-				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 				return;
 			}
 
@@ -177,15 +177,15 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 			server.set_type(gatewayOpt.value().type());
 			server.set_id(gatewayOpt.value().id());
 
-			auto rpcCB = [iSerialNum, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) mutable {
+			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) mutable {
 				if (!status.ok())
 				{
 					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
-					network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+					network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 					return;
 				}
 
-				network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			};
 			apie::rpc::RPC_Call<::rpc_login::L2G_LoginPendingRequest, rpc_login::L2G_LoginPendingResponse>(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
 		};
@@ -197,7 +197,7 @@ apie::status::Status LoginMgrModule::handleAccount(uint64_t iSerialNum, const st
 	return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
-void LoginMgrModule::handleAccountNotify(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& notify)
+void LoginMgrModule::handleAccountNotify(MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& notify)
 {
 	std::stringstream ss;
 	ss << "handleAccount:" << notify->ShortDebugString();

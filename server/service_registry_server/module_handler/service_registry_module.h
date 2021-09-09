@@ -29,9 +29,9 @@ public:
 	static void Cmd_showProvider(::pubsub::LOGIC_CMD& cmd);
 
 	// Inner Protocols		
-	static apie::status::Status handleRequestRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
+	static apie::status::Status handleRequestRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
 		std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response);
-	static apie::status::Status handleRequestHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
+	static apie::status::Status handleRequestHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
 		std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response);
 
 };

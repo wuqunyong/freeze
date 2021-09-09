@@ -22,7 +22,7 @@ namespace service {
 
 class ServiceManager {
 public:
-	using ServiceCallback = std::function<void(uint64_t, const std::shared_ptr<::google::protobuf::Message>&)>;
+	using ServiceCallback = std::function<void(MessageInfo, const std::shared_ptr<::google::protobuf::Message>&)>;
 	using HandleMuxFunction = std::function<void(MessageInfo info, const std::string& msg)>;
 
 	ServiceManager();
@@ -108,7 +108,7 @@ void ServiceManager::onMessage(MessageInfo info, const std::shared_ptr<T>& messa
 		return;
 	}
 
-	find_ite->second(info.iSessionId, message);
+	find_ite->second(info, message);
 }
 
 struct ServiceHandler

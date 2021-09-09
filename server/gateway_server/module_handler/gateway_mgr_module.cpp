@@ -453,7 +453,7 @@ void GatewayMgrModule::Cmd_deleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
 }
 
 apie::status::Status GatewayMgrModule::handleRequestClientLogin(
-	uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response)
+	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response)
 {
 	ModelUser user(request->user_id());
 	bool bResult = user.checkInvalid();
@@ -470,14 +470,14 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
-	auto cb = [iSerialNum, request, server](status::Status status, ModelUser user, uint32_t iRows) {
+	auto cb = [info, request, server](status::Status status, ModelUser user, uint32_t iRows) {
 		if (!status.ok())
 		{
 			::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
 			response.set_status_code(apie::toUnderlyingType(status.errorCode()));
 			response.set_user_id(request->user_id());
 			response.set_version(request->version());
-			network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+			network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
 			return;
 		}
 
@@ -504,10 +504,10 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 			response.set_is_newbie(false);
 		}
 
-		auto ptrGatewayRole = GatewayRole::createGatewayRole(user.fields.user_id, iSerialNum);
+		auto ptrGatewayRole = GatewayRole::createGatewayRole(user.fields.user_id, info.iSessionId);
 		GatewayMgrSingleton::get().addGatewayRole(ptrGatewayRole);
 
-		network::OutputStream::sendMsg(iSerialNum, apie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+		network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
 	};
 	LoadFromDb<ModelUser>(server, user, cb);
 
@@ -515,7 +515,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 }
 
 apie::status::Status GatewayMgrModule::handleRequestHandshakeInit(
-	uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>& response)
+	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>& response)
 {
 	std::string content;
 	std::string pubKey = apie::CtxSingleton::get().getConfigs()->certificate.public_key;
@@ -536,20 +536,20 @@ apie::status::Status GatewayMgrModule::handleRequestHandshakeInit(
 
 
 	apie::SetServerSessionAttr *ptr = new apie::SetServerSessionAttr;
-	ptr->iSerialNum = iSerialNum;
+	ptr->iSerialNum = info.iSessionId;
 	ptr->optClientRandom = request->client_random();
 	ptr->optServerRandom = sServerRandom;
 
 	Command cmd;
 	cmd.type = Command::set_server_session_attr;
 	cmd.args.set_server_session_attr.ptrData = ptr;
-	network::OutputStream::sendCommand(ConnetionType::CT_SERVER, iSerialNum, cmd);
+	network::OutputStream::sendCommand(ConnetionType::CT_SERVER, info.iSessionId, cmd);
 
 	return { apie::status::StatusCode::OK, "" };
 }
 
 apie::status::Status GatewayMgrModule::handleRequestHandshakeEstablished(
-	uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>& response)
+	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>& response)
 {
 	std::string decryptedMsg;
 	bool bResult = apie::crypto::RSAUtilitySingleton::get().decrypt(request->encrypted_key(), &decryptedMsg);
@@ -559,7 +559,7 @@ apie::status::Status GatewayMgrModule::handleRequestHandshakeEstablished(
 		return { apie::status::StatusCode::OK, "" };
 	}
 
-	auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
+	auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
 	if (ptrConnection == nullptr)
 	{
 		response->set_status_code(opcodes::SC_Connection_Lost);
@@ -574,13 +574,13 @@ apie::status::Status GatewayMgrModule::handleRequestHandshakeEstablished(
 	response->set_status_code(opcodes::SC_Ok);
 
 	apie::SetServerSessionAttr *ptr = new apie::SetServerSessionAttr;
-	ptr->iSerialNum = iSerialNum;
+	ptr->iSerialNum = info.iSessionId;
 	ptr->optKey = sSessionKey;
 
 	Command cmd;
 	cmd.type = Command::set_server_session_attr;
 	cmd.args.set_server_session_attr.ptrData = ptr;
-	network::OutputStream::sendCommand(ConnetionType::CT_SERVER, iSerialNum, cmd);
+	network::OutputStream::sendCommand(ConnetionType::CT_SERVER, info.iSessionId, cmd);
 	
 	return { apie::status::StatusCode::OK, "" };;
 }

@@ -52,11 +52,11 @@ void ServiceRegistryModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGI
 	handlerOpt.value()(*msg);
 }
 
-apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
+apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
 	std::shared_ptr<::service_discovery::MSG_RESP_REGISTER_INSTANCE>& response)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",request:" << request->ShortDebugString();
+	ss << "iSerialNum:" << info.iSessionId << ",request:" << request->ShortDebugString();
 
 	auto auth = apie::CtxSingleton::get().identify().auth;
 	if (!auth.empty() && auth != request->auth())
@@ -68,7 +68,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(uint6
 		return { apie::status::StatusCode::OK, "" };
 	}
 
-	bool bResult = ServiceRegistrySingleton::get().updateInstance(iSerialNum, request->instance());
+	bool bResult = ServiceRegistrySingleton::get().updateInstance(info.iSessionId, request->instance());
 	if (!bResult)
 	{
 		response->set_status_code(opcodes::SC_Discovery_DuplicateNode);
@@ -91,15 +91,15 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(uint6
 }
 
 
-apie::status::Status  ServiceRegistryModule::handleRequestHeartbeat(uint64_t iSerialNum, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
+apie::status::Status  ServiceRegistryModule::handleRequestHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
 		std::shared_ptr<::service_discovery::MSG_RESP_HEARTBEAT>& response)
 {
 	std::stringstream ss;
-	ss << "iSerialNum:" << iSerialNum << ",request:" << request->ShortDebugString();
+	ss << "iSerialNum:" << info.iSessionId << ",request:" << request->ShortDebugString();
 
 	response->set_status_code(opcodes::SC_Ok);
 
-	bool bResult = ServiceRegistrySingleton::get().updateHeartbeat(iSerialNum);
+	bool bResult = ServiceRegistrySingleton::get().updateHeartbeat(info.iSessionId);
 	if (!bResult)
 	{
 		response->set_status_code(opcodes::SC_Discovery_Unregistered);
