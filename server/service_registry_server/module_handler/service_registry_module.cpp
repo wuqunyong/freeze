@@ -17,11 +17,9 @@ void ServiceRegistryModule::init()
 	cmd.registerOnCmd("provider", "show_provider", ServiceRegistryModule::Cmd_showProvider);
 
 	// Inner Protocols		
-	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	server.createService<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, opcodes::OP_MSG_RESPONSE_REGISTER_INSTANCE, ::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>(
-		::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, ServiceRegistryModule::handleRequestRegisterInstance);
-	server.createService<::service_discovery::MSG_REQUEST_HEARTBEAT, opcodes::OP_MSG_RESPONSE_HEARTBEAT, ::service_discovery::MSG_RESPONSE_HEARTBEAT>(
-		::opcodes::OP_MSG_REQUEST_HEARTBEAT, ServiceRegistryModule::handleRequestHeartbeat);
+	using namespace ::service_discovery;
+	S_INTRA_REGISTER_SERVICE(REGISTER_INSTANCE, ServiceRegistryModule::handleRequestRegisterInstance);
+	S_INTRA_REGISTER_SERVICE(HEARTBEAT, ServiceRegistryModule::handleRequestHeartbeat);
 }
 
 void ServiceRegistryModule::ready()
