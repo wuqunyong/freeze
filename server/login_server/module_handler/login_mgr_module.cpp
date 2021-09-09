@@ -107,7 +107,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 		response.set_port(port);
 		response.set_session_key(sessionKey);
 
-		::rpc_login::L2G_LoginPendingRequest rpcRequest;
+		::rpc_login::RPC_LoginPendingRequest rpcRequest;
 		rpcRequest.set_account_id(request->account_id());
 		rpcRequest.set_session_key(sessionKey);
 		rpcRequest.set_db_id(account.fields.db_id);
@@ -137,7 +137,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 			server.set_type(gatewayOpt.value().type());
 			server.set_id(gatewayOpt.value().id());
 
-			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) mutable {
+			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::RPC_LoginPendingResponse>& responsePtr) mutable {
 				if (!status.ok())
 				{
 					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
@@ -147,7 +147,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 
 				network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			};
-			apie::rpc::RPC_Call<::rpc_login::L2G_LoginPendingRequest, rpc_login::L2G_LoginPendingResponse>(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
+			apie::rpc::RPC_Call<::rpc_login::RPC_LoginPendingRequest, rpc_login::RPC_LoginPendingResponse>(server, ::rpc_msg::OP_RPC_LoginPending, rpcRequest, rpcCB);
 			return;
 		}
 
@@ -178,7 +178,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 			server.set_type(gatewayOpt.value().type());
 			server.set_id(gatewayOpt.value().id());
 
-			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::L2G_LoginPendingResponse>& responsePtr) mutable {
+			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::RPC_LoginPendingResponse>& responsePtr) mutable {
 				if (!status.ok())
 				{
 					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
@@ -188,7 +188,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 
 				network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
 			};
-			apie::rpc::RPC_Call<::rpc_login::L2G_LoginPendingRequest, rpc_login::L2G_LoginPendingResponse>(server, ::rpc_msg::RPC_L2G_LoginPending, rpcRequest, rpcCB);
+			apie::rpc::RPC_Call<::rpc_login::RPC_LoginPendingRequest, rpc_login::RPC_LoginPendingResponse>(server, ::rpc_msg::OP_RPC_LoginPending, rpcRequest, rpcCB);
 		};
 		InsertToDb<ModelAccount>(server, account, cb);
 	};

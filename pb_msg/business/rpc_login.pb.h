@@ -55,38 +55,38 @@ struct TableStruct_rpc_5flogin_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5flogin_2eproto;
 namespace rpc_login {
-class L2G_LoginPendingRequest;
-class L2G_LoginPendingRequestDefaultTypeInternal;
-extern L2G_LoginPendingRequestDefaultTypeInternal _L2G_LoginPendingRequest_default_instance_;
-class L2G_LoginPendingResponse;
-class L2G_LoginPendingResponseDefaultTypeInternal;
-extern L2G_LoginPendingResponseDefaultTypeInternal _L2G_LoginPendingResponse_default_instance_;
+class RPC_LoginPendingRequest;
+class RPC_LoginPendingRequestDefaultTypeInternal;
+extern RPC_LoginPendingRequestDefaultTypeInternal _RPC_LoginPendingRequest_default_instance_;
+class RPC_LoginPendingResponse;
+class RPC_LoginPendingResponseDefaultTypeInternal;
+extern RPC_LoginPendingResponseDefaultTypeInternal _RPC_LoginPendingResponse_default_instance_;
 }  // namespace rpc_login
 PROTOBUF_NAMESPACE_OPEN
-template<> ::rpc_login::L2G_LoginPendingRequest* Arena::CreateMaybeMessage<::rpc_login::L2G_LoginPendingRequest>(Arena*);
-template<> ::rpc_login::L2G_LoginPendingResponse* Arena::CreateMaybeMessage<::rpc_login::L2G_LoginPendingResponse>(Arena*);
+template<> ::rpc_login::RPC_LoginPendingRequest* Arena::CreateMaybeMessage<::rpc_login::RPC_LoginPendingRequest>(Arena*);
+template<> ::rpc_login::RPC_LoginPendingResponse* Arena::CreateMaybeMessage<::rpc_login::RPC_LoginPendingResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace rpc_login {
 
 // ===================================================================
 
-class L2G_LoginPendingRequest :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc_login.L2G_LoginPendingRequest) */ {
+class RPC_LoginPendingRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc_login.RPC_LoginPendingRequest) */ {
  public:
-  L2G_LoginPendingRequest();
-  virtual ~L2G_LoginPendingRequest();
+  RPC_LoginPendingRequest();
+  virtual ~RPC_LoginPendingRequest();
 
-  L2G_LoginPendingRequest(const L2G_LoginPendingRequest& from);
-  L2G_LoginPendingRequest(L2G_LoginPendingRequest&& from) noexcept
-    : L2G_LoginPendingRequest() {
+  RPC_LoginPendingRequest(const RPC_LoginPendingRequest& from);
+  RPC_LoginPendingRequest(RPC_LoginPendingRequest&& from) noexcept
+    : RPC_LoginPendingRequest() {
     *this = ::std::move(from);
   }
 
-  inline L2G_LoginPendingRequest& operator=(const L2G_LoginPendingRequest& from) {
+  inline RPC_LoginPendingRequest& operator=(const RPC_LoginPendingRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline L2G_LoginPendingRequest& operator=(L2G_LoginPendingRequest&& from) noexcept {
+  inline RPC_LoginPendingRequest& operator=(RPC_LoginPendingRequest&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -104,37 +104,37 @@ class L2G_LoginPendingRequest :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const L2G_LoginPendingRequest& default_instance();
+  static const RPC_LoginPendingRequest& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const L2G_LoginPendingRequest* internal_default_instance() {
-    return reinterpret_cast<const L2G_LoginPendingRequest*>(
-               &_L2G_LoginPendingRequest_default_instance_);
+  static inline const RPC_LoginPendingRequest* internal_default_instance() {
+    return reinterpret_cast<const RPC_LoginPendingRequest*>(
+               &_RPC_LoginPendingRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(L2G_LoginPendingRequest& a, L2G_LoginPendingRequest& b) {
+  friend void swap(RPC_LoginPendingRequest& a, RPC_LoginPendingRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(L2G_LoginPendingRequest* other) {
+  inline void Swap(RPC_LoginPendingRequest* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline L2G_LoginPendingRequest* New() const final {
-    return CreateMaybeMessage<L2G_LoginPendingRequest>(nullptr);
+  inline RPC_LoginPendingRequest* New() const final {
+    return CreateMaybeMessage<RPC_LoginPendingRequest>(nullptr);
   }
 
-  L2G_LoginPendingRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<L2G_LoginPendingRequest>(arena);
+  RPC_LoginPendingRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RPC_LoginPendingRequest>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const L2G_LoginPendingRequest& from);
-  void MergeFrom(const L2G_LoginPendingRequest& from);
+  void CopyFrom(const RPC_LoginPendingRequest& from);
+  void MergeFrom(const RPC_LoginPendingRequest& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -148,10 +148,10 @@ class L2G_LoginPendingRequest :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(L2G_LoginPendingRequest* other);
+  void InternalSwap(RPC_LoginPendingRequest* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "rpc_login.L2G_LoginPendingRequest";
+    return "rpc_login.RPC_LoginPendingRequest";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -224,7 +224,7 @@ class L2G_LoginPendingRequest :
   void _internal_set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:rpc_login.L2G_LoginPendingRequest)
+  // @@protoc_insertion_point(class_scope:rpc_login.RPC_LoginPendingRequest)
  private:
   class _Internal;
 
@@ -238,23 +238,23 @@ class L2G_LoginPendingRequest :
 };
 // -------------------------------------------------------------------
 
-class L2G_LoginPendingResponse :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc_login.L2G_LoginPendingResponse) */ {
+class RPC_LoginPendingResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rpc_login.RPC_LoginPendingResponse) */ {
  public:
-  L2G_LoginPendingResponse();
-  virtual ~L2G_LoginPendingResponse();
+  RPC_LoginPendingResponse();
+  virtual ~RPC_LoginPendingResponse();
 
-  L2G_LoginPendingResponse(const L2G_LoginPendingResponse& from);
-  L2G_LoginPendingResponse(L2G_LoginPendingResponse&& from) noexcept
-    : L2G_LoginPendingResponse() {
+  RPC_LoginPendingResponse(const RPC_LoginPendingResponse& from);
+  RPC_LoginPendingResponse(RPC_LoginPendingResponse&& from) noexcept
+    : RPC_LoginPendingResponse() {
     *this = ::std::move(from);
   }
 
-  inline L2G_LoginPendingResponse& operator=(const L2G_LoginPendingResponse& from) {
+  inline RPC_LoginPendingResponse& operator=(const RPC_LoginPendingResponse& from) {
     CopyFrom(from);
     return *this;
   }
-  inline L2G_LoginPendingResponse& operator=(L2G_LoginPendingResponse&& from) noexcept {
+  inline RPC_LoginPendingResponse& operator=(RPC_LoginPendingResponse&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -272,37 +272,37 @@ class L2G_LoginPendingResponse :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const L2G_LoginPendingResponse& default_instance();
+  static const RPC_LoginPendingResponse& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const L2G_LoginPendingResponse* internal_default_instance() {
-    return reinterpret_cast<const L2G_LoginPendingResponse*>(
-               &_L2G_LoginPendingResponse_default_instance_);
+  static inline const RPC_LoginPendingResponse* internal_default_instance() {
+    return reinterpret_cast<const RPC_LoginPendingResponse*>(
+               &_RPC_LoginPendingResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(L2G_LoginPendingResponse& a, L2G_LoginPendingResponse& b) {
+  friend void swap(RPC_LoginPendingResponse& a, RPC_LoginPendingResponse& b) {
     a.Swap(&b);
   }
-  inline void Swap(L2G_LoginPendingResponse* other) {
+  inline void Swap(RPC_LoginPendingResponse* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline L2G_LoginPendingResponse* New() const final {
-    return CreateMaybeMessage<L2G_LoginPendingResponse>(nullptr);
+  inline RPC_LoginPendingResponse* New() const final {
+    return CreateMaybeMessage<RPC_LoginPendingResponse>(nullptr);
   }
 
-  L2G_LoginPendingResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<L2G_LoginPendingResponse>(arena);
+  RPC_LoginPendingResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RPC_LoginPendingResponse>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const L2G_LoginPendingResponse& from);
-  void MergeFrom(const L2G_LoginPendingResponse& from);
+  void CopyFrom(const RPC_LoginPendingResponse& from);
+  void MergeFrom(const RPC_LoginPendingResponse& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -316,10 +316,10 @@ class L2G_LoginPendingResponse :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(L2G_LoginPendingResponse* other);
+  void InternalSwap(RPC_LoginPendingResponse* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "rpc_login.L2G_LoginPendingResponse";
+    return "rpc_login.RPC_LoginPendingResponse";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -365,7 +365,7 @@ class L2G_LoginPendingResponse :
   void _internal_set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:rpc_login.L2G_LoginPendingResponse)
+  // @@protoc_insertion_point(class_scope:rpc_login.RPC_LoginPendingResponse)
  private:
   class _Internal;
 
@@ -384,170 +384,170 @@ class L2G_LoginPendingResponse :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// L2G_LoginPendingRequest
+// RPC_LoginPendingRequest
 
 // uint64 account_id = 1;
-inline void L2G_LoginPendingRequest::clear_account_id() {
+inline void RPC_LoginPendingRequest::clear_account_id() {
   account_id_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 L2G_LoginPendingRequest::_internal_account_id() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 RPC_LoginPendingRequest::_internal_account_id() const {
   return account_id_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 L2G_LoginPendingRequest::account_id() const {
-  // @@protoc_insertion_point(field_get:rpc_login.L2G_LoginPendingRequest.account_id)
+inline ::PROTOBUF_NAMESPACE_ID::uint64 RPC_LoginPendingRequest::account_id() const {
+  // @@protoc_insertion_point(field_get:rpc_login.RPC_LoginPendingRequest.account_id)
   return _internal_account_id();
 }
-inline void L2G_LoginPendingRequest::_internal_set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void RPC_LoginPendingRequest::_internal_set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   account_id_ = value;
 }
-inline void L2G_LoginPendingRequest::set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void RPC_LoginPendingRequest::set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_account_id(value);
-  // @@protoc_insertion_point(field_set:rpc_login.L2G_LoginPendingRequest.account_id)
+  // @@protoc_insertion_point(field_set:rpc_login.RPC_LoginPendingRequest.account_id)
 }
 
 // string session_key = 2;
-inline void L2G_LoginPendingRequest::clear_session_key() {
+inline void RPC_LoginPendingRequest::clear_session_key() {
   session_key_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline const std::string& L2G_LoginPendingRequest::session_key() const {
-  // @@protoc_insertion_point(field_get:rpc_login.L2G_LoginPendingRequest.session_key)
+inline const std::string& RPC_LoginPendingRequest::session_key() const {
+  // @@protoc_insertion_point(field_get:rpc_login.RPC_LoginPendingRequest.session_key)
   return _internal_session_key();
 }
-inline void L2G_LoginPendingRequest::set_session_key(const std::string& value) {
+inline void RPC_LoginPendingRequest::set_session_key(const std::string& value) {
   _internal_set_session_key(value);
-  // @@protoc_insertion_point(field_set:rpc_login.L2G_LoginPendingRequest.session_key)
+  // @@protoc_insertion_point(field_set:rpc_login.RPC_LoginPendingRequest.session_key)
 }
-inline std::string* L2G_LoginPendingRequest::mutable_session_key() {
-  // @@protoc_insertion_point(field_mutable:rpc_login.L2G_LoginPendingRequest.session_key)
+inline std::string* RPC_LoginPendingRequest::mutable_session_key() {
+  // @@protoc_insertion_point(field_mutable:rpc_login.RPC_LoginPendingRequest.session_key)
   return _internal_mutable_session_key();
 }
-inline const std::string& L2G_LoginPendingRequest::_internal_session_key() const {
+inline const std::string& RPC_LoginPendingRequest::_internal_session_key() const {
   return session_key_.GetNoArena();
 }
-inline void L2G_LoginPendingRequest::_internal_set_session_key(const std::string& value) {
+inline void RPC_LoginPendingRequest::_internal_set_session_key(const std::string& value) {
   
   session_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
 }
-inline void L2G_LoginPendingRequest::set_session_key(std::string&& value) {
+inline void RPC_LoginPendingRequest::set_session_key(std::string&& value) {
   
   session_key_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:rpc_login.L2G_LoginPendingRequest.session_key)
+  // @@protoc_insertion_point(field_set_rvalue:rpc_login.RPC_LoginPendingRequest.session_key)
 }
-inline void L2G_LoginPendingRequest::set_session_key(const char* value) {
+inline void RPC_LoginPendingRequest::set_session_key(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
   session_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:rpc_login.L2G_LoginPendingRequest.session_key)
+  // @@protoc_insertion_point(field_set_char:rpc_login.RPC_LoginPendingRequest.session_key)
 }
-inline void L2G_LoginPendingRequest::set_session_key(const char* value, size_t size) {
+inline void RPC_LoginPendingRequest::set_session_key(const char* value, size_t size) {
   
   session_key_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:rpc_login.L2G_LoginPendingRequest.session_key)
+  // @@protoc_insertion_point(field_set_pointer:rpc_login.RPC_LoginPendingRequest.session_key)
 }
-inline std::string* L2G_LoginPendingRequest::_internal_mutable_session_key() {
+inline std::string* RPC_LoginPendingRequest::_internal_mutable_session_key() {
   
   return session_key_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* L2G_LoginPendingRequest::release_session_key() {
-  // @@protoc_insertion_point(field_release:rpc_login.L2G_LoginPendingRequest.session_key)
+inline std::string* RPC_LoginPendingRequest::release_session_key() {
+  // @@protoc_insertion_point(field_release:rpc_login.RPC_LoginPendingRequest.session_key)
   
   return session_key_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void L2G_LoginPendingRequest::set_allocated_session_key(std::string* session_key) {
+inline void RPC_LoginPendingRequest::set_allocated_session_key(std::string* session_key) {
   if (session_key != nullptr) {
     
   } else {
     
   }
   session_key_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), session_key);
-  // @@protoc_insertion_point(field_set_allocated:rpc_login.L2G_LoginPendingRequest.session_key)
+  // @@protoc_insertion_point(field_set_allocated:rpc_login.RPC_LoginPendingRequest.session_key)
 }
 
 // int32 version = 3;
-inline void L2G_LoginPendingRequest::clear_version() {
+inline void RPC_LoginPendingRequest::clear_version() {
   version_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 L2G_LoginPendingRequest::_internal_version() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 RPC_LoginPendingRequest::_internal_version() const {
   return version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 L2G_LoginPendingRequest::version() const {
-  // @@protoc_insertion_point(field_get:rpc_login.L2G_LoginPendingRequest.version)
+inline ::PROTOBUF_NAMESPACE_ID::int32 RPC_LoginPendingRequest::version() const {
+  // @@protoc_insertion_point(field_get:rpc_login.RPC_LoginPendingRequest.version)
   return _internal_version();
 }
-inline void L2G_LoginPendingRequest::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void RPC_LoginPendingRequest::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
   version_ = value;
 }
-inline void L2G_LoginPendingRequest::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void RPC_LoginPendingRequest::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_version(value);
-  // @@protoc_insertion_point(field_set:rpc_login.L2G_LoginPendingRequest.version)
+  // @@protoc_insertion_point(field_set:rpc_login.RPC_LoginPendingRequest.version)
 }
 
 // uint32 db_id = 4;
-inline void L2G_LoginPendingRequest::clear_db_id() {
+inline void RPC_LoginPendingRequest::clear_db_id() {
   db_id_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 L2G_LoginPendingRequest::_internal_db_id() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 RPC_LoginPendingRequest::_internal_db_id() const {
   return db_id_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 L2G_LoginPendingRequest::db_id() const {
-  // @@protoc_insertion_point(field_get:rpc_login.L2G_LoginPendingRequest.db_id)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 RPC_LoginPendingRequest::db_id() const {
+  // @@protoc_insertion_point(field_get:rpc_login.RPC_LoginPendingRequest.db_id)
   return _internal_db_id();
 }
-inline void L2G_LoginPendingRequest::_internal_set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void RPC_LoginPendingRequest::_internal_set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   db_id_ = value;
 }
-inline void L2G_LoginPendingRequest::set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void RPC_LoginPendingRequest::set_db_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_db_id(value);
-  // @@protoc_insertion_point(field_set:rpc_login.L2G_LoginPendingRequest.db_id)
+  // @@protoc_insertion_point(field_set:rpc_login.RPC_LoginPendingRequest.db_id)
 }
 
 // -------------------------------------------------------------------
 
-// L2G_LoginPendingResponse
+// RPC_LoginPendingResponse
 
 // int32 status_code = 1;
-inline void L2G_LoginPendingResponse::clear_status_code() {
+inline void RPC_LoginPendingResponse::clear_status_code() {
   status_code_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 L2G_LoginPendingResponse::_internal_status_code() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 RPC_LoginPendingResponse::_internal_status_code() const {
   return status_code_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 L2G_LoginPendingResponse::status_code() const {
-  // @@protoc_insertion_point(field_get:rpc_login.L2G_LoginPendingResponse.status_code)
+inline ::PROTOBUF_NAMESPACE_ID::int32 RPC_LoginPendingResponse::status_code() const {
+  // @@protoc_insertion_point(field_get:rpc_login.RPC_LoginPendingResponse.status_code)
   return _internal_status_code();
 }
-inline void L2G_LoginPendingResponse::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void RPC_LoginPendingResponse::_internal_set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
   status_code_ = value;
 }
-inline void L2G_LoginPendingResponse::set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void RPC_LoginPendingResponse::set_status_code(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_status_code(value);
-  // @@protoc_insertion_point(field_set:rpc_login.L2G_LoginPendingResponse.status_code)
+  // @@protoc_insertion_point(field_set:rpc_login.RPC_LoginPendingResponse.status_code)
 }
 
 // uint64 account_id = 2;
-inline void L2G_LoginPendingResponse::clear_account_id() {
+inline void RPC_LoginPendingResponse::clear_account_id() {
   account_id_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 L2G_LoginPendingResponse::_internal_account_id() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint64 RPC_LoginPendingResponse::_internal_account_id() const {
   return account_id_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 L2G_LoginPendingResponse::account_id() const {
-  // @@protoc_insertion_point(field_get:rpc_login.L2G_LoginPendingResponse.account_id)
+inline ::PROTOBUF_NAMESPACE_ID::uint64 RPC_LoginPendingResponse::account_id() const {
+  // @@protoc_insertion_point(field_get:rpc_login.RPC_LoginPendingResponse.account_id)
   return _internal_account_id();
 }
-inline void L2G_LoginPendingResponse::_internal_set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void RPC_LoginPendingResponse::_internal_set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
   account_id_ = value;
 }
-inline void L2G_LoginPendingResponse::set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void RPC_LoginPendingResponse::set_account_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_account_id(value);
-  // @@protoc_insertion_point(field_set:rpc_login.L2G_LoginPendingResponse.account_id)
+  // @@protoc_insertion_point(field_set:rpc_login.RPC_LoginPendingResponse.account_id)
 }
 
 #ifdef __GNUC__

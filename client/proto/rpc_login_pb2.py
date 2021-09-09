@@ -18,42 +18,42 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='rpc_login',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x0frpc_login.proto\x12\trpc_login\"b\n\x17L2G_LoginPendingRequest\x12\x12\n\naccount_id\x18\x01 \x01(\x04\x12\x13\n\x0bsession_key\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x05\x12\r\n\x05\x64\x62_id\x18\x04 \x01(\r\"C\n\x18L2G_LoginPendingResponse\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x12\n\naccount_id\x18\x02 \x01(\x04\x62\x06proto3'
+  serialized_pb=b'\n\x0frpc_login.proto\x12\trpc_login\"b\n\x17RPC_LoginPendingRequest\x12\x12\n\naccount_id\x18\x01 \x01(\x04\x12\x13\n\x0bsession_key\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x05\x12\r\n\x05\x64\x62_id\x18\x04 \x01(\r\"C\n\x18RPC_LoginPendingResponse\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x12\n\naccount_id\x18\x02 \x01(\x04\x62\x06proto3'
 )
 
 
 
 
-_L2G_LOGINPENDINGREQUEST = _descriptor.Descriptor(
-  name='L2G_LoginPendingRequest',
-  full_name='rpc_login.L2G_LoginPendingRequest',
+_RPC_LOGINPENDINGREQUEST = _descriptor.Descriptor(
+  name='RPC_LoginPendingRequest',
+  full_name='rpc_login.RPC_LoginPendingRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='account_id', full_name='rpc_login.L2G_LoginPendingRequest.account_id', index=0,
+      name='account_id', full_name='rpc_login.RPC_LoginPendingRequest.account_id', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='session_key', full_name='rpc_login.L2G_LoginPendingRequest.session_key', index=1,
+      name='session_key', full_name='rpc_login.RPC_LoginPendingRequest.session_key', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='version', full_name='rpc_login.L2G_LoginPendingRequest.version', index=2,
+      name='version', full_name='rpc_login.RPC_LoginPendingRequest.version', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='db_id', full_name='rpc_login.L2G_LoginPendingRequest.db_id', index=3,
+      name='db_id', full_name='rpc_login.RPC_LoginPendingRequest.db_id', index=3,
       number=4, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -76,22 +76,22 @@ _L2G_LOGINPENDINGREQUEST = _descriptor.Descriptor(
 )
 
 
-_L2G_LOGINPENDINGRESPONSE = _descriptor.Descriptor(
-  name='L2G_LoginPendingResponse',
-  full_name='rpc_login.L2G_LoginPendingResponse',
+_RPC_LOGINPENDINGRESPONSE = _descriptor.Descriptor(
+  name='RPC_LoginPendingResponse',
+  full_name='rpc_login.RPC_LoginPendingResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='status_code', full_name='rpc_login.L2G_LoginPendingResponse.status_code', index=0,
+      name='status_code', full_name='rpc_login.RPC_LoginPendingResponse.status_code', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='account_id', full_name='rpc_login.L2G_LoginPendingResponse.account_id', index=1,
+      name='account_id', full_name='rpc_login.RPC_LoginPendingResponse.account_id', index=1,
       number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -113,23 +113,23 @@ _L2G_LOGINPENDINGRESPONSE = _descriptor.Descriptor(
   serialized_end=197,
 )
 
-DESCRIPTOR.message_types_by_name['L2G_LoginPendingRequest'] = _L2G_LOGINPENDINGREQUEST
-DESCRIPTOR.message_types_by_name['L2G_LoginPendingResponse'] = _L2G_LOGINPENDINGRESPONSE
+DESCRIPTOR.message_types_by_name['RPC_LoginPendingRequest'] = _RPC_LOGINPENDINGREQUEST
+DESCRIPTOR.message_types_by_name['RPC_LoginPendingResponse'] = _RPC_LOGINPENDINGRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-L2G_LoginPendingRequest = _reflection.GeneratedProtocolMessageType('L2G_LoginPendingRequest', (_message.Message,), {
-  'DESCRIPTOR' : _L2G_LOGINPENDINGREQUEST,
+RPC_LoginPendingRequest = _reflection.GeneratedProtocolMessageType('RPC_LoginPendingRequest', (_message.Message,), {
+  'DESCRIPTOR' : _RPC_LOGINPENDINGREQUEST,
   '__module__' : 'rpc_login_pb2'
-  # @@protoc_insertion_point(class_scope:rpc_login.L2G_LoginPendingRequest)
+  # @@protoc_insertion_point(class_scope:rpc_login.RPC_LoginPendingRequest)
   })
-_sym_db.RegisterMessage(L2G_LoginPendingRequest)
+_sym_db.RegisterMessage(RPC_LoginPendingRequest)
 
-L2G_LoginPendingResponse = _reflection.GeneratedProtocolMessageType('L2G_LoginPendingResponse', (_message.Message,), {
-  'DESCRIPTOR' : _L2G_LOGINPENDINGRESPONSE,
+RPC_LoginPendingResponse = _reflection.GeneratedProtocolMessageType('RPC_LoginPendingResponse', (_message.Message,), {
+  'DESCRIPTOR' : _RPC_LOGINPENDINGRESPONSE,
   '__module__' : 'rpc_login_pb2'
-  # @@protoc_insertion_point(class_scope:rpc_login.L2G_LoginPendingResponse)
+  # @@protoc_insertion_point(class_scope:rpc_login.RPC_LoginPendingResponse)
   })
-_sym_db.RegisterMessage(L2G_LoginPendingResponse)
+_sym_db.RegisterMessage(RPC_LoginPendingResponse)
 
 
 # @@protoc_insertion_point(module_scope)

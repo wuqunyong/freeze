@@ -16,7 +16,7 @@ enum RPC_OPCODES {
 	RPC_MysqlQueryByFilter = 406;
 	RPC_MysqlMultiQuery = 407;
 
-	RPC_L2G_LoginPending = 1001;
+	OP_RPC_LoginPending = 1001;
 }
 
 enum RPC_CODE {

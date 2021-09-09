@@ -406,25 +406,25 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   " \001(\r\022\020\n\010body_msg\030\003 \001(\014\"6\n\024MSG_RPC_REQUES"
   "T_ECHO\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\"7"
   "\n\025MSG_RPC_RESPONSE_ECHO\022\016\n\006value1\030\001 \001(\004\022"
-  "\016\n\006value2\030\002 \001(\t*\357\001\n\013RPC_OPCODES\022\014\n\010RPC_N"
+  "\016\n\006value2\030\002 \001(\t*\356\001\n\013RPC_OPCODES\022\014\n\010RPC_N"
   "one\020\000\022\020\n\014RPC_EchoTest\020\001\022\027\n\022RPC_MysqlDesc"
   "Table\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022\024\n\017RPC_Mys"
   "qlInsert\020\223\003\022\024\n\017RPC_MysqlUpdate\020\224\003\022\024\n\017RPC"
   "_MysqlDelete\020\225\003\022\033\n\026RPC_MysqlQueryByFilte"
-  "r\020\226\003\022\030\n\023RPC_MysqlMultiQuery\020\227\003\022\031\n\024RPC_L2"
-  "G_LoginPending\020\351\007*\343\003\n\010RPC_CODE\022\013\n\007CODE_O"
-  "k\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Timeout\020d"
-  "\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_ParseError"
-  "\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031CODE_Rou"
-  "teNotLinkToServer\020h\022\037\n\033CODE_RouteSendToS"
-  "erverError\020i\022\031\n\025CODE_OpcodeUnregister\020j\022"
-  "\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE_LogicTh"
-  "readNull\020l\022\031\n\025CODE_NotReceivedReply\020m\022\020\n"
-  "\014CODE_NotSend\020n\022\030\n\024CODE_LoadFromDbError\020"
-  "o\022\026\n\022CODE_DirtyFlagZero\020p\022\023\n\017CODE_QueryE"
-  "rror\020q\022\037\n\033CODE_TableNameNotExistError\020r\022"
-  "\036\n\032CODE_GenerateQuerySQLError\020s\022\036\n\032CODE_"
-  "NotMatchedResultError\020tb\006proto3"
+  "r\020\226\003\022\030\n\023RPC_MysqlMultiQuery\020\227\003\022\030\n\023OP_RPC"
+  "_LoginPending\020\351\007*\343\003\n\010RPC_CODE\022\013\n\007CODE_Ok"
+  "\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Timeout\020d\022"
+  "\023\n\017CODE_Unregister\020e\022\023\n\017CODE_ParseError\020"
+  "f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031CODE_Rout"
+  "eNotLinkToServer\020h\022\037\n\033CODE_RouteSendToSe"
+  "rverError\020i\022\031\n\025CODE_OpcodeUnregister\020j\022\027"
+  "\n\023CODE_CreateMsgError\020k\022\030\n\024CODE_LogicThr"
+  "eadNull\020l\022\031\n\025CODE_NotReceivedReply\020m\022\020\n\014"
+  "CODE_NotSend\020n\022\030\n\024CODE_LoadFromDbError\020o"
+  "\022\026\n\022CODE_DirtyFlagZero\020p\022\023\n\017CODE_QueryEr"
+  "ror\020q\022\037\n\033CODE_TableNameNotExistError\020r\022\036"
+  "\n\032CODE_GenerateQuerySQLError\020s\022\036\n\032CODE_N"
+  "otMatchedResultError\020tb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -445,7 +445,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1831,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1830,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 12, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 12, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
