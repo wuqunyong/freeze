@@ -19,21 +19,14 @@ void LoginMgrModule::init()
 	auto& cmd = LogicCmdHandlerSingleton::get();
 	cmd.init();
 	cmd.registerOnCmd("nats_publish", "nats_publish", LoginMgrModule::Cmd_natsPublish);
-
-	return;
 }
 
 
 void LoginMgrModule::ready()
 {
 	// CLIENT OPCODE
-	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	//server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgrModule::handleAccountNotify);
-
 	using namespace ::login_msg;
 	S_REGISTER_REQUEST(ACCOUNT_LOGIN_L, LoginMgrModule::handleAccount);
-
-	return;
 }
 
 
