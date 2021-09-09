@@ -19,16 +19,25 @@
 namespace apie {
 namespace service {
 
-#define S_REGISTER_SERVICE(opcode, func)                                                                                                                                                                     \
-  {                                                                                                                                                                                                          \
-  	bool bResult = apie::service::ServiceHandlerSingleton::get().server.createService<MSG_REQUEST_##opcode, ::apie::OP_MSG_RESPONSE_##opcode, MSG_RESPONSE_##opcode>(::apie::OP_MSG_REQUEST_##opcode, func); \
-  	if (!bResult) {                                                                                                                                                                                          \
-		std::stringstream ss;                                                                                                                                                                                \
-		ss << "server register " << ::apie::OP_MSG_REQUEST_##opcode << " collision";                                                                                                                         \
-		PANIC_ABORT(ss.str().c_str());                                                                                                                                                                       \
-	}                                                                                                                                                                                                        \
-  }
+#define S_REGISTER_REQUEST(opcode, func)                                                                                                                                                                         \
+	{                                                                                                                                                                                                            \
+		bool bResult = apie::service::ServiceHandlerSingleton::get().server.createService<MSG_REQUEST_##opcode, ::apie::OP_MSG_RESPONSE_##opcode, MSG_RESPONSE_##opcode>(::apie::OP_MSG_REQUEST_##opcode, func); \
+		if (!bResult) {                                                                                                                                                                                          \
+			std::stringstream ss;                                                                                                                                                                                \
+			ss << "server register " << ::apie::OP_MSG_REQUEST_##opcode << " collision";                                                                                                                         \
+			PANIC_ABORT(ss.str().c_str());                                                                                                                                                                       \
+		}                                                                                                                                                                                                        \
+	}
 
+#define S_REGISTER_NOTIFY(opcode, func)                                                                                                                 \
+	{                                                                                                                                                   \
+		bool bResult = apie::service::ServiceHandlerSingleton::get().server.createService<MSG_NOTIFY_##opcode>(::apie::OP_MSG_NOTIFY_##opcode, func);   \
+		if (!bResult) {                                                                                                                                 \
+			std::stringstream ss;                                                                                                                       \
+			ss << "server register " << ::apie::OP_MSG_NOTIFY_##opcode << " collision";                                                                 \
+			PANIC_ABORT(ss.str().c_str());                                                                                                              \
+		}                                                                                                                                               \
+	}
 
 #define S_INTRA_REGISTER_SERVICE(opcode, func)                                                                                                                                                                    \
   {                                                                                                                                                                                                               \

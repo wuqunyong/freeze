@@ -31,7 +31,7 @@ void LoginMgrModule::ready()
 	//server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, LoginMgrModule::handleAccountNotify);
 
 	using namespace ::login_msg;
-	S_REGISTER_SERVICE(ACCOUNT_LOGIN_L, LoginMgrModule::handleAccount);
+	S_REGISTER_REQUEST(ACCOUNT_LOGIN_L, LoginMgrModule::handleAccount);
 
 	return;
 }

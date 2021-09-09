@@ -24,7 +24,7 @@
 namespace apie {
 namespace forward {
 
-#define S_REGISTER_FORWARD_SERVICE(opcode, func)                                                                                                                                                              \
+#define S_REGISTER_FORWARD_REQUEST(opcode, func)                                                                                                                                                              \
 	{                                                                                                                                                                                                         \
 		bool bResult = apie::forward::ForwardManagerSingleton::get().createService<MSG_REQUEST_##opcode, ::apie::OP_MSG_RESPONSE_##opcode, MSG_RESPONSE_##opcode>(::apie::OP_MSG_REQUEST_##opcode, func);     \
 		if (!bResult) {                                                                                                                                                                                       \
@@ -32,6 +32,16 @@ namespace forward {
 			ss << "forward register " << ::apie::OP_MSG_REQUEST_##opcode << " collision";                                                                                                                     \
 			PANIC_ABORT(ss.str().c_str());                                                                                                                                                                    \
 		}                                                                                                                                                                                                     \
+	}
+
+#define S_REGISTER_FORWARD_NOTIFY(opcode, func)                                                                                                       \
+	{                                                                                                                                                 \
+		bool bResult = apie::forward::ForwardManagerSingleton::get().createService<MSG_NOTIFY_##opcode>(::apie::OP_MSG_NOTIFY_##opcode, func);        \
+		if (!bResult) {                                                                                                                               \
+			std::stringstream ss;                                                                                                                     \
+			ss << "forward register " << ::apie::OP_MSG_NOTIFY_##opcode << " collision";                                                              \
+			PANIC_ABORT(ss.str().c_str());                                                                                                            \
+		}                                                                                                                                             \
 	}
 
 

@@ -44,9 +44,9 @@ void GatewayMgrModule::ready()
 	server.setDefaultFunc(GatewayMgrModule::handleDefaultOpcodes);
 
 	using namespace ::login_msg;
-	S_REGISTER_SERVICE(CLIENT_LOGIN, GatewayMgrModule::handleRequestClientLogin);
-	S_REGISTER_SERVICE(HANDSHAKE_INIT, GatewayMgrModule::handleRequestHandshakeInit);
-	S_REGISTER_SERVICE(HANDSHAKE_ESTABLISHED, GatewayMgrModule::handleRequestHandshakeEstablished);
+	S_REGISTER_REQUEST(CLIENT_LOGIN, GatewayMgrModule::handleRequestClientLogin);
+	S_REGISTER_REQUEST(HANDSHAKE_INIT, GatewayMgrModule::handleRequestHandshakeInit);
+	S_REGISTER_REQUEST(HANDSHAKE_ESTABLISHED, GatewayMgrModule::handleRequestHandshakeEstablished);
 
 	// FORWARD
 	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgrModule::handleDemuxForward);
