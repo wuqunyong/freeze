@@ -24,8 +24,8 @@ void SceneMgrModule::ready()
 
 
 	// FORWARD
-	auto& mux = apie::forward::ForwardManagerSingleton::get();
-	mux.createService<::login_msg::MSG_REQUEST_ECHO, ::apie::OP_MSG_RESPONSE_ECHO, ::login_msg::MSG_RESPONSE_ECHO>(::apie::OP_MSG_REQUEST_ECHO, SceneMgrModule::Forward_echo);
+	using namespace ::login_msg;
+	S_REGISTER_FORWARD_SERVICE(ECHO, SceneMgrModule::Forward_echo);
 }
 
 void SceneMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
