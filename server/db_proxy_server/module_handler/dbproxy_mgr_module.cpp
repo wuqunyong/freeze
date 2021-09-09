@@ -13,7 +13,7 @@ void DBProxyMgrModule::init()
 
 	// PUBSUB
 	auto& pubsub = apie::pubsub::PubSubManagerSingleton::get();
-	pubsub.subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, DBProxyMgrModule::PubSub_logicCmd);
+	pubsub.subscribe<::pubsub::LOGIC_CMD>(::pubsub::PT_LogicCmd, DBProxyMgrModule::PubSub_logicCmd);
 
 	// CMD
 	LogicCmdHandlerSingleton::get().init();

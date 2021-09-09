@@ -9,7 +9,7 @@ void SceneMgrModule::init()
 {
 	// PUBSUB
 	auto& pubsub = apie::pubsub::PubSubManagerSingleton::get();
-	pubsub.subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, SceneMgrModule::PubSub_logicCmd);
+	pubsub.subscribe<::pubsub::LOGIC_CMD>(::pubsub::PT_LogicCmd, SceneMgrModule::PubSub_logicCmd);
 
 	// CMD
 	auto& cmd = LogicCmdHandlerSingleton::get();
