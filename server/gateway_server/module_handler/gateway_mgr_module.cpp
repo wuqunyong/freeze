@@ -88,14 +88,11 @@ void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role,
 
 	uint64_t iSerialNum = ptrGatewayRole->getSerailNum();
 	uint32_t iMaskFlag = ptrGatewayRole->getMaskFlag();
-	if (iMaskFlag == 0)
-	{
-		network::OutputStream::sendMsgByStr(iSerialNum, info.iOpcode, msg, apie::ConnetionType::CT_SERVER);
-	}
-	else
-	{
-		network::OutputStream::sendMsgByStrWithFlag(iSerialNum, info.iOpcode, iMaskFlag, msg, apie::ConnetionType::CT_SERVER);
-	}
+
+	info.iSessionId = iSerialNum;
+	info.iConnetionType = ConnetionType::CT_SERVER;
+	info.setFlags(iMaskFlag);
+	network::OutputStream::sendStringMsgImpl(info, msg);
 }
 
 apie::status::Status GatewayMgrModule::RPC_loginPending(

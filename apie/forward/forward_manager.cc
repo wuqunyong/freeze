@@ -124,8 +124,10 @@ void ForwardManager::onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role
 MessageInfo ForwardManager::extractMessageInfo(const ::rpc_msg::RoleIdentifier& role)
 {
 	MessageInfo info;
+	info.iSessionId = role.info().session_id();
 	info.iSeqNum = role.info().seq_num();
 	info.iOpcode = role.info().opcode();
+	info.iResponseOpcode = role.info().response_opcode();
 
 	switch (role.info().connetion_type())
 	{
