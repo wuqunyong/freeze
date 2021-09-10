@@ -75,8 +75,10 @@ void GatewayMgrModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 	apie::forward::ForwardManagerSingleton::get().sendForwardMux(server, role, info, msg);
 }
 
-void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)
+void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, const std::string& msg)
 {
+	MessageInfo info = apie::forward::ForwardManager::extractMessageInfo(role);
+
 	uint64_t iRoleId = role.user_id();
 	auto ptrGatewayRole = GatewayMgrSingleton::get().findGatewayRoleById(iRoleId);
 	if (ptrGatewayRole == nullptr)
@@ -88,11 +90,11 @@ void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role,
 	uint32_t iMaskFlag = ptrGatewayRole->getMaskFlag();
 	if (iMaskFlag == 0)
 	{
-		network::OutputStream::sendMsgByStr(iSerialNum, opcode, msg, apie::ConnetionType::CT_SERVER);
+		network::OutputStream::sendMsgByStr(iSerialNum, info.iOpcode, msg, apie::ConnetionType::CT_SERVER);
 	}
 	else
 	{
-		network::OutputStream::sendMsgByStrWithFlag(iSerialNum, opcode, iMaskFlag, msg, apie::ConnetionType::CT_SERVER);
+		network::OutputStream::sendMsgByStrWithFlag(iSerialNum, info.iOpcode, iMaskFlag, msg, apie::ConnetionType::CT_SERVER);
 	}
 }
 

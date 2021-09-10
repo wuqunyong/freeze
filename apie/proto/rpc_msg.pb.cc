@@ -142,9 +142,10 @@ static void InitDefaultsscc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto() {
   ::rpc_msg::PRC_DeMultiplexer_Forward::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto}, {
-      &scc_info_RoleIdentifier_rpc_5fmsg_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto}, {
+      &scc_info_RoleIdentifier_rpc_5fmsg_2eproto.base,
+      &scc_info_ClientMessageInfo_rpc_5fmsg_2eproto.base,}};
 
 static void InitDefaultsscc_info_RPC_EchoTestRequest_rpc_5fmsg_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -363,7 +364,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward, role_),
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward, opcodes_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward, info_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::PRC_DeMultiplexer_Forward, body_msg_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RPC_EchoTestRequest, _internal_metadata_),
@@ -439,31 +440,32 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "(\r\022\023\n\013result_data\030\006 \001(\014\"|\n\027RPC_Multiplex"
   "er_Forward\022%\n\004role\030\001 \001(\0132\027.rpc_msg.RoleI"
   "dentifier\022(\n\004info\030\002 \001(\0132\032.rpc_msg.Client"
-  "MessageInfo\022\020\n\010body_msg\030\003 \001(\014\"e\n\031PRC_DeM"
+  "MessageInfo\022\020\n\010body_msg\030\003 \001(\014\"~\n\031PRC_DeM"
   "ultiplexer_Forward\022%\n\004role\030\001 \001(\0132\027.rpc_m"
-  "sg.RoleIdentifier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010bo"
-  "dy_msg\030\003 \001(\014\"5\n\023RPC_EchoTestRequest\022\016\n\006v"
-  "alue1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\"6\n\024RPC_EchoT"
-  "estResponse\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 "
-  "\001(\t*\362\001\n\013RPC_OPCODES\022\014\n\010RPC_None\020\000\022\027\n\022RPC"
-  "_MysqlDescTable\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022"
-  "\024\n\017RPC_MysqlInsert\020\223\003\022\024\n\017RPC_MysqlUpdate"
-  "\020\224\003\022\024\n\017RPC_MysqlDelete\020\225\003\022\033\n\026RPC_MysqlQu"
-  "eryByFilter\020\226\003\022\030\n\023RPC_MysqlMultiQuery\020\227\003"
-  "\022\024\n\017OP_RPC_EchoTest\020\351\007\022\030\n\023OP_RPC_LoginPe"
-  "nding\020\321\017*\343\003\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCO"
-  "DE_Ok_Async\020\001\022\020\n\014CODE_Timeout\020d\022\023\n\017CODE_"
-  "Unregister\020e\022\023\n\017CODE_ParseError\020f\022\030\n\024COD"
-  "E_ErrorServerPost\020g\022\035\n\031CODE_RouteNotLink"
-  "ToServer\020h\022\037\n\033CODE_RouteSendToServerErro"
-  "r\020i\022\031\n\025CODE_OpcodeUnregister\020j\022\027\n\023CODE_C"
-  "reateMsgError\020k\022\030\n\024CODE_LogicThreadNull\020"
-  "l\022\031\n\025CODE_NotReceivedReply\020m\022\020\n\014CODE_Not"
-  "Send\020n\022\030\n\024CODE_LoadFromDbError\020o\022\026\n\022CODE"
-  "_DirtyFlagZero\020p\022\023\n\017CODE_QueryError\020q\022\037\n"
-  "\033CODE_TableNameNotExistError\020r\022\036\n\032CODE_G"
-  "enerateQuerySQLError\020s\022\036\n\032CODE_NotMatche"
-  "dResultError\020tb\006proto3"
+  "sg.RoleIdentifier\022(\n\004info\030\002 \001(\0132\032.rpc_ms"
+  "g.ClientMessageInfo\022\020\n\010body_msg\030\003 \001(\014\"5\n"
+  "\023RPC_EchoTestRequest\022\016\n\006value1\030\001 \001(\004\022\016\n\006"
+  "value2\030\002 \001(\t\"6\n\024RPC_EchoTestResponse\022\016\n\006"
+  "value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t*\362\001\n\013RPC_OPC"
+  "ODES\022\014\n\010RPC_None\020\000\022\027\n\022RPC_MysqlDescTable"
+  "\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022\024\n\017RPC_MysqlIns"
+  "ert\020\223\003\022\024\n\017RPC_MysqlUpdate\020\224\003\022\024\n\017RPC_Mysq"
+  "lDelete\020\225\003\022\033\n\026RPC_MysqlQueryByFilter\020\226\003\022"
+  "\030\n\023RPC_MysqlMultiQuery\020\227\003\022\024\n\017OP_RPC_Echo"
+  "Test\020\351\007\022\030\n\023OP_RPC_LoginPending\020\321\017*\343\003\n\010RP"
+  "C_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020"
+  "\n\014CODE_Timeout\020d\022\023\n\017CODE_Unregister\020e\022\023\n"
+  "\017CODE_ParseError\020f\022\030\n\024CODE_ErrorServerPo"
+  "st\020g\022\035\n\031CODE_RouteNotLinkToServer\020h\022\037\n\033C"
+  "ODE_RouteSendToServerError\020i\022\031\n\025CODE_Opc"
+  "odeUnregister\020j\022\027\n\023CODE_CreateMsgError\020k"
+  "\022\030\n\024CODE_LogicThreadNull\020l\022\031\n\025CODE_NotRe"
+  "ceivedReply\020m\022\020\n\014CODE_NotSend\020n\022\030\n\024CODE_"
+  "LoadFromDbError\020o\022\026\n\022CODE_DirtyFlagZero\020"
+  "p\022\023\n\017CODE_QueryError\020q\022\037\n\033CODE_TableName"
+  "NotExistError\020r\022\036\n\032CODE_GenerateQuerySQL"
+  "Error\020s\022\036\n\032CODE_NotMatchedResultError\020tb"
+  "\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -485,7 +487,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 2022,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 2047,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 13, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 13, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -3279,15 +3281,22 @@ void RPC_Multiplexer_Forward::InternalSwap(RPC_Multiplexer_Forward* other) {
 void PRC_DeMultiplexer_Forward::InitAsDefaultInstance() {
   ::rpc_msg::_PRC_DeMultiplexer_Forward_default_instance_._instance.get_mutable()->role_ = const_cast< ::rpc_msg::RoleIdentifier*>(
       ::rpc_msg::RoleIdentifier::internal_default_instance());
+  ::rpc_msg::_PRC_DeMultiplexer_Forward_default_instance_._instance.get_mutable()->info_ = const_cast< ::rpc_msg::ClientMessageInfo*>(
+      ::rpc_msg::ClientMessageInfo::internal_default_instance());
 }
 class PRC_DeMultiplexer_Forward::_Internal {
  public:
   static const ::rpc_msg::RoleIdentifier& role(const PRC_DeMultiplexer_Forward* msg);
+  static const ::rpc_msg::ClientMessageInfo& info(const PRC_DeMultiplexer_Forward* msg);
 };
 
 const ::rpc_msg::RoleIdentifier&
 PRC_DeMultiplexer_Forward::_Internal::role(const PRC_DeMultiplexer_Forward* msg) {
   return *msg->role_;
+}
+const ::rpc_msg::ClientMessageInfo&
+PRC_DeMultiplexer_Forward::_Internal::info(const PRC_DeMultiplexer_Forward* msg) {
+  return *msg->info_;
 }
 PRC_DeMultiplexer_Forward::PRC_DeMultiplexer_Forward()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
@@ -3307,7 +3316,11 @@ PRC_DeMultiplexer_Forward::PRC_DeMultiplexer_Forward(const PRC_DeMultiplexer_For
   } else {
     role_ = nullptr;
   }
-  opcodes_ = from.opcodes_;
+  if (from._internal_has_info()) {
+    info_ = new ::rpc_msg::ClientMessageInfo(*from.info_);
+  } else {
+    info_ = nullptr;
+  }
   // @@protoc_insertion_point(copy_constructor:rpc_msg.PRC_DeMultiplexer_Forward)
 }
 
@@ -3315,8 +3328,8 @@ void PRC_DeMultiplexer_Forward::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto.base);
   body_msg_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&role_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&opcodes_) -
-      reinterpret_cast<char*>(&role_)) + sizeof(opcodes_));
+      reinterpret_cast<char*>(&info_) -
+      reinterpret_cast<char*>(&role_)) + sizeof(info_));
 }
 
 PRC_DeMultiplexer_Forward::~PRC_DeMultiplexer_Forward() {
@@ -3327,6 +3340,7 @@ PRC_DeMultiplexer_Forward::~PRC_DeMultiplexer_Forward() {
 void PRC_DeMultiplexer_Forward::SharedDtor() {
   body_msg_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete role_;
+  if (this != internal_default_instance()) delete info_;
 }
 
 void PRC_DeMultiplexer_Forward::SetCachedSize(int size) const {
@@ -3349,7 +3363,10 @@ void PRC_DeMultiplexer_Forward::Clear() {
     delete role_;
   }
   role_ = nullptr;
-  opcodes_ = 0u;
+  if (GetArenaNoVirtual() == nullptr && info_ != nullptr) {
+    delete info_;
+  }
+  info_ = nullptr;
   _internal_metadata_.Clear();
 }
 
@@ -3367,10 +3384,10 @@ const char* PRC_DeMultiplexer_Forward::_InternalParse(const char* ptr, ::PROTOBU
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // uint32 opcodes = 2;
+      // .rpc_msg.ClientMessageInfo info = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          opcodes_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_info(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -3416,10 +3433,12 @@ failure:
         1, _Internal::role(this), target, stream);
   }
 
-  // uint32 opcodes = 2;
-  if (this->opcodes() != 0) {
+  // .rpc_msg.ClientMessageInfo info = 2;
+  if (this->has_info()) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_opcodes(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::info(this), target, stream);
   }
 
   // bytes body_msg = 3;
@@ -3458,11 +3477,11 @@ size_t PRC_DeMultiplexer_Forward::ByteSizeLong() const {
         *role_);
   }
 
-  // uint32 opcodes = 2;
-  if (this->opcodes() != 0) {
+  // .rpc_msg.ClientMessageInfo info = 2;
+  if (this->has_info()) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_opcodes());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *info_);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3503,8 +3522,8 @@ void PRC_DeMultiplexer_Forward::MergeFrom(const PRC_DeMultiplexer_Forward& from)
   if (from.has_role()) {
     _internal_mutable_role()->::rpc_msg::RoleIdentifier::MergeFrom(from._internal_role());
   }
-  if (from.opcodes() != 0) {
-    _internal_set_opcodes(from._internal_opcodes());
+  if (from.has_info()) {
+    _internal_mutable_info()->::rpc_msg::ClientMessageInfo::MergeFrom(from._internal_info());
   }
 }
 
@@ -3532,7 +3551,7 @@ void PRC_DeMultiplexer_Forward::InternalSwap(PRC_DeMultiplexer_Forward* other) {
   body_msg_.Swap(&other->body_msg_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(role_, other->role_);
-  swap(opcodes_, other->opcodes_);
+  swap(info_, other->info_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata PRC_DeMultiplexer_Forward::GetMetadata() const {

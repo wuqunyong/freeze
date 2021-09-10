@@ -48,7 +48,7 @@ namespace forward {
 class ForwardManager {
 public:
 	using ServiceCallback = std::function<void(const ::rpc_msg::RoleIdentifier&, const std::shared_ptr<::google::protobuf::Message>&)>;
-	using DemuxCallback = std::function<void(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)>;
+	using DemuxCallback = std::function<void(const ::rpc_msg::RoleIdentifier& role, const std::string& msg)>;
 
 	ForwardManager();
 	virtual ~ForwardManager();
@@ -69,7 +69,9 @@ public:
 	void onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg);
 
 	void setDemuxCallback(DemuxCallback func);
-	void onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg);
+	void onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role, const std::string& msg);
+
+	static MessageInfo extractMessageInfo(const ::rpc_msg::RoleIdentifier& role);
 
 private:
 	std::map<uint32_t, std::shared_ptr<ForwardBase>> service_;

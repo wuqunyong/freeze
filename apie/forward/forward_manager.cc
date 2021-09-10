@@ -110,16 +110,41 @@ void ForwardManager::setDemuxCallback(DemuxCallback func)
 	demux_callback_ = func;
 }
 
-void ForwardManager::onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role, uint32_t opcode, const std::string& msg)
+void ForwardManager::onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role, const std::string& msg)
 {
 	if (!demux_callback_)
 	{
 		return;
 	}
 
-	demux_callback_(role, opcode, msg);
+	demux_callback_(role, msg);
 }
 
+
+MessageInfo ForwardManager::extractMessageInfo(const ::rpc_msg::RoleIdentifier& role)
+{
+	MessageInfo info;
+	info.iSeqNum = role.info().seq_num();
+	info.iOpcode = role.info().opcode();
+
+	switch (role.info().connetion_type())
+	{
+	case 1:
+	{
+		info.iConnetionType = ConnetionType::CT_CLIENT;
+		break;
+	}
+	case 2:
+	{
+		info.iConnetionType = ConnetionType::CT_SERVER;
+		break;
+	}
+	default:
+		break;
+	}
+
+	return info;
+}
 
 }  
 }

@@ -121,7 +121,7 @@ message RPC_Multiplexer_Forward
 message PRC_DeMultiplexer_Forward
 {
 	RoleIdentifier role = 1;
-	uint32 opcodes = 2;
+	ClientMessageInfo info = 2;
 	bytes body_msg = 3;
 }
 
