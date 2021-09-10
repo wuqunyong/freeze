@@ -375,8 +375,8 @@ def testRC4():
     else:
         print("failure")
 
-testPack1()
+# testPack1()
 # testPack2()
-testPack3()
+# testPack3()
 # testLz4()
 # testRC4()
