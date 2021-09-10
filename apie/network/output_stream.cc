@@ -21,7 +21,7 @@ namespace network {
 		info.iOpcode = iOpcode;
 		info.iConnetionType = type;
 
-		return sendMsgImpl(info, msg);
+		return sendProtobufMsgImpl(info, msg);
 	}
 
 	bool OutputStream::sendMsgByFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const ::google::protobuf::Message& msg, ConnetionType type)
@@ -32,10 +32,10 @@ namespace network {
 		info.iConnetionType = type;
 		info.setFlags(iFlag);
 
-		return sendMsgImpl(info, msg);
+		return sendProtobufMsgImpl(info, msg);
 	}
 
-	bool OutputStream::sendMsgImpl(MessageInfo info, const ::google::protobuf::Message& msg)
+	bool OutputStream::sendProtobufMsgImpl(MessageInfo info, const ::google::protobuf::Message& msg)
 	{
 		uint32_t iThreadId = 0;
 		
@@ -134,97 +134,40 @@ namespace network {
 		return true;
 	}
 
-	bool OutputStream::sendMsgByStr(uint64_t iSerialNum, uint32_t iOpcode, const std::string& msg, ConnetionType type)
+	bool OutputStream::sendMsgByStr(uint64_t iSessionId, uint32_t iOpcode, const std::string& msg, ConnetionType type)
 	{
-		uint32_t iThreadId = 0;
+		MessageInfo info;
+		info.iSessionId = iSessionId;
+		info.iOpcode = iOpcode;
+		info.iConnetionType = type;
 
-		switch (type)
-		{
-		case apie::ConnetionType::CT_NONE:
-		{
-			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
-			if (ptrConnection == nullptr)
-			{
-				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
-				if (ptrClient == nullptr)
-				{
-					return false;
-				}
-				else
-				{
-					iThreadId = ptrClient->getTId();
-					type = ConnetionType::CT_CLIENT;
-				}
-			}
-			else
-			{
-				iThreadId = ptrConnection->getTId();
-				type = ConnetionType::CT_SERVER;
-			}
-			break;
-		}
-		case apie::ConnetionType::CT_SERVER:
-		{
-			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
-			if (ptrConnection == nullptr)
-			{
-				return false;
-			}
-
-			iThreadId = ptrConnection->getTId();
-			break;
-		}
-		case apie::ConnetionType::CT_CLIENT:
-		{
-			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
-			if (ptrConnection == nullptr)
-			{
-				return false;
-			}
-
-			iThreadId = ptrConnection->getTId();
-			break;
-		}
-		default:
-			break;
-		}
-
-		auto ptrThread = CtxSingleton::get().getThreadById(iThreadId);
-		if (ptrThread == nullptr)
-		{
-			return false;
-		}
-
-		ProtocolHead head;
-		head.iOpcode = iOpcode;
-		head.iBodyLen = (uint32_t)msg.size();
-
-		SendData *itemObjPtr = new SendData;
-		itemObjPtr->type = type;
-		itemObjPtr->iSerialNum = iSerialNum;
-		itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(ProtocolHead));
-		itemObjPtr->sData.append(msg);
-
-		Command command;
-		command.type = Command::send_data;
-		command.args.send_data.ptrData = itemObjPtr;
-		ptrThread->push(command);
-
-		return true;
+		return sendStringMsgImpl(info, msg);
 	}
 
-	bool OutputStream::sendMsgByStrByFlag(uint64_t iSerialNum, uint32_t iOpcode, const std::string& msg, uint32_t iFlag, ConnetionType type)
+	bool OutputStream::sendMsgByStrByFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const std::string& msg, ConnetionType type)
+	{
+		MessageInfo info;
+		info.iSessionId = iSessionId;
+		info.iOpcode = iOpcode;
+		info.iConnetionType = type;
+		info.setFlags(iFlag);
+
+		return sendStringMsgImpl(info, msg);
+	}
+
+	bool OutputStream::sendStringMsgImpl(MessageInfo info, const std::string& msg)
 	{
 		uint32_t iThreadId = 0;
 
+		auto type = info.iConnetionType;
 		switch (type)
 		{
 		case apie::ConnetionType::CT_NONE:
 		{
-			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
 			if (ptrConnection == nullptr)
 			{
-				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
+				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
 				if (ptrClient == nullptr)
 				{
 					return false;
@@ -244,7 +187,7 @@ namespace network {
 		}
 		case apie::ConnetionType::CT_SERVER:
 		{
-			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -255,7 +198,7 @@ namespace network {
 		}
 		case apie::ConnetionType::CT_CLIENT:
 		{
-			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
 			if (ptrConnection == nullptr)
 			{
 				return false;
@@ -275,20 +218,36 @@ namespace network {
 		}
 
 		ProtocolHead head;
-		head.iFlags = iFlag;
-		head.iOpcode = iOpcode;
+		head.iFlags = info.getFlags();
+		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.size();
 
-		SendDataByFlag *itemObjPtr = new SendDataByFlag;
-		itemObjPtr->type = type;
-		itemObjPtr->iSerialNum = iSerialNum;
-		itemObjPtr->head = head;
-		itemObjPtr->sBody = msg;
+		if (info.getFlags() == 0)
+		{
+			SendData* itemObjPtr = new SendData;
+			itemObjPtr->type = type;
+			itemObjPtr->iSerialNum = info.iSessionId;
+			itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(ProtocolHead));
+			itemObjPtr->sData.append(msg);
 
-		Command command;
-		command.type = Command::send_data_by_flag;
-		command.args.send_data_by_flag.ptrData = itemObjPtr;
-		ptrThread->push(command);
+			Command command;
+			command.type = Command::send_data;
+			command.args.send_data.ptrData = itemObjPtr;
+			ptrThread->push(command);
+		}
+		else
+		{
+			SendDataByFlag* itemObjPtr = new SendDataByFlag;
+			itemObjPtr->type = type;
+			itemObjPtr->iSerialNum = info.iSessionId;
+			itemObjPtr->head = head;
+			itemObjPtr->sBody = msg;
+
+			Command command;
+			command.type = Command::send_data_by_flag;
+			command.args.send_data_by_flag.ptrData = itemObjPtr;
+			ptrThread->push(command);
+		}
 
 		return true;
 	}

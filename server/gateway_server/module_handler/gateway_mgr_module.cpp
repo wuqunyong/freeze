@@ -92,7 +92,7 @@ void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role,
 	}
 	else
 	{
-		network::OutputStream::sendMsgByStrByFlag(iSerialNum, opcode, msg, iMaskFlag, apie::ConnetionType::CT_SERVER);
+		network::OutputStream::sendMsgByStrByFlag(iSerialNum, opcode, iMaskFlag, msg, apie::ConnetionType::CT_SERVER);
 	}
 }
 
