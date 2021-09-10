@@ -96,6 +96,8 @@ void HandleRequestForward<Request, responseOpcode, Response>::sendResponse(const
 	::rpc_msg::PRC_DeMultiplexer_Forward demux;
 	*demux.mutable_role() = role;
 	*demux.mutable_info() = role.info();
+	demux.mutable_info()->set_opcode(responseOpcode_);
+	*demux.mutable_role()->mutable_info() = demux.info();
 	demux.set_body_msg(response->SerializeAsString());
 
 	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(role.gw_id());
