@@ -24,7 +24,7 @@ namespace network {
 		return sendProtobufMsgImpl(info, msg);
 	}
 
-	bool OutputStream::sendMsgByFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const ::google::protobuf::Message& msg, ConnetionType type)
+	bool OutputStream::sendMsgWithFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const ::google::protobuf::Message& msg, ConnetionType type)
 	{
 		MessageInfo info;
 		info.iSessionId = iSessionId;
@@ -144,7 +144,7 @@ namespace network {
 		return sendStringMsgImpl(info, msg);
 	}
 
-	bool OutputStream::sendMsgByStrByFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const std::string& msg, ConnetionType type)
+	bool OutputStream::sendMsgByStrWithFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const std::string& msg, ConnetionType type)
 	{
 		MessageInfo info;
 		info.iSessionId = iSessionId;

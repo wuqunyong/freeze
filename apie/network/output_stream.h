@@ -24,12 +24,12 @@ namespace network {
 	{
 	public:
 		static bool sendMsg(uint64_t iSessionId, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type = ConnetionType::CT_NONE);
-		static bool sendMsgByFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const ::google::protobuf::Message& msg, ConnetionType type = ConnetionType::CT_NONE);
+		static bool sendMsgWithFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const ::google::protobuf::Message& msg, ConnetionType type = ConnetionType::CT_NONE);
 		static bool sendProtobufMsgImpl(MessageInfo info, const ::google::protobuf::Message& msg);
 
 
 		static bool sendMsgByStr(uint64_t iSessionId, uint32_t iOpcode, const std::string& msg, ConnetionType type = ConnetionType::CT_NONE);
-		static bool sendMsgByStrByFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const std::string& msg, ConnetionType type = ConnetionType::CT_NONE);
+		static bool sendMsgByStrWithFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const std::string& msg, ConnetionType type = ConnetionType::CT_NONE);
 		static bool sendStringMsgImpl(MessageInfo info, const std::string& msg);
 
 

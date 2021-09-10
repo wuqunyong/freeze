@@ -201,7 +201,7 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 	}
 	else
 	{
-		apie::network::OutputStream::sendMsgByFlag(this->m_curSerialNum, iOpcode, this->m_maskFlag, msg,  apie::ConnetionType::CT_CLIENT);
+		apie::network::OutputStream::sendMsgWithFlag(this->m_curSerialNum, iOpcode, this->m_maskFlag, msg,  apie::ConnetionType::CT_CLIENT);
 	}
 	return 0;
 }
