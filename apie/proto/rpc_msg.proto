@@ -59,8 +59,11 @@ message CONTROLLER
 
 message ClientMessageInfo
 {
-	uint32 opcodes = 1;
+	uint64 session_id = 1;
 	uint32 seq_num = 2;
+	uint32 opcode = 3;
+	uint32 response_opcode = 4;
+	uint32 connetion_type = 5;
 }
 
 message RoleIdentifier

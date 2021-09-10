@@ -190,6 +190,7 @@ void ServerConnection::readPB()
 			info.iSessionId = this->iSerialNum;
 			info.iSeqNum = head.iSeqNum;
 			info.iOpcode = head.iOpcode;
+			info.iConnetionType = ConnetionType::CT_SERVER;
 			this->recv(info, sBody);
 
 		} while (false);

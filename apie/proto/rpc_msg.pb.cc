@@ -294,8 +294,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5fmsg_2eproto::offsets[] P
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::rpc_msg::ClientMessageInfo, opcodes_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::ClientMessageInfo, session_id_),
   PROTOBUF_FIELD_OFFSET(::rpc_msg::ClientMessageInfo, seq_num_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::ClientMessageInfo, opcode_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::ClientMessageInfo, response_opcode_),
+  PROTOBUF_FIELD_OFFSET(::rpc_msg::ClientMessageInfo, connetion_type_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_msg::RoleIdentifier, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -381,16 +384,16 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 0, -1, sizeof(::rpc_msg::CHANNEL)},
   { 8, -1, sizeof(::rpc_msg::CONTROLLER)},
   { 16, -1, sizeof(::rpc_msg::ClientMessageInfo)},
-  { 23, -1, sizeof(::rpc_msg::RoleIdentifier)},
-  { 31, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
-  { 39, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
-  { 45, -1, sizeof(::rpc_msg::RPC_REQUEST)},
-  { 55, -1, sizeof(::rpc_msg::STATUS)},
-  { 62, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
-  { 73, -1, sizeof(::rpc_msg::RPC_Multiplexer_Forward)},
-  { 81, -1, sizeof(::rpc_msg::PRC_DeMultiplexer_Forward)},
-  { 89, -1, sizeof(::rpc_msg::RPC_EchoTestRequest)},
-  { 96, -1, sizeof(::rpc_msg::RPC_EchoTestResponse)},
+  { 26, -1, sizeof(::rpc_msg::RoleIdentifier)},
+  { 34, -1, sizeof(::rpc_msg::CLIENT_IDENTIFIER)},
+  { 42, -1, sizeof(::rpc_msg::SERVER_IDENTIFIER)},
+  { 48, -1, sizeof(::rpc_msg::RPC_REQUEST)},
+  { 58, -1, sizeof(::rpc_msg::STATUS)},
+  { 65, -1, sizeof(::rpc_msg::RPC_RESPONSE)},
+  { 76, -1, sizeof(::rpc_msg::RPC_Multiplexer_Forward)},
+  { 84, -1, sizeof(::rpc_msg::PRC_DeMultiplexer_Forward)},
+  { 92, -1, sizeof(::rpc_msg::RPC_EchoTestRequest)},
+  { 99, -1, sizeof(::rpc_msg::RPC_EchoTestResponse)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -413,52 +416,54 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "\n\rrpc_msg.proto\022\007rpc_msg\"2\n\007CHANNEL\022\r\n\005r"
   "ealm\030\001 \001(\r\022\014\n\004type\030\002 \001(\r\022\n\n\002id\030\003 \001(\r\"G\n\n"
   "CONTROLLER\022\016\n\006seq_id\030\001 \001(\004\022\022\n\ntimeout_ms"
-  "\030\002 \001(\004\022\025\n\rserver_stream\030\003 \001(\010\"5\n\021ClientM"
-  "essageInfo\022\017\n\007opcodes\030\001 \001(\r\022\017\n\007seq_num\030\002"
-  " \001(\r\"l\n\016RoleIdentifier\022\017\n\007user_id\030\001 \001(\004\022"
-  "\037\n\005gw_id\030\002 \001(\0132\020.rpc_msg.CHANNEL\022(\n\004info"
-  "\030\003 \001(\0132\032.rpc_msg.ClientMessageInfo\"[\n\021CL"
-  "IENT_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg."
-  "CHANNEL\022\016\n\006seq_id\030\002 \001(\004\022\026\n\016required_repl"
-  "y\030\003 \001(\010\"3\n\021SERVER_IDENTIFIER\022\036\n\004stub\030\001 \001"
-  "(\0132\020.rpc_msg.CHANNEL\"\266\001\n\013RPC_REQUEST\022*\n\006"
-  "client\030\001 \001(\0132\032.rpc_msg.CLIENT_IDENTIFIER"
-  "\022*\n\006server\030\002 \001(\0132\032.rpc_msg.SERVER_IDENTI"
-  "FIER\022\025\n\rserver_stream\030\003 \001(\010\022%\n\007opcodes\030\004"
-  " \001(\0162\024.rpc_msg.RPC_OPCODES\022\021\n\targs_data\030"
-  "\005 \001(\014\"#\n\006STATUS\022\014\n\004code\030\001 \001(\r\022\013\n\003msg\030\002 \001"
-  "(\t\"\276\001\n\014RPC_RESPONSE\022*\n\006client\030\001 \001(\0132\032.rp"
-  "c_msg.CLIENT_IDENTIFIER\022*\n\006server\030\002 \001(\0132"
-  "\032.rpc_msg.SERVER_IDENTIFIER\022\037\n\006status\030\003 "
-  "\001(\0132\017.rpc_msg.STATUS\022\020\n\010has_more\030\004 \001(\010\022\016"
-  "\n\006offset\030\005 \001(\r\022\023\n\013result_data\030\006 \001(\014\"|\n\027R"
-  "PC_Multiplexer_Forward\022%\n\004role\030\001 \001(\0132\027.r"
-  "pc_msg.RoleIdentifier\022(\n\004info\030\002 \001(\0132\032.rp"
-  "c_msg.ClientMessageInfo\022\020\n\010body_msg\030\003 \001("
-  "\014\"e\n\031PRC_DeMultiplexer_Forward\022%\n\004role\030\001"
-  " \001(\0132\027.rpc_msg.RoleIdentifier\022\017\n\007opcodes"
-  "\030\002 \001(\r\022\020\n\010body_msg\030\003 \001(\014\"5\n\023RPC_EchoTest"
-  "Request\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\""
-  "6\n\024RPC_EchoTestResponse\022\016\n\006value1\030\001 \001(\004\022"
-  "\016\n\006value2\030\002 \001(\t*\362\001\n\013RPC_OPCODES\022\014\n\010RPC_N"
-  "one\020\000\022\027\n\022RPC_MysqlDescTable\020\221\003\022\023\n\016RPC_My"
-  "sqlQuery\020\222\003\022\024\n\017RPC_MysqlInsert\020\223\003\022\024\n\017RPC"
-  "_MysqlUpdate\020\224\003\022\024\n\017RPC_MysqlDelete\020\225\003\022\033\n"
-  "\026RPC_MysqlQueryByFilter\020\226\003\022\030\n\023RPC_MysqlM"
-  "ultiQuery\020\227\003\022\024\n\017OP_RPC_EchoTest\020\351\007\022\030\n\023OP"
-  "_RPC_LoginPending\020\321\017*\343\003\n\010RPC_CODE\022\013\n\007COD"
-  "E_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Timeou"
-  "t\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_ParseEr"
-  "ror\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031CODE_"
-  "RouteNotLinkToServer\020h\022\037\n\033CODE_RouteSend"
-  "ToServerError\020i\022\031\n\025CODE_OpcodeUnregister"
-  "\020j\022\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE_Logi"
-  "cThreadNull\020l\022\031\n\025CODE_NotReceivedReply\020m"
-  "\022\020\n\014CODE_NotSend\020n\022\030\n\024CODE_LoadFromDbErr"
-  "or\020o\022\026\n\022CODE_DirtyFlagZero\020p\022\023\n\017CODE_Que"
-  "ryError\020q\022\037\n\033CODE_TableNameNotExistError"
-  "\020r\022\036\n\032CODE_GenerateQuerySQLError\020s\022\036\n\032CO"
-  "DE_NotMatchedResultError\020tb\006proto3"
+  "\030\002 \001(\004\022\025\n\rserver_stream\030\003 \001(\010\"y\n\021ClientM"
+  "essageInfo\022\022\n\nsession_id\030\001 \001(\004\022\017\n\007seq_nu"
+  "m\030\002 \001(\r\022\016\n\006opcode\030\003 \001(\r\022\027\n\017response_opco"
+  "de\030\004 \001(\r\022\026\n\016connetion_type\030\005 \001(\r\"l\n\016Role"
+  "Identifier\022\017\n\007user_id\030\001 \001(\004\022\037\n\005gw_id\030\002 \001"
+  "(\0132\020.rpc_msg.CHANNEL\022(\n\004info\030\003 \001(\0132\032.rpc"
+  "_msg.ClientMessageInfo\"[\n\021CLIENT_IDENTIF"
+  "IER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg.CHANNEL\022\016\n\006s"
+  "eq_id\030\002 \001(\004\022\026\n\016required_reply\030\003 \001(\010\"3\n\021S"
+  "ERVER_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg"
+  ".CHANNEL\"\266\001\n\013RPC_REQUEST\022*\n\006client\030\001 \001(\013"
+  "2\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006server\030\002"
+  " \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022\025\n\rserv"
+  "er_stream\030\003 \001(\010\022%\n\007opcodes\030\004 \001(\0162\024.rpc_m"
+  "sg.RPC_OPCODES\022\021\n\targs_data\030\005 \001(\014\"#\n\006STA"
+  "TUS\022\014\n\004code\030\001 \001(\r\022\013\n\003msg\030\002 \001(\t\"\276\001\n\014RPC_R"
+  "ESPONSE\022*\n\006client\030\001 \001(\0132\032.rpc_msg.CLIENT"
+  "_IDENTIFIER\022*\n\006server\030\002 \001(\0132\032.rpc_msg.SE"
+  "RVER_IDENTIFIER\022\037\n\006status\030\003 \001(\0132\017.rpc_ms"
+  "g.STATUS\022\020\n\010has_more\030\004 \001(\010\022\016\n\006offset\030\005 \001"
+  "(\r\022\023\n\013result_data\030\006 \001(\014\"|\n\027RPC_Multiplex"
+  "er_Forward\022%\n\004role\030\001 \001(\0132\027.rpc_msg.RoleI"
+  "dentifier\022(\n\004info\030\002 \001(\0132\032.rpc_msg.Client"
+  "MessageInfo\022\020\n\010body_msg\030\003 \001(\014\"e\n\031PRC_DeM"
+  "ultiplexer_Forward\022%\n\004role\030\001 \001(\0132\027.rpc_m"
+  "sg.RoleIdentifier\022\017\n\007opcodes\030\002 \001(\r\022\020\n\010bo"
+  "dy_msg\030\003 \001(\014\"5\n\023RPC_EchoTestRequest\022\016\n\006v"
+  "alue1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\"6\n\024RPC_EchoT"
+  "estResponse\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 "
+  "\001(\t*\362\001\n\013RPC_OPCODES\022\014\n\010RPC_None\020\000\022\027\n\022RPC"
+  "_MysqlDescTable\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022"
+  "\024\n\017RPC_MysqlInsert\020\223\003\022\024\n\017RPC_MysqlUpdate"
+  "\020\224\003\022\024\n\017RPC_MysqlDelete\020\225\003\022\033\n\026RPC_MysqlQu"
+  "eryByFilter\020\226\003\022\030\n\023RPC_MysqlMultiQuery\020\227\003"
+  "\022\024\n\017OP_RPC_EchoTest\020\351\007\022\030\n\023OP_RPC_LoginPe"
+  "nding\020\321\017*\343\003\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCO"
+  "DE_Ok_Async\020\001\022\020\n\014CODE_Timeout\020d\022\023\n\017CODE_"
+  "Unregister\020e\022\023\n\017CODE_ParseError\020f\022\030\n\024COD"
+  "E_ErrorServerPost\020g\022\035\n\031CODE_RouteNotLink"
+  "ToServer\020h\022\037\n\033CODE_RouteSendToServerErro"
+  "r\020i\022\031\n\025CODE_OpcodeUnregister\020j\022\027\n\023CODE_C"
+  "reateMsgError\020k\022\030\n\024CODE_LogicThreadNull\020"
+  "l\022\031\n\025CODE_NotReceivedReply\020m\022\020\n\014CODE_Not"
+  "Send\020n\022\030\n\024CODE_LoadFromDbError\020o\022\026\n\022CODE"
+  "_DirtyFlagZero\020p\022\023\n\017CODE_QueryError\020q\022\037\n"
+  "\033CODE_TableNameNotExistError\020r\022\036\n\032CODE_G"
+  "enerateQuerySQLError\020s\022\036\n\032CODE_NotMatche"
+  "dResultError\020tb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5fmsg_2eproto_deps[1] = {
 };
@@ -480,7 +485,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 static bool descriptor_table_rpc_5fmsg_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 1954,
+  &descriptor_table_rpc_5fmsg_2eproto_initialized, descriptor_table_protodef_rpc_5fmsg_2eproto, "rpc_msg.proto", 2022,
   &descriptor_table_rpc_5fmsg_2eproto_once, descriptor_table_rpc_5fmsg_2eproto_sccs, descriptor_table_rpc_5fmsg_2eproto_deps, 13, 0,
   schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
   file_level_metadata_rpc_5fmsg_2eproto, 13, file_level_enum_descriptors_rpc_5fmsg_2eproto, file_level_service_descriptors_rpc_5fmsg_2eproto,
@@ -1038,16 +1043,16 @@ ClientMessageInfo::ClientMessageInfo(const ClientMessageInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::memcpy(&opcodes_, &from.opcodes_,
-    static_cast<size_t>(reinterpret_cast<char*>(&seq_num_) -
-    reinterpret_cast<char*>(&opcodes_)) + sizeof(seq_num_));
+  ::memcpy(&session_id_, &from.session_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&connetion_type_) -
+    reinterpret_cast<char*>(&session_id_)) + sizeof(connetion_type_));
   // @@protoc_insertion_point(copy_constructor:rpc_msg.ClientMessageInfo)
 }
 
 void ClientMessageInfo::SharedCtor() {
-  ::memset(&opcodes_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&seq_num_) -
-      reinterpret_cast<char*>(&opcodes_)) + sizeof(seq_num_));
+  ::memset(&session_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&connetion_type_) -
+      reinterpret_cast<char*>(&session_id_)) + sizeof(connetion_type_));
 }
 
 ClientMessageInfo::~ClientMessageInfo() {
@@ -1073,9 +1078,9 @@ void ClientMessageInfo::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&opcodes_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&seq_num_) -
-      reinterpret_cast<char*>(&opcodes_)) + sizeof(seq_num_));
+  ::memset(&session_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&connetion_type_) -
+      reinterpret_cast<char*>(&session_id_)) + sizeof(connetion_type_));
   _internal_metadata_.Clear();
 }
 
@@ -1086,10 +1091,10 @@ const char* ClientMessageInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // uint32 opcodes = 1;
+      // uint64 session_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          opcodes_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          session_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1097,6 +1102,27 @@ const char* ClientMessageInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           seq_num_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 opcode = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          opcode_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 response_opcode = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          response_opcode_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 connetion_type = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          connetion_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1126,16 +1152,34 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 opcodes = 1;
-  if (this->opcodes() != 0) {
+  // uint64 session_id = 1;
+  if (this->session_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_opcodes(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_session_id(), target);
   }
 
   // uint32 seq_num = 2;
   if (this->seq_num() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_seq_num(), target);
+  }
+
+  // uint32 opcode = 3;
+  if (this->opcode() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_opcode(), target);
+  }
+
+  // uint32 response_opcode = 4;
+  if (this->response_opcode() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(4, this->_internal_response_opcode(), target);
+  }
+
+  // uint32 connetion_type = 5;
+  if (this->connetion_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_connetion_type(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1154,11 +1198,11 @@ size_t ClientMessageInfo::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // uint32 opcodes = 1;
-  if (this->opcodes() != 0) {
+  // uint64 session_id = 1;
+  if (this->session_id() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_opcodes());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_session_id());
   }
 
   // uint32 seq_num = 2;
@@ -1166,6 +1210,27 @@ size_t ClientMessageInfo::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->_internal_seq_num());
+  }
+
+  // uint32 opcode = 3;
+  if (this->opcode() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_opcode());
+  }
+
+  // uint32 response_opcode = 4;
+  if (this->response_opcode() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_response_opcode());
+  }
+
+  // uint32 connetion_type = 5;
+  if (this->connetion_type() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_connetion_type());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1199,11 +1264,20 @@ void ClientMessageInfo::MergeFrom(const ClientMessageInfo& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.opcodes() != 0) {
-    _internal_set_opcodes(from._internal_opcodes());
+  if (from.session_id() != 0) {
+    _internal_set_session_id(from._internal_session_id());
   }
   if (from.seq_num() != 0) {
     _internal_set_seq_num(from._internal_seq_num());
+  }
+  if (from.opcode() != 0) {
+    _internal_set_opcode(from._internal_opcode());
+  }
+  if (from.response_opcode() != 0) {
+    _internal_set_response_opcode(from._internal_response_opcode());
+  }
+  if (from.connetion_type() != 0) {
+    _internal_set_connetion_type(from._internal_connetion_type());
   }
 }
 
@@ -1228,8 +1302,11 @@ bool ClientMessageInfo::IsInitialized() const {
 void ClientMessageInfo::InternalSwap(ClientMessageInfo* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(opcodes_, other->opcodes_);
+  swap(session_id_, other->session_id_);
   swap(seq_num_, other->seq_num_);
+  swap(opcode_, other->opcode_);
+  swap(response_opcode_, other->response_opcode_);
+  swap(connetion_type_, other->connetion_type_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ClientMessageInfo::GetMetadata() const {

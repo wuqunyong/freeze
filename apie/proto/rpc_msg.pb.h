@@ -596,16 +596,19 @@ class ClientMessageInfo :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kOpcodesFieldNumber = 1,
+    kSessionIdFieldNumber = 1,
     kSeqNumFieldNumber = 2,
+    kOpcodeFieldNumber = 3,
+    kResponseOpcodeFieldNumber = 4,
+    kConnetionTypeFieldNumber = 5,
   };
-  // uint32 opcodes = 1;
-  void clear_opcodes();
-  ::PROTOBUF_NAMESPACE_ID::uint32 opcodes() const;
-  void set_opcodes(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  // uint64 session_id = 1;
+  void clear_session_id();
+  ::PROTOBUF_NAMESPACE_ID::uint64 session_id() const;
+  void set_session_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_opcodes() const;
-  void _internal_set_opcodes(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_session_id() const;
+  void _internal_set_session_id(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
   // uint32 seq_num = 2;
@@ -617,13 +620,43 @@ class ClientMessageInfo :
   void _internal_set_seq_num(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
+  // uint32 opcode = 3;
+  void clear_opcode();
+  ::PROTOBUF_NAMESPACE_ID::uint32 opcode() const;
+  void set_opcode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_opcode() const;
+  void _internal_set_opcode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 response_opcode = 4;
+  void clear_response_opcode();
+  ::PROTOBUF_NAMESPACE_ID::uint32 response_opcode() const;
+  void set_response_opcode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_response_opcode() const;
+  void _internal_set_response_opcode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 connetion_type = 5;
+  void clear_connetion_type();
+  ::PROTOBUF_NAMESPACE_ID::uint32 connetion_type() const;
+  void set_connetion_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_connetion_type() const;
+  void _internal_set_connetion_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:rpc_msg.ClientMessageInfo)
  private:
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 opcodes_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 session_id_;
   ::PROTOBUF_NAMESPACE_ID::uint32 seq_num_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 opcode_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 response_opcode_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 connetion_type_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_5fmsg_2eproto;
 };
@@ -2387,24 +2420,24 @@ inline void CONTROLLER::set_server_stream(bool value) {
 
 // ClientMessageInfo
 
-// uint32 opcodes = 1;
-inline void ClientMessageInfo::clear_opcodes() {
-  opcodes_ = 0u;
+// uint64 session_id = 1;
+inline void ClientMessageInfo::clear_session_id() {
+  session_id_ = PROTOBUF_ULONGLONG(0);
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ClientMessageInfo::_internal_opcodes() const {
-  return opcodes_;
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ClientMessageInfo::_internal_session_id() const {
+  return session_id_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ClientMessageInfo::opcodes() const {
-  // @@protoc_insertion_point(field_get:rpc_msg.ClientMessageInfo.opcodes)
-  return _internal_opcodes();
+inline ::PROTOBUF_NAMESPACE_ID::uint64 ClientMessageInfo::session_id() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.ClientMessageInfo.session_id)
+  return _internal_session_id();
 }
-inline void ClientMessageInfo::_internal_set_opcodes(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void ClientMessageInfo::_internal_set_session_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
-  opcodes_ = value;
+  session_id_ = value;
 }
-inline void ClientMessageInfo::set_opcodes(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _internal_set_opcodes(value);
-  // @@protoc_insertion_point(field_set:rpc_msg.ClientMessageInfo.opcodes)
+inline void ClientMessageInfo::set_session_id(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_session_id(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.ClientMessageInfo.session_id)
 }
 
 // uint32 seq_num = 2;
@@ -2425,6 +2458,66 @@ inline void ClientMessageInfo::_internal_set_seq_num(::PROTOBUF_NAMESPACE_ID::ui
 inline void ClientMessageInfo::set_seq_num(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_seq_num(value);
   // @@protoc_insertion_point(field_set:rpc_msg.ClientMessageInfo.seq_num)
+}
+
+// uint32 opcode = 3;
+inline void ClientMessageInfo::clear_opcode() {
+  opcode_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ClientMessageInfo::_internal_opcode() const {
+  return opcode_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ClientMessageInfo::opcode() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.ClientMessageInfo.opcode)
+  return _internal_opcode();
+}
+inline void ClientMessageInfo::_internal_set_opcode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  opcode_ = value;
+}
+inline void ClientMessageInfo::set_opcode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_opcode(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.ClientMessageInfo.opcode)
+}
+
+// uint32 response_opcode = 4;
+inline void ClientMessageInfo::clear_response_opcode() {
+  response_opcode_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ClientMessageInfo::_internal_response_opcode() const {
+  return response_opcode_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ClientMessageInfo::response_opcode() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.ClientMessageInfo.response_opcode)
+  return _internal_response_opcode();
+}
+inline void ClientMessageInfo::_internal_set_response_opcode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  response_opcode_ = value;
+}
+inline void ClientMessageInfo::set_response_opcode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_response_opcode(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.ClientMessageInfo.response_opcode)
+}
+
+// uint32 connetion_type = 5;
+inline void ClientMessageInfo::clear_connetion_type() {
+  connetion_type_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ClientMessageInfo::_internal_connetion_type() const {
+  return connetion_type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ClientMessageInfo::connetion_type() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.ClientMessageInfo.connetion_type)
+  return _internal_connetion_type();
+}
+inline void ClientMessageInfo::_internal_set_connetion_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  connetion_type_ = value;
+}
+inline void ClientMessageInfo::set_connetion_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_connetion_type(value);
+  // @@protoc_insertion_point(field_set:rpc_msg.ClientMessageInfo.connetion_type)
 }
 
 // -------------------------------------------------------------------

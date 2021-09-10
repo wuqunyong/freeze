@@ -224,6 +224,7 @@ void apie::ClientConnection::readPB()
 			info.iSessionId = this->iSerialNum;
 			info.iSeqNum = head.iSeqNum;
 			info.iOpcode = head.iOpcode;
+			info.iConnetionType = ConnetionType::CT_CLIENT;
 			this->recv(info, sBody);
 
 		} while (false);

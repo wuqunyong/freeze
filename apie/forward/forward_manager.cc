@@ -44,7 +44,8 @@ bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rp
 {
 	::rpc_msg::RPC_Multiplexer_Forward mux;
 	*mux.mutable_role() = role;
-	mux.mutable_info()->set_opcodes(info.iOpcode);
+	mux.mutable_info()->set_session_id(info.iSessionId);
+	mux.mutable_info()->set_opcode(info.iOpcode);
 	mux.mutable_info()->set_seq_num(info.iSeqNum);
 	*(mux.mutable_role()->mutable_info()) = mux.info();
 	mux.set_body_msg(msg);
