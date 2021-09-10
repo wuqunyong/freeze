@@ -75,6 +75,8 @@ void HandleRequestService<Request, responseOpcode, Response>::init()
 template <typename Request, uint32_t responseOpcode, typename Response>
 void HandleRequestService<Request, responseOpcode, Response>::handleRequest(MessageInfo info, const std::shared_ptr<Request>& request)
 {
+	info.iResponseOpcode = responseOpcode_;
+
 	auto response = std::make_shared<Response>();
 	auto status = service_callback_(info, request, response);
 	if (status.isAsync())
@@ -84,6 +86,7 @@ void HandleRequestService<Request, responseOpcode, Response>::handleRequest(Mess
 
 	if (status.ok())
 	{
+		info.iOpcode = info.iResponseOpcode;
 		sendResponse(info, response);
 	}
 }

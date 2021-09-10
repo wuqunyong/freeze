@@ -218,6 +218,7 @@ namespace network {
 		}
 
 		ProtocolHead head;
+		head.iSeqNum = info.iSeqNum;
 		head.iFlags = info.getFlags();
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.size();

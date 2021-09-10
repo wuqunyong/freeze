@@ -33,7 +33,6 @@ namespace apie
 		uint32_t iSeqNum = 0;
 		uint32_t iOpcode = 0;
 		uint32_t iResponseOpcode = 0;
-		uint32_t iNotifyOpcode = 0;
 		ConnetionType iConnetionType = ConnetionType::CT_NONE;
 
 		void setFlags(uint8_t iFlags)

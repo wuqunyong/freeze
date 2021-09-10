@@ -74,6 +74,10 @@ public:
 	HandleMuxFunction& getDefaultFunc();
 	void setDefaultFunc(HandleMuxFunction func);
 
+public:
+	static bool sendResponse(MessageInfo info, const ::google::protobuf::Message& msg);
+	static bool sendNotify(uint64_t iSessionId, uint32_t iOpcode, const ::google::protobuf::Message& msg);
+
 private:
 	std::map<uint32_t, std::shared_ptr<ServiceBase>> service_;
 	std::map<uint32_t, std::string> type_;

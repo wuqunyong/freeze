@@ -47,6 +47,22 @@ void ServiceManager::setDefaultFunc(HandleMuxFunction func)
 	default_func_ = func;
 }
 
+bool ServiceManager::sendResponse(MessageInfo info, const ::google::protobuf::Message& msg)
+{
+	MessageInfo response(info);
+	response.iOpcode = info.iResponseOpcode;
+
+	return apie::network::OutputStream::sendProtobufMsgImpl(info, msg);
+}
+
+bool ServiceManager::sendNotify(uint64_t iSessionId, uint32_t iOpcode, const ::google::protobuf::Message& msg)
+{
+	MessageInfo info;
+	info.iSessionId = iSessionId;
+	info.iOpcode = iOpcode;
+
+	return apie::network::OutputStream::sendProtobufMsgImpl(info, msg);
+}
 
 
 }  
