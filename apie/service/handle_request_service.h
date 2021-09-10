@@ -91,7 +91,7 @@ void HandleRequestService<Request, responseOpcode, Response>::handleRequest(Mess
 template <typename Request, uint32_t responseOpcode, typename Response>
 void HandleRequestService<Request, responseOpcode, Response>::sendResponse(MessageInfo info, const std::shared_ptr<Response>& response)
 {
-	apie::network::OutputStream::sendMsgRaw(info, *response);
+	apie::network::OutputStream::sendMsgImpl(info, *response);
 }
 
 

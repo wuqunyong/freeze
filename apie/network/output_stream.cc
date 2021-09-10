@@ -19,14 +19,28 @@ namespace network {
 		MessageInfo info;
 		info.iSessionId = iSessionId;
 		info.iOpcode = iOpcode;
+		info.iConnetionType = type;
 
-		return sendMsgRaw(info, msg, type);
+		return sendMsgImpl(info, msg);
 	}
 
-	bool OutputStream::sendMsgRaw(MessageInfo info, const ::google::protobuf::Message& msg, ConnetionType type)
+	bool OutputStream::sendMsgByFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const ::google::protobuf::Message& msg, ConnetionType type)
+	{
+		MessageInfo info;
+		info.iSessionId = iSessionId;
+		info.iOpcode = iOpcode;
+		info.iConnetionType = type;
+		info.setFlags(iFlag);
+
+		return sendMsgImpl(info, msg);
+	}
+
+	bool OutputStream::sendMsgImpl(MessageInfo info, const ::google::protobuf::Message& msg)
 	{
 		uint32_t iThreadId = 0;
 		
+		ConnetionType type = info.iConnetionType;
+
 		switch (type)
 		{
 		case apie::ConnetionType::CT_NONE:
@@ -86,99 +100,36 @@ namespace network {
 
 		ProtocolHead head;
 		head.iSeqNum = info.iSeqNum;
+		head.iFlags = info.getFlags();
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
 
-		SendData *itemObjPtr = new SendData;
-		itemObjPtr->type = type;
-		itemObjPtr->iSerialNum = info.iSessionId;
-		itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(ProtocolHead));
-		itemObjPtr->sData.append(msg.SerializeAsString());
-
-		Command command;
-		command.type = Command::send_data;
-		command.args.send_data.ptrData = itemObjPtr;
-		ptrThread->push(command);
-
-		return true;
-	}
-
-	bool OutputStream::sendMsgByFlag(uint64_t iSerialNum, uint32_t iOpcode, const ::google::protobuf::Message& msg, uint32_t iFlag, ConnetionType type)
-	{
-		uint32_t iThreadId = 0;
-
-		switch (type)
+		if (info.getFlags() == 0)
 		{
-		case apie::ConnetionType::CT_NONE:
+			SendData* itemObjPtr = new SendData;
+			itemObjPtr->type = type;
+			itemObjPtr->iSerialNum = info.iSessionId;
+			itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(ProtocolHead));
+			itemObjPtr->sData.append(msg.SerializeAsString());
+
+			Command command;
+			command.type = Command::send_data;
+			command.args.send_data.ptrData = itemObjPtr;
+			ptrThread->push(command);
+		} 
+		else
 		{
-			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
-			if (ptrConnection == nullptr)
-			{
-				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
-				if (ptrClient == nullptr)
-				{
-					return false;
-				}
-				else
-				{
-					iThreadId = ptrClient->getTId();
-					type = ConnetionType::CT_CLIENT;
-				}
-			}
-			else
-			{
-				iThreadId = ptrConnection->getTId();
-				type = ConnetionType::CT_SERVER;
-			}
-			break;
+			SendDataByFlag* itemObjPtr = new SendDataByFlag;
+			itemObjPtr->type = type;
+			itemObjPtr->iSerialNum = info.iSessionId;
+			itemObjPtr->head = head;
+			itemObjPtr->sBody = msg.SerializeAsString();
+
+			Command command;
+			command.type = Command::send_data_by_flag;
+			command.args.send_data_by_flag.ptrData = itemObjPtr;
+			ptrThread->push(command);
 		}
-		case apie::ConnetionType::CT_SERVER:
-		{
-			auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
-			if (ptrConnection == nullptr)
-			{
-				return false;
-			}
-
-			iThreadId = ptrConnection->getTId();
-			break;
-		}
-		case apie::ConnetionType::CT_CLIENT:
-		{
-			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(iSerialNum);
-			if (ptrConnection == nullptr)
-			{
-				return false;
-			}
-
-			iThreadId = ptrConnection->getTId();
-			break;
-		}
-		default:
-			break;
-		}
-
-		auto ptrThread = CtxSingleton::get().getThreadById(iThreadId);
-		if (ptrThread == nullptr)
-		{
-			return false;
-		}
-
-		ProtocolHead head;
-		head.iFlags = iFlag;
-		head.iOpcode = iOpcode;
-		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
-
-		SendDataByFlag *itemObjPtr = new SendDataByFlag;
-		itemObjPtr->type = type;
-		itemObjPtr->iSerialNum = iSerialNum;
-		itemObjPtr->head = head;
-		itemObjPtr->sBody = msg.SerializeAsString();
-
-		Command command;
-		command.type = Command::send_data_by_flag;
-		command.args.send_data_by_flag.ptrData = itemObjPtr;
-		ptrThread->push(command);
 
 		return true;
 	}

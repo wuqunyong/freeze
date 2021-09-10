@@ -196,11 +196,12 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 		MessageInfo info;
 		info.iSessionId = this->m_curSerialNum;
 		info.iOpcode = iOpcode;
-		apie::network::OutputStream::sendMsgRaw(info, msg, apie::ConnetionType::CT_CLIENT);
+		info.iConnetionType = apie::ConnetionType::CT_CLIENT;
+		apie::network::OutputStream::sendMsgImpl(info, msg);
 	}
 	else
 	{
-		apie::network::OutputStream::sendMsgByFlag(this->m_curSerialNum, iOpcode, msg, this->m_maskFlag, apie::ConnetionType::CT_CLIENT);
+		apie::network::OutputStream::sendMsgByFlag(this->m_curSerialNum, iOpcode, this->m_maskFlag, msg,  apie::ConnetionType::CT_CLIENT);
 	}
 	return 0;
 }

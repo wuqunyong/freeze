@@ -28,9 +28,26 @@ namespace apie
 
 	struct MessageInfo
 	{
+	public:
 		uint64_t iSessionId = 0;
-		uint32_t iOpcode = 0;
 		uint32_t iSeqNum = 0;
+		uint32_t iOpcode = 0;
+		uint32_t iResponseOpcode = 0;
+		uint32_t iNotifyOpcode = 0;
+		ConnetionType iConnetionType = ConnetionType::CT_NONE;
+
+		void setFlags(uint8_t iFlags)
+		{
+			iFlags_ = iFlags;
+		}
+
+		uint8_t getFlags()
+		{
+			return iFlags_;
+		}
+
+	private:
+		uint8_t iFlags_ = 0;
 	};
 
 	struct PBRequest
