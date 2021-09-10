@@ -268,7 +268,7 @@ bool NatsManager::isConnect(E_NatsType type)
 	return false;
 }
 
-int32_t NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg)
+bool NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg)
 {
 	switch (type)
 	{
@@ -280,7 +280,7 @@ int32_t NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel,
 			ss << "nats_realm nullptr";
 			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
 
-			return 100;
+			return false;
 		}
 
 		return nats_realm->Publish(channel, msg);
@@ -293,7 +293,7 @@ int32_t NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel,
 	ss << "invalid type:" << type;
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
 
-	return 101;
+	return false;
 }
 
 void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType msg)

@@ -71,7 +71,11 @@ public:
 	void setDemuxCallback(DemuxCallback func);
 	void onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role, const std::string& msg);
 
+public:
 	static MessageInfo extractMessageInfo(const ::rpc_msg::RoleIdentifier& role);
+
+	static bool sendResponse(::rpc_msg::RoleIdentifier role, const ::google::protobuf::Message& msg);
+	static bool sendNotify(uint64_t iRoleId, ::rpc_msg::CHANNEL gwId, uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
 private:
 	std::map<uint32_t, std::shared_ptr<ForwardBase>> service_;

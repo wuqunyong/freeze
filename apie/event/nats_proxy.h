@@ -184,7 +184,7 @@ namespace event_ns {
 			 * @param msg The protobuf message.
 			 * @return Status of publication.
 			 */
-			virtual int32_t Publish(const std::string& channel, const TMsg& msg)
+			virtual bool Publish(const std::string& channel, const TMsg& msg)
 			{
 				if (!nats_connection_)
 				{
@@ -192,7 +192,7 @@ namespace event_ns {
 					ss << "Not connected to NATS";
 
 					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "handlePublish|%s", ss.str().c_str());
-					return 1;
+					return false;
 				}
 
 				std::string sPub = apie::event_ns::NATSConnectorBase::GetCombineTopicChannel(pub_topic_, channel);
@@ -205,12 +205,12 @@ namespace event_ns {
 					ss << "Failed to publish to NATS, nats_status=" << nats_status;
 					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "handlePublish|%s", ss.str().c_str());
 
-					return 2;
+					return false;
 				}
 
 				ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Channel:%s|Publish|%s", sPub.c_str(), serialized_msg.c_str());
 
-				return 0;
+				return true;
 			}
 
 			/**
@@ -286,7 +286,7 @@ namespace event_ns {
 
 		public:
 			bool isConnect(E_NatsType type);
-			int32_t publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg);
+			bool publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg);
 
 		public:
 			static std::string GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id);

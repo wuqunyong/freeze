@@ -119,18 +119,11 @@ bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request_ptr)
 		manager_.insertRequestsTimeout(seq_num, expire_at);
 	}
 
-	bool bResult = false;
 	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(request.server().stub());
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
 	(*nats_msg.mutable_rpc_request()) = request;
-	int32_t iRC = apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
-	if (iRC == 0)
-	{
-		bResult = true;
-	}
-
-	return bResult;
+	return apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 }
 
 

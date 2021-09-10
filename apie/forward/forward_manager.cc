@@ -50,18 +50,11 @@ bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rp
 	*(mux.mutable_role()->mutable_info()) = mux.info();
 	mux.set_body_msg(msg);
 
-	bool bResult = false;
 	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(server);
 
 	::nats_msg::NATS_MSG_PRXOY nats_msg;
 	(*nats_msg.mutable_multiplexer_forward()) = mux;
-	int32_t iRC = apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
-	if (iRC == 0)
-	{
-		bResult = true;
-	}
-
-	return bResult;
+	return apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 }
 
 void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg)
@@ -146,6 +139,40 @@ MessageInfo ForwardManager::extractMessageInfo(const ::rpc_msg::RoleIdentifier& 
 	}
 
 	return info;
+}
+
+bool ForwardManager::sendResponse(::rpc_msg::RoleIdentifier role, const ::google::protobuf::Message& msg)
+{
+	auto iResponseOpcode = role.info().response_opcode();
+
+	::rpc_msg::PRC_DeMultiplexer_Forward demux;
+	*demux.mutable_role() = role;
+	*demux.mutable_info() = role.info();
+	demux.mutable_info()->set_opcode(iResponseOpcode);
+	*demux.mutable_role()->mutable_info() = demux.info();
+	demux.set_body_msg(msg.SerializeAsString());
+
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(role.gw_id());
+
+	::nats_msg::NATS_MSG_PRXOY nats_msg;
+	(*nats_msg.mutable_demultiplexer_forward()) = demux;
+	return apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
+}
+
+bool ForwardManager::sendNotify(uint64_t iRoleId, ::rpc_msg::CHANNEL gwId, uint32_t iOpcode, const ::google::protobuf::Message& msg)
+{
+	::rpc_msg::PRC_DeMultiplexer_Forward demux;
+	demux.mutable_role()->set_user_id(iRoleId);
+	*demux.mutable_role()->mutable_gw_id() = gwId;
+	demux.mutable_info()->set_opcode(iOpcode);
+	*demux.mutable_role()->mutable_info() = demux.info();
+	demux.set_body_msg(msg.SerializeAsString());
+
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(gwId);
+
+	::nats_msg::NATS_MSG_PRXOY nats_msg;
+	(*nats_msg.mutable_demultiplexer_forward()) = demux;
+	return apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 }
 
 }  
