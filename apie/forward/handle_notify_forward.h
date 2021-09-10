@@ -35,9 +35,9 @@ public:
 	void init();
 	void destroy();
 
-	std::function<void(const ::rpc_msg::RoleIdentifier&, const std::shared_ptr<::google::protobuf::Message>&) > getHandler()
+	std::function<void(::rpc_msg::RoleIdentifier, const std::shared_ptr<::google::protobuf::Message>&) > getHandler()
 	{
-		auto ptr_cb = [this](const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::google::protobuf::Message>& notify) {
+		auto ptr_cb = [this](::rpc_msg::RoleIdentifier role, const std::shared_ptr<::google::protobuf::Message>& notify) {
 			auto shared_obj = std::dynamic_pointer_cast<Notify>(notify);
 			if (shared_obj == nullptr)
 			{

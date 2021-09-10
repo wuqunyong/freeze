@@ -47,7 +47,7 @@ namespace forward {
 
 class ForwardManager {
 public:
-	using ServiceCallback = std::function<void(const ::rpc_msg::RoleIdentifier&, const std::shared_ptr<::google::protobuf::Message>&)>;
+	using ServiceCallback = std::function<void(::rpc_msg::RoleIdentifier, const std::shared_ptr<::google::protobuf::Message>&)>;
 	using DemuxCallback = std::function<void(const ::rpc_msg::RoleIdentifier& role, const std::string& msg)>;
 
 	ForwardManager();

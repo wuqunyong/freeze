@@ -46,7 +46,10 @@ apie::status::Status SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifie
 	response->set_value1(request->value1());
 	response->set_value2(request->value2() + "|response");
 
-	return { apie::status::StatusCode::OK, "" };
+	//return { apie::status::StatusCode::OK, "" };
+
+	apie::forward::ForwardManager::sendResponse(role, *response);
+	return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
 apie::status::Status SceneMgrModule::RPC_echoTest(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::RPC_EchoTestRequest>& request, std::shared_ptr<rpc_msg::RPC_EchoTestResponse>& response)
