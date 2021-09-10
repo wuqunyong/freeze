@@ -11,6 +11,7 @@ from arc4 import ARC4
 from proto import rpc_login_pb2
 from proto import login_msg_pb2
 
+
 # /*
 # Byte order:little-endian
 # Native byte order is big-endian or little-endian, depending on the host system. For example, Intel x86 and AMD64 (x86-64) are little-endian;
@@ -19,13 +20,15 @@ from proto import login_msg_pb2
 # /               |               |               |               |
 # |0 1 2 3 4 5 6 7|0 1 2 3 4 5 6 7|0 1 2 3 4 5 6 7|0 1 2 3 4 5 6 7|
 # +---------------+---------------+---------------+---------------+
-# 0| ..........R|C|   --iMagic--  |          ---iOpcode---
+# 0|                           iSeqNum
 # +---------------+---------------+---------------+---------------+
-# 4|                           iBodyLen
+# 4| ..........R|C|   --iMagic--  |          ---iOpcode---
 # +---------------+---------------+---------------+---------------+
-# 4|          iCheckSum           |              Data
+# 8|                           iBodyLen
 # +---------------+---------------+---------------+---------------+
-# 4|                             Data
+# 12|          iCheckSum          |              Data
+# +---------------+---------------+---------------+---------------+
+# 16|                             Data
 # +---------------+---------------+---------------+---------------+
 # */
 
@@ -34,6 +37,7 @@ PH_CRYPTO = 0x02
 
 class Protocol:
     def __init__(self):
+        self.iSeqNum = 0
         self.iFlags = 0
         self.iMagic = 0
         self.iOpcode = 0
@@ -42,15 +46,15 @@ class Protocol:
         self.bBody = b""
 
     def __str__(self):
-        return f"iFlags:{self.iFlags},iMagic:{self.iMagic},iOpcode:{self.iOpcode},iBodyLen:{self.iBodyLen},iCheckSum:{self.iCheckSum}"
+        return f"iSeqNum:{self.iSeqNum},iFlags:{self.iFlags},iMagic:{self.iMagic},iOpcode:{self.iOpcode},iBodyLen:{self.iBodyLen},iCheckSum:{self.iCheckSum}"
 
 
 def packToStreams(protocol):
     iBodyLen = len(protocol.bBody)
     protocol.iBodyLen = iBodyLen
 
-    fmt = '<bbhii%ds'%(iBodyLen,)
-    bytes = struct.pack(fmt, protocol.iFlags, protocol.iMagic, protocol.iOpcode, protocol.iBodyLen, protocol.iCheckSum,
+    fmt = '<ibbhii%ds'%(iBodyLen,)
+    bytes = struct.pack(fmt, protocol.iSeqNum, protocol.iFlags, protocol.iMagic, protocol.iOpcode, protocol.iBodyLen, protocol.iCheckSum,
                         protocol.bBody)
     print("bytes:", bytes)
     return bytes
@@ -58,16 +62,17 @@ def packToStreams(protocol):
 
 def unpackFromStreams(buffer):
     iRecvLen = len(buffer)
-    iHeadLen = 1 + 1 + 2 + 4 + 4
+    iHeadLen = 4 + 1 + 1 + 2 + 4 + 4
     if iRecvLen < iHeadLen:
         return
 
     bHead = buffer[:iHeadLen]
-    iFlags, iMagic, iOpcode, iBodyLen, iCheckSum = struct.unpack('<bbhii', bHead)
+    iSeqNum, iFlags, iMagic, iOpcode, iBodyLen, iCheckSum = struct.unpack('<ibbhii', bHead)
     if iRecvLen != iHeadLen + iBodyLen:
         return
 
     protocol = Protocol()
+    protocol.iSeqNum = iSeqNum
     protocol.iFlags = iFlags
     protocol.iMagic = iMagic
     protocol.iOpcode = iOpcode
@@ -98,6 +103,8 @@ class Client(threading.Thread):
 
         self.init()
 
+        self.iSeqNum = 0
+
     def setCipher(self, data):
         self.cipher = data
 
@@ -114,7 +121,10 @@ class Client(threading.Thread):
     def send(self, iOpcode, pbMsg):
         print("pbMsg:", pbMsg)
 
+        self.iSeqNum += 1
+
         data = Protocol()
+        data.iSeqNum = self.iSeqNum
         data.iFlags = self.flag
         data.iMagic = 0
         data.iOpcode = iOpcode
@@ -134,6 +144,7 @@ class Client(threading.Thread):
                 iFlag = ~PH_CRYPTO
                 data.iFlags = data.iFlags & iFlag
 
+        print("send Protocol:", data)
         sPack = packToStreams(data)
         self.client.sendall(sPack)
         print("send:", sPack)
@@ -154,7 +165,7 @@ class Client(threading.Thread):
                     continue
 
                 protocolObj = unpackFromStreams(self.buff)
-                iTotalLen = 12 + protocolObj.iBodyLen
+                iTotalLen = 16 + protocolObj.iBodyLen
                 self.buff = self.buff[iTotalLen:]
 
                 callback = self.getHandler(protocolObj.iOpcode)
@@ -171,6 +182,7 @@ class Client(threading.Thread):
                     outputData = lz4.frame.decompress(protocolObj.bBody)
                     protocolObj.bBody = outputData
 
+                print("recv Protocol:", protocolObj)
                 callback(self, protocolObj.bBody)
 
                 # response = login_msg_pb2.MSG_RESPONSE_ACCOUNT_LOGIN_L()
@@ -363,8 +375,8 @@ def testRC4():
     else:
         print("failure")
 
-# testPack1()
+testPack1()
 # testPack2()
-# testPack3()
+testPack3()
 # testLz4()
 # testRC4()
