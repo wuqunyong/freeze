@@ -49,8 +49,7 @@ void ServiceManager::setDefaultFunc(HandleMuxFunction func)
 
 bool ServiceManager::sendResponse(MessageInfo info, const ::google::protobuf::Message& msg)
 {
-	MessageInfo response(info);
-	response.iOpcode = info.iResponseOpcode;
+	info.iOpcode = info.iResponseOpcode;
 
 	return apie::network::OutputStream::sendProtobufMsgImpl(info, msg);
 }

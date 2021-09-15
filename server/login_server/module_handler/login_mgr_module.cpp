@@ -76,7 +76,8 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 			::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
 			response.set_status_code(apie::toUnderlyingType(status.errorCode()));
 			response.set_account_id(request->account_id());
-			network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			
+			service::ServiceManager::sendResponse(info, response);
 			return;
 		}
 
@@ -88,7 +89,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 		if (!gatewayOpt.has_value())
 		{
 			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
-			network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			service::ServiceManager::sendResponse(info, response);
 			return;
 		}
 
@@ -134,11 +135,11 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 				if (!status.ok())
 				{
 					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
-					network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+					service::ServiceManager::sendResponse(info, response);
 					return;
 				}
 
-				network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				service::ServiceManager::sendResponse(info, response);
 			};
 			apie::rpc::RPC_Call<::rpc_login::RPC_LoginPendingRequest, rpc_login::RPC_LoginPendingResponse>(server, ::rpc_msg::OP_RPC_LoginPending, rpcRequest, rpcCB);
 			return;
@@ -148,7 +149,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 		if (!roleDBopt.has_value())
 		{
 			response.set_status_code(opcodes::SC_Discovery_ServerListEmpty);
-			network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+			service::ServiceManager::sendResponse(info, response);
 			return;
 		}
 
@@ -162,7 +163,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 			if (!status.ok())
 			{
 				response.set_status_code(apie::toUnderlyingType(status.errorCode()));
-				network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				service::ServiceManager::sendResponse(info, response);
 				return;
 			}
 
@@ -175,11 +176,11 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 				if (!status.ok())
 				{
 					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
-					network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+					service::ServiceManager::sendResponse(info, response);
 					return;
 				}
 
-				network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, response);
+				service::ServiceManager::sendResponse(info, response);
 			};
 			apie::rpc::RPC_Call<::rpc_login::RPC_LoginPendingRequest, rpc_login::RPC_LoginPendingResponse>(server, ::rpc_msg::OP_RPC_LoginPending, rpcRequest, rpcCB);
 		};

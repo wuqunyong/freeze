@@ -477,7 +477,8 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 			response.set_status_code(apie::toUnderlyingType(status.errorCode()));
 			response.set_user_id(request->user_id());
 			response.set_version(request->version());
-			network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+
+			service::ServiceManager::sendResponse(info, response);
 			return;
 		}
 
@@ -507,7 +508,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 		auto ptrGatewayRole = GatewayRole::createGatewayRole(user.fields.user_id, info.iSessionId);
 		GatewayMgrSingleton::get().addGatewayRole(ptrGatewayRole);
 
-		network::OutputStream::sendMsg(info.iSessionId, apie::OP_MSG_RESPONSE_CLIENT_LOGIN, response);
+		service::ServiceManager::sendResponse(info, response);
 	};
 	LoadFromDb<ModelUser>(server, user, cb);
 

@@ -86,7 +86,6 @@ void HandleRequestService<Request, responseOpcode, Response>::handleRequest(Mess
 
 	if (status.ok())
 	{
-		info.iOpcode = info.iResponseOpcode;
 		sendResponse(info, response);
 	}
 }
@@ -94,6 +93,7 @@ void HandleRequestService<Request, responseOpcode, Response>::handleRequest(Mess
 template <typename Request, uint32_t responseOpcode, typename Response>
 void HandleRequestService<Request, responseOpcode, Response>::sendResponse(MessageInfo info, const std::shared_ptr<Response>& response)
 {
+	info.iOpcode = info.iResponseOpcode;
 	apie::network::OutputStream::sendProtobufMsgImpl(info, *response);
 }
 
