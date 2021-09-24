@@ -511,6 +511,9 @@
     <ClInclude Include="forward\handle_request_forward.h">
       <Filter>forward</Filter>
     </ClInclude>
+    <ClInclude Include="common\dao_macros.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">

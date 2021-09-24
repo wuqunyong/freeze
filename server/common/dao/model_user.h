@@ -36,40 +36,7 @@ namespace apie {
 			name
 		};
 
-		virtual void* layoutAddress() override
-		{
-			return &fields;
-		}
-
-		virtual std::vector<uint32_t> layoutOffset() override
-		{
-			std::vector<uint32_t> layout = {
-				offsetof(db_fields, user_id),
-				offsetof(db_fields, game_id),
-				offsetof(db_fields, level),
-				offsetof(db_fields, register_time),
-				offsetof(db_fields, login_time),
-				offsetof(db_fields, offline_time),
-				offsetof(db_fields, name),
-			};
-
-			return layout;
-		}
-
-		virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override
-		{
-			std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout = {
-				get_field_type(fields.user_id),
-				get_field_type(fields.game_id),
-				get_field_type(fields.level),
-				get_field_type(fields.register_time),
-				get_field_type(fields.login_time),
-				get_field_type(fields.offline_time),
-				get_field_type(fields.name),
-			};
-
-			return layout;
-		}
+		DAO_DEFINE_TYPE_INTRUSIVE(db_fields);
 
 		ModelUser() = default;
 		ModelUser(uint64_t user_id)
@@ -87,9 +54,6 @@ namespace apie {
 		{ 
 			return "role_base"; 
 		}
-
-	public:
-		db_fields fields;
 	};
 
 

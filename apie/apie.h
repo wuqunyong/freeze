@@ -16,6 +16,7 @@
 #include "apie/api/logiccmd_handler.h"
 #include "apie/api/os_sys_calls.h"
 
+#include "apie/common/dao_macros.h"
 #include "apie/common/string_utils.h"
 #include "apie/common/message_traits.h"
 #include "apie/common/exception_trap.h"

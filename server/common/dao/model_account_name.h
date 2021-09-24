@@ -26,30 +26,7 @@ namespace apie {
 			name,
 		};
 
-		virtual void* layoutAddress() override
-		{
-			return &fields;
-		}
-
-		virtual std::vector<uint32_t> layoutOffset() override
-		{
-			std::vector<uint32_t> layout = {
-				offsetof(db_fields, account_id),
-				offsetof(db_fields, name),
-			};
-
-			return layout;
-		}
-
-		virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override
-		{
-			std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout = {
-				get_field_type(fields.account_id),
-				get_field_type(fields.name),
-			};
-
-			return layout;
-		}
+		DAO_DEFINE_TYPE_INTRUSIVE(db_fields);
 
 		ModelAccountName() = default;
 		ModelAccountName(uint64_t account_id)
@@ -67,9 +44,6 @@ namespace apie {
 		{ 
 			return "account_name"; 
 		}
-
-	public:
-		db_fields fields;
 	};
 
 

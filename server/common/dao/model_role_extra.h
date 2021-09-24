@@ -26,30 +26,8 @@ namespace apie {
 			extra_info
 		};
 
-		virtual void* layoutAddress() override
-		{
-			return &fields;
-		}
+		DAO_DEFINE_TYPE_INTRUSIVE(db_fields);
 
-		virtual std::vector<uint32_t> layoutOffset() override
-		{
-			std::vector<uint32_t> layout = {
-				offsetof(db_fields, user_id),
-				offsetof(db_fields, extra_info),
-			};
-
-			return layout;
-		}
-
-		virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override
-		{
-			std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout = {
-				get_field_type(fields.user_id),
-				get_field_type(fields.extra_info),
-			};
-
-			return layout;
-		}
 
 		ModelRoleExtra() = default;
 		ModelRoleExtra(uint64_t user_id)
@@ -67,9 +45,6 @@ namespace apie {
 		{ 
 			return "role_extra"; 
 		}
-
-	public:
-		db_fields fields;
 	};
 
 
