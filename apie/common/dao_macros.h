@@ -43,13 +43,13 @@ void to_layout_type(std::vector<std::set<MysqlField::DB_FIELD_TYPE>>& vec, T& t,
 	virtual std::vector<uint32_t> layoutOffset() override \
 	{                                                     \
 		std::vector<uint32_t> layout;                     \
-		to_layout_offset(layout, fields, std::make_index_sequence <boost::pfr::tuple_size_v<Type>>{}); \
+		to_layout_offset(layout, fields, std::make_index_sequence<boost::pfr::tuple_size_v<Type>>{});  \
 		return layout;                                                                                 \
 	}                                                                                                  \
                                                                                                        \
 	virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override                     \
 	{                                                                                                  \
 		std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout;                                       \
-		to_layout_type(layout, fields, std::make_index_sequence <boost::pfr::tuple_size_v<Type>>{});   \
+		to_layout_type(layout, fields, std::make_index_sequence<boost::pfr::tuple_size_v<Type>>{});    \
 		return layout;                                                                                 \
 	}                                                                                                  \
