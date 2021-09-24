@@ -26,25 +26,13 @@ namespace apie {
 			extra_info
 		};
 
-		DAO_DEFINE_TYPE_INTRUSIVE(db_fields);
-
-
-		ModelRoleExtra() = default;
 		ModelRoleExtra(uint64_t user_id)
 		{
 			this->fields.user_id = user_id;
 			this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
 		}
 
-		static std::shared_ptr<DeclarativeBase> createMethod()
-		{
-			return std::make_shared<ModelRoleExtra>();
-		}
-
-		static std::string getFactoryName() 
-		{ 
-			return "role_extra"; 
-		}
+		DAO_DEFINE_TYPE_INTRUSIVE(ModelRoleExtra, db_fields, role_extra);
 	};
 
 

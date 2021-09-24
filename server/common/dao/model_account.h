@@ -30,25 +30,13 @@ namespace apie {
 			modified_time,
 		};
 
-		DAO_DEFINE_TYPE_INTRUSIVE(db_fields);
-
-
-		ModelAccount() = default;
 		ModelAccount(uint64_t account_id)
 		{
 			this->fields.account_id = account_id;
 			this->bindTable(DeclarativeBase::DBType::DBT_Account, getFactoryName());
 		}
 
-		static std::shared_ptr<DeclarativeBase> createMethod()
-		{
-			return std::make_shared<ModelAccount>();
-		}
-
-		static std::string getFactoryName() 
-		{ 
-			return "account"; 
-		}
+		DAO_DEFINE_TYPE_INTRUSIVE(ModelAccount, db_fields, account);
 	};
 
 

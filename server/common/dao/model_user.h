@@ -36,24 +36,13 @@ namespace apie {
 			name
 		};
 
-		DAO_DEFINE_TYPE_INTRUSIVE(db_fields);
-
-		ModelUser() = default;
 		ModelUser(uint64_t user_id)
 		{
 			this->fields.user_id = user_id;
 			this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
 		}
 
-		static std::shared_ptr<DeclarativeBase> createMethod()
-		{
-			return std::make_shared<ModelUser>();
-		}
-
-		static std::string getFactoryName() 
-		{ 
-			return "role_base"; 
-		}
+		DAO_DEFINE_TYPE_INTRUSIVE(ModelUser, db_fields, role_base);
 	};
 
 
