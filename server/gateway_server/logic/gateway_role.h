@@ -25,7 +25,7 @@ namespace apie {
 		RoleTablesData(uint64_t roleId);
 
 		bool LoadFromDb(CallbackType cb);
-		bool SaveToDb();
+		bool SaveToDb(bool bFlush=false);
 
 		bool onLoaded();
 		bool onBeforeSave();
@@ -34,6 +34,8 @@ namespace apie {
 		uint64_t role_id;
 		ModelUser user;
 		ModelRoleExtra role_extra;
+
+		::rpc_msg::CHANNEL server;
 	};
 
 	using RoleTablesDataPtr = std::shared_ptr<RoleTablesData>;

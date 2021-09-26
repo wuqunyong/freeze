@@ -9,20 +9,17 @@ RoleTablesData::RoleTablesData(uint64_t roleId) :
 	user(roleId),
 	role_extra(roleId)
 {
-
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ROLE_Proxy);
+	server.set_id(1);
 }
 
 
 bool RoleTablesData::LoadFromDb(CallbackType cb)
 {
-	::rpc_msg::CHANNEL server;
-	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(::common::EPT_DB_ROLE_Proxy);
-	server.set_id(1);
-
 	std::weak_ptr<RoleTablesData> weak_this = shared_from_this();
 
-	auto multiCb = [weak_this, server, cb](const status::Status& status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, const std::array<uint32_t, 2>& tupleRows) {
+	auto multiCb = [weak_this, cb](const status::Status& status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, const std::array<uint32_t, 2>& tupleRows) {
 		if (!status.ok())
 		{
 			cb(status);
@@ -40,7 +37,7 @@ bool RoleTablesData::LoadFromDb(CallbackType cb)
 
 		std::tie(share_this->user, share_this->role_extra) = tupleData;
 
-		auto doneCb = [weak_this, server, tupleData, cb](const status::Status& status, const std::tuple<uint32_t, uint32_t>& insertRows) mutable {
+		auto doneCb = [weak_this, cb](const status::Status& status, const std::tuple<uint32_t, uint32_t>& insertRows) mutable {
 			if (!status.ok())
 			{
 				cb(status);
@@ -68,15 +65,31 @@ bool RoleTablesData::LoadFromDb(CallbackType cb)
 				cb(status);
 			}
 		};
-		Insert_OnNotExists(server, tupleData, tupleRows, doneCb);
+		Insert_OnNotExists(share_this->server, tupleData, tupleRows, doneCb);
 	};
 	apie::Multi_LoadFromDb(multiCb, server, user, role_extra);
 
 	return true;
 }
 
-bool RoleTablesData::SaveToDb()
+bool RoleTablesData::SaveToDb(bool bFlush)
 {
+	auto bResult = onBeforeSave();
+	if (!bResult)
+	{
+		return bResult;
+	}
+
+	auto&& tupleData = std::make_tuple(user, role_extra);
+	if (bFlush)
+	{
+		Update_OnForced(server, tupleData);
+	} 
+	else
+	{
+		Update_OnChanged(server, tupleData);
+	}
+
 	return true;
 }
 

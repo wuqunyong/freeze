@@ -446,6 +446,7 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 //bResult = Multi_LoadFromDb(multiCb, server, accountData, accountData, accountData);
 
 
+//std::shared_ptr<std::tuple<uint32_t, uint32_t, bool>> ptrCheck : <0>需要插入的行数，<1>已插入的行数
 
 template <size_t I = 0, typename... Ts>
 void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup, const std::array<uint32_t, sizeof...(Ts)>& rows, std::shared_ptr<std::tuple<uint32_t, uint32_t, bool>> ptrCheck, InsertDoneCb doneCb)
