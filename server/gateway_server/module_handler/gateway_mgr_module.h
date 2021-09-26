@@ -34,6 +34,8 @@ namespace apie {
 		static void Cmd_loadFromDbORM(::pubsub::LOGIC_CMD& cmd);
 		static void Cmd_queryFromDbORM(::pubsub::LOGIC_CMD& cmd);
 		static void Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd);
+		static void Cmd_load(::pubsub::LOGIC_CMD& cmd);
+		
 
 		static void Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd);
 

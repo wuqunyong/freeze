@@ -3,6 +3,93 @@
 
 namespace apie {
 
+
+RoleTablesData::RoleTablesData(uint64_t roleId) :
+	role_id(roleId),
+	user(roleId),
+	role_extra(roleId)
+{
+
+}
+
+
+bool RoleTablesData::LoadFromDb(CallbackType cb)
+{
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ROLE_Proxy);
+	server.set_id(1);
+
+	std::weak_ptr<RoleTablesData> weak_this = shared_from_this();
+
+	auto multiCb = [weak_this, server, cb](const status::Status& status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, const std::array<uint32_t, 2>& tupleRows) {
+		if (!status.ok())
+		{
+			cb(status);
+			return;
+		}
+
+		auto share_this = weak_this.lock();
+		if (!share_this) 
+		{
+			status::Status newStatus;
+			newStatus.setErrorCode(status::StatusCode::Obj_NotExist);
+			cb(status);
+			return;
+		}
+
+		std::tie(share_this->user, share_this->role_extra) = tupleData;
+
+		auto doneCb = [weak_this, server, tupleData, cb](const status::Status& status, const std::tuple<uint32_t, uint32_t>& insertRows) mutable {
+			if (!status.ok())
+			{
+				cb(status);
+				return;
+			}
+			
+			auto share_this = weak_this.lock();
+			if (!share_this)
+			{
+				status::Status newStatus;
+				newStatus.setErrorCode(status::StatusCode::Obj_NotExist);
+				cb(status);
+				return;
+			}
+
+			bool bResult = share_this->onLoaded();
+			if (bResult)
+			{
+				cb(status);
+			} 
+			else
+			{
+				status::Status newStatus;
+				newStatus.setErrorCode(status::StatusCode::DB_LoadedError);
+				cb(status);
+			}
+		};
+		Insert_OnNotExists(server, tupleData, tupleRows, doneCb);
+	};
+	apie::Multi_LoadFromDb(multiCb, server, user, role_extra);
+
+	return true;
+}
+
+bool RoleTablesData::SaveToDb()
+{
+	return true;
+}
+
+bool RoleTablesData::onLoaded()
+{
+	return true;
+}
+
+bool RoleTablesData::onBeforeSave()
+{
+	return true;
+}
+
 std::shared_ptr<GatewayRole> GatewayRole::createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum)
 {
 	return std::make_shared<GatewayRole>(iRoleId, iSerialNum);

@@ -29,6 +29,7 @@ void GatewayMgrModule::init()
 	cmd.registerOnCmd("query_from_db", "mysql_query_from_db_orm", GatewayMgrModule::Cmd_queryFromDbORM);
 	cmd.registerOnCmd("mulit_load_from_db", "mysql_mulit_load_from_db_orm", GatewayMgrModule::Cmd_multiLoadFromDbORM);
 
+	cmd.registerOnCmd("load", "load roleTables", GatewayMgrModule::Cmd_load);
 
 	cmd.registerOnCmd("nats_publish", "nats_publish", GatewayMgrModule::Cmd_natsPublish);
 }
@@ -323,6 +324,27 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 		Insert_OnNotExists(server, tupleData, tupleRows, doneCb);
 	};
 	Multi_LoadFromDb(multiCb, server, ModelUser(userId), ModelRoleExtra(userId));
+}
+
+
+void GatewayMgrModule::Cmd_load(::pubsub::LOGIC_CMD& cmd)
+{
+	if (cmd.params_size() < 1)
+	{
+		return;
+	}
+
+	uint64_t userId = std::stoull(cmd.params()[0]);
+
+	auto ptrRole = std::make_shared<RoleTablesData>(userId);
+	auto ptrCb = [ptrRole](const status::Status& status) {
+		if (!status.ok())
+		{
+			return;
+		}
+	};
+
+	ptrRole->LoadFromDb(ptrCb);
 }
 
 

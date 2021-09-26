@@ -124,6 +124,8 @@ LoadFromDbError = 20,
 NotMatchedResultError = 21,
 DirtyFlagZero = 22,
 DB_InsertError = 23,
+DB_LoadedError = 24,
+Obj_NotExist = 25,
 
 /// Force users to include a default branch:
   DO_NOT_USE = -1
