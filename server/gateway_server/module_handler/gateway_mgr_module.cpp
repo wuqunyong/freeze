@@ -8,6 +8,7 @@
 
 #include "logic/gateway_mgr.h"
 #include "logic/gateway_role.h"
+#include "logic/role_tables_data.h"
 
 namespace apie {
 

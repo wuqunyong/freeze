@@ -20,6 +20,9 @@
     <ClInclude Include="module_handler\gateway_mgr_module.h">
       <Filter>module_handler</Filter>
     </ClInclude>
+    <ClInclude Include="logic\role_tables_data.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -38,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="module_handler\gateway_mgr_module.cpp">
       <Filter>module_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\role_tables_data.cpp">
+      <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
