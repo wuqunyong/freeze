@@ -14,6 +14,10 @@ RoleTablesData::RoleTablesData(uint64_t roleId) :
 	server.set_id(1);
 }
 
+RoleTablesData::~RoleTablesData()
+{
+
+}
 
 void RoleTablesData::LoadFromDb(CallbackType cb)
 {

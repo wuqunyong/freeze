@@ -23,6 +23,7 @@ namespace apie {
 		using CallbackType = std::function<void(const status::Status& status)>;
 
 		RoleTablesData(uint64_t roleId);
+		~RoleTablesData();
 
 		void LoadFromDb(CallbackType cb);
 		bool SaveToDb(bool bFlush=false);
