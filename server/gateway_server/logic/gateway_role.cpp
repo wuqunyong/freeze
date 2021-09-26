@@ -15,11 +15,11 @@ RoleTablesData::RoleTablesData(uint64_t roleId) :
 }
 
 
-bool RoleTablesData::LoadFromDb(CallbackType cb)
+void RoleTablesData::LoadFromDb(CallbackType cb)
 {
 	std::weak_ptr<RoleTablesData> weak_this = shared_from_this();
 
-	auto multiCb = [weak_this, cb](const status::Status& status, std::tuple<ModelUser, ModelRoleExtra>& tupleData, const std::array<uint32_t, 2>& tupleRows) {
+	auto multiCb = [weak_this, cb](const status::Status& status, auto& tupleData, auto& tupleRows) {
 		if (!status.ok())
 		{
 			cb(status);
@@ -68,8 +68,6 @@ bool RoleTablesData::LoadFromDb(CallbackType cb)
 		Insert_OnNotExists(share_this->server, tupleData, tupleRows, doneCb);
 	};
 	apie::Multi_LoadFromDb(multiCb, server, user, role_extra);
-
-	return true;
 }
 
 bool RoleTablesData::SaveToDb(bool bFlush)

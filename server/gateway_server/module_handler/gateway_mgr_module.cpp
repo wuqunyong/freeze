@@ -329,24 +329,36 @@ void GatewayMgrModule::Cmd_multiLoadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 
 void GatewayMgrModule::Cmd_load(::pubsub::LOGIC_CMD& cmd)
 {
-	if (cmd.params_size() < 1)
+	if (cmd.params_size() < 2)
 	{
 		return;
 	}
 
 	uint64_t userId = std::stoull(cmd.params()[0]);
+	bool bFlush = (bool)std::stoul(cmd.params()[1]);
 
 	auto ptrRole = std::make_shared<RoleTablesData>(userId);
-	auto ptrCb = [ptrRole](const status::Status& status) {
+	auto ptrCb = [ptrRole, bFlush](const status::Status& status) mutable {
 		if (!status.ok())
 		{
 			return;
 		}
+
+		uint32_t iRandom = rand() % 10;
+		if (iRandom >= 5)
+		{
+			ptrRole->user.fields.level += 1;
+			ptrRole->user.fields.game_id += 1;
+			ptrRole->user.markDirty({ ModelUser::level, ModelUser::game_id });
+
+			ptrRole->role_extra.fields.extra_info += "|extra";
+			ptrRole->role_extra.markDirty({ ModelRoleExtra::extra_info });
+		}
+		ptrRole->SaveToDb(bFlush);
 	};
 
 	ptrRole->LoadFromDb(ptrCb);
 }
-
 
 void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 {
