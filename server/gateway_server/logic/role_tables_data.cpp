@@ -18,7 +18,7 @@ RoleTablesData::~RoleTablesData()
 
 }
 
-void RoleTablesData::LoadFromDb(CallbackType cb)
+void RoleTablesData::loadFromDb(CallbackType cb)
 {
 	std::weak_ptr<RoleTablesData> weak_this = shared_from_this();
 
@@ -74,7 +74,7 @@ void RoleTablesData::LoadFromDb(CallbackType cb)
 	apie::Multi_LoadFromDb(multiCb, server, user, role_extra);
 }
 
-bool RoleTablesData::SaveToDb(bool bFlush)
+bool RoleTablesData::saveToDb(bool bFlush)
 {
 	auto bResult = onBeforeSave();
 	if (!bResult)

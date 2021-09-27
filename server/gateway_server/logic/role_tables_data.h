@@ -25,8 +25,8 @@ namespace apie {
 		RoleTablesData(uint64_t roleId);
 		~RoleTablesData();
 
-		void LoadFromDb(CallbackType cb);
-		bool SaveToDb(bool bFlush=false);
+		void loadFromDb(CallbackType cb);
+		bool saveToDb(bool bFlush=false);
 
 		bool onLoaded();
 		bool onBeforeSave();

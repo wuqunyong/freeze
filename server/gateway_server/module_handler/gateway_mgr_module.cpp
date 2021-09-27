@@ -355,10 +355,10 @@ void GatewayMgrModule::Cmd_load(::pubsub::LOGIC_CMD& cmd)
 			ptrRole->role_extra.fields.extra_info += "|extra";
 			ptrRole->role_extra.markDirty({ ModelRoleExtra::extra_info });
 		}
-		ptrRole->SaveToDb(bFlush);
+		ptrRole->saveToDb(bFlush);
 	};
 
-	ptrRole->LoadFromDb(ptrCb);
+	ptrRole->loadFromDb(ptrCb);
 }
 
 void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
