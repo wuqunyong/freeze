@@ -17,7 +17,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 # Debug
-set(CMAKE_BUILD_TYPE RelWithDebInfo)
+set(CMAKE_BUILD_TYPE Debug)
+# set(CMAKE_BUILD_TYPE RelWithDebInfo)
 
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
@@ -43,6 +44,8 @@ if (WIN32)
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyxml2
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cpp_redis/includes
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cpp_redis/tacopie/includes
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/json/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/pfr/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libnats)
 
     set(LinkDirs
@@ -67,6 +70,8 @@ if (WIN32)
         tacopie.lib
         nats_staticd.lib)
 else ()
+    set(CMAKE_BUILD_TYPE RelWithDebInfo)
+
     set(CMAKE_INSTALL_PREFIX "/usr/local/apie")
 
     set(IncludeDirs
@@ -82,6 +87,8 @@ else ()
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/jsoncpp/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/tinyxml2
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/influxdb-cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/json/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/pfr/include
         ${CMAKE_CURRENT_SOURCE_DIR}/pb_msg
         ${CMAKE_CURRENT_SOURCE_DIR}/apie)
 
@@ -95,6 +102,7 @@ else ()
     set(LinkLibs -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie)
 endif()
 
+message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 message(STATUS "freeze PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
