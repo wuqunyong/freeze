@@ -28,6 +28,7 @@ namespace apie {
 		void loadFromDb(CallbackType cb);
 		bool saveToDb(bool bFlush=false);
 
+	private:
 		bool onLoaded();
 		bool onBeforeSave();
 
