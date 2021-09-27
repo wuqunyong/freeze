@@ -9,6 +9,7 @@
 #include <type_traits>
 #include <variant>
 #include <utility>
+#include <nlohmann/json.hpp>
 
 #include "service_init.h"
 
@@ -33,8 +34,54 @@ void to_layer_impl(std::vector<std::set<MysqlField::DB_FIELD_TYPE>>& vec, T& t, 
 	(vec.push_back(get_field_type(boost::pfr::get<Idx>(t))), ...);
 }
 
+class ItemsConfigList
+{
+public:
+	uint32_t Id = 0;
+	uint32_t Quality = 0;
+	uint32_t StackNum = 0;
+	uint32_t UseNum = 0;
+	uint32_t CoreLv = 0;
+	uint32_t Page = 0;
+	uint32_t Type = 0;
+	uint32_t SubType = 0;
+	uint32_t Gift = 0;
+	uint32_t Value1 = 0;
+	std::string Value2;
 
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(ItemsConfigList, Id, Quality, StackNum, UseNum, CoreLv, Page, Type, SubType, Gift, Value1, Value2);
+};
 
+class ItemsConfig
+{
+public:
+	std::string TableName;
+	std::vector<ItemsConfigList> List;
+
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(ItemsConfig, TableName, List);
+};
+
+class Items
+{
+public:
+	ItemsConfig Config;
+
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Items, Config);
+
+};
+
+auto test_json(std::string file_name)
+{
+	std::string content;
+	bool bResult = apie::common::GetContent(file_name, &content);
+	if (!bResult)
+	{
+		return;
+	}
+
+	nlohmann::json jsonObj = nlohmann::json::parse(content);
+	Items itemsObj = jsonObj.get<Items>();
+}
 
 int main(int argc, char **argv)
 {
@@ -42,6 +89,8 @@ int main(int argc, char **argv)
 
 	std::cout << boost::pfr::get<0>(val) << " was born in " << boost::pfr::get<1>(val);
 	std::cout << boost::pfr::io(val);
+
+	test_json("F:/freeze/data/Item.json");
 
 	std::vector<uint32_t> offsetV;
 	to_vec_impl(offsetV, val, std::make_index_sequence<2>{});

@@ -243,7 +243,12 @@ def dumpExcel(sNmae):
                     dCheckAccess[iKeyValue] = {}
                     lCheck.append(dCheckAccess[iKeyValue])
 
-        sJSON = json.dumps(lTransferDocument, ensure_ascii=False).encode('utf8')
+        dConfigData = {}
+        dConfigData["Config"] = {}
+        dConfigData["Config"]["TableName"] = s.name
+        dConfigData["Config"]["List"] = lTransferDocument
+
+        sJSON = json.dumps(dConfigData, ensure_ascii=False).encode('utf8')
         # print(sJSON)
         
         # Open a file
