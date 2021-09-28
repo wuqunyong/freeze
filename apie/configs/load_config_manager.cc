@@ -88,7 +88,7 @@ bool LoadConfigManager::loadAll()
 		if (!bResult)
 		{
 			std::stringstream ss;
-			ss << "isValid error|fileName:" << elem.second << "|errInfo:" << errInfo;                                                                                                                         \
+			ss << "isValid false|fileName:" << elem.second << "|errInfo:" << errInfo;                                                                                                                         \
 
 			ASYNC_PIE_LOG("load_config", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
 

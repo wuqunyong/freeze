@@ -13,6 +13,7 @@
 #include <nlohmann/json.hpp>
 #include "boost/pfr.hpp"
 
+#include "apie/common/macros.h"
 #include "apie/network/logger.h"
 
 namespace apie {
@@ -26,6 +27,9 @@ class LoadConfigBase {
     virtual bool load(const std::string& content) = 0;
     virtual bool reload(const std::string& content) = 0;
 };
+
+
+DEFINE_TYPE_TRAIT(HasIsValid, isValid)
 
 
 template <typename T>
@@ -71,7 +75,14 @@ std::string LoadConfig<T>::getConfigName()
 template <typename T>
 bool LoadConfig<T>::isValid(std::string& errInfo)
 {
-	return config_data_.isValid(errInfo);
+    if constexpr(HasIsValid<T>::value)
+    {
+        return config_data_.isValid(errInfo);
+    }
+    else
+    {
+        return true;
+    }
 }
 
 template <typename T>
