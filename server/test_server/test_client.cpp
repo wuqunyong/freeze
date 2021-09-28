@@ -68,6 +68,11 @@ public:
 
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Items, Config);
 
+	bool isValid(std::string& errInfo) 
+	{
+		return false;
+	}
+
 	static constexpr const char* sName = "items";
 };
 

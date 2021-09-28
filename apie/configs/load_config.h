@@ -22,6 +22,7 @@ class LoadConfigBase {
     virtual ~LoadConfigBase() = default;
 
     virtual std::string getConfigName() = 0;
+    virtual bool isValid(std::string& errInfo) = 0;
     virtual bool load(const std::string& content) = 0;
     virtual bool reload(const std::string& content) = 0;
 };
@@ -39,6 +40,7 @@ class LoadConfig : public LoadConfigBase {
     virtual ~LoadConfig();
 
     std::string getConfigName() override;
+    bool isValid(std::string& errInfo) override;
     bool load(const std::string& content) override;
     bool reload(const std::string& content) override;
 
@@ -64,6 +66,12 @@ template <typename T>
 std::string LoadConfig<T>::getConfigName()
 {
     return name_;
+}
+
+template <typename T>
+bool LoadConfig<T>::isValid(std::string& errInfo)
+{
+	return config_data_.isValid(errInfo);
 }
 
 template <typename T>

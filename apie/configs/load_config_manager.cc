@@ -66,9 +66,32 @@ bool LoadConfigManager::loadAll()
 {
 	for (const auto& elem : file_name_map_)
 	{
-		auto bResult = this->loadFile(elem.first);
+		bool bResult = this->loadFile(elem.first);
 		if (!bResult)
 		{
+			return bResult;
+		}
+
+		auto findIte = configs_.find(elem.second);
+		if (findIte == configs_.end())
+		{
+			std::stringstream ss;
+			ss << "configObj not exist|fileName:" << elem.second;                                                                                                                         \
+
+			ASYNC_PIE_LOG("load_config", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+
+			return false;
+		}
+
+		std::string errInfo;
+		bResult = findIte->second->isValid(errInfo);
+		if (!bResult)
+		{
+			std::stringstream ss;
+			ss << "isValid error|fileName:" << elem.second << "|errInfo:" << errInfo;                                                                                                                         \
+
+			ASYNC_PIE_LOG("load_config", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+
 			return bResult;
 		}
 	}
