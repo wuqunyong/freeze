@@ -95,10 +95,11 @@ int main(int argc, char **argv)
 	//test_json("F:/freeze/data/Item.json");
 
 	apie::LCMgrSingleton::get().registerConfig<Items>(Items::sName, "F:/freeze/data/Item.json");
-	apie::LCMgrSingleton::get().loadFile("F:/freeze/data/Item.json");
-	apie::LCMgrSingleton::get().reloadFile("F:/freeze/data/Item.json");
+	apie::LCMgrSingleton::get().loadAll();
 
 	auto ptrConfig = apie::LCMgrSingleton::get().getConfig<Items>(Items::sName);
+
+	apie::LCMgrSingleton::get().reloadFile("F:/freeze/data/Item.json");
 
 	std::vector<uint32_t> offsetV;
 	to_vec_impl(offsetV, val, std::make_index_sequence<2>{});

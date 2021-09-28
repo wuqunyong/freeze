@@ -23,12 +23,15 @@ class LoadConfigManager {
 	template <typename T>
 	std::shared_ptr<LoadConfig<T>> getConfig(const std::string& name);
 
-    bool loadFile(const std::string& fileName);
+    bool loadAll();
     bool reloadFile(const std::string& fileName);
+
+private:
+	bool loadFile(const std::string& fileName);
 
  private:
     ConfigMap configs_;
-    std::unordered_map<std::string, std::string> name_file_map_;
+    std::unordered_map<std::string, std::string> file_name_map_;
 };
 
 
@@ -40,7 +43,7 @@ bool LoadConfigManager::registerConfig(const std::string& name, const std::strin
         return false;
     }
 
-	if (name_file_map_.find(fileName) != name_file_map_.end())
+	if (file_name_map_.find(fileName) != file_name_map_.end())
 	{
 		return false;
 	}
@@ -48,7 +51,7 @@ bool LoadConfigManager::registerConfig(const std::string& name, const std::strin
     auto configObj = std::make_shared<LoadConfig<T>>(name);
     configs_[name] = configObj;
 
-    name_file_map_[fileName] = name;
+    file_name_map_[fileName] = name;
 
     return true;
 }

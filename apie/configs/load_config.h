@@ -42,6 +42,8 @@ class LoadConfig : public LoadConfigBase {
     bool load(const std::string& content) override;
     bool reload(const std::string& content) override;
 
+    const ConfigType& configData();
+
  private:
     std::string name_;
     ConfigType config_data_;
@@ -102,6 +104,12 @@ bool LoadConfig<T>::reload(const std::string& content)
 
         return false;
     }
+}
+
+template <typename T>
+const T& LoadConfig<T>::configData()
+{
+    return config_data_;
 }
 
 

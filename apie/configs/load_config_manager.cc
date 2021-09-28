@@ -16,8 +16,8 @@ LoadConfigManager::~LoadConfigManager()
 
 bool LoadConfigManager::loadFile(const std::string& fileName)
 {
-	auto fileIte = name_file_map_.find(fileName);
-	if (fileIte == name_file_map_.end())
+	auto fileIte = file_name_map_.find(fileName);
+	if (fileIte == file_name_map_.end())
 	{
 		return false;
 	}
@@ -40,8 +40,8 @@ bool LoadConfigManager::loadFile(const std::string& fileName)
 
 bool LoadConfigManager::reloadFile(const std::string& fileName)
 {
-	auto fileIte = name_file_map_.find(fileName);
-	if (fileIte == name_file_map_.end())
+	auto fileIte = file_name_map_.find(fileName);
+	if (fileIte == file_name_map_.end())
 	{
 		return false;
 	}
@@ -60,6 +60,20 @@ bool LoadConfigManager::reloadFile(const std::string& fileName)
 	}
 
 	return configIte->second->reload(content);
+}
+
+bool LoadConfigManager::loadAll()
+{
+	for (const auto& elem : file_name_map_)
+	{
+		auto bResult = this->loadFile(elem.first);
+		if (!bResult)
+		{
+			return bResult;
+		}
+	}
+
+	return true;
 }
 
 }  // namespace blocker
