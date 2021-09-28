@@ -514,6 +514,12 @@
     <ClInclude Include="common\dao_macros.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="configs\load_config.h">
+      <Filter>configs</Filter>
+    </ClInclude>
+    <ClInclude Include="configs\load_config_manager.h">
+      <Filter>configs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -767,6 +773,9 @@
     </ClCompile>
     <ClCompile Include="forward\forward_manager.cc">
       <Filter>forward</Filter>
+    </ClCompile>
+    <ClCompile Include="configs\load_config_manager.cc">
+      <Filter>configs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

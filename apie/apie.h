@@ -24,6 +24,9 @@
 #include "apie/common/enum_to_int.h"
 #include "apie/common/file.h"
 
+#include "apie/configs/load_config.h"
+#include "apie/configs/load_config_manager.h"
+
 #include "apie/crypto/crypto_utility.h"
 
 #include "apie/event/real_time_system.h"

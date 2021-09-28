@@ -68,7 +68,9 @@ public:
 
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Items, Config);
 
+	static constexpr const char* sName = "items";
 };
+
 
 auto test_json(std::string file_name)
 {
@@ -90,7 +92,13 @@ int main(int argc, char **argv)
 	std::cout << boost::pfr::get<0>(val) << " was born in " << boost::pfr::get<1>(val);
 	std::cout << boost::pfr::io(val);
 
-	test_json("F:/freeze/data/Item.json");
+	//test_json("F:/freeze/data/Item.json");
+
+	apie::LCMgrSingleton::get().registerConfig<Items>(Items::sName, "F:/freeze/data/Item.json");
+	apie::LCMgrSingleton::get().loadFile("F:/freeze/data/Item.json");
+	apie::LCMgrSingleton::get().reloadFile("F:/freeze/data/Item.json");
+
+	auto ptrConfig = apie::LCMgrSingleton::get().getConfig<Items>(Items::sName);
 
 	std::vector<uint32_t> offsetV;
 	to_vec_impl(offsetV, val, std::make_index_sequence<2>{});
