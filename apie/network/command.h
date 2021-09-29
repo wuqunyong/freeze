@@ -87,8 +87,15 @@ namespace apie
 		bool bIgnoreMore = false;
 	};
 
+	enum class DIAL_MODE
+	{
+		DM_ASYNC = 0,
+		DM_SYNC = 1
+	};
+
 	struct DialParameters
 	{
+		DIAL_MODE mode = DIAL_MODE::DM_ASYNC;
 		std::string sIp;
 		uint16_t iPort;
 		ProtocolType iCodecType;

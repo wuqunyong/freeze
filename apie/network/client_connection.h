@@ -3,6 +3,12 @@
 #include <stdint.h>
 #include <string>
 #include <memory>
+#include <future>
+#include <map>
+#include <sstream>
+#include <tuple>
+#include <unordered_map>
+#include <utility>
 
 #include <event2/bufferevent.h>
 
@@ -72,6 +78,8 @@ namespace apie
 		//class IOThread* ptrThreadObj;
 
 		HttpResponseDecoder decoder;
+
+		uint64_t sequence_number_ = 0;
 
 		ClientConnection(const ClientConnection&);
         const ClientConnection &operator = (const ClientConnection&);

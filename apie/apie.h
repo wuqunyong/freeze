@@ -45,6 +45,8 @@
 #include "apie/network/client_proxy.h"
 #include "apie/network/windows_platform.h"
 
+#include "apie/sync_service/sync_service.h"
+
 #include "apie/mysql_driver/mysql_connector.h"
 #include "apie/mysql_driver/result_set.h"
 #include "apie/mysql_driver/mysql_orm.h"

@@ -399,6 +399,7 @@ void apie::ClientConnection::handleSend(const char *data, size_t size)
 {
 	if (NULL != this->bev)
 	{
+		sequence_number_++;
 		int rc = bufferevent_write(this->bev, data, size);
 		if (rc != 0)
 		{

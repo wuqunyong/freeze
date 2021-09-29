@@ -100,6 +100,9 @@
     <Filter Include="forward">
       <UniqueIdentifier>{944334a0-6137-4818-9a09-c9d3940681ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sync_service">
+      <UniqueIdentifier>{70f5e493-7e35-43b5-84dd-50c7f0eec7f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -519,6 +522,9 @@
     </ClInclude>
     <ClInclude Include="configs\load_config_manager.h">
       <Filter>configs</Filter>
+    </ClInclude>
+    <ClInclude Include="sync_service\sync_service.h">
+      <Filter>sync_service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

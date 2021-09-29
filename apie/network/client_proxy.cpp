@@ -87,7 +87,7 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 	auto ptrProxy = shared_from_this();
 	ClientProxy::registerClientProxy(ptrProxy);
 
-	return this->sendConnect();
+	return this->sendConnect(DIAL_MODE::DM_ASYNC);
 }
 
 void ClientProxy::resetConnect(const std::string& ip, uint16_t port, ProtocolType type)
@@ -110,7 +110,7 @@ int ClientProxy::reconnect()
 	}
 
 	this->m_reconnectTimes++;
-	return this->sendConnect();
+	return this->sendConnect(DIAL_MODE::DM_ASYNC);
 }
 
 void ClientProxy::addReconnectTimer(uint64_t interval)
@@ -261,13 +261,14 @@ void ClientProxy::onActiveClose()
 	this->close();
 }
 
-int ClientProxy::sendConnect()
+int ClientProxy::sendConnect(DIAL_MODE mode)
 {
 	auto *ptr = new DialParameters;
 	if (NULL == ptr)
 	{
 		return opcodes::SC_ClientProxy_BadAlloc;
 	}
+	ptr->mode = mode;
 	ptr->sIp = this->m_ip;
 	ptr->iPort = this->m_port;
 	ptr->iCodecType = this->m_codecType;

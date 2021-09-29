@@ -10,10 +10,13 @@
 #include <variant>
 #include <utility>
 #include <nlohmann/json.hpp>
+#include <thread>
 
 #include "service_init.h"
 
 #include "boost/pfr.hpp"
+
+#include "../../pb_msg/business/login_msg.pb.h"
 
 struct some_person {
 	std::string name;
@@ -90,6 +93,17 @@ auto test_json(std::string file_name)
 	Items itemsObj = jsonObj.get<Items>();
 }
 
+void print_int(std::shared_ptr<apie::service::SyncServiceBase> ptrBase) {
+	std::cout << "SyncServiceBase 1" << '\n';
+	std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+	std::cout << "SyncServiceBase 2" << '\n';
+	std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+	auto ptrData = std::make_shared<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>();
+	ptrData->set_platform_id("hello world");
+	ptrBase->getHandler()(ptrData);
+}
+
 int main(int argc, char **argv)
 {
 	some_person val{ "hello", 1809};
@@ -98,6 +112,13 @@ int main(int argc, char **argv)
 	std::cout << boost::pfr::io(val);
 
 	//test_json("F:/freeze/data/Item.json");
+
+	auto ptrSync = std::make_shared<apie::service::SyncService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>>();
+	std::shared_ptr<apie::service::SyncServiceBase> ptrSyncBase = ptrSync;
+	std::thread th(print_int, ptrSyncBase);
+
+	auto gotData = ptrSync->getFuture().get();
+	std::cout << gotData->ShortDebugString();
 
 	apie::LCMgrSingleton::get().registerConfig<Items>(Items::sName, "F:/freeze/data/Item.json");
 	apie::LCMgrSingleton::get().loadAll();

@@ -11,7 +11,9 @@
 #include <google/protobuf/message.h>
 
 #include "apie/network/i_poll_events.hpp"
+#include "apie/network/command.h"
 #include "apie/event/timer.h"
+
 
 
 namespace apie
@@ -72,7 +74,7 @@ namespace apie
 
 	private:
 		void close();
-		int sendConnect();
+		int sendConnect(DIAL_MODE mode);
 		void sendClose();
 		static uint64_t generatorId();
 

@@ -20,6 +20,10 @@ class EndPointInstanceDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<EndPointInstance> _instance;
 } _EndPointInstance_default_instance_;
+class ConnectDialResultDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ConnectDialResult> _instance;
+} _ConnectDialResult_default_instance_;
 class MSG_REQUEST_REGISTER_INSTANCEDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_REQUEST_REGISTER_INSTANCE> _instance;
@@ -41,6 +45,20 @@ class MSG_RESPONSE_HEARTBEATDefaultTypeInternal {
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MSG_RESPONSE_HEARTBEAT> _instance;
 } _MSG_RESPONSE_HEARTBEAT_default_instance_;
 }  // namespace service_discovery
+static void InitDefaultsscc_info_ConnectDialResult_service_5fdiscovery_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::service_discovery::_ConnectDialResult_default_instance_;
+    new (ptr) ::service_discovery::ConnectDialResult();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::service_discovery::ConnectDialResult::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ConnectDialResult_service_5fdiscovery_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ConnectDialResult_service_5fdiscovery_2eproto}, {}};
+
 static void InitDefaultsscc_info_EndPointInstance_service_5fdiscovery_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -127,7 +145,7 @@ static void InitDefaultsscc_info_MSG_RESPONSE_REGISTER_INSTANCE_service_5fdiscov
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MSG_RESPONSE_REGISTER_INSTANCE_service_5fdiscovery_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MSG_RESPONSE_REGISTER_INSTANCE_service_5fdiscovery_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_service_5fdiscovery_2eproto[6];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_service_5fdiscovery_2eproto[7];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_service_5fdiscovery_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_service_5fdiscovery_2eproto = nullptr;
 
@@ -145,6 +163,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, port_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, codec_type_),
   PROTOBUF_FIELD_OFFSET(::service_discovery::EndPointInstance, mask_flag_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::service_discovery::ConnectDialResult, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::service_discovery::ConnectDialResult, serial_num_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::ConnectDialResult, result_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::ConnectDialResult, local_ip_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -184,15 +210,17 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::service_discovery::EndPointInstance)},
-  { 13, -1, sizeof(::service_discovery::MSG_REQUEST_REGISTER_INSTANCE)},
-  { 20, -1, sizeof(::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE)},
-  { 26, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
-  { 38, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
-  { 43, -1, sizeof(::service_discovery::MSG_RESPONSE_HEARTBEAT)},
+  { 13, -1, sizeof(::service_discovery::ConnectDialResult)},
+  { 21, -1, sizeof(::service_discovery::MSG_REQUEST_REGISTER_INSTANCE)},
+  { 28, -1, sizeof(::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE)},
+  { 34, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
+  { 46, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
+  { 51, -1, sizeof(::service_discovery::MSG_RESPONSE_HEARTBEAT)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_EndPointInstance_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_ConnectDialResult_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_MSG_REQUEST_REGISTER_INSTANCE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_MSG_RESPONSE_REGISTER_INSTANCE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::service_discovery::_MSG_NOTICE_INSTANCE_default_instance_),
@@ -206,29 +234,32 @@ const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECT
   "\r\n\005realm\030\001 \001(\r\022\"\n\004type\030\002 \001(\0162\024.common.En"
   "dPointType\022\n\n\002id\030\003 \001(\r\022\014\n\004auth\030\004 \001(\t\022\n\n\002"
   "ip\030\005 \001(\t\022\014\n\004port\030\006 \001(\r\022\022\n\ncodec_type\030\007 \001"
-  "(\r\022\021\n\tmask_flag\030\010 \001(\r\"d\n\035MSG_REQUEST_REG"
-  "ISTER_INSTANCE\0225\n\010instance\030\001 \001(\0132#.servi"
-  "ce_discovery.EndPointInstance\022\014\n\004auth\030\002 "
-  "\001(\t\"5\n\036MSG_RESPONSE_REGISTER_INSTANCE\022\023\n"
-  "\013status_code\030\001 \001(\r\"\311\002\n\023MSG_NOTICE_INSTAN"
-  "CE\022\n\n\002id\030\001 \001(\t\022\017\n\007version\030\002 \001(\004\0221\n\006statu"
-  "s\030\003 \001(\0162!.service_discovery.RegistryStat"
-  "us\022+\n\004mode\030\004 \001(\0162\035.service_discovery.Upd"
-  "ateMode\0229\n\014add_instance\030\005 \003(\0132#.service_"
-  "discovery.EndPointInstance\022<\n\017delete_ins"
-  "tance\030\006 \003(\0132#.service_discovery.EndPoint"
-  "Instance\022<\n\017update_instance\030\007 \003(\0132#.serv"
-  "ice_discovery.EndPointInstance\"\027\n\025MSG_RE"
-  "QUEST_HEARTBEAT\"-\n\026MSG_RESPONSE_HEARTBEA"
-  "T\022\023\n\013status_code\030\001 \001(\r*A\n\016RegistryStatus"
-  "\022\013\n\007RS_None\020\000\022\017\n\013RS_Learning\020\001\022\021\n\rRS_For"
-  "warding\020\002*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007"
-  "UM_Full\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
+  "(\r\022\021\n\tmask_flag\030\010 \001(\r\"I\n\021ConnectDialResu"
+  "lt\022\022\n\nserial_num\030\001 \001(\004\022\016\n\006result\030\002 \001(\r\022\020"
+  "\n\010local_ip\030\003 \001(\t\"d\n\035MSG_REQUEST_REGISTER"
+  "_INSTANCE\0225\n\010instance\030\001 \001(\0132#.service_di"
+  "scovery.EndPointInstance\022\014\n\004auth\030\002 \001(\t\"5"
+  "\n\036MSG_RESPONSE_REGISTER_INSTANCE\022\023\n\013stat"
+  "us_code\030\001 \001(\r\"\311\002\n\023MSG_NOTICE_INSTANCE\022\n\n"
+  "\002id\030\001 \001(\t\022\017\n\007version\030\002 \001(\004\0221\n\006status\030\003 \001"
+  "(\0162!.service_discovery.RegistryStatus\022+\n"
+  "\004mode\030\004 \001(\0162\035.service_discovery.UpdateMo"
+  "de\0229\n\014add_instance\030\005 \003(\0132#.service_disco"
+  "very.EndPointInstance\022<\n\017delete_instance"
+  "\030\006 \003(\0132#.service_discovery.EndPointInsta"
+  "nce\022<\n\017update_instance\030\007 \003(\0132#.service_d"
+  "iscovery.EndPointInstance\"\027\n\025MSG_REQUEST"
+  "_HEARTBEAT\"-\n\026MSG_RESPONSE_HEARTBEAT\022\023\n\013"
+  "status_code\030\001 \001(\r*A\n\016RegistryStatus\022\013\n\007R"
+  "S_None\020\000\022\017\n\013RS_Learning\020\001\022\021\n\rRS_Forwardi"
+  "ng\020\002*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007UM_Fu"
+  "ll\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
   &::descriptor_table_common_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_service_5fdiscovery_2eproto_sccs[6] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_service_5fdiscovery_2eproto_sccs[7] = {
+  &scc_info_ConnectDialResult_service_5fdiscovery_2eproto.base,
   &scc_info_EndPointInstance_service_5fdiscovery_2eproto.base,
   &scc_info_MSG_NOTICE_INSTANCE_service_5fdiscovery_2eproto.base,
   &scc_info_MSG_REQUEST_HEARTBEAT_service_5fdiscovery_2eproto.base,
@@ -239,10 +270,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_ser
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 917,
-  &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 6, 1,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 992,
+  &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 7, 1,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
-  file_level_metadata_service_5fdiscovery_2eproto, 6, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
+  file_level_metadata_service_5fdiscovery_2eproto, 7, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -667,6 +698,262 @@ void EndPointInstance::InternalSwap(EndPointInstance* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata EndPointInstance::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void ConnectDialResult::InitAsDefaultInstance() {
+}
+class ConnectDialResult::_Internal {
+ public:
+};
+
+ConnectDialResult::ConnectDialResult()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:service_discovery.ConnectDialResult)
+}
+ConnectDialResult::ConnectDialResult(const ConnectDialResult& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  local_ip_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_local_ip().empty()) {
+    local_ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.local_ip_);
+  }
+  ::memcpy(&serial_num_, &from.serial_num_,
+    static_cast<size_t>(reinterpret_cast<char*>(&result_) -
+    reinterpret_cast<char*>(&serial_num_)) + sizeof(result_));
+  // @@protoc_insertion_point(copy_constructor:service_discovery.ConnectDialResult)
+}
+
+void ConnectDialResult::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ConnectDialResult_service_5fdiscovery_2eproto.base);
+  local_ip_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  ::memset(&serial_num_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&result_) -
+      reinterpret_cast<char*>(&serial_num_)) + sizeof(result_));
+}
+
+ConnectDialResult::~ConnectDialResult() {
+  // @@protoc_insertion_point(destructor:service_discovery.ConnectDialResult)
+  SharedDtor();
+}
+
+void ConnectDialResult::SharedDtor() {
+  local_ip_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void ConnectDialResult::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ConnectDialResult& ConnectDialResult::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_ConnectDialResult_service_5fdiscovery_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void ConnectDialResult::Clear() {
+// @@protoc_insertion_point(message_clear_start:service_discovery.ConnectDialResult)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  local_ip_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  ::memset(&serial_num_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&result_) -
+      reinterpret_cast<char*>(&serial_num_)) + sizeof(result_));
+  _internal_metadata_.Clear();
+}
+
+const char* ConnectDialResult::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // uint64 serial_num = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          serial_num_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 result = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          result_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string local_ip = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_local_ip();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "service_discovery.ConnectDialResult.local_ip"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* ConnectDialResult::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:service_discovery.ConnectDialResult)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 serial_num = 1;
+  if (this->serial_num() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_serial_num(), target);
+  }
+
+  // uint32 result = 2;
+  if (this->result() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_result(), target);
+  }
+
+  // string local_ip = 3;
+  if (this->local_ip().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_local_ip().data(), static_cast<int>(this->_internal_local_ip().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "service_discovery.ConnectDialResult.local_ip");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_local_ip(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:service_discovery.ConnectDialResult)
+  return target;
+}
+
+size_t ConnectDialResult::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:service_discovery.ConnectDialResult)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string local_ip = 3;
+  if (this->local_ip().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_local_ip());
+  }
+
+  // uint64 serial_num = 1;
+  if (this->serial_num() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+        this->_internal_serial_num());
+  }
+
+  // uint32 result = 2;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_result());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void ConnectDialResult::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:service_discovery.ConnectDialResult)
+  GOOGLE_DCHECK_NE(&from, this);
+  const ConnectDialResult* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<ConnectDialResult>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:service_discovery.ConnectDialResult)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:service_discovery.ConnectDialResult)
+    MergeFrom(*source);
+  }
+}
+
+void ConnectDialResult::MergeFrom(const ConnectDialResult& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:service_discovery.ConnectDialResult)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.local_ip().size() > 0) {
+
+    local_ip_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.local_ip_);
+  }
+  if (from.serial_num() != 0) {
+    _internal_set_serial_num(from._internal_serial_num());
+  }
+  if (from.result() != 0) {
+    _internal_set_result(from._internal_result());
+  }
+}
+
+void ConnectDialResult::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:service_discovery.ConnectDialResult)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ConnectDialResult::CopyFrom(const ConnectDialResult& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:service_discovery.ConnectDialResult)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ConnectDialResult::IsInitialized() const {
+  return true;
+}
+
+void ConnectDialResult::InternalSwap(ConnectDialResult* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  local_ip_.Swap(&other->local_ip_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(serial_num_, other->serial_num_);
+  swap(result_, other->result_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ConnectDialResult::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -1820,6 +2107,9 @@ void MSG_RESPONSE_HEARTBEAT::InternalSwap(MSG_RESPONSE_HEARTBEAT* other) {
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::service_discovery::EndPointInstance* Arena::CreateMaybeMessage< ::service_discovery::EndPointInstance >(Arena* arena) {
   return Arena::CreateInternal< ::service_discovery::EndPointInstance >(arena);
+}
+template<> PROTOBUF_NOINLINE ::service_discovery::ConnectDialResult* Arena::CreateMaybeMessage< ::service_discovery::ConnectDialResult >(Arena* arena) {
+  return Arena::CreateInternal< ::service_discovery::ConnectDialResult >(arena);
 }
 template<> PROTOBUF_NOINLINE ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE* Arena::CreateMaybeMessage< ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE >(Arena* arena) {
   return Arena::CreateInternal< ::service_discovery::MSG_REQUEST_REGISTER_INSTANCE >(arena);

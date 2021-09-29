@@ -29,6 +29,15 @@ message EndPointInstance
 	uint32 mask_flag = 8;
 }
 
+
+message ConnectDialResult
+{
+	uint64 serial_num = 1;
+	uint32 result = 2;
+	string local_ip = 3;	
+}
+
+
 // 注册服务节点 register
 message MSG_REQUEST_REGISTER_INSTANCE
 {

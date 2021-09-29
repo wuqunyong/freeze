@@ -278,6 +278,7 @@
     <ClInclude Include="singleton\threadsafe_singleton.h" />
     <ClInclude Include="status\status.h" />
     <ClInclude Include="status\status_code_enum.h" />
+    <ClInclude Include="sync_service\sync_service.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third_party\http-parser\http_parser.c" />
