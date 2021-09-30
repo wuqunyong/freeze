@@ -7,7 +7,6 @@
 #include <optional>
 
 #include "apie/network/i_poll_events.hpp"
-#include "apie/network/client_proxy.h"
 #include "apie/network/command.h"
 #include "apie/singleton/threadsafe_singleton.h"
 #include "apie/proto/init.h"
@@ -16,6 +15,8 @@
 
 namespace apie
 {
+	class ClientProxy;
+
 	class SelfRegistration : public std::enable_shared_from_this<SelfRegistration>
 	{
 	public:

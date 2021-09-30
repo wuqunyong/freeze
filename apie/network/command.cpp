@@ -49,6 +49,15 @@ void apie::deallocateCommand(Command* cmd)
 		}
 		break;
 	}
+	case Command::sync_send_data:
+	{
+		if (NULL != cmd->args.sync_send_data.ptrData)
+		{
+			delete cmd->args.sync_send_data.ptrData;
+			cmd->args.sync_send_data.ptrData = NULL;
+		}
+		break;
+	}
 	case Command::async_log:
 	{
 		if (NULL != cmd->args.async_log.ptrData)

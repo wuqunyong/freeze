@@ -330,6 +330,11 @@ void DispatcherImpl::handleCommand()
 			this->handleSendData(cmd.args.send_data.ptrData);
 			break;
 		}
+		case Command::sync_send_data:
+		{
+			this->handleSyncSendData(cmd.args.sync_send_data.ptrData);
+			break;
+		}
 		case Command::send_data_by_flag:
 		{
 			this->handleSendDataByFlag(cmd.args.send_data_by_flag.ptrData);
@@ -676,6 +681,26 @@ void DispatcherImpl::handleSendData(SendData *itemPtr)
 		break;
 	}
 }
+
+void DispatcherImpl::handleSyncSendData(SyncSendData* itemPtr)
+{
+	switch (itemPtr->type)
+	{
+	case ConnetionType::CT_CLIENT:
+	{
+		auto ptrConnection = getClientConnection(itemPtr->iSerialNum);
+		if (ptrConnection == nullptr)
+		{
+			return;
+		}
+		ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
+		break;
+	}
+	default:
+		break;
+	}
+}
+
 
 void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
 {

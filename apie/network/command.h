@@ -71,6 +71,14 @@ namespace apie
 		std::string sData;
 	};
 
+	struct SyncSendData
+	{
+		ConnetionType type;
+		uint64_t iSerialNum;
+		std::string sData;
+		std::shared_ptr<apie::service::SyncServiceBase> ptrSyncBase = nullptr;
+	};
+
 	struct SendDataByFlag
 	{
 		ConnetionType type;
@@ -187,6 +195,7 @@ namespace apie
 			pb_forward,
 			send_data,
 			send_data_by_flag, // PH_COMPRESSED, PH_CRYPTO
+			sync_send_data,
 			dial,
 			dial_result,
 			set_server_session_attr,
@@ -240,6 +249,10 @@ namespace apie
 				SendDataByFlag* ptrData;
 			} send_data_by_flag;
 
+			struct {
+				SyncSendData* ptrData;
+			} sync_send_data;
+			
 			struct {
 				LogCmd* ptrData;
 			} async_log;

@@ -66,79 +66,81 @@ public:
 	static uint64_t generatorSerialNum();
 
 private:
-  void runPostCallbacks();
-  void runIntervalCallbacks();
-  void handleCommand();
+	void runPostCallbacks();
+	void runIntervalCallbacks();
+	void handleCommand();
 
-  void handleNewConnect(PassiveConnect *itemPtr);
-  void handlePBRequest(PBRequest *itemPtr);
-  void handlePBForward(PBForward *itemPtr);
-  void handleSendData(SendData *itemPtr);
-  void handleSendDataByFlag(SendDataByFlag *itemPtr);
+	void handleNewConnect(PassiveConnect *itemPtr);
+	void handlePBRequest(PBRequest *itemPtr);
+	void handlePBForward(PBForward *itemPtr);
+	void handleSendData(SendData *itemPtr);
+	void handleSendDataByFlag(SendDataByFlag *itemPtr);
+	void handleSyncSendData(SyncSendData* itemPtr);
 
-  void handleAsyncLog(LogCmd* ptrCmd);
-  void handleMetric(MetricData* ptrCmd);
+	
+	void handleAsyncLog(LogCmd* ptrCmd);
+	void handleMetric(MetricData* ptrCmd);
 
-  void handleRotate(time_t cutTime);
+	void handleRotate(time_t cutTime);
 
-  void handleDial(DialParameters* ptrCmd);
-  void handleDialResult(DialResult* ptrCmd);
-  void handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd);
-  void handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd);
-  void handleLogicCmd(LogicCmd* ptrCmd);
-  void handleAsyncCallFunctor(LogicAsyncCallFunctor* ptrCmd);
-  void handleCloseLocalClient(CloseLocalClient* ptrCmd);
-  void handleCloseLocalServer(CloseLocalServer* ptrCmd);
-  void handleClientPeerClose(ClientPeerClose* ptrCmd);
-  void handleServerPeerClose(ServerPeerClose* ptrCmd);
+	void handleDial(DialParameters* ptrCmd);
+	void handleDialResult(DialResult* ptrCmd);
+	void handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd);
+	void handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd);
+	void handleLogicCmd(LogicCmd* ptrCmd);
+	void handleAsyncCallFunctor(LogicAsyncCallFunctor* ptrCmd);
+	void handleCloseLocalClient(CloseLocalClient* ptrCmd);
+	void handleCloseLocalServer(CloseLocalServer* ptrCmd);
+	void handleClientPeerClose(ClientPeerClose* ptrCmd);
+	void handleServerPeerClose(ServerPeerClose* ptrCmd);
 
-  void handleLogicStart(uint32_t iThreadId);
-  void handleLogicExit(uint32_t iThreadId);
-  void handleStopThread(uint32_t iThreadId);
+	void handleLogicStart(uint32_t iThreadId);
+	void handleLogicExit(uint32_t iThreadId);
+	void handleStopThread(uint32_t iThreadId);
 
-  void registerEndpoint();
+	void registerEndpoint();
 
-  static void processCommand(evutil_socket_t fd, short event, void *arg);
+	static void processCommand(evutil_socket_t fd, short event, void *arg);
 
-  EThreadType type_;
-  uint32_t tid_;
-  LibeventScheduler base_scheduler_;
-  TimerPtr deferred_delete_timer_;
-  TimerPtr post_timer_;
-  TimerPtr interval_timer_;
+	EThreadType type_;
+	uint32_t tid_;
+	LibeventScheduler base_scheduler_;
+	TimerPtr deferred_delete_timer_;
+	TimerPtr post_timer_;
+	TimerPtr interval_timer_;
 
-  std::vector<DeferredDeletablePtr> to_delete_1_;
-  std::vector<DeferredDeletablePtr> to_delete_2_;
-  std::vector<DeferredDeletablePtr>* current_to_delete_;
-  std::mutex post_lock_;
-  //std::list<std::function<void()>> post_callbacks_ GUARDED_BY(post_lock_);
-  std::list<std::function<void()>> post_callbacks_;
-  bool deferred_deleting_{};
+	std::vector<DeferredDeletablePtr> to_delete_1_;
+	std::vector<DeferredDeletablePtr> to_delete_2_;
+	std::vector<DeferredDeletablePtr>* current_to_delete_;
+	std::mutex post_lock_;
+	//std::list<std::function<void()>> post_callbacks_ GUARDED_BY(post_lock_);
+	std::list<std::function<void()>> post_callbacks_;
+	bool deferred_deleting_{};
 
-  apie::Mailbox<Command> mailbox_;
-  time_t i_next_check_rotate;
-  time_t i_next_metric_time;
+	apie::Mailbox<Command> mailbox_;
+	time_t i_next_check_rotate;
+	time_t i_next_metric_time;
 
-  std::map<uint32_t, uint32_t> m_cmdStats;
-  std::map<uint32_t, uint32_t> m_pbStats;
+	std::map<uint32_t, uint32_t> m_cmdStats;
+	std::map<uint32_t, uint32_t> m_pbStats;
 
-  uint32_t m_maxMailboxStats = 0;
-  uint32_t m_accumulateMailBoxStats = 0;
-  uint32_t m_zeroMailBoxStats = 0;
+	uint32_t m_maxMailboxStats = 0;
+	uint32_t m_accumulateMailBoxStats = 0;
+	uint32_t m_zeroMailBoxStats = 0;
 
-  uint32_t m_loopCountStats = 0;
+	uint32_t m_loopCountStats = 0;
 
 
-  std::atomic<bool> terminating_ = false;
+	std::atomic<bool> terminating_ = false;
 
-  static std::atomic<uint64_t> serial_num_;
-  static std::mutex connecton_sync_;
+	static std::atomic<uint64_t> serial_num_;
+	static std::mutex connecton_sync_;
 
-  //A server side Socket connection
-  static std::map<uint64_t, std::shared_ptr<ServerConnection>> connection_map_;
+	//A server side Socket connection
+	static std::map<uint64_t, std::shared_ptr<ServerConnection>> connection_map_;
 
-  //A client side Socket connection.(ClientConnection)
-  static std::map<uint64_t, std::shared_ptr<ClientConnection>> client_connection_map_;
+	//A client side Socket connection.(ClientConnection)
+	static std::map<uint64_t, std::shared_ptr<ClientConnection>> client_connection_map_;
 };
 
 } // namespace Event

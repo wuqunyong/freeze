@@ -14,6 +14,7 @@
 #include "apie/network/i_poll_events.hpp"
 #include "apie/network/command.h"
 #include "apie/event/timer.h"
+#include "apie/network/output_stream.h"
 
 #include "apie/proto/init.h"
 
@@ -62,6 +63,9 @@ namespace apie
 
 		int32_t sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
+		template <typename Response>
+		std::shared_ptr<Response> syncSendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
+
 		uint64_t getSerialNum();
 		std::string getCurSerialNumToStr();
 
@@ -98,6 +102,8 @@ namespace apie
 		uint64_t m_curSerialNum;
 		std::string m_localIp;
 
+		uint64_t m_sequenceNumber = 0;
+
 		std::string m_ip;
 		uint16_t m_port;
 		ProtocolType m_codecType;  //–≠“È£∫1(PB°Ã),2(HTTP)
@@ -118,4 +124,35 @@ namespace apie
 		static std::map<uint64_t, std::shared_ptr<ClientProxy>> m_clientProxy;
 	};
 
+	template <typename Response>
+	std::shared_ptr<Response> ClientProxy::syncSendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
+	{
+		if (this->m_hadEstablished != CONNECT_ESTABLISHED)
+		{
+			return nullptr;
+		}
+
+		m_sequenceNumber;
+
+		MessageInfo info;
+		info.iSessionId = this->m_curSerialNum;
+		info.iSeqNum = m_sequenceNumber;
+		info.iOpcode = iOpcode;
+		info.iConnetionType = apie::ConnetionType::CT_CLIENT;
+		auto future = apie::network::syncSendProtobufMsgImpl<Response>(info, msg);
+
+		if (!future.valid())
+		{
+			return nullptr;
+		}
+
+		std::chrono::seconds timeout_s(10);
+		auto status = future.wait_for(timeout_s);
+		if (status == std::future_status::ready) {
+			return future.get();
+		}
+		else {
+			return nullptr;
+		}
+	}
 }

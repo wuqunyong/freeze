@@ -5,11 +5,6 @@
 #include <string>
 #include <assert.h>
 
-#include "apie/event/dispatcher_impl.h"
-#include "apie/network/ctx.h"
-#include "apie/serialization/protocol_head.h"
-#include "apie/rpc/client/rpc_client.h"
-#include "apie/network/command.h"
 
 namespace apie {
 namespace network {
@@ -24,14 +19,8 @@ namespace network {
 		return sendProtobufMsgImpl(info, msg);
 	}
 
-	bool OutputStream::sendMsgWithFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const ::google::protobuf::Message& msg, ConnetionType type)
+	bool OutputStream::sendMsgWithFlag(MessageInfo info, const ::google::protobuf::Message& msg)
 	{
-		MessageInfo info;
-		info.iSessionId = iSessionId;
-		info.iOpcode = iOpcode;
-		info.iConnetionType = type;
-		info.setFlags(iFlag);
-
 		return sendProtobufMsgImpl(info, msg);
 	}
 
