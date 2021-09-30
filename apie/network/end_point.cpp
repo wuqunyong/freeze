@@ -63,15 +63,26 @@ void SelfRegistration::registerEndpoint()
 
 	auto ptrSelf = this->shared_from_this();
 	auto ptrClient = apie::ClientProxy::createClientProxy();
-	auto connectCb = [ptrSelf, registryAuth](apie::ClientProxy* ptrClient, uint32_t iResult) {
-		if (iResult == 0)
-		{
-			ptrSelf->sendRegister(ptrClient, registryAuth);
-			ptrSelf->setState(apie::SelfRegistration::State::Registering);
-		}
-		return true;
-	};
-	ptrClient->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
+
+	//auto connectCb = [ptrSelf, registryAuth](apie::ClientProxy* ptrClient, uint32_t iResult) {
+	//	if (iResult == 0)
+	//	{
+	//		ptrSelf->sendRegister(ptrClient, registryAuth);
+	//		ptrSelf->setState(apie::SelfRegistration::State::Registering);
+	//	}
+	//	return true;
+	//};
+	//ptrClient->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
+
+	bool bResult = ptrClient->syncConnect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag);
+	if (!bResult)
+	{
+		std::stringstream ss;
+		ss << "sync_connect service_registry error";
+
+		PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		PANIC_ABORT(ss.str().c_str());
+	}
 
 	auto heartbeatCb = [ptrSelf, registryAuth](apie::ClientProxy *ptrClient) {
 		ptrClient->addHeartbeatTimer(3000);

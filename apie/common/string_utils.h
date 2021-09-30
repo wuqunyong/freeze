@@ -112,4 +112,10 @@ std::string key_to_string(const Key& key) {
 	return streamable_to_string<Key, is_streamable<std::stringstream, Key>::value>().impl(key);
 }
 
+
+std::string DecodeBase64(const std::string& base64_str);
+
+std::string EncodeBase64(const std::string& in);
+
+
 }  // namespace APie

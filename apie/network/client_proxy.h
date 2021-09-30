@@ -7,6 +7,7 @@
 #include <queue>
 #include <functional>
 #include <map>
+#include <future>
 
 #include <google/protobuf/message.h>
 
@@ -14,7 +15,7 @@
 #include "apie/network/command.h"
 #include "apie/event/timer.h"
 
-
+#include "apie/proto/init.h"
 
 namespace apie
 {
@@ -42,6 +43,8 @@ namespace apie
 		int connect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag, HandleConnectCB cb=nullptr);
 		void resetConnect(const std::string& ip, uint16_t port, ProtocolType type);
 		int reconnect();
+
+		bool syncConnect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag);
 
 		void addReconnectTimer(uint64_t interval);
 		void disableReconnectTimer();
@@ -74,8 +77,11 @@ namespace apie
 
 	private:
 		void close();
-		int sendConnect(DIAL_MODE mode);
+		int sendConnect();
 		void sendClose();
+		
+		std::shared_future<std::shared_ptr<service_discovery::ConnectDialResult>> syncSendConnect();
+
 		static uint64_t generatorId();
 
 	public:

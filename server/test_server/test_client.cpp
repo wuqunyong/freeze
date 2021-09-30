@@ -113,6 +113,20 @@ int main(int argc, char **argv)
 
 	//test_json("F:/freeze/data/Item.json");
 
+	std::shared_future<std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>> tempFuture;
+	if (!tempFuture.valid())
+	{
+		return 1;
+	}
+	auto status = tempFuture.wait_for(std::chrono::seconds(5));
+	if (status == std::future_status::ready) {
+		auto i = tempFuture.get();
+	}
+	else {
+		
+	}
+
+
 	auto ptrSync = std::make_shared<apie::service::SyncService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>>();
 	std::shared_ptr<apie::service::SyncServiceBase> ptrSyncBase = ptrSync;
 	std::thread th(print_int, ptrSyncBase);

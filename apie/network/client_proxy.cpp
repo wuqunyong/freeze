@@ -11,7 +11,6 @@
 #include "apie/network/output_stream.h"
 #include "apie/event/dispatcher_impl.h"
 
-#include "apie/proto/init.h"
 
 using namespace apie;
 
@@ -87,7 +86,58 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 	auto ptrProxy = shared_from_this();
 	ClientProxy::registerClientProxy(ptrProxy);
 
-	return this->sendConnect(DIAL_MODE::DM_ASYNC);
+	return this->sendConnect();
+}
+
+bool ClientProxy::syncConnect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag)
+{
+	if (this->m_curSerialNum != 0)
+	{
+		return false;
+	}
+
+	this->m_curSerialNum = generatorId();
+	this->m_ip = ip;
+	this->m_port = port;
+	this->m_codecType = type;
+	this->m_maskFlag = maskFlag;
+	this->m_cb = nullptr;
+
+	auto ptrProxy = shared_from_this();
+	ClientProxy::registerClientProxy(ptrProxy);
+
+	auto future = this->syncSendConnect();
+	if (!future.valid()) 
+	{
+		return false;
+	}
+
+	std::chrono::seconds timeout_s(10);
+	auto status = future.wait_for(timeout_s);
+	if (status == std::future_status::ready) 
+	{
+		try
+		{
+			auto pbObj = future.get();
+			if (pbObj->result() == 0)
+			{
+				this->m_reconnectTimes = 0;
+				this->m_hadEstablished = CONNECT_ESTABLISHED;
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (const std::exception& e)
+		{
+			return false;
+		}
+	}
+	else 
+	{
+		return false;
+	}
 }
 
 void ClientProxy::resetConnect(const std::string& ip, uint16_t port, ProtocolType type)
@@ -110,7 +160,7 @@ int ClientProxy::reconnect()
 	}
 
 	this->m_reconnectTimes++;
-	return this->sendConnect(DIAL_MODE::DM_ASYNC);
+	return this->sendConnect();
 }
 
 void ClientProxy::addReconnectTimer(uint64_t interval)
@@ -261,18 +311,19 @@ void ClientProxy::onActiveClose()
 	this->close();
 }
 
-int ClientProxy::sendConnect(DIAL_MODE mode)
+int ClientProxy::sendConnect()
 {
 	auto *ptr = new DialParameters;
 	if (NULL == ptr)
 	{
 		return opcodes::SC_ClientProxy_BadAlloc;
 	}
-	ptr->mode = mode;
+	ptr->mode = DIAL_MODE::DM_ASYNC;
 	ptr->sIp = this->m_ip;
 	ptr->iPort = this->m_port;
 	ptr->iCodecType = this->m_codecType;
 	ptr->iCurSerialNum = this->m_curSerialNum;
+	ptr->ptrSyncBase = nullptr;
 
 	Command cmd;
 	cmd.type = Command::dial;
@@ -304,6 +355,57 @@ int ClientProxy::sendConnect(DIAL_MODE mode)
 	ASYNC_PIE_LOG("ClientProxy/connect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
 	return 0;
+}
+
+std::shared_future<std::shared_ptr<service_discovery::ConnectDialResult>> ClientProxy::syncSendConnect()
+{
+	std::shared_future<std::shared_ptr<service_discovery::ConnectDialResult>> invalidResult;
+
+	auto* ptr = new DialParameters;
+	if (NULL == ptr)
+	{
+		return invalidResult;
+	}
+
+	auto ptrSync = std::make_shared<apie::service::SyncService<service_discovery::ConnectDialResult>>();
+	ptr->mode = DIAL_MODE::DM_SYNC;
+	ptr->sIp = this->m_ip;
+	ptr->iPort = this->m_port;
+	ptr->iCodecType = this->m_codecType;
+	ptr->iCurSerialNum = this->m_curSerialNum;
+	ptr->ptrSyncBase = ptrSync;
+
+	Command cmd;
+	cmd.type = Command::dial;
+	cmd.args.dial.ptrData = ptr;
+
+	if (m_tId == 0)
+	{
+		auto ptrThread = apie::CtxSingleton::get().chooseIOThread();
+		if (ptrThread == NULL)
+		{
+			delete ptr;
+			return invalidResult;
+		}
+		m_tId = ptrThread->getTId();
+	}
+
+	auto ptrIOThread = apie::CtxSingleton::get().getThreadById(m_tId);
+	if (ptrIOThread == NULL)
+	{
+		delete ptr;
+		return invalidResult;
+	}
+
+	ptrIOThread->push(cmd);
+
+	std::stringstream ss;
+	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port
+		<< ",reconnectTimes:" << this->m_reconnectTimes;
+	ASYNC_PIE_LOG("ClientProxy/sync_connect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+
+
+	return ptrSync->getFuture();
 }
 
 void ClientProxy::sendClose()

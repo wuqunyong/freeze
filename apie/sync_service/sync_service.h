@@ -19,7 +19,7 @@ public:
 	using ServiceCallback = std::function<void(const std::shared_ptr<::google::protobuf::Message>&)>;
 	
 	virtual ServiceCallback getHandler() = 0;
-
+	virtual void setException(const std::exception& e) = 0;
 };
 
 
@@ -46,7 +46,7 @@ public:
 			auto shared_obj = std::dynamic_pointer_cast<Response>(response);
 			if (shared_obj == nullptr)
 			{
-				share_this->promise_.set_exception(std::current_exception());
+				share_this->setException(std::invalid_argument("dynamic_pointer_cast error"));
 				return;
 			}
 
@@ -54,6 +54,19 @@ public:
 		};
 
 		return ptr_cb;
+	}
+
+	void setException(const std::exception& exceptionObj) override
+	{
+		try
+		{
+			throw exceptionObj;
+		}
+		catch (const std::exception& e)
+		{
+			std::exception_ptr p = std::current_exception();
+			this->promise_.set_exception(p);
+		}
 	}
 
 	SharedFuture getFuture()

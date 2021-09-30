@@ -72,6 +72,13 @@ void apie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 		<< "|reason:" << sInfo;
 	ASYNC_PIE_LOG("ClientConnection/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
 
+	if (this->m_ptrDialSyncBase)
+	{
+		this->m_ptrDialSyncBase->setException(std::invalid_argument(sInfo));
+		this->resetDialSync(nullptr);
+	}
+
+
 	this->sendCloseCmd(iCode, sInfo, iActive);
 
 	apie::event_ns::DispatcherImpl::delClientConnection(this->iSerialNum);
@@ -108,7 +115,19 @@ void apie::ClientConnection::sendConnectResultCmd(uint32_t iResult)
 		}
 	}
 
-	apie::CtxSingleton::get().getLogicThread()->push(cmd);
+	if (this->m_ptrDialSyncBase)
+	{
+		auto ptrData = std::make_shared<service_discovery::ConnectDialResult>();
+		ptrData->set_result(iResult);
+		ptrData->set_serial_num(iSerialNum);
+		this->m_ptrDialSyncBase->getHandler()(ptrData);
+		this->resetDialSync(nullptr);
+	}
+	else
+	{
+
+		apie::CtxSingleton::get().getLogicThread()->push(cmd);
+	}
 }
 
 apie::ClientConnection::~ClientConnection()
@@ -423,6 +442,11 @@ void apie::ClientConnection::handleClose()
 	this->close(ss.str(),0,1);
 }
 
+void apie::ClientConnection::resetDialSync(std::shared_ptr<apie::service::SyncServiceBase> ptrDialSyncBase)
+{
+	m_ptrDialSyncBase = ptrDialSyncBase;
+}
+
 static void client_readcb(struct bufferevent *bev, void *arg)
 {
 	apie::ClientConnection *ptrSession = (apie::ClientConnection *)arg;
@@ -547,9 +571,30 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 		cmd.args.dial_result.ptrData->iResult = iResult;
 		cmd.args.dial_result.ptrData->iSerialNum = iSerialNum;
 
-		apie::CtxSingleton::get().getLogicThread()->push(cmd);
+		if (ptrDial->mode == DIAL_MODE::DM_SYNC)
+		{
+			if (ptrDial->ptrSyncBase)
+			{
+				auto ptrData = std::make_shared<service_discovery::ConnectDialResult>();
+				ptrData->set_result(iResult);
+				ptrData->set_serial_num(iSerialNum);
+				ptrDial->ptrSyncBase->getHandler()(ptrData);
+			}
+			else
+			{
+				//TODO
+			}
+		} 
+		else
+		{
+			apie::CtxSingleton::get().getLogicThread()->push(cmd);
+		}
 	}
 
+	if (ptrDial->mode == DIAL_MODE::DM_SYNC)
+	{
+		ptrSharedClient->resetDialSync(ptrDial->ptrSyncBase);
+	}
 
 	return ptrSharedClient;
 }

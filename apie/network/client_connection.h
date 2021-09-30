@@ -49,6 +49,8 @@ namespace apie
 		void handleSend(const char *data, size_t size);
 		void handleClose();
 
+		void resetDialSync(std::shared_ptr<apie::service::SyncServiceBase> ptrDialSyncBase);
+
 	private:
 		void readHttp();
 		void readPB();
@@ -80,6 +82,7 @@ namespace apie
 		HttpResponseDecoder decoder;
 
 		uint64_t sequence_number_ = 0;
+		std::shared_ptr<apie::service::SyncServiceBase> m_ptrDialSyncBase = nullptr;
 
 		ClientConnection(const ClientConnection&);
         const ClientConnection &operator = (const ClientConnection&);

@@ -14,6 +14,7 @@
 #include "apie/http/http_response.h"
 #include "apie/network/i_poll_events.hpp"
 #include "apie/serialization/protocol_head.h"
+#include "apie/sync_service/sync_service.h"
 
 namespace apie
 {
@@ -101,6 +102,7 @@ namespace apie
 		ProtocolType iCodecType;
 		uint64_t iCurSerialNum = 0;
 		uint32_t iMaskFlag = 0;
+		std::shared_ptr<apie::service::SyncServiceBase> ptrSyncBase = nullptr;
 	};
 
 	struct DialResult
