@@ -89,7 +89,7 @@ int ClientProxy::connect(const std::string& ip, uint16_t port, ProtocolType type
 	return this->sendConnect();
 }
 
-bool ClientProxy::syncConnect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag)
+bool ClientProxy::syncConnect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag, HandleConnectCB cb)
 {
 	if (this->m_curSerialNum != 0)
 	{
@@ -101,7 +101,7 @@ bool ClientProxy::syncConnect(const std::string& ip, uint16_t port, ProtocolType
 	this->m_port = port;
 	this->m_codecType = type;
 	this->m_maskFlag = maskFlag;
-	this->m_cb = nullptr;
+	this->m_cb = cb;
 
 	auto ptrProxy = shared_from_this();
 	ClientProxy::registerClientProxy(ptrProxy);

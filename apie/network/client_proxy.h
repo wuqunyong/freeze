@@ -44,7 +44,7 @@ namespace apie
 		void resetConnect(const std::string& ip, uint16_t port, ProtocolType type);
 		int reconnect();
 
-		bool syncConnect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag);
+		bool syncConnect(const std::string& ip, uint16_t port, ProtocolType type, uint32_t maskFlag, HandleConnectCB cb = nullptr);
 
 		void addReconnectTimer(uint64_t interval);
 		void disableReconnectTimer();
