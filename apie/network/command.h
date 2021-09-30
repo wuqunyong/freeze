@@ -74,6 +74,7 @@ namespace apie
 	struct SyncSendData
 	{
 		ConnetionType type;
+		uint64_t iSequenceNumber = 0;
 		uint64_t iSerialNum;
 		std::string sData;
 		std::shared_ptr<apie::service::SyncServiceBase> ptrSyncBase = nullptr;

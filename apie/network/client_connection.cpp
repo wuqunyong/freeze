@@ -308,6 +308,13 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 
 	//newMsg->PrintDebugString();
 
+	bool bSync = this->triggerSyncHandler(info.iSeqNum, newMsg);
+	if (bSync)
+	{
+		return;
+	}
+
+
 	PBRequest *itemObjPtr = new PBRequest;
 	itemObjPtr->type = ConnetionType::CT_CLIENT;
 	itemObjPtr->info = info;
@@ -418,7 +425,6 @@ void apie::ClientConnection::handleSend(const char *data, size_t size)
 {
 	if (NULL != this->bev)
 	{
-		sequence_number_++;
 		int rc = bufferevent_write(this->bev, data, size);
 		if (rc != 0)
 		{
@@ -445,6 +451,44 @@ void apie::ClientConnection::handleClose()
 void apie::ClientConnection::resetDialSync(std::shared_ptr<apie::service::SyncServiceBase> ptrDialSyncBase)
 {
 	m_ptrDialSyncBase = ptrDialSyncBase;
+}
+
+bool apie::ClientConnection::addSyncSend(uint64_t iId, std::shared_ptr<apie::service::SyncServiceBase> ptrSync)
+{
+	if (ptrSync == nullptr)
+	{
+		return false;
+	}
+
+	auto findIte = m_pendingSyncSend.find(iId);
+	if (findIte == m_pendingSyncSend.end())
+	{
+		m_pendingSyncSend[iId] = ptrSync;
+		return true;
+	}
+
+	return false;
+}
+
+bool apie::ClientConnection::triggerSyncHandler(uint64_t iId, const std::shared_ptr<::google::protobuf::Message>& response)
+{
+	if (iId == 0)
+	{
+		return false;
+	}
+
+	auto findIte = m_pendingSyncSend.find(iId);
+	if (findIte == m_pendingSyncSend.end())
+	{
+		return false;
+	}
+
+	if (findIte->second)
+	{
+		findIte->second->getHandler()(response);
+	}
+
+	return true;
 }
 
 static void client_readcb(struct bufferevent *bev, void *arg)

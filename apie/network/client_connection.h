@@ -50,6 +50,10 @@ namespace apie
 		void handleClose();
 
 		void resetDialSync(std::shared_ptr<apie::service::SyncServiceBase> ptrDialSyncBase);
+		bool addSyncSend(uint64_t iId, std::shared_ptr<apie::service::SyncServiceBase> ptrSync);
+		
+		bool triggerSyncHandler(uint64_t iId, const std::shared_ptr<::google::protobuf::Message>& response);
+
 
 	private:
 		void readHttp();
@@ -81,8 +85,8 @@ namespace apie
 
 		HttpResponseDecoder decoder;
 
-		uint64_t sequence_number_ = 0;
 		std::shared_ptr<apie::service::SyncServiceBase> m_ptrDialSyncBase = nullptr;
+		std::map<uint64_t, std::shared_ptr<apie::service::SyncServiceBase>> m_pendingSyncSend;
 
 		ClientConnection(const ClientConnection&);
         const ClientConnection &operator = (const ClientConnection&);

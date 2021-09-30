@@ -693,11 +693,18 @@ void DispatcherImpl::handleSyncSendData(SyncSendData* itemPtr)
 		{
 			return;
 		}
+		ptrConnection->addSyncSend(itemPtr->iSequenceNumber, itemPtr->ptrSyncBase);
 		ptrConnection->handleSend(itemPtr->sData.data(), itemPtr->sData.size());
 		break;
 	}
 	default:
+	{
+		if (itemPtr->ptrSyncBase)
+		{
+			itemPtr->ptrSyncBase->setException(std::invalid_argument("invalid type"));
+		}
 		break;
+	}
 	}
 }
 

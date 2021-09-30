@@ -68,6 +68,10 @@ public:
 	template <typename Notify>
 	bool createService(uint32_t opcode, const typename HandleNotifyService<Notify>::ServiceCallback& service_calllback);
 
+
+	template <typename PbMsg>
+	bool createOpcodePbMap(uint32_t opcode);
+
 	template <typename T>
 	void onMessage(MessageInfo info, const std::shared_ptr<T>& message);
 
@@ -129,6 +133,14 @@ bool ServiceManager::createService(
 	func_[opcode] = service_ptr->getHandler();
 
 	return true;
+}
+
+
+template <typename PbMsg>
+bool ServiceManager::createOpcodePbMap(uint32_t opcode)
+{
+	std::string pb_type = PbMsg::descriptor()->full_name();
+	type_[opcode] = pb_type;
 }
 
 template <typename T>

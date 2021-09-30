@@ -129,7 +129,21 @@ void SelfRegistration::sendRegister(apie::ClientProxy* ptrClient, std::string re
 	//request.mutable_instance()->set_db_id(db_id);
 	request.set_auth(registryAuth);
 
-	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
+	//ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
+
+	auto ptrResponse = ptrClient->syncSendMsg<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
+	if (ptrResponse == nullptr)
+	{
+		return;
+	}
+	std::stringstream ss;
+	ss << "response:" << ptrResponse->ShortDebugString();
+
+	if (ptrResponse->status_code() == opcodes::StatusCode::SC_Ok)
+	{
+		this->setState(apie::SelfRegistration::State::Registered);
+	}
+
 }
 
 void SelfRegistration::sendHeartbeat(apie::ClientProxy* ptrClient)

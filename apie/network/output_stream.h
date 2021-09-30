@@ -67,6 +67,7 @@ namespace network {
 
 		SyncSendData* itemObjPtr = new SyncSendData;
 		itemObjPtr->type = apie::ConnetionType::CT_CLIENT;
+		itemObjPtr->iSequenceNumber = info.iSeqNum;
 		itemObjPtr->iSerialNum = info.iSessionId;
 		itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(ProtocolHead));
 		itemObjPtr->sData.append(msg.SerializeAsString());

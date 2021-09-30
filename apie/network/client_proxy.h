@@ -132,7 +132,7 @@ namespace apie
 			return nullptr;
 		}
 
-		m_sequenceNumber;
+		m_sequenceNumber++;
 
 		MessageInfo info;
 		info.iSessionId = this->m_curSerialNum;
