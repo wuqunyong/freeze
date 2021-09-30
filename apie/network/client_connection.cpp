@@ -487,6 +487,7 @@ bool apie::ClientConnection::triggerSyncHandler(uint64_t iId, const std::shared_
 	{
 		findIte->second->getHandler()(response);
 	}
+	m_pendingSyncSend.erase(findIte);
 
 	return true;
 }
