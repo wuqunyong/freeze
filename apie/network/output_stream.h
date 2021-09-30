@@ -31,7 +31,7 @@ namespace network {
 		static bool sendProtobufMsgImpl(MessageInfo info, const ::google::protobuf::Message& msg);
 
 		static bool sendMsgByStr(uint64_t iSessionId, uint32_t iOpcode, const std::string& msg, ConnetionType type = ConnetionType::CT_NONE);
-		static bool sendMsgByStrWithFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const std::string& msg, ConnetionType type = ConnetionType::CT_NONE);
+		static bool sendMsgByStrWithFlag(MessageInfo info, const std::string& msg);
 		static bool sendStringMsgImpl(MessageInfo info, const std::string& msg);
 
 

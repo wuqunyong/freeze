@@ -133,14 +133,8 @@ namespace network {
 		return sendStringMsgImpl(info, msg);
 	}
 
-	bool OutputStream::sendMsgByStrWithFlag(uint64_t iSessionId, uint32_t iOpcode, uint8_t iFlag, const std::string& msg, ConnetionType type)
+	bool OutputStream::sendMsgByStrWithFlag(MessageInfo info, const std::string& msg)
 	{
-		MessageInfo info;
-		info.iSessionId = iSessionId;
-		info.iOpcode = iOpcode;
-		info.iConnetionType = type;
-		info.setFlags(iFlag);
-
 		return sendStringMsgImpl(info, msg);
 	}
 
