@@ -26,11 +26,11 @@ namespace network {
 	class OutputStream
 	{
 	public:
-		static bool sendMsg(uint64_t iSessionId, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type = ConnetionType::CT_NONE);
+		static bool sendMsg(MessageInfo info, const ::google::protobuf::Message& msg);
 		static bool sendMsgWithFlag(MessageInfo info, const ::google::protobuf::Message& msg);
 		static bool sendProtobufMsgImpl(MessageInfo info, const ::google::protobuf::Message& msg);
 
-		static bool sendMsgByStr(uint64_t iSessionId, uint32_t iOpcode, const std::string& msg, ConnetionType type = ConnetionType::CT_NONE);
+		static bool sendMsgByStr(MessageInfo info, const std::string& msg);
 		static bool sendMsgByStrWithFlag(MessageInfo info, const std::string& msg);
 		static bool sendStringMsgImpl(MessageInfo info, const std::string& msg);
 

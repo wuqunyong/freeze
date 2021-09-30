@@ -207,7 +207,10 @@ void ServiceRegistry::broadcast()
 
 	for (const auto& items : m_registered)
 	{
-		apie::network::OutputStream::sendMsg(items.first, ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE, notice);
+		MessageInfo info;
+		info.iSessionId = items.first;
+		info.iOpcode = ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE;
+		apie::network::OutputStream::sendMsg(info, notice);
 	}
 }
 

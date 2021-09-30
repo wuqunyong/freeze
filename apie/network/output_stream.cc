@@ -9,13 +9,9 @@
 namespace apie {
 namespace network {
 
-	bool OutputStream::sendMsg(uint64_t iSessionId, uint32_t iOpcode, const ::google::protobuf::Message& msg, ConnetionType type)
+	bool OutputStream::sendMsg(MessageInfo info, const ::google::protobuf::Message& msg)
 	{
-		MessageInfo info;
-		info.iSessionId = iSessionId;
-		info.iOpcode = iOpcode;
-		info.iConnetionType = type;
-
+		info.setFlags(0);
 		return sendProtobufMsgImpl(info, msg);
 	}
 
@@ -123,13 +119,9 @@ namespace network {
 		return true;
 	}
 
-	bool OutputStream::sendMsgByStr(uint64_t iSessionId, uint32_t iOpcode, const std::string& msg, ConnetionType type)
+	bool OutputStream::sendMsgByStr(MessageInfo info, const std::string& msg)
 	{
-		MessageInfo info;
-		info.iSessionId = iSessionId;
-		info.iOpcode = iOpcode;
-		info.iConnetionType = type;
-
+		info.setFlags(0);
 		return sendStringMsgImpl(info, msg);
 	}
 
