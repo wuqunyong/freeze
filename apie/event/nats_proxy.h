@@ -71,7 +71,7 @@ namespace event_ns {
 					natsConnection_Destroy(nats_connection_);
 				}
 
-				nats_Close();
+				//nats_Close();
 			}
 
 			void destroy()
