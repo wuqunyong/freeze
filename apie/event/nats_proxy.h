@@ -103,15 +103,18 @@ namespace event_ns {
 					nats_subscription_ = nullptr;
 				}
 
-				natsConnection_Close(nats_connection_);
-				while (!conn_closed) 
+				if (nats_connection_)
 				{
-					// Wait until the connection is actually closed. This will be reported on a different
-					// thread.
-					std::this_thread::sleep_for(std::chrono::milliseconds(10));
+					natsConnection_Close(nats_connection_);
+					while (!conn_closed)
+					{
+						// Wait until the connection is actually closed. This will be reported on a different
+						// thread.
+						std::this_thread::sleep_for(std::chrono::milliseconds(10));
+					}
+					natsConnection_Destroy(nats_connection_);
+					nats_connection_ = nullptr;
 				}
-				natsConnection_Destroy(nats_connection_);
-				nats_connection_ = nullptr;
 			}
 
 			/**
