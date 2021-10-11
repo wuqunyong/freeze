@@ -526,6 +526,9 @@
     <ClInclude Include="sync_service\sync_service.h">
       <Filter>sync_service</Filter>
     </ClInclude>
+    <ClInclude Include="common\optional_serializer.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">

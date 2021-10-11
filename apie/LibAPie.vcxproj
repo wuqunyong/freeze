@@ -184,6 +184,7 @@
     <ClInclude Include="common\macros.h" />
     <ClInclude Include="common\message_traits.h" />
     <ClInclude Include="common\noncopyable.h" />
+    <ClInclude Include="common\optional_serializer.h" />
     <ClInclude Include="common\protobuf_factory.h" />
     <ClInclude Include="common\pure.h" />
     <ClInclude Include="common\string_utils.h" />

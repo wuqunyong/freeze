@@ -11,12 +11,14 @@
 #include <utility>
 #include <nlohmann/json.hpp>
 #include <thread>
+#include <optional>
 
 #include "service_init.h"
 
 #include "boost/pfr.hpp"
 
 #include "../../pb_msg/business/login_msg.pb.h"
+
 
 struct some_person {
 	std::string name;
@@ -51,8 +53,9 @@ public:
 	uint32_t Gift = 0;
 	uint32_t Value1 = 0;
 	std::string Value2;
+	std::optional<std::string> Path;
 
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(ItemsConfigList, Id, Quality, StackNum, UseNum, CoreLv, Page, Type, SubType, Gift, Value1, Value2);
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(ItemsConfigList, Id, Quality, StackNum, UseNum, CoreLv, Page, Type, SubType, Gift, Value1, Value2, Path);
 };
 
 class ItemsConfig
@@ -111,7 +114,7 @@ int main(int argc, char **argv)
 	std::cout << boost::pfr::get<0>(val) << " was born in " << boost::pfr::get<1>(val);
 	std::cout << boost::pfr::io(val);
 
-	//test_json("F:/freeze/data/Item.json");
+	test_json("F:/freeze/data/Item.json");
 
 	std::shared_future<std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>> tempFuture;
 	if (!tempFuture.valid())
