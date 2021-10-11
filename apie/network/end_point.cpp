@@ -418,9 +418,6 @@ void SelfRegistration::onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_
 	std::stringstream ss;
 	ss << "topic:"<< ",refMsg:" << msg->ShortDebugString();
 	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-
-	uint64_t iSerialNum = msg->serial_num();
-	EndPointMgrSingleton::get().delRoute(iSerialNum);
 }
 
 std::shared_ptr<SelfRegistration> SelfRegistration::createSelfRegistration()
