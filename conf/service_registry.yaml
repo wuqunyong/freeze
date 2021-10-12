@@ -2,9 +2,9 @@ identify:
   realm: 1
   type: 1
   id: 1
-  auth: "hello"
   ip: "127.0.0.1"
   port: 5007
+  auth: "hello"
   codec_type: 1
 io_threads: 2
 daemon: true
@@ -16,11 +16,6 @@ listeners:
       port_value: 5007
       type: 1
       mask_flag : 0
-service_registry:
-  address: "127.0.0.1"
-  port_value: 5007
-  auth: "hello"
-  type: 1
 log:
   merge: true
   level: 0
