@@ -31,6 +31,7 @@ CREATE TABLE `service_node` (
   `listeners_config` varchar(512) NOT NULL DEFAULT '',
   `mysql_config` varchar(512) NOT NULL DEFAULT '',
   `nats_config` varchar(512) NOT NULL DEFAULT '',
+  `redis_config` varchar(512) NOT NULL DEFAULT '',
   PRIMARY KEY (`service_realm`,`service_type`,`service_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -41,7 +42,7 @@ CREATE TABLE `service_node` (
 
 LOCK TABLES `service_node` WRITE;
 /*!40000 ALTER TABLE `service_node` DISABLE KEYS */;
-INSERT INTO `service_node` VALUES (1,1,1,'',0,'{\r\n	\"bind\": [{\r\n		\"ip\": \"127.0.0.1\",\r\n		\"port\": 5007,\r\n		\"type\": 1,\r\n		\"mask_flag\": 0\r\n	}]\r\n}','',''),(1,2,1,'127.0.0.1',16007,'{\r\n	\"bind\": [{\r\n		\"ip\": \"127.0.0.1\",\r\n		\"port\": 16007,\r\n		\"type\": 1,\r\n		\"mask_flag\": 0\r\n	}]\r\n}','','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}'),(1,3,1,'127.0.0.1',14007,'{\r\n	\"bind\": [{\r\n		\"ip\": \"127.0.0.1\",\r\n		\"port\": 14007,\r\n		\"type\": 1,\r\n		\"mask_flag\": 0\r\n	}]\r\n}','','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}'),(1,4,1,'',0,'','','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}'),(1,5,1,'',0,'','{\r\n	\"host\": \"127.0.0.1\",\r\n	\"port\": 3306,\r\n	\"user\": \"root\",\r\n	\"passwd\": \"root\",\r\n	\"db\": \"apie_account\"\r\n}','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}'),(1,6,1,'',0,'','{\r\n	\"host\": \"127.0.0.1\",\r\n	\"port\": 3306,\r\n	\"user\": \"root\",\r\n	\"passwd\": \"root\",\r\n	\"db\": \"apie\"\r\n}','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}');
+INSERT INTO `service_node` VALUES (1,1,1,'',0,'{\r\n	\"bind\": [{\r\n		\"ip\": \"127.0.0.1\",\r\n		\"port\": 5007,\r\n		\"type\": 1,\r\n		\"mask_flag\": 0\r\n	}]\r\n}','','',''),(1,2,1,'127.0.0.1',16007,'{\r\n	\"bind\": [{\r\n		\"ip\": \"127.0.0.1\",\r\n		\"port\": 16007,\r\n		\"type\": 1,\r\n		\"mask_flag\": 0\r\n	}]\r\n}','','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}',''),(1,3,1,'127.0.0.1',14007,'{\r\n	\"bind\": [{\r\n		\"ip\": \"127.0.0.1\",\r\n		\"port\": 14007,\r\n		\"type\": 1,\r\n		\"mask_flag\": 0\r\n	}]\r\n}','','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}','{\r\n	\"clients\": [{\r\n		\"type\": 1,\r\n		\"id\": 1,\r\n		\"host\": \"127.0.0.1\",\r\n		\"port\": 6379,\r\n		\"passwd\": \"\"\r\n	}]\r\n}'),(1,4,1,'',0,'','','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}',''),(1,5,1,'',0,'','{\r\n	\"host\": \"127.0.0.1\",\r\n	\"port\": 3306,\r\n	\"user\": \"root\",\r\n	\"passwd\": \"root\",\r\n	\"db\": \"apie_account\"\r\n}','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}',''),(1,6,1,'',0,'','{\r\n	\"host\": \"127.0.0.1\",\r\n	\"port\": 3306,\r\n	\"user\": \"root\",\r\n	\"passwd\": \"root\",\r\n	\"db\": \"apie\"\r\n}','{\r\n	\"connections\": [{\r\n		\"type\": 1,\r\n		\"nats_server\": \"nats://127.0.0.1:4222\",\r\n		\"channel_domains\": \"sub_topic\"\r\n	}]\r\n}','');
 /*!40000 ALTER TABLE `service_node` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-13 14:26:09
+-- Dump completed on 2021-10-13 16:13:04
