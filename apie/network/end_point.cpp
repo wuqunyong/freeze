@@ -191,10 +191,6 @@ void SelfRegistration::sendRegister(apie::ClientProxy* ptrClient, std::string re
 	uint32_t realm = apie::CtxSingleton::get().getServerRealm();
 	uint32_t type = apie::CtxSingleton::get().getServerType();
 	uint32_t id = apie::CtxSingleton::get().getServerId();
-	//std::string auth = apie::CtxSingleton::get().getConfigs()->identify.auth;
-	//std::string ip = apie::CtxSingleton::get().getConfigs()->identify.ip;
-	//uint32_t port = apie::CtxSingleton::get().getConfigs()->identify.port;
-	//uint32_t codec_type = apie::CtxSingleton::get().getConfigs()->identify.codec_type;
 
 	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
 	request.mutable_instance()->set_realm(realm);
@@ -207,20 +203,20 @@ void SelfRegistration::sendRegister(apie::ClientProxy* ptrClient, std::string re
 	//request.mutable_instance()->set_mask_flag(0); // 节点间不需要压缩，加密
 	request.set_auth(registryAuth);
 
-	//ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
+	ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
 
-	auto ptrResponse = ptrClient->syncSendMsg<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
-	if (ptrResponse == nullptr)
-	{
-		return;
-	}
-	std::stringstream ss;
-	ss << "response:" << ptrResponse->ShortDebugString();
+	//auto ptrResponse = ptrClient->syncSendMsg<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
+	//if (ptrResponse == nullptr)
+	//{
+	//	return;
+	//}
+	//std::stringstream ss;
+	//ss << "response:" << ptrResponse->ShortDebugString();
 
-	if (ptrResponse->status_code() == opcodes::StatusCode::SC_Ok)
-	{
-		this->setState(apie::SelfRegistration::State::Registered);
-	}
+	//if (ptrResponse->status_code() == opcodes::StatusCode::SC_Ok)
+	//{
+	//	this->setState(apie::SelfRegistration::State::Registered);
+	//}
 
 }
 
