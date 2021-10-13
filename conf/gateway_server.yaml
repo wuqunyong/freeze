@@ -2,21 +2,10 @@ identify:
   realm: 1
   type: 3
   id: 1
-  auth: "hello"
-  ip: "127.0.0.1"
-  port: 14007
-  codec_type: 1
 io_threads: 16
 certificate:         #证书
   public_key: F:\\freeze\\etc\\key.pub    #公钥位置
   private_key: F:\\freeze\\etc\\key.pem   #私钥位置
-listeners:
-- address:
-    socket_address:
-      address: "127.0.0.1"
-      port_value: 14007
-      type: 1
-      mask_flag : 1
 service_registry:
   address: "127.0.0.1"
   port_value: 5007
@@ -41,13 +30,6 @@ redis_clients:
     host: "127.0.0.1"
     port: 6379
     passwd: ""
-nats:               # nats
-  enable: true                # 是否连接, 默认false
-  connections:
-  - subscription:
-      type: 1
-      nats_server: "nats://127.0.0.1:4222"  # server 
-      channel_domains: "sub_topic"           # sub
 limited:
   requests_per_unit: 0 
   uint: 10             

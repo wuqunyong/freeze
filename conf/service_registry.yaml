@@ -2,20 +2,10 @@ identify:
   realm: 1
   type: 1
   id: 1
-  ip: "127.0.0.1"
-  port: 5007
   auth: "hello"
-  codec_type: 1
 io_threads: 2
 daemon: true
 service_timeout: 600
-listeners:
-- address:
-    socket_address:
-      address: "127.0.0.1"
-      port_value: 5007
-      type: 1
-      mask_flag : 0
 log:
   merge: true
   level: 0
@@ -35,10 +25,3 @@ mysql:               # mysql数据库
   user: "root"           # 用户名
   passwd: "root"         # 密码
   db: "config_db"             # 数据库名
-nats:               # nats
-  enable: false                # 是否连接, 默认false
-  connections:
-  - subscription:
-      type: 1
-      nats_server: "nats://127.0.0.1:4222"  # server 
-      channel_domains: "sub_topic"           # sub

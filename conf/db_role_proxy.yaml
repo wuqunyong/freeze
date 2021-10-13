@@ -20,18 +20,4 @@ metrics:
   enable: true
   ip: "127.0.0.1"
   udp_port: 8089
-mysql:
-  enable: true
-  host: "127.0.0.1"
-  port: 3306
-  user: "root"
-  passwd: "root"
-  db: "apie"
-nats:               # nats
-  enable: true                # 是否连接, 默认false
-  connections:
-  - subscription:
-      type: 1
-      nats_server: "nats://127.0.0.1:4222"  # server 
-      channel_domains: "sub_topic"           # sub
   
