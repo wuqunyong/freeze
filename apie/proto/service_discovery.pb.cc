@@ -184,6 +184,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_service_5fdiscovery_2eproto::o
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE, status_code_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE, listeners_config_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE, mysql_config_),
+  PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE, nats_config_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::service_discovery::MSG_NOTICE_INSTANCE, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -213,9 +216,9 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 13, -1, sizeof(::service_discovery::ConnectDialResult)},
   { 21, -1, sizeof(::service_discovery::MSG_REQUEST_REGISTER_INSTANCE)},
   { 28, -1, sizeof(::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE)},
-  { 34, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
-  { 46, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
-  { 51, -1, sizeof(::service_discovery::MSG_RESPONSE_HEARTBEAT)},
+  { 37, -1, sizeof(::service_discovery::MSG_NOTICE_INSTANCE)},
+  { 49, -1, sizeof(::service_discovery::MSG_REQUEST_HEARTBEAT)},
+  { 54, -1, sizeof(::service_discovery::MSG_RESPONSE_HEARTBEAT)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -238,22 +241,24 @@ const char descriptor_table_protodef_service_5fdiscovery_2eproto[] PROTOBUF_SECT
   "lt\022\022\n\nserial_num\030\001 \001(\004\022\016\n\006result\030\002 \001(\r\022\020"
   "\n\010local_ip\030\003 \001(\t\"d\n\035MSG_REQUEST_REGISTER"
   "_INSTANCE\0225\n\010instance\030\001 \001(\0132#.service_di"
-  "scovery.EndPointInstance\022\014\n\004auth\030\002 \001(\t\"5"
+  "scovery.EndPointInstance\022\014\n\004auth\030\002 \001(\t\"z"
   "\n\036MSG_RESPONSE_REGISTER_INSTANCE\022\023\n\013stat"
-  "us_code\030\001 \001(\r\"\311\002\n\023MSG_NOTICE_INSTANCE\022\n\n"
-  "\002id\030\001 \001(\t\022\017\n\007version\030\002 \001(\004\0221\n\006status\030\003 \001"
-  "(\0162!.service_discovery.RegistryStatus\022+\n"
-  "\004mode\030\004 \001(\0162\035.service_discovery.UpdateMo"
-  "de\0229\n\014add_instance\030\005 \003(\0132#.service_disco"
-  "very.EndPointInstance\022<\n\017delete_instance"
-  "\030\006 \003(\0132#.service_discovery.EndPointInsta"
-  "nce\022<\n\017update_instance\030\007 \003(\0132#.service_d"
-  "iscovery.EndPointInstance\"\027\n\025MSG_REQUEST"
-  "_HEARTBEAT\"-\n\026MSG_RESPONSE_HEARTBEAT\022\023\n\013"
-  "status_code\030\001 \001(\r*A\n\016RegistryStatus\022\013\n\007R"
-  "S_None\020\000\022\017\n\013RS_Learning\020\001\022\021\n\rRS_Forwardi"
-  "ng\020\002*:\n\nUpdateMode\022\013\n\007UM_None\020\000\022\013\n\007UM_Fu"
-  "ll\020\001\022\022\n\016UM_Incremental\020\002b\006proto3"
+  "us_code\030\001 \001(\r\022\030\n\020listeners_config\030\002 \001(\t\022"
+  "\024\n\014mysql_config\030\003 \001(\t\022\023\n\013nats_config\030\004 \001"
+  "(\t\"\311\002\n\023MSG_NOTICE_INSTANCE\022\n\n\002id\030\001 \001(\t\022\017"
+  "\n\007version\030\002 \001(\004\0221\n\006status\030\003 \001(\0162!.servic"
+  "e_discovery.RegistryStatus\022+\n\004mode\030\004 \001(\016"
+  "2\035.service_discovery.UpdateMode\0229\n\014add_i"
+  "nstance\030\005 \003(\0132#.service_discovery.EndPoi"
+  "ntInstance\022<\n\017delete_instance\030\006 \003(\0132#.se"
+  "rvice_discovery.EndPointInstance\022<\n\017upda"
+  "te_instance\030\007 \003(\0132#.service_discovery.En"
+  "dPointInstance\"\027\n\025MSG_REQUEST_HEARTBEAT\""
+  "-\n\026MSG_RESPONSE_HEARTBEAT\022\023\n\013status_code"
+  "\030\001 \001(\r*A\n\016RegistryStatus\022\013\n\007RS_None\020\000\022\017\n"
+  "\013RS_Learning\020\001\022\021\n\rRS_Forwarding\020\002*:\n\nUpd"
+  "ateMode\022\013\n\007UM_None\020\000\022\013\n\007UM_Full\020\001\022\022\n\016UM_"
+  "Incremental\020\002b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_service_5fdiscovery_2eproto_deps[1] = {
   &::descriptor_table_common_2eproto,
@@ -270,7 +275,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_ser
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_service_5fdiscovery_2eproto_once;
 static bool descriptor_table_service_5fdiscovery_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_service_5fdiscovery_2eproto = {
-  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 992,
+  &descriptor_table_service_5fdiscovery_2eproto_initialized, descriptor_table_protodef_service_5fdiscovery_2eproto, "service_discovery.proto", 1061,
   &descriptor_table_service_5fdiscovery_2eproto_once, descriptor_table_service_5fdiscovery_2eproto_sccs, descriptor_table_service_5fdiscovery_2eproto_deps, 7, 1,
   schemas, file_default_instances, TableStruct_service_5fdiscovery_2eproto::offsets,
   file_level_metadata_service_5fdiscovery_2eproto, 7, file_level_enum_descriptors_service_5fdiscovery_2eproto, file_level_service_descriptors_service_5fdiscovery_2eproto,
@@ -1218,11 +1223,27 @@ MSG_RESPONSE_REGISTER_INSTANCE::MSG_RESPONSE_REGISTER_INSTANCE(const MSG_RESPONS
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  listeners_config_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_listeners_config().empty()) {
+    listeners_config_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.listeners_config_);
+  }
+  mysql_config_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_mysql_config().empty()) {
+    mysql_config_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.mysql_config_);
+  }
+  nats_config_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_nats_config().empty()) {
+    nats_config_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.nats_config_);
+  }
   status_code_ = from.status_code_;
   // @@protoc_insertion_point(copy_constructor:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE)
 }
 
 void MSG_RESPONSE_REGISTER_INSTANCE::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MSG_RESPONSE_REGISTER_INSTANCE_service_5fdiscovery_2eproto.base);
+  listeners_config_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  mysql_config_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  nats_config_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   status_code_ = 0u;
 }
 
@@ -1232,6 +1253,9 @@ MSG_RESPONSE_REGISTER_INSTANCE::~MSG_RESPONSE_REGISTER_INSTANCE() {
 }
 
 void MSG_RESPONSE_REGISTER_INSTANCE::SharedDtor() {
+  listeners_config_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  mysql_config_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  nats_config_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void MSG_RESPONSE_REGISTER_INSTANCE::SetCachedSize(int size) const {
@@ -1249,6 +1273,9 @@ void MSG_RESPONSE_REGISTER_INSTANCE::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  listeners_config_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  mysql_config_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  nats_config_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   status_code_ = 0u;
   _internal_metadata_.Clear();
 }
@@ -1264,6 +1291,33 @@ const char* MSG_RESPONSE_REGISTER_INSTANCE::_InternalParse(const char* ptr, ::PR
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           status_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string listeners_config = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_listeners_config();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string mysql_config = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_mysql_config();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string nats_config = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_nats_config();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1299,6 +1353,36 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_status_code(), target);
   }
 
+  // string listeners_config = 2;
+  if (this->listeners_config().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_listeners_config().data(), static_cast<int>(this->_internal_listeners_config().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_listeners_config(), target);
+  }
+
+  // string mysql_config = 3;
+  if (this->mysql_config().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_mysql_config().data(), static_cast<int>(this->_internal_mysql_config().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_mysql_config(), target);
+  }
+
+  // string nats_config = 4;
+  if (this->nats_config().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_nats_config().data(), static_cast<int>(this->_internal_nats_config().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_nats_config(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -1314,6 +1398,27 @@ size_t MSG_RESPONSE_REGISTER_INSTANCE::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // string listeners_config = 2;
+  if (this->listeners_config().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_listeners_config());
+  }
+
+  // string mysql_config = 3;
+  if (this->mysql_config().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_mysql_config());
+  }
+
+  // string nats_config = 4;
+  if (this->nats_config().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_nats_config());
+  }
 
   // uint32 status_code = 1;
   if (this->status_code() != 0) {
@@ -1353,6 +1458,18 @@ void MSG_RESPONSE_REGISTER_INSTANCE::MergeFrom(const MSG_RESPONSE_REGISTER_INSTA
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.listeners_config().size() > 0) {
+
+    listeners_config_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.listeners_config_);
+  }
+  if (from.mysql_config().size() > 0) {
+
+    mysql_config_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.mysql_config_);
+  }
+  if (from.nats_config().size() > 0) {
+
+    nats_config_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.nats_config_);
+  }
   if (from.status_code() != 0) {
     _internal_set_status_code(from._internal_status_code());
   }
@@ -1379,6 +1496,12 @@ bool MSG_RESPONSE_REGISTER_INSTANCE::IsInitialized() const {
 void MSG_RESPONSE_REGISTER_INSTANCE::InternalSwap(MSG_RESPONSE_REGISTER_INSTANCE* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
+  listeners_config_.Swap(&other->listeners_config_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  mysql_config_.Swap(&other->mysql_config_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  nats_config_.Swap(&other->nats_config_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(status_code_, other->status_code_);
 }
 

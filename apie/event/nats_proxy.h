@@ -287,6 +287,8 @@ namespace event_ns {
 			bool init();
 			void destroy();
 
+			void addConnection(uint32_t domainsType, const std::string& urls, const std::string& domains);
+
 		public:
 			bool isConnect(E_NatsType type);
 			bool publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg);

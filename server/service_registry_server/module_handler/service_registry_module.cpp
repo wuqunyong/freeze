@@ -66,7 +66,22 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 		return { apie::status::StatusCode::OK, "" };
 	}
 
-	bool bResult = ServiceRegistrySingleton::get().updateInstance(info.iSessionId, request->instance());
+	EndPoint addNode(request->instance().realm(), request->instance().type(), request->instance().id(), "");
+	auto nodeOpt = ServiceRegistrySingleton::get().findNode(addNode);
+	if (!nodeOpt.has_value())
+	{
+		response->set_status_code(opcodes::SC_Discovery_InvalidPoint);
+
+		ss << ",invalid node";
+		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		return { apie::status::StatusCode::OK, "" };
+	}
+
+	::service_discovery::EndPointInstance instanceObj = request->instance();
+	instanceObj.set_ip(nodeOpt.value().fields.ip);
+	instanceObj.set_port(nodeOpt.value().fields.port);
+
+	bool bResult = ServiceRegistrySingleton::get().updateInstance(info.iSessionId, instanceObj);
 	if (!bResult)
 	{
 		response->set_status_code(opcodes::SC_Discovery_DuplicateNode);
@@ -79,6 +94,9 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 	ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 	response->set_status_code(::opcodes::StatusCode::SC_Ok);
+	response->set_listeners_config(nodeOpt.value().fields.listeners_config);
+	response->set_mysql_config(nodeOpt.value().fields.mysql_config);
+	response->set_nats_config(nodeOpt.value().fields.nats_config);
 
 	auto cb = [](){
 		ServiceRegistrySingleton::get().broadcast();

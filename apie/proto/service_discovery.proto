@@ -48,6 +48,9 @@ message MSG_REQUEST_REGISTER_INSTANCE
 message MSG_RESPONSE_REGISTER_INSTANCE
 {
 	uint32 status_code = 1;
+	string listeners_config = 2;
+	string mysql_config = 3;
+	string nats_config = 4;
 }
 
 
@@ -60,7 +63,6 @@ message MSG_NOTICE_INSTANCE
 	repeated EndPointInstance add_instance = 5;
 	repeated EndPointInstance delete_instance = 6;
 	repeated EndPointInstance update_instance = 7;
-	// map<uint32, ClientNode> network_topology = 8;
 }
 
 

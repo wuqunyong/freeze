@@ -938,7 +938,9 @@ void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
 	}
 
 	try {
+		//连接注册中心，获取配置
 		CtxSingleton::get().getEndpoint()->init();
+
 		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Start);
 	}
 	catch (YAML::InvalidNode& e) {

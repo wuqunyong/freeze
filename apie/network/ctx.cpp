@@ -53,7 +53,7 @@ sigset_t g_SigSet;
 #include "apie/event/nats_proxy.h"
 #include "apie/api/os_sys_calls.h"
 #include "apie/redis_driver/redis_client.h"
-
+#include "apie/configs/load_config.h"
 
 namespace apie {
 
@@ -201,11 +201,12 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 		tmpPtrConfig->identify.type = node_["identify"]["type"].as<uint32_t>();
 		tmpPtrConfig->identify.id = node_["identify"]["id"].as<uint32_t>();
 		tmpPtrConfig->identify.auth = node_["identify"]["auth"].as<std::string>("");
-		tmpPtrConfig->identify.ip = node_["identify"]["ip"].as<std::string>("");
-		tmpPtrConfig->identify.port = node_["identify"]["port"].as<uint16_t>(0);
-		tmpPtrConfig->identify.out_ip = node_["identify"]["out_ip"].as<std::string>("");
-		tmpPtrConfig->identify.out_port = node_["identify"]["out_port"].as<uint16_t>(0);
-		tmpPtrConfig->identify.codec_type = node_["identify"]["codec_type"].as<uint16_t>(1);
+
+		//tmpPtrConfig->identify.ip = node_["identify"]["ip"].as<std::string>("");
+		//tmpPtrConfig->identify.port = node_["identify"]["port"].as<uint16_t>(0);
+		//tmpPtrConfig->identify.out_ip = node_["identify"]["out_ip"].as<std::string>("");
+		//tmpPtrConfig->identify.out_port = node_["identify"]["out_port"].as<uint16_t>(0);
+		//tmpPtrConfig->identify.codec_type = node_["identify"]["codec_type"].as<uint16_t>(1);
 	}
 	else
 	{
@@ -214,8 +215,9 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 
 	tmpPtrConfig->io_threads = node_["io_threads"].as<uint16_t>(2);
 	tmpPtrConfig->daemon = node_["daemon"].as<bool>(true);
-	tmpPtrConfig->service_timeout = node_["service_timeout"].as<uint32_t>(600);
-	tmpPtrConfig->service_learning_duration = node_["service_learning_duration"].as<uint32_t>(60);
+
+	//tmpPtrConfig->service_timeout = node_["service_timeout"].as<uint32_t>(600);
+	//tmpPtrConfig->service_learning_duration = node_["service_learning_duration"].as<uint32_t>(60);
 
 	if (node_["certificate"])
 	{
@@ -223,21 +225,28 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 		tmpPtrConfig->certificate.private_key = node_["certificate"]["private_key"].as<std::string>("");
 	}
 
-	for (const auto& item : this->node_["listeners"])
+	bool bIsRegistry = false;
+	if (tmpPtrConfig->identify.type == ::common::EndPointType::EPT_Service_Registry)
 	{
-		std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
-		uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
-		uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>(1);
-		uint32_t maskFlag = item["address"]["socket_address"]["mask_flag"].as<uint32_t>(0);
-
-		APieConfig_ListenersElems elems;
-		elems.socket_address.address = ip;
-		elems.socket_address.port_value = port;
-		elems.socket_address.type = type;
-		elems.socket_address.mask_flag = maskFlag;
-
-		tmpPtrConfig->listeners.push_back(elems);
+		bIsRegistry = true;
 	}
+
+
+	//for (const auto& item : this->node_["listeners"])
+	//{
+	//	std::string ip = item["address"]["socket_address"]["address"].as<std::string>();
+	//	uint16_t port = item["address"]["socket_address"]["port_value"].as<uint16_t>();
+	//	uint16_t type = item["address"]["socket_address"]["type"].as<uint16_t>(1);
+	//	uint32_t maskFlag = item["address"]["socket_address"]["mask_flag"].as<uint32_t>(0);
+
+	//	APieConfig_ListenersElems elems;
+	//	elems.socket_address.address = ip;
+	//	elems.socket_address.port_value = port;
+	//	elems.socket_address.type = type;
+	//	elems.socket_address.mask_flag = maskFlag;
+
+	//	tmpPtrConfig->listeners.push_back(elems);
+	//}
 
 	if (this->node_["clients"])
 	{
@@ -280,8 +289,8 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 		tmpPtrConfig->metrics.ip = node_["metrics"]["ip"].as<std::string>("127.0.0.1");
 		tmpPtrConfig->metrics.udp_port = node_["metrics"]["udp_port"].as<uint16_t>(8089);
 	}
-
-	if (node_["mysql"])
+		
+	if (bIsRegistry && node_["mysql"])
 	{
 		tmpPtrConfig->mysql.enable = node_["mysql"]["enable"].as<bool>(false);
 		tmpPtrConfig->mysql.host = node_["mysql"]["host"].as<std::string>("127.0.0.1");
@@ -291,51 +300,51 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 		tmpPtrConfig->mysql.db = node_["mysql"]["db"].as<std::string>("apie");
 	}
 
-	for (const auto& item : this->node_["redis_clients"])
-	{
-		uint32_t type = item["client"]["type"].as<uint32_t>();
-		uint32_t id = item["client"]["id"].as<uint32_t>();
-		std::string host = item["client"]["host"].as<std::string>();
-		uint16_t port = item["client"]["port"].as<uint16_t>();
-		std::string passwd = item["client"]["passwd"].as<std::string>();
+	//for (const auto& item : this->node_["redis_clients"])
+	//{
+	//	uint32_t type = item["client"]["type"].as<uint32_t>();
+	//	uint32_t id = item["client"]["id"].as<uint32_t>();
+	//	std::string host = item["client"]["host"].as<std::string>();
+	//	uint16_t port = item["client"]["port"].as<uint16_t>();
+	//	std::string passwd = item["client"]["passwd"].as<std::string>();
 
 
-		APieConfig_RedisClient elems;
-		elems.type = type;
-		elems.id = id;
-		elems.host = host;
-		elems.port = port;
-		elems.passwd = passwd;
+	//	APieConfig_RedisClient elems;
+	//	elems.type = type;
+	//	elems.id = id;
+	//	elems.host = host;
+	//	elems.port = port;
+	//	elems.passwd = passwd;
 
-		tmpPtrConfig->redis_clients.push_back(elems);
-	}
+	//	tmpPtrConfig->redis_clients.push_back(elems);
+	//}
 
-	if (node_["nats"])
-	{
-		tmpPtrConfig->nats.enable = node_["nats"]["enable"].as<bool>(false);
+	//if (node_["nats"])
+	//{
+	//	tmpPtrConfig->nats.enable = node_["nats"]["enable"].as<bool>(false);
 
-		for (const auto& item : this->node_["nats"]["connections"])
-		{
-			uint32_t type = item["subscription"]["type"].as<uint32_t>();
-			std::string nats_server = item["subscription"]["nats_server"].as<std::string>();
-			std::string channel_domains = item["subscription"]["channel_domains"].as<std::string>();
+	//	for (const auto& item : this->node_["nats"]["connections"])
+	//	{
+	//		uint32_t type = item["subscription"]["type"].as<uint32_t>();
+	//		std::string nats_server = item["subscription"]["nats_server"].as<std::string>();
+	//		std::string channel_domains = item["subscription"]["channel_domains"].as<std::string>();
 
 
-			APieConfig_NatsSubscription elems;
-			elems.type = type;
-			elems.nats_server = nats_server;
-			elems.channel_domains = channel_domains;
+	//		APieConfig_NatsSubscription elems;
+	//		elems.type = type;
+	//		elems.nats_server = nats_server;
+	//		elems.channel_domains = channel_domains;
 
-			tmpPtrConfig->nats.connections.push_back(elems);
-		}
-	}
+	//		tmpPtrConfig->nats.connections.push_back(elems);
+	//	}
+	//}
 
-	if (node_["etcd"])
-	{
-		tmpPtrConfig->etcd.enable = node_["etcd"]["enable"].as<bool>(false);
-		tmpPtrConfig->etcd.urls = node_["etcd"]["urls"].as<std::string>("");
-		tmpPtrConfig->etcd.prefix = node_["etcd"]["prefix"].as<std::string>("");
-	}
+	//if (node_["etcd"])
+	//{
+	//	tmpPtrConfig->etcd.enable = node_["etcd"]["enable"].as<bool>(false);
+	//	tmpPtrConfig->etcd.urls = node_["etcd"]["urls"].as<std::string>("");
+	//	tmpPtrConfig->etcd.prefix = node_["etcd"]["prefix"].as<std::string>("");
+	//}
 
 	if (node_["limited"])
 	{
@@ -390,6 +399,88 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 	};
 
 	return tmpPtrConfig;
+}
+
+void Ctx::addListeners(LoadConfig<Mysql_ListenersConfig>& listenersConfig)
+{
+	std::shared_ptr<event_ns::DispatchedThreadImpl> ptrListen = nullptr;
+	auto findIte = thread_.find(event_ns::EThreadType::TT_Listen);
+	if (findIte != thread_.end())
+	{
+		if (!findIte->second.empty())
+		{
+			ptrListen = findIte->second.front();
+		}
+	}
+
+	for (const auto& item : listenersConfig.configData().bind)
+	{
+		std::string ip = item.ip;
+		uint16_t port = item.port;
+		uint16_t type = item.type;
+		uint32_t maskFlag = item.mask_flag;
+
+		network::ListenerConfig config;
+		config.ip = ip;
+		config.port = port;
+		config.type = static_cast<apie::ProtocolType>(type);
+
+		if (config.type <= ProtocolType::PT_None || config.type >= ProtocolType::PT_MAX)
+		{
+			std::stringstream ss;
+			ss << "invalid listener type:" << type;
+			PANIC_ABORT(ss.str().c_str());
+		}
+
+
+		if (nullptr == ptrListen)
+		{
+			ptrListen = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Listen, this->generatorTId());
+			thread_[event_ns::EThreadType::TT_Listen].push_back(ptrListen);
+		}
+
+		auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
+		ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
+
+		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|ip:%s|port:%d|type:%d", ip.c_str(), port, type);
+	}
+
+
+	for (auto& elem : thread_[event_ns::EThreadType::TT_Listen])
+	{
+		if (elem->state() == event_ns::DTState::DTS_Ready)
+		{
+			elem->start();
+			thread_id_[elem->getTId()] = elem;
+		}
+	}
+}
+
+void Ctx::initMysqlConnector(LoadConfig<Mysql_MysqlConfig>& mysqlConfig)
+{
+	std::string host = mysqlConfig.configData().host;
+	std::string user = mysqlConfig.configData().user;
+	std::string passwd = mysqlConfig.configData().passwd;
+	std::string db = mysqlConfig.configData().db;
+	uint16_t port = mysqlConfig.configData().port;
+
+	MySQLConnectOptions options;
+	options.host = host;
+	options.user = user;
+	options.passwd = passwd;
+	options.db = db;
+	options.port = port;
+
+	logic_thread_->initMysql(options);
+	PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "mysql:%s|%s|%d", host.c_str(), db.c_str(), port);
+}
+
+void Ctx::addNatsConnections(LoadConfig<Mysql_NatsConfig>& natsConfig)
+{
+	for (const auto& elems : natsConfig.configData().connections)
+	{
+		apie::event_ns::NatsSingleton::get().addConnection(elems.type, elems.nats_server, elems.channel_domains);
+	}
 }
 
 void Ctx::init(const std::string& configFile)
@@ -450,39 +541,39 @@ void Ctx::init(const std::string& configFile)
 
 		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Init);
 
-		std::shared_ptr<event_ns::DispatchedThreadImpl> ptrListen = nullptr;
+		//std::shared_ptr<event_ns::DispatchedThreadImpl> ptrListen = nullptr;
 
-		for (const auto& item : this->getConfigs()->listeners)
-		{
-			std::string ip = item.socket_address.address;
-			uint16_t port = item.socket_address.port_value;
-			uint16_t type = item.socket_address.type;
-			uint32_t maskFlag = item.socket_address.mask_flag;
+		//for (const auto& item : this->getConfigs()->listeners)
+		//{
+		//	std::string ip = item.socket_address.address;
+		//	uint16_t port = item.socket_address.port_value;
+		//	uint16_t type = item.socket_address.type;
+		//	uint32_t maskFlag = item.socket_address.mask_flag;
 
-			network::ListenerConfig config;
-			config.ip = ip;
-			config.port = port;
-			config.type = static_cast<apie::ProtocolType>(type);
+		//	network::ListenerConfig config;
+		//	config.ip = ip;
+		//	config.port = port;
+		//	config.type = static_cast<apie::ProtocolType>(type);
 
-			if (config.type <= ProtocolType::PT_None || config.type >= ProtocolType::PT_MAX)
-			{
-				std::stringstream ss;
-				ss << "invalid listener type:" << type;
-				PANIC_ABORT(ss.str().c_str());
-			}
+		//	if (config.type <= ProtocolType::PT_None || config.type >= ProtocolType::PT_MAX)
+		//	{
+		//		std::stringstream ss;
+		//		ss << "invalid listener type:" << type;
+		//		PANIC_ABORT(ss.str().c_str());
+		//	}
 
-			
-			if (nullptr == ptrListen)
-			{
-				ptrListen = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Listen, this->generatorTId());
-				thread_[event_ns::EThreadType::TT_Listen].push_back(ptrListen);
-			}
+		//	
+		//	if (nullptr == ptrListen)
+		//	{
+		//		ptrListen = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Listen, this->generatorTId());
+		//		thread_[event_ns::EThreadType::TT_Listen].push_back(ptrListen);
+		//	}
 
-			auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
-			ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
+		//	auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
+		//	ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
 
-			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|ip:%s|port:%d|type:%d", ip.c_str(), port, type);
-		}
+		//	PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|ip:%s|port:%d|type:%d", ip.c_str(), port, type);
+		//}
 
 		uint16_t ioThreads = this->node_["io_threads"].as<uint16_t>();
 		if (ioThreads <= 0 || ioThreads > 64)
@@ -520,38 +611,38 @@ void Ctx::init(const std::string& configFile)
 			PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "mysql:%s|%s|%d", host.c_str(), db.c_str(), port);
 		}
 
-		bool bResult = apie::event_ns::NatsSingleton::get().init();
-		if (!bResult)
-		{
-			std::stringstream ss;
-			ss << "nats init error";
-			PANIC_ABORT(ss.str().c_str());
-		}
+		//bool bResult = apie::event_ns::NatsSingleton::get().init();
+		//if (!bResult)
+		//{
+		//	std::stringstream ss;
+		//	ss << "nats init error";
+		//	PANIC_ABORT(ss.str().c_str());
+		//}
 
-		for (const auto& item : this->getConfigs()->redis_clients)
-		{
-			auto iType = item.type;
-			auto iId = item.id;
-			auto sHost = item.host;
-			auto iPort = item.port;
-			auto sPasswd = item.passwd;
+		//for (const auto& item : this->getConfigs()->redis_clients)
+		//{
+		//	auto iType = item.type;
+		//	auto iId = item.id;
+		//	auto sHost = item.host;
+		//	auto iPort = item.port;
+		//	auto sPasswd = item.passwd;
 
-			auto key = std::make_tuple(iType, iId);
+		//	auto key = std::make_tuple(iType, iId);
 
-			auto ptrCb = [](std::shared_ptr<RedisClient> ptrClient) {
-				std::stringstream ss;
-				ss << key_to_string(*ptrClient);
-				ASYNC_PIE_LOG("RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
-			};
-			auto sharedPtr = RedisClientFactorySingleton::get().createClient(key, sHost, iPort, sPasswd, ptrCb);
-			bool bResult = RedisClientFactorySingleton::get().registerClient(sharedPtr);
-			if (!bResult)
-			{
-				std::stringstream ss;
-				ss << "redis|registerClient error|key:" << (uint32_t)std::get<0>(key) << "-" << std::get<1>(key);
-				PANIC_ABORT(ss.str().c_str());
-			}
-		}
+		//	auto ptrCb = [](std::shared_ptr<RedisClient> ptrClient) {
+		//		std::stringstream ss;
+		//		ss << key_to_string(*ptrClient);
+		//		ASYNC_PIE_LOG("RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+		//	};
+		//	auto sharedPtr = RedisClientFactorySingleton::get().createClient(key, sHost, iPort, sPasswd, ptrCb);
+		//	bool bResult = RedisClientFactorySingleton::get().registerClient(sharedPtr);
+		//	if (!bResult)
+		//	{
+		//		std::stringstream ss;
+		//		ss << "redis|registerClient error|key:" << (uint32_t)std::get<0>(key) << "-" << std::get<1>(key);
+		//		PANIC_ABORT(ss.str().c_str());
+		//	}
+		//}
 
 	}
 	catch (YAML::BadFile& e) {

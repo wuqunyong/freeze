@@ -17,10 +17,14 @@
 #include "apie/proto/init.h"
 
 
+
 namespace apie
 {
     //  Context object encapsulates all the global state associated with
     //  the library.
+
+	template <typename T>
+	class LoadConfig;
 
     class Ctx
     {
@@ -71,6 +75,10 @@ namespace apie
 		void setConfigFileMTime(int64_t mtime);
 
 		std::shared_ptr<APieConfig> getConfigs();
+
+		void addListeners(LoadConfig<Mysql_ListenersConfig>& listenersConfig);
+		void initMysqlConnector(LoadConfig<Mysql_MysqlConfig>& mysqlConfig);
+		void addNatsConnections(LoadConfig<Mysql_NatsConfig>& natsConfig);
 
 	public:
 		static std::string logPostfix();

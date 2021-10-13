@@ -51,6 +51,7 @@ namespace apie {
 	private:
 		DAOFactory account;
 		DAOFactory role;
+		DAOFactory config_db;
 	};
 
 	typedef ThreadSafeSingleton<DAOFactoryType> DAOFactoryTypeSingleton;

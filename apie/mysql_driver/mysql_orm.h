@@ -21,6 +21,7 @@
 #include "apie/mysql_driver/result_set.h"
 
 #include "apie/proto/init.h"
+#include "apie/status/status.h"
 
 
 #ifdef _MSC_VER
@@ -42,6 +43,7 @@ public:
 		DBT_None = 0,
 		DBT_Account = 1,
 		DBT_Role = 2,
+		DBT_ConfigDb = 3,
 	};
 
 	//virtual uint32_t blockSize() = 0;
@@ -97,6 +99,8 @@ public:
 
 	mysql_proxy_msg::MysqlQueryRequestByFilter generateQueryByFilter();
 
+	MysqlTable& getMysqlTable();
+
 private:
 	//bool loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response);
 
@@ -105,7 +109,7 @@ public:
 
 	static MysqlTable convertFrom(::mysql_proxy_msg::MysqlDescTable& desc);
 	static mysql_proxy_msg::MysqlQueryResponse convertFrom(MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr);
-	static std::optional<mysql_proxy_msg::MysqlRow> convertToRowFrom(MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr);
+	static std::optional<mysql_proxy_msg::MysqlRow> convertToRowFrom( MysqlTable& table, std::shared_ptr<ResultSet> sharedPtr);
 
 
 private:
@@ -116,3 +120,47 @@ private:
 	bool m_binded = false;
 };
 
+template<typename T>
+apie::status::Status syncLoadDbByFilter(MySQLConnector& connector, T& obj, std::vector<T>& loadedList)
+{
+	auto queryFilter = obj.generateQueryByFilter();
+
+	std::string sSQL;
+	bool bResult = obj.getMysqlTable().generateQueryByFilterSQL(connector, queryFilter, sSQL);
+	if (!bResult)
+	{
+		return { apie::status::StatusCode::INTERNAL, "generateQueryByFilterSQL Error" };
+	}
+
+	std::shared_ptr<ResultSet> recordSet;
+	bResult = connector.query(sSQL.c_str(), sSQL.length(), recordSet);
+	if (!bResult)
+	{
+		return { apie::status::StatusCode::INTERNAL, connector.getError() };
+	}
+
+	if (!recordSet)
+	{
+		return { apie::status::StatusCode::OK, "" };
+	}
+
+	uint32_t iRows = 0;
+	do
+	{
+		auto optRowData = DeclarativeBase::convertToRowFrom(obj.getMysqlTable(), recordSet);
+		if (optRowData.has_value())
+		{
+			iRows++;
+
+			T newObj;
+			newObj.loadFromPb(optRowData.value());
+			loadedList.push_back(newObj);
+		}
+		else
+		{
+			break;
+		}
+	} while (true);
+
+	return { apie::status::StatusCode::OK, "" };
+}

@@ -209,6 +209,45 @@ bool NatsManager::init()
 	return true;
 }
 
+void NatsManager::addConnection(uint32_t domainsType, const std::string& urls, const std::string& domains)
+{
+	uint32_t realm = apie::CtxSingleton::get().getServerRealm();
+	uint32_t id = apie::CtxSingleton::get().getServerId();
+	uint32_t type = apie::CtxSingleton::get().getServerType();
+
+	switch (domainsType)
+	{
+	case E_NT_Realm:
+	{
+		if (nats_realm)
+		{
+			std::stringstream ss;
+			ss << "duplicate type:" << domainsType;
+			PANIC_ABORT(ss.str().c_str());
+		}
+
+		nats_realm = createConnection(realm, type, id, domainsType, urls, domains);
+		if (nats_realm == nullptr)
+		{
+			std::stringstream ss;
+			ss << "createConnection null type:" << domainsType;
+			PANIC_ABORT(ss.str().c_str());
+		}
+		break;
+	}
+	default:
+	{
+		//nothing
+	}
+	}
+
+	if (interval_timer_ == nullptr)
+	{
+		interval_timer_ = apie::CtxSingleton::get().getNatsThread()->dispatcherImpl()->createTimer([this]() -> void { runIntervalCallbacks(); });
+		interval_timer_->enableTimer(std::chrono::milliseconds(2000));
+	}
+}
+
 std::shared_ptr<NatsManager::PrxoyNATSConnector> NatsManager::createConnection(uint32_t realm, uint32_t serverType, uint32_t serverId, uint32_t domainsType, const std::string& urls, const std::string& domains)
 {
 	auto sharedPtr = std::make_shared<PrxoyNATSConnector>(urls, domains, domains);

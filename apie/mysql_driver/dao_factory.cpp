@@ -72,6 +72,10 @@ bool DAOFactoryType::registerRequiredTable(DeclarativeBase::DBType type, const s
 	{
 		return DAOFactoryTypeSingleton::get().role.registerFactory(name, funcCreate);
 	}
+	case DeclarativeBase::DBType::DBT_ConfigDb:
+	{
+		return DAOFactoryTypeSingleton::get().config_db.registerFactory(name, funcCreate);
+	}
 	default:
 	{
 		return false;
@@ -93,6 +97,10 @@ std::optional<std::map<std::string, DAOFactory::TCreateMethod>> DAOFactoryType::
 	{
 		return std::make_optional(this->role.getMethods());
 	}
+	case DeclarativeBase::DBType::DBT_ConfigDb:
+	{
+		return std::make_optional(this->config_db.getMethods());
+	}
 	default:
 		break;
 	}
@@ -110,6 +118,10 @@ std::shared_ptr<DeclarativeBase> DAOFactoryType::createDAO(DeclarativeBase::DBTy
 	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return this->role.create(name);
+	}
+	case DeclarativeBase::DBType::DBT_ConfigDb:
+	{
+		return this->config_db.create(name);
 	}
 	default:
 		break;
@@ -130,6 +142,10 @@ bool DAOFactoryType::addLoadedTable(DeclarativeBase::DBType type, const std::str
 	{
 		return this->role.addTable(name, table);
 	}
+	case DeclarativeBase::DBType::DBT_ConfigDb:
+	{
+		return this->config_db.addTable(name, table);
+	}
 	default:
 		break;
 	}
@@ -148,6 +164,10 @@ DAOFactory* DAOFactoryType::getDAOFactory(DeclarativeBase::DBType type)
 	case DeclarativeBase::DBType::DBT_Role:
 	{
 		return &role;
+	}
+	case DeclarativeBase::DBType::DBT_ConfigDb:
+	{
+		return &config_db;
 	}
 	default:
 		break;

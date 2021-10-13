@@ -12,6 +12,15 @@ namespace apie
 		uint32_t id = 0;
 		std::string auth;
 
+		EndPoint() = default;
+		EndPoint(uint32_t realm, uint32_t type, uint32_t id, std::string auth)
+		{
+			this->realm = realm;
+			this->type = type;
+			this->id = id;
+			this->auth = auth;
+		}
+
 		bool operator<(const EndPoint& other) const
 		{
 			if (realm != other.realm)

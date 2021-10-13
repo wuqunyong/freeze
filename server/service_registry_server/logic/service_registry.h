@@ -10,6 +10,8 @@
 
 #include "apie.h"
 
+#include "../../common/dao/model_service_node.h"
+
 namespace apie {
 
 	struct RegisteredEndPoint
@@ -41,6 +43,7 @@ namespace apie {
 		void disableUpdateTimer();
 
 		std::map<uint64_t, RegisteredEndPoint>& registered();
+		std::optional<ModelServiceNode> findNode(EndPoint key);
 
 	public:
 		std::map<uint64_t, RegisteredEndPoint> m_registered;
@@ -52,6 +55,8 @@ namespace apie {
 		::service_discovery::RegistryStatus m_status = service_discovery::RS_Learning;
 		uint64_t m_iStatusCheckTime = 0;
 		event_ns::TimerPtr m_updateTimer;
+
+		std::map<EndPoint, ModelServiceNode> m_nodes;
 	};
 
 	using ServiceRegistrySingleton = ThreadSafeSingleton<ServiceRegistry>;

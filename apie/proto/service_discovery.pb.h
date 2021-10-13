@@ -778,8 +778,59 @@ class MSG_RESPONSE_REGISTER_INSTANCE :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kListenersConfigFieldNumber = 2,
+    kMysqlConfigFieldNumber = 3,
+    kNatsConfigFieldNumber = 4,
     kStatusCodeFieldNumber = 1,
   };
+  // string listeners_config = 2;
+  void clear_listeners_config();
+  const std::string& listeners_config() const;
+  void set_listeners_config(const std::string& value);
+  void set_listeners_config(std::string&& value);
+  void set_listeners_config(const char* value);
+  void set_listeners_config(const char* value, size_t size);
+  std::string* mutable_listeners_config();
+  std::string* release_listeners_config();
+  void set_allocated_listeners_config(std::string* listeners_config);
+  private:
+  const std::string& _internal_listeners_config() const;
+  void _internal_set_listeners_config(const std::string& value);
+  std::string* _internal_mutable_listeners_config();
+  public:
+
+  // string mysql_config = 3;
+  void clear_mysql_config();
+  const std::string& mysql_config() const;
+  void set_mysql_config(const std::string& value);
+  void set_mysql_config(std::string&& value);
+  void set_mysql_config(const char* value);
+  void set_mysql_config(const char* value, size_t size);
+  std::string* mutable_mysql_config();
+  std::string* release_mysql_config();
+  void set_allocated_mysql_config(std::string* mysql_config);
+  private:
+  const std::string& _internal_mysql_config() const;
+  void _internal_set_mysql_config(const std::string& value);
+  std::string* _internal_mutable_mysql_config();
+  public:
+
+  // string nats_config = 4;
+  void clear_nats_config();
+  const std::string& nats_config() const;
+  void set_nats_config(const std::string& value);
+  void set_nats_config(std::string&& value);
+  void set_nats_config(const char* value);
+  void set_nats_config(const char* value, size_t size);
+  std::string* mutable_nats_config();
+  std::string* release_nats_config();
+  void set_allocated_nats_config(std::string* nats_config);
+  private:
+  const std::string& _internal_nats_config() const;
+  void _internal_set_nats_config(const std::string& value);
+  std::string* _internal_mutable_nats_config();
+  public:
+
   // uint32 status_code = 1;
   void clear_status_code();
   ::PROTOBUF_NAMESPACE_ID::uint32 status_code() const;
@@ -794,6 +845,9 @@ class MSG_RESPONSE_REGISTER_INSTANCE :
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr listeners_config_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr mysql_config_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr nats_config_;
   ::PROTOBUF_NAMESPACE_ID::uint32 status_code_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_5fdiscovery_2eproto;
@@ -1770,6 +1824,186 @@ inline void MSG_RESPONSE_REGISTER_INSTANCE::_internal_set_status_code(::PROTOBUF
 inline void MSG_RESPONSE_REGISTER_INSTANCE::set_status_code(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_status_code(value);
   // @@protoc_insertion_point(field_set:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.status_code)
+}
+
+// string listeners_config = 2;
+inline void MSG_RESPONSE_REGISTER_INSTANCE::clear_listeners_config() {
+  listeners_config_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_RESPONSE_REGISTER_INSTANCE::listeners_config() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config)
+  return _internal_listeners_config();
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_listeners_config(const std::string& value) {
+  _internal_set_listeners_config(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config)
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::mutable_listeners_config() {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config)
+  return _internal_mutable_listeners_config();
+}
+inline const std::string& MSG_RESPONSE_REGISTER_INSTANCE::_internal_listeners_config() const {
+  return listeners_config_.GetNoArena();
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::_internal_set_listeners_config(const std::string& value) {
+  
+  listeners_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_listeners_config(std::string&& value) {
+  
+  listeners_config_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config)
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_listeners_config(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  listeners_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config)
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_listeners_config(const char* value, size_t size) {
+  
+  listeners_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config)
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::_internal_mutable_listeners_config() {
+  
+  return listeners_config_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::release_listeners_config() {
+  // @@protoc_insertion_point(field_release:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config)
+  
+  return listeners_config_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_allocated_listeners_config(std::string* listeners_config) {
+  if (listeners_config != nullptr) {
+    
+  } else {
+    
+  }
+  listeners_config_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), listeners_config);
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.listeners_config)
+}
+
+// string mysql_config = 3;
+inline void MSG_RESPONSE_REGISTER_INSTANCE::clear_mysql_config() {
+  mysql_config_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_RESPONSE_REGISTER_INSTANCE::mysql_config() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config)
+  return _internal_mysql_config();
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_mysql_config(const std::string& value) {
+  _internal_set_mysql_config(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config)
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::mutable_mysql_config() {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config)
+  return _internal_mutable_mysql_config();
+}
+inline const std::string& MSG_RESPONSE_REGISTER_INSTANCE::_internal_mysql_config() const {
+  return mysql_config_.GetNoArena();
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::_internal_set_mysql_config(const std::string& value) {
+  
+  mysql_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_mysql_config(std::string&& value) {
+  
+  mysql_config_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config)
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_mysql_config(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  mysql_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config)
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_mysql_config(const char* value, size_t size) {
+  
+  mysql_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config)
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::_internal_mutable_mysql_config() {
+  
+  return mysql_config_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::release_mysql_config() {
+  // @@protoc_insertion_point(field_release:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config)
+  
+  return mysql_config_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_allocated_mysql_config(std::string* mysql_config) {
+  if (mysql_config != nullptr) {
+    
+  } else {
+    
+  }
+  mysql_config_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), mysql_config);
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.mysql_config)
+}
+
+// string nats_config = 4;
+inline void MSG_RESPONSE_REGISTER_INSTANCE::clear_nats_config() {
+  nats_config_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_RESPONSE_REGISTER_INSTANCE::nats_config() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
+  return _internal_nats_config();
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_nats_config(const std::string& value) {
+  _internal_set_nats_config(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::mutable_nats_config() {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
+  return _internal_mutable_nats_config();
+}
+inline const std::string& MSG_RESPONSE_REGISTER_INSTANCE::_internal_nats_config() const {
+  return nats_config_.GetNoArena();
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::_internal_set_nats_config(const std::string& value) {
+  
+  nats_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_nats_config(std::string&& value) {
+  
+  nats_config_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_nats_config(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  nats_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_nats_config(const char* value, size_t size) {
+  
+  nats_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::_internal_mutable_nats_config() {
+  
+  return nats_config_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::release_nats_config() {
+  // @@protoc_insertion_point(field_release:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
+  
+  return nats_config_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_allocated_nats_config(std::string* nats_config) {
+  if (nats_config != nullptr) {
+    
+  } else {
+    
+  }
+  nats_config_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), nats_config);
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
 }
 
 // -------------------------------------------------------------------

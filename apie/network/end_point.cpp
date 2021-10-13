@@ -9,6 +9,8 @@
 #include "apie/network/output_stream.h"
 #include "apie/service/service_manager.h"
 #include "apie/pub_sub/pubsub_manager.h"
+#include "apie/configs/configs.h"
+#include "apie/configs/load_config.h"
 
 namespace apie{
 
@@ -84,6 +86,83 @@ void SelfRegistration::registerEndpoint()
 		PANIC_ABORT(ss.str().c_str());
 	}
 
+	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
+	request.mutable_instance()->set_realm(apie::CtxSingleton::get().getServerRealm());
+	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(apie::CtxSingleton::get().getServerType()));
+	request.mutable_instance()->set_id(apie::CtxSingleton::get().getServerId());
+	request.set_auth(registryAuth);
+
+	auto ptrResponse = ptrClient->syncSendMsg<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);
+	if (ptrResponse == nullptr)
+	{
+		std::stringstream ss;
+		ss << "syncSendMsg service_registry error";
+
+		PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		PANIC_ABORT(ss.str().c_str());
+	}
+	std::stringstream ss;
+	ss << "response:" << ptrResponse->ShortDebugString();
+
+	if (ptrResponse->status_code() == opcodes::StatusCode::SC_Ok)
+	{
+		this->setState(apie::SelfRegistration::State::Registered);
+
+		if (identityType == ::common::EndPointType::EPT_Login_Server || identityType == ::common::EndPointType::EPT_Gateway_Server)
+		{
+			apie::LoadConfig<Mysql_ListenersConfig> listenConfig("listenConfig");
+			bool bResult = listenConfig.load(ptrResponse->listeners_config());
+			if (!bResult)
+			{
+				std::stringstream ss;
+				ss << "invalid listenConfig";
+
+				PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+				PANIC_ABORT(ss.str().c_str());
+			}
+
+			apie::CtxSingleton::get().addListeners(listenConfig);
+		}
+
+		if (identityType == ::common::EndPointType::EPT_DB_ACCOUNT_Proxy || identityType == ::common::EndPointType::EPT_DB_ROLE_Proxy)
+		{
+			apie::LoadConfig<Mysql_MysqlConfig> mysqlConfig("mysqlConfig");
+			bool bResult = mysqlConfig.load(ptrResponse->mysql_config());
+			if (!bResult)
+			{
+				std::stringstream ss;
+				ss << "invalid mysqlConfig";
+
+				PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+				PANIC_ABORT(ss.str().c_str());
+			}
+
+			apie::CtxSingleton::get().initMysqlConnector(mysqlConfig);
+		}
+
+		apie::LoadConfig<Mysql_NatsConfig> natsConfig("natsConfig");
+		bool bResult = natsConfig.load(ptrResponse->nats_config());
+		if (!bResult)
+		{
+			std::stringstream ss;
+			ss << "invalid natsConfig";
+
+			PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+			PANIC_ABORT(ss.str().c_str());
+		}
+
+		apie::CtxSingleton::get().addNatsConnections(natsConfig);
+	}
+	else
+	{
+		std::stringstream ss;
+		ss << "register service_registry error";
+
+		PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		PANIC_ABORT(ss.str().c_str());
+	}
+
+
 	auto heartbeatCb = [ptrSelf, registryAuth](apie::ClientProxy *ptrClient) {
 		ptrClient->addHeartbeatTimer(3000);
 
@@ -112,21 +191,20 @@ void SelfRegistration::sendRegister(apie::ClientProxy* ptrClient, std::string re
 	uint32_t realm = apie::CtxSingleton::get().getServerRealm();
 	uint32_t type = apie::CtxSingleton::get().getServerType();
 	uint32_t id = apie::CtxSingleton::get().getServerId();
-	std::string auth = apie::CtxSingleton::get().getConfigs()->identify.auth;
-	std::string ip = apie::CtxSingleton::get().getConfigs()->identify.ip;
-	uint32_t port = apie::CtxSingleton::get().getConfigs()->identify.port;
-	uint32_t codec_type = apie::CtxSingleton::get().getConfigs()->identify.codec_type;
+	//std::string auth = apie::CtxSingleton::get().getConfigs()->identify.auth;
+	//std::string ip = apie::CtxSingleton::get().getConfigs()->identify.ip;
+	//uint32_t port = apie::CtxSingleton::get().getConfigs()->identify.port;
+	//uint32_t codec_type = apie::CtxSingleton::get().getConfigs()->identify.codec_type;
 
 	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
 	request.mutable_instance()->set_realm(realm);
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(type));
 	request.mutable_instance()->set_id(id);
-	request.mutable_instance()->set_auth(auth);
-	request.mutable_instance()->set_ip(ip);
-	request.mutable_instance()->set_port(port);
-	request.mutable_instance()->set_codec_type(codec_type);
-	request.mutable_instance()->set_mask_flag(0); // 节点间不需要压缩，加密
-	//request.mutable_instance()->set_db_id(db_id);
+	//request.mutable_instance()->set_auth(auth);
+	//request.mutable_instance()->set_ip(ip);
+	//request.mutable_instance()->set_port(port);
+	//request.mutable_instance()->set_codec_type(codec_type);
+	//request.mutable_instance()->set_mask_flag(0); // 节点间不需要压缩，加密
 	request.set_auth(registryAuth);
 
 	//ptrClient->sendMsg(::opcodes::OP_MSG_REQUEST_REGISTER_INSTANCE, request);

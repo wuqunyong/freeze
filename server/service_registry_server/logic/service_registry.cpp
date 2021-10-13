@@ -19,6 +19,96 @@ apie::status::Status ServiceRegistry::init()
 
 apie::status::Status ServiceRegistry::start()
 {
+	DeclarativeBase::DBType dbType = DeclarativeBase::DBType::DBT_ConfigDb;
+	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelServiceNode::getFactoryName(), ModelServiceNode::createMethod);
+	auto ptrDispatched = CtxSingleton::get().getLogicThread();
+	if (ptrDispatched == nullptr)
+	{
+		return { apie::status::StatusCode::HOOK_ERROR, "null ptrDispatched" };
+	}
+
+	auto requiredTableOpt = DAOFactoryTypeSingleton::get().getRequiredTable(dbType);
+	if (!requiredTableOpt.has_value())
+	{
+		return { apie::status::StatusCode::OK, "" };
+	}
+
+	std::vector<std::string> tables;
+	for (const auto& items : requiredTableOpt.value())
+	{
+		tables.push_back(items.first);
+	}
+
+	for (const auto& tableName : tables)
+	{
+		MysqlTable table;
+		bool bSQL = ptrDispatched->getMySQLConnector().describeTable(tableName, table);
+		if (bSQL)
+		{
+			auto ptrDaoBase = DAOFactoryTypeSingleton::get().createDAO(dbType, tableName);
+			if (ptrDaoBase == nullptr)
+			{
+				std::stringstream ss;
+				ss << "tableName:" << tableName << " not declare";
+
+				return { apie::status::StatusCode::HOOK_ERROR, ss.str() };
+			}
+
+			ptrDaoBase->initMetaData(table);
+			bool bResult = ptrDaoBase->checkInvalid();
+			if (!bResult)
+			{
+				std::stringstream ss;
+				ss << "tableName:" << tableName << " checkInvalid false";
+
+				return { apie::status::StatusCode::HOOK_ERROR, ss.str() };
+			}
+
+			DAOFactoryTypeSingleton::get().addLoadedTable(dbType, tableName, table);
+		}
+		else
+		{
+			return { apie::status::StatusCode::HOOK_ERROR, ptrDispatched->getMySQLConnector().getError() };
+		}
+	}
+
+	ModelServiceNode node;
+	node.fields.service_realm = apie::CtxSingleton::get().getServerRealm();
+	bool bResult = node.bindTable(DeclarativeBase::DBType::DBT_ConfigDb, ModelServiceNode::getFactoryName());
+	if (!bResult)
+	{
+		return { apie::status::StatusCode::HOOK_ERROR, "bind table"};
+	}
+	node.markFilter({ ModelServiceNode::service_realm });
+
+	std::vector<ModelServiceNode> nodeList;
+	auto status = syncLoadDbByFilter(ptrDispatched->getMySQLConnector(), node, nodeList);
+	if (!status.ok())
+	{
+		return status;
+	}
+
+	for (const auto& elem : nodeList)
+	{
+		EndPoint key(elem.fields.service_realm, elem.fields.service_type, elem.fields.service_id, "");
+		m_nodes[key] = elem;
+	}
+
+	auto findIte = m_nodes.find(apie::CtxSingleton::get().identify());
+	if (findIte == m_nodes.end())
+	{
+		return { apie::status::StatusCode::HOOK_ERROR, "identify not exist" };
+	}
+
+	apie::LoadConfig<Mysql_ListenersConfig> listenConfig("listenConfig");
+	bResult = listenConfig.load(findIte->second.fields.listeners_config);
+	if (!bResult)
+	{
+		return { apie::status::StatusCode::HOOK_ERROR, "invalid listenConfig" };
+	}
+	apie::CtxSingleton::get().addListeners(listenConfig);
+
+
 	m_id = "id_" + apie::CtxSingleton::get().launchTime();
 	m_serviceTimeout = apie::CtxSingleton::get().getConfigs()->service_timeout;
 
@@ -64,6 +154,17 @@ void ServiceRegistry::disableUpdateTimer()
 std::map<uint64_t, RegisteredEndPoint>& ServiceRegistry::registered()
 {
 	return m_registered;
+}
+
+std::optional<ModelServiceNode> ServiceRegistry::findNode(EndPoint key)
+{
+	auto findIte = m_nodes.find(key);
+	if (findIte == m_nodes.end())
+	{
+		return std::nullopt;
+	}
+
+	return findIte->second;
 }
 
 void ServiceRegistry::update()

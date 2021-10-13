@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <memory>
-
+#include <nlohmann/json.hpp>
 
 namespace apie {
 
@@ -168,6 +168,75 @@ namespace apie {
 		APieConfig_Etcd etcd;
 		APieConfig_Limited limited;
 		APieConfig_AutoTest auto_test;
+	};
+
+
+
+	class Mysql_BindElem
+	{
+	public:
+		std::string ip;
+		uint32_t port;
+		uint32_t type;
+		uint32_t mask_flag;
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Mysql_BindElem, ip, port, type, mask_flag);
+	};
+
+	class Mysql_ListenersConfig
+	{
+	public:
+		std::vector<Mysql_BindElem> bind;
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Mysql_ListenersConfig, bind);
+
+
+		bool isValid(std::string& errInfo)
+		{
+			return true;
+		}
+	};
+
+	class Mysql_MysqlConfig
+	{
+	public:
+		std::string host;
+		uint32_t port;
+		std::string user;
+		std::string passwd;
+		std::string db;
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Mysql_MysqlConfig, host, port, user, passwd, db);
+
+
+		bool isValid(std::string& errInfo)
+		{
+			return true;
+		}
+	};
+
+	class Mysql_NatsConnectionElem
+	{
+	public:
+		uint32_t type;
+		std::string nats_server;
+		std::string channel_domains;
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Mysql_NatsConnectionElem, type, nats_server, channel_domains);
+	};
+
+	class Mysql_NatsConfig
+	{
+	public:
+		std::vector<Mysql_NatsConnectionElem> connections;
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Mysql_NatsConfig, connections);
+
+
+		bool isValid(std::string& errInfo)
+		{
+			return true;
+		}
 	};
 
 } 

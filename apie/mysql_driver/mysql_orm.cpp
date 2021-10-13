@@ -31,6 +31,11 @@ bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string&
 	return this->checkInvalid();
 }
 
+MysqlTable& DeclarativeBase::getMysqlTable()
+{
+	return m_table;
+}
+
 std::string DeclarativeBase::query(MySQLConnector& connector)
 {
 	std::stringstream ss;
