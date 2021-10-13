@@ -140,6 +140,28 @@ void SelfRegistration::registerEndpoint()
 			apie::CtxSingleton::get().initMysqlConnector(mysqlConfig);
 		}
 
+
+		if (identityType == ::common::EndPointType::EPT_Login_Server
+			|| identityType == ::common::EndPointType::EPT_Gateway_Server
+			|| identityType == ::common::EndPointType::EPT_Scene_Server)
+		{
+			if (!ptrResponse->redis_config().empty())
+			{
+				apie::LoadConfig<Mysql_RedisConfig> redisConfig("redisConfig");
+				bool bResult = redisConfig.load(ptrResponse->redis_config());
+				if (!bResult)
+				{
+					std::stringstream ss;
+					ss << "invalid redis_config";
+
+					PIE_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+					PANIC_ABORT(ss.str().c_str());
+				}
+
+				apie::CtxSingleton::get().addRedisClients(redisConfig);
+			}
+		}
+
 		apie::LoadConfig<Mysql_NatsConfig> natsConfig("natsConfig");
 		bool bResult = natsConfig.load(ptrResponse->nats_config());
 		if (!bResult)

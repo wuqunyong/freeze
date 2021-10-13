@@ -51,6 +51,7 @@ message MSG_RESPONSE_REGISTER_INSTANCE
 	string listeners_config = 2;
 	string mysql_config = 3;
 	string nats_config = 4;
+	string redis_config = 5;
 }
 
 

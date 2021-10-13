@@ -483,6 +483,35 @@ void Ctx::addNatsConnections(LoadConfig<Mysql_NatsConfig>& natsConfig)
 	}
 }
 
+void Ctx::addRedisClients(LoadConfig<Mysql_RedisConfig>& redisConfig)
+{
+	for (const auto& elems : redisConfig.configData().clients)
+	{
+		auto iType = elems.type;
+		auto iId = elems.id;
+		auto sHost = elems.host;
+		auto iPort = elems.port;
+		auto sPasswd = elems.passwd;
+
+		auto key = std::make_tuple(iType, iId);
+
+		auto ptrCb = [](std::shared_ptr<RedisClient> ptrClient) {
+			std::stringstream ss;
+			ss << key_to_string(*ptrClient);
+			ASYNC_PIE_LOG("RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+		};
+		auto sharedPtr = RedisClientFactorySingleton::get().createClient(key, sHost, iPort, sPasswd, ptrCb);
+		bool bResult = RedisClientFactorySingleton::get().registerClient(sharedPtr);
+		if (!bResult)
+		{
+			std::stringstream ss;
+			ss << "redis|registerClient error|key:" << (uint32_t)std::get<0>(key) << "-" << std::get<1>(key);
+			PANIC_ABORT(ss.str().c_str());
+		}
+
+	}
+}
+
 void Ctx::init(const std::string& configFile)
 {
 	this->m_configFile = configFile;

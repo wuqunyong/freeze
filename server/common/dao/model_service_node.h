@@ -24,6 +24,7 @@ namespace apie {
 			std::string listeners_config;
 			std::string mysql_config;
 			std::string nats_config;
+			std::string redis_config;
 		};
 
 		enum Fields
@@ -35,7 +36,8 @@ namespace apie {
 			port,
 			listeners_config,
 			mysql_config,
-			nats_config
+			nats_config,
+			redis_config
 		};
 
 		ModelServiceNode(uint32_t realm, uint32_t type, uint32_t id)

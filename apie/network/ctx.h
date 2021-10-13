@@ -79,6 +79,7 @@ namespace apie
 		void addListeners(LoadConfig<Mysql_ListenersConfig>& listenersConfig);
 		void initMysqlConnector(LoadConfig<Mysql_MysqlConfig>& mysqlConfig);
 		void addNatsConnections(LoadConfig<Mysql_NatsConfig>& natsConfig);
+		void addRedisClients(LoadConfig<Mysql_RedisConfig>& redisConfig);
 
 	public:
 		static std::string logPostfix();

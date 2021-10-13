@@ -97,6 +97,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 	response->set_listeners_config(nodeOpt.value().fields.listeners_config);
 	response->set_mysql_config(nodeOpt.value().fields.mysql_config);
 	response->set_nats_config(nodeOpt.value().fields.nats_config);
+	response->set_redis_config(nodeOpt.value().fields.redis_config);
 
 	auto cb = [](){
 		ServiceRegistrySingleton::get().broadcast();

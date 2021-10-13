@@ -781,6 +781,7 @@ class MSG_RESPONSE_REGISTER_INSTANCE :
     kListenersConfigFieldNumber = 2,
     kMysqlConfigFieldNumber = 3,
     kNatsConfigFieldNumber = 4,
+    kRedisConfigFieldNumber = 5,
     kStatusCodeFieldNumber = 1,
   };
   // string listeners_config = 2;
@@ -831,6 +832,22 @@ class MSG_RESPONSE_REGISTER_INSTANCE :
   std::string* _internal_mutable_nats_config();
   public:
 
+  // string redis_config = 5;
+  void clear_redis_config();
+  const std::string& redis_config() const;
+  void set_redis_config(const std::string& value);
+  void set_redis_config(std::string&& value);
+  void set_redis_config(const char* value);
+  void set_redis_config(const char* value, size_t size);
+  std::string* mutable_redis_config();
+  std::string* release_redis_config();
+  void set_allocated_redis_config(std::string* redis_config);
+  private:
+  const std::string& _internal_redis_config() const;
+  void _internal_set_redis_config(const std::string& value);
+  std::string* _internal_mutable_redis_config();
+  public:
+
   // uint32 status_code = 1;
   void clear_status_code();
   ::PROTOBUF_NAMESPACE_ID::uint32 status_code() const;
@@ -848,6 +865,7 @@ class MSG_RESPONSE_REGISTER_INSTANCE :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr listeners_config_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr mysql_config_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr nats_config_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr redis_config_;
   ::PROTOBUF_NAMESPACE_ID::uint32 status_code_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_service_5fdiscovery_2eproto;
@@ -2004,6 +2022,66 @@ inline void MSG_RESPONSE_REGISTER_INSTANCE::set_allocated_nats_config(std::strin
   }
   nats_config_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), nats_config);
   // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.nats_config)
+}
+
+// string redis_config = 5;
+inline void MSG_RESPONSE_REGISTER_INSTANCE::clear_redis_config() {
+  redis_config_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& MSG_RESPONSE_REGISTER_INSTANCE::redis_config() const {
+  // @@protoc_insertion_point(field_get:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.redis_config)
+  return _internal_redis_config();
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_redis_config(const std::string& value) {
+  _internal_set_redis_config(value);
+  // @@protoc_insertion_point(field_set:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.redis_config)
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::mutable_redis_config() {
+  // @@protoc_insertion_point(field_mutable:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.redis_config)
+  return _internal_mutable_redis_config();
+}
+inline const std::string& MSG_RESPONSE_REGISTER_INSTANCE::_internal_redis_config() const {
+  return redis_config_.GetNoArena();
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::_internal_set_redis_config(const std::string& value) {
+  
+  redis_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_redis_config(std::string&& value) {
+  
+  redis_config_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.redis_config)
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_redis_config(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  redis_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.redis_config)
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_redis_config(const char* value, size_t size) {
+  
+  redis_config_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.redis_config)
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::_internal_mutable_redis_config() {
+  
+  return redis_config_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MSG_RESPONSE_REGISTER_INSTANCE::release_redis_config() {
+  // @@protoc_insertion_point(field_release:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.redis_config)
+  
+  return redis_config_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MSG_RESPONSE_REGISTER_INSTANCE::set_allocated_redis_config(std::string* redis_config) {
+  if (redis_config != nullptr) {
+    
+  } else {
+    
+  }
+  redis_config_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), redis_config);
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.MSG_RESPONSE_REGISTER_INSTANCE.redis_config)
 }
 
 // -------------------------------------------------------------------

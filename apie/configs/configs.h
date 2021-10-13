@@ -239,4 +239,30 @@ namespace apie {
 		}
 	};
 
+	class Mysql_RedisClient
+	{
+	public:
+		uint32_t type;
+		uint32_t id;
+		std::string host;
+		uint32_t port;
+		std::string passwd;
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Mysql_RedisClient, type, id, host, port, passwd);
+	};
+
+	class Mysql_RedisConfig
+	{
+	public:
+		std::vector<Mysql_RedisClient> clients;
+
+		NLOHMANN_DEFINE_TYPE_INTRUSIVE(Mysql_RedisConfig, clients);
+
+
+		bool isValid(std::string& errInfo)
+		{
+			return true;
+		}
+	};
+
 } 
