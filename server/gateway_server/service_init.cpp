@@ -4,17 +4,17 @@
 
 namespace apie {
 
-apie::status::Status  initHook()
+apie::status::Status initHook()
 {
 	return GatewayMgrSingleton::get().init();
 }
 
-apie::status::Status  startHook()
+apie::status::Status startHook()
 {
 	return GatewayMgrSingleton::get().start();
 }
 
-apie::status::Status  readyHook()
+apie::status::Status readyHook()
 {
 	return GatewayMgrSingleton::get().ready();
 }
