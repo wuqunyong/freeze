@@ -136,10 +136,10 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Init, apie::initHook);
-	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Start, apie::startHook);
-	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Ready, apie::readyHook);
-	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Exit, apie::exitHook);
+	apie::hook::APieModuleInit(apie::initHook);
+	apie::hook::APieModuleStart(apie::startHook);
+	apie::hook::APieModuleReady(apie::readyHook);
+	apie::hook::APieModuleExit(apie::exitHook);
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();

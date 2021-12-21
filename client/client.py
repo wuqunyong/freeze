@@ -377,6 +377,6 @@ def testRC4():
 
 # testPack1()
 # testPack2()
-testPack3()
+# testPack3()
 # testLz4()
 # testRC4()
