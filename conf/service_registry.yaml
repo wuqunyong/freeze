@@ -18,10 +18,10 @@ metrics:
   enable: true
   ip: "127.0.0.1"
   udp_port: 8089
-mysql:               # mysql数据库
+mysql:                   # mysql数据库
   enable: true           # 是否连接, 默认false
   host: "127.0.0.1"      # ip
   port: 3306             # port
   user: "root"           # 用户名
   passwd: "root"         # 密码
-  db: "config_db"             # 数据库名
+  db: "config_db"        # 数据库名
