@@ -14,7 +14,7 @@ namespace apie {
 	void LoginTestCase::setUp()
 	{
 		::pubsub::LOGIC_CMD newMsg;
-		newMsg.set_cmd("account_login");
+		newMsg.set_cmd("login");
 
 		auto ptrAdd = newMsg.add_params();
 		*ptrAdd = std::to_string(this->getRole().getRoleId());

@@ -59,7 +59,7 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 	auto ptrMockRole = apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->findMockRole(iRoleId);
 	if (ptrMockRole == nullptr)
 	{
-		if (cmd.params()[1] == "account_login")
+		if (cmd.params()[1] == "login")
 		{
 			ptrMockRole = MockRole::createMockRole(iRoleId);
 			ptrMockRole->start();

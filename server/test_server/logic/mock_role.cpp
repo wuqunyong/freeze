@@ -40,8 +40,7 @@ void MockRole::setUp()
 	m_bInit = true;
 	apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iRoleId);
 
-	this->addHandler("account_login", std::bind(&MockRole::handleAccountLogin, this, std::placeholders::_1));
-	//this->addHandler("login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
+	this->addHandler("login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
 	this->addHandler("echo", std::bind(&MockRole::handleEcho, this, std::placeholders::_1));
 	this->addHandler("logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
 
@@ -592,7 +591,7 @@ std::optional<std::string> MockRole::getPbNameByOpcode(uint32_t iOpcode)
 	return findIte->second;
 }
 
-void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
+void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
 {
 	::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L request;
 	request.set_account_id(m_iRoleId);
@@ -601,16 +600,6 @@ void MockRole::handleAccountLogin(::pubsub::LOGIC_CMD& msg)
 
 	this->addPendingResponse(OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, OP_MSG_REQUEST_ACCOUNT_LOGIN_L);
 }
-
-//void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
-//{
-//	::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
-//	request.set_user_id(m_iRoleId);
-//	request.set_version(std::stoi(msg.params()[0]));
-//	request.set_session_key(msg.params()[1]);
-//
-//	this->sendMsg(::apie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
-//}
 
 void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
 {

@@ -118,9 +118,7 @@ namespace apie {
 	private:
 		void handleMsg(::pubsub::LOGIC_CMD& msg);
 
-		void handleAccountLogin(::pubsub::LOGIC_CMD& msg);
-
-		//void handleLogin(::pubsub::LOGIC_CMD& msg);
+		void handleLogin(::pubsub::LOGIC_CMD& msg);
 		void handleEcho(::pubsub::LOGIC_CMD& msg);
 		void handleLogout(::pubsub::LOGIC_CMD& msg);
 
