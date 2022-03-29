@@ -9,6 +9,11 @@ std::string ServiceRegistry::moduleName()
 	return "ServiceRegistry";
 }
 
+uint32_t ServiceRegistry::modulePrecedence()
+{
+	return 1;
+}
+
 ServiceRegistry::ServiceRegistry(std::string name, module_loader::ModuleLoaderBase* prtLoader)
 	: m_name(name),
 	m_prtLoader(prtLoader)

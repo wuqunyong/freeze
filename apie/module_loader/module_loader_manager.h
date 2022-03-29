@@ -32,7 +32,7 @@ private:
 	std::shared_ptr<ModuleLoader<T>> getLoader(const std::string& name);
 
 	template <typename T>
-	std::shared_ptr<ModuleLoader<T>> getOrCreateLoader(const std::string& name);
+	std::shared_ptr<ModuleLoader<T>> getOrCreateLoader(const std::string& name, uint32_t priority);
 
 	LoaderMap m_loader;
 	std::chrono::milliseconds m_timeOut;
@@ -44,6 +44,8 @@ template <typename T>
 bool ModuleLoaderManager::registerModule()
 {
 	std::string name = T::moduleName();
+	uint32_t iPriority = T::modulePrecedence();
+
 	auto ptrLoader = this->getLoader<T>(name);
 	if (ptrLoader != nullptr)
 	{
@@ -54,7 +56,7 @@ bool ModuleLoaderManager::registerModule()
 		return false;
 	}
 
-	this->getOrCreateLoader<T>(name);
+	this->getOrCreateLoader<T>(name, iPriority);
 	return true;
 }
 
@@ -89,7 +91,7 @@ std::shared_ptr<ModuleLoader<T>> ModuleLoaderManager::getLoader(const std::strin
 }
 
 template <typename T>
-std::shared_ptr<ModuleLoader<T>> ModuleLoaderManager::getOrCreateLoader(const std::string& name)
+std::shared_ptr<ModuleLoader<T>> ModuleLoaderManager::getOrCreateLoader(const std::string& name, uint32_t priority)
 {
 	std::shared_ptr<ModuleLoader<T>> ptrLoader = nullptr;
 
@@ -100,7 +102,7 @@ std::shared_ptr<ModuleLoader<T>> ModuleLoaderManager::getOrCreateLoader(const st
 	}
 	else 
 	{
-		ptrLoader = std::make_shared<ModuleLoader<T>>(name);
+		ptrLoader = std::make_shared<ModuleLoader<T>>(name, priority);
 		m_loader[name] = ptrLoader;
 	}
 

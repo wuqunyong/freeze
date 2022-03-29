@@ -52,26 +52,37 @@ namespace module_loader {
 	{
 		apie::status::Status curState(apie::status::StatusCode::OK, "");
 
+		std::vector<std::shared_ptr<ModuleLoaderBase>> loaderVec;
 		for (auto& elems : m_loader)
+		{
+			loaderVec.push_back(elems.second);
+		}
+
+		auto myCmp = [](std::shared_ptr<ModuleLoaderBase>& lhs, std::shared_ptr<ModuleLoaderBase>& rhs) {
+			return lhs->getPriority() < rhs->getPriority();
+		};
+		std::sort(loaderVec.begin(), loaderVec.end(), myCmp);
+
+		for (auto& elems : loaderVec)
 		{
 			switch (point)
 			{
 			case apie::hook::HookPoint::HP_Init:
 			{
-				auto status = elems.second->init();
+				auto status = elems->init();
 				if (!status.ok())
 				{
 					return status;
 				}
 				else
 				{
-					elems.second->setHookReady(point);
+					elems->setHookReady(point);
 				}
 				break;
 			}
 			case apie::hook::HookPoint::HP_Start:
 			{
-				auto status = elems.second->start();
+				auto status = elems->start();
 				if (!status.ok())
 				{
 					if (status.isAsync())
@@ -83,33 +94,33 @@ namespace module_loader {
 				}
 				else
 				{
-					elems.second->setHookReady(point);
+					elems->setHookReady(point);
 				}
 				break;
 			}
 			case apie::hook::HookPoint::HP_Ready:
 			{
-				auto status = elems.second->ready();
+				auto status = elems->ready();
 				if (!status.ok())
 				{
 					return status;
 				}
 				else
 				{
-					elems.second->setHookReady(point);
+					elems->setHookReady(point);
 				}
 				break;
 			}
 			case apie::hook::HookPoint::HP_Exit:
 			{
-				auto status = elems.second->exit();
+				auto status = elems->exit();
 				if (!status.ok())
 				{
 					//nothing
 				}
 				else
 				{
-					elems.second->setHookReady(point);
+					elems->setHookReady(point);
 				}
 				break;
 			}

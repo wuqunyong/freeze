@@ -29,6 +29,7 @@ namespace apie {
 		GatewayMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader);
 
 		static std::string moduleName();
+		static uint32_t modulePrecedence();
 
 		apie::status::Status init();
 		apie::status::Status start();

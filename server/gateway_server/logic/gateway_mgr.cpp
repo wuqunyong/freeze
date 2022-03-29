@@ -16,6 +16,11 @@ std::string GatewayMgr::moduleName()
 	return "GatewayMgr";
 }
 
+uint32_t GatewayMgr::modulePrecedence()
+{
+	return 1;
+}
+
 GatewayMgr::GatewayMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader)
 	: m_name(name),
 	m_prtLoader(prtLoader)

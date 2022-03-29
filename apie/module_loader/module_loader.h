@@ -27,6 +27,7 @@ public:
 	virtual ~ModuleLoaderBase() = default;
 
 	virtual std::string name() = 0;
+	virtual uint32_t getPriority() = 0;
 	virtual apie::status::Status init() = 0;
 	virtual apie::status::Status start() = 0;
 	virtual apie::status::Status ready() = 0;
@@ -60,25 +61,29 @@ public:
 	using ModuleType = T;
 	using ModulePtr = std::shared_ptr<T>;
 
-	explicit ModuleLoader(const std::string& name);
+	explicit ModuleLoader(const std::string& name, uint32_t priority);
 	virtual ~ModuleLoader();
 
 	std::string name() override;
-
-	ModulePtr getModulePtr();
+	uint32_t getPriority() override;
 
 	apie::status::Status init() override;
 	apie::status::Status start() override;
 	apie::status::Status ready() override;
 	apie::status::Status exit() override;
 
+	ModulePtr getModulePtr();
+
 private:
 	std::string m_name;
+	uint32_t m_priority;
 	ModulePtr m_modulePtr;
 };
 
 template <typename T>
-ModuleLoader<T>::ModuleLoader(const std::string& name) : m_name(name)
+ModuleLoader<T>::ModuleLoader(const std::string& name, uint32_t priority) 
+	: m_name(name),
+	m_priority(priority)
 {
 	m_modulePtr = std::make_shared<T>(name, this);
 }
@@ -93,6 +98,12 @@ template <typename T>
 std::string ModuleLoader<T>::name()
 {
 	return m_name;
+}
+
+template <typename T>
+uint32_t ModuleLoader<T>::getPriority()
+{
+	return m_priority;
 }
 
 template <typename T>
