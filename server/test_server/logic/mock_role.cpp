@@ -24,7 +24,7 @@ MockRole::~MockRole()
 
 	if (this->m_clientProxy)
 	{
-		TestServerMgrSingleton::get().removeSerialNum(this->m_clientProxy->getSerialNum());
+		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
 
 		this->m_clientProxy->onActiveClose();
 	}
@@ -38,7 +38,7 @@ void MockRole::setUp()
 	}
 
 	m_bInit = true;
-	TestServerMgrSingleton::get().addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iRoleId);
+	apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iRoleId);
 
 	this->addHandler("account_login", std::bind(&MockRole::handleAccountLogin, this, std::placeholders::_1));
 	//this->addHandler("login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
@@ -624,7 +624,7 @@ void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
 
 void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 {
-	TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+	apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeMockRole(m_iRoleId);
 
 	uint64_t iSerialNum = 0;
 	if (m_clientProxy)
@@ -648,14 +648,14 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 	{
 		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
 
-		TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeMockRole(m_iRoleId);
 		return;
 	}
 
 	ss << "data|" << response.ShortDebugString();
 	ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
 
-	TestServerMgrSingleton::get().removeSerialNum(this->m_clientProxy->getSerialNum());
+	apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
 	this->m_clientProxy->onActiveClose();
 
 
@@ -673,7 +673,7 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 			auto ptrShared = ptrSelf.lock();
 			if (ptrShared)
 			{
-				TestServerMgrSingleton::get().addSerialNumRole(ptrShared->m_clientProxy->getSerialNum(), ptrShared->m_iRoleId);
+				apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->addSerialNumRole(ptrShared->m_clientProxy->getSerialNum(), ptrShared->m_iRoleId);
 
 
 				ptrShared->m_clientRandom = "client";
@@ -707,7 +707,7 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT(uint64_t serialNum, uint32_t o
 	{
 		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
 
-		TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeMockRole(m_iRoleId);
 		return;
 	}
 
@@ -758,7 +758,7 @@ void MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uin
 	{
 		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
 
-		TestServerMgrSingleton::get().removeMockRole(m_iRoleId);
+		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeMockRole(m_iRoleId);
 		return;
 	}
 

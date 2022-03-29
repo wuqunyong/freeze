@@ -56,7 +56,7 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	uint64_t iRoleId = std::stoull(cmd.params()[0]);
-	auto ptrMockRole = TestServerMgrSingleton::get().findMockRole(iRoleId);
+	auto ptrMockRole = apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->findMockRole(iRoleId);
 	if (ptrMockRole == nullptr)
 	{
 		if (cmd.params()[1] == "account_login")
@@ -64,7 +64,7 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 			ptrMockRole = MockRole::createMockRole(iRoleId);
 			ptrMockRole->start();
 
-			TestServerMgrSingleton::get().addMockRole(ptrMockRole);
+			apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->addMockRole(ptrMockRole);
 		}
 		else
 		{
@@ -99,14 +99,14 @@ void TestServerModule::Cmd_autoTest(::pubsub::LOGIC_CMD& cmd)
 
 void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string& msg)
 {
-	auto iRoleIdOpt = TestServerMgrSingleton::get().findRoleIdBySerialNum(info.iSessionId);
+	auto iRoleIdOpt = apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->findRoleIdBySerialNum(info.iSessionId);
 	if (!iRoleIdOpt.has_value())
 	{
 		return;
 	}
 
 	uint64_t iRoleId = iRoleIdOpt.value();
-	auto ptrMockRole = TestServerMgrSingleton::get().findMockRole(iRoleId);
+	auto ptrMockRole = apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->findMockRole(iRoleId);
 	if (ptrMockRole == nullptr)
 	{
 		return;

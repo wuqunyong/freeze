@@ -12,9 +12,6 @@
 
 namespace apie {
 
-apie::status::Status initHook();
-apie::status::Status startHook();
-apie::status::Status readyHook();
-apie::status::Status exitHook();
+apie::status::Status APieModuleObj(hook::HookPoint point);
 
 }

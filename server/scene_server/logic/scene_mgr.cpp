@@ -6,6 +6,23 @@
 
 namespace apie {
 
+std::string SceneMgr::moduleName()
+{
+	return "SceneMgr";
+}
+
+uint32_t SceneMgr::modulePrecedence()
+{
+	return 1;
+}
+
+SceneMgr::SceneMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader)
+	: m_name(name),
+	m_prtLoader(prtLoader)
+{
+
+}
+
 apie::status::Status SceneMgr::init()
 {
 	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Scene_Server });
@@ -38,9 +55,9 @@ apie::status::Status SceneMgr::ready()
 	return { apie::status::StatusCode::OK, "" };
 }
 
-void SceneMgr::exit()
+apie::status::Status SceneMgr::exit()
 {
-
+	return { apie::status::StatusCode::OK, "" };
 }
 
 

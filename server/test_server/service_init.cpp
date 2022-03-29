@@ -1,28 +1,10 @@
 #include "service_init.h"
 
-#include "logic/test_server.h"
-
 namespace apie {
 
-apie::status::Status initHook()
+apie::status::Status APieModuleObj(hook::HookPoint point)
 {
-	return TestServerMgrSingleton::get().init();
-}
-
-apie::status::Status startHook()
-{
-	return TestServerMgrSingleton::get().start();
-}
-
-apie::status::Status readyHook()
-{
-	return TestServerMgrSingleton::get().ready();
-}
-
-apie::status::Status exitHook()
-{
-	TestServerMgrSingleton::get().exit();
-	return { apie::status::StatusCode::OK, "" };
+	return module_loader::ModuleLoaderMgrSingleton::get().hookHandler(point);
 }
 
 }

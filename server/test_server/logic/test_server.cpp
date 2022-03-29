@@ -9,6 +9,22 @@
 
 namespace apie {
 
+std::string TestServerMgr::moduleName()
+{
+	return "TestServerMgr";
+}
+
+uint32_t TestServerMgr::modulePrecedence()
+{
+	return 1;
+}
+
+TestServerMgr::TestServerMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader)
+	: m_name(name),
+	m_prtLoader(prtLoader)
+{
+
+}
 
 apie::status::Status TestServerMgr::init()
 {
@@ -56,8 +72,9 @@ apie::status::Status TestServerMgr::ready()
 	return { apie::status::StatusCode::OK, "" };
 }
 
-void TestServerMgr::exit()
+apie::status::Status TestServerMgr::exit()
 {
+	return { apie::status::StatusCode::OK, "" };
 }
 
 void TestServerMgr::addMockRole(std::shared_ptr<MockRole> ptrMockRole)

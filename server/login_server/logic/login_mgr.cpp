@@ -9,6 +9,23 @@
 
 namespace apie {
 
+std::string LoginMgr::moduleName()
+{
+	return "LoginMgr";
+}
+
+uint32_t LoginMgr::modulePrecedence()
+{
+	return 1;
+}
+
+LoginMgr::LoginMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader)
+	: m_name(name),
+	m_prtLoader(prtLoader)
+{
+
+}
+
 apie::status::Status LoginMgr::init()
 {
 	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Login_Server });
@@ -70,9 +87,9 @@ apie::status::Status LoginMgr::ready()
 	return { apie::status::StatusCode::OK, "" };
 }
 
-void LoginMgr::exit()
+apie::status::Status LoginMgr::exit()
 {
-
+	return { apie::status::StatusCode::OK, "" };
 }
 
 

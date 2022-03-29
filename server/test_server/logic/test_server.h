@@ -22,10 +22,15 @@ namespace apie {
 class TestServerMgr
 {
 public:
+	TestServerMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader);
+
+	static std::string moduleName();
+	static uint32_t modulePrecedence();
+
 	apie::status::Status init();
 	apie::status::Status start();
 	apie::status::Status ready();
-	void exit();
+	apie::status::Status exit();
 
 	void addMockRole(std::shared_ptr<MockRole> ptrMockRole);
 	std::shared_ptr<MockRole> findMockRole(uint64_t iRoleId);
@@ -37,14 +42,15 @@ public:
 
 
 public:
+	std::string m_name;
+	module_loader::ModuleLoaderBase* m_prtLoader;
+
 	std::shared_ptr<ClientProxy> m_ptrClientProxy;
 
 	std::map<uint64_t, std::shared_ptr<MockRole>> m_mockRole;
 	std::map<uint64_t, uint64_t> m_serialNumRole;
 };
 
-
-using TestServerMgrSingleton = ThreadSafeSingleton<TestServerMgr>;
 
 
 }
