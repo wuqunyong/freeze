@@ -58,6 +58,11 @@ namespace hook {
 				auto result = item.cb(point);
 				if (!result.ok())
 				{
+					if (point == HookPoint::HP_Start && result.isAsync())
+					{
+						continue;
+					}
+
 					std::stringstream ss;
 					ss << "errorCode:" << apie::toUnderlyingType(result.errorCode()) << "|info:" << result.errorMessage();
 

@@ -4,6 +4,18 @@
 
 namespace apie {
 
+std::string ServiceRegistry::moduleName()
+{
+	return "ServiceRegistry";
+}
+
+ServiceRegistry::ServiceRegistry(std::string name, module_loader::ModuleLoaderBase* prtLoader)
+	: m_name(name),
+	m_prtLoader(prtLoader)
+{
+
+}
+
 apie::status::Status ServiceRegistry::init()
 {
 	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Service_Registry });
@@ -136,9 +148,10 @@ apie::status::Status ServiceRegistry::ready()
 	return { apie::status::StatusCode::OK, "" };
 }
 
-void ServiceRegistry::exit()
+apie::status::Status ServiceRegistry::exit()
 {
 	this->disableUpdateTimer();
+	return { apie::status::StatusCode::OK, "" };
 }
 
 void ServiceRegistry::addUpdateTimer(uint64_t interval)
@@ -278,7 +291,7 @@ void ServiceRegistry::checkTimeout()
 	for (const auto& items : delSerial)
 	{
 		ServerConnection::sendCloseLocalServer(items);
-		bool bTemp = ServiceRegistrySingleton::get().deleteBySerialNum(items);
+		bool bTemp = apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::ServiceRegistry>()->deleteBySerialNum(items);
 		if (bTemp)
 		{
 			bChanged = true;
@@ -287,7 +300,7 @@ void ServiceRegistry::checkTimeout()
 
 	if (bChanged)
 	{
-		ServiceRegistrySingleton::get().broadcast();
+		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::ServiceRegistry>()->broadcast();
 	}
 }
 

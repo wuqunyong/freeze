@@ -50,7 +50,7 @@ namespace module_loader {
 
 	status::Status ModuleLoaderManager::hookHandler(hook::HookPoint point)
 	{
-		apie::status::Status curState(apie::status::StatusCode::UNKNOWN, "");
+		apie::status::Status curState(apie::status::StatusCode::OK, "");
 
 		for (auto& elems : m_loader)
 		{
@@ -105,7 +105,7 @@ namespace module_loader {
 				auto status = elems.second->exit();
 				if (!status.ok())
 				{
-					return status;
+					//nothing
 				}
 				else
 				{
@@ -115,12 +115,13 @@ namespace module_loader {
 			}
 			default:
 			{
+				curState.setErrorCode(status::StatusCode::UNKNOWN);
 				return curState;
 			}
 			}
 		}
 
-		if (curState.isAsync())
+		if (curState.isAsync() && point == apie::hook::HookPoint::HP_Start)
 		{
 			auto cb = std::bind(&ModuleLoaderManager::checkStartFinish, this);
 			auto ptrTimer = apie::event_ns::EphemeralTimerMgrSingleton::get().createEphemeralTimer(cb);

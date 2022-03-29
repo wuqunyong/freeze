@@ -35,6 +35,8 @@ namespace apie {
 		apie::status::Status ready();
 		apie::status::Status exit();
 
+		void setHookReady(hook::HookPoint point);
+
 		std::shared_ptr<GatewayRole> findGatewayRoleById(uint64_t iRoleId);
 		std::shared_ptr<GatewayRole> findGatewayRoleBySerialNum(uint64_t iSerialNum);
 		std::optional<uint64_t> findRoleIdBySerialNum(uint64_t iSerialNum);

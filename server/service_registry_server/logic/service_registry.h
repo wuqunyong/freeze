@@ -24,10 +24,14 @@ namespace apie {
 	class ServiceRegistry
 	{
 	public:
+		ServiceRegistry(std::string name, module_loader::ModuleLoaderBase* prtLoader);
+
+		static std::string moduleName();
+
 		apie::status::Status init();
 		apie::status::Status start();
 		apie::status::Status ready();
-		void exit();
+		apie::status::Status exit();
 
 	public:
 		void update();
@@ -46,6 +50,9 @@ namespace apie {
 		std::optional<ModelServiceNode> findNode(EndPoint key);
 
 	public:
+		std::string m_name;
+		module_loader::ModuleLoaderBase* m_prtLoader;
+
 		std::map<uint64_t, RegisteredEndPoint> m_registered;
 		std::map<EndPoint, uint64_t> m_pointMap;
 		uint32_t m_serviceTimeout = 300;
@@ -59,5 +66,4 @@ namespace apie {
 		std::map<EndPoint, ModelServiceNode> m_nodes;
 	};
 
-	using ServiceRegistrySingleton = ThreadSafeSingleton<ServiceRegistry>;
 }

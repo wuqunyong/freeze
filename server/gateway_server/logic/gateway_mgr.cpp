@@ -52,7 +52,7 @@ apie::status::Status GatewayMgr::start()
 {
 	// 加载:数据表结构
 	auto dbType = DeclarativeBase::DBType::DBT_Role;
-	auto ptrReadyCb = [](bool bResul, std::string sInfo, uint64_t iCallCount) {
+	auto ptrReadyCb = [this](bool bResul, std::string sInfo, uint64_t iCallCount) {
 		if (!bResul)
 		{
 			std::stringstream ss;
@@ -61,8 +61,7 @@ apie::status::Status GatewayMgr::start()
 			PANIC_ABORT(ss.str().c_str());
 		}
 
-		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
-
+		this->setHookReady(hook::HookPoint::HP_Start);
 	};
 
 	::rpc_msg::CHANNEL server;
@@ -77,7 +76,7 @@ apie::status::Status GatewayMgr::start()
 	bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
 	if (bResult)
 	{
-		return { apie::status::StatusCode::OK, "" };
+		return { apie::status::StatusCode::OK_ASYNC, "" };
 	}
 	else
 	{
@@ -100,6 +99,11 @@ apie::status::Status GatewayMgr::ready()
 apie::status::Status GatewayMgr::exit()
 {
 	return { apie::status::StatusCode::OK, "" };
+}
+
+void GatewayMgr::setHookReady(hook::HookPoint point)
+{
+	m_prtLoader->setHookReady(point);
 }
 
 std::shared_ptr<GatewayRole> GatewayMgr::findGatewayRoleById(uint64_t iRoleId)
