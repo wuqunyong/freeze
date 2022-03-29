@@ -132,6 +132,9 @@
     <ClInclude Include="logic\gateway_mgr.h" />
     <ClInclude Include="logic\gateway_role.h" />
     <ClInclude Include="logic\role_tables_data.h" />
+    <ClInclude Include="logic\test_module_10.h" />
+    <ClInclude Include="logic\test_module_11.h" />
+    <ClInclude Include="logic\test_module_12.h" />
     <ClInclude Include="module_handler\gateway_mgr_module.h" />
     <ClInclude Include="service_init.h" />
   </ItemGroup>
@@ -141,6 +144,9 @@
     <ClCompile Include="logic\gateway_mgr.cpp" />
     <ClCompile Include="logic\gateway_role.cpp" />
     <ClCompile Include="logic\role_tables_data.cpp" />
+    <ClCompile Include="logic\test_module_10.cpp" />
+    <ClCompile Include="logic\test_module_11.cpp" />
+    <ClCompile Include="logic\test_module_12.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="module_handler\gateway_mgr_module.cpp" />
     <ClCompile Include="service_init.cpp" />

@@ -9,6 +9,9 @@
 #include "service_init.h"
 
 #include "logic/gateway_mgr.h"
+#include "logic/test_module_10.h"
+#include "logic/test_module_11.h"
+#include "logic/test_module_12.h"
 
 int main(int argc, char **argv)
 {
@@ -20,6 +23,9 @@ int main(int argc, char **argv)
 	std::string configFile = argv[1];
 
 	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::GatewayMgr>();
+	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::TestModule10>();
+	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::TestModule11>();
+	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::TestModule12>();
 
 	apie::hook::APieModuleObj(apie::APieModuleObj);
 

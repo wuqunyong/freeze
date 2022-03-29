@@ -23,6 +23,15 @@
     <ClInclude Include="logic\role_tables_data.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="logic\test_module_10.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_module_11.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_module_12.h">
+      <Filter>logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -43,6 +52,15 @@
       <Filter>module_handler</Filter>
     </ClCompile>
     <ClCompile Include="logic\role_tables_data.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_module_10.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_module_11.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_module_12.cpp">
       <Filter>logic</Filter>
     </ClCompile>
   </ItemGroup>
