@@ -63,6 +63,11 @@ namespace module_loader {
 		};
 		std::sort(loaderVec.begin(), loaderVec.end(), myCmp);
 
+		if (point == hook::HookPoint::HP_Exit)
+		{
+			std::reverse(loaderVec.begin(), loaderVec.end());
+		}
+
 		for (auto& elems : loaderVec)
 		{
 			switch (point)
