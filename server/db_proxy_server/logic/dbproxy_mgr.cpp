@@ -11,6 +11,23 @@
 
 namespace apie {
 
+std::string DBProxyMgr::moduleName()
+{
+	return "DBProxyMgr";
+}
+
+uint32_t DBProxyMgr::modulePrecedence()
+{
+	return 1;
+}
+
+DBProxyMgr::DBProxyMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader)
+	: m_name(name),
+	m_prtLoader(prtLoader)
+{
+
+}
+
 apie::status::Status DBProxyMgr::init()
 {
 	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_DB_ACCOUNT_Proxy, ::common::EPT_DB_ROLE_Proxy });
@@ -118,9 +135,9 @@ apie::status::Status DBProxyMgr::ready()
 	return { apie::status::StatusCode::OK, "" };
 }
 
-void DBProxyMgr::exit()
+apie::status::Status DBProxyMgr::exit()
 {
-
+	return { apie::status::StatusCode::OK, "" };
 }
 
 

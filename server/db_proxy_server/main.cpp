@@ -7,7 +7,7 @@
 #include <tuple>
 
 #include "service_init.h"
-
+#include "logic/dbproxy_mgr.h"
 
 int main(int argc, char **argv)
 {
@@ -18,10 +18,9 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	apie::hook::APieModuleInit(apie::initHook);
-	apie::hook::APieModuleStart(apie::startHook);
-	apie::hook::APieModuleReady(apie::readyHook);
-	apie::hook::APieModuleExit(apie::exitHook);
+	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::DBProxyMgr>();
+
+	apie::hook::APieModuleObj(apie::APieModuleObj);
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();
