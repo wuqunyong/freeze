@@ -103,6 +103,9 @@
     <Filter Include="sync_service">
       <UniqueIdentifier>{70f5e493-7e35-43b5-84dd-50c7f0eec7f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="module_loader">
+      <UniqueIdentifier>{94ef87ab-8407-4e1e-a5e8-a0ef4a62e03d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -529,6 +532,12 @@
     <ClInclude Include="common\optional_serializer.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="module_loader\module_loader.h">
+      <Filter>module_loader</Filter>
+    </ClInclude>
+    <ClInclude Include="module_loader\module_loader_manager.h">
+      <Filter>module_loader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -785,6 +794,9 @@
     </ClCompile>
     <ClCompile Include="configs\load_config_manager.cc">
       <Filter>configs</Filter>
+    </ClCompile>
+    <ClCompile Include="module_loader\module_loader_manager.cpp">
+      <Filter>module_loader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

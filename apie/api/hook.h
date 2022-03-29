@@ -28,7 +28,7 @@ enum class HookPoint
 
 class HookRegistry {
 public:
-	using HookCallback = std::function<apie::status::Status(void)>;
+	using HookCallback = std::function<apie::status::Status(HookPoint)>;
 
 	struct HookEntry
 	{
@@ -52,10 +52,11 @@ public:
 typedef ThreadSafeSingleton<HookRegistry> HookRegistrySingleton;
 
 
-extern void APieModuleInit(HookRegistry::HookCallback cb);
-extern void APieModuleStart(HookRegistry::HookCallback cb);
-extern void APieModuleReady(HookRegistry::HookCallback cb);
-extern void APieModuleExit(HookRegistry::HookCallback cb);
+//extern void APieModuleInit(HookRegistry::HookCallback cb);
+//extern void APieModuleStart(HookRegistry::HookCallback cb);
+//extern void APieModuleReady(HookRegistry::HookCallback cb);
+//extern void APieModuleExit(HookRegistry::HookCallback cb);
+extern void APieModuleObj(HookRegistry::HookCallback cb);
 
 } 
 } 

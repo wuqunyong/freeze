@@ -11,6 +11,17 @@
 
 namespace apie {
 
+std::string GatewayMgr::moduleName()
+{
+	return "GatewayMgr";
+}
+
+GatewayMgr::GatewayMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader)
+	: m_name(name),
+	m_prtLoader(prtLoader)
+{
+
+}
 
 apie::status::Status GatewayMgr::init()
 {
@@ -86,9 +97,9 @@ apie::status::Status GatewayMgr::ready()
 	return { apie::status::StatusCode::OK, "" };
 }
 
-void GatewayMgr::exit()
+apie::status::Status GatewayMgr::exit()
 {
-
+	return { apie::status::StatusCode::OK, "" };
 }
 
 std::shared_ptr<GatewayRole> GatewayMgr::findGatewayRoleById(uint64_t iRoleId)

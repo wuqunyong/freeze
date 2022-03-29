@@ -1,29 +1,12 @@
 #include "service_init.h"
 
-#include "logic/gateway_mgr.h"
-
 namespace apie {
 
-apie::status::Status initHook()
+apie::status::Status APieModuleObj(hook::HookPoint point)
 {
-	return GatewayMgrSingleton::get().init();
+	return module_loader::ModuleLoaderMgrSingleton::get().hookHandler(point);
 }
 
-apie::status::Status startHook()
-{
-	return GatewayMgrSingleton::get().start();
-}
-
-apie::status::Status readyHook()
-{
-	return GatewayMgrSingleton::get().ready();
-}
-
-apie::status::Status exitHook()
-{
-	GatewayMgrSingleton::get().exit();
-	return { apie::status::StatusCode::OK, "" };
-}
 
 }
 

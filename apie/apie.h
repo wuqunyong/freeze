@@ -36,6 +36,8 @@
 #include "apie/event/libevent_scheduler.h"
 #include "apie/event/nats_proxy.h"
 
+#include "apie/module_loader/module_loader_manager.h"
+
 #include "apie/filesystem/directory.h"
 
 #include "apie/forward/forward_manager.h"

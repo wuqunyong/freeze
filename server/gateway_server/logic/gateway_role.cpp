@@ -91,7 +91,8 @@ void GatewayRole::resetRequestPerUnit()
 
 void GatewayRole::close()
 {
-	GatewayMgrSingleton::get().removeGateWayRole(m_iRoleId);
+	module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<GatewayMgr>()->removeGateWayRole(m_iRoleId);
+
 	ServerConnection::sendCloseLocalServer(m_iSerialNum);
 }
 

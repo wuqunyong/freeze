@@ -26,10 +26,14 @@ namespace apie {
 	class GatewayMgr
 	{
 	public:
+		GatewayMgr(std::string name, module_loader::ModuleLoaderBase* prtLoader);
+
+		static std::string moduleName();
+
 		apie::status::Status init();
 		apie::status::Status start();
 		apie::status::Status ready();
-		void exit();
+		apie::status::Status exit();
 
 		std::shared_ptr<GatewayRole> findGatewayRoleById(uint64_t iRoleId);
 		std::shared_ptr<GatewayRole> findGatewayRoleBySerialNum(uint64_t iSerialNum);
@@ -44,11 +48,12 @@ namespace apie {
 
 
 	private:
+		std::string m_name;
+		module_loader::ModuleLoaderBase* m_prtLoader;
+
 		std::map<uint64_t, std::shared_ptr<GatewayRole>> m_serialNumMap; // key:serialNum, value:shared_ptr
 		std::map<uint64_t, uint64_t> m_roleIdMapSerialNum;               // key:roleId, value:serialNum
 
 		std::unordered_map<uint64_t, PendingLoginRole> m_pendingRole;
 	};
-
-	using GatewayMgrSingleton = ThreadSafeSingleton<GatewayMgr>;
 }

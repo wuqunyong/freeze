@@ -55,7 +55,7 @@ namespace hook {
 
 			for (auto& item : initCbOpt.value())
 			{
-				auto result = item.cb();
+				auto result = item.cb(point);
 				if (!result.ok())
 				{
 					std::stringstream ss;
@@ -73,23 +73,31 @@ namespace hook {
 		}
 	}
 
-	void APieModuleInit(HookRegistry::HookCallback cb)
+	//void APieModuleInit(HookRegistry::HookCallback cb)
+	//{
+	//	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Init, cb);
+	//}
+
+	//void APieModuleStart(HookRegistry::HookCallback cb)
+	//{
+	//	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Start, cb);
+	//}
+
+	//void APieModuleReady(HookRegistry::HookCallback cb)
+	//{
+	//	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Ready, cb);
+	//}
+
+	//void APieModuleExit(HookRegistry::HookCallback cb)
+	//{
+	//	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Exit, cb);
+	//}
+
+	void APieModuleObj(HookRegistry::HookCallback cb)
 	{
 		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Init, cb);
-	}
-
-	void APieModuleStart(HookRegistry::HookCallback cb)
-	{
 		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Start, cb);
-	}
-
-	void APieModuleReady(HookRegistry::HookCallback cb)
-	{
 		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Ready, cb);
-	}
-
-	void APieModuleExit(HookRegistry::HookCallback cb)
-	{
 		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Exit, cb);
 	}
 
