@@ -108,9 +108,45 @@ void print_int(std::shared_ptr<apie::service::SyncServiceBase> ptrBase) {
 	ptrBase->getHandler()(ptrData);
 }
 
+int test_func1(int a)
+{
+	return a;
+}
+
+class TestClass1
+{
+public:
+	int test_echo(int a)
+	{
+		return a;
+	}
+};
+
 int main(int argc, char **argv)
 {
 	some_person val{ "hello", 1809};
+
+	decltype(&test_func1) func_1;
+	decltype(test_func1)* func_2 = &test_func1;
+	decltype(test_func1)& func_3 = test_func1;
+
+	decltype(&TestClass1::test_echo) mem_1;
+	decltype(&TestClass1::test_echo) *mem_2;
+
+	std::cout << typeid(func_1).name() << std::endl;
+	std::cout << typeid(func_2).name() << std::endl;
+	std::cout << typeid(func_3).name() << std::endl;
+
+	std::cout << typeid(mem_1).name() << std::endl;
+	std::cout << typeid(mem_2).name() << std::endl;
+
+	mem_1 = &TestClass1::test_echo;
+	TestClass1 tc1;
+	(tc1.*mem_1)(100);
+
+	auto ptrFn = &TestClass1::test_echo;
+	mem_2 = &ptrFn;
+	(tc1.**mem_2)(200);
 
 	std::cout << boost::pfr::get<0>(val) << " was born in " << boost::pfr::get<1>(val);
 	std::cout << boost::pfr::io(val);
