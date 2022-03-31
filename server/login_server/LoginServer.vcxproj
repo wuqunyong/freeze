@@ -132,7 +132,6 @@
     <ClInclude Include="..\SharedDir\opcodes.h" />
     <ClInclude Include="logic\login_mgr.h" />
     <ClInclude Include="module_handler\login_mgr_module.h" />
-    <ClInclude Include="service_init.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc" />
@@ -140,7 +139,6 @@
     <ClCompile Include="logic\login_mgr.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="module_handler\login_mgr_module.cpp" />
-    <ClCompile Include="service_init.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,6 +5,12 @@ namespace module_loader {
 
 	ModuleLoaderManager::ModuleLoaderManager()
 	{
+		if (!m_init)
+		{
+			m_init = true;
+			apie::hook::APieModuleObj(ModuleLoaderManager::APieModuleHookHandler);
+		}
+
 		m_timeOut = std::chrono::milliseconds(1000 * 120);
 		m_stepDuration = std::chrono::milliseconds(1000);
 	}
@@ -144,6 +150,11 @@ namespace module_loader {
 			ptrTimer->enableTimer(m_stepDuration.count());
 		}
 		return curState;
+	}
+
+	apie::status::Status ModuleLoaderManager::APieModuleHookHandler(hook::HookPoint point)
+	{
+		return module_loader::ModuleLoaderMgrSingleton::get().hookHandler(point);
 	}
 }
 }

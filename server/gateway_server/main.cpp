@@ -6,8 +6,6 @@
 #include <algorithm>
 #include <tuple>
 
-#include "service_init.h"
-
 #include "logic/gateway_mgr.h"
 #include "logic/test_module_10.h"
 #include "logic/test_module_11.h"
@@ -26,8 +24,6 @@ int main(int argc, char **argv)
 	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::TestModule10>();
 	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::TestModule11>();
 	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::TestModule12>();
-
-	apie::hook::APieModuleObj(apie::APieModuleObj);
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();

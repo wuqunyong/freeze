@@ -27,6 +27,8 @@ public:
 	status::Status hookHandler(hook::HookPoint point);
 	void checkStartFinish();
 
+	static apie::status::Status APieModuleHookHandler(hook::HookPoint point);
+
 private:
 	template <typename T>
 	std::shared_ptr<ModuleLoader<T>> getLoader(const std::string& name);
@@ -34,6 +36,7 @@ private:
 	template <typename T>
 	std::shared_ptr<ModuleLoader<T>> getOrCreateLoader(const std::string& name, uint32_t priority);
 
+	bool m_init = false;
 	LoaderMap m_loader;
 	std::chrono::milliseconds m_timeOut;
 	std::chrono::milliseconds m_stepDuration;

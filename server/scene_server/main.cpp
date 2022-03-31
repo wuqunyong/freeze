@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <tuple>
 
-#include "service_init.h"
 #include "logic/scene_mgr.h"
 
 
@@ -20,8 +19,6 @@ int main(int argc, char **argv)
 	std::string configFile = argv[1];
 
 	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::SceneMgr>();
-
-	apie::hook::APieModuleObj(apie::APieModuleObj);
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();

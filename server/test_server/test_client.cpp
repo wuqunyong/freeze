@@ -13,7 +13,6 @@
 #include <thread>
 #include <optional>
 
-#include "service_init.h"
 #include "logic/test_server.h"
 
 #include "boost/pfr.hpp"
@@ -179,8 +178,6 @@ int main(int argc, char **argv)
 	std::string configFile = argv[1];
 
 	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::TestServerMgr>();
-
-	apie::hook::APieModuleObj(apie::APieModuleObj);
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();

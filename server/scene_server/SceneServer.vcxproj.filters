@@ -15,7 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="service_init.h" />
     <ClInclude Include="logic\scene_mgr.h">
       <Filter>logic</Filter>
     </ClInclude>
@@ -31,7 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="service_init.cpp" />
     <ClCompile Include="logic\scene_mgr.cpp">
       <Filter>logic</Filter>
     </ClCompile>
