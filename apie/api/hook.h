@@ -30,6 +30,8 @@ class HookRegistry {
 public:
 	using HookCallback = std::function<apie::status::Status(HookPoint)>;
 
+	friend void APieModuleObj(HookRegistry::HookCallback cb);
+
 	struct HookEntry
 	{
 		HookCallback cb;
@@ -38,13 +40,14 @@ public:
 
 	using HookCallbackMap = std::map<HookPoint, std::vector<HookEntry>>;
 
-	//register
-	void registerHook(HookPoint point, HookCallback cb, uint32_t priority = 0);
 	std::optional<std::vector<HookEntry>> getHook(HookPoint point);
 
 	void triggerHook(HookPoint point);
 
-public:
+private:
+	//register
+	void registerHook(HookPoint point, HookCallback cb, uint32_t priority = 0);
+
 	HookCallbackMap m_hookMap;
 	std::mutex m_hookMutex;
 };
@@ -52,10 +55,6 @@ public:
 typedef ThreadSafeSingleton<HookRegistry> HookRegistrySingleton;
 
 
-//extern void APieModuleInit(HookRegistry::HookCallback cb);
-//extern void APieModuleStart(HookRegistry::HookCallback cb);
-//extern void APieModuleReady(HookRegistry::HookCallback cb);
-//extern void APieModuleExit(HookRegistry::HookCallback cb);
 extern void APieModuleObj(HookRegistry::HookCallback cb);
 
 } 
