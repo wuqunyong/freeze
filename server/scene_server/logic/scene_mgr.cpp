@@ -38,8 +38,6 @@ apie::status::Status SceneMgr::init()
 
 apie::status::Status SceneMgr::start()
 {
-	apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
-
 	return { apie::status::StatusCode::OK, "" };
 }
 

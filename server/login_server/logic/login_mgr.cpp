@@ -42,7 +42,7 @@ apie::status::Status LoginMgr::init()
 apie::status::Status LoginMgr::start()
 {
 	auto dbType = DeclarativeBase::DBType::DBT_Account;
-	auto ptrReadyCb = [](bool bResul, std::string sInfo, uint64_t iCallCount) {
+	auto ptrReadyCb = [this](bool bResul, std::string sInfo, uint64_t iCallCount) {
 		if (!bResul)
 		{
 			std::stringstream ss;
@@ -51,8 +51,7 @@ apie::status::Status LoginMgr::start()
 			PANIC_ABORT(ss.str().c_str());
 		}
 
-		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
-
+		this->setHookReady(apie::hook::HookPoint::HP_Start);
 	};
 
 	::rpc_msg::CHANNEL server;
@@ -67,7 +66,7 @@ apie::status::Status LoginMgr::start()
 	bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
 	if (bResult)
 	{
-		return { apie::status::StatusCode::OK, "" };
+		return { apie::status::StatusCode::OK_ASYNC, "" };
 	}
 	else
 	{
@@ -92,6 +91,10 @@ apie::status::Status LoginMgr::exit()
 	return { apie::status::StatusCode::OK, "" };
 }
 
+void LoginMgr::setHookReady(hook::HookPoint point)
+{
+	m_prtLoader->setHookReady(point);
+}
 
 }
 

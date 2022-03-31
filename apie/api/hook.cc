@@ -53,11 +53,14 @@ namespace hook {
 			};
 			std::sort(initCbOpt.value().begin(), initCbOpt.value().end(), ptrCmp);
 
+			bool bAllOk = true;
 			for (auto& item : initCbOpt.value())
 			{
 				auto result = item.cb(point);
 				if (!result.ok())
 				{
+					bAllOk = false;
+
 					if (point == HookPoint::HP_Start && result.isAsync())
 					{
 						continue;
@@ -74,6 +77,11 @@ namespace hook {
 
 					PANIC_ABORT(ss.str().c_str());
 				}
+			}
+
+			if (bAllOk && point == HookPoint::HP_Start)
+			{
+				apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 			}
 		}
 	}

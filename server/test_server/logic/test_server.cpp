@@ -47,17 +47,17 @@ apie::status::Status TestServerMgr::start()
 	uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->clients.socket_address.mask_flag;
 
 	m_ptrClientProxy = apie::ClientProxy::createClientProxy();
-	auto connectCb = [](apie::ClientProxy* ptrClient, uint32_t iResult) {
+	auto connectCb = [this](apie::ClientProxy* ptrClient, uint32_t iResult) {
 		if (iResult == 0)
 		{
-			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
+			this->setHookReady(apie::hook::HookPoint::HP_Start);
 		}
 		return true;
 	};
 	m_ptrClientProxy->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
 	m_ptrClientProxy->addReconnectTimer(60000);
 
-	return { apie::status::StatusCode::OK, "" };
+	return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
 apie::status::Status TestServerMgr::ready()
@@ -75,6 +75,11 @@ apie::status::Status TestServerMgr::ready()
 apie::status::Status TestServerMgr::exit()
 {
 	return { apie::status::StatusCode::OK, "" };
+}
+
+void TestServerMgr::setHookReady(hook::HookPoint point)
+{
+	m_prtLoader->setHookReady(point);
 }
 
 void TestServerMgr::addMockRole(std::shared_ptr<MockRole> ptrMockRole)

@@ -32,6 +32,8 @@ public:
 	apie::status::Status ready();
 	apie::status::Status exit();
 
+	void setHookReady(hook::HookPoint point);
+
 	void addMockRole(std::shared_ptr<MockRole> ptrMockRole);
 	std::shared_ptr<MockRole> findMockRole(uint64_t iRoleId);
 	void removeMockRole(uint64_t iRoleId);

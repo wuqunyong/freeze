@@ -136,8 +136,6 @@ apie::status::Status ServiceRegistry::start()
 	this->m_updateTimer = apie::CtxSingleton::get().getLogicThread()->dispatcher().createTimer(timerCb);
 	this->addUpdateTimer(1000);
 
-	apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
-
 	return { apie::status::StatusCode::OK, "" };
 }
 
