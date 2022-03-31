@@ -198,13 +198,17 @@ void apie::ClientConnection::readPB()
 		}
 		evbuffer_drain(input, iHeadLen);
 
-		char* pBuf = (char*)malloc(iBodyLen + 1); // Add space for trailing '\0'.
+		//char* pBuf = (char*)malloc(iBodyLen + 1); // Add space for trailing '\0'.
 
-		evbuffer_remove(input, pBuf, iBodyLen);
-		pBuf[iBodyLen] = '\0';
+		//evbuffer_remove(input, pBuf, iBodyLen);
+		//pBuf[iBodyLen] = '\0';
 
-		std::string sBody(pBuf, iBodyLen);
-		free(pBuf);
+		//std::string sBody(pBuf, iBodyLen);
+		//free(pBuf);
+
+		std::string sBody;
+		sBody.resize(iBodyLen, '\0');
+		evbuffer_remove(input, &sBody[0], iBodyLen);
 
 		do
 		{

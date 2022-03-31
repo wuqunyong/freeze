@@ -126,6 +126,11 @@ int main(int argc, char **argv)
 {
 	some_person val{ "hello", 1809};
 
+	int iBodyLen = 8;
+	std::string sBody;
+	sBody.resize(iBodyLen, '\0');
+	strncpy(&sBody[0], "123456789abcdefg", iBodyLen);
+
 	decltype(&test_func1) func_1;
 	decltype(test_func1)* func_2 = &test_func1;
 	decltype(test_func1)& func_3 = test_func1;
