@@ -306,6 +306,7 @@
     <ClCompile Include="api\hook.cc" />
     <ClCompile Include="api\logiccmd_handler.cc" />
     <ClCompile Include="api\os_sys_calls.cc" />
+    <ClCompile Include="base\datagen.cpp" />
     <ClCompile Include="common\exception_trap.cpp" />
     <ClCompile Include="common\file.cc" />
     <ClCompile Include="common\graphics_utility.cpp" />

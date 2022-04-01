@@ -801,6 +801,9 @@
     <ClCompile Include="module_loader\module_loader_manager.cpp">
       <Filter>module_loader</Filter>
     </ClCompile>
+    <ClCompile Include="base\datagen.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\third_party\jsoncpp\src\lib_json\json_valueiterator.inl">
