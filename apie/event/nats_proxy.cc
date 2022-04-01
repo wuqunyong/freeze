@@ -329,6 +329,63 @@ bool NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, co
 	return false;
 }
 
+bool NatsManager::subscribeChannel(E_NatsType type, const std::string& channel)
+{
+	switch (type)
+	{
+	case apie::event_ns::NatsManager::E_NT_Realm:
+	{
+		if (nats_realm == nullptr)
+		{
+			std::stringstream ss;
+			ss << "nats_realm nullptr";
+			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
+
+			return false;
+		}
+
+		return nats_realm->subscribeChannel(channel);
+	}
+	default:
+		break;
+	}
+
+	std::stringstream ss;
+	ss << "invalid type:" << type;
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "subscribeChannel|channel:%s|%s", channel.c_str(), ss.str().c_str());
+
+	return false;
+}
+
+bool NatsManager::unsubscribeChannel(E_NatsType type, const std::string& channel)
+{
+	switch (type)
+	{
+	case apie::event_ns::NatsManager::E_NT_Realm:
+	{
+		if (nats_realm == nullptr)
+		{
+			std::stringstream ss;
+			ss << "nats_realm nullptr";
+			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
+
+			return false;
+		}
+
+		return nats_realm->unsubscribeChannel(channel);
+	}
+	default:
+		break;
+	}
+
+	std::stringstream ss;
+	ss << "invalid type:" << type;
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "unsubscribeChannel|channel:%s|%s", channel.c_str(), ss.str().c_str());
+
+	return false;
+}
+
+
 void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType msg)
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
@@ -498,6 +555,25 @@ std::string NatsManager::GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const 
 	std::string channel = std::to_string(src.realm()) + "." + std::to_string(src.type()) + "." + std::to_string(src.id()) 
 		+ "->" + std::to_string(dest.realm()) + "." + std::to_string(dest.type()) + "." + std::to_string(dest.id());
 	return channel;
+}
+
+std::string NatsManager::GenerateGWRIdChannel(uint64_t iRId)
+{
+	std::stringstream ss;
+	ss << "gateway.role." << iRId;
+	return ss.str();
+}
+
+bool NatsManager::SubscribeChannelByRIdFromGW(uint64_t iRId)
+{
+	auto channel = GenerateGWRIdChannel(iRId);
+	return apie::event_ns::NatsSingleton::get().subscribeChannel(apie::event_ns::NatsManager::E_NT_Realm, channel);
+}
+
+bool NatsManager::UnsubscribeChannelByRIdFromGW(uint64_t iRId)
+{
+	auto channel = GenerateGWRIdChannel(iRId);
+	return apie::event_ns::NatsSingleton::get().unsubscribeChannel(apie::event_ns::NatsManager::E_NT_Realm, channel);
 }
 
 }  // namespace APie

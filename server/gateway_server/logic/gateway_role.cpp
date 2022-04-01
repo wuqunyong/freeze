@@ -13,7 +13,7 @@ GatewayRole::GatewayRole(uint64_t iRoleId, uint64_t iSerialNum) :
 	m_iRoleId(iRoleId),
 	m_iSerialNum(iSerialNum)
 {
-
+	m_bSubNats = apie::event_ns::NatsManager::SubscribeChannelByRIdFromGW(iRoleId);
 }
 
 GatewayRole::~GatewayRole()
@@ -23,7 +23,11 @@ GatewayRole::~GatewayRole()
 
 void GatewayRole::destroy()
 {
-
+	if (m_bSubNats)
+	{
+		apie::event_ns::NatsManager::UnsubscribeChannelByRIdFromGW(m_iRoleId);
+		m_bSubNats = false;
+	}
 }
 
 uint64_t GatewayRole::getSerailNum()

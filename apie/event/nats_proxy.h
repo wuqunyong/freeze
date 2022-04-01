@@ -216,6 +216,66 @@ namespace event_ns {
 				return true;
 			}
 
+			bool subscribeChannel(const std::string& channel)
+			{
+				if (!nats_connection_)
+				{
+					std::stringstream ss;
+					ss << "Not connected to NATS";
+
+					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "subscribeChannel|%s", ss.str().c_str());
+					return false;
+				}
+
+				auto ite = dynamic_sub_.find(channel);
+				if (ite != dynamic_sub_.end())
+				{
+					std::stringstream ss;
+					ss << "duplicate subscribe, name=" << channel;
+					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "subscribeChannel|%s", ss.str().c_str());
+					return true;
+				}
+				
+				natsSubscription* nats_sub = nullptr;
+				natsStatus status = natsConnection_Subscribe(&nats_sub, nats_connection_, channel.c_str(), NATSMessageCallbackHandler, this);
+				if (status == NATS_OK)
+				{
+					dynamic_sub_[channel] = nats_sub;
+
+					return true;
+				} 
+				else
+				{
+					std::stringstream ss;
+					ss << "Failed to natsConnection_Subscribe, nats_status=" << status << ", name=" << channel;
+					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "subscribeChannel|%s", ss.str().c_str());
+
+					return false;
+				}
+			}
+
+			bool unsubscribeChannel(const std::string& channel)
+			{
+				auto ite = dynamic_sub_.find(channel);
+				if (ite != dynamic_sub_.end())
+				{
+					natsStatus status = natsSubscription_Unsubscribe(ite->second);
+					if (status != NATS_OK)
+					{
+						std::stringstream ss;
+						ss << "Failed to natsSubscription_Unsubscribe, nats_status=" << status << ", name=" << channel;
+						ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "unsubscribeChannel|%s", ss.str().c_str());
+					}
+					natsSubscription_Destroy(ite->second);
+					dynamic_sub_.erase(ite);
+
+					return true;
+				}
+
+				return false;
+			}
+
+
 			/**
 			 * Register the message handler.
 			 * The lifetime of the handler (and bound variables), must exceed the lifetime of this class,
@@ -262,6 +322,7 @@ namespace event_ns {
 			}
 
 			natsSubscription* nats_subscription_ = nullptr;
+			std::unordered_map<std::string, natsSubscription*> dynamic_sub_;
 
 			std::string pub_topic_;
 			std::string sub_topic_;
@@ -293,11 +354,18 @@ namespace event_ns {
 			bool isConnect(E_NatsType type);
 			bool publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg);
 
+			bool subscribeChannel(E_NatsType type, const std::string& channel);
+			bool unsubscribeChannel(E_NatsType type, const std::string& channel);
+
 		public:
 			static std::string GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id);
 			static std::string GetTopicChannel(const ::rpc_msg::CHANNEL& channel);
 
 			static std::string GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest);
+
+			static std::string GenerateGWRIdChannel(uint64_t iRId);
+			static bool SubscribeChannelByRIdFromGW(uint64_t iRId);
+			static bool UnsubscribeChannelByRIdFromGW(uint64_t iRId);
 
 			void Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg);
 
