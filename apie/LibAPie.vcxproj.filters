@@ -538,6 +538,9 @@
     <ClInclude Include="module_loader\module_loader_manager.h">
       <Filter>module_loader</Filter>
     </ClInclude>
+    <ClInclude Include="base\datagen.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">

@@ -16,6 +16,8 @@
 #include "apie/api/logiccmd_handler.h"
 #include "apie/api/os_sys_calls.h"
 
+#include "apie/base/datagen.h"
+
 #include "apie/common/dao_macros.h"
 #include "apie/common/string_utils.h"
 #include "apie/common/message_traits.h"
@@ -24,7 +26,6 @@
 #include "apie/common/enum_to_int.h"
 #include "apie/common/file.h"
 #include "apie/common/optional_serializer.h"
-
 
 #include "apie/configs/load_config.h"
 #include "apie/configs/load_config_manager.h"

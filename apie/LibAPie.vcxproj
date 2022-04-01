@@ -173,6 +173,7 @@
     <ClInclude Include="api\hook.h" />
     <ClInclude Include="api\logiccmd_handler.h" />
     <ClInclude Include="api\os_sys_calls.h" />
+    <ClInclude Include="base\datagen.h" />
     <ClInclude Include="base\macros.h" />
     <ClInclude Include="common\c_smart_ptr.h" />
     <ClInclude Include="common\dao_macros.h" />
