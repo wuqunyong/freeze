@@ -48,6 +48,8 @@ apie::status::Status SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifie
 
 	return { apie::status::StatusCode::OK, "" };
 
+	//apie::forward::ForwardManager::sendNotifyToGW(role.user_id(), role.info().response_opcode(), *response);
+
 	//apie::forward::ForwardManager::sendResponse(role, *response);
 	//return { apie::status::StatusCode::OK_ASYNC, "" };
 }

@@ -175,5 +175,20 @@ bool ForwardManager::sendNotify(uint64_t iRoleId, ::rpc_msg::CHANNEL gwId, uint3
 	return apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 }
 
+bool ForwardManager::sendNotifyToGW(uint64_t iRoleId, uint32_t iOpcode, const ::google::protobuf::Message& msg)
+{
+	::rpc_msg::PRC_DeMultiplexer_Forward demux;
+	demux.mutable_role()->set_user_id(iRoleId);
+	demux.mutable_info()->set_opcode(iOpcode);
+	*demux.mutable_role()->mutable_info() = demux.info();
+	demux.set_body_msg(msg.SerializeAsString());
+
+	std::string channel = apie::event_ns::NatsManager::GenerateGWRIdChannel(iRoleId);
+
+	::nats_msg::NATS_MSG_PRXOY nats_msg;
+	(*nats_msg.mutable_demultiplexer_forward()) = demux;
+	return apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg, false);
+}
+
 }  
 }

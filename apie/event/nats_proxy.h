@@ -143,7 +143,7 @@ namespace event_ns {
 			 * also be used by Fakes/tests to inject new messages.
 			 * @param msg The natsMessage.
 			 */
-			void NATSMessageHandler(natsConnection* /*nc*/, natsSubscription* /*sub*/, natsMsg* msg)
+			void NATSMessageHandler(natsConnection* nc, natsSubscription* sub, natsMsg* msg)
 			{
 				if (msg == nullptr)
 				{
@@ -187,7 +187,7 @@ namespace event_ns {
 			 * @param msg The protobuf message.
 			 * @return Status of publication.
 			 */
-			virtual bool Publish(const std::string& channel, const TMsg& msg)
+			virtual bool Publish(const std::string& channel, const TMsg& msg, bool bSplice)
 			{
 				if (!nats_connection_)
 				{
@@ -198,7 +198,11 @@ namespace event_ns {
 					return false;
 				}
 
-				std::string sPub = apie::event_ns::NATSConnectorBase::GetCombineTopicChannel(pub_topic_, channel);
+				std::string sPub = channel;
+				if (bSplice)
+				{
+					sPub = apie::event_ns::NATSConnectorBase::GetCombineTopicChannel(pub_topic_, channel);
+				}
 
 				auto serialized_msg = msg.SerializeAsString();
 				auto nats_status = natsConnection_Publish(nats_connection_, sPub.c_str(), serialized_msg.c_str(), serialized_msg.size());
@@ -352,7 +356,7 @@ namespace event_ns {
 
 		public:
 			bool isConnect(E_NatsType type);
-			bool publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg);
+			bool publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg, bool bSplice = true);
 
 			bool subscribeChannel(E_NatsType type, const std::string& channel);
 			bool unsubscribeChannel(E_NatsType type, const std::string& channel);

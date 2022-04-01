@@ -301,7 +301,7 @@ bool NatsManager::isConnect(E_NatsType type)
 	return false;
 }
 
-bool NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg)
+bool NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, const PrxoyNATSConnector::OriginType& msg, bool bSplice)
 {
 	switch (type)
 	{
@@ -316,7 +316,7 @@ bool NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, co
 			return false;
 		}
 
-		return nats_realm->Publish(channel, msg);
+		return nats_realm->Publish(channel, msg, bSplice);
 	}
 	default:
 		break;

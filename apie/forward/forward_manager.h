@@ -76,6 +76,7 @@ public:
 
 	static bool sendResponse(::rpc_msg::RoleIdentifier role, const ::google::protobuf::Message& msg);
 	static bool sendNotify(uint64_t iRoleId, ::rpc_msg::CHANNEL gwId, uint32_t iOpcode, const ::google::protobuf::Message& msg);
+	static bool sendNotifyToGW(uint64_t iRoleId, uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
 private:
 	std::map<uint32_t, std::shared_ptr<ForwardBase>> service_;
