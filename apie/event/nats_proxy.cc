@@ -147,12 +147,6 @@ void NATSConnectorBase::ErrHandler(natsConnection* nc, natsSubscription* subscri
 	}
 }
 
-std::string NATSConnectorBase::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
-{
-	std::string topic = domains + "/" + channel;
-	return topic;
-}
-
 NatsManager::NatsManager() : nats_realm(nullptr)
 {
 
@@ -482,9 +476,15 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "Handle_Subscribe invalid params|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
 }
 
+std::string NATSConnectorBase::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
+{
+	std::string topic = domains + "." + channel;
+	return topic;
+}
+
 std::string NatsManager::GetTopicChannel(uint32_t realm, uint32_t type, uint32_t id)
 {
-	std::string channel = std::to_string(realm) + "/" + std::to_string(type) + "/" + std::to_string(id);
+	std::string channel = std::to_string(realm) + "." + std::to_string(type) + "." + std::to_string(id);
 	return channel;
 }
 
@@ -495,8 +495,8 @@ std::string NatsManager::GetTopicChannel(const ::rpc_msg::CHANNEL& channel)
 
 std::string NatsManager::GetMetricsChannel(const ::rpc_msg::CHANNEL& src, const ::rpc_msg::CHANNEL& dest)
 {
-	std::string channel = std::to_string(src.realm()) + "/" + std::to_string(src.type()) + "/" + std::to_string(src.id()) 
-		+ "->" + std::to_string(dest.realm()) + "/" + std::to_string(dest.type()) + "/" + std::to_string(dest.id());
+	std::string channel = std::to_string(src.realm()) + "." + std::to_string(src.type()) + "." + std::to_string(src.id()) 
+		+ "->" + std::to_string(dest.realm()) + "." + std::to_string(dest.type()) + "." + std::to_string(dest.id());
 	return channel;
 }
 
