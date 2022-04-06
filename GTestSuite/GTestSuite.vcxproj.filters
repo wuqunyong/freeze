@@ -9,5 +9,8 @@
     <ClCompile Include="gtest_demo1.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="gtest_demo2.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
