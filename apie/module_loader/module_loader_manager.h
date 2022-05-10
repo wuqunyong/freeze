@@ -118,3 +118,15 @@ using ModuleLoaderMgrSingleton = ThreadSafeSingleton<ModuleLoaderManager>;
 
 }
 }
+
+template <typename T>
+static inline bool APieRegisterModule()
+{
+	return apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<T>();
+}
+
+template <typename T>
+static inline auto APieGetModule()
+{
+	return apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<T>();
+}
