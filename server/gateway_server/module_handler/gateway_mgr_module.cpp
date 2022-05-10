@@ -56,7 +56,7 @@ void GatewayMgrModule::ready()
 
 void GatewayMgrModule::handleDefaultOpcodes(MessageInfo info, const std::string& msg)
 {	
-	auto ptrGatewayRole = module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<GatewayMgr>()->findGatewayRoleBySerialNum(info.iSessionId);
+	auto ptrGatewayRole = APieGetModule<GatewayMgr>()->findGatewayRoleBySerialNum(info.iSessionId);
 	if (ptrGatewayRole == nullptr)
 	{
 		ASYNC_PIE_LOG("handleDefaultOpcodes", PIE_CYCLE_DAY, PIE_ERROR, "Not Login|serialNum:%lld|opcodes:%d", info.iSessionId, info.iOpcode);
@@ -82,7 +82,7 @@ void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role,
 	MessageInfo info = apie::forward::ForwardManager::extractMessageInfo(role);
 
 	uint64_t iRoleId = role.user_id();
-	auto ptrGatewayRole = module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<GatewayMgr>()->findGatewayRoleById(iRoleId);
+	auto ptrGatewayRole = APieGetModule<GatewayMgr>()->findGatewayRoleById(iRoleId);
 	if (ptrGatewayRole == nullptr)
 	{
 		return;
@@ -108,7 +108,7 @@ apie::status::Status GatewayMgrModule::RPC_loginPending(
 	role.db_id = request->db_id();
 	role.expires_at = curTime + 30;
 
-	module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<GatewayMgr>()->addPendingRole(role);
+	APieGetModule<GatewayMgr>()->addPendingRole(role);
 
 	response->set_status_code(opcodes::SC_Ok);
 	response->set_account_id(request->account_id());
@@ -541,7 +541,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 		}
 
 		auto ptrGatewayRole = GatewayRole::createGatewayRole(user.fields.user_id, info.iSessionId);
-		module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<GatewayMgr>()->addGatewayRole(ptrGatewayRole);
+		APieGetModule<GatewayMgr>()->addGatewayRole(ptrGatewayRole);
 
 		service::ServiceManager::sendResponse(info, response);
 	};
@@ -630,13 +630,13 @@ void GatewayMgrModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SE
 
 	uint64_t iSerialNum = msg->serial_num();
 
-	auto optRoleId = module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<GatewayMgr>()->findRoleIdBySerialNum(iSerialNum);
+	auto optRoleId = APieGetModule<GatewayMgr>()->findRoleIdBySerialNum(iSerialNum);
 	if (!optRoleId.has_value())
 	{
 		return;
 	}
 
-	module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<GatewayMgr>()->removeGateWayRole(optRoleId.value());
+	APieGetModule<GatewayMgr>()->removeGateWayRole(optRoleId.value());
 }
 
 }

@@ -95,7 +95,7 @@ void GatewayRole::resetRequestPerUnit()
 
 void GatewayRole::close()
 {
-	module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<GatewayMgr>()->removeGateWayRole(m_iRoleId);
+	APieGetModule<GatewayMgr>()->removeGateWayRole(m_iRoleId);
 
 	ServerConnection::sendCloseLocalServer(m_iSerialNum);
 }
