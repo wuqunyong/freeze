@@ -1,7 +1,5 @@
 #include "module_handler/test_server_module.h"
 
-#include "json/json.h"
-
 #include "../../common/opcodes.h"
 
 #include "logic/test_runner.h"

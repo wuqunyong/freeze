@@ -8,13 +8,10 @@
 #include <algorithm>
 #include <tuple>
 
+#include "json/json.h"
+
 #include "apie.h"
-
-#include "../../pb_msg/business/login_msg.pb.h"
-#include "../../pb_msg/business/role_server_msg.pb.h"
-
 #include "logic/mock_role.h"
-
 
 namespace apie {
 
