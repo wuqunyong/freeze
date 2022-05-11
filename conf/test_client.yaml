@@ -37,7 +37,7 @@ auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
   start: 1
   stop: 20
-  ramp_up_interval_ms: 10000
+  ramp_up_interval: 10000
   ramp_up_nums: 5
   task_suite:
   - task_case:

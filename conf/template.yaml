@@ -89,7 +89,7 @@ login_server:            # 测试客户端连接的登录服地址
   port_value: 9339
   type: 3
   mask_flag : 0  
-pb_map_vec :
+pb_map_vec :             # 应答操作码与PB结构的映射关系
   - { type:   505, cmd:   0, pb_name: "pb.db.DB_Update"}
   - { type:   505, cmd:   3, pb_name: "pb.db.DB_EffectProp"}
   - { type:   505, cmd:   4, pb_name: "pb.db.DB_DataFlag"}
@@ -105,13 +105,13 @@ pb_map_vec :
   - { type:  1001, cmd:   0, pb_name: "pb.db.User_DB_Recordset"}
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
-  start: 1
-  stop: 2000
-  ramp_up_interval: 1000
-  ramp_up_nums: 100
-  loop_count: 1 
-  task_suite:
-  - task_case:
+  start: 1                   # 开始IggID
+  stop: 2000                 # 结束IggID
+  ramp_up_interval: 1000     # 执行一次间隔多久(单位毫秒)
+  ramp_up_nums: 100          # 一次执行多少个IggID[start,stop]
+  loop_count: 1              # 循环次数
+  task_suite:                # 测试套件
+  - task_case:               # 测试用例
       case_type: 1
       loop_count: 1
       loop_interval_ms: 10
