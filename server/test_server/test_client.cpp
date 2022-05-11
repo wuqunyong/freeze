@@ -23,9 +23,6 @@ int main(int argc, char **argv)
 		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
 	}
 
-	uint32_t iOpcode = MergeOpcode(509, 6);
-	auto tData = SplitOpcode(iOpcode);
-
 	APieRegisterModule<apie::TestServerMgr>();
 
 	std::string configFile = argv[1];

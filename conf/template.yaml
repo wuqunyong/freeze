@@ -89,6 +89,19 @@ login_server:            # 测试客户端连接的登录服地址
   port_value: 9339
   type: 3
   mask_flag : 0  
+pb_map_vec :
+  - type: 505
+    cmd: 3
+    pb_name: "pb.db.DB_EffectProp"
+  - type: 505
+    cmd: 4
+    pb_name: "pb.db.DB_DataFlag"
+  - type: 505
+    cmd: 5
+    pb_name: "pb.db.DB_DataFlag"
+  - type: 720
+    cmd: 5
+    pb_name: "pb.userinfo.NewUser"
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
   start: 1

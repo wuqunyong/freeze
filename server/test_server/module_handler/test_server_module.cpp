@@ -12,9 +12,13 @@ namespace apie {
 
 void TestServerModule::init()
 {
+}
+
+void TestServerModule::ready()
+{
 	// PUBSUB
 	apie::pubsub::PubSubManagerSingleton::get().subscribe<::pubsub::LOGIC_CMD>(::pubsub::PUB_TOPIC::PT_LogicCmd, TestServerModule::PubSub_logicCmd);
-	
+
 	// CMD
 	auto& cmd = LogicCmdHandlerSingleton::get();
 	cmd.init();
@@ -24,18 +28,11 @@ void TestServerModule::init()
 	// OPCODE
 	apie::service::ServiceHandlerSingleton::get().client.setDefaultFunc(TestServerModule::handleDefaultOpcodes);
 
-	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, "login_msg.MSG_RESPONSE_ACCOUNT_LOGIN_L");
-	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_CLIENT_LOGIN, "login_msg.MSG_RESPONSE_CLIENT_LOGIN");
-	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_ECHO, "login_msg.MSG_RESPONSE_ECHO");
-	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_HANDSHAKE_INIT, "login_msg.MSG_RESPONSE_HANDSHAKE_INIT");
-	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, "login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED");
-
-	MockRole::registerPbOpcodeName(MergeOpcode(_MSG_GAMESERVER_LOGINRESP,0), "pb.login.LoginLS_Resp");
-
-}
-
-void TestServerModule::ready()
-{
+	//MockRole::registerPbOpcodeName(MergeOpcode(_MSG_GAMESERVER_LOGINRESP, 0), "pb.login.LoginLS_Resp");
+	for (const auto& elems : apie::CtxSingleton::get().getConfigs()->pb_map_vec)
+	{
+		MockRole::registerPbOpcodeName(MergeOpcode(elems.type, elems.cmd), elems.pb_name);
+	}
 }
 
 void TestServerModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)

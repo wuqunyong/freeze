@@ -7,5 +7,8 @@ rem ..\protoc rpc_login.proto --python_out=../../client/proto
 
 ..\protoc login.proto --cpp_out=./
 ..\protoc userinfo.proto --cpp_out=./
-
+..\protoc map.proto --cpp_out=./
+..\protoc db.proto --cpp_out=./
+..\protoc talent.proto --cpp_out=./
+..\protoc decree.proto --cpp_out=./
 pause

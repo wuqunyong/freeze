@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package pb.talent;
+
+//_MSG_TALENT_CMD=750;  // 天赋
+
+
+enum E_Talent_Cmd {
+    E_Talent_Cmd_None = 0;
+
+    E_Talent_Cmd_Login_Notice = 1;        // 登录时，同步天赋数据
+    E_Talent_Cmd_BaseChange_Notice = 2;   // 天赋基础数据改变通知
+    E_Talent_Cmd_ElemsChange_Notice = 3;  // 天赋数据改变通知（新增，变化）
+
+    E_Talent_Cmd_Open_Req = 10;           // 领悟天赋_请求
+    E_Talent_Cmd_Open_Response = 11;      // 领取天赋_响应
+    E_Talent_Cmd_Choose_Req = 12;         // 选择领悟获得的天赋_请求
+    E_Talent_Cmd_Choose_Response = 13;    // 选择领悟获得的天赋_响应
+    E_Talent_Cmd_Activate_Req = 14;       // 激活天赋_请求
+    E_Talent_Cmd_Activate_Response = 15;  // 激活天赋_响应
+    E_Talent_Cmd_Unload_Req = 16;         // 卸载天赋_请求
+    E_Talent_Cmd_Unload_Response = 17;    // 卸载天赋_响应
+} 
+
+
+
+// 槽位
+message TalentSlot {
+    uint32 id = 1;             // ID 
+    bool unlock_flag = 2;      // 是否解锁: true(已解锁)，false(未解锁)
+    uint64 talent_id = 4;      // 绑定的天赋ID(0:未绑定)，其他绑定的天赋ID
+}
+
+
+// 天赋状态
+enum E_Talent_Status {
+    E_TE_None = 0;    // 未激活
+    E_TE_Prepare = 1; // 激活，装备中
+    E_TE_Ready = 2;   // 激活，已生效
+}
+
+// 天赋
+message TalentElem {
+    uint64 id = 1;              // TalentType (id, level)确认唯一索引 
+    uint32 level = 2;           // 等级
+    uint32 exp = 3;             // 升级进度(经验)
+    E_Talent_Status status = 4; // 状态
+    uint64 begin_time = 5;      // 天赋生效开始时间
+}
+
+
+// 面板
+message TalentPanel {
+    uint32 level = 1;                  // 等级
+    uint32 exp = 2;                    // 当前经验
+    uint32 point = 3;                  // 领悟次数
+    repeated TalentSlot slots = 4;     // 槽位
+    repeated TalentElem elems = 5;     // 天赋
+    bool has_pending_open = 6;         // 是否有未选择的领悟，true(有)
+    uint32 reserve_num = 7;            // 每次可以选择几个天赋保留
+    repeated uint64 optional_list = 8; // 领悟开出的天赋
+}
+
+
+// 登录时，同步天赋数据
+message Talent_Login_Notice
+{
+    TalentPanel data = 1;
+}
+
+
+// 天赋基础数据改变通知
+message Talent_BaseChange_Notice
+{
+    uint32 level = 1;   // 等级
+    uint32 exp = 2;     // 当前经验
+    uint32 point = 3;   // 领悟次数
+}
+
+
+// 天赋数据改变通知（新增，变化）
+message Talent_ElemsChange_Notice
+{
+    repeated TalentSlot slots = 1;
+    repeated TalentElem elems = 2;
+}
+
+
+// 领悟天赋_请求
+message Talent_Open_Req
+{
+}
+
+// 领取天赋_响应
+message Talent_Open_Response
+{
+    uint32 error_code = 1;
+    uint32 reserve_num = 2;     // 每次可以选择几个天赋保留
+    repeated uint64 data = 3;   // 天赋ID
+}
+
+
+// 选择领悟获得的天赋_请求
+message Talent_Choose_Req
+{
+    repeated uint32 id = 1;    // Talent_Open_Response 返回的data数据
+}
+
+// 选择领悟获得的天赋_响应
+message Talent_Choose_Response
+{
+   uint32 error_code = 1;
+}
+
+
+// 激活天赋_请求
+message Talent_Activate_Req
+{
+    uint64 id = 1;  // 天赋TalentType
+}
+
+// 激活天赋_响应
+message Talent_Activate_Response
+{
+    uint32 error_code = 1;
+}
+
+
+// 卸载天赋_请求
+message Talent_Unload_Req
+{
+    uint64 id = 1;  // 天赋TalentType
+}
+
+// 卸载天赋_响应
+message Talent_Unload_Response
+{
+    uint32 error_code = 1;
+}

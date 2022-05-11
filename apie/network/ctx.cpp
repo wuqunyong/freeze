@@ -360,6 +360,20 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 		tmpPtrConfig->login_server.mask_flag = node_["login_server"]["mask_flag"].as<uint16_t>(0);
 	}
 
+	for (const auto& item : this->node_["pb_map_vec"])
+	{
+		auto iType = item["type"].as<int16_t>();
+		auto iCmd = item["cmd"].as<int16_t>();
+		std::string sPbName = item["pb_name"].as<std::string>();
+
+		PBMagElem elems;
+		elems.type = iType;
+		elems.cmd = iCmd;
+		elems.pb_name = sPbName;
+
+		tmpPtrConfig->pb_map_vec.push_back(elems);
+	}
+
 	if (node_["auto_test"])
 	{
 		tmpPtrConfig->auto_test.enable = node_["auto_test"]["enable"].as<bool>(false);

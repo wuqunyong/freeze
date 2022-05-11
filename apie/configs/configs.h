@@ -148,6 +148,12 @@ namespace apie {
 		std::vector<APieConfig_TaskSuite> task_suite;
 	};
 
+	struct PBMagElem
+	{
+		int16_t type;
+		int16_t cmd;
+		std::string pb_name;
+	};
 
 	struct APieConfig
 	{
@@ -168,6 +174,7 @@ namespace apie {
 		APieConfig_Etcd etcd;
 		APieConfig_Limited limited;
 		APieConfig_ClientsSocketAddress login_server;
+		std::vector<PBMagElem> pb_map_vec;
 		APieConfig_AutoTest auto_test;
 	};
 

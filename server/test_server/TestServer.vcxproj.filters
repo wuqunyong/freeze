@@ -44,6 +44,18 @@
     <ClCompile Include="..\..\pb_msg\business\userinfo.pb.cc">
       <Filter>pb_msg\business</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\map.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\db.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\talent.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\decree.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logic\test_server.h">
@@ -86,6 +98,18 @@
       <Filter>pb_msg\business</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pb_msg\business\userinfo.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\map.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\db.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\talent.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\decree.pb.h">
       <Filter>pb_msg\business</Filter>
     </ClInclude>
   </ItemGroup>

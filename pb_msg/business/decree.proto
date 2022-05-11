@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package pb.decree;
+
+// 	_MSG_DECREE_CMD = 715
+
+enum E_decree_cmd
+{
+	E_decree_cmd_None	= 0;  //无意义
+	E_decree_cmd_Buy		= 1;  //  购买  decree_buy
+	E_decree_cmd_reflush_time = 2; // 刷新 decree_reflush
+}
+
+ 
+// 上行
+message decree_buy
+{
+	uint32 error_code 	=1;	 
+	uint32  get_count =2; // 返回 ，新加数量
+}
+
+message decree_reflush
+{
+	uint64 next_time =  1;
+	uint32 cur_count = 2;
+}

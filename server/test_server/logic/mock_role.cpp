@@ -708,7 +708,27 @@ void MockRole::handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::stri
 
 void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg)
 {
+	auto [iType, iCmd] = SplitOpcode(info.iOpcode);
+	std::stringstream ss;
+	ss << "handleResponse|m_iIggId:" << m_iIggId << "|serialNum:" << info.iSeqNum << "|iOpcode:" << info.iOpcode << ",iType:" << iType << ",iCmd:" << iCmd;
 
+	pb::userinfo::NewUser response;
+	bool bResult = response.ParseFromString(msg);
+	if (!bResult)
+	{
+		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+
+		APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
+		return;
+	}
+
+	if (response.flag() == pb::userinfo::E_UserFlag_New)
+	{
+		pb::map::Choose_Country request;
+		request.set_country_id(2);
+		this->sendMsg(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::ChooseCountry), request);
+		this->sendMsg(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::CmdEnterMap), request);
+	}
 }
 
 

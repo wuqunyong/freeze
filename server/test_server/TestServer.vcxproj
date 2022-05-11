@@ -19,10 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\pb_msg\business\db.pb.cc" />
+    <ClCompile Include="..\..\pb_msg\business\decree.pb.cc" />
     <ClCompile Include="..\..\pb_msg\business\login.pb.cc" />
     <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc" />
+    <ClCompile Include="..\..\pb_msg\business\map.pb.cc" />
     <ClCompile Include="..\..\pb_msg\business\role_server_msg.pb.cc" />
     <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc" />
+    <ClCompile Include="..\..\pb_msg\business\talent.pb.cc" />
     <ClCompile Include="..\..\pb_msg\business\userinfo.pb.cc" />
     <ClCompile Include="logic\mock_role.cpp" />
     <ClCompile Include="logic\task\echo_test_case.cpp" />
@@ -36,10 +40,14 @@
     <ClCompile Include="test_client.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\pb_msg\business\db.pb.h" />
+    <ClInclude Include="..\..\pb_msg\business\decree.pb.h" />
     <ClInclude Include="..\..\pb_msg\business\login.pb.h" />
     <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h" />
+    <ClInclude Include="..\..\pb_msg\business\map.pb.h" />
     <ClInclude Include="..\..\pb_msg\business\role_server_msg.pb.h" />
     <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h" />
+    <ClInclude Include="..\..\pb_msg\business\talent.pb.h" />
     <ClInclude Include="..\..\pb_msg\business\userinfo.pb.h" />
     <ClInclude Include="logic\mock_role.h" />
     <ClInclude Include="logic\task\echo_test_case.h" />
