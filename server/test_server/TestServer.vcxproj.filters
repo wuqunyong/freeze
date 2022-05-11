@@ -112,6 +112,9 @@
     <ClInclude Include="..\..\pb_msg\business\decree.pb.h">
       <Filter>pb_msg\business</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\pb_msg\init.h">
+      <Filter>pb_msg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
