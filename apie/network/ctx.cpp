@@ -352,6 +352,14 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 		tmpPtrConfig->limited.uint = node_["limited"]["uint"].as<uint32_t>(60);
 	}
 
+	if (node_["login_server"])
+	{
+		tmpPtrConfig->login_server.address = node_["login_server"]["address"].as<std::string>();
+		tmpPtrConfig->login_server.port_value = node_["login_server"]["port_value"].as<uint16_t>();
+		tmpPtrConfig->login_server.type = node_["login_server"]["type"].as<uint16_t>(3);
+		tmpPtrConfig->login_server.mask_flag = node_["login_server"]["mask_flag"].as<uint16_t>(0);
+	}
+
 	if (node_["auto_test"])
 	{
 		tmpPtrConfig->auto_test.enable = node_["auto_test"]["enable"].as<bool>(false);

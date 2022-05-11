@@ -10,8 +10,8 @@ namespace apie {
 
 std::map<uint32_t, std::string> MockRole::s_pbReflect;
 
-MockRole::MockRole(uint64_t iRoleId) :
-	m_iRoleId(iRoleId)
+MockRole::MockRole(uint64_t iIggId) :
+	m_iIggId(iIggId)
 {
 }
 
@@ -38,17 +38,16 @@ void MockRole::setUp()
 	}
 
 	m_bInit = true;
-	apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iRoleId);
+	APieGetModule<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iIggId);
 
 	this->addHandler("login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
 	this->addHandler("echo", std::bind(&MockRole::handleEcho, this, std::placeholders::_1));
 	this->addHandler("logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
 
 
-	this->addResponseHandler(::apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, &MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L);
-	this->addResponseHandler(::apie::OP_MSG_RESPONSE_HANDSHAKE_INIT, &MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT);
-	this->addResponseHandler(::apie::OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, &MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED);
-
+	this->addResponseHandler(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), &MockRole::handle_MSG_GAMESERVER_LOGINRESP);
+	this->addResponseHandler(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_UserFlag_New), &MockRole::handle_MSG_USER_INFO_E_UserFlag_New);
+	
 
 	this->processCmd();
 }
@@ -60,12 +59,13 @@ void MockRole::tearDown()
 
 void MockRole::start()
 {
-	std::string ip = apie::CtxSingleton::get().getConfigs()->clients.socket_address.address;
-	uint16_t port = apie::CtxSingleton::get().getConfigs()->clients.socket_address.port_value;
-	uint16_t type = apie::CtxSingleton::get().getConfigs()->clients.socket_address.type;
-	uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->clients.socket_address.mask_flag;
+	std::string ip = apie::CtxSingleton::get().getConfigs()->login_server.address;
+	uint16_t port = apie::CtxSingleton::get().getConfigs()->login_server.port_value;
+	uint16_t type = apie::CtxSingleton::get().getConfigs()->login_server.type;
+	uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->login_server.mask_flag;
 
 	m_clientProxy = apie::ClientProxy::createClientProxy();
+	m_clientProxy->setUserId(this->m_iIggId);
 
 	std::weak_ptr<MockRole> ptrSelf = this->shared_from_this();
 
@@ -96,9 +96,9 @@ void MockRole::start()
 	this->addTimer(100);
 }
 
-uint64_t MockRole::getRoleId()
+uint64_t MockRole::getIggId()
 {
-	return m_iRoleId;
+	return m_iIggId;
 }
 
 void MockRole::processCmd()
@@ -178,7 +178,7 @@ void MockRole::handleMsg(::pubsub::LOGIC_CMD& msg)
 	catch (std::exception& e)
 	{
 		std::stringstream ss;
-		ss << "roleId:" << m_iRoleId << "|Unexpected exception: " << e.what();
+		ss << "m_iIggId:" << m_iIggId << "|Unexpected exception: " << e.what();
 		PIE_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 	}
 }
@@ -443,11 +443,13 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 	} while (false);
 
 	std::stringstream ss;
-	ss << "traffic/" << m_iRoleId;
+	ss << "traffic/" << m_iIggId;
 	std::string fileName = ss.str();
 
 	ss.str("");
-	ss << "recv|iSerialNum:" << serialNum << "|iOpcode:" << opcodes << "|data:" << sMsg;
+
+	auto [iType, iCmd] = SplitOpcode(opcodes);
+	ss << "recv|iSerialNum:" << serialNum << "|iOpcode:" << opcodes << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << sMsg;
 	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
 
 	this->removeWaitResponse(opcodes);
@@ -563,9 +565,9 @@ void MockRole::handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const
 	removePendingResponseById(findIte.value().id);
 }
 
-std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iRoleId)
+std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iIggId)
 {
-	return std::make_shared<MockRole>(iRoleId);
+	return std::make_shared<MockRole>(iIggId);
 }
 
 bool MockRole::registerPbOpcodeName(uint32_t iOpcode, const std::string& sName)
@@ -593,12 +595,13 @@ std::optional<std::string> MockRole::getPbNameByOpcode(uint32_t iOpcode)
 
 void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
 {
-	::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L request;
-	request.set_account_id(m_iRoleId);
+	pb::login::LoginC2LS request;
+	request.set_game_id(1);
+	request.set_user_id(m_iIggId);
+	request.set_version(1);
+	this->sendMsg(MergeOpcode(::apie::_MSG_CLIENT_LOGINTOL, 0), request);
 
-	this->sendMsg(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, request);
-
-	this->addPendingResponse(OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, OP_MSG_REQUEST_ACCOUNT_LOGIN_L);
+	this->addPendingResponse(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), MergeOpcode(::apie::_MSG_CLIENT_LOGINTOL, 0));
 }
 
 void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
@@ -613,7 +616,7 @@ void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
 
 void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 {
-	apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeMockRole(m_iRoleId);
+	APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
 
 	uint64_t iSerialNum = 0;
 	if (m_clientProxy)
@@ -623,34 +626,44 @@ void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 	this->handlePendingNotify(iSerialNum, 0, "active close");
 }
 
-void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void MockRole::handle_MSG_GAMESERVER_LOGINRESP(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
 	this->setPauseProcess(true);
 
+	auto [iType, iCmd] = SplitOpcode(opcodes);
 	std::stringstream ss;
-	ss << "handleResponse|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes;
-	
+	ss << "handleResponse|m_iIggId:" << m_iIggId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes << ",iType:" << iType << ",iCmd:" << iCmd;
 
-	::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
+
+	pb::login::LoginLS_Resp response;
 	bool bResult = response.ParseFromString(msg);
 	if (!bResult)
 	{
 		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
 
-		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeMockRole(m_iRoleId);
+		APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
+		return;
+	}
+
+	if (response.result() != pb::login::E_Login_Result::Succ)
+	{
+		ss << "data|" << response.ShortDebugString();
+		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+
+		APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
 		return;
 	}
 
 	ss << "data|" << response.ShortDebugString();
 	ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
 
-	apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
+	APieGetModule<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
 	this->m_clientProxy->onActiveClose();
 
 
 	std::string ip = response.ip();
 	uint32_t port = response.port();
-	uint16_t type = apie::CtxSingleton::get().getConfigs()->clients.socket_address.type;
+	uint16_t type = toUnderlyingType(apie::ProtocolType::PT_PBMsgUser);
 	uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->clients.socket_address.mask_flag;
 
 
@@ -662,18 +675,17 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 			auto ptrShared = ptrSelf.lock();
 			if (ptrShared)
 			{
-				apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->addSerialNumRole(ptrShared->m_clientProxy->getSerialNum(), ptrShared->m_iRoleId);
+				APieGetModule<apie::TestServerMgr>()->addSerialNumRole(ptrShared->m_clientProxy->getSerialNum(), ptrShared->m_iIggId);
 
 
-				ptrShared->m_clientRandom = "client";
+				pb::login::LoginC2GS request;
+				request.set_game_id(1);
+				request.set_check_out_text(response.check_out_text());
+				request.set_user_id(ptrShared->m_iIggId);
+				ptrShared->sendMsg(MergeOpcode(_MSG_CLIENT_LOGINTOG, 0), request);
 
-				::login_msg::MSG_REQUEST_HANDSHAKE_INIT request;
-				request.set_client_random(ptrShared->m_clientRandom);
-				ptrShared->sendMsg(::apie::OP_MSG_REQUEST_HANDSHAKE_INIT, request);
-				ptrShared->addPendingResponse(OP_MSG_RESPONSE_HANDSHAKE_INIT, OP_MSG_REQUEST_HANDSHAKE_INIT);
-
-				ptrShared->m_account_id = response.account_id();
-				ptrShared->m_session_key = response.session_key();
+				ptrShared->setPauseProcess(false);
+				ptrShared->addWaitResponse(::apie::OP_MSG_RESPONSE_CLIENT_LOGIN, 1);
 			}
 		}
 		return true;
@@ -681,85 +693,14 @@ void MockRole::handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t 
 	m_clientProxy->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
 	m_clientProxy->addReconnectTimer(1000);
 	m_target = CT_Gateway;
-
 }
 
-void MockRole::handle_MSG_RESPONSE_HANDSHAKE_INIT(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
 {
-	std::stringstream ss;
-	ss << "handle_MSG_RESPONSE_HANDSHAKE_INIT|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes;
-
-
-	::login_msg::MSG_RESPONSE_HANDSHAKE_INIT response;
-	bool bResult = response.ParseFromString(msg);
-	if (!bResult)
-	{
-		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
-
-		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeMockRole(m_iRoleId);
-		return;
-	}
-
-	std::string plainMsg("client_key");
-	std::string encryptedMsg;
-
-	std::string content = response.public_key();
-
-	const std::vector<uint8_t> keyDer(content.begin(), content.end());
-
-	BIO* ptrBIO = BIO_new_mem_buf(&content[0], content.size());
-	std::unique_ptr<BIO, decltype(BIO_free)*> bio(ptrBIO, BIO_free);
-
-	RSA* ptrRSA = PEM_read_bio_RSA_PUBKEY(bio.get(), NULL, NULL, NULL);
-	std::unique_ptr<RSA, decltype(RSA_free)*> rsa(ptrRSA, RSA_free);
-
-	apie::crypto::RSAUtilitySingleton::get().encryptByPub(rsa.get(), plainMsg, &encryptedMsg);
-
-
-	this->m_sharedKey = this->m_clientRandom + response.server_random() + plainMsg;
-
-
-	::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED request;
-	request.set_encrypted_key(encryptedMsg);
-	this->sendMsg(::apie::OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED, request);
-	this->addPendingResponse(OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, OP_MSG_REQUEST_HANDSHAKE_ESTABLISHED);
-
-	apie::SetClientSessionAttr *ptr = new apie::SetClientSessionAttr;
-	ptr->iSerialNum = this->m_clientProxy->getSerialNum();
-	ptr->optKey = this->m_sharedKey;
-
-	Command cmd;
-	cmd.type = Command::set_client_session_attr;
-	cmd.args.set_client_session_attr.ptrData = ptr;
-	network::OutputStream::sendCommand(ConnetionType::CT_CLIENT, ptr->iSerialNum, cmd);
 
 }
 
-void MockRole::handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
-{
-	std::stringstream ss;
-	ss << "handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED|roleId:" << m_iRoleId << "|serialNum:" << serialNum << "|iOpcode:" << opcodes;
 
-
-	::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED response;
-	bool bResult = response.ParseFromString(msg);
-	if (!bResult)
-	{
-		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
-
-		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeMockRole(m_iRoleId);
-		return;
-	}
-
-	::login_msg::MSG_REQUEST_CLIENT_LOGIN request;
-	request.set_user_id(this->m_account_id);
-	request.set_session_key(this->m_session_key);
-	this->sendMsg(::apie::OP_MSG_REQUEST_CLIENT_LOGIN, request);
-	this->addPendingResponse(OP_MSG_RESPONSE_CLIENT_LOGIN, OP_MSG_REQUEST_CLIENT_LOGIN);
-
-	this->setPauseProcess(false);
-	this->addWaitResponse(::apie::OP_MSG_RESPONSE_CLIENT_LOGIN, 1);
-}
 
 void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
@@ -768,11 +709,13 @@ void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 	auto iSerialNum = m_clientProxy->getSerialNum();
 
 	std::stringstream ss;
-	ss << "traffic/" << m_iRoleId;
+	ss << "traffic/" << m_iIggId;
 	std::string fileName = ss.str();
 
 	ss.str("");
-	ss << "send|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode << "|data:" << msg.ShortDebugString();
+
+	auto [iType, iCmd] = SplitOpcode(iOpcode);
+	ss << "send|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode  << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << msg.ShortDebugString();
 	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
 }
 

@@ -52,8 +52,10 @@ namespace apie
 	enum class ProtocolType
 	{
 		PT_None = 0,
-		PT_PB,
-		PT_HTTP,
+		PT_PB = 1,
+		PT_HTTP = 2,
+		PT_PBMsgHead = 3,
+		PT_PBMsgUser = 4,
 		PT_MAX,
 	};
 

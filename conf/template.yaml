@@ -7,7 +7,7 @@ identify:            # 节点标识
   port: 5007             # 节点作为Server,监听的端口
   out_ip: "127.0.0.1"    # 节点对外IP
   out_port: 5007         # 节点对外端口
-  codec_type: 1          # 节点协议：1(PB√),2(HTTP×)
+  codec_type: 1          # 节点协议：1(PB√),2(HTTP×),3(PBMsgHead),4(PBMsgUser)
 io_threads: 2        # IO线程数
 daemon: true         # 是否作为守护进程启动
 service_timeout: 600 # 服务发现超时时间，默认：300, 单位秒
@@ -84,6 +84,11 @@ etcd:
 limited:             # 限制
   requests_per_unit: 10  # 客户端发送的请求数/间隔单位(0:没有限制，默认：0)
   uint: 1                # 客户端间隔单位(秒数，默认:60)
+login_server:            # 测试客户端连接的登录服地址
+  address: "127.0.0.1"
+  port_value: 9339
+  type: 3
+  mask_flag : 0  
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
   start: 1

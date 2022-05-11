@@ -58,6 +58,9 @@ namespace apie
 	private:
 		void readHttp();
 		void readPB();
+		void readPBMsgHead();
+		void readPBMsgUser();
+
 		void recv(MessageInfo info, std::string& requestStr);
 
 

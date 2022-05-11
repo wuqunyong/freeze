@@ -13,6 +13,8 @@
 #include "apie.h"
 
 #include "../../pb_msg/business/login_msg.pb.h"
+#include "../../pb_msg/business/login.pb.h"
+#include "../../pb_msg/business/userinfo.pb.h"
 
 
 namespace apie {
@@ -61,7 +63,7 @@ namespace apie {
 			CT_Gateway = 2,
 		};
 
-		MockRole(uint64_t iRoleId);
+		MockRole(uint64_t iIggId);
 		~MockRole();
 
 		void setUp();
@@ -69,7 +71,7 @@ namespace apie {
 
 		void start();
 
-		uint64_t getRoleId();
+		uint64_t getIggId();
 		void processCmd();
 		void addTimer(uint64_t interval);
 
@@ -121,17 +123,14 @@ namespace apie {
 		void handleLogin(::pubsub::LOGIC_CMD& msg);
 		void handleEcho(::pubsub::LOGIC_CMD& msg);
 		void handleLogout(::pubsub::LOGIC_CMD& msg);
-
-		void handle_MSG_RESPONSE_ACCOUNT_LOGIN_L(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
-		void handle_MSG_RESPONSE_HANDSHAKE_INIT(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
-		void handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
 		
-
+		void handle_MSG_GAMESERVER_LOGINRESP(uint64_t serialNum, uint32_t opcodes, const std::string& msg);		
+		void handle_MSG_USER_INFO_E_UserFlag_New(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
 
 		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
 	public:
-		static std::shared_ptr<MockRole> createMockRole(uint64_t iRoleId);
+		static std::shared_ptr<MockRole> createMockRole(uint64_t iIggId);
 
 		static bool registerPbOpcodeName(uint32_t iOpcode, const std::string& sName);
 		static std::optional<std::string> getPbNameByOpcode(uint32_t iOpcode);
@@ -144,7 +143,7 @@ namespace apie {
 
 	private:
 		uint32_t m_id = 0;
-		uint64_t m_iRoleId;
+		uint64_t m_iIggId;
 		std::shared_ptr<ClientProxy> m_clientProxy;
 		event_ns::TimerPtr m_cmdTimer;
 

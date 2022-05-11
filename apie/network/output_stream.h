@@ -36,6 +36,10 @@ namespace network {
 
 
 		static bool sendCommand(ConnetionType type, uint64_t iSerialNum, apie::Command& cmd);
+
+
+		static bool sendPBMsgHead(MessageInfo info, const ::google::protobuf::Message& msg);
+		static bool sendPBMsgUser(MessageInfo info, const ::google::protobuf::Message& msg);
 	};
 
 	// 只有客户端能发送同步请求

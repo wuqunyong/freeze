@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package pb.userinfo;
+
+//_MSG_USER_INFO_FS = 602 或 _MSG_USER_INFO = 720
+enum E_Cmd
+{
+	E_Cmd_UserInfoReq				= 0;	//玩家信息请求
+	E_Cmd_UserInfoResp				= 1;	//玩家信息应答
+	E_Cmd_SearchByIdReq				= 2;	//根据Id搜索玩家请求
+	E_Cmd_SearchByNameReq			= 3;	//根据名称搜索玩家请求
+	E_Cmd_SearchResp				= 4;	//搜索应答
+	E_Cmd_NewUser					= 5;	//新用户
+	E_Cmd_NoviceData				= 6;	//新手引导特有数据
+	E_Cmd_AsyncUserDatasReq			= 7;	//异步用户数据请求
+	E_Cmd_AsyncUserDatasResp		= 8;	//异步用户数据应答
+}
+
+message UserData
+{
+	int32 power = 1;				//势力
+	string presentation = 2;		//简介
+	int32 guild_id = 3;				//联盟Id
+	string guild_name = 4;			//联盟名称
+	string guild_group_name = 5;	//分组名称
+	int32 officer = 6;			//职位
+	int32 captive_guild_id = 7;		//俘虏的联盟id
+	string captive_guild_name = 8;	//俘虏的联盟名称
+}
+
+
+message AsyncUserDatasReq
+{
+	repeated int64 user_ids = 1;
+}
+
+message AsyncUserDatasResp
+{
+	repeated UserData user_datas = 1;
+}
+
+message UserInfo
+{
+	int32 map_id = 1;				//所在MapServerId
+	int64 user_id = 2;				//UserId
+	string user_name = 3;			//玩家名称
+	int32 head_id = 4;				//头像Id
+	int32 power = 5;				//势力
+	string presentation = 6;		//简介
+	int32 guild_id = 7;				//联盟Id
+	string guild_name = 8;			//联盟名称
+	string guild_group_name = 9;	//分组名称
+	int32 officer = 10;			//官职
+	int32 captive_guild_id = 11;	//俘虏的联盟id
+	string captive_guild_name = 12;	//俘虏的联盟名称
+}
+
+message UserInfoReq
+{
+	int64 user_id = 1;
+}
+
+message UserInfoResp
+{
+	uint32 error_code = 1;
+	UserInfo user_info = 2;
+}
+
+message SearchInfo
+{
+	int64 user_id = 1;
+	int32 map_id = 2;
+	string user_name = 3;
+	int32 head_id = 4;
+	int32 power = 5;
+	int32 game_id = 6;
+}
+
+message SearchByIdReq		//enum E_Cmd_SerachByIdReq
+{
+	int64 user_id = 1;		//UserId
+}
+
+message SearchByNameReq		//enum E_Cmd_SerachByNameReq
+{
+	string user_name = 1;	//玩家名称
+}
+
+message SearchResp			//enum E_Cmd_SearchResp
+{
+	uint32 error_code = 1;
+	repeated SearchInfo search_infos = 2;
+}
+
+enum E_UserFlag
+{
+	E_UserFlag_New = 0;		//新号
+	E_UserFlag_Back = 1;	//回归
+}
+
+message NewUser
+{
+	E_UserFlag flag = 1;
+	string name = 2;
+	int32 head_id = 3;
+}
+
+message NoviceField
+{
+	int32 q = 1;
+	int32 r = 2;
+}
+
+message RespNoviceData
+{
+	repeated NoviceField fields = 1;	// 新手引导 特有地块信息
+}

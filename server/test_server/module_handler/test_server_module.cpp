@@ -30,6 +30,8 @@ void TestServerModule::init()
 	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_HANDSHAKE_INIT, "login_msg.MSG_RESPONSE_HANDSHAKE_INIT");
 	MockRole::registerPbOpcodeName(OP_MSG_RESPONSE_HANDSHAKE_ESTABLISHED, "login_msg.MSG_RESPONSE_HANDSHAKE_ESTABLISHED");
 
+	MockRole::registerPbOpcodeName(MergeOpcode(_MSG_GAMESERVER_LOGINRESP,0), "pb.login.LoginLS_Resp");
+
 }
 
 void TestServerModule::ready()
@@ -56,7 +58,7 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	uint64_t iRoleId = std::stoull(cmd.params()[0]);
-	auto ptrMockRole = apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->findMockRole(iRoleId);
+	auto ptrMockRole = APieGetModule<apie::TestServerMgr>()->findMockRole(iRoleId);
 	if (ptrMockRole == nullptr)
 	{
 		if (cmd.params()[1] == "login")
@@ -64,7 +66,7 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 			ptrMockRole = MockRole::createMockRole(iRoleId);
 			ptrMockRole->start();
 
-			apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->addMockRole(ptrMockRole);
+			APieGetModule<apie::TestServerMgr>()->addMockRole(ptrMockRole);
 		}
 		else
 		{
@@ -99,14 +101,14 @@ void TestServerModule::Cmd_autoTest(::pubsub::LOGIC_CMD& cmd)
 
 void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string& msg)
 {
-	auto iRoleIdOpt = apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->findRoleIdBySerialNum(info.iSessionId);
+	auto iRoleIdOpt = APieGetModule<apie::TestServerMgr>()->findRoleIdBySerialNum(info.iSessionId);
 	if (!iRoleIdOpt.has_value())
 	{
 		return;
 	}
 
 	uint64_t iRoleId = iRoleIdOpt.value();
-	auto ptrMockRole = apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->findMockRole(iRoleId);
+	auto ptrMockRole = APieGetModule<apie::TestServerMgr>()->findMockRole(iRoleId);
 	if (ptrMockRole == nullptr)
 	{
 		return;

@@ -119,6 +119,185 @@ namespace network {
 		return true;
 	}
 
+	bool OutputStream::sendPBMsgHead(MessageInfo info, const ::google::protobuf::Message& msg)
+	{
+		uint32_t iThreadId = 0;
+
+		ConnetionType type = info.iConnetionType;
+
+		switch (type)
+		{
+		case apie::ConnetionType::CT_NONE:
+		{
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
+			if (ptrConnection == nullptr)
+			{
+				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
+				if (ptrClient == nullptr)
+				{
+					return false;
+				}
+				else
+				{
+					iThreadId = ptrClient->getTId();
+					type = ConnetionType::CT_CLIENT;
+				}
+			}
+			else
+			{
+				iThreadId = ptrConnection->getTId();
+				type = ConnetionType::CT_SERVER;
+			}
+			break;
+		}
+		case apie::ConnetionType::CT_SERVER:
+		{
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
+			if (ptrConnection == nullptr)
+			{
+				return false;
+			}
+
+			iThreadId = ptrConnection->getTId();
+			break;
+		}
+		case apie::ConnetionType::CT_CLIENT:
+		{
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
+			if (ptrConnection == nullptr)
+			{
+				return false;
+			}
+
+			iThreadId = ptrConnection->getTId();
+			break;
+		}
+		default:
+			break;
+		}
+
+		auto ptrThread = CtxSingleton::get().getThreadById(iThreadId);
+		if (ptrThread == nullptr)
+		{
+			return false;
+		}
+		
+		auto [iType, iCmd] = SplitOpcode(info.iOpcode);
+		int32_t iHeadLen = sizeof(PBMsgHead);
+		int32_t iBodyLen = msg.ByteSizeLong();
+
+		PBMsgHead head;
+		head.iSize = iHeadLen + iBodyLen;
+		head.iType = iType;
+		head.iCmd = iCmd;
+		head.idSeq = info.iSeqNum;
+
+		SendData* itemObjPtr = new SendData;
+		itemObjPtr->type = type;
+		itemObjPtr->iSerialNum = info.iSessionId;
+		itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(PBMsgHead));
+		itemObjPtr->sData.append(msg.SerializeAsString());
+
+		Command command;
+		command.type = Command::send_data;
+		command.args.send_data.ptrData = itemObjPtr;
+		ptrThread->push(command);
+
+
+		return true;
+	}
+
+	bool OutputStream::sendPBMsgUser(MessageInfo info, const ::google::protobuf::Message& msg)
+	{
+		uint32_t iThreadId = 0;
+
+		ConnetionType type = info.iConnetionType;
+
+		switch (type)
+		{
+		case apie::ConnetionType::CT_NONE:
+		{
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
+			if (ptrConnection == nullptr)
+			{
+				auto ptrClient = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
+				if (ptrClient == nullptr)
+				{
+					return false;
+				}
+				else
+				{
+					iThreadId = ptrClient->getTId();
+					type = ConnetionType::CT_CLIENT;
+				}
+			}
+			else
+			{
+				iThreadId = ptrConnection->getTId();
+				type = ConnetionType::CT_SERVER;
+			}
+			break;
+		}
+		case apie::ConnetionType::CT_SERVER:
+		{
+			auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
+			if (ptrConnection == nullptr)
+			{
+				return false;
+			}
+
+			iThreadId = ptrConnection->getTId();
+			break;
+		}
+		case apie::ConnetionType::CT_CLIENT:
+		{
+			auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
+			if (ptrConnection == nullptr)
+			{
+				return false;
+			}
+
+			iThreadId = ptrConnection->getTId();
+			break;
+		}
+		default:
+			break;
+		}
+
+		auto ptrThread = CtxSingleton::get().getThreadById(iThreadId);
+		if (ptrThread == nullptr)
+		{
+			return false;
+		}
+
+		auto [iType, iCmd] = SplitOpcode(info.iOpcode);
+		int32_t iHeadLen = sizeof(PBMsgUser);
+		int32_t iBodyLen = msg.ByteSizeLong();
+
+		PBMsgUser head;
+		head.iSize = iHeadLen + iBodyLen;
+		head.iType = iType;
+		head.iCmd = iCmd;
+		head.idSeq = info.iSeqNum;
+
+		head.iUserId = info.iUserId;
+
+		SendData* itemObjPtr = new SendData;
+		itemObjPtr->type = type;
+		itemObjPtr->iSerialNum = info.iSessionId;
+		itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(PBMsgUser));
+		itemObjPtr->sData.append(msg.SerializeAsString());
+
+		Command command;
+		command.type = Command::send_data;
+		command.args.send_data.ptrData = itemObjPtr;
+		ptrThread->push(command);
+
+
+		return true;
+	}
+
+
 	bool OutputStream::sendMsgByStr(MessageInfo info, const std::string& msg)
 	{
 		info.setFlags(0);

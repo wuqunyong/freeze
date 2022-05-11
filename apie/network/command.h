@@ -35,6 +35,9 @@ namespace apie
 		uint32_t iOpcode = 0;
 		uint32_t iResponseOpcode = 0;
 		ConnetionType iConnetionType = ConnetionType::CT_NONE;
+		ProtocolType iCodec = ProtocolType::PT_None;
+
+		int64_t iUserId = 0;
 
 		void setFlags(uint8_t iFlags)
 		{

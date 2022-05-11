@@ -10,6 +10,7 @@
 #include "apie/network/logger.h"
 #include "apie/network/output_stream.h"
 #include "apie/event/dispatcher_impl.h"
+#include "apie/common/enum_to_int.h"
 
 
 using namespace apie;
@@ -234,6 +235,16 @@ void ClientProxy::setLocalIp(const std::string& ip)
 	m_localIp = ip;
 }
 
+int64_t ClientProxy::getUserId()
+{
+	return m_iUserId;
+}
+
+void ClientProxy::setUserId(int64_t iUserId)
+{
+	m_iUserId = iUserId;
+}
+
 int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
 	if (this->m_hadEstablished != CONNECT_ESTABLISHED)
@@ -243,25 +254,62 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 
 	m_sequenceNumber++;
 
-	if (this->m_maskFlag == 0)
+	switch (m_codecType)
+	{
+	case apie::ProtocolType::PT_PB:
+	{
+		if (this->m_maskFlag == 0)
+		{
+			MessageInfo info;
+			info.iSessionId = this->m_curSerialNum;
+			info.iSeqNum = m_sequenceNumber;
+			info.iOpcode = iOpcode;
+			info.iConnetionType = apie::ConnetionType::CT_CLIENT;
+			apie::network::OutputStream::sendProtobufMsgImpl(info, msg);
+		}
+		else
+		{
+			MessageInfo info;
+			info.iSessionId = this->m_curSerialNum;
+			info.iSeqNum = m_sequenceNumber;
+			info.iOpcode = iOpcode;
+			info.iConnetionType = apie::ConnetionType::CT_CLIENT;
+			info.setFlags(this->m_maskFlag);
+			apie::network::OutputStream::sendMsgWithFlag(info, msg);
+		}
+		break;
+	}
+	case apie::ProtocolType::PT_PBMsgHead:
 	{
 		MessageInfo info;
 		info.iSessionId = this->m_curSerialNum;
 		info.iSeqNum = m_sequenceNumber;
 		info.iOpcode = iOpcode;
 		info.iConnetionType = apie::ConnetionType::CT_CLIENT;
-		apie::network::OutputStream::sendProtobufMsgImpl(info, msg);
+		apie::network::OutputStream::sendPBMsgHead(info, msg);
+		break;
 	}
-	else
+	case apie::ProtocolType::PT_PBMsgUser:
 	{
 		MessageInfo info;
 		info.iSessionId = this->m_curSerialNum;
 		info.iSeqNum = m_sequenceNumber;
 		info.iOpcode = iOpcode;
 		info.iConnetionType = apie::ConnetionType::CT_CLIENT;
-		info.setFlags(this->m_maskFlag);
-		apie::network::OutputStream::sendMsgWithFlag(info, msg);
+
+		info.iUserId = this->getUserId();
+		apie::network::OutputStream::sendPBMsgUser(info, msg);
+		break;
 	}
+	default:
+	{
+		std::stringstream ss;
+		ss << "invalid m_codecType: " << toUnderlyingType(m_codecType);
+		throw std::invalid_argument(ss.str());
+		break;
+	}
+	}
+
 	return 0;
 }
 

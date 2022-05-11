@@ -35,10 +35,10 @@ public:
 	void setHookReady(hook::HookPoint point);
 
 	void addMockRole(std::shared_ptr<MockRole> ptrMockRole);
-	std::shared_ptr<MockRole> findMockRole(uint64_t iRoleId);
-	void removeMockRole(uint64_t iRoleId);
+	std::shared_ptr<MockRole> findMockRole(uint64_t iIggId);
+	void removeMockRole(uint64_t iIggId);
 
-	void addSerialNumRole(uint64_t iSerialNum, uint64_t iRoleId);
+	void addSerialNumRole(uint64_t iSerialNum, uint64_t iIggId);
 	std::optional<uint64_t> findRoleIdBySerialNum(uint64_t iSerialNum);
 	void removeSerialNum(uint64_t iSerialNum);
 

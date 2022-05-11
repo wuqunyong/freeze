@@ -4,14 +4,6 @@ identify:
   id: 1
 io_threads: 16
 daemon: false
-clients:
-    socket_address:
-      #address: "10.0.16.59"
-      #address: "45.63.24.92"
-      address: "127.0.0.1"
-      port_value: 16007
-      type: 1
-      mask_flag : 0
 log:
   merge: true
   level: 0
@@ -20,18 +12,11 @@ log:
   show_console: true
   backup: "/usr/local/apie/logs/backup"
   name: "test_client"
-metrics:
-  enable: true
-  ip: "127.0.0.1"
-  udp_port: 8089
-redis_clients:
-- client:
-    type: 1
-    id: 1
-    #host: "10.0.16.59"
-    host: "127.0.0.1"
-    port: 6379
-    passwd: "" 
+login_server:
+  address: "127.0.0.1"
+  port_value: 9339
+  type: 3
+  mask_flag : 0
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
   start: 1

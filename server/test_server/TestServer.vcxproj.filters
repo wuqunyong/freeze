@@ -38,6 +38,12 @@
     <ClCompile Include="module_handler\test_server_module.cpp">
       <Filter>module_handler</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\login.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\pb_msg\business\userinfo.pb.cc">
+      <Filter>pb_msg\business</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logic\test_server.h">
@@ -75,6 +81,12 @@
     </ClInclude>
     <ClInclude Include="module_handler\test_server_module.h">
       <Filter>module_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\login.pb.h">
+      <Filter>pb_msg\business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pb_msg\business\userinfo.pb.h">
+      <Filter>pb_msg\business</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

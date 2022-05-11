@@ -79,6 +79,9 @@ namespace apie
 
 		void setLocalIp(const std::string& ip);
 
+		int64_t getUserId();
+		void setUserId(int64_t iUserId);
+
 	private:
 		void close();
 		int sendConnect();
@@ -119,6 +122,8 @@ namespace apie
 		HeartbeatCB m_heartbeatCb;
 
 		uint32_t m_tId;            //¸½×ÅIOÏß³ÌID
+
+		int64_t m_iUserId = 0;
 
 		static std::mutex m_sync;
 		static std::map<uint64_t, std::shared_ptr<ClientProxy>> m_clientProxy;

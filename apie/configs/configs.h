@@ -167,6 +167,7 @@ namespace apie {
 		APieConfig_Nats nats;
 		APieConfig_Etcd etcd;
 		APieConfig_Limited limited;
+		APieConfig_ClientsSocketAddress login_server;
 		APieConfig_AutoTest auto_test;
 	};
 

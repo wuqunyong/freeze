@@ -261,6 +261,143 @@ void apie::ClientConnection::readPB()
 	}
 }
 
+void apie::ClientConnection::readPBMsgHead()
+{
+	while (true)
+	{
+		struct evbuffer* input = bufferevent_get_input(this->bev);
+		size_t len = evbuffer_get_length(input);
+
+		PBMsgHead head;
+		size_t iHeadLen = sizeof(PBMsgHead);
+		if (len < iHeadLen)
+		{
+			return;
+		}
+
+		size_t iRecvLen = evbuffer_copyout(input, &head, iHeadLen);
+		if (iRecvLen < iHeadLen)
+		{
+			return; // Message incomplete. Waiting for more bytes.
+		}
+
+		uint32_t iTotalLen = head.iSize;
+		if (iTotalLen > MAX_MESSAGE_LENGTH)
+		{
+			// Avoid illegal data (too large message) crashing this client.
+			std::stringstream ss;
+			ss << "active|" << "Message too large: " << iTotalLen << "|Connection closed.";
+			this->close(ss.str());
+			return;
+		}
+
+		if (iTotalLen < iHeadLen)
+		{
+			std::stringstream ss;
+			ss << "active|" << "iTotalLen < iHeadLen: " << iTotalLen << "|Connection closed.";
+			this->close(ss.str());
+			return;
+		}
+
+		uint32_t iBodyLen = iTotalLen - iHeadLen;
+		if (evbuffer_get_length(input) < iTotalLen) 
+		{
+			return; // Message incomplete. Waiting for more bytes.
+		}
+		evbuffer_drain(input, iHeadLen);
+
+
+		std::string sBody;
+		sBody.resize(iBodyLen, '\0');
+		evbuffer_remove(input, &sBody[0], iBodyLen);
+
+		uint32_t iOpcode = MergeOpcode(head.iType, head.iCmd);
+
+		MessageInfo info;
+		info.iSessionId = this->iSerialNum;
+		info.iSeqNum = head.idSeq;
+		info.iOpcode = iOpcode;
+		info.iConnetionType = ConnetionType::CT_CLIENT;
+		info.iCodec = this->iType;
+		this->recv(info, sBody);
+
+		size_t iCurLen = evbuffer_get_length(input);
+		if (iCurLen < iHeadLen)
+		{
+			return;
+		}
+	}
+}
+
+void apie::ClientConnection::readPBMsgUser()
+{
+	while (true)
+	{
+		struct evbuffer* input = bufferevent_get_input(this->bev);
+		size_t len = evbuffer_get_length(input);
+
+		PBMsgUser head;
+		size_t iHeadLen = sizeof(PBMsgUser);
+		if (len < iHeadLen)
+		{
+			return;
+		}
+
+		size_t iRecvLen = evbuffer_copyout(input, &head, iHeadLen);
+		if (iRecvLen < iHeadLen)
+		{
+			return; // Message incomplete. Waiting for more bytes.
+		}
+
+		uint32_t iTotalLen = head.iSize;
+		if (iTotalLen > MAX_MESSAGE_LENGTH)
+		{
+			// Avoid illegal data (too large message) crashing this client.
+			std::stringstream ss;
+			ss << "active|" << "Message too large: " << iTotalLen << "|Connection closed.";
+			this->close(ss.str());
+			return;
+		}
+
+		if (iTotalLen < iHeadLen)
+		{
+			std::stringstream ss;
+			ss << "active|" << "iTotalLen < iHeadLen: " << iTotalLen << "|Connection closed.";
+			this->close(ss.str());
+			return;
+		}
+
+		uint32_t iBodyLen = iTotalLen - iHeadLen;
+		if (evbuffer_get_length(input) < iTotalLen)
+		{
+			return; // Message incomplete. Waiting for more bytes.
+		}
+		evbuffer_drain(input, iHeadLen);
+
+
+		std::string sBody;
+		sBody.resize(iBodyLen, '\0');
+		evbuffer_remove(input, &sBody[0], iBodyLen);
+
+		uint32_t iOpcode = MergeOpcode(head.iType, head.iCmd);
+
+		MessageInfo info;
+		info.iSessionId = this->iSerialNum;
+		info.iSeqNum = head.idSeq;
+		info.iOpcode = iOpcode;
+		info.iConnetionType = ConnetionType::CT_CLIENT;
+		info.iCodec = this->iType;
+		info.iUserId = head.iUserId;
+		this->recv(info, sBody);
+
+		size_t iCurLen = evbuffer_get_length(input);
+		if (iCurLen < iHeadLen)
+		{
+			return;
+		}
+	}
+}
+
 void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 {
 	auto optionalData = apie::service::ServiceHandlerSingleton::get().client.getType(info.iOpcode);
@@ -353,6 +490,16 @@ void apie::ClientConnection::readcb()
 	case ProtocolType::PT_PB:
 	{
 		this->readPB();
+		break;
+	}
+	case ProtocolType::PT_PBMsgHead:
+	{
+		this->readPBMsgHead();
+		break;
+	}
+	case ProtocolType::PT_PBMsgUser:
+	{
+		this->readPBMsgUser();
 		break;
 	}
 	default:

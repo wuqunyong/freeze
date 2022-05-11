@@ -41,16 +41,22 @@ apie::status::Status TestServerMgr::init()
 
 apie::status::Status TestServerMgr::start()
 {
-	std::string ip = apie::CtxSingleton::get().getConfigs()->clients.socket_address.address;
-	uint16_t port = apie::CtxSingleton::get().getConfigs()->clients.socket_address.port_value;
-	uint16_t type = apie::CtxSingleton::get().getConfigs()->clients.socket_address.type;
-	uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->clients.socket_address.mask_flag;
+	std::string ip = apie::CtxSingleton::get().getConfigs()->login_server.address;
+	uint16_t port = apie::CtxSingleton::get().getConfigs()->login_server.port_value;
+	uint16_t type = apie::CtxSingleton::get().getConfigs()->login_server.type;
+	uint32_t maskFlag = apie::CtxSingleton::get().getConfigs()->login_server.mask_flag;
 
 	m_ptrClientProxy = apie::ClientProxy::createClientProxy();
 	auto connectCb = [this](apie::ClientProxy* ptrClient, uint32_t iResult) {
 		if (iResult == 0)
 		{
 			this->setHookReady(apie::hook::HookPoint::HP_Start);
+
+			if (ptrClient != nullptr)
+			{
+				ptrClient->disableReconnectTimer();
+				ptrClient->onActiveClose();
+			}
 		}
 		return true;
 	};
@@ -84,13 +90,13 @@ void TestServerMgr::setHookReady(hook::HookPoint point)
 
 void TestServerMgr::addMockRole(std::shared_ptr<MockRole> ptrMockRole)
 {
-	auto iRoleId = ptrMockRole->getRoleId();
-	m_mockRole[iRoleId] = ptrMockRole;
+	auto iIggId = ptrMockRole->getIggId();
+	m_mockRole[iIggId] = ptrMockRole;
 }
 
-std::shared_ptr<MockRole> TestServerMgr::findMockRole(uint64_t iRoleId)
+std::shared_ptr<MockRole> TestServerMgr::findMockRole(uint64_t iIggId)
 {
-	auto findIte = m_mockRole.find(iRoleId);
+	auto findIte = m_mockRole.find(iIggId);
 	if (findIte == m_mockRole.end())
 	{
 		return nullptr;
@@ -99,14 +105,14 @@ std::shared_ptr<MockRole> TestServerMgr::findMockRole(uint64_t iRoleId)
 	return findIte->second;
 }
 
-void TestServerMgr::removeMockRole(uint64_t iRoleId)
+void TestServerMgr::removeMockRole(uint64_t iIggId)
 {
-	m_mockRole.erase(iRoleId);
+	m_mockRole.erase(iIggId);
 }
 
-void TestServerMgr::addSerialNumRole(uint64_t iSerialNum, uint64_t iRoleId)
+void TestServerMgr::addSerialNumRole(uint64_t iSerialNum, uint64_t iIggId)
 {
-	m_serialNumRole[iSerialNum] = iRoleId;
+	m_serialNumRole[iSerialNum] = iIggId;
 }
 
 std::optional<uint64_t> TestServerMgr::findRoleIdBySerialNum(uint64_t iSerialNum)

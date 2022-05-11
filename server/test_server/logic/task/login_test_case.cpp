@@ -17,7 +17,7 @@ namespace apie {
 		newMsg.set_cmd("login");
 
 		auto ptrAdd = newMsg.add_params();
-		*ptrAdd = std::to_string(this->getRole().getRoleId());
+		*ptrAdd = std::to_string(this->getRole().getIggId());
 
 		this->getRole().pushMsg(newMsg);
 
