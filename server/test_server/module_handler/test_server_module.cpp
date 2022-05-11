@@ -114,9 +114,9 @@ void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 		return;
 	}
 
-	ptrMockRole->handleResponse(info.iSessionId, info.iOpcode, msg);
-	ptrMockRole->handlePendingResponse(info.iSessionId, info.iOpcode, msg);
-	ptrMockRole->handlePendingNotify(info.iSessionId, info.iOpcode, msg);
+	ptrMockRole->handleResponse(info, msg);
+	ptrMockRole->handlePendingResponse(info, msg);
+	ptrMockRole->handlePendingNotify(info, msg);
 }
 
 

@@ -27,7 +27,7 @@ namespace apie {
 		virtual void tearDown();
 
 	public:
-		void pendingNotify_OP_MSG_RESPONSE_ECHO(MockRole* ptrRole, uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		void pendingNotify_OP_MSG_RESPONSE_ECHO(MockRole* ptrRole, MessageInfo info, const std::string& msg);
 
 	public:
 		static std::shared_ptr<TestCase> createMethod(MockRole& role, uint32_t type);

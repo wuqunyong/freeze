@@ -17,7 +17,7 @@ namespace apie {
 		newMsg.set_cmd("logout");
 		this->getRole().pushMsg(newMsg);
 
-		auto bindCb = std::bind(&LogoutTestCase::pendingNotify_Dummy, this, _1, _2, _3, _4);
+		auto bindCb = std::bind(&LogoutTestCase::pendingNotify_Dummy, this, _1, _2, _3);
 		m_id = this->getRole().addPendingNotify(0, bindCb);
 	}
 
@@ -35,7 +35,7 @@ namespace apie {
 		return ETCT_Logout;
 	}
 
-	void LogoutTestCase::pendingNotify_Dummy(MockRole* ptrRole, uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+	void LogoutTestCase::pendingNotify_Dummy(MockRole* ptrRole, MessageInfo info, const std::string& msg)
 	{
 		this->setStatus(ETestCaseStatus::ECS_SUCCESS);
 	}

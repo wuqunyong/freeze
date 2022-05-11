@@ -23,7 +23,7 @@ namespace apie {
 
 	struct PendingResponse
 	{
-		using ResponseCB = std::function<void(MockRole* ptrRole, uint64_t serialNum, uint32_t opcodes, const std::string& msg)>;
+		using ResponseCB = std::function<void(MockRole* ptrRole, MessageInfo info, const std::string& msg)>;
 
 		uint32_t id = 0;
 
@@ -40,7 +40,7 @@ namespace apie {
 
 	struct PendingNotify
 	{
-		using ResponseCB = std::function<void(MockRole* ptrRole, uint64_t serialNum, uint32_t opcodes, const std::string& msg)>;
+		using ResponseCB = std::function<void(MockRole* ptrRole, MessageInfo info, const std::string& msg)>;
 
 		uint32_t id = 0;
 		uint32_t response_opcode = 0;
@@ -54,7 +54,7 @@ namespace apie {
 	{
 	public:
 		using HandlerCb = std::function<void(::pubsub::LOGIC_CMD& msg)>;
-		using HandleResponseCB = std::function<void(MockRole* ptrRole, uint64_t serialNum, uint32_t opcodes, const std::string& msg)>;
+		using HandleResponseCB = std::function<void(MockRole* ptrRole, MessageInfo info, const std::string& msg)>;
 
 		enum ConnectTarget
 		{
@@ -87,7 +87,7 @@ namespace apie {
 		HandleResponseCB findResponseHandler(uint32_t opcodes);
 		void clearResponseHandler();
 
-		void handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		void handleResponse(MessageInfo info, const std::string& msg);
 
 		void setPauseProcess(bool flag);
 
@@ -100,7 +100,7 @@ namespace apie {
 		void removePendingResponseById(uint32_t id);
 		void clearPendingResponse();
 
-		void handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		void handlePendingResponse(MessageInfo info, const std::string& msg);
 
 		
 
@@ -109,7 +109,7 @@ namespace apie {
 		void removePendingNotifyById(uint32_t id);
 		void clearPendingNotify();
 
-		void handlePendingNotify(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		void handlePendingNotify(MessageInfo info, const std::string& msg);
 
 
 		bool hasTimeout(uint64_t iCurMS);
@@ -124,8 +124,8 @@ namespace apie {
 		void handleEcho(::pubsub::LOGIC_CMD& msg);
 		void handleLogout(::pubsub::LOGIC_CMD& msg);
 		
-		void handle_MSG_GAMESERVER_LOGINRESP(uint64_t serialNum, uint32_t opcodes, const std::string& msg);		
-		void handle_MSG_USER_INFO_E_UserFlag_New(uint64_t serialNum, uint32_t opcodes, const std::string& msg);
+		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
+		void handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg);
 
 		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
 

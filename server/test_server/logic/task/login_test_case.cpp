@@ -21,7 +21,7 @@ namespace apie {
 
 		this->getRole().pushMsg(newMsg);
 
-		auto bindCb = std::bind(&LoginTestCase::pendingNotify_OP_MSG_RESPONSE_CLIENT_LOGIN, this, _1, _2, _3, _4);
+		auto bindCb = std::bind(&LoginTestCase::pendingNotify_OP_MSG_RESPONSE_CLIENT_LOGIN, this, _1, _2, _3);
 		m_id = this->getRole().addPendingNotify(OP_MSG_RESPONSE_CLIENT_LOGIN, bindCb);
 	}
 
@@ -40,7 +40,7 @@ namespace apie {
 		return ETCT_Login;
 	}
 
-	void LoginTestCase::pendingNotify_OP_MSG_RESPONSE_CLIENT_LOGIN(MockRole* ptrRole, uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+	void LoginTestCase::pendingNotify_OP_MSG_RESPONSE_CLIENT_LOGIN(MockRole* ptrRole, MessageInfo info, const std::string& msg)
 	{
 		this->setStatus(ETestCaseStatus::ECS_SUCCESS);
 	}

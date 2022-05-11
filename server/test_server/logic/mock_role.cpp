@@ -394,9 +394,9 @@ void MockRole::clearPendingNotify()
 	m_pendingNotify.clear();
 }
 
-void MockRole::handlePendingNotify(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void MockRole::handlePendingNotify(MessageInfo info, const std::string& msg)
 {
-	auto findIte = findPendingNotify(opcodes);
+	auto findIte = findPendingNotify(info.iOpcode);
 	if (!findIte.has_value())
 	{
 		return;
@@ -404,15 +404,18 @@ void MockRole::handlePendingNotify(uint64_t serialNum, uint32_t opcodes, const s
 
 	if (findIte.value().cb)
 	{
-		findIte.value().cb(this, serialNum, opcodes, msg);
+		findIte.value().cb(this, info, msg);
 	}
 	
 	removePendingNotifyById(findIte.value().id);
 }
 
 
-void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void MockRole::handleResponse(MessageInfo info, const std::string& msg)
 {
+	auto serialNum = info.iSeqNum;
+	auto opcodes = info.iOpcode;
+
 	std::string sMsg = msg;
 	do 
 	{
@@ -457,7 +460,7 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 	auto findIte = findResponseHandler(opcodes);
 	if (findIte != nullptr)
 	{
-		findIte(this, serialNum, opcodes, msg);
+		findIte(this, info, msg);
 
 		//std::cout << ss.str() << std::endl;
 		return;
@@ -466,8 +469,9 @@ void MockRole::handleResponse(uint64_t serialNum, uint32_t opcodes, const std::s
 	//std::cout << ss.str() << std::endl;
 }
 
-void MockRole::handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void MockRole::handlePendingResponse(MessageInfo info, const std::string& msg)
 {
+	auto opcodes = info.iOpcode;
 	auto findIte = findPendingResponse(opcodes);
 	if (!findIte.has_value())
 	{
@@ -559,7 +563,7 @@ void MockRole::handlePendingResponse(uint64_t serialNum, uint32_t opcodes, const
 
 	if (findIte.value().cb)
 	{
-		findIte.value().cb(this, serialNum, opcodes, msg);
+		findIte.value().cb(this, info, msg);
 	}
 
 	removePendingResponseById(findIte.value().id);
@@ -623,12 +627,19 @@ void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
 	{
 		iSerialNum = m_clientProxy->getSerialNum();
 	}
-	this->handlePendingNotify(iSerialNum, 0, "active close");
+
+	MessageInfo info;
+	info.iSeqNum = iSerialNum;
+	info.iOpcode = 0;
+	this->handlePendingNotify(info, "active close");
 }
 
-void MockRole::handle_MSG_GAMESERVER_LOGINRESP(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void MockRole::handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg)
 {
 	this->setPauseProcess(true);
+
+	auto serialNum = info.iSeqNum;
+	auto opcodes = info.iOpcode;
 
 	auto [iType, iCmd] = SplitOpcode(opcodes);
 	std::stringstream ss;
@@ -695,7 +706,7 @@ void MockRole::handle_MSG_GAMESERVER_LOGINRESP(uint64_t serialNum, uint32_t opco
 	m_target = CT_Gateway;
 }
 
-void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(uint64_t serialNum, uint32_t opcodes, const std::string& msg)
+void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg)
 {
 
 }
