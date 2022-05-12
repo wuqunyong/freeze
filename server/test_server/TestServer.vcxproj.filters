@@ -56,6 +56,15 @@
     <ClCompile Include="..\..\pb_msg\business\decree.pb.cc">
       <Filter>pb_msg\business</Filter>
     </ClCompile>
+    <ClCompile Include="module_handler\role_talent_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="module_handler\role_login_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="module_handler\role_logout_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logic\test_server.h">
@@ -114,6 +123,15 @@
     </ClInclude>
     <ClInclude Include="..\..\pb_msg\init.h">
       <Filter>pb_msg</Filter>
+    </ClInclude>
+    <ClInclude Include="module_handler\role_talent_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="module_handler\role_login_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="module_handler\role_logout_module.h">
+      <Filter>module_handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

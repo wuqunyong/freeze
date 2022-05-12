@@ -5,6 +5,10 @@
 #include "logic/test_runner.h"
 #include "logic/test_server.h"
 
+#include "module_handler/role_login_module.h"
+#include "module_handler/role_logout_module.h"
+#include "module_handler/role_talent_module.h"
+
 namespace apie {
 
 
@@ -31,6 +35,8 @@ void TestServerModule::ready()
 	{
 		MockRole::registerPbOpcodeName(MergeOpcode(elems.type, elems.cmd), elems.pb_name);
 	}
+
+	registerRoleCmd();
 }
 
 void TestServerModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
@@ -144,6 +150,14 @@ void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 	ptrMockRole->handleResponse(info, msg);
 	ptrMockRole->handlePendingResponse(info, msg);
 	ptrMockRole->handlePendingNotify(info, msg);
+}
+
+
+void TestServerModule::registerRoleCmd()
+{
+	RoleLoginModule::registerModule();
+	RoleTalentModule::registerModule();
+	RoleLogoutModule::registerModule();
 }
 
 

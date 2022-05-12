@@ -81,9 +81,6 @@ namespace apie {
 		void clearMsg();
 		void pushMsg(::pubsub::TEST_CMD& msg);
 
-		bool addHandler(const std::string& sModule, const std::string& sCmd, HandlerCb cb);
-		HandlerCb findHandler(const std::string& sModule, const std::string& sCmd);
-
 		bool addResponseHandler(uint32_t opcodes, HandleResponseCB cb);
 		HandleResponseCB findResponseHandler(uint32_t opcodes);
 		void clearResponseHandler();
@@ -112,22 +109,11 @@ namespace apie {
 
 		void handlePendingNotify(MessageInfo info, const std::string& msg);
 
-
 		bool hasTimeout(uint64_t iCurMS);
+		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
 		std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>& getReplyDelay();
 		std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>>& getMergeReplyDelay();
-
-	private:
-		void handleMsg(::pubsub::TEST_CMD& msg);
-
-		static void handleLogin(MockRole& mockRole, ::pubsub::TEST_CMD& msg);
-		static void handleLogout(MockRole& mockRole, ::pubsub::TEST_CMD& msg);
-		
-		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
-		void handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg);
-
-		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
 	public:
 		static std::shared_ptr<MockRole> createMockRole(uint64_t iIggId);
@@ -135,11 +121,15 @@ namespace apie {
 		static bool registerPbOpcodeName(uint32_t iOpcode, const std::string& sName);
 		static std::optional<std::string> getPbNameByOpcode(uint32_t iOpcode);
 
-		uint64_t m_account_id;
-		std::string m_session_key;
+		static bool addHandler(const std::string& sModule, const std::string& sCmd, HandlerCb cb);
+		static HandlerCb findHandler(const std::string& sModule, const std::string& sCmd);
 
-		std::string m_clientRandom;
-		std::string m_sharedKey;
+	private:
+		void handleMsg(::pubsub::TEST_CMD& msg);
+		
+		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
+		void handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg);
+
 
 	private:
 		uint32_t m_id = 0;
@@ -155,7 +145,6 @@ namespace apie {
 
 		bool m_bPauseProcess = false;
 
-		std::map<std::string, std::map<std::string, HandlerCb>> m_cmdHandler; // <module,<cmd,cb>>
 		std::map<uint32_t, HandleResponseCB> m_responseHandler;
 
 		std::map<uint32_t, uint32_t> m_waitResponse; // key:opcode, value:need check status_code
@@ -167,6 +156,7 @@ namespace apie {
 		std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>  m_replyDelay;  // key: request-response, value:delay(ms)
 		std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>> m_mergeReplyDelay; // value:min,max,count,total
 
+		static std::map<std::string, std::map<std::string, HandlerCb>> m_cmdHandler; // <module,<cmd,cb>>
 		static std::map<uint32_t, std::string> s_pbReflect;
 	};
 }

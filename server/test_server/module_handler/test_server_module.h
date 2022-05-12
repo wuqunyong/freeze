@@ -29,6 +29,9 @@ public:
 	static void Cmd_autoTest(::pubsub::LOGIC_CMD& cmd);
 
 	static void handleDefaultOpcodes(MessageInfo info, const std::string& msg);
+
+private:
+	static void registerRoleCmd();
 };
 
 

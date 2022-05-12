@@ -8,6 +8,8 @@
 
 namespace apie {
 
+
+std::map<std::string, std::map<std::string, MockRole::HandlerCb>> MockRole::m_cmdHandler;
 std::map<uint32_t, std::string> MockRole::s_pbReflect;
 
 MockRole::MockRole(uint64_t iIggId) :
@@ -39,10 +41,6 @@ void MockRole::setUp()
 
 	m_bInit = true;
 	APieGetModule<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iIggId);
-
-	this->addHandler("login", "login", std::bind(&MockRole::handleLogin, std::placeholders::_1, std::placeholders::_2));
-	this->addHandler("login", "logout", std::bind(&MockRole::handleLogout, std::placeholders::_1, std::placeholders::_2));
-
 
 	this->addResponseHandler(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), &MockRole::handle_MSG_GAMESERVER_LOGINRESP);
 	this->addResponseHandler(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_UserFlag_New), &MockRole::handle_MSG_USER_INFO_E_UserFlag_New);
@@ -621,34 +619,6 @@ std::optional<std::string> MockRole::getPbNameByOpcode(uint32_t iOpcode)
 	}
 
 	return findIte->second;
-}
-
-void MockRole::handleLogin(MockRole& mockRole, ::pubsub::TEST_CMD& msg)
-{
-	pb::login::LoginC2LS request;
-	request.set_game_id(1);
-	request.set_user_id(mockRole.getIggId());
-	request.set_version(1);
-	mockRole.sendMsg(MergeOpcode(::apie::_MSG_CLIENT_LOGINTOL, 0), request);
-
-	mockRole.addPendingResponse(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), MergeOpcode(::apie::_MSG_CLIENT_LOGINTOL, 0));
-}
-
-
-void MockRole::handleLogout(MockRole& mockRole, ::pubsub::TEST_CMD& msg)
-{
-	APieGetModule<apie::TestServerMgr>()->removeMockRole(mockRole.getIggId());
-
-	uint64_t iSerialNum = 0;
-	if (mockRole.getClientProxy())
-	{
-		iSerialNum = mockRole.getClientProxy()->getSerialNum();
-	}
-
-	MessageInfo info;
-	info.iSeqNum = iSerialNum;
-	info.iOpcode = 0;
-	mockRole.handlePendingNotify(info, "active close");
 }
 
 void MockRole::handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg)
