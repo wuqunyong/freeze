@@ -86,20 +86,20 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 
 	::pubsub::TEST_CMD newMsg;
 
-	uint64_t iRoleId = std::stoull(cmd.params()[0]);
-	auto ptrMockRole = APieGetModule<apie::TestServerMgr>()->findMockRole(iRoleId);
+	uint64_t iIggId = std::stoull(cmd.params()[0]);
+	auto ptrMockRole = APieGetModule<apie::TestServerMgr>()->findMockRole(iIggId);
 	if (ptrMockRole == nullptr)
 	{
-		if (cmd.params()[1] == "login")
+		if (cmd.params()[iModuleIndex] == "login")
 		{
-			ptrMockRole = MockRole::createMockRole(iRoleId);
+			ptrMockRole = MockRole::createMockRole(iIggId);
 			ptrMockRole->start();
 
 			APieGetModule<apie::TestServerMgr>()->addMockRole(ptrMockRole);
 		}
 		else
 		{
-			std::cout << "not login|account:" << iRoleId << std::endl;
+			PIE_LOG("Cmd_client/Cmd_client", PIE_CYCLE_DAY, PIE_WARNING, "not login|IggId:", iIggId);
 			return;
 		}
 	}
@@ -108,15 +108,8 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 	newMsg.set_cmd(cmd.params()[2]);
 	for (int i = 3; i < cmd.params().size(); i++)
 	{
-		if (i == 1)
-		{
-			newMsg.set_cmd(cmd.params()[i]);
-		}
-		else
-		{
-			auto ptrAdd = newMsg.add_params();
-			*ptrAdd = cmd.params()[i];
-		}
+		auto ptrAdd = newMsg.add_params();
+		*ptrAdd = cmd.params()[i];
 	}
 	ptrMockRole->pushMsg(newMsg);
 }
