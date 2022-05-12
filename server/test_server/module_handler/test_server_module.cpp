@@ -69,7 +69,7 @@ void TestServerModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD
 *		client|101|talent|open
 *		client|101|talent|choose|100011
 *		client|101|talent|activate|10001
-*		client|101|talent|logout
+*		client|101|logout
 * 
 */
 void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
