@@ -24,7 +24,7 @@ MockRole::~MockRole()
 
 	if (this->m_clientProxy)
 	{
-		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
+		APieGetModule<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
 
 		this->m_clientProxy->onActiveClose();
 	}

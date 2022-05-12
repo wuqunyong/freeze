@@ -29,7 +29,7 @@ namespace apie {
 		m_ptrRole->start();
 		m_ptrRole->disableCmdTimer();
 
-		apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<apie::TestServerMgr>()->addMockRole(m_ptrRole);
+		APieGetModule<apie::TestServerMgr>()->addMockRole(m_ptrRole);
 	}
 
 	void TestSuite::tearDown()

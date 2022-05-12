@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<apie::LoginMgr>();
+	APieRegisterModule<apie::LoginMgr>();
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();
