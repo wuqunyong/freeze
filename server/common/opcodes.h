@@ -36,6 +36,7 @@ namespace apie {
 		_MSG_GAMESERVER_LOGINRESP = 504,
 		_MSG_MAP_USER_CMD = 701,
 		_MSG_USER_INFO = 720,
+		_MSG_TALENT_CMD = 750,
 
 	};
 

@@ -21,7 +21,7 @@ class RoleLoginModule
 public:
 	static void registerModule();
 
-	static void handleLogin(MockRole& mockRole, ::pubsub::TEST_CMD& msg);
+	static void onLogin(MockRole& mockRole, ::pubsub::TEST_CMD& msg);
 
 public:
 	static inline const std::string s_sName = "login";

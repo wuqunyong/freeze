@@ -5,3 +5,4 @@
 #include "../pb_msg/business/map.pb.h"
 #include "../pb_msg/business/db.pb.h"
 #include "../pb_msg/business/decree.pb.h"
+#include "../pb_msg/business/talent.pb.h"
