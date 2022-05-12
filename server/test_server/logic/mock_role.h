@@ -51,7 +51,7 @@ namespace apie {
 	class MockRole : public std::enable_shared_from_this<MockRole>
 	{
 	public:
-		using HandlerCb = std::function<void(::pubsub::TEST_CMD& msg)>;
+		using HandlerCb = std::function<void(MockRole& mockRole, ::pubsub::TEST_CMD& msg)>;
 		using HandleResponseCB = std::function<void(MockRole* ptrRole, MessageInfo info, const std::string& msg)>;
 
 		enum ConnectTarget
@@ -70,6 +70,9 @@ namespace apie {
 		void start();
 
 		uint64_t getIggId();
+		std::shared_ptr<ClientProxy> getClientProxy();
+		void setClientProxy(std::shared_ptr<ClientProxy> ptrProxy);
+
 		void processCmd();
 		void addTimer(uint64_t interval);
 
@@ -118,8 +121,8 @@ namespace apie {
 	private:
 		void handleMsg(::pubsub::TEST_CMD& msg);
 
-		void handleLogin(::pubsub::TEST_CMD& msg);
-		void handleLogout(::pubsub::TEST_CMD& msg);
+		static void handleLogin(MockRole& mockRole, ::pubsub::TEST_CMD& msg);
+		static void handleLogout(MockRole& mockRole, ::pubsub::TEST_CMD& msg);
 		
 		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
 		void handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg);
