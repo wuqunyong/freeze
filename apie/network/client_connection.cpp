@@ -388,6 +388,7 @@ void apie::ClientConnection::readPBMsgUser()
 		info.iConnetionType = ConnetionType::CT_CLIENT;
 		info.iCodec = this->iType;
 		info.iUserId = head.iUserId;
+		info.s_idSeq = head.s_idSeq;
 		this->recv(info, sBody);
 
 		size_t iCurLen = evbuffer_get_length(input);

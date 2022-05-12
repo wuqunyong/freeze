@@ -38,6 +38,7 @@ namespace apie
 		ProtocolType iCodec = ProtocolType::PT_None;
 
 		int64_t iUserId = 0;
+		uint32_t s_idSeq = 0;
 
 		void setFlags(uint8_t iFlags)
 		{

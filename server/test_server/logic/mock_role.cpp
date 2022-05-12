@@ -125,6 +125,8 @@ void MockRole::processCmd()
 		return;
 	}
 
+	this->sendKeepAlive();
+
 	if (m_configCmd.empty())
 	{
 		return;
@@ -174,7 +176,7 @@ void MockRole::handleMsg(::pubsub::TEST_CMD& msg)
 	if (handler == nullptr)
 	{
 		std::stringstream ss;
-		ss << "invalid sModule:" << sModule << "sCmd:" << sCmd << std::endl;
+		ss << "invalid sModule:" << sModule << ",sCmd:" << sCmd << std::endl;
 		PIE_LOG("Cmd_client/Cmd_client", PIE_CYCLE_DAY, PIE_WARNING, "%s", ss.str().c_str());
 		return;
 	}
@@ -683,7 +685,7 @@ void MockRole::handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::stri
 				ptrShared->sendMsg(MergeOpcode(_MSG_CLIENT_LOGINTOG, 0), request);
 
 				ptrShared->setPauseProcess(false);
-				ptrShared->addWaitResponse(::apie::OP_MSG_RESPONSE_CLIENT_LOGIN, 1);
+				//ptrShared->addWaitResponse(::apie::_MSG_GAMESERVER_LOGINRESP, 1);
 			}
 		}
 		return true;
@@ -719,6 +721,25 @@ void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::
 }
 
 
+void MockRole::sendKeepAlive()
+{
+	auto iCurTime = time(nullptr);
+	if (iCurTime < m_iNextKeepAliveTime || m_target != CT_Gateway)
+	{
+		return;
+	}
+	m_iNextKeepAliveTime = iCurTime + 120;
+
+	pb::login::LoginKeepAlive request;
+	request.set_s_seqid(m_iSSeqId);
+
+	this->sendMsg(MergeOpcode(_MSG_Login_User_Cmd, pb::login::KeepAlive), request);
+}
+
+void MockRole::setSSeqId(uint32_t iId)
+{
+	m_iSSeqId = iId;
+}
 
 void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {

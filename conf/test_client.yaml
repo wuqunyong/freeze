@@ -30,7 +30,12 @@ pb_map_vec :
   - { type:   720, cmd:   4, pb_name: "pb.userinfo.SearchResp"}
   - { type:   720, cmd:   5, pb_name: "pb.userinfo.NewUser"}
   - { type:   720, cmd:   6, pb_name: "pb.userinfo.AsyncUserDatasResp"}
+  - { type:   750, cmd:   1, pb_name: "pb.talent.Talent_Login_Notice"}
+  - { type:   750, cmd:   2, pb_name: "pb.talent.Talent_BaseChange_Notice"}
   - { type:   750, cmd:   3, pb_name: "pb.talent.Talent_ElemsChange_Notice"}
+  - { type:   750, cmd:  11, pb_name: "pb.talent.Talent_Open_Response"}
+  - { type:   750, cmd:  13, pb_name: "pb.talent.Talent_Choose_Response"}
+  - { type:   750, cmd:  15, pb_name: "pb.talent.Talent_Activate_Response"}
   - { type:  1001, cmd:   0, pb_name: "pb.db.User_DB_Recordset"}
 
 auto_test:               # 自动化测试

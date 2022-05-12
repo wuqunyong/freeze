@@ -112,6 +112,8 @@ namespace apie {
 		bool hasTimeout(uint64_t iCurMS);
 		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
+		void setSSeqId(uint32_t iId);
+
 		std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>& getReplyDelay();
 		std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>>& getMergeReplyDelay();
 
@@ -130,6 +132,7 @@ namespace apie {
 		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
 		void handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg);
 
+		void sendKeepAlive();
 
 	private:
 		uint32_t m_id = 0;
@@ -151,6 +154,9 @@ namespace apie {
 
 		std::list<PendingResponse> m_pendingResponse;
 		std::list<PendingNotify> m_pendingNotify;
+
+		uint32_t m_iSSeqId = 0;
+		uint64_t m_iNextKeepAliveTime = 0;
 		
 
 		std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>  m_replyDelay;  // key: request-response, value:delay(ms)

@@ -147,6 +147,8 @@ void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 		return;
 	}
 
+	ptrMockRole->setSSeqId(info.s_idSeq);
+
 	ptrMockRole->handleResponse(info, msg);
 	ptrMockRole->handlePendingResponse(info, msg);
 	ptrMockRole->handlePendingNotify(info, msg);
