@@ -22,6 +22,13 @@ message LOGIC_CMD
 	repeated string params = 2;
 }
 
+message TEST_CMD
+{
+	string module_name = 1;
+	string cmd = 2;
+	repeated string params = 3;
+}
+
 message CLIENT_PEER_CLOSE
 {
 	uint64 serial_num = 1;

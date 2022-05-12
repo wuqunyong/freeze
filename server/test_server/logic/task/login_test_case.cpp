@@ -13,7 +13,8 @@ namespace apie {
 
 	void LoginTestCase::setUp()
 	{
-		::pubsub::LOGIC_CMD newMsg;
+		::pubsub::TEST_CMD newMsg;
+		newMsg.set_module_name("login");
 		newMsg.set_cmd("login");
 
 		auto ptrAdd = newMsg.add_params();

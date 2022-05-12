@@ -38,19 +38,53 @@ void TestServerModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD
 	auto handlerOpt = LogicCmdHandlerSingleton::get().findCb(msg->cmd());
 	if (!handlerOpt.has_value())
 	{
+		PIE_LOG("Cmd_client/Cmd_client", PIE_CYCLE_DAY, PIE_WARNING, "unregister cmd : %s", msg->ShortDebugString().c_str());
 		return;
 	}
 
-	handlerOpt.value()(*msg);
+	try
+	{
+		handlerOpt.value()(*msg);
+	}
+	catch (std::exception& e)
+	{
+		std::stringstream ss;
+		ss << msg->ShortDebugString();
+		PIE_LOG("Exception/Exception", PIE_CYCLE_DAY, PIE_ERROR, "handle cmd error: %s", ss.str().c_str());
+	}
 }
 
+/*
+* 输入格式:  client|IggId|module_name|cmd|params...
+* 转换到LOGIC_CMD结构:  cmd:client, params:IggId|module_name|cmd|params...	
+*/
 void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 {
 	if (cmd.params_size() < 2)
 	{
-		std::cout << "invalid params" << std::endl;
+		PIE_LOG("Cmd_client/Cmd_client", PIE_CYCLE_DAY, PIE_WARNING, "Expected >= %d, got: %d", 2, cmd.params_size());
 		return;
 	}
+
+	//没有模块命令的，以模块名作为命令
+	std::set<std::string> noModuleCmd;
+	noModuleCmd.insert("login");
+	noModuleCmd.insert("logout");
+
+	auto iModuleIndex = 1;
+	if (noModuleCmd.count(cmd.params()[iModuleIndex]) != 0)
+	{
+		auto ptrAdd = cmd.add_params();
+		*ptrAdd = cmd.params()[iModuleIndex];
+	}
+
+	if (cmd.params_size() < 3)
+	{
+		PIE_LOG("Cmd_client/Cmd_client", PIE_CYCLE_DAY, PIE_WARNING, "Expected >= %d, got: %d", 3, cmd.params_size());
+		return;
+	}
+
+	::pubsub::TEST_CMD newMsg;
 
 	uint64_t iRoleId = std::stoull(cmd.params()[0]);
 	auto ptrMockRole = APieGetModule<apie::TestServerMgr>()->findMockRole(iRoleId);
@@ -70,8 +104,9 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 		}
 	}
 
-	::pubsub::LOGIC_CMD newMsg;
-	for (int i = 1; i < cmd.params().size(); i++)
+	newMsg.set_module_name(cmd.params()[1]);
+	newMsg.set_cmd(cmd.params()[2]);
+	for (int i = 3; i < cmd.params().size(); i++)
 	{
 		if (i == 1)
 		{
@@ -86,6 +121,10 @@ void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 	ptrMockRole->pushMsg(newMsg);
 }
 
+/*
+* 输入格式:  auto_test
+* 转换到LOGIC_CMD结构:  cmd:auto_test, params:
+*/
 void TestServerModule::Cmd_autoTest(::pubsub::LOGIC_CMD& cmd)
 {
 	std::cout << "start auto_test" << std::endl;

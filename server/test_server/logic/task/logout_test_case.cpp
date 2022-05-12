@@ -13,7 +13,8 @@ namespace apie {
 
 	void LogoutTestCase::setUp()
 	{
-		::pubsub::LOGIC_CMD newMsg;
+		::pubsub::TEST_CMD newMsg;
+		newMsg.set_module_name("logout");
 		newMsg.set_cmd("logout");
 		this->getRole().pushMsg(newMsg);
 

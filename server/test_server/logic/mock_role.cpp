@@ -40,9 +40,8 @@ void MockRole::setUp()
 	m_bInit = true;
 	APieGetModule<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iIggId);
 
-	this->addHandler("login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
-	this->addHandler("echo", std::bind(&MockRole::handleEcho, this, std::placeholders::_1));
-	this->addHandler("logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
+	this->addHandler("login", "login", std::bind(&MockRole::handleLogin, this, std::placeholders::_1));
+	this->addHandler("login", "logout", std::bind(&MockRole::handleLogout, this, std::placeholders::_1));
 
 
 	this->addResponseHandler(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), &MockRole::handle_MSG_GAMESERVER_LOGINRESP);
@@ -159,15 +158,16 @@ void MockRole::disableCmdTimer()
 	this->m_cmdTimer->disableTimer();
 }
 
-void MockRole::handleMsg(::pubsub::LOGIC_CMD& msg)
+void MockRole::handleMsg(::pubsub::TEST_CMD& msg)
 {
+	auto sModule = msg.module_name();
 	auto sCmd = msg.cmd();
-	auto handler = this->findHandler(sCmd);
+	auto handler = this->findHandler(sModule, sCmd);
 	if (handler == nullptr)
 	{
 		std::stringstream ss;
-		ss << "invalid cmd:" << sCmd << std::endl;
-		PIE_LOG("MockRole/handleMsg", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+		ss << "invalid sModule:" << sModule << "sCmd:" << sCmd << std::endl;
+		PIE_LOG("Cmd_client/Cmd_client", PIE_CYCLE_DAY, PIE_WARNING, "%s", ss.str().c_str());
 		return;
 	}
 	
@@ -189,32 +189,48 @@ void MockRole::clearMsg()
 	m_iCurIndex = 0;
 }
 
-void MockRole::pushMsg(::pubsub::LOGIC_CMD& msg)
+void MockRole::pushMsg(::pubsub::TEST_CMD& msg)
 {
 	m_configCmd.push_back(msg);
 }
 
-bool MockRole::addHandler(const std::string& name, HandlerCb cb)
+bool MockRole::addHandler(const std::string& sModule, const std::string& sCmd, HandlerCb cb)
 {
-	auto findIte = m_cmdHandler.find(name);
+	auto findIte = m_cmdHandler.find(sModule);
 	if (findIte != m_cmdHandler.end())
 	{
-		return false;
+		auto ite = findIte->second.find(sCmd);
+		if (ite != findIte->second.end())
+		{
+			return false;
+		}
+
+		findIte->second[sCmd] = cb;
+		return true;
 	}
 
-	m_cmdHandler[name] = cb;
+	std::map<std::string, HandlerCb> cmdMap;
+	cmdMap[sCmd] = cb;
+	m_cmdHandler[sModule] = cmdMap;
+
 	return true;
 }
 
-MockRole::HandlerCb MockRole::findHandler(const std::string& name)
+MockRole::HandlerCb MockRole::findHandler(const std::string& sModule, const std::string& sCmd)
 {
-	auto findIte = m_cmdHandler.find(name);
+	auto findIte = m_cmdHandler.find(sModule);
 	if (findIte == m_cmdHandler.end())
 	{
 		return nullptr;
 	}
 
-	return findIte->second;
+	auto ite = findIte->second.find(sCmd);
+	if (ite == findIte->second.end())
+	{
+		return nullptr;
+	}
+
+	return ite->second;
 }
 
 bool MockRole::addResponseHandler(uint32_t opcodes, HandleResponseCB cb)
@@ -597,7 +613,7 @@ std::optional<std::string> MockRole::getPbNameByOpcode(uint32_t iOpcode)
 	return findIte->second;
 }
 
-void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
+void MockRole::handleLogin(::pubsub::TEST_CMD& msg)
 {
 	pb::login::LoginC2LS request;
 	request.set_game_id(1);
@@ -608,17 +624,8 @@ void MockRole::handleLogin(::pubsub::LOGIC_CMD& msg)
 	this->addPendingResponse(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), MergeOpcode(::apie::_MSG_CLIENT_LOGINTOL, 0));
 }
 
-void MockRole::handleEcho(::pubsub::LOGIC_CMD& msg)
-{
-	::login_msg::MSG_REQUEST_ECHO request;
-	request.set_value1(std::stoi(msg.params()[0]));
-	request.set_value2(msg.params()[1]);
 
-	this->sendMsg(::apie::OP_MSG_REQUEST_ECHO, request);
-	this->addPendingResponse(OP_MSG_RESPONSE_ECHO, OP_MSG_REQUEST_ECHO);
-}
-
-void MockRole::handleLogout(::pubsub::LOGIC_CMD& msg)
+void MockRole::handleLogout(::pubsub::TEST_CMD& msg)
 {
 	APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
 

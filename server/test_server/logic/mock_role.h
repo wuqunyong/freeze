@@ -51,7 +51,7 @@ namespace apie {
 	class MockRole : public std::enable_shared_from_this<MockRole>
 	{
 	public:
-		using HandlerCb = std::function<void(::pubsub::LOGIC_CMD& msg)>;
+		using HandlerCb = std::function<void(::pubsub::TEST_CMD& msg)>;
 		using HandleResponseCB = std::function<void(MockRole* ptrRole, MessageInfo info, const std::string& msg)>;
 
 		enum ConnectTarget
@@ -76,10 +76,10 @@ namespace apie {
 		void disableCmdTimer();
 
 		void clearMsg();
-		void pushMsg(::pubsub::LOGIC_CMD& msg);
+		void pushMsg(::pubsub::TEST_CMD& msg);
 
-		bool addHandler(const std::string& name, HandlerCb cb);
-		HandlerCb findHandler(const std::string& name);
+		bool addHandler(const std::string& sModule, const std::string& sCmd, HandlerCb cb);
+		HandlerCb findHandler(const std::string& sModule, const std::string& sCmd);
 
 		bool addResponseHandler(uint32_t opcodes, HandleResponseCB cb);
 		HandleResponseCB findResponseHandler(uint32_t opcodes);
@@ -116,11 +116,10 @@ namespace apie {
 		std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>>& getMergeReplyDelay();
 
 	private:
-		void handleMsg(::pubsub::LOGIC_CMD& msg);
+		void handleMsg(::pubsub::TEST_CMD& msg);
 
-		void handleLogin(::pubsub::LOGIC_CMD& msg);
-		void handleEcho(::pubsub::LOGIC_CMD& msg);
-		void handleLogout(::pubsub::LOGIC_CMD& msg);
+		void handleLogin(::pubsub::TEST_CMD& msg);
+		void handleLogout(::pubsub::TEST_CMD& msg);
 		
 		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
 		void handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg);
@@ -149,11 +148,11 @@ namespace apie {
 
 		bool m_bInit = false;
 		uint64_t m_iCurIndex = 0;
-		std::vector<::pubsub::LOGIC_CMD> m_configCmd;
+		std::vector<::pubsub::TEST_CMD> m_configCmd;
 
 		bool m_bPauseProcess = false;
 
-		std::map<std::string, HandlerCb> m_cmdHandler;
+		std::map<std::string, std::map<std::string, HandlerCb>> m_cmdHandler; // <module,<cmd,cb>>
 		std::map<uint32_t, HandleResponseCB> m_responseHandler;
 
 		std::map<uint32_t, uint32_t> m_waitResponse; // key:opcode, value:need check status_code

@@ -20,7 +20,7 @@ namespace apie {
 
 		std::string sTime = asctime(timeinfo);
 
-		::pubsub::LOGIC_CMD newMsg;
+		::pubsub::TEST_CMD newMsg;
 		newMsg.set_cmd("echo");
 
 		auto ptrAdd1 = newMsg.add_params();

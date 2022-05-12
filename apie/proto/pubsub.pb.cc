@@ -20,6 +20,10 @@ class LOGIC_CMDDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<LOGIC_CMD> _instance;
 } _LOGIC_CMD_default_instance_;
+class TEST_CMDDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<TEST_CMD> _instance;
+} _TEST_CMD_default_instance_;
 class CLIENT_PEER_CLOSEDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CLIENT_PEER_CLOSE> _instance;
@@ -90,7 +94,21 @@ static void InitDefaultsscc_info_SERVER_PEER_CLOSE_pubsub_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_SERVER_PEER_CLOSE_pubsub_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_SERVER_PEER_CLOSE_pubsub_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_pubsub_2eproto[4];
+static void InitDefaultsscc_info_TEST_CMD_pubsub_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::pubsub::_TEST_CMD_default_instance_;
+    new (ptr) ::pubsub::TEST_CMD();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::pubsub::TEST_CMD::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TEST_CMD_pubsub_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_TEST_CMD_pubsub_2eproto}, {}};
+
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_pubsub_2eproto[5];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_pubsub_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_pubsub_2eproto = nullptr;
 
@@ -102,6 +120,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_pubsub_2eproto::offsets[] PROT
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::pubsub::LOGIC_CMD, cmd_),
   PROTOBUF_FIELD_OFFSET(::pubsub::LOGIC_CMD, params_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::pubsub::TEST_CMD, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::pubsub::TEST_CMD, module_name_),
+  PROTOBUF_FIELD_OFFSET(::pubsub::TEST_CMD, cmd_),
+  PROTOBUF_FIELD_OFFSET(::pubsub::TEST_CMD, params_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::pubsub::CLIENT_PEER_CLOSE, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -129,13 +155,15 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_pubsub_2eproto::offsets[] PROT
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::pubsub::LOGIC_CMD)},
-  { 7, -1, sizeof(::pubsub::CLIENT_PEER_CLOSE)},
-  { 16, -1, sizeof(::pubsub::SERVER_PEER_CLOSE)},
-  { 25, -1, sizeof(::pubsub::DISCOVERY_NOTICE)},
+  { 7, -1, sizeof(::pubsub::TEST_CMD)},
+  { 15, -1, sizeof(::pubsub::CLIENT_PEER_CLOSE)},
+  { 24, -1, sizeof(::pubsub::SERVER_PEER_CLOSE)},
+  { 33, -1, sizeof(::pubsub::DISCOVERY_NOTICE)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pubsub::_LOGIC_CMD_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pubsub::_TEST_CMD_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pubsub::_CLIENT_PEER_CLOSE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pubsub::_SERVER_PEER_CLOSE_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::pubsub::_DISCOVERY_NOTICE_default_instance_),
@@ -144,33 +172,36 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_pubsub_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\014pubsub.proto\022\006pubsub\032\027service_discover"
   "y.proto\"(\n\tLOGIC_CMD\022\013\n\003cmd\030\001 \001(\t\022\016\n\006par"
-  "ams\030\002 \003(\t\"U\n\021CLIENT_PEER_CLOSE\022\022\n\nserial"
-  "_num\030\001 \001(\004\022\016\n\006result\030\002 \001(\r\022\014\n\004info\030\003 \001(\t"
-  "\022\016\n\006active\030\004 \001(\r\"U\n\021SERVER_PEER_CLOSE\022\022\n"
-  "\nserial_num\030\001 \001(\004\022\016\n\006result\030\002 \001(\r\022\014\n\004inf"
-  "o\030\003 \001(\t\022\016\n\006active\030\004 \001(\r\"J\n\020DISCOVERY_NOT"
-  "ICE\0226\n\006notice\030\001 \001(\0132&.service_discovery."
-  "MSG_NOTICE_INSTANCE*t\n\tPUB_TOPIC\022\013\n\007PT_N"
-  "one\020\000\022\017\n\013PT_LogicCmd\020d\022\027\n\022PT_ClientPeerC"
-  "lose\020\310\001\022\027\n\022PT_ServerPeerClose\020\311\001\022\027\n\022PT_D"
-  "iscoveryNotice\020\255\002b\006proto3"
+  "ams\030\002 \003(\t\"<\n\010TEST_CMD\022\023\n\013module_name\030\001 \001"
+  "(\t\022\013\n\003cmd\030\002 \001(\t\022\016\n\006params\030\003 \003(\t\"U\n\021CLIEN"
+  "T_PEER_CLOSE\022\022\n\nserial_num\030\001 \001(\004\022\016\n\006resu"
+  "lt\030\002 \001(\r\022\014\n\004info\030\003 \001(\t\022\016\n\006active\030\004 \001(\r\"U"
+  "\n\021SERVER_PEER_CLOSE\022\022\n\nserial_num\030\001 \001(\004\022"
+  "\016\n\006result\030\002 \001(\r\022\014\n\004info\030\003 \001(\t\022\016\n\006active\030"
+  "\004 \001(\r\"J\n\020DISCOVERY_NOTICE\0226\n\006notice\030\001 \001("
+  "\0132&.service_discovery.MSG_NOTICE_INSTANC"
+  "E*t\n\tPUB_TOPIC\022\013\n\007PT_None\020\000\022\017\n\013PT_LogicC"
+  "md\020d\022\027\n\022PT_ClientPeerClose\020\310\001\022\027\n\022PT_Serv"
+  "erPeerClose\020\311\001\022\027\n\022PT_DiscoveryNotice\020\255\002b"
+  "\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_pubsub_2eproto_deps[1] = {
   &::descriptor_table_service_5fdiscovery_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pubsub_2eproto_sccs[4] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pubsub_2eproto_sccs[5] = {
   &scc_info_CLIENT_PEER_CLOSE_pubsub_2eproto.base,
   &scc_info_DISCOVERY_NOTICE_pubsub_2eproto.base,
   &scc_info_LOGIC_CMD_pubsub_2eproto.base,
   &scc_info_SERVER_PEER_CLOSE_pubsub_2eproto.base,
+  &scc_info_TEST_CMD_pubsub_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_pubsub_2eproto_once;
 static bool descriptor_table_pubsub_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_pubsub_2eproto = {
-  &descriptor_table_pubsub_2eproto_initialized, descriptor_table_protodef_pubsub_2eproto, "pubsub.proto", 465,
-  &descriptor_table_pubsub_2eproto_once, descriptor_table_pubsub_2eproto_sccs, descriptor_table_pubsub_2eproto_deps, 4, 1,
+  &descriptor_table_pubsub_2eproto_initialized, descriptor_table_protodef_pubsub_2eproto, "pubsub.proto", 527,
+  &descriptor_table_pubsub_2eproto_once, descriptor_table_pubsub_2eproto_sccs, descriptor_table_pubsub_2eproto_deps, 5, 1,
   schemas, file_default_instances, TableStruct_pubsub_2eproto::offsets,
-  file_level_metadata_pubsub_2eproto, 4, file_level_enum_descriptors_pubsub_2eproto, file_level_service_descriptors_pubsub_2eproto,
+  file_level_metadata_pubsub_2eproto, 5, file_level_enum_descriptors_pubsub_2eproto, file_level_service_descriptors_pubsub_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -425,6 +456,280 @@ void LOGIC_CMD::InternalSwap(LOGIC_CMD* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata LOGIC_CMD::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void TEST_CMD::InitAsDefaultInstance() {
+}
+class TEST_CMD::_Internal {
+ public:
+};
+
+TEST_CMD::TEST_CMD()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:pubsub.TEST_CMD)
+}
+TEST_CMD::TEST_CMD(const TEST_CMD& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      params_(from.params_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  module_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_module_name().empty()) {
+    module_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.module_name_);
+  }
+  cmd_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_cmd().empty()) {
+    cmd_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.cmd_);
+  }
+  // @@protoc_insertion_point(copy_constructor:pubsub.TEST_CMD)
+}
+
+void TEST_CMD::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_TEST_CMD_pubsub_2eproto.base);
+  module_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  cmd_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+TEST_CMD::~TEST_CMD() {
+  // @@protoc_insertion_point(destructor:pubsub.TEST_CMD)
+  SharedDtor();
+}
+
+void TEST_CMD::SharedDtor() {
+  module_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  cmd_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void TEST_CMD::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const TEST_CMD& TEST_CMD::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_TEST_CMD_pubsub_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void TEST_CMD::Clear() {
+// @@protoc_insertion_point(message_clear_start:pubsub.TEST_CMD)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  params_.Clear();
+  module_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  cmd_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _internal_metadata_.Clear();
+}
+
+const char* TEST_CMD::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // string module_name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_module_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "pubsub.TEST_CMD.module_name"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string cmd = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_cmd();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "pubsub.TEST_CMD.cmd"));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated string params = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_params();
+            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "pubsub.TEST_CMD.params"));
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* TEST_CMD::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:pubsub.TEST_CMD)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string module_name = 1;
+  if (this->module_name().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_module_name().data(), static_cast<int>(this->_internal_module_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "pubsub.TEST_CMD.module_name");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_module_name(), target);
+  }
+
+  // string cmd = 2;
+  if (this->cmd().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_cmd().data(), static_cast<int>(this->_internal_cmd().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "pubsub.TEST_CMD.cmd");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_cmd(), target);
+  }
+
+  // repeated string params = 3;
+  for (int i = 0, n = this->_internal_params_size(); i < n; i++) {
+    const auto& s = this->_internal_params(i);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      s.data(), static_cast<int>(s.length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "pubsub.TEST_CMD.params");
+    target = stream->WriteString(3, s, target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:pubsub.TEST_CMD)
+  return target;
+}
+
+size_t TEST_CMD::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:pubsub.TEST_CMD)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated string params = 3;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(params_.size());
+  for (int i = 0, n = params_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      params_.Get(i));
+  }
+
+  // string module_name = 1;
+  if (this->module_name().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_module_name());
+  }
+
+  // string cmd = 2;
+  if (this->cmd().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_cmd());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void TEST_CMD::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:pubsub.TEST_CMD)
+  GOOGLE_DCHECK_NE(&from, this);
+  const TEST_CMD* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<TEST_CMD>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:pubsub.TEST_CMD)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:pubsub.TEST_CMD)
+    MergeFrom(*source);
+  }
+}
+
+void TEST_CMD::MergeFrom(const TEST_CMD& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:pubsub.TEST_CMD)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  params_.MergeFrom(from.params_);
+  if (from.module_name().size() > 0) {
+
+    module_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.module_name_);
+  }
+  if (from.cmd().size() > 0) {
+
+    cmd_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.cmd_);
+  }
+}
+
+void TEST_CMD::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:pubsub.TEST_CMD)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void TEST_CMD::CopyFrom(const TEST_CMD& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:pubsub.TEST_CMD)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TEST_CMD::IsInitialized() const {
+  return true;
+}
+
+void TEST_CMD::InternalSwap(TEST_CMD* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  params_.InternalSwap(&other->params_);
+  module_name_.Swap(&other->module_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  cmd_.Swap(&other->cmd_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata TEST_CMD::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -1204,6 +1509,9 @@ void DISCOVERY_NOTICE::InternalSwap(DISCOVERY_NOTICE* other) {
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::pubsub::LOGIC_CMD* Arena::CreateMaybeMessage< ::pubsub::LOGIC_CMD >(Arena* arena) {
   return Arena::CreateInternal< ::pubsub::LOGIC_CMD >(arena);
+}
+template<> PROTOBUF_NOINLINE ::pubsub::TEST_CMD* Arena::CreateMaybeMessage< ::pubsub::TEST_CMD >(Arena* arena) {
+  return Arena::CreateInternal< ::pubsub::TEST_CMD >(arena);
 }
 template<> PROTOBUF_NOINLINE ::pubsub::CLIENT_PEER_CLOSE* Arena::CreateMaybeMessage< ::pubsub::CLIENT_PEER_CLOSE >(Arena* arena) {
   return Arena::CreateInternal< ::pubsub::CLIENT_PEER_CLOSE >(arena);
