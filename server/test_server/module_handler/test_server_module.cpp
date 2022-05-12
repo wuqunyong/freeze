@@ -63,6 +63,14 @@ void TestServerModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD
 /*
 * 输入格式:  client|IggId|module_name|cmd|params...
 * 转换到LOGIC_CMD结构:  cmd:client, params:IggId|module_name|cmd|params...	
+* 
+* 例子：
+*		client|101|login
+*		client|101|talent|open
+*		client|101|talent|choose|100011
+*		client|101|talent|activate|10001
+*		client|101|talent|logout
+* 
 */
 void TestServerModule::Cmd_client(::pubsub::LOGIC_CMD& cmd)
 {
