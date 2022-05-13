@@ -245,6 +245,11 @@ void ClientProxy::setUserId(int64_t iUserId)
 	m_iUserId = iUserId;
 }
 
+uint64_t ClientProxy::getSequenceNumber()
+{
+	return m_sequenceNumber;
+}
+
 int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
 	if (this->m_hadEstablished != CONNECT_ESTABLISHED)

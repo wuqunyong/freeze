@@ -478,7 +478,7 @@ void MockRole::handleResponse(MessageInfo info, const std::string& msg)
 	ss.str("");
 
 	auto [iType, iCmd] = SplitOpcode(opcodes);
-	ss << "recv|iSerialNum:" << serialNum << "|iOpcode:" << opcodes << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << sMsg;
+	ss << "recv|iSessionId:" << info.iSessionId << "|iSeqId:" << info.iSeqNum << "|iOpcode:" << opcodes << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << sMsg;
 	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
 
 	this->removeWaitResponse(opcodes);
@@ -745,7 +745,8 @@ void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
 	m_clientProxy->sendMsg(iOpcode, msg);
 
-	auto iSerialNum = m_clientProxy->getSerialNum();
+	auto iSessionId = m_clientProxy->getSerialNum();
+	auto iSeqId = m_clientProxy->getSequenceNumber();
 
 	std::stringstream ss;
 	ss << "traffic/" << m_iIggId;
@@ -754,7 +755,7 @@ void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 	ss.str("");
 
 	auto [iType, iCmd] = SplitOpcode(iOpcode);
-	ss << "send|iSerialNum:" << iSerialNum << "|iOpcode:" << iOpcode  << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << msg.ShortDebugString();
+	ss << "send|iSessionId:" << iSessionId << "|iSeqId:" << iSeqId << "|iOpcode:" << iOpcode  << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << msg.ShortDebugString();
 	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
 }
 

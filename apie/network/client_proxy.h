@@ -62,6 +62,7 @@ namespace apie
 		void onRecvPackage(uint64_t iSerialNum, ::google::protobuf::Message* ptrMsg);
 
 		int32_t sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
+		uint64_t getSequenceNumber();
 
 		template <typename Response>
 		std::shared_ptr<Response> syncSendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
