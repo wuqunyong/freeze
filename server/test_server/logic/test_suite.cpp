@@ -175,6 +175,7 @@ namespace apie {
 				if (m_taskList[m_runTaskIndex]->hasTimeout(iCurMs))
 				{
 					m_taskList[m_runTaskIndex]->tearDown();
+					m_taskList[m_runTaskIndex]->getRole().clearMsg();
 					m_taskList[m_runTaskIndex]->addCompleteLoop();
 
 					m_taskList[m_runTaskIndex]->addFailureCount();

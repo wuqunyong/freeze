@@ -148,8 +148,8 @@ void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 		return;
 	}
 
-	uint64_t iRoleId = iRoleIdOpt.value();
-	auto ptrMockRole = APieGetModule<apie::TestServerMgr>()->findMockRole(iRoleId);
+	uint64_t iIggId = iRoleIdOpt.value();
+	auto ptrMockRole = APieGetModule<apie::TestServerMgr>()->findMockRole(iIggId);
 	if (ptrMockRole == nullptr)
 	{
 		return;

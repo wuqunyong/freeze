@@ -685,7 +685,7 @@ void MockRole::handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::stri
 				ptrShared->sendMsg(MergeOpcode(_MSG_CLIENT_LOGINTOG, 0), request);
 
 				ptrShared->setPauseProcess(false);
-				//ptrShared->addWaitResponse(::apie::_MSG_GAMESERVER_LOGINRESP, 1);
+				//ptrShared->addWaitResponse(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_UserFlag_New), 1);
 			}
 		}
 		return true;
