@@ -10,7 +10,7 @@
 #include "module_handler/role_talent_module.h"
 
 #include "logic/task/login_test_case.h"
-#include "logic/task/echo_test_case.h"
+#include "logic/task/talent_test_case.h"
 #include "logic/task/logout_test_case.h"
 
 namespace apie {
@@ -162,8 +162,9 @@ void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 	ptrMockRole->setSSeqId(info.s_idSeq);
 
 	ptrMockRole->handleResponse(info, msg);
-	ptrMockRole->handlePendingResponse(info, msg);
-	ptrMockRole->handlePendingNotify(info, msg);
+
+	ptrMockRole->handleWaitResponse(info, msg);
+	ptrMockRole->handleWaitRPC(info, msg);
 }
 
 
@@ -177,7 +178,7 @@ void TestServerModule::registerRoleCmd()
 void TestServerModule::registerTestCase()
 {
 	TestCaseFactory::registerFactory(LoginTestCase::getFactoryType(), LoginTestCase::createMethod);
-	TestCaseFactory::registerFactory(EchoTestCase::getFactoryType(), EchoTestCase::createMethod);
+	TestCaseFactory::registerFactory(TalentTestCase::getFactoryType(), TalentTestCase::createMethod);
 	TestCaseFactory::registerFactory(LogoutTestCase::getFactoryType(), LogoutTestCase::createMethod);
 }
 

@@ -2,7 +2,7 @@ identify:
   realm: 1
   type: 7
   id: 1
-io_threads: 16
+io_threads: 32
 daemon: false
 log:
   merge: true
@@ -13,8 +13,8 @@ log:
   backup: "/usr/local/apie/logs/backup"
   name: "test_client"
 login_server:
-  # address: "127.0.0.1"
-  address: "10.0.3.8"
+  address: "127.0.0.1"
+  # address: "10.0.3.8"
   port_value: 9339
   type: 3
   mask_flag : 0
@@ -41,8 +41,8 @@ pb_map_vec :
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
   start: 1
-  stop: 20
-  ramp_up_interval: 10000
+  stop: 10
+  ramp_up_interval: 1000
   ramp_up_nums: 5
   task_suite:
   - task_case:
@@ -50,10 +50,6 @@ auto_test:               # 自动化测试
       loop_count: 1
       loop_interval_ms: 10
   - task_case:
-      case_type: 2
-      loop_count: 1000
-      loop_interval_ms: 100
-  - task_case:
-      case_type: 3
+      case_type: 1000
       loop_count: 1
       loop_interval_ms: 10               

@@ -32,8 +32,5 @@ namespace apie {
 	public:
 		static std::shared_ptr<TestCase> createMethod(MockRole& role, uint32_t type);
 		static uint32_t getFactoryType();
-
-	private:
-		uint32_t m_id;
 	};
 }

@@ -29,9 +29,9 @@
     <ClCompile Include="..\..\pb_msg\business\talent.pb.cc" />
     <ClCompile Include="..\..\pb_msg\business\userinfo.pb.cc" />
     <ClCompile Include="logic\mock_role.cpp" />
-    <ClCompile Include="logic\task\echo_test_case.cpp" />
     <ClCompile Include="logic\task\login_test_case.cpp" />
     <ClCompile Include="logic\task\logout_test_case.cpp" />
+    <ClCompile Include="logic\task\talent_test_case.cpp" />
     <ClCompile Include="logic\test_case.cpp" />
     <ClCompile Include="logic\test_runner.cpp" />
     <ClCompile Include="logic\test_server.cpp" />
@@ -54,9 +54,9 @@
     <ClInclude Include="..\..\pb_msg\business\userinfo.pb.h" />
     <ClInclude Include="..\..\pb_msg\init.h" />
     <ClInclude Include="logic\mock_role.h" />
-    <ClInclude Include="logic\task\echo_test_case.h" />
     <ClInclude Include="logic\task\login_test_case.h" />
     <ClInclude Include="logic\task\logout_test_case.h" />
+    <ClInclude Include="logic\task\talent_test_case.h" />
     <ClInclude Include="logic\test_case.h" />
     <ClInclude Include="logic\test_runner.h" />
     <ClInclude Include="logic\test_server.h" />

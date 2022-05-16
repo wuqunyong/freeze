@@ -293,7 +293,7 @@ bool MockRole::hasTimeout(uint64_t iCurMS)
 		}
 	}
 
-	for (const auto& elems : m_pendingNotify)
+	for (const auto& elems : m_pendingRPC)
 	{
 		if (iCurMS > elems.expired_at_ms)
 		{
@@ -324,7 +324,59 @@ uint32_t MockRole::waitResponse(uint32_t response, uint32_t request, HandleRespo
 	return m_id;
 }
 
-std::optional<PendingResponse> MockRole::findPendingResponse(uint32_t response)
+void MockRole::waitRPC(uint32_t iRPCId, uint32_t request, HandleResponseCB cb, uint32_t timeout)
+{
+	auto iCurMs = Ctx::getCurMilliseconds();
+
+	PendingRPC pendingObj;
+	pendingObj.id = iRPCId;
+	pendingObj.request_opcode = request;
+	pendingObj.request_time = iCurMs;
+	pendingObj.response_opcode = 0;
+	pendingObj.cb = cb;
+	pendingObj.timeout = timeout;
+	pendingObj.expired_at_ms = iCurMs + timeout;
+
+	m_pendingRPC.push_back(pendingObj);
+}
+
+std::optional<PendingRPC> MockRole::findWaitRPC(uint32_t iRPCId)
+{
+	for (auto& elems : m_pendingRPC)
+	{
+		if (elems.id == iRPCId)
+		{
+			return std::make_optional(elems);
+		}
+	}
+
+	return std::nullopt;
+}
+
+void MockRole::handleWaitRPC(MessageInfo info, const std::string& msg)
+{
+	auto findIte = findWaitRPC(info.iSeqNum);
+	if (!findIte.has_value())
+	{
+		return;
+	}
+
+	findIte.value().request_opcode = info.iOpcode;
+	if (findIte.value().cb)
+	{
+		findIte.value().cb(this, info, msg);
+	}
+
+	auto iCurMs = Ctx::getCurMilliseconds();
+	auto iDelay = iCurMs - findIte.value().request_time;
+	std::tuple<uint32_t, uint32_t> key = { findIte.value().request_opcode, findIte.value().response_opcode };
+	this->calculateCostTime(key, iDelay);
+
+
+	removeWaitRPC(findIte.value().id);
+}
+
+std::optional<PendingResponse> MockRole::findWaitResponse(uint32_t response)
 {
 	for (auto& elems : m_pendingResponse)
 	{
@@ -337,7 +389,7 @@ std::optional<PendingResponse> MockRole::findPendingResponse(uint32_t response)
 	return std::nullopt;
 }
 
-void MockRole::removePendingResponseById(uint32_t id)
+void MockRole::removeWaitResponse(uint32_t id)
 {
 	auto cmp = [id](const PendingResponse& elems) {
 		if (elems.id == id)
@@ -351,46 +403,9 @@ void MockRole::removePendingResponseById(uint32_t id)
 	m_pendingResponse.remove_if(cmp);
 }
 
-void MockRole::clearPendingResponse()
+void MockRole::removeWaitRPC(uint32_t id)
 {
-	m_pendingResponse.clear();
-}
-
-
-uint32_t MockRole::addPendingNotify(uint32_t response, HandleResponseCB cb, uint32_t timeout)
-{
-	m_id++;
-
-	auto iCurMs = Ctx::getCurMilliseconds();
-
-	PendingNotify pendingObj;
-	pendingObj.id = m_id;
-	pendingObj.response_opcode = response;
-	pendingObj.cb = cb;
-	pendingObj.timeout = timeout;
-	pendingObj.expired_at_ms = iCurMs + timeout;
-
-	m_pendingNotify.push_back(pendingObj);
-
-	return m_id;
-}
-
-std::optional<PendingNotify> MockRole::findPendingNotify(uint32_t response)
-{
-	for (auto& elems : m_pendingNotify)
-	{
-		if (elems.response_opcode == response)
-		{
-			return std::make_optional(elems);
-		}
-	}
-
-	return std::nullopt;
-}
-
-void MockRole::removePendingNotifyById(uint32_t id)
-{
-	auto cmp = [id](const PendingNotify& elems) {
+	auto cmp = [id](const PendingRPC& elems) {
 		if (elems.id == id)
 		{
 			return true;
@@ -399,30 +414,8 @@ void MockRole::removePendingNotifyById(uint32_t id)
 		return false;
 	};
 
-	m_pendingNotify.remove_if(cmp);
+	m_pendingRPC.remove_if(cmp);
 }
-
-void MockRole::clearPendingNotify()
-{
-	m_pendingNotify.clear();
-}
-
-void MockRole::handlePendingNotify(MessageInfo info, const std::string& msg)
-{
-	auto findIte = findPendingNotify(info.iOpcode);
-	if (!findIte.has_value())
-	{
-		return;
-	}
-
-	if (findIte.value().cb)
-	{
-		findIte.value().cb(this, info, msg);
-	}
-	
-	removePendingNotifyById(findIte.value().id);
-}
-
 
 void MockRole::handleResponse(MessageInfo info, const std::string& msg)
 {
@@ -480,96 +473,13 @@ void MockRole::handleResponse(MessageInfo info, const std::string& msg)
 	//std::cout << ss.str() << std::endl;
 }
 
-void MockRole::handlePendingResponse(MessageInfo info, const std::string& msg)
+void MockRole::handleWaitResponse(MessageInfo info, const std::string& msg)
 {
 	auto opcodes = info.iOpcode;
-	auto findIte = findPendingResponse(opcodes);
+	auto findIte = findWaitResponse(opcodes);
 	if (!findIte.has_value())
 	{
 		return;
-	}
-
-	auto iCurMs = Ctx::getCurMilliseconds();
-	auto iDelay = iCurMs - findIte.value().request_time;
-
-	std::tuple<uint32_t, uint32_t> key = { findIte.value().request_opcode, findIte.value().response_opcode};
-	auto ite = m_replyDelay.find(key);
-	if (ite == m_replyDelay.end())
-	{
-		std::vector<uint64_t> delayVec;
-		delayVec.push_back(iDelay);
-
-		m_replyDelay[key] = delayVec;
-	}
-	else
-	{
-		if (ite->second.size() > 100)
-		{
-			uint64_t iMin = 0;
-			uint64_t iMax = 0;
-			//uint64_t iAverage = 0;
-			uint64_t iTotal = 0;
-			uint64_t iCount = 0;
-			for (auto& items : ite->second)
-			{
-				if (iMin == 0)
-				{
-					iMin = items;
-				}
-
-				if (iMax == 0)
-				{
-					iMax = items;
-				}
-
-				if (iMin > items)
-				{
-					iMin = items;
-				}
-
-				if (iMax < items)
-				{
-					iMax = items;
-				}
-
-				iCount++;
-
-				iTotal += items;
-			}
-
-			auto findIte = m_mergeReplyDelay.find(key);
-			if (findIte == m_mergeReplyDelay.end())
-			{
-				std::tuple<uint64_t, uint64_t, uint64_t, uint64_t> mergeElem = { iMin, iMax, iCount, iTotal };
-				m_mergeReplyDelay[key] = mergeElem;
-			}
-			else
-			{
-				auto prevElem = m_mergeReplyDelay[key];
-
-				uint64_t iCurMin = std::get<0>(prevElem);
-				if (iMin < iCurMin)
-				{
-					iCurMin = iMin;
-				}
-
-				uint64_t iCurMax = std::get<1>(prevElem);
-				if (iMax > iCurMax)
-				{
-					iCurMax = iMax;
-				}
-
-				uint64_t iCurCount = std::get<2>(prevElem) + iCount;
-				uint64_t iCurTotal = std::get<3>(prevElem) + iTotal;
-
-				std::tuple<uint64_t, uint64_t, uint64_t, uint64_t> mergeElem = { iCurMin, iCurMax, iCurCount, iCurTotal };
-				m_mergeReplyDelay[key] = mergeElem;
-			}
-
-			ite->second.clear();
-		}
-
-		ite->second.push_back(iDelay);
 	}
 
 	if (findIte.value().cb)
@@ -577,7 +487,12 @@ void MockRole::handlePendingResponse(MessageInfo info, const std::string& msg)
 		findIte.value().cb(this, info, msg);
 	}
 
-	removePendingResponseById(findIte.value().id);
+	auto iCurMs = Ctx::getCurMilliseconds();
+	auto iDelay = iCurMs - findIte.value().request_time;
+	std::tuple<uint32_t, uint32_t> key = { findIte.value().request_opcode, findIte.value().response_opcode };
+	this->calculateCostTime(key, iDelay);
+
+	removeWaitResponse(findIte.value().id);
 }
 
 std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iIggId)
@@ -757,12 +672,94 @@ void MockRole::sendKeepAlive()
 	this->sendMsg(MergeOpcode(_MSG_Login_User_Cmd, pb::login::KeepAlive), request);
 }
 
+void MockRole::calculateCostTime(std::tuple<uint32_t, uint32_t> key, uint32_t iDelay)
+{
+	auto ite = m_replyDelay.find(key);
+	if (ite == m_replyDelay.end())
+	{
+		std::vector<uint64_t> delayVec;
+		delayVec.push_back(iDelay);
+
+		m_replyDelay[key] = delayVec;
+	}
+	else
+	{
+		if (ite->second.size() > 100)
+		{
+			uint64_t iMin = 0;
+			uint64_t iMax = 0;
+			//uint64_t iAverage = 0;
+			uint64_t iTotal = 0;
+			uint64_t iCount = 0;
+			for (auto& items : ite->second)
+			{
+				if (iMin == 0)
+				{
+					iMin = items;
+				}
+
+				if (iMax == 0)
+				{
+					iMax = items;
+				}
+
+				if (iMin > items)
+				{
+					iMin = items;
+				}
+
+				if (iMax < items)
+				{
+					iMax = items;
+				}
+
+				iCount++;
+
+				iTotal += items;
+			}
+
+			auto findIte = m_mergeReplyDelay.find(key);
+			if (findIte == m_mergeReplyDelay.end())
+			{
+				std::tuple<uint64_t, uint64_t, uint64_t, uint64_t> mergeElem = { iMin, iMax, iCount, iTotal };
+				m_mergeReplyDelay[key] = mergeElem;
+			}
+			else
+			{
+				auto prevElem = m_mergeReplyDelay[key];
+
+				uint64_t iCurMin = std::get<0>(prevElem);
+				if (iMin < iCurMin)
+				{
+					iCurMin = iMin;
+				}
+
+				uint64_t iCurMax = std::get<1>(prevElem);
+				if (iMax > iCurMax)
+				{
+					iCurMax = iMax;
+				}
+
+				uint64_t iCurCount = std::get<2>(prevElem) + iCount;
+				uint64_t iCurTotal = std::get<3>(prevElem) + iTotal;
+
+				std::tuple<uint64_t, uint64_t, uint64_t, uint64_t> mergeElem = { iCurMin, iCurMax, iCurCount, iCurTotal };
+				m_mergeReplyDelay[key] = mergeElem;
+			}
+
+			ite->second.clear();
+		}
+
+		ite->second.push_back(iDelay);
+	}
+}
+
 void MockRole::setSSeqId(uint32_t iId)
 {
 	m_iSSeqId = iId;
 }
 
-void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
+uint64_t MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 {
 	m_clientProxy->sendMsg(iOpcode, msg);
 
@@ -778,6 +775,8 @@ void MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg)
 	auto [iType, iCmd] = SplitOpcode(iOpcode);
 	ss << "send|iSessionId:" << iSessionId << "|iSeqId:" << iSeqId << "|iOpcode:" << iOpcode  << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << msg.ShortDebugString();
 	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
+
+	return iSeqId;
 }
 
 }

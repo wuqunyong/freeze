@@ -20,7 +20,7 @@ namespace apie {
 	enum ETestCaseType
 	{
 		ETCT_Login = 1,
-		ETCT_Echo,
+		ETCT_Talent,
 		ETCT_Logout = 1000,
 	};
 

@@ -48,6 +48,23 @@ namespace apie {
 		uint64_t expired_at_ms;
 	};
 
+	struct PendingRPC
+	{
+		using ResponseCB = std::function<void(MockRole* ptrRole, MessageInfo info, const std::string& msg)>;
+
+		uint32_t id = 0;
+
+		time_t request_time = 0;
+		uint32_t request_opcode = 0;
+
+		time_t response_time = 0;
+		uint32_t response_opcode = 0;
+
+		ResponseCB cb;
+		uint32_t timeout = 1000;
+		uint64_t expired_at_ms;
+	};
+
 	class MockRole : public std::enable_shared_from_this<MockRole>
 	{
 	public:
@@ -89,22 +106,22 @@ namespace apie {
 
 		void setPauseProcess(bool flag);
 
-		uint32_t waitResponse(uint32_t response, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 10000);
-		std::optional<PendingResponse> findPendingResponse(uint32_t response);
-		void removePendingResponseById(uint32_t id);
-		void clearPendingResponse();
+		uint32_t waitResponse(uint32_t response, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 6000);
+		std::optional<PendingResponse> findWaitResponse(uint32_t response);
+		void removeWaitResponse(uint32_t id);
 
-		void handlePendingResponse(MessageInfo info, const std::string& msg);
+		void handleWaitResponse(MessageInfo info, const std::string& msg);
 
-		uint32_t addPendingNotify(uint32_t response, HandleResponseCB cb, uint32_t timeout = 10000);
-		std::optional<PendingNotify> findPendingNotify(uint32_t response);
-		void removePendingNotifyById(uint32_t id);
-		void clearPendingNotify();
 
-		void handlePendingNotify(MessageInfo info, const std::string& msg);
+		void waitRPC(uint32_t iRPCId, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 6000);
+		std::optional<PendingRPC> findWaitRPC(uint32_t iRPCId);
+		void removeWaitRPC(uint32_t id);
+
+		void handleWaitRPC(MessageInfo info, const std::string& msg);
+
 
 		bool hasTimeout(uint64_t iCurMS);
-		void sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
+		uint64_t sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
 
 		void setSSeqId(uint32_t iId);
 
@@ -131,6 +148,8 @@ namespace apie {
 
 		void sendKeepAlive();
 
+		void calculateCostTime(std::tuple<uint32_t, uint32_t> key, uint32_t iDelay);
+
 	private:
 		uint32_t m_id = 0;
 		uint64_t m_iIggId;
@@ -149,6 +168,7 @@ namespace apie {
 
 		std::list<PendingResponse> m_pendingResponse;
 		std::list<PendingNotify> m_pendingNotify;
+		std::list<PendingRPC> m_pendingRPC;
 
 		uint32_t m_iSSeqId = 0;
 		uint64_t m_iNextKeepAliveTime = 0;
