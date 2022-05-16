@@ -45,8 +45,8 @@ void MockRole::setUp()
 	this->addResponseHandler(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), &MockRole::handle_MSG_GAMESERVER_LOGINRESP);
 
 	//µÇÂ¼·µ»Ø
-	this->addResponseHandler(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_UserFlag_New), &MockRole::handle_MSG_USER_INFO_E_UserFlag_New);
-	this->addResponseHandler(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::ReqChgMap), &MockRole::handle_MSG_USER_INFO_ReqChgMap);
+	this->addResponseHandler(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_UserFlag_New), &MockRole::handle_MSG_USER_INFO);
+	this->addResponseHandler(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::ReqChgMap), &MockRole::handle_MSG_MAP_USER_CMD_ReqChgMap);
 
 	this->processCmd();
 }
@@ -137,11 +137,6 @@ void MockRole::processCmd()
 	while (m_iCurIndex < m_configCmd.size())
 	{
 		if (m_bPauseProcess)
-		{
-			break;
-		}
-
-		if (!m_waitResponse.empty())
 		{
 			break;
 		}
@@ -276,16 +271,6 @@ void MockRole::clearResponseHandler()
 void MockRole::setPauseProcess(bool flag)
 {
 	m_bPauseProcess = false;
-}
-
-void MockRole::addWaitResponse(uint32_t iOpcode, uint32_t iNeedCheck)
-{
-	m_waitResponse[iOpcode] = iNeedCheck;
-}
-
-void MockRole::removeWaitResponse(uint32_t iOpcode)
-{
-	m_waitResponse.erase(iOpcode);
 }
 
 std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>& MockRole::getReplyDelay()
@@ -482,8 +467,6 @@ void MockRole::handleResponse(MessageInfo info, const std::string& msg)
 	auto [iType, iCmd] = SplitOpcode(opcodes);
 	ss << "recv|iSessionId:" << info.iSessionId << "|iSeqId:" << info.iSeqNum << "|iOpcode:" << opcodes << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << sMsg;
 	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
-
-	this->removeWaitResponse(opcodes);
 
 	auto findIte = findResponseHandler(opcodes);
 	if (findIte != nullptr)
@@ -687,7 +670,6 @@ void MockRole::handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::stri
 				ptrShared->sendMsg(MergeOpcode(_MSG_CLIENT_LOGINTOG, 0), request);
 
 				ptrShared->setPauseProcess(false);
-				//ptrShared->addWaitResponse(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_UserFlag_New), 1);
 			}
 		}
 		return true;
@@ -697,7 +679,7 @@ void MockRole::handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::stri
 	m_target = CT_Gateway;
 }
 
-void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg)
+void MockRole::handle_MSG_USER_INFO(MessageInfo info, const std::string& msg)
 {
 	auto [iType, iCmd] = SplitOpcode(info.iOpcode);
 	std::stringstream ss;
@@ -713,17 +695,26 @@ void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::
 		return;
 	}
 
-	//pb::userinfo::E_UserFlag_New, pb::userinfo::E_UserFlag_Back
-	if (response.flag() == pb::userinfo::E_UserFlag_New)
+	switch (response.flag())
+	{
+	case pb::userinfo::E_UserFlag_New:
 	{
 		pb::map::Choose_Country request;
 		request.set_country_id(2);
 		this->sendMsg(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::ChooseCountry), request);
 		this->sendMsg(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::CmdEnterMap), request);
+		break;
+	}
+	case pb::userinfo::E_UserFlag_Back:
+	{
+		break;
+	}
+	default:
+		break;
 	}
 }
 
-void MockRole::handle_MSG_USER_INFO_ReqChgMap(MessageInfo info, const std::string& msg)
+void MockRole::handle_MSG_MAP_USER_CMD_ReqChgMap(MessageInfo info, const std::string& msg)
 {
 	auto [iType, iCmd] = SplitOpcode(info.iOpcode);
 	std::stringstream ss;

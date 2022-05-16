@@ -89,18 +89,12 @@ namespace apie {
 
 		void setPauseProcess(bool flag);
 
-		void addWaitResponse(uint32_t iOpcode, uint32_t iNeedCheck);
-		void removeWaitResponse(uint32_t iOpcode);
-
-
 		uint32_t addPendingResponse(uint32_t response, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 3000);
 		std::optional<PendingResponse> findPendingResponse(uint32_t response);
 		void removePendingResponseById(uint32_t id);
 		void clearPendingResponse();
 
 		void handlePendingResponse(MessageInfo info, const std::string& msg);
-
-		
 
 		uint32_t addPendingNotify(uint32_t response, HandleResponseCB cb, uint32_t timeout = 3000);
 		std::optional<PendingNotify> findPendingNotify(uint32_t response);
@@ -131,8 +125,8 @@ namespace apie {
 		
 		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
 
-		void handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg);
-		void handle_MSG_USER_INFO_ReqChgMap(MessageInfo info, const std::string& msg);
+		void handle_MSG_USER_INFO(MessageInfo info, const std::string& msg);
+		void handle_MSG_MAP_USER_CMD_ReqChgMap(MessageInfo info, const std::string& msg);
 		
 
 		void sendKeepAlive();
@@ -152,8 +146,6 @@ namespace apie {
 		bool m_bPauseProcess = false;
 
 		std::map<uint32_t, HandleResponseCB> m_responseHandler;
-
-		std::map<uint32_t, uint32_t> m_waitResponse; // key:opcode, value:need check status_code
 
 		std::list<PendingResponse> m_pendingResponse;
 		std::list<PendingNotify> m_pendingNotify;
