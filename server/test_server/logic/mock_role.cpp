@@ -43,8 +43,10 @@ void MockRole::setUp()
 	APieGetModule<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iIggId);
 
 	this->addResponseHandler(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), &MockRole::handle_MSG_GAMESERVER_LOGINRESP);
+
+	//µÇÂ¼·µ»Ø
 	this->addResponseHandler(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_UserFlag_New), &MockRole::handle_MSG_USER_INFO_E_UserFlag_New);
-	
+	this->addResponseHandler(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::ReqChgMap), &MockRole::handle_MSG_USER_INFO_ReqChgMap);
 
 	this->processCmd();
 }
@@ -711,6 +713,7 @@ void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::
 		return;
 	}
 
+	//pb::userinfo::E_UserFlag_New, pb::userinfo::E_UserFlag_Back
 	if (response.flag() == pb::userinfo::E_UserFlag_New)
 	{
 		pb::map::Choose_Country request;
@@ -720,6 +723,25 @@ void MockRole::handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::
 	}
 }
 
+void MockRole::handle_MSG_USER_INFO_ReqChgMap(MessageInfo info, const std::string& msg)
+{
+	auto [iType, iCmd] = SplitOpcode(info.iOpcode);
+	std::stringstream ss;
+	ss << "handleResponse|m_iIggId:" << m_iIggId << "|serialNum:" << info.iSeqNum << "|iOpcode:" << info.iOpcode << ",iType:" << iType << ",iCmd:" << iCmd;
+
+	pb::map::Req_ChgMap response;
+	bool bResult = response.ParseFromString(msg);
+	if (!bResult)
+	{
+		ASYNC_PIE_LOG("handleResponse/recv", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", ss.str().c_str());
+
+		APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
+		return;
+	}
+
+	pb::map::Choose_Country request;
+	this->sendMsg(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::CmdEnterMap), request);
+}
 
 void MockRole::sendKeepAlive()
 {

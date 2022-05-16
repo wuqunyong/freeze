@@ -130,7 +130,10 @@ namespace apie {
 		void handleMsg(::pubsub::TEST_CMD& msg);
 		
 		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
+
 		void handle_MSG_USER_INFO_E_UserFlag_New(MessageInfo info, const std::string& msg);
+		void handle_MSG_USER_INFO_ReqChgMap(MessageInfo info, const std::string& msg);
+		
 
 		void sendKeepAlive();
 
