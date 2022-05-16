@@ -218,6 +218,8 @@ namespace apie {
 				{
 					m_taskList[m_runTaskIndex]->tearDown();
 					m_taskList[m_runTaskIndex]->getRole().clearMsg();
+					m_taskList[m_runTaskIndex]->getRole().clearWait();
+
 					m_taskList[m_runTaskIndex]->addCompleteLoop();
 
 					if (m_taskList[m_runTaskIndex]->getStatus() == ETestCaseStatus::ECS_SUCCESS)

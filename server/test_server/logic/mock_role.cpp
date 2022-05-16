@@ -417,6 +417,12 @@ void MockRole::removeWaitRPC(uint32_t id)
 	m_pendingRPC.remove_if(cmp);
 }
 
+void MockRole::clearWait()
+{
+	m_pendingResponse.clear();
+	m_pendingRPC.clear();
+}
+
 void MockRole::handleResponse(MessageInfo info, const std::string& msg)
 {
 	auto serialNum = info.iSeqNum;

@@ -119,6 +119,8 @@ namespace apie {
 
 		void handleWaitRPC(MessageInfo info, const std::string& msg);
 
+		void clearWait();
+
 
 		bool hasTimeout(uint64_t iCurMS);
 		uint64_t sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& msg);
@@ -167,7 +169,6 @@ namespace apie {
 		std::map<uint32_t, HandleResponseCB> m_responseHandler;
 
 		std::list<PendingResponse> m_pendingResponse;
-		std::list<PendingNotify> m_pendingNotify;
 		std::list<PendingRPC> m_pendingRPC;
 
 		uint32_t m_iSSeqId = 0;
