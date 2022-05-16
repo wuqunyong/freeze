@@ -163,8 +163,23 @@ void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 
 	ptrMockRole->handleResponse(info, msg);
 
-	ptrMockRole->handleWaitResponse(info, msg);
-	ptrMockRole->handleWaitRPC(info, msg);
+	uint32_t iCount = 0;
+	bool bHandled = false;
+ 	bHandled = ptrMockRole->handleWaitResponse(info, msg);
+	if (bHandled)
+	{
+		iCount += 1;
+	}
+	bHandled = ptrMockRole->handleWaitRPC(info, msg);
+	if (bHandled)
+	{
+		iCount += 1;
+	}
+
+	if (iCount == 0)
+	{
+
+	}
 }
 
 

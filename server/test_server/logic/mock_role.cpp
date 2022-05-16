@@ -353,18 +353,20 @@ std::optional<PendingRPC> MockRole::findWaitRPC(uint32_t iRPCId)
 	return std::nullopt;
 }
 
-void MockRole::handleWaitRPC(MessageInfo info, const std::string& msg)
+bool MockRole::handleWaitRPC(MessageInfo info, const std::string& msg)
 {
 	auto findIte = findWaitRPC(info.iSeqNum);
 	if (!findIte.has_value())
 	{
-		return;
+		return false;
 	}
 
+	bool bHandled = false;
 	findIte.value().response_opcode = info.iOpcode;
 	if (findIte.value().cb)
 	{
 		findIte.value().cb(this, info, msg);
+		bHandled = true;
 	}
 
 	auto iCurMs = Ctx::getCurMilliseconds();
@@ -374,6 +376,8 @@ void MockRole::handleWaitRPC(MessageInfo info, const std::string& msg)
 
 
 	removeWaitRPC(findIte.value().id);
+
+	return bHandled;
 }
 
 std::optional<PendingResponse> MockRole::findWaitResponse(uint32_t response)
@@ -423,7 +427,7 @@ void MockRole::clearWait()
 	m_pendingRPC.clear();
 }
 
-void MockRole::handleResponse(MessageInfo info, const std::string& msg)
+bool MockRole::handleResponse(MessageInfo info, const std::string& msg)
 {
 	auto serialNum = info.iSeqNum;
 	auto opcodes = info.iOpcode;
@@ -471,26 +475,26 @@ void MockRole::handleResponse(MessageInfo info, const std::string& msg)
 	if (findIte != nullptr)
 	{
 		findIte(this, info, msg);
-
-		//std::cout << ss.str() << std::endl;
-		return;
+		return true;
 	}
 
-	//std::cout << ss.str() << std::endl;
+	return false;
 }
 
-void MockRole::handleWaitResponse(MessageInfo info, const std::string& msg)
+bool MockRole::handleWaitResponse(MessageInfo info, const std::string& msg)
 {
 	auto opcodes = info.iOpcode;
 	auto findIte = findWaitResponse(opcodes);
 	if (!findIte.has_value())
 	{
-		return;
+		return false;
 	}
 
+	bool bHandled = false;
 	if (findIte.value().cb)
 	{
 		findIte.value().cb(this, info, msg);
+		bHandled = true;
 	}
 
 	auto iCurMs = Ctx::getCurMilliseconds();
@@ -499,6 +503,8 @@ void MockRole::handleWaitResponse(MessageInfo info, const std::string& msg)
 	this->calculateCostTime(key, iDelay);
 
 	removeWaitResponse(findIte.value().id);
+
+	return bHandled;
 }
 
 std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iIggId)

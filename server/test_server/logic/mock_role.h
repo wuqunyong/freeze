@@ -102,7 +102,7 @@ namespace apie {
 		HandleResponseCB findResponseHandler(uint32_t opcodes);
 		void clearResponseHandler();
 
-		void handleResponse(MessageInfo info, const std::string& msg);
+		bool handleResponse(MessageInfo info, const std::string& msg);
 
 		void setPauseProcess(bool flag);
 
@@ -110,14 +110,14 @@ namespace apie {
 		std::optional<PendingResponse> findWaitResponse(uint32_t response);
 		void removeWaitResponse(uint32_t id);
 
-		void handleWaitResponse(MessageInfo info, const std::string& msg);
+		bool handleWaitResponse(MessageInfo info, const std::string& msg);
 
 
 		void waitRPC(uint32_t iRPCId, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 6000);
 		std::optional<PendingRPC> findWaitRPC(uint32_t iRPCId);
 		void removeWaitRPC(uint32_t id);
 
-		void handleWaitRPC(MessageInfo info, const std::string& msg);
+		bool handleWaitRPC(MessageInfo info, const std::string& msg);
 
 		void clearWait();
 
