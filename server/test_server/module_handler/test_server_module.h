@@ -30,8 +30,9 @@ public:
 
 	static void handleDefaultOpcodes(MessageInfo info, const std::string& msg);
 
-private:
+public:
 	static void registerRoleCmd();
+	static void registerTestCase();
 };
 
 

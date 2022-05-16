@@ -23,8 +23,9 @@ namespace apie {
 	public:
 		LogoutTestCase(MockRole& role, uint32_t type);
 
-		virtual void setUp();
-		virtual void tearDown();
+		void setUp() override;
+		void tearDown() override;
+		void run() override;
 
 	public:
 		void pendingNotify_Dummy(MockRole* ptrRole, MessageInfo info, const std::string& msg);

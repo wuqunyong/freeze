@@ -89,14 +89,14 @@ namespace apie {
 
 		void setPauseProcess(bool flag);
 
-		uint32_t addPendingResponse(uint32_t response, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 3000);
+		uint32_t addPendingResponse(uint32_t response, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 10000);
 		std::optional<PendingResponse> findPendingResponse(uint32_t response);
 		void removePendingResponseById(uint32_t id);
 		void clearPendingResponse();
 
 		void handlePendingResponse(MessageInfo info, const std::string& msg);
 
-		uint32_t addPendingNotify(uint32_t response, HandleResponseCB cb, uint32_t timeout = 3000);
+		uint32_t addPendingNotify(uint32_t response, HandleResponseCB cb, uint32_t timeout = 10000);
 		std::optional<PendingNotify> findPendingNotify(uint32_t response);
 		void removePendingNotifyById(uint32_t id);
 		void clearPendingNotify();

@@ -17,13 +17,16 @@ namespace apie {
 		newMsg.set_module_name("logout");
 		newMsg.set_cmd("logout");
 		this->getRole().pushMsg(newMsg);
-
-		auto bindCb = std::bind(&LogoutTestCase::pendingNotify_Dummy, this, _1, _2, _3);
-		m_id = this->getRole().addPendingNotify(0, bindCb);
 	}
 
 	void LogoutTestCase::tearDown()
 	{
+	}
+
+	void LogoutTestCase::run()
+	{
+		TestCase::run();
+		this->setStatus(ETestCaseStatus::ECS_SUCCESS);
 	}
 
 	std::shared_ptr<TestCase> LogoutTestCase::createMethod(MockRole& role, uint32_t type)
@@ -36,9 +39,5 @@ namespace apie {
 		return ETCT_Logout;
 	}
 
-	void LogoutTestCase::pendingNotify_Dummy(MockRole* ptrRole, MessageInfo info, const std::string& msg)
-	{
-		this->setStatus(ETestCaseStatus::ECS_SUCCESS);
-	}
 }
 

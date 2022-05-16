@@ -21,7 +21,7 @@ namespace apie {
 	{
 		ETCT_Login = 1,
 		ETCT_Echo,
-		ETCT_Logout,
+		ETCT_Logout = 1000,
 	};
 
 	enum class ETestCaseStatus

@@ -17,13 +17,10 @@ namespace apie {
 		newMsg.set_module_name("login");
 		newMsg.set_cmd("login");
 
-		auto ptrAdd = newMsg.add_params();
-		*ptrAdd = std::to_string(this->getRole().getIggId());
-
 		this->getRole().pushMsg(newMsg);
 
-		auto bindCb = std::bind(&LoginTestCase::pendingNotify_OP_MSG_RESPONSE_CLIENT_LOGIN, this, _1, _2, _3);
-		m_id = this->getRole().addPendingNotify(OP_MSG_RESPONSE_CLIENT_LOGIN, bindCb);
+		auto bindCb = std::bind(&LoginTestCase::pendingNotify_Cmd_Login_Notice, this, _1, _2, _3);
+		m_id = this->getRole().addPendingNotify(MergeOpcode(::apie::_MSG_TALENT_CMD, pb::talent::E_Talent_Cmd_Login_Notice), bindCb);
 	}
 
 	void LoginTestCase::tearDown()
@@ -41,7 +38,7 @@ namespace apie {
 		return ETCT_Login;
 	}
 
-	void LoginTestCase::pendingNotify_OP_MSG_RESPONSE_CLIENT_LOGIN(MockRole* ptrRole, MessageInfo info, const std::string& msg)
+	void LoginTestCase::pendingNotify_Cmd_Login_Notice(MockRole* ptrRole, MessageInfo info, const std::string& msg)
 	{
 		this->setStatus(ETestCaseStatus::ECS_SUCCESS);
 	}

@@ -17,8 +17,6 @@ void RoleLoginModule::onLogin(MockRole& mockRole, ::pubsub::TEST_CMD& msg)
 	request.set_user_id(mockRole.getIggId());
 	request.set_version(1);
 	mockRole.sendMsg(MergeOpcode(::apie::_MSG_CLIENT_LOGINTOL, 0), request);
-
-	mockRole.addPendingResponse(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), MergeOpcode(::apie::_MSG_CLIENT_LOGINTOL, 0));
 }
 
 }

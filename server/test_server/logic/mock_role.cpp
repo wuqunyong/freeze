@@ -707,6 +707,14 @@ void MockRole::handle_MSG_USER_INFO(MessageInfo info, const std::string& msg)
 	}
 	case pb::userinfo::E_UserFlag_Back:
 	{
+		pb::map::Choose_Country request;
+		request.set_country_id(3);
+		this->sendMsg(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::ChooseCountry), request);
+
+		pb::map::Req_ChgMap requestChanged;
+		this->sendMsg(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::ReqChgMap), requestChanged);
+
+		this->sendMsg(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::CmdEnterMap), request);
 		break;
 	}
 	default:

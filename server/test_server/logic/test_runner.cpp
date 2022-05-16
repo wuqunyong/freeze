@@ -1,8 +1,6 @@
 #include "logic/test_runner.h"
 
-#include "logic/task/login_test_case.h"
-#include "logic/task/echo_test_case.h"
-#include "logic/task/logout_test_case.h"
+#include "../module_handler/test_server_module.h"
 
 namespace apie {
 	TestRunner::TestRunner()
@@ -41,9 +39,7 @@ namespace apie {
 			m_activePos = m_start;
 		}
 
-		TestCaseFactory::registerFactory(LoginTestCase::getFactoryType(), LoginTestCase::createMethod);
-		TestCaseFactory::registerFactory(EchoTestCase::getFactoryType(), EchoTestCase::createMethod);
-		TestCaseFactory::registerFactory(LogoutTestCase::getFactoryType(), LogoutTestCase::createMethod);
+		TestServerModule::registerTestCase();
 	}
 
 	void TestRunner::run()
