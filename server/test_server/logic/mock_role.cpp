@@ -361,7 +361,7 @@ void MockRole::handleWaitRPC(MessageInfo info, const std::string& msg)
 		return;
 	}
 
-	findIte.value().request_opcode = info.iOpcode;
+	findIte.value().response_opcode = info.iOpcode;
 	if (findIte.value().cb)
 	{
 		findIte.value().cb(this, info, msg);

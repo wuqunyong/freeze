@@ -13,8 +13,8 @@ log:
   backup: "/usr/local/apie/logs/backup"
   name: "test_client"
 login_server:
-  address: "127.0.0.1"
-  # address: "10.0.3.8"
+  # address: "127.0.0.1"
+  address: "10.0.3.8"
   port_value: 9339
   type: 3
   mask_flag : 0
@@ -40,13 +40,17 @@ pb_map_vec :
 
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
-  start: 1
-  stop: 10
+  start: 90001
+  stop: 90002
   ramp_up_interval: 1000
   ramp_up_nums: 5
   task_suite:
   - task_case:
       case_type: 1
+      loop_count: 1
+      loop_interval_ms: 10
+  - task_case:
+      case_type: 2
       loop_count: 1
       loop_interval_ms: 10
   - task_case:
