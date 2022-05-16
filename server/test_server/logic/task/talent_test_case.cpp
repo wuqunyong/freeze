@@ -57,6 +57,8 @@ namespace apie {
 			{
 				uint32_t id = elems;
 				request.add_id(id);
+
+				m_id = id / 10;
 				
 				iCount++;
 				if (iCount >= response.reserve_num())
@@ -96,9 +98,34 @@ namespace apie {
 			return;
 		}
 
-		this->setStatus(ETestCaseStatus::ECS_SUCCESS);
+		::pb::talent::Talent_Activate_Req request;
+		request.set_id(m_id);
+
+		auto iRequestId = MergeOpcode(::apie::_MSG_TALENT_CMD, ::pb::talent::E_Talent_Cmd_Activate_Req);
+		uint64_t iRpcId = getRole().sendMsg(iRequestId, request);
+
+		auto bindCb = std::bind(&TalentTestCase::RPC_onActivate, this, _1, _2, _3);
+		this->getRole().waitRPC(iRpcId, iRequestId, bindCb);
 	}
 
+	void TalentTestCase::RPC_onActivate(MockRole* ptrRole, MessageInfo info, const std::string& msg)
+	{
+		pb::talent::Talent_Activate_Response response;
+		bool bResult = response.ParseFromString(msg);
+		if (!bResult)
+		{
+			this->setStatus(ETestCaseStatus::ECS_FAILURE);
+			return;
+		}
+
+		if (response.error_code() != 0)
+		{
+			this->setStatus(ETestCaseStatus::ECS_FAILURE);
+			return;
+		}
+
+		this->setStatus(ETestCaseStatus::ECS_SUCCESS);
+	}
 
 }
 

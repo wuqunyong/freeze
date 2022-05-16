@@ -29,12 +29,13 @@ namespace apie {
 	public:
 		void RPC_onOpen(MockRole* ptrRole, MessageInfo info, const std::string& msg);
 		void RPC_onChoose(MockRole* ptrRole, MessageInfo info, const std::string& msg);
+		void RPC_onActivate(MockRole* ptrRole, MessageInfo info, const std::string& msg);
 
 	public:
 		static std::shared_ptr<TestCase> createMethod(MockRole& role, uint32_t type);
 		static uint32_t getFactoryType();
 
 	private:
-		uint32_t m_id;
+		uint32_t m_id = 0;
 	};
 }
