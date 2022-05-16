@@ -304,7 +304,7 @@ bool MockRole::hasTimeout(uint64_t iCurMS)
 	return false;
 }
 
-uint32_t MockRole::addPendingResponse(uint32_t response, uint32_t request, HandleResponseCB cb, uint32_t timeout)
+uint32_t MockRole::waitResponse(uint32_t response, uint32_t request, HandleResponseCB cb, uint32_t timeout)
 {
 	m_id++;
 

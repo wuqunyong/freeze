@@ -134,7 +134,9 @@ namespace apie {
 			}
 		}
 
-		if (m_activeSuite.empty())
+		auto iTotalCount = m_stop - m_start ;
+		if (m_activeSuite.empty()
+			&& m_doneSuite.size() >= iTotalCount)
 		{
 			m_done = true;
 

@@ -89,7 +89,7 @@ namespace apie {
 
 		void setPauseProcess(bool flag);
 
-		uint32_t addPendingResponse(uint32_t response, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 10000);
+		uint32_t waitResponse(uint32_t response, uint32_t request, HandleResponseCB cb = nullptr, uint32_t timeout = 10000);
 		std::optional<PendingResponse> findPendingResponse(uint32_t response);
 		void removePendingResponseById(uint32_t id);
 		void clearPendingResponse();

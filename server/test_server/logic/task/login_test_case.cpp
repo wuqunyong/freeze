@@ -20,7 +20,8 @@ namespace apie {
 		this->getRole().pushMsg(newMsg);
 
 		auto bindCb = std::bind(&LoginTestCase::pendingNotify_Cmd_Login_Notice, this, _1, _2, _3);
-		m_id = this->getRole().addPendingNotify(MergeOpcode(::apie::_MSG_TALENT_CMD, pb::talent::E_Talent_Cmd_Login_Notice), bindCb);
+		m_id = this->getRole().waitResponse(MergeOpcode(::apie::_MSG_TALENT_CMD, pb::talent::E_Talent_Cmd_Login_Notice),
+			MergeOpcode(::apie::_MSG_CLIENT_LOGINTOL, 0), bindCb);
 	}
 
 	void LoginTestCase::tearDown()

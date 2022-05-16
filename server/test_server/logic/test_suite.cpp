@@ -67,9 +67,15 @@ namespace apie {
 			Json::Value delay;
 			for (auto& elems : m_ptrRole->getReplyDelay())
 			{
-				uint32_t iK1 = std::get<0>(elems.first);
-				uint32_t iK2 = std::get<1>(elems.first);
-				std::string sKey = std::to_string(iK1) + "->" + std::to_string(iK2);
+				auto tupleK1 = SplitOpcode(std::get<0>(elems.first));
+				auto tupleK2 = SplitOpcode(std::get<1>(elems.first));
+				std::string sKey = "->";
+				{
+					std::stringstream ss;
+					ss << "type:" << std::get<0>(tupleK1) << ",cmd:" << std::get<1>(tupleK1) << " -> " << "type:" << std::get<0>(tupleK2) << ",cmd:" << std::get<1>(tupleK2);
+
+					sKey = ss.str();
+				}
 
 				uint64_t iMin = 0;
 				uint64_t iMax = 0;

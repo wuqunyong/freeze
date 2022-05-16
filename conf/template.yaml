@@ -96,8 +96,8 @@ pb_map_vec :             # 应答操作码与PB结构的映射关系
   - { type:  1001, cmd:   0, pb_name: "pb.db.User_DB_Recordset"}
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
-  start: 1                   # 开始IggID
-  stop: 2000                 # 结束IggID
+  start: 1                   # 开始IggID,包含
+  stop: 2000                 # 结束IggID，不包含
   ramp_up_interval: 1000     # 执行一次间隔多久(单位毫秒)
   ramp_up_nums: 100          # 一次执行多少个IggID[start,stop]
   loop_count: 1              # 循环次数
