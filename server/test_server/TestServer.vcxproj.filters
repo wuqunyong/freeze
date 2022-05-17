@@ -65,6 +65,9 @@
     <ClCompile Include="logic\task\talent_test_case.cpp">
       <Filter>logic\task</Filter>
     </ClCompile>
+    <ClCompile Include="module_data\talent_data.cpp">
+      <Filter>module_data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logic\test_server.h">
@@ -133,6 +136,12 @@
     <ClInclude Include="logic\task\talent_test_case.h">
       <Filter>logic\task</Filter>
     </ClInclude>
+    <ClInclude Include="module_data\role_module_data.h">
+      <Filter>module_data</Filter>
+    </ClInclude>
+    <ClInclude Include="module_data\talent_data.h">
+      <Filter>module_data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -149,6 +158,9 @@
     </Filter>
     <Filter Include="module_handler">
       <UniqueIdentifier>{04e92ebe-a2b5-47ea-98ad-3c5e934bfce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="module_data">
+      <UniqueIdentifier>{f54440b6-5691-4c86-99e3-e6da014c77e3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

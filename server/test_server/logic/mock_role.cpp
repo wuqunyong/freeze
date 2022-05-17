@@ -10,6 +10,7 @@ namespace apie {
 
 
 std::map<std::string, std::map<std::string, MockRole::HandlerCb>> MockRole::m_cmdHandler;
+std::map<uint32_t, MockRole::HandleResponseCB> MockRole::m_dataHandler;
 std::map<uint32_t, std::string> MockRole::s_pbReflect;
 
 MockRole::MockRole(uint64_t iIggId) :
@@ -45,7 +46,7 @@ void MockRole::setUp()
 	this->addResponseHandler(MergeOpcode(::apie::_MSG_GAMESERVER_LOGINRESP, 0), &MockRole::handle_MSG_GAMESERVER_LOGINRESP);
 
 	//µÇÂ¼·µ»Ø
-	this->addResponseHandler(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_UserFlag_New), &MockRole::handle_MSG_USER_INFO);
+	this->addResponseHandler(MergeOpcode(::apie::_MSG_USER_INFO, pb::userinfo::E_Cmd_NewUser), &MockRole::handle_MSG_USER_INFO);
 	this->addResponseHandler(MergeOpcode(::apie::_MSG_MAP_USER_CMD, pb::map::ReqChgMap), &MockRole::handle_MSG_MAP_USER_CMD_ReqChgMap);
 
 	this->processCmd();
@@ -268,6 +269,30 @@ void MockRole::clearResponseHandler()
 	m_responseHandler.clear();
 }
 
+bool MockRole::registerDataHandler(uint32_t opcodes, HandleDataCB cb)
+{
+	auto findIte = m_dataHandler.find(opcodes);
+	if (findIte != m_dataHandler.end())
+	{
+		return false;
+	}
+
+	m_dataHandler[opcodes] = cb;
+	return true;
+}
+
+MockRole::HandleDataCB MockRole::findDataHandler(uint32_t opcodes)
+{
+	auto findIte = m_dataHandler.find(opcodes);
+	if (findIte == m_dataHandler.end())
+	{
+		return nullptr;
+	}
+
+	return findIte->second;
+}
+
+
 void MockRole::setPauseProcess(bool flag)
 {
 	m_bPauseProcess = false;
@@ -378,6 +403,18 @@ bool MockRole::handleWaitRPC(MessageInfo info, const std::string& msg)
 	removeWaitRPC(findIte.value().id);
 
 	return bHandled;
+}
+
+bool MockRole::handleData(MessageInfo info, const std::string& msg)
+{
+	auto findIte = findDataHandler(info.iOpcode);
+	if (findIte == nullptr)
+	{
+		return false;
+	}
+
+	findIte(this, info, msg);
+	return true;
 }
 
 std::optional<PendingResponse> MockRole::findWaitResponse(uint32_t response)
@@ -505,6 +542,11 @@ bool MockRole::handleWaitResponse(MessageInfo info, const std::string& msg)
 	removeWaitResponse(findIte.value().id);
 
 	return bHandled;
+}
+
+RoleModuleData& MockRole::getRoleModuleData()
+{
+	return m_roleModuleData;
 }
 
 std::shared_ptr<MockRole> MockRole::createMockRole(uint64_t iIggId)

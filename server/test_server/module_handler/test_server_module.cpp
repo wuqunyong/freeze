@@ -13,6 +13,8 @@
 #include "logic/task/talent_test_case.h"
 #include "logic/task/logout_test_case.h"
 
+#include "module_data/role_module_data.h"
+
 namespace apie {
 
 
@@ -41,6 +43,7 @@ void TestServerModule::ready()
 	}
 
 	registerRoleCmd();
+	registerData();
 }
 
 void TestServerModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
@@ -163,23 +166,11 @@ void TestServerModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 
 	ptrMockRole->handleResponse(info, msg);
 
-	uint32_t iCount = 0;
-	bool bHandled = false;
- 	bHandled = ptrMockRole->handleWaitResponse(info, msg);
-	if (bHandled)
-	{
-		iCount += 1;
-	}
-	bHandled = ptrMockRole->handleWaitRPC(info, msg);
-	if (bHandled)
-	{
-		iCount += 1;
-	}
+ 	ptrMockRole->handleWaitResponse(info, msg);
+	ptrMockRole->handleWaitRPC(info, msg);
 
-	if (iCount == 0)
-	{
+	ptrMockRole->handleData(info, msg);
 
-	}
 }
 
 
@@ -195,6 +186,11 @@ void TestServerModule::registerTestCase()
 	TestCaseFactory::registerFactory(LoginTestCase::getFactoryType(), LoginTestCase::createMethod);
 	TestCaseFactory::registerFactory(TalentTestCase::getFactoryType(), TalentTestCase::createMethod);
 	TestCaseFactory::registerFactory(LogoutTestCase::getFactoryType(), LogoutTestCase::createMethod);
+}
+
+void TestServerModule::registerData()
+{
+	MockRole::registerDataHandler(MergeOpcode(::apie::_MSG_TALENT_CMD, pb::talent::E_Talent_Cmd_Login_Notice), &TalentData::handleLoginNotice);
 }
 
 }

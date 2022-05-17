@@ -13,6 +13,7 @@
 #include "apie.h"
 
 #include "../../pb_msg/init.h"
+#include "../module_data/role_module_data.h"
 
 
 namespace apie {
@@ -70,6 +71,7 @@ namespace apie {
 	public:
 		using HandlerCb = std::function<void(MockRole& mockRole, ::pubsub::TEST_CMD& msg)>;
 		using HandleResponseCB = std::function<void(MockRole* ptrRole, MessageInfo info, const std::string& msg)>;
+		using HandleDataCB = std::function<void(MockRole* ptrRole, MessageInfo info, const std::string& msg)>;
 
 		enum ConnectTarget
 		{
@@ -118,6 +120,7 @@ namespace apie {
 		void removeWaitRPC(uint32_t id);
 
 		bool handleWaitRPC(MessageInfo info, const std::string& msg);
+		bool handleData(MessageInfo info, const std::string& msg);
 
 		void clearWait();
 
@@ -130,6 +133,8 @@ namespace apie {
 		std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>& getReplyDelay();
 		std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>>& getMergeReplyDelay();
 
+		RoleModuleData& getRoleModuleData();
+
 	public:
 		static std::shared_ptr<MockRole> createMockRole(uint64_t iIggId);
 
@@ -138,6 +143,9 @@ namespace apie {
 
 		static bool addHandler(const std::string& sModule, const std::string& sCmd, HandlerCb cb);
 		static HandlerCb findHandler(const std::string& sModule, const std::string& sCmd);
+
+		static bool registerDataHandler(uint32_t opcodes, HandleDataCB cb);
+		static HandleDataCB findDataHandler(uint32_t opcodes);
 
 	private:
 		void handleMsg(::pubsub::TEST_CMD& msg);
@@ -173,12 +181,13 @@ namespace apie {
 
 		uint32_t m_iSSeqId = 0;
 		uint64_t m_iNextKeepAliveTime = 0;
-		
+		RoleModuleData m_roleModuleData;
 
 		std::map<std::tuple<uint32_t, uint32_t>, std::vector<uint64_t>>  m_replyDelay;  // key: request-response, value:delay(ms)
 		std::map<std::tuple<uint32_t, uint32_t>, std::tuple<uint64_t, uint64_t, uint64_t, uint64_t>> m_mergeReplyDelay; // value:min,max,count,total
 
 		static std::map<std::string, std::map<std::string, HandlerCb>> m_cmdHandler; // <module,<cmd,cb>>
+		static std::map<uint32_t, HandleDataCB> m_dataHandler;
 		static std::map<uint32_t, std::string> s_pbReflect;
 	};
 }

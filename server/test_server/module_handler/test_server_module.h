@@ -33,6 +33,7 @@ public:
 public:
 	static void registerRoleCmd();
 	static void registerTestCase();
+	static void registerData();
 };
 
 
