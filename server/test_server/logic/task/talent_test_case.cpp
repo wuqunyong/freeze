@@ -48,7 +48,7 @@ namespace apie {
 
 		switch (response.error_code())
 		{
-		case 0:
+		case E_ErrorCode_Suc:
 		{
 			uint32_t iCount = 0;
 
@@ -59,7 +59,7 @@ namespace apie {
 				request.add_id(id);
 
 				m_id = id / 10;
-				
+
 				iCount++;
 				if (iCount >= response.reserve_num())
 				{
@@ -72,6 +72,12 @@ namespace apie {
 
 			auto bindCb = std::bind(&TalentTestCase::RPC_onChoose, this, _1, _2, _3);
 			this->getRole().waitRPC(iRpcId, iRequestId, bindCb);
+
+			break;
+		}
+		case E_ErrorCode_Talent_NoPoint:
+		{
+			this->setStatus(ETestCaseStatus::ECS_SUCCESS);
 			break;
 		}
 		default:
@@ -92,7 +98,7 @@ namespace apie {
 			return;
 		}
 
-		if (response.error_code() != 0)
+		if (response.error_code() != E_ErrorCode_Suc)
 		{
 			this->setStatus(ETestCaseStatus::ECS_FAILURE);
 			return;
@@ -118,13 +124,17 @@ namespace apie {
 			return;
 		}
 
-		if (response.error_code() != 0)
+		std::set<uint32_t> successCode;
+		successCode.insert(E_ErrorCode_Suc);
+		successCode.insert(E_ErrorCode_Talent_SlotLock);
+
+		if (successCode.count(response.error_code())  > 0)
 		{
-			this->setStatus(ETestCaseStatus::ECS_FAILURE);
+			this->setStatus(ETestCaseStatus::ECS_SUCCESS);
 			return;
 		}
 
-		this->setStatus(ETestCaseStatus::ECS_SUCCESS);
+		this->setStatus(ETestCaseStatus::ECS_FAILURE);
 	}
 
 }
