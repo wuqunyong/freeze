@@ -21,3 +21,7 @@ nats pixie https://github.com/pixie-io/pixie
 
 C++编程规范
 https://caiorss.github.io/C-Cpp-Notes/cpp-reference-card.html#org4c85db7
+
+
+windows性能监控
+https://www.bilibili.com/video/BV1UA41157cC/?p=11&spm_id_from=pageDriver
