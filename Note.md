@@ -25,3 +25,14 @@ https://caiorss.github.io/C-Cpp-Notes/cpp-reference-card.html#org4c85db7
 
 windows性能监控
 https://www.bilibili.com/video/BV1UA41157cC/?p=11&spm_id_from=pageDriver
+
+
+https://github.com/vogeljo/reset-vassistx
+
+Resets the trial period for Visual Assist X.
+
+This script does the following:
+
+Remove a temporary file "1489AFE4.TMP" in the user's temp directory used by VA
+Remove a registry key "HKEY_CURRENT_USER\SOFTWARE\Licenses" used by VA
+-- Tested on build 10.9.2114.0. Other builds may be immune to this script.
