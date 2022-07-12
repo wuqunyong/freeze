@@ -39,3 +39,7 @@ Remove a registry key "HKEY_CURRENT_USER\SOFTWARE\Licenses" used by VA
 
 
 SetConsoleTitleW
+
+
+xshell替代
+https://github.com/Eugeny/tabby
