@@ -179,7 +179,7 @@ namespace apie {
 	};
 
 
-
+	// NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT
 	class Mysql_BindElem
 	{
 	public:
