@@ -186,9 +186,11 @@
     <ClInclude Include="common\message_traits.h" />
     <ClInclude Include="common\noncopyable.h" />
     <ClInclude Include="common\optional_serializer.h" />
+    <ClInclude Include="common\options.h" />
     <ClInclude Include="common\protobuf_factory.h" />
     <ClInclude Include="common\pure.h" />
     <ClInclude Include="common\string_utils.h" />
+    <ClInclude Include="common\template_util.h" />
     <ClInclude Include="common\time.h" />
     <ClInclude Include="common\time_conversion.h" />
     <ClInclude Include="common\utility.h" />

@@ -142,6 +142,7 @@
     <ClInclude Include="module_data\talent_data.h">
       <Filter>module_data</Filter>
     </ClInclude>
+    <ClInclude Include="component.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">

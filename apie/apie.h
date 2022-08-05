@@ -26,6 +26,7 @@
 #include "apie/common/enum_to_int.h"
 #include "apie/common/file.h"
 #include "apie/common/optional_serializer.h"
+#include "apie/common/options.h"
 
 #include "apie/configs/load_config.h"
 #include "apie/configs/load_config_manager.h"

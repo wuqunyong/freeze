@@ -541,6 +541,12 @@
     <ClInclude Include="base\datagen.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="common\options.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\template_util.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
