@@ -1,0 +1,12 @@
+charset: "utf8" #使用的字符集
+database:       #连接的服务器地址列表
+    -
+        host: "127.0.0.1"   #ip
+        port: 3306          #端口
+        user: "root"        #用户名
+        passwd: "root"      #密码
+    -
+        host: "127.0.0.1"
+        port: 3306
+        user: "root"
+        passwd: "root"
