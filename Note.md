@@ -45,5 +45,9 @@ xshell替代
 https://github.com/Eugeny/tabby
 
 
+xshell 的开源替代方案 WindTerm
+
+
+
 Hexagonal Grids
 hex_linedraw
