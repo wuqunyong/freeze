@@ -7,6 +7,7 @@ import json
 import pymysql
 import yaml
 from pathlib import Path
+import traceback
 
 sDate = time.strftime("%Y%m%d_%H%M%S", time.localtime())
 sLogName = "SyncSql_" + sDate + ".log"
@@ -14,7 +15,7 @@ logging.basicConfig(level=logging.INFO, filename=sLogName, filemode="w", format=
 
 
 sExecuteSqlRecordName = "ExecuteSqlRecord"
-sCreateType = "create"
+sCreateType = "base"
 sUpdateType = "update"
 
 def TraversalDir(listObj, path, sType, sDatabase):
@@ -23,91 +24,84 @@ def TraversalDir(listObj, path, sType, sDatabase):
         for file in files:
             m = os.path.join(path, file)
             if os.path.isdir(m):
-                TraversalDir(listObj, m)
+                continue
             elif os.path.isfile(m):
-                remainder, filename = os.path.split(m)
-                if m.endswith(".sql"):
+                # remainder, filename = os.path.split(m)
+                if file.endswith(".sql"):
                     tData = (sType, sDatabase, m)
                     listObj.append(tData)
 
 def CollectSqlFile(fileList, path):
     with open(path, 'r', encoding="utf-8") as file:
-        try:
-            config = yaml.safe_load(file)
-            sPath, _ = os.path.split(path)
-            logging.info("sql_path:{}".format(sPath))
+        config = yaml.safe_load(file)
+        sPath, _ = os.path.split(path)
+        logging.info("sql_path:{}".format(sPath))
 
-            sCreateDir = os.path.join(sPath, sCreateType)
-            if os.path.exists(sCreateDir):
-                files = os.listdir(sCreateDir)
-                for file in files:
-                    if file.startswith("."):
-                        continue
-                    dbDirName = os.path.join(sCreateDir, file)
-                    if os.path.isdir(dbDirName):
-                        sDbDir = os.path.join(sCreateDir, dbDirName)
-                        TraversalDir(fileList, sDbDir, sCreateType, file)
+        sCreateDir = os.path.join(sPath, sCreateType)
+        if os.path.exists(sCreateDir):
+            files = os.listdir(sCreateDir)
+            for file in files:
+                if file.startswith("."):
+                    continue
+                dbDirName = os.path.join(sCreateDir, file)
+                if os.path.isdir(dbDirName):
+                    sDbDir = os.path.join(sCreateDir, dbDirName)
+                    TraversalDir(fileList, sDbDir, sCreateType, file)
 
-            sUpdateDir = os.path.join(sPath, sUpdateType)
-            if os.path.exists(sUpdateDir):
-                files = os.listdir(sUpdateDir)
-                for file in files:
-                    if file.startswith("."):
-                        continue
-                    dbDirName = os.path.join(sUpdateDir, file)
-                    if os.path.isdir(dbDirName):
-                        sDbDir = os.path.join(sUpdateDir, dbDirName)
-                        TraversalDir(fileList, sDbDir, sUpdateType, file)
-            return True, config
-        except yaml.YAMLError as exc:
-            logging.error("parse yaml error | path:{}".format(path))
-            return False, None
-    return False, None
+        sUpdateDir = os.path.join(sPath, sUpdateType)
+        if os.path.exists(sUpdateDir):
+            files = os.listdir(sUpdateDir)
+            for file in files:
+                if file.startswith("."):
+                    continue
+                dbDirName = os.path.join(sUpdateDir, file)
+                if os.path.isdir(dbDirName):
+                    sDbDir = os.path.join(sUpdateDir, dbDirName)
+                    TraversalDir(fileList, sDbDir, sUpdateType, file)
+        return config
 
 def sortFunc(sTable):
     sPath, sFile = os.path.split(sTable)
     fields = sFile.split("_")
 
+    iLen = len(fields)
     iNum = 0
-    if fields[0].isdigit():
+    if iLen > 0 and fields[0].isdigit():
         iNum = int(fields[0]) * 10000
-    if fields[1].isdigit():
+    if iLen > 1 and fields[1].isdigit():
         iNum += int(fields[1])
-    return iNum
+    tData = (iNum, sTable)
+    return tData
 
 def ParseSql(filename):
-    try:
-        fd = open(filename, 'r', encoding='utf-8')  # 以只读的方式打开sql文件
-        data = fd.readlines()
-        fd.close()
+    fd = open(filename, 'r', encoding='utf-8')  # 以只读的方式打开sql文件
+    data = fd.readlines()
+    fd.close()
 
-        stmts = []
-        DELIMITER = ';'
-        stmt = ''
+    stmts = []
+    DELIMITER = ';'
+    stmt = ''
 
-        for lineno, line in enumerate(data):
-            if not line.strip():
-                continue
+    for lineno, line in enumerate(data):
+        if not line.strip():
+            continue
 
-            if line.startswith('--'):
-                continue
+        if line.startswith('--'):
+            continue
 
-            if 'DELIMITER' in line:
-                DELIMITER = line.split()[1]
-                continue
+        if 'DELIMITER' in line:
+            DELIMITER = line.split()[1]
+            continue
 
-            stmt += line
-            if DELIMITER in line:
-                stmts.append(stmt.strip())
-                stmt = ''
+        stmt += line
+        if DELIMITER in line:
+            stmts.append(stmt.strip())
+            stmt = ''
 
-        if stmt:
-            stmts.append(stmt)
+    if stmt:
+        stmts.append(stmt)
 
-        return stmts
-    except Exception as msg:
-        logging.error("ParseSql error | file:{} | error:{}".format(filename, msg))
-        return None
+    return stmts
 
 def InExecuteSqlRecord(sAddress, fileName):
     sRecordName = sExecuteSqlRecordName + "_" + sAddress + ".txt"
@@ -129,7 +123,7 @@ def AddExecuteSqlRecord(sAddress, fileName):
     with open(sRecordName, "a") as fObj:
         sData = "{}\n".format(fileName)
         fObj.write(sData)
-        logging.info("AddExecuteSqlRecord | file:{} | table:{}".format(sRecordName, fileName))
+        logging.info("AddExecuteSqlRecord | record:{} | table:{}".format(sRecordName, fileName))
 
 def ConnectMysql(bCreate, dConfig, sDatabase, sCharset):
     if bCreate:
@@ -141,7 +135,7 @@ def ConnectMysql(bCreate, dConfig, sDatabase, sCharset):
     return connection
 
 def ExecuteSql(sAddress, bCheck, connection, fileName, lStatement):
-    logging.info("ExecuteSql | sAddress:{} | bCheck:{}| connection:{} | fileName:{} | lStatement:{}".format(
+    logging.info("ExecuteSql | sAddress:{} | bCheck:{} | connection:{} | fileName:{} | lStatement:{}".format(
         sAddress, bCheck, connection, fileName, lStatement))
 
     if len(lStatement) == 0:
@@ -169,14 +163,11 @@ def ExecuteSql(sAddress, bCheck, connection, fileName, lStatement):
 def main(argc, argv ):
     if argc < 2:
         logging.error("invalid argc:{}".format(argc))
-        return
+        raise Exception("invalid argc:{}".format(argc))
 
     fileList = []
     sConfigPath = argv[1]
-    bResult, configObj = CollectSqlFile(fileList, sConfigPath)
-    if not bResult:
-        logging.error("CollectSqlFile error | path:{}".format(sConfigPath))
-        return
+    configObj = CollectSqlFile(fileList, sConfigPath)
 
     sortMap = {}  # {"update": {"database": ["1_1_table", "1_2_table"]}}
     for items in fileList:
@@ -204,9 +195,6 @@ def main(argc, argv ):
             sPrefix = sType + "|" + sDatabase + "|"
             for sFile in listTable:
                 lStatement = ParseSql(sFile)
-                if lStatement is None:
-                    logging.error("ParseSql error| file:{}".format(sFile))
-                    return
                 _, sFileName = os.path.split(sFile)
                 sKey = sPrefix + sFileName
                 dSqlMap[sType][sDatabase][sKey] = lStatement
@@ -216,7 +204,7 @@ def main(argc, argv ):
     if sCreateType in dSqlMap:
         for sDatabase, dTable in dSqlMap[sCreateType].items():
             for dMysql in configObj["database"]:
-                logging.info("create | ConnectMysql | config:{} | database:{} | charset:{}".format(dMysql, sDatabase, configObj["charset"]))
+                logging.info("base | ConnectMysql | config:{} | database:{} | charset:{}".format(dMysql, sDatabase, configObj["charset"]))
                 createConn = ConnectMysql(True, dMysql, sDatabase, configObj["charset"])
 
                 lInit = []
@@ -245,8 +233,17 @@ def main(argc, argv ):
 
 
 if __name__ == "__main__":
-    logging.info("数据同步开始")
-    logging.info("args:{}".format(sys.argv))
-    
-    main(len(sys.argv), sys.argv)
-    logging.info("Success 数据同步完成")
+    try:
+        logging.info("数据同步开始")
+        logging.info("args:{}".format(sys.argv))
+        main(len(sys.argv), sys.argv)
+    except:
+        tException = sys.exc_info()
+        logging.error("Exception | {}".format(tException))
+
+        sTrace = traceback.format_exc()
+        logging.error("traceback | {}".format(sTrace))
+
+        logging.error("数据同步失败, Failure")
+    else:
+        logging.info("数据同步完成, Success")
