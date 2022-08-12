@@ -1,13 +1,12 @@
 import os
 import sys
 import logging
-import shutil
 import time
-import json
 import pymysql
 import yaml
 from pathlib import Path
 import traceback
+import hashlib
 
 sDate = time.strftime("%Y%m%d_%H%M%S", time.localtime())
 sLogName = "SyncSql_" + sDate + ".log"
@@ -17,6 +16,14 @@ logging.basicConfig(level=logging.INFO, filename=sLogName, filemode="w", format=
 sExecuteSqlRecordName = "ExecuteSqlRecord"
 sCreateType = "base"
 sUpdateType = "update"
+
+def FileMd5(fileName):
+    md5_hash = hashlib.md5()
+    with open(fileName, "rb") as f:
+        # Read and update hash in chunks of 4K
+        for byte_block in iter(lambda: f.read(4096), b""):
+            md5_hash.update(byte_block)
+        return md5_hash.hexdigest()
 
 def TraversalDir(listObj, path, sType, sDatabase):
     if os.path.exists(path):
@@ -113,15 +120,21 @@ def InExecuteSqlRecord(sAddress, fileName):
 
         for name in lData:
             sName = name.strip()
-            sFileName = fileName.strip()
-            if sName == sFileName:
-                return True
+            tField = sName.split()
+            iLen = len(tField)
+            if iLen > 2:
+                sCheck = tField[2]
+                sCheckName = sCheck.strip()
+                sFileName = fileName.strip()
+                if sCheckName == sFileName:
+                    return True
     return False
 
-def AddExecuteSqlRecord(sAddress, fileName):
+def AddExecuteSqlRecord(sAddress, fileName, sMd5):
     sRecordName = sExecuteSqlRecordName + "_" + sAddress + ".txt"
+    sDate = time.strftime("%Y-%m-%d_%H:%M:%S", time.localtime())
     with open(sRecordName, "a") as fObj:
-        sData = "{}\n".format(fileName)
+        sData = "{}    {}    {}\n".format(sDate, sMd5, fileName)
         fObj.write(sData)
         logging.info("AddExecuteSqlRecord | record:{} | table:{}".format(sRecordName, fileName))
 
@@ -134,9 +147,12 @@ def ConnectMysql(bCreate, dConfig, sDatabase, sCharset):
                                      password=dConfig["passwd"], database=sDatabase, charset=sCharset)
     return connection
 
-def ExecuteSql(sAddress, bCheck, connection, fileName, lStatement):
-    logging.info("ExecuteSql | sAddress:{} | bCheck:{} | connection:{} | fileName:{} | lStatement:{}".format(
-        sAddress, bCheck, connection, fileName, lStatement))
+def ExecuteSql(sAddress, bCheck, connection, fileName, dSqlData):
+    logging.info("ExecuteSql | sAddress:{} | bCheck:{} | connection:{} | fileName:{} | dSqlData:{}".format(
+        sAddress, bCheck, connection, fileName, dSqlData))
+
+    lStatement = dSqlData["lSql"]
+    sMd5 = dSqlData["md5"]
 
     if len(lStatement) == 0:
         return
@@ -158,7 +174,7 @@ def ExecuteSql(sAddress, bCheck, connection, fileName, lStatement):
     connection.commit()
 
     if bCheck:
-        AddExecuteSqlRecord(sAddress, fileName)
+        AddExecuteSqlRecord(sAddress, fileName, sMd5)
 
 def main(argc, argv ):
     if argc < 2:
@@ -184,7 +200,8 @@ def main(argc, argv ):
 
     logging.info("sort tables:{}".format(sortMap))
 
-    dSqlMap = {} # {"update": {"database": {"update_database_table":[statement1, statement2]}}}
+
+    dSqlMap = {} # {"update": {"database": {"update_database_table":{"lSql":[statement1, statement2], "fileName":name, "md5":md5}}}}
     for sType, dDatabase in sortMap.items():
         if sType not in dSqlMap:
             dSqlMap[sType] = {}
@@ -197,7 +214,12 @@ def main(argc, argv ):
                 lStatement = ParseSql(sFile)
                 _, sFileName = os.path.split(sFile)
                 sKey = sPrefix + sFileName
-                dSqlMap[sType][sDatabase][sKey] = lStatement
+
+                dSqlData = {}
+                dSqlData["lSql"] = lStatement
+                dSqlData["fileName"] = sFile
+                dSqlData["md5"] = FileMd5(sFile)
+                dSqlMap[sType][sDatabase][sKey] = dSqlData
 
     logging.info("sort statement:{}".format(dSqlMap))
 
@@ -213,12 +235,17 @@ def main(argc, argv ):
                 sUseDatabase = "USE `{}`;".format(sDatabase)
                 lInit.append(sUseDatabase)
 
-                sAddress = "{}_{}".format(dMysql["host"], dMysql["port"])
-                ExecuteSql(sAddress, False, createConn, "", lInit)
+                dInitData = {}
+                dInitData["lSql"] = lInit
+                dInitData["fileName"] = ""
+                dInitData["md5"] = ""
 
-                for sTable, lSql in dTable.items():
+                sAddress = "{}_{}".format(dMysql["host"], dMysql["port"])
+                ExecuteSql(sAddress, False, createConn, "", dInitData)
+
+                for sTable, dSqlData in dTable.items():
                     logging.info("ExecuteSql | file:{}".format(sTable))
-                    ExecuteSql(sAddress, True, createConn, sTable, lSql)
+                    ExecuteSql(sAddress, True, createConn, sTable, dSqlData)
 
     if sUpdateType in dSqlMap:
         for sDatabase, dTable in dSqlMap[sUpdateType].items():
@@ -227,13 +254,16 @@ def main(argc, argv ):
                 updateConn = ConnectMysql(False, dMysql, sDatabase, configObj["charset"])
 
                 sAddress = "{}_{}".format(dMysql["host"], dMysql["port"])
-                for sTable, lSql in dTable.items():
+                for sTable, dSqlData in dTable.items():
                     logging.info("ExecuteSql | file:{}".format(sTable))
-                    ExecuteSql(sAddress, True, updateConn, sTable, lSql)
+                    ExecuteSql(sAddress, True, updateConn, sTable, dSqlData)
 
 
 if __name__ == "__main__":
     try:
+        print("数据同步开始\n")
+        print("args:{}\n".format(sys.argv))
+
         logging.info("数据同步开始")
         logging.info("args:{}".format(sys.argv))
         main(len(sys.argv), sys.argv)
@@ -245,5 +275,9 @@ if __name__ == "__main__":
         logging.error("traceback | {}".format(sTrace))
 
         logging.error("数据同步失败, Failure")
+        print("数据同步失败, Failure, logFile:{}\n".format(sLogName))
+        os._exit(1)
     else:
         logging.info("数据同步完成, Success")
+        print("数据同步完成, Success, logFile:{}\n".format(sLogName))
+        os._exit(0)
