@@ -39,6 +39,8 @@ def TraversalDir(listObj, path, sType, sDatabase):
                     listObj.append(tData)
 
 def CollectSqlFile(fileList, path):
+    if not os.path.isabs(path):
+        path = os.path.abspath(path)
     with open(path, 'r', encoding="utf-8") as file:
         config = yaml.safe_load(file)
         sPath, _ = os.path.split(path)
@@ -276,8 +278,6 @@ if __name__ == "__main__":
 
         logging.error("数据同步失败, Failure")
         print("数据同步失败, Failure, logFile:{}\n".format(sLogName))
-        os._exit(1)
     else:
         logging.info("数据同步完成, Success")
         print("数据同步完成, Success, logFile:{}\n".format(sLogName))
-        os._exit(0)
