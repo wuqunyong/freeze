@@ -7,5 +7,3 @@ set curdir=%cd%
 echo Exit Code is %errorlevel%
 
 pause
-
-

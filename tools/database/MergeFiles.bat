@@ -2,7 +2,9 @@
 
 
 set curdir=%cd%
-python %curdir%/MergeFiles.py %curdir%/
+%curdir%/MergeFiles.exe SyncSql.yaml
+
+echo Exit Code is %errorlevel%
 
 pause
 

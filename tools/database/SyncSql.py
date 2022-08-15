@@ -278,6 +278,8 @@ if __name__ == "__main__":
 
         logging.error("数据同步失败, Failure")
         print("数据同步失败, Failure, logFile:{}\n".format(sLogName))
+        os._exit(1)
     else:
         logging.info("数据同步完成, Success")
         print("数据同步完成, Success, logFile:{}\n".format(sLogName))
+        os._exit(0)
