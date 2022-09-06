@@ -25,6 +25,7 @@ namespace apie {
 	template <typename T>
 	struct SingleRowLoader {
 		using TableType = T;
+		using LoaderType = SingleRowLoader<T>;
 
 		SingleRowLoader(uint32_t id = 0) :
 			m_tableType(id)
@@ -34,11 +35,11 @@ namespace apie {
 
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
-			loader->setState<SingleRowLoader>(DbLoadComponent::ELS_Loading);
+			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
 			auto ptrCb = [this, loader](apie::status::Status status, TableType& data, uint32_t iRows) {
 				if (!status.ok())
 				{
-					loader->setState<SingleRowLoader>(DbLoadComponent::ELS_Failure);
+					loader->setState<LoaderType>(DbLoadComponent::ELS_Failure);
 					return;
 				}
 
@@ -47,7 +48,7 @@ namespace apie {
 					this->m_data = data;
 				}
 
-				loader->setState<SingleRowLoader>(DbLoadComponent::ELS_Success);
+				loader->setState<LoaderType>(DbLoadComponent::ELS_Success);
 			};
 			apie::LoadFromDb<TableType>(server, m_tableType, ptrCb);
 		}
@@ -60,6 +61,7 @@ namespace apie {
 	template <typename T>
 	struct MultiRowLoader {
 		using TableType = T;
+		using LoaderType = MultiRowLoader<T>;
 
 		MultiRowLoader(uint32_t id = 0) :
 			m_tableType(id)
@@ -74,16 +76,16 @@ namespace apie {
 
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
-			loader->setState<MultiRowLoader>(DbLoadComponent::ELS_Loading);
+			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
 			auto ptrCb = [this, loader](status::Status status, std::vector<TableType>& data) {
 				if (!status.ok())
 				{
-					loader->setState<MultiRowLoader>(DbLoadComponent::ELS_Failure);
+					loader->setState<LoaderType>(DbLoadComponent::ELS_Failure);
 					return;
 				}
 
 				m_data = data;
-				loader->setState<MultiRowLoader>(DbLoadComponent::ELS_Success);
+				loader->setState<LoaderType>(DbLoadComponent::ELS_Success);
 			};
 			apie::LoadFromDbByFilter<TableType>(server, m_tableType, ptrCb);
 		}
