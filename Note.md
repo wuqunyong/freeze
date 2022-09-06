@@ -48,6 +48,7 @@ https://github.com/Eugeny/tabby
 xshell 的开源替代方案 WindTerm
 
 
+pyinstaller --onefile -w simple.py
 
 Hexagonal Grids
 hex_linedraw

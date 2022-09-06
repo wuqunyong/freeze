@@ -31,6 +31,12 @@
     <ClInclude Include="logic\test_module_12.h">
       <Filter>logic</Filter>
     </ClInclude>
+    <ClInclude Include="logic\db_load_component.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dao\model_role_extra.h">
+      <Filter>common\dao</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

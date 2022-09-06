@@ -7,7 +7,6 @@
     <ClCompile Include="logic\mock_role.cpp">
       <Filter>logic</Filter>
     </ClCompile>
-    <ClCompile Include="test_client.cpp" />
     <ClCompile Include="logic\test_suite.cpp">
       <Filter>logic</Filter>
     </ClCompile>
@@ -68,6 +67,7 @@
     <ClCompile Include="module_data\talent_data.cpp">
       <Filter>module_data</Filter>
     </ClCompile>
+    <ClCompile Include="test_client.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logic\test_server.h">

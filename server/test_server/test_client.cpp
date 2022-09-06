@@ -14,6 +14,7 @@
 #include <optional>
 #include <typeinfo>
 #include <typeindex>
+#include <memory>
 
 #include "apie.h"
 
@@ -27,6 +28,7 @@
 struct StringOption {
 	using Type = std::string;
 };
+
 
 
 template <typename T>
@@ -111,11 +113,87 @@ struct DBAccountMultiComponet
 	using Type = MultiRow<apie::ModelAccount>;
 };
 
+class TestB;
+
+class TestA
+{
+public:
+	TestA(int a) :
+		a_(a)
+	{
+
+	}
+
+	~TestA()
+	{
+
+	}
+
+	void SetPtr(std::shared_ptr<TestB> ptr)
+	{
+		ptr_ = ptr;
+	}
+
+	std::shared_ptr<TestB> ptr_;
+	int a_;
+};
+
+
+class TestB
+{
+public:
+	TestB(int b, std::shared_ptr<TestA> ptr) :
+		b_(b),
+		ptr_(ptr)
+	{
+
+	}
+
+	~TestB()
+	{
+
+	}
+
+	std::shared_ptr<TestA> ptr_;
+	int b_;
+};
+
+
+class TestC
+{
+public:
+	static std::shared_ptr<TestC> Create(int a)
+	{
+		return std::shared_ptr<TestC>(new TestC(a));
+	}
+
+private: 
+	TestC(int a) :
+		a_(a)
+	{
+
+	}
+
+	int a_;
+};
+
 int main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
 		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
+	}
+
+	auto ptrC = TestC::Create(100);
+	//auto ptrCC = new TestC(200);
+
+
+	{
+		auto ptrA = std::make_shared<TestA>(100);
+		auto ptrB = std::make_shared<TestB>(200, ptrA);
+		//ptrA->SetPtr(ptrB);
+
+		ptrA = nullptr;
 	}
 
 
@@ -134,6 +212,17 @@ int main(int argc, char **argv)
 	component.set<DBAccountMultiComponet>(MultiRow<apie::ModelAccount>(1));
 	bResult = component.has<DBAccountMultiComponet>();
 	component.lookup<DBAccountMultiComponet>().loadFromDb();
+
+
+
+
+
+
+
+
+
+
+
 
 
 	APieRegisterModule<apie::TestServerMgr>();
