@@ -75,14 +75,14 @@ namespace apie {
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
 			loader->setState<MultiRowLoader>(DbLoadComponent::ELS_Loading);
-			auto ptrCb = [this, loader](status::Status status, std::vector<TableType>& userList) {
+			auto ptrCb = [this, loader](status::Status status, std::vector<TableType>& data) {
 				if (!status.ok())
 				{
 					loader->setState<MultiRowLoader>(DbLoadComponent::ELS_Failure);
 					return;
 				}
 
-				m_data = userList;
+				m_data = data;
 				loader->setState<MultiRowLoader>(DbLoadComponent::ELS_Success);
 			};
 			apie::LoadFromDbByFilter<TableType>(server, m_tableType, ptrCb);
