@@ -48,6 +48,11 @@ class DbLoadComponent : public std::enable_shared_from_this<DbLoadComponent> {
 		 ELS_Success = 3,
 	 };
 
+    ~DbLoadComponent()
+    {
+
+    }
+
   DbLoadComponent(DbLoadComponent const& rhs) {
     for (auto const& kv : rhs.m_) m_.emplace(kv.first, kv.second->clone());
   }
@@ -211,7 +216,6 @@ class DbLoadComponent : public std::enable_shared_from_this<DbLoadComponent> {
       default:
           break;
       }
-      bool bDone = true;
 	  return *this;
   }
 
