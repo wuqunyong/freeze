@@ -58,8 +58,6 @@ apie::status::Status TestModule10::ready()
 	server.set_id(1);
 
 	auto ptrLoad = CreateLoadObj();
-	//ptrComponent->set<Single_ModelUser_Loader>(SingleRowLoader<apie::ModelUser>(1));
-	//ptrComponent->set<Single_ModelRoleExtra_Loader>(SingleRowLoader<apie::ModelRoleExtra>(1));
 	ptrLoad->set<Single_ModelUser_Loader>(1);
 	ptrLoad->set<Single_ModelRoleExtra_Loader>(1);
 	ptrLoad->set<Multi_ModelUser_Loader>(1).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
