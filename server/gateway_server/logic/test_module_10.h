@@ -33,6 +33,13 @@ namespace apie {
 
 		}
 
+		template <typename... Args>
+		SingleRowLoader(Args &&... args) :
+			m_tableType(std::forward<Args>(args)...)
+		{
+
+		}
+
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
 			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
@@ -65,6 +72,13 @@ namespace apie {
 
 		MultiRowLoader(uint64_t id = 0) :
 			m_tableType(id)
+		{
+
+		}
+
+		template <typename... Args>
+		MultiRowLoader(Args &&... args) :
+			m_tableType(std::forward<Args>(args)...)
 		{
 
 		}
