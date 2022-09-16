@@ -547,6 +547,9 @@
     <ClInclude Include="common\template_util.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="common\env.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
@@ -809,6 +812,9 @@
     </ClCompile>
     <ClCompile Include="base\datagen.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="common\env.cc">
+      <Filter>common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

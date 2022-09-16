@@ -179,6 +179,7 @@
     <ClInclude Include="common\dao_macros.h" />
     <ClInclude Include="common\empty_string.h" />
     <ClInclude Include="common\enum_to_int.h" />
+    <ClInclude Include="common\env.h" />
     <ClInclude Include="common\exception_trap.h" />
     <ClInclude Include="common\file.h" />
     <ClInclude Include="common\graphics_utility.h" />
@@ -309,6 +310,7 @@
     <ClCompile Include="api\logiccmd_handler.cc" />
     <ClCompile Include="api\os_sys_calls.cc" />
     <ClCompile Include="base\datagen.cpp" />
+    <ClCompile Include="common\env.cc" />
     <ClCompile Include="common\exception_trap.cpp" />
     <ClCompile Include="common\file.cc" />
     <ClCompile Include="common\graphics_utility.cpp" />
