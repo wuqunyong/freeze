@@ -14,105 +14,139 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+
+PROTOBUF_PRAGMA_INIT_SEG
+
+namespace _pb = ::PROTOBUF_NAMESPACE_ID;
+namespace _pbi = _pb::internal;
+
 namespace role_msg {
-class ROLE_SUMMARYDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ROLE_SUMMARY> _instance;
-} _ROLE_SUMMARY_default_instance_;
-class AGENT_SEQ_IDDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<AGENT_SEQ_ID> _instance;
-} _AGENT_SEQ_ID_default_instance_;
+PROTOBUF_CONSTEXPR ROLE_SUMMARY::ROLE_SUMMARY(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.loot_history_)*/{}
+  , /*decltype(_impl_._loot_history_cached_byte_size_)*/{0}
+  , /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.face_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.guild_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.guild_short_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.user_id_)*/uint64_t{0u}
+  , /*decltype(_impl_.fighting_power_)*/uint64_t{0u}
+  , /*decltype(_impl_.level_)*/0
+  , /*decltype(_impl_.language_type_)*/0
+  , /*decltype(_impl_.guild_id_)*/uint64_t{0u}
+  , /*decltype(_impl_.hero_power_)*/uint64_t{0u}
+  , /*decltype(_impl_.soldier_power_)*/uint64_t{0u}
+  , /*decltype(_impl_.building_power_)*/uint64_t{0u}
+  , /*decltype(_impl_.online_flag_)*/false
+  , /*decltype(_impl_.record_power_rank_)*/false
+  , /*decltype(_impl_.guild_rank_)*/0u
+  , /*decltype(_impl_.survey_expire_time_)*/uint64_t{0u}
+  , /*decltype(_impl_.power_rank_)*/0
+  , /*decltype(_impl_.best_power_rank_)*/0
+  , /*decltype(_impl_.guild_server_id_)*/0
+  , /*decltype(_impl_.guild_language_)*/0
+  , /*decltype(_impl_.loot_defense_time_)*/uint64_t{0u}
+  , /*decltype(_impl_.loot_attack_time_)*/uint64_t{0u}
+  , /*decltype(_impl_.loot_lock_owner_)*/uint64_t{0u}
+  , /*decltype(_impl_.city_center_level_)*/0u
+  , /*decltype(_impl_.online_server_type_)*/0u
+  , /*decltype(_impl_.loot_lock_at_)*/uint64_t{0u}
+  , /*decltype(_impl_.online_server_id_)*/0u
+  , /*decltype(_impl_.fantasia_chapter_)*/0u
+  , /*decltype(_impl_.fantasia_chapter_pass_)*/uint64_t{0u}
+  , /*decltype(_impl_.register_time_)*/uint64_t{0u}
+  , /*decltype(_impl_.season_point_peak_)*/0
+  , /*decltype(_impl_.loot_win_times_)*/0u
+  , /*decltype(_impl_.excluded_power_)*/uint64_t{0u}
+  , /*decltype(_impl_.login_time_)*/uint64_t{0u}
+  , /*decltype(_impl_.login_main_logic_id_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct ROLE_SUMMARYDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ROLE_SUMMARYDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ROLE_SUMMARYDefaultTypeInternal() {}
+  union {
+    ROLE_SUMMARY _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ROLE_SUMMARYDefaultTypeInternal _ROLE_SUMMARY_default_instance_;
+PROTOBUF_CONSTEXPR AGENT_SEQ_ID::AGENT_SEQ_ID(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.seq_id_)*/uint64_t{0u}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct AGENT_SEQ_IDDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR AGENT_SEQ_IDDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~AGENT_SEQ_IDDefaultTypeInternal() {}
+  union {
+    AGENT_SEQ_ID _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AGENT_SEQ_IDDefaultTypeInternal _AGENT_SEQ_ID_default_instance_;
 }  // namespace role_msg
-static void InitDefaultsscc_info_AGENT_SEQ_ID_role_5fserver_5fmsg_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
+static ::_pb::Metadata file_level_metadata_role_5fserver_5fmsg_2eproto[2];
+static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_role_5fserver_5fmsg_2eproto = nullptr;
+static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_role_5fserver_5fmsg_2eproto = nullptr;
 
-  {
-    void* ptr = &::role_msg::_AGENT_SEQ_ID_default_instance_;
-    new (ptr) ::role_msg::AGENT_SEQ_ID();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::role_msg::AGENT_SEQ_ID::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AGENT_SEQ_ID_role_5fserver_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_AGENT_SEQ_ID_role_5fserver_5fmsg_2eproto}, {}};
-
-static void InitDefaultsscc_info_ROLE_SUMMARY_role_5fserver_5fmsg_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::role_msg::_ROLE_SUMMARY_default_instance_;
-    new (ptr) ::role_msg::ROLE_SUMMARY();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::role_msg::ROLE_SUMMARY::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ROLE_SUMMARY_role_5fserver_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ROLE_SUMMARY_role_5fserver_5fmsg_2eproto}, {}};
-
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_role_5fserver_5fmsg_2eproto[2];
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_role_5fserver_5fmsg_2eproto = nullptr;
-static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_role_5fserver_5fmsg_2eproto = nullptr;
-
-const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_role_5fserver_5fmsg_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+const uint32_t TableStruct_role_5fserver_5fmsg_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, user_id_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, name_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, level_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, fighting_power_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, face_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, online_flag_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, guild_id_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, guild_name_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, language_type_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, hero_power_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, soldier_power_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, building_power_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, guild_rank_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, survey_expire_time_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, power_rank_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, best_power_rank_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, record_power_rank_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, guild_server_id_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, guild_language_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, guild_short_name_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, city_center_level_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, loot_defense_time_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, loot_attack_time_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, loot_lock_owner_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, loot_lock_at_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, loot_history_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, online_server_type_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, online_server_id_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, fantasia_chapter_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, fantasia_chapter_pass_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, register_time_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, season_point_peak_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, loot_win_times_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, excluded_power_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, login_main_logic_id_),
-  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, login_time_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.user_id_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.name_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.level_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.fighting_power_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.face_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.online_flag_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.guild_id_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.guild_name_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.language_type_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.hero_power_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.soldier_power_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.building_power_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.guild_rank_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.survey_expire_time_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.power_rank_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.best_power_rank_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.record_power_rank_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.guild_server_id_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.guild_language_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.guild_short_name_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.city_center_level_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.loot_defense_time_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.loot_attack_time_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.loot_lock_owner_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.loot_lock_at_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.loot_history_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.online_server_type_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.online_server_id_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.fantasia_chapter_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.fantasia_chapter_pass_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.register_time_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.season_point_peak_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.loot_win_times_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.excluded_power_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.login_main_logic_id_),
+  PROTOBUF_FIELD_OFFSET(::role_msg::ROLE_SUMMARY, _impl_.login_time_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::role_msg::AGENT_SEQ_ID, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::role_msg::AGENT_SEQ_ID, seq_id_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::role_msg::AGENT_SEQ_ID, _impl_.seq_id_),
 };
-static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::role_msg::ROLE_SUMMARY)},
-  { 41, -1, sizeof(::role_msg::AGENT_SEQ_ID)},
+static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, -1, sizeof(::role_msg::ROLE_SUMMARY)},
+  { 42, -1, -1, sizeof(::role_msg::AGENT_SEQ_ID)},
 };
 
-static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::role_msg::_ROLE_SUMMARY_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::role_msg::_AGENT_SEQ_ID_default_instance_),
+static const ::_pb::Message* const file_default_instances[] = {
+  &::role_msg::_ROLE_SUMMARY_default_instance_._instance,
+  &::role_msg::_AGENT_SEQ_ID_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_role_5fserver_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -141,418 +175,560 @@ const char descriptor_table_protodef_role_5fserver_5fmsg_2eproto[] PROTOBUF_SECT
   "$ \001(\004\"\036\n\014AGENT_SEQ_ID\022\016\n\006seq_id\030\001 \001(\004b\006p"
   "roto3"
   ;
-static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_role_5fserver_5fmsg_2eproto_deps[1] = {
+static ::_pbi::once_flag descriptor_table_role_5fserver_5fmsg_2eproto_once;
+const ::_pbi::DescriptorTable descriptor_table_role_5fserver_5fmsg_2eproto = {
+    false, false, 925, descriptor_table_protodef_role_5fserver_5fmsg_2eproto,
+    "role_server_msg.proto",
+    &descriptor_table_role_5fserver_5fmsg_2eproto_once, nullptr, 0, 2,
+    schemas, file_default_instances, TableStruct_role_5fserver_5fmsg_2eproto::offsets,
+    file_level_metadata_role_5fserver_5fmsg_2eproto, file_level_enum_descriptors_role_5fserver_5fmsg_2eproto,
+    file_level_service_descriptors_role_5fserver_5fmsg_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_role_5fserver_5fmsg_2eproto_sccs[2] = {
-  &scc_info_AGENT_SEQ_ID_role_5fserver_5fmsg_2eproto.base,
-  &scc_info_ROLE_SUMMARY_role_5fserver_5fmsg_2eproto.base,
-};
-static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_role_5fserver_5fmsg_2eproto_once;
-static bool descriptor_table_role_5fserver_5fmsg_2eproto_initialized = false;
-const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_role_5fserver_5fmsg_2eproto = {
-  &descriptor_table_role_5fserver_5fmsg_2eproto_initialized, descriptor_table_protodef_role_5fserver_5fmsg_2eproto, "role_server_msg.proto", 925,
-  &descriptor_table_role_5fserver_5fmsg_2eproto_once, descriptor_table_role_5fserver_5fmsg_2eproto_sccs, descriptor_table_role_5fserver_5fmsg_2eproto_deps, 2, 0,
-  schemas, file_default_instances, TableStruct_role_5fserver_5fmsg_2eproto::offsets,
-  file_level_metadata_role_5fserver_5fmsg_2eproto, 2, file_level_enum_descriptors_role_5fserver_5fmsg_2eproto, file_level_service_descriptors_role_5fserver_5fmsg_2eproto,
-};
+PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_role_5fserver_5fmsg_2eproto_getter() {
+  return &descriptor_table_role_5fserver_5fmsg_2eproto;
+}
 
 // Force running AddDescriptors() at dynamic initialization time.
-static bool dynamic_init_dummy_role_5fserver_5fmsg_2eproto = (  ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_role_5fserver_5fmsg_2eproto), true);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_role_5fserver_5fmsg_2eproto(&descriptor_table_role_5fserver_5fmsg_2eproto);
 namespace role_msg {
 
 // ===================================================================
 
-void ROLE_SUMMARY::InitAsDefaultInstance() {
-}
 class ROLE_SUMMARY::_Internal {
  public:
 };
 
-ROLE_SUMMARY::ROLE_SUMMARY()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:role_msg.ROLE_SUMMARY)
+ROLE_SUMMARY::ROLE_SUMMARY(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:role_msg.ROLE_SUMMARY)
 }
 ROLE_SUMMARY::ROLE_SUMMARY(const ROLE_SUMMARY& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr),
-      loot_history_(from.loot_history_) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  ROLE_SUMMARY* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.loot_history_){from._impl_.loot_history_}
+    , /*decltype(_impl_._loot_history_cached_byte_size_)*/{0}
+    , decltype(_impl_.name_){}
+    , decltype(_impl_.face_){}
+    , decltype(_impl_.guild_name_){}
+    , decltype(_impl_.guild_short_name_){}
+    , decltype(_impl_.user_id_){}
+    , decltype(_impl_.fighting_power_){}
+    , decltype(_impl_.level_){}
+    , decltype(_impl_.language_type_){}
+    , decltype(_impl_.guild_id_){}
+    , decltype(_impl_.hero_power_){}
+    , decltype(_impl_.soldier_power_){}
+    , decltype(_impl_.building_power_){}
+    , decltype(_impl_.online_flag_){}
+    , decltype(_impl_.record_power_rank_){}
+    , decltype(_impl_.guild_rank_){}
+    , decltype(_impl_.survey_expire_time_){}
+    , decltype(_impl_.power_rank_){}
+    , decltype(_impl_.best_power_rank_){}
+    , decltype(_impl_.guild_server_id_){}
+    , decltype(_impl_.guild_language_){}
+    , decltype(_impl_.loot_defense_time_){}
+    , decltype(_impl_.loot_attack_time_){}
+    , decltype(_impl_.loot_lock_owner_){}
+    , decltype(_impl_.city_center_level_){}
+    , decltype(_impl_.online_server_type_){}
+    , decltype(_impl_.loot_lock_at_){}
+    , decltype(_impl_.online_server_id_){}
+    , decltype(_impl_.fantasia_chapter_){}
+    , decltype(_impl_.fantasia_chapter_pass_){}
+    , decltype(_impl_.register_time_){}
+    , decltype(_impl_.season_point_peak_){}
+    , decltype(_impl_.loot_win_times_){}
+    , decltype(_impl_.excluded_power_){}
+    , decltype(_impl_.login_time_){}
+    , decltype(_impl_.login_main_logic_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_name().empty()) {
-    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+    _this->_impl_.name_.Set(from._internal_name(), 
+      _this->GetArenaForAllocation());
   }
-  face_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.face_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.face_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_face().empty()) {
-    face_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.face_);
+    _this->_impl_.face_.Set(from._internal_face(), 
+      _this->GetArenaForAllocation());
   }
-  guild_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.guild_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.guild_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_guild_name().empty()) {
-    guild_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.guild_name_);
+    _this->_impl_.guild_name_.Set(from._internal_guild_name(), 
+      _this->GetArenaForAllocation());
   }
-  guild_short_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _impl_.guild_short_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.guild_short_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_guild_short_name().empty()) {
-    guild_short_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.guild_short_name_);
+    _this->_impl_.guild_short_name_.Set(from._internal_guild_short_name(), 
+      _this->GetArenaForAllocation());
   }
-  ::memcpy(&user_id_, &from.user_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&login_main_logic_id_) -
-    reinterpret_cast<char*>(&user_id_)) + sizeof(login_main_logic_id_));
+  ::memcpy(&_impl_.user_id_, &from._impl_.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.login_main_logic_id_) -
+    reinterpret_cast<char*>(&_impl_.user_id_)) + sizeof(_impl_.login_main_logic_id_));
   // @@protoc_insertion_point(copy_constructor:role_msg.ROLE_SUMMARY)
 }
 
-void ROLE_SUMMARY::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ROLE_SUMMARY_role_5fserver_5fmsg_2eproto.base);
-  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  face_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  guild_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  guild_short_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&user_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&login_main_logic_id_) -
-      reinterpret_cast<char*>(&user_id_)) + sizeof(login_main_logic_id_));
+inline void ROLE_SUMMARY::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.loot_history_){arena}
+    , /*decltype(_impl_._loot_history_cached_byte_size_)*/{0}
+    , decltype(_impl_.name_){}
+    , decltype(_impl_.face_){}
+    , decltype(_impl_.guild_name_){}
+    , decltype(_impl_.guild_short_name_){}
+    , decltype(_impl_.user_id_){uint64_t{0u}}
+    , decltype(_impl_.fighting_power_){uint64_t{0u}}
+    , decltype(_impl_.level_){0}
+    , decltype(_impl_.language_type_){0}
+    , decltype(_impl_.guild_id_){uint64_t{0u}}
+    , decltype(_impl_.hero_power_){uint64_t{0u}}
+    , decltype(_impl_.soldier_power_){uint64_t{0u}}
+    , decltype(_impl_.building_power_){uint64_t{0u}}
+    , decltype(_impl_.online_flag_){false}
+    , decltype(_impl_.record_power_rank_){false}
+    , decltype(_impl_.guild_rank_){0u}
+    , decltype(_impl_.survey_expire_time_){uint64_t{0u}}
+    , decltype(_impl_.power_rank_){0}
+    , decltype(_impl_.best_power_rank_){0}
+    , decltype(_impl_.guild_server_id_){0}
+    , decltype(_impl_.guild_language_){0}
+    , decltype(_impl_.loot_defense_time_){uint64_t{0u}}
+    , decltype(_impl_.loot_attack_time_){uint64_t{0u}}
+    , decltype(_impl_.loot_lock_owner_){uint64_t{0u}}
+    , decltype(_impl_.city_center_level_){0u}
+    , decltype(_impl_.online_server_type_){0u}
+    , decltype(_impl_.loot_lock_at_){uint64_t{0u}}
+    , decltype(_impl_.online_server_id_){0u}
+    , decltype(_impl_.fantasia_chapter_){0u}
+    , decltype(_impl_.fantasia_chapter_pass_){uint64_t{0u}}
+    , decltype(_impl_.register_time_){uint64_t{0u}}
+    , decltype(_impl_.season_point_peak_){0}
+    , decltype(_impl_.loot_win_times_){0u}
+    , decltype(_impl_.excluded_power_){uint64_t{0u}}
+    , decltype(_impl_.login_time_){uint64_t{0u}}
+    , decltype(_impl_.login_main_logic_id_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.face_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.face_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.guild_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.guild_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.guild_short_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.guild_short_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 ROLE_SUMMARY::~ROLE_SUMMARY() {
   // @@protoc_insertion_point(destructor:role_msg.ROLE_SUMMARY)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
 }
 
-void ROLE_SUMMARY::SharedDtor() {
-  name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  face_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  guild_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  guild_short_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void ROLE_SUMMARY::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.loot_history_.~RepeatedField();
+  _impl_.name_.Destroy();
+  _impl_.face_.Destroy();
+  _impl_.guild_name_.Destroy();
+  _impl_.guild_short_name_.Destroy();
 }
 
 void ROLE_SUMMARY::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const ROLE_SUMMARY& ROLE_SUMMARY::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_ROLE_SUMMARY_role_5fserver_5fmsg_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void ROLE_SUMMARY::Clear() {
 // @@protoc_insertion_point(message_clear_start:role_msg.ROLE_SUMMARY)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  loot_history_.Clear();
-  name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  face_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  guild_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  guild_short_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&user_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&login_main_logic_id_) -
-      reinterpret_cast<char*>(&user_id_)) + sizeof(login_main_logic_id_));
-  _internal_metadata_.Clear();
+  _impl_.loot_history_.Clear();
+  _impl_.name_.ClearToEmpty();
+  _impl_.face_.ClearToEmpty();
+  _impl_.guild_name_.ClearToEmpty();
+  _impl_.guild_short_name_.ClearToEmpty();
+  ::memset(&_impl_.user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.login_main_logic_id_) -
+      reinterpret_cast<char*>(&_impl_.user_id_)) + sizeof(_impl_.login_main_logic_id_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* ROLE_SUMMARY::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* ROLE_SUMMARY::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint64 user_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.user_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // string name = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "role_msg.ROLE_SUMMARY.name"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "role_msg.ROLE_SUMMARY.name"));
+        } else
+          goto handle_unusual;
         continue;
       // int32 level = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 fighting_power = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
-          fighting_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.fighting_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // string face = 5;
       case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
           auto str = _internal_mutable_face();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "role_msg.ROLE_SUMMARY.face"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "role_msg.ROLE_SUMMARY.face"));
+        } else
+          goto handle_unusual;
         continue;
       // bool online_flag = 6;
       case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
-          online_flag_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
+          _impl_.online_flag_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 guild_id = 7;
       case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
-          guild_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
+          _impl_.guild_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // string guild_name = 8;
       case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
           auto str = _internal_mutable_guild_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "role_msg.ROLE_SUMMARY.guild_name"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "role_msg.ROLE_SUMMARY.guild_name"));
+        } else
+          goto handle_unusual;
         continue;
       // int32 language_type = 9;
       case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
-          language_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 72)) {
+          _impl_.language_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 hero_power = 10;
       case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 80)) {
-          hero_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 80)) {
+          _impl_.hero_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 soldier_power = 11;
       case 11:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 88)) {
-          soldier_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 88)) {
+          _impl_.soldier_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 building_power = 12;
       case 12:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 96)) {
-          building_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 96)) {
+          _impl_.building_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 guild_rank = 13;
       case 13:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 104)) {
-          guild_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 104)) {
+          _impl_.guild_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 survey_expire_time = 14;
       case 14:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 112)) {
-          survey_expire_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 112)) {
+          _impl_.survey_expire_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // int32 power_rank = 15;
       case 15:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 120)) {
-          power_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 120)) {
+          _impl_.power_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // int32 best_power_rank = 16;
       case 16:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 128)) {
-          best_power_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 128)) {
+          _impl_.best_power_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // bool record_power_rank = 17;
       case 17:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 136)) {
-          record_power_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 136)) {
+          _impl_.record_power_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // int32 guild_server_id = 18;
       case 18:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 144)) {
-          guild_server_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 144)) {
+          _impl_.guild_server_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // int32 guild_language = 19;
       case 19:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 152)) {
-          guild_language_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 152)) {
+          _impl_.guild_language_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // string guild_short_name = 20;
       case 20:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 162)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 162)) {
           auto str = _internal_mutable_guild_short_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "role_msg.ROLE_SUMMARY.guild_short_name"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "role_msg.ROLE_SUMMARY.guild_short_name"));
+        } else
+          goto handle_unusual;
         continue;
       // uint32 city_center_level = 21;
       case 21:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 168)) {
-          city_center_level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 168)) {
+          _impl_.city_center_level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 loot_defense_time = 22;
       case 22:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 176)) {
-          loot_defense_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 176)) {
+          _impl_.loot_defense_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 loot_attack_time = 23;
       case 23:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 184)) {
-          loot_attack_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 184)) {
+          _impl_.loot_attack_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 loot_lock_owner = 24;
       case 24:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 192)) {
-          loot_lock_owner_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 192)) {
+          _impl_.loot_lock_owner_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 loot_lock_at = 25;
       case 25:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 200)) {
-          loot_lock_at_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 200)) {
+          _impl_.loot_lock_at_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // repeated uint64 loot_history = 26;
       case 26:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 210)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 210)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt64Parser(_internal_mutable_loot_history(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 208) {
-          _internal_add_loot_history(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+        } else if (static_cast<uint8_t>(tag) == 208) {
+          _internal_add_loot_history(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 online_server_type = 27;
       case 27:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 216)) {
-          online_server_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 216)) {
+          _impl_.online_server_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 online_server_id = 28;
       case 28:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 224)) {
-          online_server_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 224)) {
+          _impl_.online_server_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 fantasia_chapter = 29;
       case 29:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 232)) {
-          fantasia_chapter_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 232)) {
+          _impl_.fantasia_chapter_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 fantasia_chapter_pass = 30;
       case 30:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 240)) {
-          fantasia_chapter_pass_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 240)) {
+          _impl_.fantasia_chapter_pass_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 register_time = 31;
       case 31:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 248)) {
-          register_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 248)) {
+          _impl_.register_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // int32 season_point_peak = 32;
       case 32:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 0)) {
-          season_point_peak_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 0)) {
+          _impl_.season_point_peak_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 loot_win_times = 33;
       case 33:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          loot_win_times_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.loot_win_times_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 excluded_power = 34;
       case 34:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          excluded_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.excluded_power_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 login_main_logic_id = 35;
       case 35:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          login_main_logic_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.login_main_logic_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 login_time = 36;
       case 36:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
-          login_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.login_time_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* ROLE_SUMMARY::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* ROLE_SUMMARY::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:role_msg.ROLE_SUMMARY)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // uint64 user_id = 1;
-  if (this->user_id() != 0) {
+  if (this->_internal_user_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_user_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_user_id(), target);
   }
 
   // string name = 2;
-  if (this->name().size() > 0) {
+  if (!this->_internal_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -562,19 +738,19 @@ failure:
   }
 
   // int32 level = 3;
-  if (this->level() != 0) {
+  if (this->_internal_level() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_level(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_level(), target);
   }
 
   // uint64 fighting_power = 4;
-  if (this->fighting_power() != 0) {
+  if (this->_internal_fighting_power() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_fighting_power(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(4, this->_internal_fighting_power(), target);
   }
 
   // string face = 5;
-  if (this->face().size() > 0) {
+  if (!this->_internal_face().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_face().data(), static_cast<int>(this->_internal_face().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -584,19 +760,19 @@ failure:
   }
 
   // bool online_flag = 6;
-  if (this->online_flag() != 0) {
+  if (this->_internal_online_flag() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(6, this->_internal_online_flag(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(6, this->_internal_online_flag(), target);
   }
 
   // uint64 guild_id = 7;
-  if (this->guild_id() != 0) {
+  if (this->_internal_guild_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(7, this->_internal_guild_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(7, this->_internal_guild_id(), target);
   }
 
   // string guild_name = 8;
-  if (this->guild_name().size() > 0) {
+  if (!this->_internal_guild_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_guild_name().data(), static_cast<int>(this->_internal_guild_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -606,73 +782,73 @@ failure:
   }
 
   // int32 language_type = 9;
-  if (this->language_type() != 0) {
+  if (this->_internal_language_type() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(9, this->_internal_language_type(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(9, this->_internal_language_type(), target);
   }
 
   // uint64 hero_power = 10;
-  if (this->hero_power() != 0) {
+  if (this->_internal_hero_power() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(10, this->_internal_hero_power(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(10, this->_internal_hero_power(), target);
   }
 
   // uint64 soldier_power = 11;
-  if (this->soldier_power() != 0) {
+  if (this->_internal_soldier_power() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(11, this->_internal_soldier_power(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(11, this->_internal_soldier_power(), target);
   }
 
   // uint64 building_power = 12;
-  if (this->building_power() != 0) {
+  if (this->_internal_building_power() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(12, this->_internal_building_power(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(12, this->_internal_building_power(), target);
   }
 
   // uint32 guild_rank = 13;
-  if (this->guild_rank() != 0) {
+  if (this->_internal_guild_rank() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(13, this->_internal_guild_rank(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(13, this->_internal_guild_rank(), target);
   }
 
   // uint64 survey_expire_time = 14;
-  if (this->survey_expire_time() != 0) {
+  if (this->_internal_survey_expire_time() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(14, this->_internal_survey_expire_time(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(14, this->_internal_survey_expire_time(), target);
   }
 
   // int32 power_rank = 15;
-  if (this->power_rank() != 0) {
+  if (this->_internal_power_rank() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(15, this->_internal_power_rank(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(15, this->_internal_power_rank(), target);
   }
 
   // int32 best_power_rank = 16;
-  if (this->best_power_rank() != 0) {
+  if (this->_internal_best_power_rank() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(16, this->_internal_best_power_rank(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(16, this->_internal_best_power_rank(), target);
   }
 
   // bool record_power_rank = 17;
-  if (this->record_power_rank() != 0) {
+  if (this->_internal_record_power_rank() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(17, this->_internal_record_power_rank(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(17, this->_internal_record_power_rank(), target);
   }
 
   // int32 guild_server_id = 18;
-  if (this->guild_server_id() != 0) {
+  if (this->_internal_guild_server_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(18, this->_internal_guild_server_id(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(18, this->_internal_guild_server_id(), target);
   }
 
   // int32 guild_language = 19;
-  if (this->guild_language() != 0) {
+  if (this->_internal_guild_language() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(19, this->_internal_guild_language(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(19, this->_internal_guild_language(), target);
   }
 
   // string guild_short_name = 20;
-  if (this->guild_short_name().size() > 0) {
+  if (!this->_internal_guild_short_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_guild_short_name().data(), static_cast<int>(this->_internal_guild_short_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -682,38 +858,38 @@ failure:
   }
 
   // uint32 city_center_level = 21;
-  if (this->city_center_level() != 0) {
+  if (this->_internal_city_center_level() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(21, this->_internal_city_center_level(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(21, this->_internal_city_center_level(), target);
   }
 
   // uint64 loot_defense_time = 22;
-  if (this->loot_defense_time() != 0) {
+  if (this->_internal_loot_defense_time() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(22, this->_internal_loot_defense_time(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(22, this->_internal_loot_defense_time(), target);
   }
 
   // uint64 loot_attack_time = 23;
-  if (this->loot_attack_time() != 0) {
+  if (this->_internal_loot_attack_time() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(23, this->_internal_loot_attack_time(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(23, this->_internal_loot_attack_time(), target);
   }
 
   // uint64 loot_lock_owner = 24;
-  if (this->loot_lock_owner() != 0) {
+  if (this->_internal_loot_lock_owner() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(24, this->_internal_loot_lock_owner(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(24, this->_internal_loot_lock_owner(), target);
   }
 
   // uint64 loot_lock_at = 25;
-  if (this->loot_lock_at() != 0) {
+  if (this->_internal_loot_lock_at() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(25, this->_internal_loot_lock_at(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(25, this->_internal_loot_lock_at(), target);
   }
 
   // repeated uint64 loot_history = 26;
   {
-    int byte_size = _loot_history_cached_byte_size_.load(std::memory_order_relaxed);
+    int byte_size = _impl_._loot_history_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteUInt64Packed(
           26, _internal_loot_history(), byte_size, target);
@@ -721,68 +897,68 @@ failure:
   }
 
   // uint32 online_server_type = 27;
-  if (this->online_server_type() != 0) {
+  if (this->_internal_online_server_type() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(27, this->_internal_online_server_type(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(27, this->_internal_online_server_type(), target);
   }
 
   // uint32 online_server_id = 28;
-  if (this->online_server_id() != 0) {
+  if (this->_internal_online_server_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(28, this->_internal_online_server_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(28, this->_internal_online_server_id(), target);
   }
 
   // uint32 fantasia_chapter = 29;
-  if (this->fantasia_chapter() != 0) {
+  if (this->_internal_fantasia_chapter() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(29, this->_internal_fantasia_chapter(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(29, this->_internal_fantasia_chapter(), target);
   }
 
   // uint64 fantasia_chapter_pass = 30;
-  if (this->fantasia_chapter_pass() != 0) {
+  if (this->_internal_fantasia_chapter_pass() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(30, this->_internal_fantasia_chapter_pass(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(30, this->_internal_fantasia_chapter_pass(), target);
   }
 
   // uint64 register_time = 31;
-  if (this->register_time() != 0) {
+  if (this->_internal_register_time() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(31, this->_internal_register_time(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(31, this->_internal_register_time(), target);
   }
 
   // int32 season_point_peak = 32;
-  if (this->season_point_peak() != 0) {
+  if (this->_internal_season_point_peak() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(32, this->_internal_season_point_peak(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(32, this->_internal_season_point_peak(), target);
   }
 
   // uint32 loot_win_times = 33;
-  if (this->loot_win_times() != 0) {
+  if (this->_internal_loot_win_times() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(33, this->_internal_loot_win_times(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(33, this->_internal_loot_win_times(), target);
   }
 
   // uint64 excluded_power = 34;
-  if (this->excluded_power() != 0) {
+  if (this->_internal_excluded_power() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(34, this->_internal_excluded_power(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(34, this->_internal_excluded_power(), target);
   }
 
   // uint32 login_main_logic_id = 35;
-  if (this->login_main_logic_id() != 0) {
+  if (this->_internal_login_main_logic_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(35, this->_internal_login_main_logic_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(35, this->_internal_login_main_logic_id(), target);
   }
 
   // uint64 login_time = 36;
-  if (this->login_time() != 0) {
+  if (this->_internal_login_time() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(36, this->_internal_login_time(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(36, this->_internal_login_time(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target, stream);
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:role_msg.ROLE_SUMMARY)
   return target;
@@ -792,414 +968,368 @@ size_t ROLE_SUMMARY::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:role_msg.ROLE_SUMMARY)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated uint64 loot_history = 26;
   {
-    size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      UInt64Size(this->loot_history_);
+    size_t data_size = ::_pbi::WireFormatLite::
+      UInt64Size(this->_impl_.loot_history_);
     if (data_size > 0) {
       total_size += 2 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-            static_cast<::PROTOBUF_NAMESPACE_ID::int32>(data_size));
+        ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
     }
-    int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(data_size);
-    _loot_history_cached_byte_size_.store(cached_size,
+    int cached_size = ::_pbi::ToCachedSize(data_size);
+    _impl_._loot_history_cached_byte_size_.store(cached_size,
                                     std::memory_order_relaxed);
     total_size += data_size;
   }
 
   // string name = 2;
-  if (this->name().size() > 0) {
+  if (!this->_internal_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_name());
   }
 
   // string face = 5;
-  if (this->face().size() > 0) {
+  if (!this->_internal_face().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_face());
   }
 
   // string guild_name = 8;
-  if (this->guild_name().size() > 0) {
+  if (!this->_internal_guild_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_guild_name());
   }
 
   // string guild_short_name = 20;
-  if (this->guild_short_name().size() > 0) {
+  if (!this->_internal_guild_short_name().empty()) {
     total_size += 2 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_guild_short_name());
   }
 
   // uint64 user_id = 1;
-  if (this->user_id() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_user_id());
+  if (this->_internal_user_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_user_id());
   }
 
   // uint64 fighting_power = 4;
-  if (this->fighting_power() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_fighting_power());
+  if (this->_internal_fighting_power() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_fighting_power());
   }
 
   // int32 level = 3;
-  if (this->level() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_level());
+  if (this->_internal_level() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_level());
   }
 
   // int32 language_type = 9;
-  if (this->language_type() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_language_type());
+  if (this->_internal_language_type() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_language_type());
   }
 
   // uint64 guild_id = 7;
-  if (this->guild_id() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_guild_id());
+  if (this->_internal_guild_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_guild_id());
   }
 
   // uint64 hero_power = 10;
-  if (this->hero_power() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_hero_power());
+  if (this->_internal_hero_power() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_hero_power());
   }
 
   // uint64 soldier_power = 11;
-  if (this->soldier_power() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_soldier_power());
+  if (this->_internal_soldier_power() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_soldier_power());
   }
 
   // uint64 building_power = 12;
-  if (this->building_power() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_building_power());
+  if (this->_internal_building_power() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_building_power());
   }
 
   // bool online_flag = 6;
-  if (this->online_flag() != 0) {
+  if (this->_internal_online_flag() != 0) {
     total_size += 1 + 1;
   }
 
   // bool record_power_rank = 17;
-  if (this->record_power_rank() != 0) {
+  if (this->_internal_record_power_rank() != 0) {
     total_size += 2 + 1;
   }
 
   // uint32 guild_rank = 13;
-  if (this->guild_rank() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_guild_rank());
+  if (this->_internal_guild_rank() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_guild_rank());
   }
 
   // uint64 survey_expire_time = 14;
-  if (this->survey_expire_time() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_survey_expire_time());
+  if (this->_internal_survey_expire_time() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_survey_expire_time());
   }
 
   // int32 power_rank = 15;
-  if (this->power_rank() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_power_rank());
+  if (this->_internal_power_rank() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_power_rank());
   }
 
   // int32 best_power_rank = 16;
-  if (this->best_power_rank() != 0) {
+  if (this->_internal_best_power_rank() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::_pbi::WireFormatLite::Int32Size(
         this->_internal_best_power_rank());
   }
 
   // int32 guild_server_id = 18;
-  if (this->guild_server_id() != 0) {
+  if (this->_internal_guild_server_id() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::_pbi::WireFormatLite::Int32Size(
         this->_internal_guild_server_id());
   }
 
   // int32 guild_language = 19;
-  if (this->guild_language() != 0) {
+  if (this->_internal_guild_language() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::_pbi::WireFormatLite::Int32Size(
         this->_internal_guild_language());
   }
 
   // uint64 loot_defense_time = 22;
-  if (this->loot_defense_time() != 0) {
+  if (this->_internal_loot_defense_time() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+      ::_pbi::WireFormatLite::UInt64Size(
         this->_internal_loot_defense_time());
   }
 
   // uint64 loot_attack_time = 23;
-  if (this->loot_attack_time() != 0) {
+  if (this->_internal_loot_attack_time() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+      ::_pbi::WireFormatLite::UInt64Size(
         this->_internal_loot_attack_time());
   }
 
   // uint64 loot_lock_owner = 24;
-  if (this->loot_lock_owner() != 0) {
+  if (this->_internal_loot_lock_owner() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+      ::_pbi::WireFormatLite::UInt64Size(
         this->_internal_loot_lock_owner());
   }
 
   // uint32 city_center_level = 21;
-  if (this->city_center_level() != 0) {
+  if (this->_internal_city_center_level() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+      ::_pbi::WireFormatLite::UInt32Size(
         this->_internal_city_center_level());
   }
 
   // uint32 online_server_type = 27;
-  if (this->online_server_type() != 0) {
+  if (this->_internal_online_server_type() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+      ::_pbi::WireFormatLite::UInt32Size(
         this->_internal_online_server_type());
   }
 
   // uint64 loot_lock_at = 25;
-  if (this->loot_lock_at() != 0) {
+  if (this->_internal_loot_lock_at() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+      ::_pbi::WireFormatLite::UInt64Size(
         this->_internal_loot_lock_at());
   }
 
   // uint32 online_server_id = 28;
-  if (this->online_server_id() != 0) {
+  if (this->_internal_online_server_id() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+      ::_pbi::WireFormatLite::UInt32Size(
         this->_internal_online_server_id());
   }
 
   // uint32 fantasia_chapter = 29;
-  if (this->fantasia_chapter() != 0) {
+  if (this->_internal_fantasia_chapter() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+      ::_pbi::WireFormatLite::UInt32Size(
         this->_internal_fantasia_chapter());
   }
 
   // uint64 fantasia_chapter_pass = 30;
-  if (this->fantasia_chapter_pass() != 0) {
+  if (this->_internal_fantasia_chapter_pass() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+      ::_pbi::WireFormatLite::UInt64Size(
         this->_internal_fantasia_chapter_pass());
   }
 
   // uint64 register_time = 31;
-  if (this->register_time() != 0) {
+  if (this->_internal_register_time() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+      ::_pbi::WireFormatLite::UInt64Size(
         this->_internal_register_time());
   }
 
   // int32 season_point_peak = 32;
-  if (this->season_point_peak() != 0) {
+  if (this->_internal_season_point_peak() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::_pbi::WireFormatLite::Int32Size(
         this->_internal_season_point_peak());
   }
 
   // uint32 loot_win_times = 33;
-  if (this->loot_win_times() != 0) {
+  if (this->_internal_loot_win_times() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+      ::_pbi::WireFormatLite::UInt32Size(
         this->_internal_loot_win_times());
   }
 
   // uint64 excluded_power = 34;
-  if (this->excluded_power() != 0) {
+  if (this->_internal_excluded_power() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+      ::_pbi::WireFormatLite::UInt64Size(
         this->_internal_excluded_power());
   }
 
   // uint64 login_time = 36;
-  if (this->login_time() != 0) {
+  if (this->_internal_login_time() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+      ::_pbi::WireFormatLite::UInt64Size(
         this->_internal_login_time());
   }
 
   // uint32 login_main_logic_id = 35;
-  if (this->login_main_logic_id() != 0) {
+  if (this->_internal_login_main_logic_id() != 0) {
     total_size += 2 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+      ::_pbi::WireFormatLite::UInt32Size(
         this->_internal_login_main_logic_id());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void ROLE_SUMMARY::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:role_msg.ROLE_SUMMARY)
-  GOOGLE_DCHECK_NE(&from, this);
-  const ROLE_SUMMARY* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<ROLE_SUMMARY>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:role_msg.ROLE_SUMMARY)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:role_msg.ROLE_SUMMARY)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ROLE_SUMMARY::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    ROLE_SUMMARY::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ROLE_SUMMARY::GetClassData() const { return &_class_data_; }
 
-void ROLE_SUMMARY::MergeFrom(const ROLE_SUMMARY& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:role_msg.ROLE_SUMMARY)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void ROLE_SUMMARY::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ROLE_SUMMARY*>(&to_msg);
+  auto& from = static_cast<const ROLE_SUMMARY&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:role_msg.ROLE_SUMMARY)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  loot_history_.MergeFrom(from.loot_history_);
-  if (from.name().size() > 0) {
-
-    name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.name_);
+  _this->_impl_.loot_history_.MergeFrom(from._impl_.loot_history_);
+  if (!from._internal_name().empty()) {
+    _this->_internal_set_name(from._internal_name());
   }
-  if (from.face().size() > 0) {
-
-    face_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.face_);
+  if (!from._internal_face().empty()) {
+    _this->_internal_set_face(from._internal_face());
   }
-  if (from.guild_name().size() > 0) {
-
-    guild_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.guild_name_);
+  if (!from._internal_guild_name().empty()) {
+    _this->_internal_set_guild_name(from._internal_guild_name());
   }
-  if (from.guild_short_name().size() > 0) {
-
-    guild_short_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.guild_short_name_);
+  if (!from._internal_guild_short_name().empty()) {
+    _this->_internal_set_guild_short_name(from._internal_guild_short_name());
   }
-  if (from.user_id() != 0) {
-    _internal_set_user_id(from._internal_user_id());
+  if (from._internal_user_id() != 0) {
+    _this->_internal_set_user_id(from._internal_user_id());
   }
-  if (from.fighting_power() != 0) {
-    _internal_set_fighting_power(from._internal_fighting_power());
+  if (from._internal_fighting_power() != 0) {
+    _this->_internal_set_fighting_power(from._internal_fighting_power());
   }
-  if (from.level() != 0) {
-    _internal_set_level(from._internal_level());
+  if (from._internal_level() != 0) {
+    _this->_internal_set_level(from._internal_level());
   }
-  if (from.language_type() != 0) {
-    _internal_set_language_type(from._internal_language_type());
+  if (from._internal_language_type() != 0) {
+    _this->_internal_set_language_type(from._internal_language_type());
   }
-  if (from.guild_id() != 0) {
-    _internal_set_guild_id(from._internal_guild_id());
+  if (from._internal_guild_id() != 0) {
+    _this->_internal_set_guild_id(from._internal_guild_id());
   }
-  if (from.hero_power() != 0) {
-    _internal_set_hero_power(from._internal_hero_power());
+  if (from._internal_hero_power() != 0) {
+    _this->_internal_set_hero_power(from._internal_hero_power());
   }
-  if (from.soldier_power() != 0) {
-    _internal_set_soldier_power(from._internal_soldier_power());
+  if (from._internal_soldier_power() != 0) {
+    _this->_internal_set_soldier_power(from._internal_soldier_power());
   }
-  if (from.building_power() != 0) {
-    _internal_set_building_power(from._internal_building_power());
+  if (from._internal_building_power() != 0) {
+    _this->_internal_set_building_power(from._internal_building_power());
   }
-  if (from.online_flag() != 0) {
-    _internal_set_online_flag(from._internal_online_flag());
+  if (from._internal_online_flag() != 0) {
+    _this->_internal_set_online_flag(from._internal_online_flag());
   }
-  if (from.record_power_rank() != 0) {
-    _internal_set_record_power_rank(from._internal_record_power_rank());
+  if (from._internal_record_power_rank() != 0) {
+    _this->_internal_set_record_power_rank(from._internal_record_power_rank());
   }
-  if (from.guild_rank() != 0) {
-    _internal_set_guild_rank(from._internal_guild_rank());
+  if (from._internal_guild_rank() != 0) {
+    _this->_internal_set_guild_rank(from._internal_guild_rank());
   }
-  if (from.survey_expire_time() != 0) {
-    _internal_set_survey_expire_time(from._internal_survey_expire_time());
+  if (from._internal_survey_expire_time() != 0) {
+    _this->_internal_set_survey_expire_time(from._internal_survey_expire_time());
   }
-  if (from.power_rank() != 0) {
-    _internal_set_power_rank(from._internal_power_rank());
+  if (from._internal_power_rank() != 0) {
+    _this->_internal_set_power_rank(from._internal_power_rank());
   }
-  if (from.best_power_rank() != 0) {
-    _internal_set_best_power_rank(from._internal_best_power_rank());
+  if (from._internal_best_power_rank() != 0) {
+    _this->_internal_set_best_power_rank(from._internal_best_power_rank());
   }
-  if (from.guild_server_id() != 0) {
-    _internal_set_guild_server_id(from._internal_guild_server_id());
+  if (from._internal_guild_server_id() != 0) {
+    _this->_internal_set_guild_server_id(from._internal_guild_server_id());
   }
-  if (from.guild_language() != 0) {
-    _internal_set_guild_language(from._internal_guild_language());
+  if (from._internal_guild_language() != 0) {
+    _this->_internal_set_guild_language(from._internal_guild_language());
   }
-  if (from.loot_defense_time() != 0) {
-    _internal_set_loot_defense_time(from._internal_loot_defense_time());
+  if (from._internal_loot_defense_time() != 0) {
+    _this->_internal_set_loot_defense_time(from._internal_loot_defense_time());
   }
-  if (from.loot_attack_time() != 0) {
-    _internal_set_loot_attack_time(from._internal_loot_attack_time());
+  if (from._internal_loot_attack_time() != 0) {
+    _this->_internal_set_loot_attack_time(from._internal_loot_attack_time());
   }
-  if (from.loot_lock_owner() != 0) {
-    _internal_set_loot_lock_owner(from._internal_loot_lock_owner());
+  if (from._internal_loot_lock_owner() != 0) {
+    _this->_internal_set_loot_lock_owner(from._internal_loot_lock_owner());
   }
-  if (from.city_center_level() != 0) {
-    _internal_set_city_center_level(from._internal_city_center_level());
+  if (from._internal_city_center_level() != 0) {
+    _this->_internal_set_city_center_level(from._internal_city_center_level());
   }
-  if (from.online_server_type() != 0) {
-    _internal_set_online_server_type(from._internal_online_server_type());
+  if (from._internal_online_server_type() != 0) {
+    _this->_internal_set_online_server_type(from._internal_online_server_type());
   }
-  if (from.loot_lock_at() != 0) {
-    _internal_set_loot_lock_at(from._internal_loot_lock_at());
+  if (from._internal_loot_lock_at() != 0) {
+    _this->_internal_set_loot_lock_at(from._internal_loot_lock_at());
   }
-  if (from.online_server_id() != 0) {
-    _internal_set_online_server_id(from._internal_online_server_id());
+  if (from._internal_online_server_id() != 0) {
+    _this->_internal_set_online_server_id(from._internal_online_server_id());
   }
-  if (from.fantasia_chapter() != 0) {
-    _internal_set_fantasia_chapter(from._internal_fantasia_chapter());
+  if (from._internal_fantasia_chapter() != 0) {
+    _this->_internal_set_fantasia_chapter(from._internal_fantasia_chapter());
   }
-  if (from.fantasia_chapter_pass() != 0) {
-    _internal_set_fantasia_chapter_pass(from._internal_fantasia_chapter_pass());
+  if (from._internal_fantasia_chapter_pass() != 0) {
+    _this->_internal_set_fantasia_chapter_pass(from._internal_fantasia_chapter_pass());
   }
-  if (from.register_time() != 0) {
-    _internal_set_register_time(from._internal_register_time());
+  if (from._internal_register_time() != 0) {
+    _this->_internal_set_register_time(from._internal_register_time());
   }
-  if (from.season_point_peak() != 0) {
-    _internal_set_season_point_peak(from._internal_season_point_peak());
+  if (from._internal_season_point_peak() != 0) {
+    _this->_internal_set_season_point_peak(from._internal_season_point_peak());
   }
-  if (from.loot_win_times() != 0) {
-    _internal_set_loot_win_times(from._internal_loot_win_times());
+  if (from._internal_loot_win_times() != 0) {
+    _this->_internal_set_loot_win_times(from._internal_loot_win_times());
   }
-  if (from.excluded_power() != 0) {
-    _internal_set_excluded_power(from._internal_excluded_power());
+  if (from._internal_excluded_power() != 0) {
+    _this->_internal_set_excluded_power(from._internal_excluded_power());
   }
-  if (from.login_time() != 0) {
-    _internal_set_login_time(from._internal_login_time());
+  if (from._internal_login_time() != 0) {
+    _this->_internal_set_login_time(from._internal_login_time());
   }
-  if (from.login_main_logic_id() != 0) {
-    _internal_set_login_main_logic_id(from._internal_login_main_logic_id());
+  if (from._internal_login_main_logic_id() != 0) {
+    _this->_internal_set_login_main_logic_id(from._internal_login_main_logic_id());
   }
-}
-
-void ROLE_SUMMARY::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:role_msg.ROLE_SUMMARY)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void ROLE_SUMMARY::CopyFrom(const ROLE_SUMMARY& from) {
@@ -1215,155 +1345,153 @@ bool ROLE_SUMMARY::IsInitialized() const {
 
 void ROLE_SUMMARY::InternalSwap(ROLE_SUMMARY* other) {
   using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  loot_history_.InternalSwap(&other->loot_history_);
-  name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  face_.Swap(&other->face_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  guild_name_.Swap(&other->guild_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  guild_short_name_.Swap(&other->guild_short_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(user_id_, other->user_id_);
-  swap(fighting_power_, other->fighting_power_);
-  swap(level_, other->level_);
-  swap(language_type_, other->language_type_);
-  swap(guild_id_, other->guild_id_);
-  swap(hero_power_, other->hero_power_);
-  swap(soldier_power_, other->soldier_power_);
-  swap(building_power_, other->building_power_);
-  swap(online_flag_, other->online_flag_);
-  swap(record_power_rank_, other->record_power_rank_);
-  swap(guild_rank_, other->guild_rank_);
-  swap(survey_expire_time_, other->survey_expire_time_);
-  swap(power_rank_, other->power_rank_);
-  swap(best_power_rank_, other->best_power_rank_);
-  swap(guild_server_id_, other->guild_server_id_);
-  swap(guild_language_, other->guild_language_);
-  swap(loot_defense_time_, other->loot_defense_time_);
-  swap(loot_attack_time_, other->loot_attack_time_);
-  swap(loot_lock_owner_, other->loot_lock_owner_);
-  swap(city_center_level_, other->city_center_level_);
-  swap(online_server_type_, other->online_server_type_);
-  swap(loot_lock_at_, other->loot_lock_at_);
-  swap(online_server_id_, other->online_server_id_);
-  swap(fantasia_chapter_, other->fantasia_chapter_);
-  swap(fantasia_chapter_pass_, other->fantasia_chapter_pass_);
-  swap(register_time_, other->register_time_);
-  swap(season_point_peak_, other->season_point_peak_);
-  swap(loot_win_times_, other->loot_win_times_);
-  swap(excluded_power_, other->excluded_power_);
-  swap(login_time_, other->login_time_);
-  swap(login_main_logic_id_, other->login_main_logic_id_);
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.loot_history_.InternalSwap(&other->_impl_.loot_history_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.name_, lhs_arena,
+      &other->_impl_.name_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.face_, lhs_arena,
+      &other->_impl_.face_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.guild_name_, lhs_arena,
+      &other->_impl_.guild_name_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.guild_short_name_, lhs_arena,
+      &other->_impl_.guild_short_name_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ROLE_SUMMARY, _impl_.login_main_logic_id_)
+      + sizeof(ROLE_SUMMARY::_impl_.login_main_logic_id_)
+      - PROTOBUF_FIELD_OFFSET(ROLE_SUMMARY, _impl_.user_id_)>(
+          reinterpret_cast<char*>(&_impl_.user_id_),
+          reinterpret_cast<char*>(&other->_impl_.user_id_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ROLE_SUMMARY::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_role_5fserver_5fmsg_2eproto_getter, &descriptor_table_role_5fserver_5fmsg_2eproto_once,
+      file_level_metadata_role_5fserver_5fmsg_2eproto[0]);
 }
-
 
 // ===================================================================
 
-void AGENT_SEQ_ID::InitAsDefaultInstance() {
-}
 class AGENT_SEQ_ID::_Internal {
  public:
 };
 
-AGENT_SEQ_ID::AGENT_SEQ_ID()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:role_msg.AGENT_SEQ_ID)
+AGENT_SEQ_ID::AGENT_SEQ_ID(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:role_msg.AGENT_SEQ_ID)
 }
 AGENT_SEQ_ID::AGENT_SEQ_ID(const AGENT_SEQ_ID& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  seq_id_ = from.seq_id_;
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  AGENT_SEQ_ID* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.seq_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.seq_id_ = from._impl_.seq_id_;
   // @@protoc_insertion_point(copy_constructor:role_msg.AGENT_SEQ_ID)
 }
 
-void AGENT_SEQ_ID::SharedCtor() {
-  seq_id_ = PROTOBUF_ULONGLONG(0);
+inline void AGENT_SEQ_ID::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.seq_id_){uint64_t{0u}}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 AGENT_SEQ_ID::~AGENT_SEQ_ID() {
   // @@protoc_insertion_point(destructor:role_msg.AGENT_SEQ_ID)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
 }
 
-void AGENT_SEQ_ID::SharedDtor() {
+inline void AGENT_SEQ_ID::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
 void AGENT_SEQ_ID::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const AGENT_SEQ_ID& AGENT_SEQ_ID::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_AGENT_SEQ_ID_role_5fserver_5fmsg_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void AGENT_SEQ_ID::Clear() {
 // @@protoc_insertion_point(message_clear_start:role_msg.AGENT_SEQ_ID)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  seq_id_ = PROTOBUF_ULONGLONG(0);
-  _internal_metadata_.Clear();
+  _impl_.seq_id_ = uint64_t{0u};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* AGENT_SEQ_ID::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* AGENT_SEQ_ID::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint64 seq_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          seq_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.seq_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* AGENT_SEQ_ID::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* AGENT_SEQ_ID::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:role_msg.AGENT_SEQ_ID)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // uint64 seq_id = 1;
-  if (this->seq_id() != 0) {
+  if (this->_internal_seq_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_seq_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_seq_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target, stream);
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:role_msg.AGENT_SEQ_ID)
   return target;
@@ -1373,58 +1501,37 @@ size_t AGENT_SEQ_ID::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:role_msg.AGENT_SEQ_ID)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // uint64 seq_id = 1;
-  if (this->seq_id() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_seq_id());
+  if (this->_internal_seq_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_seq_id());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void AGENT_SEQ_ID::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:role_msg.AGENT_SEQ_ID)
-  GOOGLE_DCHECK_NE(&from, this);
-  const AGENT_SEQ_ID* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<AGENT_SEQ_ID>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:role_msg.AGENT_SEQ_ID)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:role_msg.AGENT_SEQ_ID)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AGENT_SEQ_ID::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    AGENT_SEQ_ID::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AGENT_SEQ_ID::GetClassData() const { return &_class_data_; }
 
-void AGENT_SEQ_ID::MergeFrom(const AGENT_SEQ_ID& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:role_msg.AGENT_SEQ_ID)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void AGENT_SEQ_ID::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<AGENT_SEQ_ID*>(&to_msg);
+  auto& from = static_cast<const AGENT_SEQ_ID&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:role_msg.AGENT_SEQ_ID)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.seq_id() != 0) {
-    _internal_set_seq_id(from._internal_seq_id());
+  if (from._internal_seq_id() != 0) {
+    _this->_internal_set_seq_id(from._internal_seq_id());
   }
-}
-
-void AGENT_SEQ_ID::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:role_msg.AGENT_SEQ_ID)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void AGENT_SEQ_ID::CopyFrom(const AGENT_SEQ_ID& from) {
@@ -1440,23 +1547,26 @@ bool AGENT_SEQ_ID::IsInitialized() const {
 
 void AGENT_SEQ_ID::InternalSwap(AGENT_SEQ_ID* other) {
   using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(seq_id_, other->seq_id_);
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.seq_id_, other->_impl_.seq_id_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata AGENT_SEQ_ID::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_role_5fserver_5fmsg_2eproto_getter, &descriptor_table_role_5fserver_5fmsg_2eproto_once,
+      file_level_metadata_role_5fserver_5fmsg_2eproto[1]);
 }
-
 
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace role_msg
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::role_msg::ROLE_SUMMARY* Arena::CreateMaybeMessage< ::role_msg::ROLE_SUMMARY >(Arena* arena) {
-  return Arena::CreateInternal< ::role_msg::ROLE_SUMMARY >(arena);
+template<> PROTOBUF_NOINLINE ::role_msg::ROLE_SUMMARY*
+Arena::CreateMaybeMessage< ::role_msg::ROLE_SUMMARY >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::role_msg::ROLE_SUMMARY >(arena);
 }
-template<> PROTOBUF_NOINLINE ::role_msg::AGENT_SEQ_ID* Arena::CreateMaybeMessage< ::role_msg::AGENT_SEQ_ID >(Arena* arena) {
-  return Arena::CreateInternal< ::role_msg::AGENT_SEQ_ID >(arena);
+template<> PROTOBUF_NOINLINE ::role_msg::AGENT_SEQ_ID*
+Arena::CreateMaybeMessage< ::role_msg::AGENT_SEQ_ID >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::role_msg::AGENT_SEQ_ID >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

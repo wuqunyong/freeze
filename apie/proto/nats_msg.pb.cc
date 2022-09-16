@@ -14,60 +14,51 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
-extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_RPC_Multiplexer_Forward_rpc_5fmsg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_RPC_REQUEST_rpc_5fmsg_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_rpc_5fmsg_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<3> scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto;
+
+PROTOBUF_PRAGMA_INIT_SEG
+
+namespace _pb = ::PROTOBUF_NAMESPACE_ID;
+namespace _pbi = _pb::internal;
+
 namespace nats_msg {
-class NATS_MSG_PRXOYDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<NATS_MSG_PRXOY> _instance;
-  const ::rpc_msg::RPC_REQUEST* rpc_request_;
-  const ::rpc_msg::RPC_RESPONSE* rpc_response_;
-  const ::rpc_msg::RPC_Multiplexer_Forward* multiplexer_forward_;
-  const ::rpc_msg::PRC_DeMultiplexer_Forward* demultiplexer_forward_;
-} _NATS_MSG_PRXOY_default_instance_;
+PROTOBUF_CONSTEXPR NATS_MSG_PRXOY::NATS_MSG_PRXOY(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.msg_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_._oneof_case_)*/{}} {}
+struct NATS_MSG_PRXOYDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR NATS_MSG_PRXOYDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~NATS_MSG_PRXOYDefaultTypeInternal() {}
+  union {
+    NATS_MSG_PRXOY _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NATS_MSG_PRXOYDefaultTypeInternal _NATS_MSG_PRXOY_default_instance_;
 }  // namespace nats_msg
-static void InitDefaultsscc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
+static ::_pb::Metadata file_level_metadata_nats_5fmsg_2eproto[1];
+static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_nats_5fmsg_2eproto = nullptr;
+static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_nats_5fmsg_2eproto = nullptr;
 
-  {
-    void* ptr = &::nats_msg::_NATS_MSG_PRXOY_default_instance_;
-    new (ptr) ::nats_msg::NATS_MSG_PRXOY();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::nats_msg::NATS_MSG_PRXOY::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<4> scc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 4, 0, InitDefaultsscc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto}, {
-      &scc_info_RPC_REQUEST_rpc_5fmsg_2eproto.base,
-      &scc_info_RPC_RESPONSE_rpc_5fmsg_2eproto.base,
-      &scc_info_RPC_Multiplexer_Forward_rpc_5fmsg_2eproto.base,
-      &scc_info_PRC_DeMultiplexer_Forward_rpc_5fmsg_2eproto.base,}};
-
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_nats_5fmsg_2eproto[1];
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_nats_5fmsg_2eproto = nullptr;
-static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_nats_5fmsg_2eproto = nullptr;
-
-const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_nats_5fmsg_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+const uint32_t TableStruct_nats_5fmsg_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, _internal_metadata_),
   ~0u,  // no _extensions_
-  PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, _oneof_case_[0]),
+  PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, _impl_._oneof_case_[0]),
   ~0u,  // no _weak_field_map_
-  offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, rpc_request_),
-  offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, rpc_response_),
-  offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, multiplexer_forward_),
-  offsetof(::nats_msg::NATS_MSG_PRXOYDefaultTypeInternal, demultiplexer_forward_),
-  PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, msg_),
+  ~0u,  // no _inlined_string_donated_
+  ::_pbi::kInvalidFieldOffsetTag,
+  ::_pbi::kInvalidFieldOffsetTag,
+  ::_pbi::kInvalidFieldOffsetTag,
+  ::_pbi::kInvalidFieldOffsetTag,
+  PROTOBUF_FIELD_OFFSET(::nats_msg::NATS_MSG_PRXOY, _impl_.msg_),
 };
-static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::nats_msg::NATS_MSG_PRXOY)},
+static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, -1, sizeof(::nats_msg::NATS_MSG_PRXOY)},
 };
 
-static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::nats_msg::_NATS_MSG_PRXOY_default_instance_),
+static const ::_pb::Message* const file_default_instances[] = {
+  &::nats_msg::_NATS_MSG_PRXOY_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_nats_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -80,37 +71,28 @@ const char descriptor_table_protodef_nats_5fmsg_2eproto[] PROTOBUF_SECTION_VARIA
   "rd\030g \001(\0132\".rpc_msg.PRC_DeMultiplexer_For"
   "wardH\000B\005\n\003msgb\006proto3"
   ;
-static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_nats_5fmsg_2eproto_deps[1] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_nats_5fmsg_2eproto_deps[1] = {
   &::descriptor_table_rpc_5fmsg_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_nats_5fmsg_2eproto_sccs[1] = {
-  &scc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto.base,
+static ::_pbi::once_flag descriptor_table_nats_5fmsg_2eproto_once;
+const ::_pbi::DescriptorTable descriptor_table_nats_5fmsg_2eproto = {
+    false, false, 301, descriptor_table_protodef_nats_5fmsg_2eproto,
+    "nats_msg.proto",
+    &descriptor_table_nats_5fmsg_2eproto_once, descriptor_table_nats_5fmsg_2eproto_deps, 1, 1,
+    schemas, file_default_instances, TableStruct_nats_5fmsg_2eproto::offsets,
+    file_level_metadata_nats_5fmsg_2eproto, file_level_enum_descriptors_nats_5fmsg_2eproto,
+    file_level_service_descriptors_nats_5fmsg_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_nats_5fmsg_2eproto_once;
-static bool descriptor_table_nats_5fmsg_2eproto_initialized = false;
-const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_nats_5fmsg_2eproto = {
-  &descriptor_table_nats_5fmsg_2eproto_initialized, descriptor_table_protodef_nats_5fmsg_2eproto, "nats_msg.proto", 301,
-  &descriptor_table_nats_5fmsg_2eproto_once, descriptor_table_nats_5fmsg_2eproto_sccs, descriptor_table_nats_5fmsg_2eproto_deps, 1, 1,
-  schemas, file_default_instances, TableStruct_nats_5fmsg_2eproto::offsets,
-  file_level_metadata_nats_5fmsg_2eproto, 1, file_level_enum_descriptors_nats_5fmsg_2eproto, file_level_service_descriptors_nats_5fmsg_2eproto,
-};
+PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_nats_5fmsg_2eproto_getter() {
+  return &descriptor_table_nats_5fmsg_2eproto;
+}
 
 // Force running AddDescriptors() at dynamic initialization time.
-static bool dynamic_init_dummy_nats_5fmsg_2eproto = (  ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_nats_5fmsg_2eproto), true);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_nats_5fmsg_2eproto(&descriptor_table_nats_5fmsg_2eproto);
 namespace nats_msg {
 
 // ===================================================================
 
-void NATS_MSG_PRXOY::InitAsDefaultInstance() {
-  ::nats_msg::_NATS_MSG_PRXOY_default_instance_.rpc_request_ = const_cast< ::rpc_msg::RPC_REQUEST*>(
-      ::rpc_msg::RPC_REQUEST::internal_default_instance());
-  ::nats_msg::_NATS_MSG_PRXOY_default_instance_.rpc_response_ = const_cast< ::rpc_msg::RPC_RESPONSE*>(
-      ::rpc_msg::RPC_RESPONSE::internal_default_instance());
-  ::nats_msg::_NATS_MSG_PRXOY_default_instance_.multiplexer_forward_ = const_cast< ::rpc_msg::RPC_Multiplexer_Forward*>(
-      ::rpc_msg::RPC_Multiplexer_Forward::internal_default_instance());
-  ::nats_msg::_NATS_MSG_PRXOY_default_instance_.demultiplexer_forward_ = const_cast< ::rpc_msg::PRC_DeMultiplexer_Forward*>(
-      ::rpc_msg::PRC_DeMultiplexer_Forward::internal_default_instance());
-}
 class NATS_MSG_PRXOY::_Internal {
  public:
   static const ::rpc_msg::RPC_REQUEST& rpc_request(const NATS_MSG_PRXOY* msg);
@@ -121,125 +103,151 @@ class NATS_MSG_PRXOY::_Internal {
 
 const ::rpc_msg::RPC_REQUEST&
 NATS_MSG_PRXOY::_Internal::rpc_request(const NATS_MSG_PRXOY* msg) {
-  return *msg->msg_.rpc_request_;
+  return *msg->_impl_.msg_.rpc_request_;
 }
 const ::rpc_msg::RPC_RESPONSE&
 NATS_MSG_PRXOY::_Internal::rpc_response(const NATS_MSG_PRXOY* msg) {
-  return *msg->msg_.rpc_response_;
+  return *msg->_impl_.msg_.rpc_response_;
 }
 const ::rpc_msg::RPC_Multiplexer_Forward&
 NATS_MSG_PRXOY::_Internal::multiplexer_forward(const NATS_MSG_PRXOY* msg) {
-  return *msg->msg_.multiplexer_forward_;
+  return *msg->_impl_.msg_.multiplexer_forward_;
 }
 const ::rpc_msg::PRC_DeMultiplexer_Forward&
 NATS_MSG_PRXOY::_Internal::demultiplexer_forward(const NATS_MSG_PRXOY* msg) {
-  return *msg->msg_.demultiplexer_forward_;
+  return *msg->_impl_.msg_.demultiplexer_forward_;
 }
 void NATS_MSG_PRXOY::set_allocated_rpc_request(::rpc_msg::RPC_REQUEST* rpc_request) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   clear_msg();
   if (rpc_request) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(rpc_request));
     if (message_arena != submessage_arena) {
       rpc_request = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
           message_arena, rpc_request, submessage_arena);
     }
     set_has_rpc_request();
-    msg_.rpc_request_ = rpc_request;
+    _impl_.msg_.rpc_request_ = rpc_request;
   }
   // @@protoc_insertion_point(field_set_allocated:nats_msg.NATS_MSG_PRXOY.rpc_request)
 }
 void NATS_MSG_PRXOY::clear_rpc_request() {
   if (_internal_has_rpc_request()) {
-    delete msg_.rpc_request_;
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.msg_.rpc_request_;
+    }
     clear_has_msg();
   }
 }
 void NATS_MSG_PRXOY::set_allocated_rpc_response(::rpc_msg::RPC_RESPONSE* rpc_response) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   clear_msg();
   if (rpc_response) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(rpc_response));
     if (message_arena != submessage_arena) {
       rpc_response = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
           message_arena, rpc_response, submessage_arena);
     }
     set_has_rpc_response();
-    msg_.rpc_response_ = rpc_response;
+    _impl_.msg_.rpc_response_ = rpc_response;
   }
   // @@protoc_insertion_point(field_set_allocated:nats_msg.NATS_MSG_PRXOY.rpc_response)
 }
 void NATS_MSG_PRXOY::clear_rpc_response() {
   if (_internal_has_rpc_response()) {
-    delete msg_.rpc_response_;
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.msg_.rpc_response_;
+    }
     clear_has_msg();
   }
 }
 void NATS_MSG_PRXOY::set_allocated_multiplexer_forward(::rpc_msg::RPC_Multiplexer_Forward* multiplexer_forward) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   clear_msg();
   if (multiplexer_forward) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(multiplexer_forward));
     if (message_arena != submessage_arena) {
       multiplexer_forward = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
           message_arena, multiplexer_forward, submessage_arena);
     }
     set_has_multiplexer_forward();
-    msg_.multiplexer_forward_ = multiplexer_forward;
+    _impl_.msg_.multiplexer_forward_ = multiplexer_forward;
   }
   // @@protoc_insertion_point(field_set_allocated:nats_msg.NATS_MSG_PRXOY.multiplexer_forward)
 }
 void NATS_MSG_PRXOY::clear_multiplexer_forward() {
   if (_internal_has_multiplexer_forward()) {
-    delete msg_.multiplexer_forward_;
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.msg_.multiplexer_forward_;
+    }
     clear_has_msg();
   }
 }
 void NATS_MSG_PRXOY::set_allocated_demultiplexer_forward(::rpc_msg::PRC_DeMultiplexer_Forward* demultiplexer_forward) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   clear_msg();
   if (demultiplexer_forward) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(demultiplexer_forward));
     if (message_arena != submessage_arena) {
       demultiplexer_forward = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
           message_arena, demultiplexer_forward, submessage_arena);
     }
     set_has_demultiplexer_forward();
-    msg_.demultiplexer_forward_ = demultiplexer_forward;
+    _impl_.msg_.demultiplexer_forward_ = demultiplexer_forward;
   }
   // @@protoc_insertion_point(field_set_allocated:nats_msg.NATS_MSG_PRXOY.demultiplexer_forward)
 }
 void NATS_MSG_PRXOY::clear_demultiplexer_forward() {
   if (_internal_has_demultiplexer_forward()) {
-    delete msg_.demultiplexer_forward_;
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.msg_.demultiplexer_forward_;
+    }
     clear_has_msg();
   }
 }
-NATS_MSG_PRXOY::NATS_MSG_PRXOY()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:nats_msg.NATS_MSG_PRXOY)
+NATS_MSG_PRXOY::NATS_MSG_PRXOY(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:nats_msg.NATS_MSG_PRXOY)
 }
 NATS_MSG_PRXOY::NATS_MSG_PRXOY(const NATS_MSG_PRXOY& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  NATS_MSG_PRXOY* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.msg_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , /*decltype(_impl_._oneof_case_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   clear_has_msg();
   switch (from.msg_case()) {
     case kRpcRequest: {
-      _internal_mutable_rpc_request()->::rpc_msg::RPC_REQUEST::MergeFrom(from._internal_rpc_request());
+      _this->_internal_mutable_rpc_request()->::rpc_msg::RPC_REQUEST::MergeFrom(
+          from._internal_rpc_request());
       break;
     }
     case kRpcResponse: {
-      _internal_mutable_rpc_response()->::rpc_msg::RPC_RESPONSE::MergeFrom(from._internal_rpc_response());
+      _this->_internal_mutable_rpc_response()->::rpc_msg::RPC_RESPONSE::MergeFrom(
+          from._internal_rpc_response());
       break;
     }
     case kMultiplexerForward: {
-      _internal_mutable_multiplexer_forward()->::rpc_msg::RPC_Multiplexer_Forward::MergeFrom(from._internal_multiplexer_forward());
+      _this->_internal_mutable_multiplexer_forward()->::rpc_msg::RPC_Multiplexer_Forward::MergeFrom(
+          from._internal_multiplexer_forward());
       break;
     }
     case kDemultiplexerForward: {
-      _internal_mutable_demultiplexer_forward()->::rpc_msg::PRC_DeMultiplexer_Forward::MergeFrom(from._internal_demultiplexer_forward());
+      _this->_internal_mutable_demultiplexer_forward()->::rpc_msg::PRC_DeMultiplexer_Forward::MergeFrom(
+          from._internal_demultiplexer_forward());
       break;
     }
     case MSG_NOT_SET: {
@@ -249,164 +257,181 @@ NATS_MSG_PRXOY::NATS_MSG_PRXOY(const NATS_MSG_PRXOY& from)
   // @@protoc_insertion_point(copy_constructor:nats_msg.NATS_MSG_PRXOY)
 }
 
-void NATS_MSG_PRXOY::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto.base);
+inline void NATS_MSG_PRXOY::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.msg_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , /*decltype(_impl_._oneof_case_)*/{}
+  };
   clear_has_msg();
 }
 
 NATS_MSG_PRXOY::~NATS_MSG_PRXOY() {
   // @@protoc_insertion_point(destructor:nats_msg.NATS_MSG_PRXOY)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
 }
 
-void NATS_MSG_PRXOY::SharedDtor() {
+inline void NATS_MSG_PRXOY::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (has_msg()) {
     clear_msg();
   }
 }
 
 void NATS_MSG_PRXOY::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const NATS_MSG_PRXOY& NATS_MSG_PRXOY::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_NATS_MSG_PRXOY_nats_5fmsg_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void NATS_MSG_PRXOY::clear_msg() {
 // @@protoc_insertion_point(one_of_clear_start:nats_msg.NATS_MSG_PRXOY)
   switch (msg_case()) {
     case kRpcRequest: {
-      delete msg_.rpc_request_;
+      if (GetArenaForAllocation() == nullptr) {
+        delete _impl_.msg_.rpc_request_;
+      }
       break;
     }
     case kRpcResponse: {
-      delete msg_.rpc_response_;
+      if (GetArenaForAllocation() == nullptr) {
+        delete _impl_.msg_.rpc_response_;
+      }
       break;
     }
     case kMultiplexerForward: {
-      delete msg_.multiplexer_forward_;
+      if (GetArenaForAllocation() == nullptr) {
+        delete _impl_.msg_.multiplexer_forward_;
+      }
       break;
     }
     case kDemultiplexerForward: {
-      delete msg_.demultiplexer_forward_;
+      if (GetArenaForAllocation() == nullptr) {
+        delete _impl_.msg_.demultiplexer_forward_;
+      }
       break;
     }
     case MSG_NOT_SET: {
       break;
     }
   }
-  _oneof_case_[0] = MSG_NOT_SET;
+  _impl_._oneof_case_[0] = MSG_NOT_SET;
 }
 
 
 void NATS_MSG_PRXOY::Clear() {
 // @@protoc_insertion_point(message_clear_start:nats_msg.NATS_MSG_PRXOY)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   clear_msg();
-  _internal_metadata_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* NATS_MSG_PRXOY::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* NATS_MSG_PRXOY::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .rpc_msg.RPC_REQUEST rpc_request = 100;
       case 100:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_rpc_request(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // .rpc_msg.RPC_RESPONSE rpc_response = 101;
       case 101:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
           ptr = ctx->ParseMessage(_internal_mutable_rpc_response(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // .rpc_msg.RPC_Multiplexer_Forward multiplexer_forward = 102;
       case 102:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
           ptr = ctx->ParseMessage(_internal_mutable_multiplexer_forward(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // .rpc_msg.PRC_DeMultiplexer_Forward demultiplexer_forward = 103;
       case 103:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
           ptr = ctx->ParseMessage(_internal_mutable_demultiplexer_forward(), ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* NATS_MSG_PRXOY::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* NATS_MSG_PRXOY::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:nats_msg.NATS_MSG_PRXOY)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // .rpc_msg.RPC_REQUEST rpc_request = 100;
   if (_internal_has_rpc_request()) {
-    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        100, _Internal::rpc_request(this), target, stream);
+      InternalWriteMessage(100, _Internal::rpc_request(this),
+        _Internal::rpc_request(this).GetCachedSize(), target, stream);
   }
 
   // .rpc_msg.RPC_RESPONSE rpc_response = 101;
   if (_internal_has_rpc_response()) {
-    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        101, _Internal::rpc_response(this), target, stream);
+      InternalWriteMessage(101, _Internal::rpc_response(this),
+        _Internal::rpc_response(this).GetCachedSize(), target, stream);
   }
 
   // .rpc_msg.RPC_Multiplexer_Forward multiplexer_forward = 102;
   if (_internal_has_multiplexer_forward()) {
-    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        102, _Internal::multiplexer_forward(this), target, stream);
+      InternalWriteMessage(102, _Internal::multiplexer_forward(this),
+        _Internal::multiplexer_forward(this).GetCachedSize(), target, stream);
   }
 
   // .rpc_msg.PRC_DeMultiplexer_Forward demultiplexer_forward = 103;
   if (_internal_has_demultiplexer_forward()) {
-    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        103, _Internal::demultiplexer_forward(this), target, stream);
+      InternalWriteMessage(103, _Internal::demultiplexer_forward(this),
+        _Internal::demultiplexer_forward(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target, stream);
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:nats_msg.NATS_MSG_PRXOY)
   return target;
@@ -416,7 +441,7 @@ size_t NATS_MSG_PRXOY::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:nats_msg.NATS_MSG_PRXOY)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -425,93 +450,78 @@ size_t NATS_MSG_PRXOY::ByteSizeLong() const {
     case kRpcRequest: {
       total_size += 2 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *msg_.rpc_request_);
+          *_impl_.msg_.rpc_request_);
       break;
     }
     // .rpc_msg.RPC_RESPONSE rpc_response = 101;
     case kRpcResponse: {
       total_size += 2 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *msg_.rpc_response_);
+          *_impl_.msg_.rpc_response_);
       break;
     }
     // .rpc_msg.RPC_Multiplexer_Forward multiplexer_forward = 102;
     case kMultiplexerForward: {
       total_size += 2 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *msg_.multiplexer_forward_);
+          *_impl_.msg_.multiplexer_forward_);
       break;
     }
     // .rpc_msg.PRC_DeMultiplexer_Forward demultiplexer_forward = 103;
     case kDemultiplexerForward: {
       total_size += 2 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *msg_.demultiplexer_forward_);
+          *_impl_.msg_.demultiplexer_forward_);
       break;
     }
     case MSG_NOT_SET: {
       break;
     }
   }
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void NATS_MSG_PRXOY::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:nats_msg.NATS_MSG_PRXOY)
-  GOOGLE_DCHECK_NE(&from, this);
-  const NATS_MSG_PRXOY* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<NATS_MSG_PRXOY>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:nats_msg.NATS_MSG_PRXOY)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:nats_msg.NATS_MSG_PRXOY)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData NATS_MSG_PRXOY::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    NATS_MSG_PRXOY::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*NATS_MSG_PRXOY::GetClassData() const { return &_class_data_; }
 
-void NATS_MSG_PRXOY::MergeFrom(const NATS_MSG_PRXOY& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:nats_msg.NATS_MSG_PRXOY)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void NATS_MSG_PRXOY::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<NATS_MSG_PRXOY*>(&to_msg);
+  auto& from = static_cast<const NATS_MSG_PRXOY&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:nats_msg.NATS_MSG_PRXOY)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   switch (from.msg_case()) {
     case kRpcRequest: {
-      _internal_mutable_rpc_request()->::rpc_msg::RPC_REQUEST::MergeFrom(from._internal_rpc_request());
+      _this->_internal_mutable_rpc_request()->::rpc_msg::RPC_REQUEST::MergeFrom(
+          from._internal_rpc_request());
       break;
     }
     case kRpcResponse: {
-      _internal_mutable_rpc_response()->::rpc_msg::RPC_RESPONSE::MergeFrom(from._internal_rpc_response());
+      _this->_internal_mutable_rpc_response()->::rpc_msg::RPC_RESPONSE::MergeFrom(
+          from._internal_rpc_response());
       break;
     }
     case kMultiplexerForward: {
-      _internal_mutable_multiplexer_forward()->::rpc_msg::RPC_Multiplexer_Forward::MergeFrom(from._internal_multiplexer_forward());
+      _this->_internal_mutable_multiplexer_forward()->::rpc_msg::RPC_Multiplexer_Forward::MergeFrom(
+          from._internal_multiplexer_forward());
       break;
     }
     case kDemultiplexerForward: {
-      _internal_mutable_demultiplexer_forward()->::rpc_msg::PRC_DeMultiplexer_Forward::MergeFrom(from._internal_demultiplexer_forward());
+      _this->_internal_mutable_demultiplexer_forward()->::rpc_msg::PRC_DeMultiplexer_Forward::MergeFrom(
+          from._internal_demultiplexer_forward());
       break;
     }
     case MSG_NOT_SET: {
       break;
     }
   }
-}
-
-void NATS_MSG_PRXOY::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:nats_msg.NATS_MSG_PRXOY)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void NATS_MSG_PRXOY::CopyFrom(const NATS_MSG_PRXOY& from) {
@@ -527,21 +537,23 @@ bool NATS_MSG_PRXOY::IsInitialized() const {
 
 void NATS_MSG_PRXOY::InternalSwap(NATS_MSG_PRXOY* other) {
   using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(msg_, other->msg_);
-  swap(_oneof_case_[0], other->_oneof_case_[0]);
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.msg_, other->_impl_.msg_);
+  swap(_impl_._oneof_case_[0], other->_impl_._oneof_case_[0]);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata NATS_MSG_PRXOY::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_nats_5fmsg_2eproto_getter, &descriptor_table_nats_5fmsg_2eproto_once,
+      file_level_metadata_nats_5fmsg_2eproto[0]);
 }
-
 
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace nats_msg
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::nats_msg::NATS_MSG_PRXOY* Arena::CreateMaybeMessage< ::nats_msg::NATS_MSG_PRXOY >(Arena* arena) {
-  return Arena::CreateInternal< ::nats_msg::NATS_MSG_PRXOY >(arena);
+template<> PROTOBUF_NOINLINE ::nats_msg::NATS_MSG_PRXOY*
+Arena::CreateMaybeMessage< ::nats_msg::NATS_MSG_PRXOY >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::nats_msg::NATS_MSG_PRXOY >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

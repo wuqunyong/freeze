@@ -14,74 +14,76 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+
+PROTOBUF_PRAGMA_INIT_SEG
+
+namespace _pb = ::PROTOBUF_NAMESPACE_ID;
+namespace _pbi = _pb::internal;
+
 namespace rpc_login {
-class RPC_LoginPendingRequestDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RPC_LoginPendingRequest> _instance;
-} _RPC_LoginPendingRequest_default_instance_;
-class RPC_LoginPendingResponseDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RPC_LoginPendingResponse> _instance;
-} _RPC_LoginPendingResponse_default_instance_;
+PROTOBUF_CONSTEXPR RPC_LoginPendingRequest::RPC_LoginPendingRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.session_key_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.account_id_)*/uint64_t{0u}
+  , /*decltype(_impl_.version_)*/0
+  , /*decltype(_impl_.db_id_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct RPC_LoginPendingRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RPC_LoginPendingRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RPC_LoginPendingRequestDefaultTypeInternal() {}
+  union {
+    RPC_LoginPendingRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RPC_LoginPendingRequestDefaultTypeInternal _RPC_LoginPendingRequest_default_instance_;
+PROTOBUF_CONSTEXPR RPC_LoginPendingResponse::RPC_LoginPendingResponse(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.account_id_)*/uint64_t{0u}
+  , /*decltype(_impl_.status_code_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct RPC_LoginPendingResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RPC_LoginPendingResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RPC_LoginPendingResponseDefaultTypeInternal() {}
+  union {
+    RPC_LoginPendingResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RPC_LoginPendingResponseDefaultTypeInternal _RPC_LoginPendingResponse_default_instance_;
 }  // namespace rpc_login
-static void InitDefaultsscc_info_RPC_LoginPendingRequest_rpc_5flogin_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
+static ::_pb::Metadata file_level_metadata_rpc_5flogin_2eproto[2];
+static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_rpc_5flogin_2eproto = nullptr;
+static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_rpc_5flogin_2eproto = nullptr;
 
-  {
-    void* ptr = &::rpc_login::_RPC_LoginPendingRequest_default_instance_;
-    new (ptr) ::rpc_login::RPC_LoginPendingRequest();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::rpc_login::RPC_LoginPendingRequest::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RPC_LoginPendingRequest_rpc_5flogin_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RPC_LoginPendingRequest_rpc_5flogin_2eproto}, {}};
-
-static void InitDefaultsscc_info_RPC_LoginPendingResponse_rpc_5flogin_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::rpc_login::_RPC_LoginPendingResponse_default_instance_;
-    new (ptr) ::rpc_login::RPC_LoginPendingResponse();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::rpc_login::RPC_LoginPendingResponse::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RPC_LoginPendingResponse_rpc_5flogin_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RPC_LoginPendingResponse_rpc_5flogin_2eproto}, {}};
-
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_rpc_5flogin_2eproto[2];
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_rpc_5flogin_2eproto = nullptr;
-static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_rpc_5flogin_2eproto = nullptr;
-
-const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_5flogin_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+const uint32_t TableStruct_rpc_5flogin_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, account_id_),
-  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, session_key_),
-  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, version_),
-  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, db_id_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, _impl_.account_id_),
+  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, _impl_.session_key_),
+  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, _impl_.version_),
+  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingRequest, _impl_.db_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingResponse, status_code_),
-  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingResponse, account_id_),
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingResponse, _impl_.status_code_),
+  PROTOBUF_FIELD_OFFSET(::rpc_login::RPC_LoginPendingResponse, _impl_.account_id_),
 };
-static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::rpc_login::RPC_LoginPendingRequest)},
-  { 9, -1, sizeof(::rpc_login::RPC_LoginPendingResponse)},
+static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, -1, sizeof(::rpc_login::RPC_LoginPendingRequest)},
+  { 10, -1, -1, sizeof(::rpc_login::RPC_LoginPendingResponse)},
 };
 
-static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_login::_RPC_LoginPendingRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::rpc_login::_RPC_LoginPendingResponse_default_instance_),
+static const ::_pb::Message* const file_default_instances[] = {
+  &::rpc_login::_RPC_LoginPendingRequest_default_instance_._instance,
+  &::rpc_login::_RPC_LoginPendingResponse_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_rpc_5flogin_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -92,162 +94,185 @@ const char descriptor_table_protodef_rpc_5flogin_2eproto[] PROTOBUF_SECTION_VARI
   "status_code\030\001 \001(\005\022\022\n\naccount_id\030\002 \001(\004b\006p"
   "roto3"
   ;
-static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_5flogin_2eproto_deps[1] = {
+static ::_pbi::once_flag descriptor_table_rpc_5flogin_2eproto_once;
+const ::_pbi::DescriptorTable descriptor_table_rpc_5flogin_2eproto = {
+    false, false, 205, descriptor_table_protodef_rpc_5flogin_2eproto,
+    "rpc_login.proto",
+    &descriptor_table_rpc_5flogin_2eproto_once, nullptr, 0, 2,
+    schemas, file_default_instances, TableStruct_rpc_5flogin_2eproto::offsets,
+    file_level_metadata_rpc_5flogin_2eproto, file_level_enum_descriptors_rpc_5flogin_2eproto,
+    file_level_service_descriptors_rpc_5flogin_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc_5flogin_2eproto_sccs[2] = {
-  &scc_info_RPC_LoginPendingRequest_rpc_5flogin_2eproto.base,
-  &scc_info_RPC_LoginPendingResponse_rpc_5flogin_2eproto.base,
-};
-static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_5flogin_2eproto_once;
-static bool descriptor_table_rpc_5flogin_2eproto_initialized = false;
-const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5flogin_2eproto = {
-  &descriptor_table_rpc_5flogin_2eproto_initialized, descriptor_table_protodef_rpc_5flogin_2eproto, "rpc_login.proto", 205,
-  &descriptor_table_rpc_5flogin_2eproto_once, descriptor_table_rpc_5flogin_2eproto_sccs, descriptor_table_rpc_5flogin_2eproto_deps, 2, 0,
-  schemas, file_default_instances, TableStruct_rpc_5flogin_2eproto::offsets,
-  file_level_metadata_rpc_5flogin_2eproto, 2, file_level_enum_descriptors_rpc_5flogin_2eproto, file_level_service_descriptors_rpc_5flogin_2eproto,
-};
+PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_rpc_5flogin_2eproto_getter() {
+  return &descriptor_table_rpc_5flogin_2eproto;
+}
 
 // Force running AddDescriptors() at dynamic initialization time.
-static bool dynamic_init_dummy_rpc_5flogin_2eproto = (  ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_rpc_5flogin_2eproto), true);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_rpc_5flogin_2eproto(&descriptor_table_rpc_5flogin_2eproto);
 namespace rpc_login {
 
 // ===================================================================
 
-void RPC_LoginPendingRequest::InitAsDefaultInstance() {
-}
 class RPC_LoginPendingRequest::_Internal {
  public:
 };
 
-RPC_LoginPendingRequest::RPC_LoginPendingRequest()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:rpc_login.RPC_LoginPendingRequest)
+RPC_LoginPendingRequest::RPC_LoginPendingRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:rpc_login.RPC_LoginPendingRequest)
 }
 RPC_LoginPendingRequest::RPC_LoginPendingRequest(const RPC_LoginPendingRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  session_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  RPC_LoginPendingRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.session_key_){}
+    , decltype(_impl_.account_id_){}
+    , decltype(_impl_.version_){}
+    , decltype(_impl_.db_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.session_key_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.session_key_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_session_key().empty()) {
-    session_key_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.session_key_);
+    _this->_impl_.session_key_.Set(from._internal_session_key(), 
+      _this->GetArenaForAllocation());
   }
-  ::memcpy(&account_id_, &from.account_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&db_id_) -
-    reinterpret_cast<char*>(&account_id_)) + sizeof(db_id_));
+  ::memcpy(&_impl_.account_id_, &from._impl_.account_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.db_id_) -
+    reinterpret_cast<char*>(&_impl_.account_id_)) + sizeof(_impl_.db_id_));
   // @@protoc_insertion_point(copy_constructor:rpc_login.RPC_LoginPendingRequest)
 }
 
-void RPC_LoginPendingRequest::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RPC_LoginPendingRequest_rpc_5flogin_2eproto.base);
-  session_key_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&account_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&db_id_) -
-      reinterpret_cast<char*>(&account_id_)) + sizeof(db_id_));
+inline void RPC_LoginPendingRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.session_key_){}
+    , decltype(_impl_.account_id_){uint64_t{0u}}
+    , decltype(_impl_.version_){0}
+    , decltype(_impl_.db_id_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.session_key_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.session_key_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 RPC_LoginPendingRequest::~RPC_LoginPendingRequest() {
   // @@protoc_insertion_point(destructor:rpc_login.RPC_LoginPendingRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
 }
 
-void RPC_LoginPendingRequest::SharedDtor() {
-  session_key_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+inline void RPC_LoginPendingRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.session_key_.Destroy();
 }
 
 void RPC_LoginPendingRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const RPC_LoginPendingRequest& RPC_LoginPendingRequest::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RPC_LoginPendingRequest_rpc_5flogin_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void RPC_LoginPendingRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:rpc_login.RPC_LoginPendingRequest)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  session_key_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&account_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&db_id_) -
-      reinterpret_cast<char*>(&account_id_)) + sizeof(db_id_));
-  _internal_metadata_.Clear();
+  _impl_.session_key_.ClearToEmpty();
+  ::memset(&_impl_.account_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.db_id_) -
+      reinterpret_cast<char*>(&_impl_.account_id_)) + sizeof(_impl_.db_id_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* RPC_LoginPendingRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* RPC_LoginPendingRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint64 account_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          account_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.account_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // string session_key = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_session_key();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "rpc_login.RPC_LoginPendingRequest.session_key"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-        } else goto handle_unusual;
+          CHK_(::_pbi::VerifyUTF8(str, "rpc_login.RPC_LoginPendingRequest.session_key"));
+        } else
+          goto handle_unusual;
         continue;
       // int32 version = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          version_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.version_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint32 db_id = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
-          db_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.db_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* RPC_LoginPendingRequest::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* RPC_LoginPendingRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc_login.RPC_LoginPendingRequest)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // uint64 account_id = 1;
-  if (this->account_id() != 0) {
+  if (this->_internal_account_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_account_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_account_id(), target);
   }
 
   // string session_key = 2;
-  if (this->session_key().size() > 0) {
+  if (!this->_internal_session_key().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_session_key().data(), static_cast<int>(this->_internal_session_key().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
@@ -257,20 +282,20 @@ failure:
   }
 
   // int32 version = 3;
-  if (this->version() != 0) {
+  if (this->_internal_version() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_version(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_version(), target);
   }
 
   // uint32 db_id = 4;
-  if (this->db_id() != 0) {
+  if (this->_internal_db_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(4, this->_internal_db_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(4, this->_internal_db_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target, stream);
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:rpc_login.RPC_LoginPendingRequest)
   return target;
@@ -280,89 +305,63 @@ size_t RPC_LoginPendingRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:rpc_login.RPC_LoginPendingRequest)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string session_key = 2;
-  if (this->session_key().size() > 0) {
+  if (!this->_internal_session_key().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_session_key());
   }
 
   // uint64 account_id = 1;
-  if (this->account_id() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_account_id());
+  if (this->_internal_account_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_account_id());
   }
 
   // int32 version = 3;
-  if (this->version() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_version());
+  if (this->_internal_version() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_version());
   }
 
   // uint32 db_id = 4;
-  if (this->db_id() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_db_id());
+  if (this->_internal_db_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_db_id());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void RPC_LoginPendingRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:rpc_login.RPC_LoginPendingRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  const RPC_LoginPendingRequest* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RPC_LoginPendingRequest>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_login.RPC_LoginPendingRequest)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_login.RPC_LoginPendingRequest)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RPC_LoginPendingRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    RPC_LoginPendingRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RPC_LoginPendingRequest::GetClassData() const { return &_class_data_; }
 
-void RPC_LoginPendingRequest::MergeFrom(const RPC_LoginPendingRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:rpc_login.RPC_LoginPendingRequest)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void RPC_LoginPendingRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<RPC_LoginPendingRequest*>(&to_msg);
+  auto& from = static_cast<const RPC_LoginPendingRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rpc_login.RPC_LoginPendingRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.session_key().size() > 0) {
-
-    session_key_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.session_key_);
+  if (!from._internal_session_key().empty()) {
+    _this->_internal_set_session_key(from._internal_session_key());
   }
-  if (from.account_id() != 0) {
-    _internal_set_account_id(from._internal_account_id());
+  if (from._internal_account_id() != 0) {
+    _this->_internal_set_account_id(from._internal_account_id());
   }
-  if (from.version() != 0) {
-    _internal_set_version(from._internal_version());
+  if (from._internal_version() != 0) {
+    _this->_internal_set_version(from._internal_version());
   }
-  if (from.db_id() != 0) {
-    _internal_set_db_id(from._internal_db_id());
+  if (from._internal_db_id() != 0) {
+    _this->_internal_set_db_id(from._internal_db_id());
   }
-}
-
-void RPC_LoginPendingRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:rpc_login.RPC_LoginPendingRequest)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void RPC_LoginPendingRequest::CopyFrom(const RPC_LoginPendingRequest& from) {
@@ -378,139 +377,160 @@ bool RPC_LoginPendingRequest::IsInitialized() const {
 
 void RPC_LoginPendingRequest::InternalSwap(RPC_LoginPendingRequest* other) {
   using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  session_key_.Swap(&other->session_key_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(account_id_, other->account_id_);
-  swap(version_, other->version_);
-  swap(db_id_, other->db_id_);
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.session_key_, lhs_arena,
+      &other->_impl_.session_key_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(RPC_LoginPendingRequest, _impl_.db_id_)
+      + sizeof(RPC_LoginPendingRequest::_impl_.db_id_)
+      - PROTOBUF_FIELD_OFFSET(RPC_LoginPendingRequest, _impl_.account_id_)>(
+          reinterpret_cast<char*>(&_impl_.account_id_),
+          reinterpret_cast<char*>(&other->_impl_.account_id_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata RPC_LoginPendingRequest::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_rpc_5flogin_2eproto_getter, &descriptor_table_rpc_5flogin_2eproto_once,
+      file_level_metadata_rpc_5flogin_2eproto[0]);
 }
-
 
 // ===================================================================
 
-void RPC_LoginPendingResponse::InitAsDefaultInstance() {
-}
 class RPC_LoginPendingResponse::_Internal {
  public:
 };
 
-RPC_LoginPendingResponse::RPC_LoginPendingResponse()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:rpc_login.RPC_LoginPendingResponse)
+RPC_LoginPendingResponse::RPC_LoginPendingResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:rpc_login.RPC_LoginPendingResponse)
 }
 RPC_LoginPendingResponse::RPC_LoginPendingResponse(const RPC_LoginPendingResponse& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::memcpy(&account_id_, &from.account_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&status_code_) -
-    reinterpret_cast<char*>(&account_id_)) + sizeof(status_code_));
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  RPC_LoginPendingResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.account_id_){}
+    , decltype(_impl_.status_code_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.account_id_, &from._impl_.account_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.status_code_) -
+    reinterpret_cast<char*>(&_impl_.account_id_)) + sizeof(_impl_.status_code_));
   // @@protoc_insertion_point(copy_constructor:rpc_login.RPC_LoginPendingResponse)
 }
 
-void RPC_LoginPendingResponse::SharedCtor() {
-  ::memset(&account_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&status_code_) -
-      reinterpret_cast<char*>(&account_id_)) + sizeof(status_code_));
+inline void RPC_LoginPendingResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.account_id_){uint64_t{0u}}
+    , decltype(_impl_.status_code_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 RPC_LoginPendingResponse::~RPC_LoginPendingResponse() {
   // @@protoc_insertion_point(destructor:rpc_login.RPC_LoginPendingResponse)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
 }
 
-void RPC_LoginPendingResponse::SharedDtor() {
+inline void RPC_LoginPendingResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
 void RPC_LoginPendingResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
-const RPC_LoginPendingResponse& RPC_LoginPendingResponse::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RPC_LoginPendingResponse_rpc_5flogin_2eproto.base);
-  return *internal_default_instance();
-}
-
 
 void RPC_LoginPendingResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:rpc_login.RPC_LoginPendingResponse)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&account_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&status_code_) -
-      reinterpret_cast<char*>(&account_id_)) + sizeof(status_code_));
-  _internal_metadata_.Clear();
+  ::memset(&_impl_.account_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.status_code_) -
+      reinterpret_cast<char*>(&_impl_.account_id_)) + sizeof(_impl_.status_code_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* RPC_LoginPendingResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* RPC_LoginPendingResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int32 status_code = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          status_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.status_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
       // uint64 account_id = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          account_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.account_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
+        } else
+          goto handle_unusual;
         continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
+      default:
+        goto handle_unusual;
     }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
   }  // while
-success:
+message_done:
   return ptr;
 failure:
   ptr = nullptr;
-  goto success;
+  goto message_done;
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* RPC_LoginPendingResponse::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+uint8_t* RPC_LoginPendingResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:rpc_login.RPC_LoginPendingResponse)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // int32 status_code = 1;
-  if (this->status_code() != 0) {
+  if (this->_internal_status_code() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_status_code(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_status_code(), target);
   }
 
   // uint64 account_id = 2;
-  if (this->account_id() != 0) {
+  if (this->_internal_account_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_account_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(2, this->_internal_account_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target, stream);
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:rpc_login.RPC_LoginPendingResponse)
   return target;
@@ -520,68 +540,45 @@ size_t RPC_LoginPendingResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:rpc_login.RPC_LoginPendingResponse)
   size_t total_size = 0;
 
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // uint64 account_id = 2;
-  if (this->account_id() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_account_id());
+  if (this->_internal_account_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_account_id());
   }
 
   // int32 status_code = 1;
-  if (this->status_code() != 0) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_status_code());
+  if (this->_internal_status_code() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_status_code());
   }
 
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-void RPC_LoginPendingResponse::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:rpc_login.RPC_LoginPendingResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  const RPC_LoginPendingResponse* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RPC_LoginPendingResponse>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:rpc_login.RPC_LoginPendingResponse)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:rpc_login.RPC_LoginPendingResponse)
-    MergeFrom(*source);
-  }
-}
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RPC_LoginPendingResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    RPC_LoginPendingResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RPC_LoginPendingResponse::GetClassData() const { return &_class_data_; }
 
-void RPC_LoginPendingResponse::MergeFrom(const RPC_LoginPendingResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:rpc_login.RPC_LoginPendingResponse)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+
+void RPC_LoginPendingResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<RPC_LoginPendingResponse*>(&to_msg);
+  auto& from = static_cast<const RPC_LoginPendingResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rpc_login.RPC_LoginPendingResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.account_id() != 0) {
-    _internal_set_account_id(from._internal_account_id());
+  if (from._internal_account_id() != 0) {
+    _this->_internal_set_account_id(from._internal_account_id());
   }
-  if (from.status_code() != 0) {
-    _internal_set_status_code(from._internal_status_code());
+  if (from._internal_status_code() != 0) {
+    _this->_internal_set_status_code(from._internal_status_code());
   }
-}
-
-void RPC_LoginPendingResponse::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:rpc_login.RPC_LoginPendingResponse)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void RPC_LoginPendingResponse::CopyFrom(const RPC_LoginPendingResponse& from) {
@@ -597,24 +594,31 @@ bool RPC_LoginPendingResponse::IsInitialized() const {
 
 void RPC_LoginPendingResponse::InternalSwap(RPC_LoginPendingResponse* other) {
   using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(account_id_, other->account_id_);
-  swap(status_code_, other->status_code_);
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(RPC_LoginPendingResponse, _impl_.status_code_)
+      + sizeof(RPC_LoginPendingResponse::_impl_.status_code_)
+      - PROTOBUF_FIELD_OFFSET(RPC_LoginPendingResponse, _impl_.account_id_)>(
+          reinterpret_cast<char*>(&_impl_.account_id_),
+          reinterpret_cast<char*>(&other->_impl_.account_id_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata RPC_LoginPendingResponse::GetMetadata() const {
-  return GetMetadataStatic();
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_rpc_5flogin_2eproto_getter, &descriptor_table_rpc_5flogin_2eproto_once,
+      file_level_metadata_rpc_5flogin_2eproto[1]);
 }
-
 
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace rpc_login
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::rpc_login::RPC_LoginPendingRequest* Arena::CreateMaybeMessage< ::rpc_login::RPC_LoginPendingRequest >(Arena* arena) {
-  return Arena::CreateInternal< ::rpc_login::RPC_LoginPendingRequest >(arena);
+template<> PROTOBUF_NOINLINE ::rpc_login::RPC_LoginPendingRequest*
+Arena::CreateMaybeMessage< ::rpc_login::RPC_LoginPendingRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rpc_login::RPC_LoginPendingRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::rpc_login::RPC_LoginPendingResponse* Arena::CreateMaybeMessage< ::rpc_login::RPC_LoginPendingResponse >(Arena* arena) {
-  return Arena::CreateInternal< ::rpc_login::RPC_LoginPendingResponse >(arena);
+template<> PROTOBUF_NOINLINE ::rpc_login::RPC_LoginPendingResponse*
+Arena::CreateMaybeMessage< ::rpc_login::RPC_LoginPendingResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rpc_login::RPC_LoginPendingResponse >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

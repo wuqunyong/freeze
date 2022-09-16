@@ -3,6 +3,8 @@
 #include "apie/network/windows_platform.h"
 #include "apie/network/logger.h"
 
+#include <algorithm>
+
 #ifdef WIN32
 #include "apie/apie.h"
 #include <ImageHlp.h>
@@ -118,7 +120,16 @@ bool GetLogicalAddress(void* pAddress, char* pszModule, DWORD dwSize, DWORD& dwS
 	for (unsigned int i = 0; i < pNtHeaders->FileHeader.NumberOfSections; i++, pSectionHeader++)
 	{
 		DWORD dwSectionStart = pSectionHeader->VirtualAddress;
-		DWORD dwSectionEnd = dwSectionStart + std::max(pSectionHeader->SizeOfRawData, pSectionHeader->Misc.VirtualSize);
+		
+		DWORD iLeft = pSectionHeader->SizeOfRawData;
+		DWORD iRight = pSectionHeader->Misc.VirtualSize;
+
+		DWORD iMax = iLeft;
+		if (iLeft < iRight)
+		{
+			iLeft = iRight;
+		}
+		DWORD dwSectionEnd = dwSectionStart + iMax;
 
 		// Is the address in this section?
 		if ((dwRVA >= dwSectionStart) && (dwRVA <= dwSectionEnd))
