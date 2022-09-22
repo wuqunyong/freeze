@@ -1,0 +1,21 @@
+{
+  "modules": [{
+    "name": "test",
+    "protocols": [{
+      "request_response": [{
+        "request_cmd": 1,
+        "request_type": "proto.request",
+        "response_cmd": 2,
+        "response_type": "proto.response"
+      }],
+      "up": [{
+        "cmd": 11,
+        "type": "proto.notify"
+      }],
+      "down": [{
+        "cmd": 12,
+        "type": "proto.notify"
+      }]
+    }]
+  }]
+}
