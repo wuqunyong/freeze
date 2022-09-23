@@ -213,6 +213,15 @@ void ServerConnection::recv(MessageInfo info, std::string& requestStr)
 	auto optionalData = apie::service::ServiceHandlerSingleton::get().server.getType(info.iOpcode);
 	if (!optionalData)
 	{
+		auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
+		if (ptrLogic == nullptr)
+		{
+			std::stringstream ss;
+			ss << "getLogicThread null | iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
+			ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+			return;
+		}
+
 		PBForward *itemObjPtr = new PBForward;
 		itemObjPtr->type = ConnetionType::CT_SERVER;
 		itemObjPtr->info = info;
@@ -221,17 +230,6 @@ void ServerConnection::recv(MessageInfo info, std::string& requestStr)
 		Command command;
 		command.type = Command::pb_forward;
 		command.args.pb_forward.ptrData = itemObjPtr;
-
-		auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
-		if (ptrLogic == nullptr)
-		{
-			delete itemObjPtr;
-
-			std::stringstream ss;
-			ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
-			ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
-			return;
-		}
 
 		ptrLogic->push(command);
 		return;
@@ -259,6 +257,15 @@ void ServerConnection::recv(MessageInfo info, std::string& requestStr)
 
 	//newMsg->PrintDebugString();
 
+	auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
+	if (ptrLogic == nullptr)
+	{
+		std::stringstream ss;
+		ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
+		ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+		return;
+	}
+
 	PBRequest *itemObjPtr = new PBRequest;
 	itemObjPtr->type = ConnetionType::CT_SERVER;
 	itemObjPtr->info = info;
@@ -268,16 +275,6 @@ void ServerConnection::recv(MessageInfo info, std::string& requestStr)
 	command.type = Command::pb_reqeust;
 	command.args.pb_reqeust.ptrData = itemObjPtr;
 
-	auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
-	if (ptrLogic == nullptr)
-	{
-		delete itemObjPtr;
-
-		std::stringstream ss;
-		ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG("ServerConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
-		return;
-	}
 	ptrLogic->push(command);
 }
 
