@@ -58,6 +58,8 @@
 #include "apie/mysql_driver/result_set.h"
 #include "apie/mysql_driver/mysql_orm.h"
 #include "apie/mysql_driver/dao_factory.h"
+#include "apie/mysql_driver/db_load_component.h"
+#include "apie/mysql_driver/table_loader.h"
 
 #include "apie/proto/init.h"
 

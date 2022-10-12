@@ -10,103 +10,12 @@
 #include <tuple>
 
 #include "apie.h"
-#include "db_load_component.h"
 
 #include "../../common/dao/model_user.h"
 #include "../../common/dao/model_account.h"
 #include "../../common/dao/model_role_extra.h"
 
 namespace apie {
-
-
-	using DbFuntor = std::function<void(std::shared_ptr<apie::DbLoadComponent>)>;
-
-
-	template <typename T>
-	struct SingleRowLoader {
-		using TableType = T;
-		using LoaderType = SingleRowLoader<T>;
-
-		SingleRowLoader(uint64_t id = 0) :
-			m_tableType(id)
-		{
-
-		}
-
-		template <typename... Args>
-		SingleRowLoader(Args &&... args) :
-			m_tableType(std::forward<Args>(args)...)
-		{
-
-		}
-
-		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
-		{
-			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
-			auto ptrCb = [this, loader](apie::status::Status status, TableType& data, uint32_t iRows) {
-				if (!status.ok())
-				{
-					loader->setState<LoaderType>(DbLoadComponent::ELS_Failure);
-					return;
-				}
-
-				if (iRows != 0)
-				{
-					this->m_data = data;
-				}
-
-				loader->setState<LoaderType>(DbLoadComponent::ELS_Success);
-			};
-			apie::LoadFromDb<TableType>(server, m_tableType, ptrCb);
-		}
-
-		TableType m_tableType;
-		std::optional<TableType> m_data;
-	};
-
-
-	template <typename T>
-	struct MultiRowLoader {
-		using TableType = T;
-		using LoaderType = MultiRowLoader<T>;
-
-		MultiRowLoader(uint64_t id = 0) :
-			m_tableType(id)
-		{
-
-		}
-
-		template <typename... Args>
-		MultiRowLoader(Args &&... args) :
-			m_tableType(std::forward<Args>(args)...)
-		{
-
-		}
-
-		void markFilter(const std::vector<uint8_t>& index)
-		{
-			m_tableType.markFilter(index);
-		}
-
-		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
-		{
-			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
-			auto ptrCb = [this, loader](status::Status status, std::vector<TableType>& data) {
-				if (!status.ok())
-				{
-					loader->setState<LoaderType>(DbLoadComponent::ELS_Failure);
-					return;
-				}
-
-				m_data = data;
-				loader->setState<LoaderType>(DbLoadComponent::ELS_Success);
-			};
-			apie::LoadFromDbByFilter<TableType>(server, m_tableType, ptrCb);
-		}
-
-		TableType m_tableType;
-		std::vector<TableType> m_data;
-	};
 
 
 	struct Single_ModelUser_Loader

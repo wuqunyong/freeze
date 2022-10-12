@@ -235,11 +235,13 @@
     <ClInclude Include="module_loader\module_loader.h" />
     <ClInclude Include="module_loader\module_loader_manager.h" />
     <ClInclude Include="mysql_driver\dao_factory.h" />
+    <ClInclude Include="mysql_driver\db_load_component.h" />
     <ClInclude Include="mysql_driver\mysql_connector.h" />
     <ClInclude Include="mysql_driver\mysql_field.h" />
     <ClInclude Include="mysql_driver\mysql_orm.h" />
     <ClInclude Include="mysql_driver\mysql_table.h" />
     <ClInclude Include="mysql_driver\result_set.h" />
+    <ClInclude Include="mysql_driver\table_loader.h" />
     <ClInclude Include="network\address.h" />
     <ClInclude Include="network\client_connection.h" />
     <ClInclude Include="network\client_proxy.h" />

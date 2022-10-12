@@ -20,7 +20,7 @@ class DbLoadComponent;
 namespace internal {
 
 	template <typename T>
-	inline T const& DefaultValue() {
+	inline T const& DBDefaultValue() {
 		static auto const* const kDefaultValue = new T{};
 		return *kDefaultValue;
 	}
@@ -129,7 +129,7 @@ class DbLoadComponent : public std::enable_shared_from_this<DbLoadComponent> {
   template <typename T>
   ValueTypeT<T> const& get() const {
     auto const it = m_.find(typeid(T));
-    if (it == m_.end()) return internal::DefaultValue<ValueTypeT<T>>();
+    if (it == m_.end()) return internal::DBDefaultValue<ValueTypeT<T>>();
     auto const* value = it->second->data_address();
     return *reinterpret_cast<ValueTypeT<T> const*>(value);
   }
@@ -277,8 +277,7 @@ class DbLoadComponent : public std::enable_shared_from_this<DbLoadComponent> {
 
 inline std::shared_ptr<DbLoadComponent> CreateLoadObj()
 {
-    std::shared_ptr<DbLoadComponent> ptrObj(new DbLoadComponent());
-	return ptrObj;
+    return std::shared_ptr<DbLoadComponent>(new DbLoadComponent());
 }
 
 } 
