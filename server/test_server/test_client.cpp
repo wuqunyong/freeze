@@ -177,8 +177,200 @@ private:
 	int a_;
 };
 
+class RowSet {
+public:
+	/// Create an empty set.
+	RowSet() = default;
+
+	RowSet(RowSet&&) = default;
+	RowSet& operator=(RowSet&&) = default;
+	RowSet(RowSet const&) = default;
+	RowSet& operator=(RowSet const&) = default;
+
+	template <typename... Arg>
+	RowSet(Arg&&... a) 
+	{  // NOLINT(google-explicit-constructor)
+		std::tuple<Arg...> m_types = { std::forward<Arg&&>(a)... };
+
+
+		//uint32_t iSize = std::tuple_size<decltype(m_types)>::value;
+		//for (uint32_t i = 0; i < iSize; i++)
+		//{
+		//	typename std::remove_reference<decltype(std::get<i>(m_types))>::type va;
+		//	std::type_index m_typeIndex = typeid(m_types);
+		//	m_typeVec.push_back(m_typeIndex);
+		//}
+
+
+
+		std::type_index m_typeIndex = typeid(m_types);
+		auto m_typeName = typeid(m_types).name();
+
+		AppendAll(std::forward<Arg&&>(a)...);
+	}
+
+
+	/**
+	 * Add @p row_key to the set, minimize copies when possible.
+	 */
+	template <typename T>
+	void Append(T&& row_key) {
+		std::type_index m_typeIndex = typeid(row_key);
+		std::string m_type = typeid(row_key).name();
+
+		m_typeVec.push_back(m_typeIndex);
+		m_typeName[m_typeIndex] = m_type;
+	}
+
+	std::string ToString()
+	{
+		return "";
+	}
+
+private:
+	/// Append the arguments to the rowset.
+	template <typename H, typename... Tail>
+	void AppendAll(H&& head, Tail&&... a) {
+		// We cannot use the initializer list expression here because the types
+		// may be all different.
+		Append(std::forward<H>(head));
+		AppendAll(std::forward<Tail>(a)...);
+	}
+
+	/// Terminate the recursion.
+	void AppendAll() {}
+
+	std::vector<std::type_index> m_typeVec;
+	std::unordered_map<std::type_index, std::string> m_typeName;
+
+	//std::type_index m_typeIndex;
+	//std::string m_typeName;
+};
+
+
+class ModuleA
+{
+public:
+	ModuleA(uint64_t iId = 0) :
+		m_iId(iId)
+	{
+
+	}
+
+	std::string toString()
+	{
+		return "ModuleA";
+	}
+
+
+private:
+	uint64_t m_iId = 0;
+};
+
+struct TestModuleA
+{
+	using Type = ModuleA;
+};
+
+
+class ModuleB
+{
+public:
+	ModuleB(uint64_t iId = 0) :
+		m_iId(iId)
+	{
+
+	}
+
+	std::string toString()
+	{
+		return "ModuleB";
+	}
+
+
+private:
+	uint64_t m_iId = 0;
+};
+
+struct TestModuleB
+{
+	using Type = ModuleB;
+};
+
+class ModuleLoader
+{
+public:
+	template <typename T>
+	using ValueTypeT = typename T::Type;
+
+	template <typename... Arg>
+	ModuleLoader(uint64_t iId, Arg&&... a) :
+		m_id(iId)
+	{  
+		AppendAll(std::forward<Arg&&>(a)...);
+	}
+
+	template <typename T>
+	void Append(T moduleType) 
+	{
+		m_options.set<T>(m_id);
+		m_modules.push_back(typeid(moduleType));
+	}
+
+	template <typename T>
+	bool has() const 
+	{
+		return m_options.has<T>();
+	}
+
+	template <typename T>
+	ValueTypeT<T>& lookup(ValueTypeT<T> value = {})
+	{
+		if (!has<T>())
+		{
+			throw std::exception("unregister");
+		}
+
+		return m_options.lookup<T>(value);
+	}
+
+private:
+	ModuleLoader(const ModuleLoader&) = delete;
+	ModuleLoader& operator=(const ModuleLoader&) = delete;
+	ModuleLoader(ModuleLoader&&) = delete;
+	ModuleLoader& operator=(ModuleLoader&&) = delete;
+
+
+	template <typename H, typename... Tail>
+	void AppendAll(H&& head, Tail&&... a) 
+	{
+		Append(std::forward<H>(head));
+		AppendAll(std::forward<Tail>(a)...);
+	}
+
+	/// Terminate the recursion.
+	void AppendAll() 
+	{
+	}
+
+	uint64_t m_id = 0;
+	std::vector<std::type_index> m_modules;
+	apie::common::Options m_options;
+};
+
 int main(int argc, char **argv)
 {
+
+	ModuleLoader moduleLoader(1, TestModuleA(), TestModuleB());
+
+	auto& rModule = moduleLoader.lookup<TestModuleA>();
+	auto sInfo = rModule.toString();
+
+	//uint64_t iId = 123;
+	//apie::common::Options m_options;
+	//m_options.set<TestModuleA>(iId);
+	//auto& rValue = m_options.get<TestModuleA>();
+
 	if (argc != 2)
 	{
 		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
