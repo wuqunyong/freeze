@@ -247,67 +247,6 @@ private:
 	//std::string m_typeName;
 };
 
-class ModuleLoader
-{
-public:
-	template <typename T>
-	using ValueTypeT = typename T::Type;
-
-	template <typename... Arg>
-	ModuleLoader(uint64_t iId, Arg&&... a) :
-		m_id(iId)
-	{  
-		AppendAll(std::forward<Arg&&>(a)...);
-	}
-
-	template <typename T>
-	void Append(T moduleType) 
-	{
-		m_options.set<T>(m_id);
-		m_modules.push_back(typeid(moduleType));
-	}
-
-	template <typename T>
-	bool has() const 
-	{
-		return m_options.has<T>();
-	}
-
-	template <typename T>
-	ValueTypeT<T>& lookup(ValueTypeT<T> value = {})
-	{
-		if (!has<T>())
-		{
-			throw std::exception("unregister");
-		}
-
-		return m_options.lookup<T>(value);
-	}
-
-private:
-	ModuleLoader(const ModuleLoader&) = delete;
-	ModuleLoader& operator=(const ModuleLoader&) = delete;
-	ModuleLoader(ModuleLoader&&) = delete;
-	ModuleLoader& operator=(ModuleLoader&&) = delete;
-
-
-	template <typename H, typename... Tail>
-	void AppendAll(H&& head, Tail&&... a) 
-	{
-		Append(std::forward<H>(head));
-		AppendAll(std::forward<Tail>(a)...);
-	}
-
-	/// Terminate the recursion.
-	void AppendAll() 
-	{
-	}
-
-	uint64_t m_id = 0;
-	std::vector<std::type_index> m_modules;
-	apie::common::Options m_options;
-};
-
 class ModuleA
 {
 public:
@@ -364,15 +303,111 @@ struct TestModuleB
 	using Type = ModuleB;
 };
 
+
+class ModuleLoader
+{
+public:
+	template <typename T>
+	using ValueTypeT = typename T::Type;
+
+	~ModuleLoader()
+	{
+
+	}
+
+	static std::shared_ptr<ModuleLoader> CreateInstance(uint64_t iId) 
+	{
+		return UnwrapTuple(iId, ModuleLoader::tupleType);
+	}
+
+	template<class... Args>
+	static std::shared_ptr<ModuleLoader> UnwrapTuple(uint64_t iId, const std::tuple<Args...>& t)
+	{
+		return UnwrapTupleImpl(iId, t, std::index_sequence_for<Args...>{});
+	}
+
+	template<class Tuple, std::size_t... Is>
+	static std::shared_ptr<ModuleLoader> UnwrapTupleImpl(uint64_t iId, const Tuple& t, std::index_sequence<Is...>)
+	{
+		auto pInstance = std::shared_ptr<ModuleLoader>(new ModuleLoader(iId, std::get<Is>(t)...));
+		return pInstance;
+	}
+
+	template <typename T>
+	void Append(T moduleType) 
+	{
+		m_options.set<T>(m_id);
+		m_modules.push_back(typeid(moduleType));
+	}
+
+	template <typename T>
+	bool has() const 
+	{
+		return m_options.has<T>();
+	}
+
+	template <typename T>
+	ValueTypeT<T>& lookup(ValueTypeT<T> value = {})
+	{
+		if (!has<T>())
+		{
+			throw std::exception("unregister");
+		}
+
+		return m_options.lookup<T>(value);
+	}
+
+	void saveToDb()
+	{
+		for (const auto& elems : m_modules)
+		{
+		}
+	}
+
+private:
+	template <typename... Arg>
+	ModuleLoader(uint64_t iId, Arg&&... a) :
+		m_id(iId)
+	{
+		AppendAll(std::forward<Arg&&>(a)...);
+	}
+
+	ModuleLoader(const ModuleLoader&) = delete;
+	ModuleLoader& operator=(const ModuleLoader&) = delete;
+
+
+	template <typename H, typename... Tail>
+	void AppendAll(H&& head, Tail&&... a) 
+	{
+		Append(std::forward<H>(head));
+		AppendAll(std::forward<Tail>(a)...);
+	}
+
+	/// Terminate the recursion.
+	void AppendAll() 
+	{
+	}
+
+	uint64_t m_id = 0;
+	std::vector<std::type_index> m_modules;
+	apie::common::Options m_options;
+
+
+public:
+	inline static auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
+};
+
 int main(int argc, char **argv)
 {
 
-	ModuleLoader moduleLoader(1, TestModuleA(), TestModuleB());
+	auto ptrModuleLoader = ModuleLoader::CreateInstance(123);
 
-	auto& rModuleA = moduleLoader.lookup<TestModuleA>();
+	auto iLen = std::tuple_size<decltype(ModuleLoader::tupleType)>::value;
+
+	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
 	auto sInfo = rModuleA.toString();
 
-	auto& rModuleB = moduleLoader.lookup<TestModuleB>();
+	auto& rModuleB = ptrModuleLoader->lookup<TestModuleB>();
 	sInfo = rModuleB.toString();
 	rModuleB.incrementValue();
 	sInfo = rModuleB.toString();
