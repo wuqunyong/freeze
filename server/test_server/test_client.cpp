@@ -425,12 +425,10 @@ public:
 	inline static auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
 };
 
+
 int main(int argc, char **argv)
 {
-
 	auto ptrModuleLoader = ModuleLoader::CreateInstance(123);
-
-	auto iLen = std::tuple_size<decltype(ModuleLoader::tupleType)>::value;
 
 	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
 	auto sInfo = rModuleA.toString();
