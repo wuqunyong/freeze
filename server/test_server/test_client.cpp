@@ -261,6 +261,10 @@ public:
 		return "ModuleA";
 	}
 
+	void saveToDb()
+	{
+		std::cout << "ModuleA saveToDb" << std::endl;
+	}
 
 private:
 	uint64_t m_iId = 0;
@@ -292,6 +296,11 @@ public:
 	{
 		m_value++;
 	}
+	
+	void saveToDb()
+	{
+		std::cout << "ModuleB saveToDb" << std::endl;
+	}
 
 private:
 	uint64_t m_iId = 0;
@@ -304,7 +313,7 @@ struct TestModuleB
 };
 
 
-class ModuleLoader
+class ModuleLoader : public std::enable_shared_from_this<ModuleLoader>
 {
 public:
 	template <typename T>
@@ -346,9 +355,8 @@ public:
 
 	void saveToDb()
 	{
-		for (const auto& elems : m_modules)
-		{
-		}
+		auto self = this->shared_from_this();
+		SaveToDb(self, ModuleLoader::tupleType);
 	}
 
 private:
@@ -370,6 +378,26 @@ private:
 	{
 		auto pInstance = std::shared_ptr<ModuleLoader>(new ModuleLoader(iId, std::get<Is>(t)...));
 		return pInstance;
+	}
+
+	template <size_t I = 0, typename... Ts>
+	static constexpr void SaveToDb(std::shared_ptr<ModuleLoader> ptrLoader, std::tuple<Ts...> tup)
+	{
+		// If we have iterated through all elements
+		if constexpr (I == sizeof...(Ts))
+		{
+			// Last case, if nothing is left to
+			// iterate, then exit the function
+			return;
+		}
+		else 
+		{
+			auto tObj = std::get<I>(tup);
+			ptrLoader->lookup<decltype(tObj)>().saveToDb();
+
+			// Going for next element.
+			SaveToDb<I + 1>(ptrLoader, tup);
+		}
 	}
 
 	ModuleLoader(const ModuleLoader&) = delete;
@@ -412,7 +440,7 @@ int main(int argc, char **argv)
 	rModuleB.incrementValue();
 	sInfo = rModuleB.toString();
 
-
+	ptrModuleLoader->saveToDb();
 
 	//uint64_t iId = 123;
 	//apie::common::Options m_options;
