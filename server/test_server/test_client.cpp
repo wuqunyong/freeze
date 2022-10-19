@@ -422,7 +422,7 @@ private:
 
 
 public:
-	inline static auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
+	static inline auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
 };
 
 
