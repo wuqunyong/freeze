@@ -247,63 +247,6 @@ private:
 	//std::string m_typeName;
 };
 
-
-class ModuleA
-{
-public:
-	ModuleA(uint64_t iId = 0) :
-		m_iId(iId)
-	{
-
-	}
-
-	std::string toString()
-	{
-		return "ModuleA";
-	}
-
-
-private:
-	uint64_t m_iId = 0;
-};
-
-struct TestModuleA
-{
-	using Type = ModuleA;
-};
-
-
-class ModuleB
-{
-public:
-	ModuleB(uint64_t iId = 0) :
-		m_iId(iId)
-	{
-
-	}
-
-	std::string toString()
-	{
-		std::stringstream ss;
-		ss << "ModuleB"  << ":" << m_iId << ":" << m_value;
-		return ss.str();
-	}
-
-	void incrementValue()
-	{
-		m_value++;
-	}
-
-private:
-	uint64_t m_iId = 0;
-	uint64_t m_value = 0;
-};
-
-struct TestModuleB
-{
-	using Type = ModuleB;
-};
-
 class ModuleLoader
 {
 public:
@@ -363,6 +306,62 @@ private:
 	uint64_t m_id = 0;
 	std::vector<std::type_index> m_modules;
 	apie::common::Options m_options;
+};
+
+class ModuleA
+{
+public:
+	ModuleA(uint64_t iId = 0) :
+		m_iId(iId)
+	{
+
+	}
+
+	std::string toString()
+	{
+		return "ModuleA";
+	}
+
+
+private:
+	uint64_t m_iId = 0;
+};
+
+struct TestModuleA
+{
+	using Type = ModuleA;
+};
+
+
+class ModuleB
+{
+public:
+	ModuleB(uint64_t iId = 0) :
+		m_iId(iId)
+	{
+
+	}
+
+	std::string toString()
+	{
+		std::stringstream ss;
+		ss << "ModuleB" << ":" << m_iId << ":" << m_value;
+		return ss.str();
+	}
+
+	void incrementValue()
+	{
+		m_value++;
+	}
+
+private:
+	uint64_t m_iId = 0;
+	uint64_t m_value = 0;
+};
+
+struct TestModuleB
+{
+	using Type = ModuleB;
 };
 
 int main(int argc, char **argv)
