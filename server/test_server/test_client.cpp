@@ -320,19 +320,6 @@ public:
 		return UnwrapTuple(iId, ModuleLoader::tupleType);
 	}
 
-	template<class... Args>
-	static std::shared_ptr<ModuleLoader> UnwrapTuple(uint64_t iId, const std::tuple<Args...>& t)
-	{
-		return UnwrapTupleImpl(iId, t, std::index_sequence_for<Args...>{});
-	}
-
-	template<class Tuple, std::size_t... Is>
-	static std::shared_ptr<ModuleLoader> UnwrapTupleImpl(uint64_t iId, const Tuple& t, std::index_sequence<Is...>)
-	{
-		auto pInstance = std::shared_ptr<ModuleLoader>(new ModuleLoader(iId, std::get<Is>(t)...));
-		return pInstance;
-	}
-
 	template <typename T>
 	void Append(T moduleType) 
 	{
@@ -370,6 +357,19 @@ private:
 		m_id(iId)
 	{
 		AppendAll(std::forward<Arg&&>(a)...);
+	}
+
+	template<class... Args>
+	static std::shared_ptr<ModuleLoader> UnwrapTuple(uint64_t iId, const std::tuple<Args...>& t)
+	{
+		return BuildInstance(iId, t, std::index_sequence_for<Args...>{});
+	}
+
+	template<class Tuple, std::size_t... Is>
+	static std::shared_ptr<ModuleLoader> BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>)
+	{
+		auto pInstance = std::shared_ptr<ModuleLoader>(new ModuleLoader(iId, std::get<Is>(t)...));
+		return pInstance;
 	}
 
 	ModuleLoader(const ModuleLoader&) = delete;
