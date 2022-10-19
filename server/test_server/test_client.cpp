@@ -369,8 +369,8 @@ int main(int argc, char **argv)
 
 	ModuleLoader moduleLoader(1, TestModuleA(), TestModuleB());
 
-	auto& rModule = moduleLoader.lookup<TestModuleA>();
-	auto sInfo = rModule.toString();
+	auto& rModuleA = moduleLoader.lookup<TestModuleA>();
+	auto sInfo = rModuleA.toString();
 
 	auto& rModuleB = moduleLoader.lookup<TestModuleB>();
 	sInfo = rModuleB.toString();
