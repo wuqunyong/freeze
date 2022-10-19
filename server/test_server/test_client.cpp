@@ -284,12 +284,19 @@ public:
 
 	std::string toString()
 	{
-		return "ModuleB";
+		std::stringstream ss;
+		ss << "ModuleB"  << ":" << m_iId << ":" << m_value;
+		return ss.str();
 	}
 
+	void incrementValue()
+	{
+		m_value++;
+	}
 
 private:
 	uint64_t m_iId = 0;
+	uint64_t m_value = 0;
 };
 
 struct TestModuleB
@@ -365,6 +372,13 @@ int main(int argc, char **argv)
 
 	auto& rModule = moduleLoader.lookup<TestModuleA>();
 	auto sInfo = rModule.toString();
+
+	auto& rModuleB = moduleLoader.lookup<TestModuleB>();
+	sInfo = rModuleB.toString();
+	rModuleB.incrementValue();
+	sInfo = rModuleB.toString();
+
+
 
 	//uint64_t iId = 123;
 	//apie::common::Options m_options;
