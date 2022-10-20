@@ -313,11 +313,17 @@ struct TestModuleB
 };
 
 
-class ModuleLoader : public std::enable_shared_from_this<ModuleLoader>
+template <typename T>
+class ModuleLoader : public std::enable_shared_from_this<ModuleLoader<T>>
 {
 public:
 	template <typename T>
 	using ValueTypeT = typename T::Type;
+
+	using LoaderType = T;
+
+	template<class Tuple, std::size_t... Is>
+	friend static auto BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>);
 
 	~ModuleLoader()
 	{
@@ -326,7 +332,7 @@ public:
 
 	static std::shared_ptr<ModuleLoader> CreateInstance(uint64_t iId) 
 	{
-		return UnwrapTuple(iId, ModuleLoader::tupleType);
+		return UnwrapTuple(iId, m_loaderType);
 	}
 
 	template <typename T>
@@ -356,13 +362,14 @@ public:
 	void saveToDb()
 	{
 		auto self = this->shared_from_this();
-		SaveToDbImpl(ModuleLoader::tupleType);
+		SaveToDbImpl(m_loaderType);
 	}
 
 private:
+
 	template <typename... Arg>
-	ModuleLoader(uint64_t iId, Arg&&... a) :
-		m_id(iId)
+	ModuleLoader(LoaderType loaderType, uint64_t iId, Arg&&... a) :
+		m_loaderType(loaderType), m_id(iId)
 	{
 		AppendAll(std::forward<Arg&&>(a)...);
 	}
@@ -371,13 +378,6 @@ private:
 	static std::shared_ptr<ModuleLoader> UnwrapTuple(uint64_t iId, const std::tuple<Args...>& t)
 	{
 		return BuildInstance(iId, t, std::index_sequence_for<Args...>{});
-	}
-
-	template<class Tuple, std::size_t... Is>
-	static std::shared_ptr<ModuleLoader> BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>)
-	{
-		auto pInstance = std::shared_ptr<ModuleLoader>(new ModuleLoader(iId, std::get<Is>(t)...));
-		return pInstance;
 	}
 
 	template <size_t I = 0, typename... Ts>
@@ -420,15 +420,29 @@ private:
 	std::vector<std::type_index> m_modules;
 	apie::common::Options m_options;
 
-
-public:
-	static inline auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
+	LoaderType m_loaderType;
 };
 
+template<class Tuple, std::size_t... Is>
+static auto BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>)
+{
+	auto pInstance = std::shared_ptr<ModuleLoader<Tuple>>(new ModuleLoader<Tuple>(t, iId, std::get<Is>(t)...));
+	return pInstance;
+}
+
+static auto CreateLoadInstance(uint64_t iId)
+{
+	static auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
+	auto pInstance = BuildInstance(iId, tupleType, std::make_index_sequence<std::tuple_size<decltype(tupleType)>::value>{});
+	return pInstance;
+}
 
 int main(int argc, char **argv)
 {
-	auto ptrModuleLoader = ModuleLoader::CreateInstance(123);
+	//auto ptrModuleLoader = ModuleLoader::CreateInstance(123);
+
+	
+	auto ptrModuleLoader = CreateLoadInstance(123);
 
 	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
 	auto sInfo = rModuleA.toString();
@@ -440,10 +454,10 @@ int main(int argc, char **argv)
 
 	ptrModuleLoader->saveToDb();
 
-	//uint64_t iId = 123;
-	//apie::common::Options m_options;
-	//m_options.set<TestModuleA>(iId);
-	//auto& rValue = m_options.get<TestModuleA>();
+	uint64_t iId = 123;
+	apie::common::Options m_options;
+	m_options.set<TestModuleA>(iId);
+	auto& rValue = m_options.get<TestModuleA>();
 
 	if (argc != 2)
 	{
