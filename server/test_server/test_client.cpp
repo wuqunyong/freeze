@@ -330,11 +330,6 @@ public:
 
 	}
 
-	static std::shared_ptr<ModuleLoader> CreateInstance(uint64_t iId) 
-	{
-		return UnwrapTuple(iId, m_loaderType);
-	}
-
 	template <typename T>
 	void Append(T moduleType) 
 	{
@@ -372,12 +367,6 @@ private:
 		m_loaderType(loaderType), m_id(iId)
 	{
 		AppendAll(std::forward<Arg&&>(a)...);
-	}
-
-	template<class... Args>
-	static std::shared_ptr<ModuleLoader> UnwrapTuple(uint64_t iId, const std::tuple<Args...>& t)
-	{
-		return BuildInstance(iId, t, std::index_sequence_for<Args...>{});
 	}
 
 	template <size_t I = 0, typename... Ts>
