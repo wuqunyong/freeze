@@ -356,7 +356,7 @@ public:
 	void saveToDb()
 	{
 		auto self = this->shared_from_this();
-		SaveToDb(self, ModuleLoader::tupleType);
+		SaveToDbImpl(ModuleLoader::tupleType);
 	}
 
 private:
@@ -381,7 +381,7 @@ private:
 	}
 
 	template <size_t I = 0, typename... Ts>
-	static constexpr void SaveToDb(std::shared_ptr<ModuleLoader> ptrLoader, std::tuple<Ts...> tup)
+	constexpr void SaveToDbImpl(std::tuple<Ts...> tup)
 	{
 		// If we have iterated through all elements
 		if constexpr (I == sizeof...(Ts))
@@ -393,10 +393,10 @@ private:
 		else 
 		{
 			auto tObj = std::get<I>(tup);
-			ptrLoader->lookup<decltype(tObj)>().saveToDb();
+			this->lookup<decltype(tObj)>().saveToDb();
 
 			// Going for next element.
-			SaveToDb<I + 1>(ptrLoader, tup);
+			this->SaveToDbImpl<I + 1>(tup);
 		}
 	}
 
