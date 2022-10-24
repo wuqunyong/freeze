@@ -323,7 +323,7 @@ public:
 	using LoaderType = T;
 
 	template<class Tuple, std::size_t... Is>
-	friend static auto BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>);
+	friend static inline auto BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>);
 
 	~ModuleLoader()
 	{
@@ -413,7 +413,7 @@ private:
 };
 
 template<class Tuple, std::size_t... Is>
-static auto BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>)
+static inline auto BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>)
 {
 	auto pInstance = std::shared_ptr<ModuleLoader<Tuple>>(new ModuleLoader<Tuple>(t, iId, std::get<Is>(t)...));
 	return pInstance;
@@ -430,7 +430,7 @@ int main(int argc, char **argv)
 {
 	//auto ptrModuleLoader = ModuleLoader::CreateInstance(123);
 
-	
+
 	auto ptrModuleLoader = CreateLoadInstance(123);
 
 	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
