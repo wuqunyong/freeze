@@ -150,6 +150,30 @@ static auto CreateLoadInstance(uint64_t iId)
 	return pInstance;
 }
 
+auto CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))> doneCb)
+{
+	auto ptrModuleLoader = CreateLoadInstance(iRoleId);
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ROLE_Proxy);
+	server.set_id(1);
+
+	auto ptrLoad = CreateDBLoaderPtr();
+	ptrLoad->set<Single_ModelUser_Loader>(iRoleId);
+	ptrLoad->set<Single_ModelRoleExtra_Loader>(iRoleId);
+	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
+
+	auto cb = [ptrModuleLoader, doneCb](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
+		if (status.ok())
+		{
+			ptrModuleLoader->loadFromDbLoader(loader);
+		}
+
+		doneCb(status, ptrModuleLoader);
+	};
+	ptrLoad->loadFromDb(server, cb);
+}
 
 apie::status::Status TestModule10::ready()
 {
@@ -158,35 +182,53 @@ apie::status::Status TestModule10::ready()
 	std::cout << ss.str() << std::endl;
 	ASYNC_PIE_LOG("ModuleLoad", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
 
-	::rpc_msg::CHANNEL server;
-	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(::common::EPT_DB_ROLE_Proxy);
-	server.set_id(1);
+	//decltype(CreateLoadInstance(0)) aTest = CreateLoadInstance(123);
 
-	auto ptrModuleLoader = CreateLoadInstance(123);
-
-	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
-	auto sInfo = rModuleA.toString();
-
-	auto& rModuleB = ptrModuleLoader->lookup<TestModuleB>();
-	sInfo = rModuleB.toString();
-	rModuleB.incrementValue();
-	sInfo = rModuleB.toString();
-
-	ptrModuleLoader->saveToDb();
-
-	auto ptrLoad = CreateDBLoaderPtr();
-	ptrLoad->set<Single_ModelUser_Loader>(1);
-	ptrLoad->set<Single_ModelRoleExtra_Loader>(1);
-	ptrLoad->set<Multi_ModelUser_Loader>(1).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
-
-	auto cb = [ptrModuleLoader](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
+	auto doneCb = [](apie::status::Status status, auto ptrModule) {
 		if (status.ok())
 		{
-			ptrModuleLoader->loadFromDbLoader(loader);
+			auto& rModuleA = ptrModule->lookup<TestModuleA>();
+			auto sInfo = rModuleA.toString();
+
+			auto& rModuleB = ptrModule->lookup<TestModuleB>();
+			sInfo = rModuleB.toString();
+			rModuleB.incrementValue();
+			sInfo = rModuleB.toString();
+
+			ptrModule->saveToDb();
 		}
 	};
-	ptrLoad->loadFromDb(server, cb);
+	CreateUserObj(12345, doneCb);
+
+	//::rpc_msg::CHANNEL server;
+	//server.set_realm(apie::Ctx::getThisChannel().realm());
+	//server.set_type(::common::EPT_DB_ROLE_Proxy);
+	//server.set_id(1);
+
+	//auto ptrModuleLoader = CreateLoadInstance(123);
+
+	//auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
+	//auto sInfo = rModuleA.toString();
+
+	//auto& rModuleB = ptrModuleLoader->lookup<TestModuleB>();
+	//sInfo = rModuleB.toString();
+	//rModuleB.incrementValue();
+	//sInfo = rModuleB.toString();
+
+	//ptrModuleLoader->saveToDb();
+
+	//auto ptrLoad = CreateDBLoaderPtr();
+	//ptrLoad->set<Single_ModelUser_Loader>(1);
+	//ptrLoad->set<Single_ModelRoleExtra_Loader>(1);
+	//ptrLoad->set<Multi_ModelUser_Loader>(1).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
+
+	//auto cb = [ptrModuleLoader](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
+	//	if (status.ok())
+	//	{
+	//		ptrModuleLoader->loadFromDbLoader(loader);
+	//	}
+	//};
+	//ptrLoad->loadFromDb(server, cb);
 
 	return { apie::status::StatusCode::OK, "" };
 }
