@@ -296,7 +296,7 @@ public:
 	{
 		m_value++;
 	}
-	
+
 	void saveToDb()
 	{
 		std::cout << "ModuleB saveToDb" << std::endl;

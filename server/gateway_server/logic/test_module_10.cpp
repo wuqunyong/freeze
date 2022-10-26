@@ -45,6 +45,91 @@ apie::status::Status TestModule10::start()
 	return { apie::status::StatusCode::OK, "" };
 }
 
+
+class ModuleA
+{
+public:
+	ModuleA(uint64_t iId = 0) :
+		m_iId(iId)
+	{
+
+	}
+
+	std::string toString()
+	{
+		return "ModuleA";
+	}
+
+	void loadFromDbLoad(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
+	{
+		std::cout << "ModuleA loadFromDbLoad" << std::endl;
+	}
+
+	void saveToDb()
+	{
+		std::cout << "ModuleA saveToDb" << std::endl;
+	}
+
+private:
+	uint64_t m_iId = 0;
+};
+
+struct TestModuleA
+{
+	using Type = ModuleA;
+};
+
+
+class ModuleB
+{
+public:
+	ModuleB(uint64_t iId = 0) :
+		m_iId(iId)
+	{
+
+	}
+
+	std::string toString()
+	{
+		std::stringstream ss;
+		ss << "ModuleB" << ":" << m_iId << ":" << m_value;
+		return ss.str();
+	}
+
+	void incrementValue()
+	{
+		m_value++;
+	}
+
+	void loadFromDbLoad(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
+	{
+		std::cout << "ModuleB loadFromDbLoad" << std::endl;
+	}
+
+	void saveToDb()
+	{
+		std::cout << "ModuleB saveToDb" << std::endl;
+	}
+
+private:
+	uint64_t m_iId = 0;
+	uint64_t m_value = 0;
+};
+
+struct TestModuleB
+{
+	using Type = ModuleB;
+};
+
+
+static auto CreateLoadInstance(uint64_t iId)
+{
+	static auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
+	auto pInstance = CreateModuleLoaderInstance(iId, tupleType, std::make_index_sequence<std::tuple_size<decltype(tupleType)>::value>{});
+	return pInstance;
+}
+
+
 apie::status::Status TestModule10::ready()
 {
 	std::stringstream ss;
@@ -57,12 +142,24 @@ apie::status::Status TestModule10::ready()
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
+	auto ptrModuleLoader = CreateLoadInstance(123);
+
+	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
+	auto sInfo = rModuleA.toString();
+
+	auto& rModuleB = ptrModuleLoader->lookup<TestModuleB>();
+	sInfo = rModuleB.toString();
+	rModuleB.incrementValue();
+	sInfo = rModuleB.toString();
+
+	ptrModuleLoader->saveToDb();
+
 	auto ptrLoad = CreateLoadObj();
 	ptrLoad->set<Single_ModelUser_Loader>(1);
 	ptrLoad->set<Single_ModelRoleExtra_Loader>(1);
 	ptrLoad->set<Multi_ModelUser_Loader>(1).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
 
-	auto cb = [](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
+	auto cb = [ptrModuleLoader](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
 		if (status.ok())
 		{
 			if (loader->has<Single_ModelUser_Loader>())
@@ -79,6 +176,8 @@ apie::status::Status TestModule10::ready()
 			{
 				auto value = loader->get<Multi_ModelUser_Loader>();
 			}
+
+			ptrModuleLoader->loadFromDbLoad(loader);
 		}
 	};
 	ptrLoad->loadFromDb(server, cb);

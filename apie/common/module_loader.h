@@ -11,6 +11,9 @@
 #include <typeindex>
 
 #include "apie/common/options.h"
+#include "apie/mysql_driver/db_load_component.h"
+
+namespace apie {
 
 template <typename T>
 class ModuleLoader : public std::enable_shared_from_this<ModuleLoader<T>>
@@ -53,9 +56,13 @@ public:
 		return m_options.lookup<T>(value);
 	}
 
+	void loadFromDbLoad(std::shared_ptr<DbLoadComponent> ptrLoad)
+	{
+		loadFromDbLoadImpl(ptrLoad, m_wrapperType);
+	}
+
 	void saveToDb()
 	{
-		auto self = this->shared_from_this();
 		SaveToDbImpl(m_wrapperType);
 	}
 
@@ -66,6 +73,26 @@ private:
 		m_wrapperType(wrapperType), m_id(iId)
 	{
 		AppendAll(std::forward<Arg&&>(a)...);
+	}
+
+	template <size_t I = 0, typename... Ts>
+	constexpr void loadFromDbLoadImpl(std::shared_ptr<DbLoadComponent> ptrLoad, std::tuple<Ts...> tup)
+	{
+		// If we have iterated through all elements
+		if constexpr (I == sizeof...(Ts))
+		{
+			// Last case, if nothing is left to
+			// iterate, then exit the function
+			return;
+		}
+		else
+		{
+			auto tObj = std::get<I>(tup);
+			this->lookup<decltype(tObj)>().loadFromDbLoad(ptrLoad);
+
+			// Going for next element.
+			this->loadFromDbLoadImpl<I + 1>(ptrLoad, tup);
+		}
 	}
 
 	template <size_t I = 0, typename... Ts>
@@ -87,6 +114,7 @@ private:
 			this->SaveToDbImpl<I + 1>(tup);
 		}
 	}
+
 
 	ModuleLoader(const ModuleLoader&) = delete;
 	ModuleLoader& operator=(const ModuleLoader&) = delete;
@@ -116,4 +144,6 @@ static inline auto CreateModuleLoaderInstance(uint64_t iId, const Tuple& t, std:
 {
 	auto pInstance = std::shared_ptr<ModuleLoader<Tuple>>(new ModuleLoader<Tuple>(t, iId, std::get<Is>(t)...));
 	return pInstance;
+}
+
 }
