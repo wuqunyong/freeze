@@ -60,7 +60,7 @@ public:
 		return "ModuleA";
 	}
 
-	void loadFromDbLoader(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
+	void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 	{
 		std::cout << "ModuleA loadFromDbLoad" << std::endl;
 
@@ -115,7 +115,7 @@ public:
 		m_value++;
 	}
 
-	void loadFromDbLoader(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
+	void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 	{
 		std::cout << "ModuleB loadFromDbLoad" << std::endl;
 
@@ -164,10 +164,10 @@ auto CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 	ptrLoad->set<Single_ModelRoleExtra_Loader>(iRoleId);
 	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
 
-	auto cb = [ptrModuleLoader, doneCb](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
+	auto cb = [ptrModuleLoader, doneCb, server](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
 		if (status.ok())
 		{
-			ptrModuleLoader->loadFromDbLoader(loader);
+			ptrModuleLoader->loadFromDbLoader(server, loader);
 		}
 
 		doneCb(status, ptrModuleLoader);

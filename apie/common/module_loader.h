@@ -12,6 +12,7 @@
 
 #include "apie/common/options.h"
 #include "apie/mysql_driver/db_load_component.h"
+#include "apie/proto/init.h"
 
 namespace apie {
 
@@ -56,9 +57,9 @@ public:
 		return m_options.lookup<T>(value);
 	}
 
-	void loadFromDbLoader(std::shared_ptr<DbLoadComponent> ptrLoad)
+	void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<DbLoadComponent> ptrLoad)
 	{
-		loadFromDbLoadImpl(ptrLoad, m_wrapperType);
+		loadFromDbLoadImpl(server, ptrLoad, m_wrapperType);
 	}
 
 	void saveToDb()
@@ -76,7 +77,7 @@ private:
 	}
 
 	template <size_t I = 0, typename... Ts>
-	constexpr void loadFromDbLoadImpl(std::shared_ptr<DbLoadComponent> ptrLoad, std::tuple<Ts...> tup)
+	constexpr void loadFromDbLoadImpl(const ::rpc_msg::CHANNEL& server, std::shared_ptr<DbLoadComponent> ptrLoad, std::tuple<Ts...> tup)
 	{
 		// If we have iterated through all elements
 		if constexpr (I == sizeof...(Ts))
@@ -88,10 +89,10 @@ private:
 		else
 		{
 			auto tObj = std::get<I>(tup);
-			this->lookup<decltype(tObj)>().loadFromDbLoader(ptrLoad);
+			this->lookup<decltype(tObj)>().loadFromDbLoader(server, ptrLoad);
 
 			// Going for next element.
-			this->loadFromDbLoadImpl<I + 1>(ptrLoad, tup);
+			this->loadFromDbLoadImpl<I + 1>(server, ptrLoad, tup);
 		}
 	}
 
