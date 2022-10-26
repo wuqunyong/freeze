@@ -556,6 +556,9 @@
     <ClInclude Include="mysql_driver\table_loader.h">
       <Filter>mysql_driver</Filter>
     </ClInclude>
+    <ClInclude Include="common\module_loader.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">
