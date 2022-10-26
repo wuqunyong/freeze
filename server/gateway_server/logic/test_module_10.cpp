@@ -175,7 +175,7 @@ apie::status::Status TestModule10::ready()
 
 	ptrModuleLoader->saveToDb();
 
-	auto ptrLoad = CreateLoadObj();
+	auto ptrLoad = CreateDBLoaderPtr();
 	ptrLoad->set<Single_ModelUser_Loader>(1);
 	ptrLoad->set<Single_ModelRoleExtra_Loader>(1);
 	ptrLoad->set<Multi_ModelUser_Loader>(1).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });

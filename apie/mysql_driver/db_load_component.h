@@ -38,7 +38,7 @@ class DbLoadComponent : public std::enable_shared_from_this<DbLoadComponent> {
   DbLoadComponent() = default;
 
  public:
-     friend std::shared_ptr<DbLoadComponent> CreateLoadObj();
+     friend std::shared_ptr<DbLoadComponent> CreateDBLoaderPtr();
 
 	 enum E_LoadingState
 	 {
@@ -275,7 +275,7 @@ class DbLoadComponent : public std::enable_shared_from_this<DbLoadComponent> {
 };
 
 
-inline std::shared_ptr<DbLoadComponent> CreateLoadObj()
+inline std::shared_ptr<DbLoadComponent> CreateDBLoaderPtr()
 {
     return std::shared_ptr<DbLoadComponent>(new DbLoadComponent());
 }
