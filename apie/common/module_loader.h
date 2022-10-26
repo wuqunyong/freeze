@@ -56,7 +56,7 @@ public:
 		return m_options.lookup<T>(value);
 	}
 
-	void loadFromDbLoad(std::shared_ptr<DbLoadComponent> ptrLoad)
+	void loadFromDbLoader(std::shared_ptr<DbLoadComponent> ptrLoad)
 	{
 		loadFromDbLoadImpl(ptrLoad, m_wrapperType);
 	}
@@ -88,7 +88,7 @@ private:
 		else
 		{
 			auto tObj = std::get<I>(tup);
-			this->lookup<decltype(tObj)>().loadFromDbLoad(ptrLoad);
+			this->lookup<decltype(tObj)>().loadFromDbLoader(ptrLoad);
 
 			// Going for next element.
 			this->loadFromDbLoadImpl<I + 1>(ptrLoad, tup);

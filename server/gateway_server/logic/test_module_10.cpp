@@ -60,7 +60,7 @@ public:
 		return "ModuleA";
 	}
 
-	void loadFromDbLoad(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
+	void loadFromDbLoader(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 	{
 		std::cout << "ModuleA loadFromDbLoad" << std::endl;
 
@@ -115,7 +115,7 @@ public:
 		m_value++;
 	}
 
-	void loadFromDbLoad(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
+	void loadFromDbLoader(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 	{
 		std::cout << "ModuleB loadFromDbLoad" << std::endl;
 
@@ -183,7 +183,7 @@ apie::status::Status TestModule10::ready()
 	auto cb = [ptrModuleLoader](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
 		if (status.ok())
 		{
-			ptrModuleLoader->loadFromDbLoad(loader);
+			ptrModuleLoader->loadFromDbLoader(loader);
 		}
 	};
 	ptrLoad->loadFromDb(server, cb);
