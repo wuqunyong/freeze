@@ -320,7 +320,7 @@ public:
 	template <typename T>
 	using ValueTypeT = typename T::Type;
 
-	using LoaderType = T;
+	using WrapperType = T;
 
 	template<class Tuple, std::size_t... Is>
 	friend static inline auto BuildInstance(uint64_t iId, const Tuple& t, std::index_sequence<Is...>);
@@ -357,14 +357,14 @@ public:
 	void saveToDb()
 	{
 		auto self = this->shared_from_this();
-		SaveToDbImpl(m_loaderType);
+		SaveToDbImpl(m_wrapperType);
 	}
 
 private:
 
 	template <typename... Arg>
-	ModuleLoader(LoaderType loaderType, uint64_t iId, Arg&&... a) :
-		m_loaderType(loaderType), m_id(iId)
+	ModuleLoader(WrapperType wrapperType, uint64_t iId, Arg&&... a) :
+		m_wrapperType(wrapperType), m_id(iId)
 	{
 		AppendAll(std::forward<Arg&&>(a)...);
 	}
@@ -409,7 +409,7 @@ private:
 	std::vector<std::type_index> m_modules;
 	apie::common::Options m_options;
 
-	LoaderType m_loaderType;
+	WrapperType m_wrapperType;
 };
 
 template<class Tuple, std::size_t... Is>
