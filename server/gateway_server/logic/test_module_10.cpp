@@ -63,6 +63,16 @@ public:
 	void loadFromDbLoad(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 	{
 		std::cout << "ModuleA loadFromDbLoad" << std::endl;
+
+		if (ptrLoader->has<Single_ModelUser_Loader>())
+		{
+			m_data1 = ptrLoader->get<Single_ModelUser_Loader>();
+		}
+
+		if (ptrLoader->has<Single_ModelRoleExtra_Loader>())
+		{
+			m_data2 = ptrLoader->get<Single_ModelRoleExtra_Loader>();
+		}
 	}
 
 	void saveToDb()
@@ -72,6 +82,10 @@ public:
 
 private:
 	uint64_t m_iId = 0;
+
+	Single_ModelUser_Loader::Type m_data1;
+	Single_ModelRoleExtra_Loader::Type m_data2;
+
 };
 
 struct TestModuleA
@@ -104,6 +118,11 @@ public:
 	void loadFromDbLoad(std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 	{
 		std::cout << "ModuleB loadFromDbLoad" << std::endl;
+
+		if (ptrLoader->has<Multi_ModelUser_Loader>())
+		{
+			m_data1 = ptrLoader->get<Multi_ModelUser_Loader>();
+		}
 	}
 
 	void saveToDb()
@@ -114,6 +133,8 @@ public:
 private:
 	uint64_t m_iId = 0;
 	uint64_t m_value = 0;
+
+	Multi_ModelUser_Loader::Type m_data1;
 };
 
 struct TestModuleB
@@ -162,21 +183,6 @@ apie::status::Status TestModule10::ready()
 	auto cb = [ptrModuleLoader](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
 		if (status.ok())
 		{
-			if (loader->has<Single_ModelUser_Loader>())
-			{
-				auto value = loader->get<Single_ModelUser_Loader>();
-			}
-
-			if (loader->has<Single_ModelRoleExtra_Loader>())
-			{
-				auto value = loader->get<Single_ModelRoleExtra_Loader>();
-			}
-
-			if (loader->has<Multi_ModelUser_Loader>())
-			{
-				auto value = loader->get<Multi_ModelUser_Loader>();
-			}
-
 			ptrModuleLoader->loadFromDbLoad(loader);
 		}
 	};
