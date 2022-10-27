@@ -96,7 +96,7 @@ public:
 		if (m_data3.m_optData.has_value())
 		{
 			m_data3.m_optData.value().fields.modified_time++;
-			m_data3.m_optData.value().markDirty({ ModelAccount::modified_time });
+			m_data3.m_optData.value().markDirty({ Single_ModelAccount_Loader::Type::TableType::modified_time });
 			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.m_server, m_data3.m_optData.value(), nullptr);
 		}
 
