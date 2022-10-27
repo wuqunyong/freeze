@@ -172,10 +172,13 @@ auto CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
 
 	auto cb = [ptrModuleLoader, doneCb, server, iRoleId](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
-		if (status.ok())
+		if (!status.ok())
 		{
-			ptrModuleLoader->loadFromDbLoader(server, loader);
+			doneCb(status, ptrModuleLoader);
+			return;
 		}
+
+		ptrModuleLoader->loadFromDbLoader(server, loader);
 
 		::rpc_msg::CHANNEL accountServer;
 		accountServer.set_realm(apie::Ctx::getThisChannel().realm());
@@ -187,10 +190,13 @@ auto CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 
 		auto wrapperFunc = [loader, ptrModuleLoader, doneCb, accountServer]() mutable {
 			auto funObj = [ptrModuleLoader, doneCb, accountServer](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> ptrLoader) mutable {
-				if (status.ok())
+				if (!status.ok())
 				{
-					ptrModuleLoader->loadFromDbLoader(accountServer, ptrLoader);
+					doneCb(status, ptrModuleLoader);
+					return;
 				}
+
+				ptrModuleLoader->loadFromDbLoader(accountServer, ptrLoader);
 				doneCb(status, ptrModuleLoader);
 			};
 			loader->loadFromDb(accountServer, funObj);
