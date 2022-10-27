@@ -51,7 +51,7 @@ namespace apie {
 
 				if (iRows != 0)
 				{
-					this->m_data = data;
+					this->m_optData = data;
 				}
 
 				loader->setState<LoaderType>(DbLoadComponent::ELS_Success);
@@ -60,7 +60,7 @@ namespace apie {
 		}
 
 		TableType m_tableType;
-		std::optional<TableType> m_data;
+		std::optional<TableType> m_optData;
 	};
 
 
@@ -97,14 +97,14 @@ namespace apie {
 					return;
 				}
 
-				m_data = data;
+				m_vecData = data;
 				loader->setState<LoaderType>(DbLoadComponent::ELS_Success);
 			};
 			apie::LoadFromDbByFilter<TableType>(server, m_tableType, ptrCb);
 		}
 
 		TableType m_tableType;
-		std::vector<TableType> m_data;
+		std::vector<TableType> m_vecData;
 	};
 
 } 

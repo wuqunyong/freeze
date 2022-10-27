@@ -87,10 +87,10 @@ public:
 		server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
 		server.set_id(1);
 
-		if (!m_data3.m_data.has_value())
+		if (!m_data3.m_optData.has_value())
 		{
-			m_data3.m_data = Single_ModelAccount_Loader::Type::TableType(m_iId);
-			InsertToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), nullptr);
+			m_data3.m_optData = Single_ModelAccount_Loader::Type::TableType(m_iId);
+			InsertToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_optData.value(), nullptr);
 		}
 
 		std::cout << "ModuleA loadFromDbDone" << std::endl;
@@ -103,11 +103,11 @@ public:
 		server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
 		server.set_id(1);
 
-		if (m_data3.m_data.has_value())
+		if (m_data3.m_optData.has_value())
 		{
-			m_data3.m_data.value().fields.modified_time++;
-			m_data3.m_data.value().markDirty({ ModelAccount::modified_time });
-			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), nullptr);
+			m_data3.m_optData.value().fields.modified_time++;
+			m_data3.m_optData.value().markDirty({ ModelAccount::modified_time });
+			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_optData.value(), nullptr);
 		}
 
 		std::cout << "ModuleA saveToDb" << std::endl;
