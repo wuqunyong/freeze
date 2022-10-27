@@ -82,6 +82,17 @@ public:
 
 	void loadFromDbDone()
 	{
+		::rpc_msg::CHANNEL server;
+		server.set_realm(apie::Ctx::getThisChannel().realm());
+		server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+		server.set_id(1);
+
+		if (!m_data3.m_data.has_value())
+		{
+			m_data3.m_data = Single_ModelAccount_Loader::Type::TableType(m_iId);
+			InsertToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), nullptr);
+		}
+
 		std::cout << "ModuleA loadFromDbDone" << std::endl;
 	}
 
@@ -92,33 +103,12 @@ public:
 		server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
 		server.set_id(1);
 
-		if (!m_data3.m_data.has_value())
-		{
-			m_data3.m_data = Single_ModelAccount_Loader::Type::TableType(m_iId);
-
-			auto cb = [](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
-				if (!status.ok())
-				{
-					return;
-				}
-			};
-			InsertToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), cb);
-		}
-		else
+		if (m_data3.m_data.has_value())
 		{
 			m_data3.m_data.value().fields.modified_time++;
 			m_data3.m_data.value().markDirty({ ModelAccount::modified_time });
 			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), nullptr);
-
-			//auto cb = [](status::Status status, bool result, uint64_t affectedRows) {
-			//	if (!status.ok())
-			//	{
-			//		return;
-			//	}
-			//};
-			//UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), cb);
 		}
-		
 
 		std::cout << "ModuleA saveToDb" << std::endl;
 	}
@@ -274,7 +264,7 @@ apie::status::Status TestModule10::ready()
 			ptrModule->saveToDb();
 		}
 	};
-	CreateUserObj(30003, doneCb);
+	CreateUserObj(30004, doneCb);
 
 	//::rpc_msg::CHANNEL server;
 	//server.set_realm(apie::Ctx::getThisChannel().realm());
