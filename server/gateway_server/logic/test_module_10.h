@@ -33,6 +33,10 @@ namespace apie {
 		using Type = MultiRowLoader<apie::ModelUser>;
 	};
 
+	struct Single_ModelAccount_Loader
+	{
+		using Type = SingleRowLoader<apie::ModelAccount>;
+	};
 
 	class TestModule10
 	{

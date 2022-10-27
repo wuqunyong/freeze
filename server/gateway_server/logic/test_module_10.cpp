@@ -73,6 +73,11 @@ public:
 		{
 			m_data2 = ptrLoader->get<Single_ModelRoleExtra_Loader>();
 		}
+
+		if (ptrLoader->has<Single_ModelAccount_Loader>())
+		{
+			m_data3 = ptrLoader->get<Single_ModelAccount_Loader>();
+		}
 	}
 
 	void saveToDb()
@@ -85,6 +90,8 @@ private:
 
 	Single_ModelUser_Loader::Type m_data1;
 	Single_ModelRoleExtra_Loader::Type m_data2;
+
+	Single_ModelAccount_Loader::Type m_data3;
 
 };
 
@@ -164,13 +171,31 @@ auto CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 	ptrLoad->set<Single_ModelRoleExtra_Loader>(iRoleId);
 	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
 
-	auto cb = [ptrModuleLoader, doneCb, server](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
+	auto cb = [ptrModuleLoader, doneCb, server, iRoleId](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
 		if (status.ok())
 		{
 			ptrModuleLoader->loadFromDbLoader(server, loader);
 		}
 
-		doneCb(status, ptrModuleLoader);
+		::rpc_msg::CHANNEL accountServer;
+		accountServer.set_realm(apie::Ctx::getThisChannel().realm());
+		accountServer.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+		accountServer.set_id(1);
+
+		loader->clear();
+		loader->set<Single_ModelAccount_Loader>(iRoleId);
+
+		auto wrapperFunc = [loader, ptrModuleLoader, doneCb, accountServer]() mutable {
+			auto funObj = [ptrModuleLoader, doneCb, accountServer](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> ptrLoader) mutable {
+				if (status.ok())
+				{
+					ptrModuleLoader->loadFromDbLoader(accountServer, ptrLoader);
+				}
+				doneCb(status, ptrModuleLoader);
+			};
+			loader->loadFromDb(accountServer, funObj);
+		};
+		apie::CtxSingleton::get().getLogicThread()->dispatcher().post(wrapperFunc);
 	};
 	ptrLoad->loadFromDb(server, cb);
 }
