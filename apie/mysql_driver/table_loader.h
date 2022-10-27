@@ -15,6 +15,7 @@
 #include <functional> 
 
 #include "apie/mysql_driver/db_load_component.h"
+#include "apie/proto/init.h"
 
 namespace apie {
 
@@ -41,6 +42,12 @@ namespace apie {
 
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
+			if (!m_initServer)
+			{
+				m_initServer = true;
+				m_server = server;
+			}
+
 			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
 			auto ptrCb = [this, loader](apie::status::Status status, TableType& data, uint32_t iRows) {
 				if (!status.ok())
@@ -58,6 +65,9 @@ namespace apie {
 			};
 			apie::LoadFromDb<TableType>(server, m_tableType, ptrCb);
 		}
+
+		bool m_initServer = false;
+		::rpc_msg::CHANNEL m_server;
 
 		TableType m_tableType;
 		std::optional<TableType> m_optData;
@@ -89,6 +99,12 @@ namespace apie {
 
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
+			if (!m_initServer)
+			{
+				m_initServer = true;
+				m_server = server;
+			}
+
 			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
 			auto ptrCb = [this, loader](status::Status status, std::vector<TableType>& data) {
 				if (!status.ok())
@@ -102,6 +118,9 @@ namespace apie {
 			};
 			apie::LoadFromDbByFilter<TableType>(server, m_tableType, ptrCb);
 		}
+
+		bool m_initServer = false;
+		::rpc_msg::CHANNEL m_server;
 
 		TableType m_tableType;
 		std::vector<TableType> m_vecData;
