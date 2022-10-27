@@ -87,6 +87,38 @@ public:
 
 	void saveToDb()
 	{
+		::rpc_msg::CHANNEL server;
+		server.set_realm(apie::Ctx::getThisChannel().realm());
+		server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+		server.set_id(1);
+
+		if (!m_data3.m_data.has_value())
+		{
+			m_data3.m_data = Single_ModelAccount_Loader::Type::TableType(m_iId);
+
+			auto cb = [](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
+				if (!status.ok())
+				{
+					return;
+				}
+			};
+			InsertToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), cb);
+		}
+		else
+		{
+			m_data3.m_data.value().fields.modified_time++;
+			m_data3.m_data.value().markDirty({ ModelAccount::modified_time });
+
+			auto cb = [](status::Status status, bool result, uint64_t affectedRows) {
+				if (!status.ok())
+				{
+					return;
+				}
+			};
+			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), cb);
+		}
+		
+
 		std::cout << "ModuleA saveToDb" << std::endl;
 	}
 
@@ -240,7 +272,7 @@ apie::status::Status TestModule10::ready()
 			ptrModule->saveToDb();
 		}
 	};
-	CreateUserObj(5, doneCb);
+	CreateUserObj(30003, doneCb);
 
 	//::rpc_msg::CHANNEL server;
 	//server.set_realm(apie::Ctx::getThisChannel().realm());
