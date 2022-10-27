@@ -162,6 +162,11 @@ apie::status::Status GatewayMgr::exit()
 
 void GatewayMgr::setHookReady(hook::HookPoint point)
 {
+	if (m_prtLoader->getHookReady(point))
+	{
+		return;
+	}
+
 	m_prtLoader->setHookReady(point);
 }
 

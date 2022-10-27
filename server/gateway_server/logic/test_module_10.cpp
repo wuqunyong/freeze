@@ -240,7 +240,7 @@ apie::status::Status TestModule10::ready()
 			ptrModule->saveToDb();
 		}
 	};
-	CreateUserObj(12345, doneCb);
+	CreateUserObj(5, doneCb);
 
 	//::rpc_msg::CHANNEL server;
 	//server.set_realm(apie::Ctx::getThisChannel().realm());
