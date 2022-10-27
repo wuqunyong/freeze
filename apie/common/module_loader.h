@@ -62,6 +62,11 @@ public:
 		loadFromDbLoadImpl(server, ptrLoad, m_wrapperType);
 	}
 
+	void loadFromDbDone()
+	{
+		loadFromDbDoneImpl(m_wrapperType);
+	}
+
 	void saveToDb()
 	{
 		SaveToDbImpl(m_wrapperType);
@@ -93,6 +98,26 @@ private:
 
 			// Going for next element.
 			this->loadFromDbLoadImpl<I + 1>(server, ptrLoad, tup);
+		}
+	}
+
+	template <size_t I = 0, typename... Ts>
+	constexpr void loadFromDbDoneImpl(std::tuple<Ts...> tup)
+	{
+		// If we have iterated through all elements
+		if constexpr (I == sizeof...(Ts))
+		{
+			// Last case, if nothing is left to
+			// iterate, then exit the function
+			return;
+		}
+		else
+		{
+			auto tObj = std::get<I>(tup);
+			this->lookup<decltype(tObj)>().loadFromDbDone();
+
+			// Going for next element.
+			this->loadFromDbDoneImpl<I + 1>(tup);
 		}
 	}
 

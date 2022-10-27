@@ -80,6 +80,11 @@ public:
 		}
 	}
 
+	void loadFromDbDone()
+	{
+		std::cout << "ModuleA loadFromDbDone" << std::endl;
+	}
+
 	void saveToDb()
 	{
 		std::cout << "ModuleA saveToDb" << std::endl;
@@ -130,6 +135,11 @@ public:
 		{
 			m_data1 = ptrLoader->get<Multi_ModelUser_Loader>();
 		}
+	}
+
+	void loadFromDbDone()
+	{
+		std::cout << "ModuleB loadFromDbDone" << std::endl;
 	}
 
 	void saveToDb()
@@ -197,6 +207,7 @@ auto CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 				}
 
 				ptrModuleLoader->loadFromDbLoader(accountServer, ptrLoader);
+				ptrModuleLoader->loadFromDbDone();
 				doneCb(status, ptrModuleLoader);
 			};
 			loader->loadFromDb(accountServer, funObj);
