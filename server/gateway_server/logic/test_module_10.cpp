@@ -108,14 +108,15 @@ public:
 		{
 			m_data3.m_data.value().fields.modified_time++;
 			m_data3.m_data.value().markDirty({ ModelAccount::modified_time });
+			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), nullptr);
 
-			auto cb = [](status::Status status, bool result, uint64_t affectedRows) {
-				if (!status.ok())
-				{
-					return;
-				}
-			};
-			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), cb);
+			//auto cb = [](status::Status status, bool result, uint64_t affectedRows) {
+			//	if (!status.ok())
+			//	{
+			//		return;
+			//	}
+			//};
+			//UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(server, m_data3.m_data.value(), cb);
 		}
 		
 
@@ -124,6 +125,7 @@ public:
 
 private:
 	uint64_t m_iId = 0;
+	
 
 	Single_ModelUser_Loader::Type m_data1;
 	Single_ModelRoleExtra_Loader::Type m_data2;
