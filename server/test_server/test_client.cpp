@@ -316,7 +316,7 @@ struct TestModuleB
 static auto CreateLoadInstance(uint64_t iId)
 {
 	static auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
-	auto pInstance = CreateModuleLoaderInstance(iId, tupleType, std::make_index_sequence<std::tuple_size<decltype(tupleType)>::value>{});
+	auto pInstance = apie::CreateModuleLoaderInstance(iId, tupleType, std::make_index_sequence<std::tuple_size<decltype(tupleType)>::value>{});
 	return pInstance;
 }
 
