@@ -23,6 +23,8 @@ void DispatchedThreadImpl::stop()
 
 void DispatchedThreadImpl::initMysql(MySQLConnectOptions& options)
 {
+	this->mysqlConnector_.close();
+
 	this->mysqlConnector_.init(options);
 	bool bResult = this->mysqlConnector_.connect();
 	if (!bResult)
