@@ -56,7 +56,6 @@ bool ModuleLoaderManager::registerModule()
 		ss << "module name collision: " << name;
 
 		PANIC_ABORT(ss.str().c_str());
-		return false;
 	}
 
 	this->getOrCreateLoader<T>(name, iPriority);
