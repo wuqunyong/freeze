@@ -566,7 +566,9 @@ void Ctx::init(const std::string& configFile)
 		apie::CtxSingleton::get().setServerId(id);
 		apie::CtxSingleton::get().setServerType(type);
 
+		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "hook::HookPoint::HP_Init before");
 		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Init);
+		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "hook::HookPoint::HP_Init after");
 
 		//std::shared_ptr<event_ns::DispatchedThreadImpl> ptrListen = nullptr;
 

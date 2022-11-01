@@ -934,14 +934,19 @@ void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
 {
 	if (iThreadId != this->tid_)
 	{
-		return;
+		std::stringstream ss;
+		ss << "handleLogicStart : iThreadId:" << iThreadId << " != tid_:" << this->tid_;
+		PANIC_ABORT(ss.str().c_str());
 	}
 
 	try {
 		//连接注册中心，获取配置
 		CtxSingleton::get().getEndpoint()->init();
 
+		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "hook::HookPoint::HP_Start before");
 		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Start);
+		PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "hook::HookPoint::HP_Start after");
+
 	}
 	catch (YAML::InvalidNode& e) {
 		std::stringstream ss;
