@@ -57,6 +57,10 @@ sigset_t g_SigSet;
 
 namespace apie {
 
+namespace {
+	bool g_atexit_registered = false;
+}
+
 PlatformImpl Ctx::s_platform;
 std::string Ctx::s_log_postfix;
 
@@ -510,6 +514,11 @@ void Ctx::addRedisClients(LoadConfig<Mysql_RedisConfig>& redisConfig)
 	}
 }
 
+void NormalExitHandle()
+{ 
+	PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "NormalExitHandle");
+}
+
 void Ctx::init(const std::string& configFile)
 {
 	this->m_configFile = configFile;
@@ -672,6 +681,17 @@ void Ctx::init(const std::string& configFile)
 		//		PANIC_ABORT(ss.str().c_str());
 		//	}
 		//}
+
+
+		 // Register exit handlers
+		if (!g_atexit_registered) 
+		{
+			if (std::atexit(NormalExitHandle) != 0)
+			{
+				PANIC_ABORT("Register exit handle failed");
+			}
+			g_atexit_registered = true;
+		}
 
 	}
 	catch (YAML::BadFile& e) {
