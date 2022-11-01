@@ -61,3 +61,6 @@ protobuf-cpp-3.21.6.tar.gz
 
 C++ Insights - See your source code with the eyes of a compiler.
 https://cppinsights.io/
+
+
+https://www.modernescpp.com/index.php/a-generic-data-stream-with-coroutines-in-c-20
