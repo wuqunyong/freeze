@@ -107,11 +107,12 @@ fibonacci_sequence(unsigned n)
     }
 }
 
+
+
 int main()
 {
     try {
-
-        auto gen = fibonacci_sequence(100); //最大值94，避免 uint64_t 溢出
+        auto gen = fibonacci_sequence(2); //最大值94，避免 uint64_t 溢出
 
         for (int j = 0; gen; j++)
             std::cout << "fib(" << j << ")=" << gen() << '\n';

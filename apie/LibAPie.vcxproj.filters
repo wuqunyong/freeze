@@ -106,6 +106,9 @@
     <Filter Include="module_loader">
       <UniqueIdentifier>{94ef87ab-8407-4e1e-a5e8-a0ef4a62e03d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="co_traits">
+      <UniqueIdentifier>{de4d508e-41a7-42fb-8756-25660ea0b13d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -558,6 +561,15 @@
     </ClInclude>
     <ClInclude Include="common\module_loader.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="co_traits\co_task.h">
+      <Filter>co_traits</Filter>
+    </ClInclude>
+    <ClInclude Include="co_traits\co_awaitable.h">
+      <Filter>co_traits</Filter>
+    </ClInclude>
+    <ClInclude Include="status\status_or.h">
+      <Filter>status</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

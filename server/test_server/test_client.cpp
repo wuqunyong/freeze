@@ -320,10 +320,34 @@ static auto CreateLoadInstance(uint64_t iId)
 	return pInstance;
 }
 
+
+apie::co_traits::CoTask TestCoRPC()
+{
+	int i = 0;
+	i++;
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_id(1);
+
+	::mysql_proxy_msg::MysqlDescribeRequest args;
+	auto ptrAdd = args.add_names();
+	*ptrAdd = "test";
+
+	auto ptrAwait = std::make_shared<apie::co_traits::CoAwaitable<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>>(server, rpc_msg::RPC_MysqlDescTable, args);
+	auto response = co_await *ptrAwait;
+	
+	i++;
+
+	co_return;
+}
+
 int main(int argc, char **argv)
 {
 	//auto ptrModuleLoader = ModuleLoader::CreateInstance(123);
 
+	TestCoRPC();
 
 	auto ptrModuleLoader = CreateLoadInstance(123);
 

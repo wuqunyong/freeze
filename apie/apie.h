@@ -53,6 +53,10 @@
 #include "apie/network/client_proxy.h"
 #include "apie/network/windows_platform.h"
 
+#include "apie/co_traits/co_awaitable.h"
+#include "apie/co_traits/co_task.h"
+
+
 #include "apie/sync_service/sync_service.h"
 
 #include "apie/mysql_driver/mysql_connector.h"
@@ -77,3 +81,4 @@
 #include "apie/service/service_manager.h"
 
 #include "apie/status/status.h"
+#include "apie/status/status_or.h"

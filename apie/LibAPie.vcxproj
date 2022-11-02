@@ -201,6 +201,8 @@
     <ClInclude Include="configs\configs.h" />
     <ClInclude Include="configs\load_config.h" />
     <ClInclude Include="configs\load_config_manager.h" />
+    <ClInclude Include="co_traits\co_awaitable.h" />
+    <ClInclude Include="co_traits\co_task.h" />
     <ClInclude Include="crypto\crypto_utility.h" />
     <ClInclude Include="decompressor\decompressor.h" />
     <ClInclude Include="decompressor\lz4_decompressor_impl.h" />
@@ -288,6 +290,7 @@
     <ClInclude Include="singleton\threadsafe_singleton.h" />
     <ClInclude Include="status\status.h" />
     <ClInclude Include="status\status_code_enum.h" />
+    <ClInclude Include="status\status_or.h" />
     <ClInclude Include="sync_service\sync_service.h" />
   </ItemGroup>
   <ItemGroup>
