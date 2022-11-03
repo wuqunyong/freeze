@@ -331,6 +331,7 @@ CoTaskVoid TestCoRPC()
 	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
 	server.set_id(1);
 
+
 	::mysql_proxy_msg::MysqlDescribeRequest args;
 	auto ptrAdd = args.add_names();
 	*ptrAdd = "test";
@@ -339,6 +340,9 @@ CoTaskVoid TestCoRPC()
 	//auto response = co_await *ptrAwait;
 	
 	auto ptrAwait = MakeCoAwaitable<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>(server, rpc_msg::RPC_MysqlDescTable, args);
+
+	throw std::exception("test");
+
 	auto response = co_await *ptrAwait;
 	if (!response.ok())
 	{

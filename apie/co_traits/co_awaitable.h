@@ -15,11 +15,13 @@ namespace apie {
 namespace co_traits {
 
 	template <typename Request, typename Response>
-	struct CoAwaitable : public std::enable_shared_from_this<CoAwaitable<Request, Response>>
+	class CoAwaitable : public std::enable_shared_from_this<CoAwaitable<Request, Response>>
 	{
+	public:
 		using RequestType = Request;
 		using ResponseType = Response;
 		using ResponseTypePtr = std::shared_ptr<Response>;
+
 
 		CoAwaitable(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const RequestType& request)
 			: m_server(server),
@@ -78,7 +80,7 @@ namespace co_traits {
 }
 
 template<typename Request, typename Response>
- auto MakeCoAwaitable(const ::rpc_msg::CHANNEL& server, const ::rpc_msg::RPC_OPCODES opcode, const Request& request)
+auto MakeCoAwaitable(const ::rpc_msg::CHANNEL& server, const ::rpc_msg::RPC_OPCODES opcode, const Request& request)
 {
 	return std::make_shared<apie::co_traits::CoAwaitable<Request, Response>>(server, opcode, request);
 }
