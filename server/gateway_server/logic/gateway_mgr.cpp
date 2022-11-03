@@ -171,11 +171,41 @@ CoTaskVoid TestCoRPC1()
 	co_return;
 }
 
+CoTaskVoid TestCoRPC2()
+{
+	int i = 0;
+	i++;
+
+	TestCoRPC1();
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_id(1);
+
+	::mysql_proxy_msg::MysqlDescribeRequest args;
+	auto ptrAdd = args.add_names();
+	*ptrAdd = "account111";
+
+	auto ptrAwait = MakeCoAwaitable<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>(server, rpc_msg::RPC_MysqlDescTable, args);
+	auto response = co_await *ptrAwait;
+	if (!response.ok())
+	{
+		co_return;
+	}
+
+	auto valueObj = response.value();
+
+	i++;
+
+	co_return;
+}
+
 apie::status::Status GatewayMgr::ready()
 {
 	GatewayMgrModule::ready();
 
-	TestCoRPC1();
+	TestCoRPC2();
 
 	std::stringstream ss;
 	ss << "Server Ready!";
