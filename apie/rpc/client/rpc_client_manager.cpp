@@ -2,6 +2,7 @@
 
 #include "apie/status/status.h"
 #include "apie/network/ctx.h"
+#include "apie/network/logger.h"
 
 namespace apie {
 namespace rpc {
@@ -63,8 +64,15 @@ void RPCClientManager::handleTimeout()
 			auto findIte = pending_requests_.find(it->second.id_);
 			if (findIte != pending_requests_.end())
 			{
-				status::Status status(status::StatusCode::TIMEOUT, "timeout");
-				findIte->second->onMessage(status, "");
+				try {
+					status::Status status(status::StatusCode::TIMEOUT, "timeout");
+					findIte->second->onMessage(status, "");
+				}
+				catch (const std::exception& e) {
+					std::stringstream ss;
+					ss << "handleTimeout|exception:" << e.what();
+					ASYNC_PIE_LOG("DispatcherImpl/exception", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+				}
 
 				pending_requests_.erase(findIte);
 			}

@@ -274,7 +274,15 @@ void DispatcherImpl::runPostCallbacks() {
       callback = post_callbacks_.front();
       post_callbacks_.pop_front();
     }
-    callback();
+
+	try {
+		callback();
+	}
+	catch (const std::exception& e) {
+		std::stringstream ss;
+		ss << "runPostCallbacks|exception:" << e.what();
+		ASYNC_PIE_LOG("DispatcherImpl/exception", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+	}
   }
 }
 
