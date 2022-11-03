@@ -6,10 +6,18 @@
 #include <sstream>
 #include <unordered_map>
 #include <coroutine>
+#include <map>
+
+#include "apie/network/logger.h"
 
 namespace apie {
 namespace co_traits {
 
+	struct CoroutineTracer
+	{
+		uint64_t iId = 0;
+		uint64_t iCreateTime = 0;
+	};
 
 	class CoTask {
 	public:
@@ -20,11 +28,12 @@ namespace co_traits {
 				: m_exception(nullptr)
 			{
 				m_iId = genId();
+				addCoroutine(m_iId);
 			}
 
 			~promise_type()
 			{
-
+				removeCoroutine(m_iId);
 			}
 
 			promise_type(const promise_type&) = delete;
@@ -102,11 +111,55 @@ namespace co_traits {
 				return s_iId;
 			}
 
+
+			static inline void addCoroutine(uint64_t iId)
+			{
+				auto ite = s_mIdToTracer.find(iId);
+				if (ite != s_mIdToTracer.end())
+				{
+					return;
+				}
+
+				uint64_t iCurTime = time(nullptr);
+
+				CoroutineTracer tracer;
+				tracer.iId = iId;
+				tracer.iCreateTime = iCurTime;
+
+				s_mIdToTracer[iId] = tracer;
+				s_mTimeToId.insert(std::pair<uint64_t, uint64_t>(iCurTime, iId));
+			}
+
+			static inline void removeCoroutine(uint64_t iId)
+			{
+				auto ite = s_mIdToTracer.find(iId);
+				if (ite == s_mIdToTracer.end())
+				{
+					return;
+				}
+
+				auto iTime = ite->second.iCreateTime;
+				s_mIdToTracer.erase(ite);
+
+				auto itePair = s_mTimeToId.equal_range(iTime);
+				for (auto delIte = itePair.first; delIte != itePair.second; ++delIte)
+				{
+					if (delIte->second == iId)
+					{
+						s_mTimeToId.erase(delIte);
+						return;
+					}
+				}
+			}
+
 		private:
 			uint64_t m_iId = 0;
 			std::exception_ptr m_exception;
 
 			static inline uint64_t s_iId = 0;
+
+			static inline std::multimap<uint64_t, uint64_t> s_mTimeToId = {};
+			static inline std::map<uint64_t, CoroutineTracer>  s_mIdToTracer = {};
 		};
 
 		using Handle = std::coroutine_handle<promise_type>;
