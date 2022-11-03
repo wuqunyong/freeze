@@ -143,7 +143,7 @@ apie::status::Status GatewayMgr::start()
 
 }
 
-apie::co_traits::CoTask TestCoRPC1()
+CoTaskVoid TestCoRPC1()
 {
 	int i = 0;
 	i++;

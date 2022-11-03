@@ -321,7 +321,7 @@ static auto CreateLoadInstance(uint64_t iId)
 }
 
 
-apie::co_traits::CoTask TestCoRPC()
+CoTaskVoid TestCoRPC()
 {
 	int i = 0;
 	i++;
@@ -335,9 +335,18 @@ apie::co_traits::CoTask TestCoRPC()
 	auto ptrAdd = args.add_names();
 	*ptrAdd = "test";
 
-	auto ptrAwait = std::make_shared<apie::co_traits::CoAwaitable<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>>(server, rpc_msg::RPC_MysqlDescTable, args);
-	auto response = co_await *ptrAwait;
+	//auto ptrAwait = std::make_shared<apie::co_traits::CoAwaitable<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>>(server, rpc_msg::RPC_MysqlDescTable, args);
+	//auto response = co_await *ptrAwait;
 	
+	auto ptrAwait = MakeCoAwaitable<::mysql_proxy_msg::MysqlDescribeRequest, ::mysql_proxy_msg::MysqlDescribeResponse>(server, rpc_msg::RPC_MysqlDescTable, args);
+	auto response = co_await *ptrAwait;
+	if (!response.ok())
+	{
+		co_return;
+	}
+
+	auto valueObj = response.value();
+
 	i++;
 
 	co_return;

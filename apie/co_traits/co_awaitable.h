@@ -50,6 +50,7 @@ namespace co_traits {
 			auto rpcCB = [self, h](const apie::status::Status& status, const ResponseTypePtr& response) {
 				if (!status.ok())
 				{
+					self->m_response = status;
 					h.resume();
 					return;
 				}

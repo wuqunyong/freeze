@@ -37,7 +37,7 @@ namespace co_traits {
 
 			auto get_return_object() noexcept 
 			{ 
-				return CoTask{ std::coroutine_handle<promise_type>::from_promise(*this) };
+				return CoTask{ m_iId };
 			}
 
 			//std::suspend_always
@@ -111,54 +111,47 @@ namespace co_traits {
 
 		using Handle = std::coroutine_handle<promise_type>;
 
-		explicit CoTask(const Handle coroutine) :
-			m_coroutine{ coroutine }
+		explicit CoTask(uint64_t iId) :
+			m_iId{ iId }
 		{
 		}
 
-		CoTask() :
-			m_coroutine(nullptr)
+		CoTask()
 		{
 
 		}
 
 		~CoTask() 
 		{
-			//if (m_coroutine) 
-			//{
-			//	if (!m_coroutine.done())
-			//	{
-			//		m_coroutine.destroy();
-			//	}
-			//}
 		}
 
 		CoTask(const CoTask&) = delete;
 		CoTask& operator=(const CoTask&) = delete;
 
 		CoTask(CoTask&& other) noexcept :
-			m_coroutine{ other.m_coroutine }
+			m_iId{ other.m_iId }
 		{
-			other.m_coroutine = {};
+			other.m_iId = 0;
 		}
 		CoTask& operator=(CoTask&& other) noexcept 
 		{
 			if (this != &other) 
 			{
-				if (m_coroutine) 
+				if (m_iId != 0)
 				{
-					m_coroutine.destroy();
+					//Todo
 				}
-				m_coroutine = other.m_coroutine;
-				other.m_coroutine = {};
+				m_iId = other.m_iId;
+				other.m_iId = 0;
 			}
 			return *this;
 		}
 
 	private:
-		Handle m_coroutine;
+		uint64_t m_iId = 0;
 	};
 
+}
+}
 
-}
-}
+using CoTaskVoid = apie::co_traits::CoTask;
