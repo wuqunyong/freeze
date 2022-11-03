@@ -450,7 +450,14 @@ void DispatcherImpl::handleCommand()
 
 void DispatcherImpl::processCommand(evutil_socket_t fd, short event, void *arg)
 {
-	((DispatcherImpl*)arg)->handleCommand();
+	try {
+		((DispatcherImpl*)arg)->handleCommand();
+	}
+	catch (const std::exception& e) {
+		std::stringstream ss;
+		ss << "processCommand|exception:" << e.what();
+		ASYNC_PIE_LOG("DispatcherImpl/exception", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+	}
 }
 
 uint64_t DispatcherImpl::generatorSerialNum()
