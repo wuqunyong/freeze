@@ -38,11 +38,11 @@ public:
 		has_more_ = flag;
 	}
 
-	StatusCode errorCode() const { return code_; }
+	bool ok() const { return code_ == StatusCode::OK; }
+	StatusCode code() const { return code_; }
+
 	std::string errorMessage() const { return error_message_; }
 	bool hasMore() const { return has_more_; }
-
-	bool ok() const { return code_ == StatusCode::OK; }
 	bool isAsync() const { return code_ == StatusCode::OK_ASYNC; }
 
 private:

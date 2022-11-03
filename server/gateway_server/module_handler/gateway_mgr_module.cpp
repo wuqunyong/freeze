@@ -509,7 +509,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 		if (!status.ok())
 		{
 			::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
-			response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+			response.set_status_code(apie::toUnderlyingType(status.code()));
 			response.set_user_id(request->user_id());
 			response.set_version(request->version());
 
@@ -518,7 +518,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 		}
 
 		::login_msg::MSG_RESPONSE_CLIENT_LOGIN response;
-		response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+		response.set_status_code(apie::toUnderlyingType(status.code()));
 		response.set_user_id(request->user_id());
 		response.set_version(request->version());
 		response.set_ammo(rand() % 30 + 50);

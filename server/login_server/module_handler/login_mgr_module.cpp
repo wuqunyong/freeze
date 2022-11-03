@@ -74,7 +74,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 		if (!status.ok())
 		{
 			::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
-			response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+			response.set_status_code(apie::toUnderlyingType(status.code()));
 			response.set_account_id(request->account_id());
 			
 			service::ServiceManager::sendResponse(info, response);
@@ -82,7 +82,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 		}
 
 		::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L response;
-		response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+		response.set_status_code(apie::toUnderlyingType(status.code()));
 		response.set_account_id(request->account_id());
 
 		auto gatewayOpt = EndPointMgrSingleton::get().modulusEndpointById(::common::EPT_Gateway_Server, request->account_id());
@@ -134,7 +134,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::RPC_LoginPendingResponse>& responsePtr) mutable {
 				if (!status.ok())
 				{
-					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+					response.set_status_code(apie::toUnderlyingType(status.code()));
 					service::ServiceManager::sendResponse(info, response);
 					return;
 				}
@@ -162,7 +162,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 		auto cb = [info, response, gatewayOpt, rpcRequest](status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) mutable {
 			if (!status.ok())
 			{
-				response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+				response.set_status_code(apie::toUnderlyingType(status.code()));
 				service::ServiceManager::sendResponse(info, response);
 				return;
 			}
@@ -175,7 +175,7 @@ apie::status::Status LoginMgrModule::handleAccount(MessageInfo info, const std::
 			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr< rpc_login::RPC_LoginPendingResponse>& responsePtr) mutable {
 				if (!status.ok())
 				{
-					response.set_status_code(apie::toUnderlyingType(status.errorCode()));
+					response.set_status_code(apie::toUnderlyingType(status.code()));
 					service::ServiceManager::sendResponse(info, response);
 					return;
 				}
