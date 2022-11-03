@@ -104,7 +104,7 @@ void RPCServer<Request, Response>::sendResponse(const apie::status::Status& stat
 	*response.mutable_server()->mutable_stub() = server;
 
 	response.mutable_status()->set_code(apie::toUnderlyingType(status.code()));
-	response.mutable_status()->set_msg(status.errorMessage());
+	response.mutable_status()->set_msg(status.message());
 
 	response.set_result_data(response_ptr->SerializeAsString());
 

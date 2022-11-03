@@ -40,8 +40,8 @@ public:
 
 	bool ok() const { return code_ == StatusCode::OK; }
 	StatusCode code() const { return code_; }
+	std::string message() const { return error_message_; }
 
-	std::string errorMessage() const { return error_message_; }
 	bool hasMore() const { return has_more_; }
 	bool isAsync() const { return code_ == StatusCode::OK_ASYNC; }
 

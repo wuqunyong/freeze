@@ -67,7 +67,7 @@ namespace hook {
 					}
 
 					std::stringstream ss;
-					ss << "errorCode:" << apie::toUnderlyingType(result.code()) << "|info:" << result.errorMessage();
+					ss << "errorCode:" << apie::toUnderlyingType(result.code()) << "|info:" << result.message();
 
 					if (point == HookPoint::HP_Exit)
 					{

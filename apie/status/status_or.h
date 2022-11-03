@@ -246,7 +246,7 @@ namespace status {
 		void CheckHasValue() const& {
 			if (!ok()) {
 				std::stringstream ss;
-				ss << "ErrorCode:" << apie::toUnderlyingType(status_.code()) << ", ErrorMsg:" << status_.errorMessage();
+				ss << "ErrorCode:" << apie::toUnderlyingType(status_.code()) << ", ErrorMsg:" << status_.message();
 
 				throw std::exception(ss.str().c_str());
 			}
@@ -256,7 +256,7 @@ namespace status {
 		void CheckHasValue()&& {
 			if (!ok()) {
 				std::stringstream ss;
-				ss << "ErrorCode:" << apie::toUnderlyingType(status_.code()) << ", ErrorMsg:" << status_.errorMessage();
+				ss << "ErrorCode:" << apie::toUnderlyingType(status_.code()) << ", ErrorMsg:" << status_.message();
 
 				throw std::exception(ss.str().c_str());
 			}
