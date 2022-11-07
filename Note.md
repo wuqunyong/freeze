@@ -64,3 +64,6 @@ https://cppinsights.io/
 
 
 https://www.modernescpp.com/index.php/a-generic-data-stream-with-coroutines-in-c-20
+
+
+C:\Users\Administrator\AppData\Local\Temp\1489AFE4.TMP
