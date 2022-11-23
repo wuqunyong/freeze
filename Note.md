@@ -67,3 +67,10 @@ https://www.modernescpp.com/index.php/a-generic-data-stream-with-coroutines-in-c
 
 
 C:\Users\Administrator\AppData\Local\Temp\1489AFE4.TMP
+
+
+ SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE, COLUMN_DEFAULT, COLUMN_KEY, COLUMN_TYPE, TABLE_SCHEMA FROM INFORMATION_SCHEMA.columns WHERE table_name = 'name'
+
+
+clang format
+ https://llvm.org/builds/
