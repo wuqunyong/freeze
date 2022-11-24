@@ -10,7 +10,7 @@ import hashlib
 import subprocess
 
 sDate = time.strftime("%Y%m%d_%H%M%S", time.localtime())
-sLogName = "GenoratorSql_" + sDate + ".log"
+sLogName = "GenSql_" + sDate + ".log"
 logging.basicConfig(level=logging.INFO, filename=sLogName, filemode="w", format="%(asctime)s | %(levelname)s | %(message)s")
 
 sSQLPattern = "SELECT DATA_TYPE, COLUMN_NAME, COLUMN_DEFAULT, COLUMN_KEY, ORDINAL_POSITION, COLUMN_TYPE, TABLE_SCHEMA, TABLE_NAME " \
@@ -32,7 +32,8 @@ def readConfig(path):
     return config
 
 def IsUnsigned(sName) :
-    iPos = sName.find("unsigned")
+    sLittleName = sName.lower()
+    iPos = sLittleName.find("unsigned")
     if iPos == -1:
         return False
     return True
@@ -44,8 +45,11 @@ def GenStructDefine(sName, lField) :
         if elems[2] is None:
             sField = "\t" + elems[0] + " " + elems[1] + ";\n"
         else:
-            if elems[0] == "std::string":
-                sField = "\t" + elems[0] + " " + elems[1] + " = \"" + elems[2] + "\";\n"
+            if elems[0].lower() == "std::string":
+                if elems[2].upper() == "CURRENT_TIMESTAMP":
+                    sField = "\t" + elems[0] + " " + elems[1] + " = " + elems[2] + "();\n"
+                else:
+                    sField = "\t" + elems[0] + " " + elems[1] + " = \"" + elems[2] + "\";\n"
             else:
                 sField = "\t" + elems[0] + " " + elems[1] + " = " + elems[2] + ";\n"
         sDefine += sField
@@ -69,7 +73,7 @@ def GenConstructor(sName, lField, sBindType):
     sStatements = ""
 
     for elems in lField:
-        if elems[3] != "PRI":
+        if elems[3].upper() != "PRI":
             continue
         sValue1 = "\t" + elems[0] + " " + elems[1] + ","
         sParameters += sValue1
@@ -182,7 +186,10 @@ def TypeNameConvert(sName, sSign):
             "mediumtext": "std::string",
             "longtext": "std::string",
             "date": "std::string",
-            "datetime": "std::string"
+            "datetime": "std::string",
+            "varbinary": "std::string",
+            "float": "float",
+            "double": "double"
         }
 
         if sName in dMap:
@@ -204,7 +211,10 @@ def TypeNameConvert(sName, sSign):
             "mediumtext": "std::string",
             "longtext": "std::string",
             "date": "std::string",
-            "datetime": "std::string"
+            "datetime": "std::string",
+            "varbinary": "std::string",
+            "float": "float",
+            "double": "double"
         }
 
         if sName in dMap:
