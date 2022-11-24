@@ -7,3 +7,18 @@ database:       #连接的服务器地址列表
         database: "apie"
         charset: "utf8"
         bind_type: "DeclarativeBase::DBType::DBT_Role"
+    -
+        host: "127.0.0.1"   #ip
+        port: 3306          #端口
+        user: "root"        #用户名
+        passwd: "root"      #密码
+        database: "apie_account"
+        charset: "utf8"
+        bind_type: "DeclarativeBase::DBType::DBT_Account"
+
+
+
+
+
+
+

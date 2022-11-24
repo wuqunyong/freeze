@@ -2,9 +2,10 @@
 
 
 set curdir=%cd%
-python %curdir%/GenoratorSql.py %curdir%/GenSql.yaml
+python %curdir%/GenSql.py %curdir%/GenSql.yaml
 
-clang-format -i %curdir%/*.h
+clang-format -i %curdir%/dao/apie/*.h
+clang-format -i %curdir%/dao/apie_account/*.h
 
 echo Exit Code is %errorlevel%
 
