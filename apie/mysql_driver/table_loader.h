@@ -27,7 +27,7 @@ namespace apie {
 		using TableType = T;
 		using LoaderType = SingleRowLoader<T>;
 
-		SingleRowLoader(uint64_t id = 0) :
+		SingleRowLoader(uint64_t id ) :
 			m_tableType(id)
 		{
 
@@ -79,7 +79,7 @@ namespace apie {
 		using TableType = T;
 		using LoaderType = MultiRowLoader<T>;
 
-		MultiRowLoader(uint64_t id = 0) :
+		MultiRowLoader(uint64_t id) :
 			m_tableType(id)
 		{
 

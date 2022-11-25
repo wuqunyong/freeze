@@ -22,6 +22,9 @@
     <ClInclude Include="..\common\dao\model_role_extra.h">
       <Filter>common\dao</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\dao\varchars1_AutoGen.h">
+      <Filter>common\dao</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

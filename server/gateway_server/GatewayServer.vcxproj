@@ -130,6 +130,7 @@
     <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h" />
     <ClInclude Include="..\common\dao\model_role_extra.h" />
     <ClInclude Include="..\common\dao\model_user.h" />
+    <ClInclude Include="..\common\dao\varchars1_AutoGen.h" />
     <ClInclude Include="logic\gateway_mgr.h" />
     <ClInclude Include="logic\gateway_role.h" />
     <ClInclude Include="logic\role_tables_data.h" />

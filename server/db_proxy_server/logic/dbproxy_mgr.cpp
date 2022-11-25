@@ -8,6 +8,7 @@
 #include "../../common/dao/model_account_name.h"
 #include "../../common/dao/model_user.h"
 #include "../../common/dao/model_role_extra.h"
+#include "../../common/dao/varchars1_AutoGen.h"
 
 namespace apie {
 
@@ -60,6 +61,7 @@ apie::status::Status DBProxyMgr::start()
 		dbType = DeclarativeBase::DBType::DBT_Role;
 		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelUser::getFactoryName(), ModelUser::createMethod);
 		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelRoleExtra::getFactoryName(), ModelRoleExtra::createMethod);
+		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, varchars1_AutoGen::getFactoryName(), varchars1_AutoGen::createMethod);
 
 		break;
 	}

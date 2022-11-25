@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dao", "dao", "{194FF2C4-6DC
 		server\common\dao\model_role_extra.h = server\common\dao\model_role_extra.h
 		server\common\dao\model_service_node.h = server\common\dao\model_service_node.h
 		server\common\dao\model_user.h = server\common\dao\model_user.h
+		server\common\dao\varchars1_AutoGen.h = server\common\dao\varchars1_AutoGen.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DBProxy", "server\db_proxy_server\DBProxy.vcxproj", "{DF57F9F0-A6F6-402C-A678-C3D0343D42C7}"

@@ -4,6 +4,7 @@
 #include "../../common/dao/model_role_extra.h"
 #include "../../common/dao/model_account.h"
 #include "../../common/dao/model_account_name.h"
+#include "../../common/dao/varchars1_AutoGen.h"
 #include "../../common/opcodes.h"
 
 #include "logic/gateway_role.h"
@@ -92,6 +93,7 @@ apie::status::Status GatewayMgr::start()
 		std::map<std::string, DAOFactory::TCreateMethod> loadTables;
 		loadTables.insert(std::make_pair(ModelUser::getFactoryName(), ModelUser::createMethod));
 		loadTables.insert(std::make_pair(ModelRoleExtra::getFactoryName(), ModelRoleExtra::createMethod));
+		loadTables.insert(std::make_pair(varchars1_AutoGen::getFactoryName(), varchars1_AutoGen::createMethod));
 
 		bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
 		if (!bResult)

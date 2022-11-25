@@ -14,6 +14,7 @@
 #include "../../common/dao/model_user.h"
 #include "../../common/dao/model_account.h"
 #include "../../common/dao/model_role_extra.h"
+#include "../../common/dao/varchars1_AutoGen.h"
 
 namespace apie {
 
@@ -27,6 +28,12 @@ namespace apie {
 	{
 		using Type = SingleRowLoader<apie::ModelRoleExtra>;
 	};
+
+	struct Single_ModelVarchars1_Loader
+	{
+		using Type = SingleRowLoader<apie::varchars1_AutoGen>;
+	};
+
 
 	struct Multi_ModelUser_Loader
 	{

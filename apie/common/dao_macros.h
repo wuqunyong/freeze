@@ -66,3 +66,42 @@ void to_layout_type(std::vector<std::set<MysqlField::DB_FIELD_TYPE>>& vec, T& t,
 	{                                                                                                    \
 		return #TableName;                                                                               \
 	}
+
+
+
+
+
+#define DAO_DEFINE_TYPE_INTRUSIVE_MACRO(ModelType, DbType, TableName) \
+	private:                                                          \
+		DbType fields;                                                \
+    public:                                                           \
+	virtual void* layoutAddress() override						      \
+	{                                                                 \
+		return &fields;                                               \
+	}                                                                 \
+                                                                      \
+	virtual std::vector<uint32_t> layoutOffset() override             \
+	{                                                                 \
+		std::vector<uint32_t> layout;                                 \
+		to_layout_offset(layout, fields, std::make_index_sequence<boost::pfr::tuple_size_v<DbType>>{});  \
+		return layout;                                                                                   \
+	}                                                                                                    \
+                                                                                                         \
+	virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() override                       \
+	{                                                                                                    \
+		std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layout;                                         \
+		to_layout_type(layout, fields, std::make_index_sequence<boost::pfr::tuple_size_v<DbType>>{});    \
+		return layout;                                                                                   \
+	}                                                                                                    \
+                                                                                                         \
+    ModelType() = default;                                                                               \
+                                                                                                         \
+	static std::shared_ptr<DeclarativeBase> createMethod()                                               \
+	{                                                                                                    \
+		return std::make_shared<ModelType>();                                                            \
+	}                                                                                                    \
+                                                                                                         \
+	static std::string getFactoryName()                                                                  \
+	{                                                                                                    \
+		return #TableName;                                                                               \
+	}
