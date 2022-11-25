@@ -112,15 +112,15 @@ def GenProperty(sTable, lField):
         sName = elems[1]
         sParameters = elems[0] + " " + elems[1]
         sBody = ""
-        sBody += "this.fields.{} = {};\n".format(elems[1], elems[1])
+        sBody += "this->fields.{} = {};\n".format(elems[1], elems[1])
         sClassName = "{}_AutoGen".format(sTable)
-        sBody += "this.markDirty({{ {}::{} }});\n".format(sClassName, elems[1])
+        sBody += "this->markDirty({{ {}::{} }});\n".format(sClassName, elems[1])
 
         sSetFunc = sSetTemplate.format("void", sName, sParameters, sBody)
         sProperty += sSetFunc + "\n"
 
         sBody = ""
-        sBody += "return this.fields.{};\n".format(elems[1])
+        sBody += "return this->fields.{};\n".format(elems[1])
         sGetFunc = sGetTemplate.format(sReturn, sName, "", sBody)
         sProperty += sGetFunc + "\n"
 
@@ -158,7 +158,7 @@ namespace {} {{
 		
 		{}
 		
-		DAO_DEFINE_TYPE_INTRUSIVE({}_AutoGen, db_fields, {});
+		DAO_DEFINE_TYPE_INTRUSIVE_MACRO({}_AutoGen, db_fields, {});
 	}};
 }}
 }}
