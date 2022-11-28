@@ -188,7 +188,7 @@ static auto CreateLoadInstance(uint64_t iId)
 	return pInstance;
 }
 
-auto CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))> doneCb)
+void CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))> doneCb)
 {
 	auto ptrModuleLoader = CreateLoadInstance(iRoleId);
 
