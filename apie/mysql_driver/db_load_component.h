@@ -17,15 +17,15 @@ namespace apie {
 
 	class DbLoadComponent;
 
-	namespace internal {
+	//namespace internal {
 
-		template <typename T>
-		inline T const& DBDefaultValue() {
-			static auto const* const kDefaultValue = new T{};
-			return *kDefaultValue;
-		}
+	//	template <typename T>
+	//	inline T const& DBDefaultValue() {
+	//		static auto const* const kDefaultValue = new T{};
+	//		return *kDefaultValue;
+	//	}
 
-	}  // namespace internal
+	//}  // namespace internal
 
 	class DbLoadComponent : public std::enable_shared_from_this<DbLoadComponent> {
 	private:
@@ -129,7 +129,13 @@ namespace apie {
 		template <typename T>
 		ValueTypeT<T> const& get() const {
 			auto const it = m_.find(typeid(T));
-			if (it == m_.end()) return internal::DBDefaultValue<ValueTypeT<T>>();
+			//if (it == m_.end()) return internal::DBDefaultValue<ValueTypeT<T>>();
+			if (it == m_.end())
+			{
+				std::stringstream ss;
+				ss << "type:" << typeid(T).name() << " not exist";
+				throw std::exception(ss.str().c_str());
+			}
 			auto const* value = it->second->data_address();
 			return *reinterpret_cast<ValueTypeT<T> const*>(value);
 		}
