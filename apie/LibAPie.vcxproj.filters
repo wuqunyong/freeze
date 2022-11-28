@@ -571,6 +571,9 @@
     <ClInclude Include="status\status_or.h">
       <Filter>status</Filter>
     </ClInclude>
+    <ClInclude Include="common\class_loader_register_macro.h">
+      <Filter>common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="event\dispatched_thread.cc">

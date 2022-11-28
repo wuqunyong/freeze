@@ -175,6 +175,7 @@
     <ClInclude Include="api\os_sys_calls.h" />
     <ClInclude Include="base\datagen.h" />
     <ClInclude Include="base\macros.h" />
+    <ClInclude Include="common\class_loader_register_macro.h" />
     <ClInclude Include="common\c_smart_ptr.h" />
     <ClInclude Include="common\dao_macros.h" />
     <ClInclude Include="common\empty_string.h" />

@@ -159,4 +159,7 @@ public:
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(varchars1_AutoGen, db_fields, varchars1);
 };
+
+CYBER_REGISTER_COMPONENT(varchars1_AutoGen)
+
 } // namespace apie
