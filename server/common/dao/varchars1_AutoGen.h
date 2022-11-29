@@ -16,150 +16,150 @@
 
 namespace apie {
 
-class varchars1_AutoGen : public DeclarativeBase {
-public:
-  struct db_fields {
-    int32_t a = 0;
-    uint32_t b = 0;
-    int64_t c = 0;
-    std::string te = "hello world";
-    std::string aa;
-    std::string aaa;
-    std::string aaa1;
-    std::string Column1aaa;
-    std::string Column1;
-    std::string Column2;
-    std::string Column3;
-    std::string Column4;
-    std::string Column5;
-    std::string Column6;
-  };
+		class varchars1_AutoGen : public DeclarativeBase {
+		public:
+			struct db_fields {
+				int32_t a = 0;
+				uint32_t b = 0;
+				int64_t c = 0;
+				std::string te = "hello world";
+				std::string aa;
+				std::string aaa;
+				std::string aaa1;
+				std::string Column1aaa;
+				std::string Column1;
+				std::string Column2;
+				std::string Column3;
+				std::string Column4;
+				std::string Column5;
+				std::string Column6;
+			};
 
-  enum Fields {
-    a = 1,
-    b = 2,
-    c = 3,
-    te = 4,
-    aa = 5,
-    aaa = 6,
-    aaa1 = 7,
-    Column1aaa = 8,
-    Column1 = 9,
-    Column2 = 10,
-    Column3 = 11,
-    Column4 = 12,
-    Column5 = 13,
-    Column6 = 14,
-  };
+			enum Fields {
+				a = 1,
+				b = 2,
+				c = 3,
+				te = 4,
+				aa = 5,
+				aaa = 6,
+				aaa1 = 7,
+				Column1aaa = 8,
+				Column1 = 9,
+				Column2 = 10,
+				Column3 = 11,
+				Column4 = 12,
+				Column5 = 13,
+				Column6 = 14,
+			};
 
-  varchars1_AutoGen(int32_t a, uint32_t b) {
-    this->fields.a = a;
-    this->fields.b = b;
+			varchars1_AutoGen(int32_t a, uint32_t b) {
+				this->fields.a = a;
+				this->fields.b = b;
 
-    this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
-  }
+				this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
+			}
 
-  void set_a(int32_t a) {
-    this->fields.a = a;
-    this->markDirty({varchars1_AutoGen::a});
-  }
+			void set_a(int32_t a) {
+				this->fields.a = a;
+				this->markDirty({ varchars1_AutoGen::a });
+			}
 
-  int32_t get_a() { return this->fields.a; }
+			int32_t get_a() { return this->fields.a; }
 
-  void set_b(uint32_t b) {
-    this->fields.b = b;
-    this->markDirty({varchars1_AutoGen::b});
-  }
+			void set_b(uint32_t b) {
+				this->fields.b = b;
+				this->markDirty({ varchars1_AutoGen::b });
+			}
 
-  uint32_t get_b() { return this->fields.b; }
+			uint32_t get_b() { return this->fields.b; }
 
-  void set_c(int64_t c) {
-    this->fields.c = c;
-    this->markDirty({varchars1_AutoGen::c});
-  }
+			void set_c(int64_t c) {
+				this->fields.c = c;
+				this->markDirty({ varchars1_AutoGen::c });
+			}
 
-  int64_t get_c() { return this->fields.c; }
+			int64_t get_c() { return this->fields.c; }
 
-  void set_te(std::string te) {
-    this->fields.te = te;
-    this->markDirty({varchars1_AutoGen::te});
-  }
+			void set_te(std::string te) {
+				this->fields.te = te;
+				this->markDirty({ varchars1_AutoGen::te });
+			}
 
-  std::string get_te() { return this->fields.te; }
+			std::string get_te() { return this->fields.te; }
 
-  void set_aa(std::string aa) {
-    this->fields.aa = aa;
-    this->markDirty({varchars1_AutoGen::aa});
-  }
+			void set_aa(std::string aa) {
+				this->fields.aa = aa;
+				this->markDirty({ varchars1_AutoGen::aa });
+			}
 
-  std::string get_aa() { return this->fields.aa; }
+			std::string get_aa() { return this->fields.aa; }
 
-  void set_aaa(std::string aaa) {
-    this->fields.aaa = aaa;
-    this->markDirty({varchars1_AutoGen::aaa});
-  }
+			void set_aaa(std::string aaa) {
+				this->fields.aaa = aaa;
+				this->markDirty({ varchars1_AutoGen::aaa });
+			}
 
-  std::string get_aaa() { return this->fields.aaa; }
+			std::string get_aaa() { return this->fields.aaa; }
 
-  void set_aaa1(std::string aaa1) {
-    this->fields.aaa1 = aaa1;
-    this->markDirty({varchars1_AutoGen::aaa1});
-  }
+			void set_aaa1(std::string aaa1) {
+				this->fields.aaa1 = aaa1;
+				this->markDirty({ varchars1_AutoGen::aaa1 });
+			}
 
-  std::string get_aaa1() { return this->fields.aaa1; }
+			std::string get_aaa1() { return this->fields.aaa1; }
 
-  void set_Column1aaa(std::string Column1aaa) {
-    this->fields.Column1aaa = Column1aaa;
-    this->markDirty({varchars1_AutoGen::Column1aaa});
-  }
+			void set_Column1aaa(std::string Column1aaa) {
+				this->fields.Column1aaa = Column1aaa;
+				this->markDirty({ varchars1_AutoGen::Column1aaa });
+			}
 
-  std::string get_Column1aaa() { return this->fields.Column1aaa; }
+			std::string get_Column1aaa() { return this->fields.Column1aaa; }
 
-  void set_Column1(std::string Column1) {
-    this->fields.Column1 = Column1;
-    this->markDirty({varchars1_AutoGen::Column1});
-  }
+			void set_Column1(std::string Column1) {
+				this->fields.Column1 = Column1;
+				this->markDirty({ varchars1_AutoGen::Column1 });
+			}
 
-  std::string get_Column1() { return this->fields.Column1; }
+			std::string get_Column1() { return this->fields.Column1; }
 
-  void set_Column2(std::string Column2) {
-    this->fields.Column2 = Column2;
-    this->markDirty({varchars1_AutoGen::Column2});
-  }
+			void set_Column2(std::string Column2) {
+				this->fields.Column2 = Column2;
+				this->markDirty({ varchars1_AutoGen::Column2 });
+			}
 
-  std::string get_Column2() { return this->fields.Column2; }
+			std::string get_Column2() { return this->fields.Column2; }
 
-  void set_Column3(std::string Column3) {
-    this->fields.Column3 = Column3;
-    this->markDirty({varchars1_AutoGen::Column3});
-  }
+			void set_Column3(std::string Column3) {
+				this->fields.Column3 = Column3;
+				this->markDirty({ varchars1_AutoGen::Column3 });
+			}
 
-  std::string get_Column3() { return this->fields.Column3; }
+			std::string get_Column3() { return this->fields.Column3; }
 
-  void set_Column4(std::string Column4) {
-    this->fields.Column4 = Column4;
-    this->markDirty({varchars1_AutoGen::Column4});
-  }
+			void set_Column4(std::string Column4) {
+				this->fields.Column4 = Column4;
+				this->markDirty({ varchars1_AutoGen::Column4 });
+			}
 
-  std::string get_Column4() { return this->fields.Column4; }
+			std::string get_Column4() { return this->fields.Column4; }
 
-  void set_Column5(std::string Column5) {
-    this->fields.Column5 = Column5;
-    this->markDirty({varchars1_AutoGen::Column5});
-  }
+			void set_Column5(std::string Column5) {
+				this->fields.Column5 = Column5;
+				this->markDirty({ varchars1_AutoGen::Column5 });
+			}
 
-  std::string get_Column5() { return this->fields.Column5; }
+			std::string get_Column5() { return this->fields.Column5; }
 
-  void set_Column6(std::string Column6) {
-    this->fields.Column6 = Column6;
-    this->markDirty({varchars1_AutoGen::Column6});
-  }
+			void set_Column6(std::string Column6) {
+				this->fields.Column6 = Column6;
+				this->markDirty({ varchars1_AutoGen::Column6 });
+			}
 
-  std::string get_Column6() { return this->fields.Column6; }
+			std::string get_Column6() { return this->fields.Column6; }
 
-  DAO_DEFINE_TYPE_INTRUSIVE_MACRO(varchars1_AutoGen, db_fields, varchars1);
-};
+			DAO_DEFINE_TYPE_INTRUSIVE_MACRO(varchars1_AutoGen, db_fields, varchars1);
+		};
 
-APIE_REGISTER_TABLE(DeclarativeBase::DBType::DBT_Role, varchars1_AutoGen, varchars1)
-
+		APIE_REGISTER_TABLE(DeclarativeBase::DBType::DBT_Role, varchars1_AutoGen,
+			varchars1)
 } // namespace apie
