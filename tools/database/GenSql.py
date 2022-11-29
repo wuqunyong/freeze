@@ -161,12 +161,14 @@ namespace {} {{
 		DAO_DEFINE_TYPE_INTRUSIVE_MACRO({}_AutoGen, db_fields, {});
 	}};
 	
-	APIE_REGISTER_TABLE({}, {}_AutoGen, {})
 }}
+
+APIE_REGISTER_TABLE({}, {}::{}_AutoGen, {})
+
 }}
 """
 
-    sDefine = sTemplate.format(sSChema, sName, sStruct, sEnum, sConstructor, sProperty, sName, sName, sBindType, sName, sName)
+    sDefine = sTemplate.format(sSChema, sName, sStruct, sEnum, sConstructor, sProperty, sName, sName, sBindType, sSChema, sName, sName)
     return sDefine
 
 def TypeNameConvert(sName, sSign):
