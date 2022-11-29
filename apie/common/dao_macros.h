@@ -32,6 +32,59 @@ void to_layout_type(std::vector<std::set<MysqlField::DB_FIELD_TYPE>>& vec, T& t,
 }
 
 
+class RegisterMetaTable {
+public:
+	using CreateMethod = std::function<std::shared_ptr<DeclarativeBase>()>;
+
+	RegisterMetaTable(DeclarativeBase::DBType type, const std::string& tableName, CreateMethod method)
+		: m_type(type), m_tableName(tableName), m_method(method)
+	{
+	}
+
+	~RegisterMetaTable()
+	{
+
+	}
+
+	bool registerMeta() const 
+	{ 
+		auto findIte = m_registerTable.find(m_type);
+		if (findIte == m_registerTable.end())
+		{
+			std::map<std::string, CreateMethod> tableMap;
+			m_registerTable[m_type] = tableMap;
+		}
+
+		auto tableIte = m_registerTable[m_type].find(m_tableName);
+		if (tableIte != m_registerTable[m_type].end())
+		{
+			return false;
+		}
+
+		m_registerTable[m_type].emplace(std::make_pair(m_tableName, m_method));
+
+		return true;
+	}
+
+private:
+	DeclarativeBase::DBType m_type = DeclarativeBase::DBType::DBT_None;
+	std::string m_tableName;
+	CreateMethod m_method;
+
+private:
+	inline static std::map<DeclarativeBase::DBType, std::map<std::string, CreateMethod>> m_registerTable;
+};
+
+template <typename T, typename std::enable_if<std::is_base_of<DeclarativeBase, T>::value, int>::type = 0>
+void RegisterTable(DeclarativeBase::DBType type, const std::string& tableName)
+{
+	auto ptrMethod = T::createMethod;
+	auto ptrTable = std::make_shared<RegisterMetaTable>(type, tableName, ptrMethod);
+	ptrTable->registerMeta();
+}
+
+
+
 #define DAO_DEFINE_TYPE_INTRUSIVE(ModelType, DbType, TableName) \
 	public:                                                     \
 		DbType fields;                                          \

@@ -4,6 +4,16 @@
 #include "apie/network/logger.h"
 
 
+DeclarativeBase::DBType DeclarativeBase::getDBType()
+{
+	return m_dbType;
+}
+
+void DeclarativeBase::setDBType(DeclarativeBase::DBType type)
+{
+	m_dbType = type;
+}
+
 bool DeclarativeBase::initMetaData(MysqlTable& table)
 {
 	m_table = table;
@@ -26,6 +36,7 @@ bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string&
 
 	this->initMetaData(userTableOpt.value());
 	
+	this->setDBType(type);
 	this->m_binded = true;
 
 	return this->checkInvalid();

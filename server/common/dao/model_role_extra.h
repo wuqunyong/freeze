@@ -35,6 +35,6 @@ namespace apie {
 		DAO_DEFINE_TYPE_INTRUSIVE(ModelRoleExtra, db_fields, role_extra);
 	};
 
-	CYBER_REGISTER_COMPONENT(ModelRoleExtra)
+	//CYBER_REGISTER_COMPONENT(ModelRoleExtra)
 
 }

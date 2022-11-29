@@ -63,6 +63,9 @@ public:
 		*((T*)address) = value;
 	}
 
+	DBType getDBType();
+	void setDBType(DeclarativeBase::DBType type);
+
 	bool initMetaData(MysqlTable& table);
 	bool bindTable(DeclarativeBase::DBType type, const std::string& name);
 
@@ -113,6 +116,8 @@ public:
 
 
 private:
+	DBType m_dbType = DBType::DBT_None;
+
 	MysqlTable m_table;
 	std::bitset<256> m_dirtyFlags;
 	std::bitset<256> m_filterFlags;
