@@ -12,7 +12,7 @@ namespace status {
 class Status {
 public:
 	Status()
-		: code_(StatusCode::OK)
+		: code_(StatusCode::OK), error_message_()
 	{
 
 	}
