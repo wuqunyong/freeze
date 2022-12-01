@@ -51,7 +51,9 @@ public:
 	{
 		if (!has<T>())
 		{
-			throw std::exception("unregister");
+			std::stringstream ss;
+			ss << typeid(T).name() << " : unregister";
+			throw std::exception(ss.str().c_str());
 		}
 
 		return m_options.lookup<T>(value);
