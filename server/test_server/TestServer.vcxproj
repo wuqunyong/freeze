@@ -19,56 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\pb_msg\business\db.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\decree.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\login.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\map.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\role_server_msg.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\talent.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\userinfo.pb.cc" />
-    <ClCompile Include="logic\mock_role.cpp" />
-    <ClCompile Include="logic\task\login_test_case.cpp" />
-    <ClCompile Include="logic\task\logout_test_case.cpp" />
-    <ClCompile Include="logic\task\talent_test_case.cpp" />
-    <ClCompile Include="logic\test_case.cpp" />
-    <ClCompile Include="logic\test_runner.cpp" />
-    <ClCompile Include="logic\test_server.cpp" />
-    <ClCompile Include="logic\test_suite.cpp" />
-    <ClCompile Include="module_data\talent_data.cpp" />
-    <ClCompile Include="module_handler\role_login_module.cpp" />
-    <ClCompile Include="module_handler\role_logout_module.cpp" />
-    <ClCompile Include="module_handler\role_talent_module.cpp" />
-    <ClCompile Include="module_handler\test_server_module.cpp" />
     <ClCompile Include="test_client.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\pb_msg\business\db.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\decree.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\login.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\map.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\role_server_msg.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\talent.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\userinfo.pb.h" />
-    <ClInclude Include="..\..\pb_msg\init.h" />
-    <ClInclude Include="component.h" />
-    <ClInclude Include="logic\mock_role.h" />
-    <ClInclude Include="logic\task\login_test_case.h" />
-    <ClInclude Include="logic\task\logout_test_case.h" />
-    <ClInclude Include="logic\task\talent_test_case.h" />
-    <ClInclude Include="logic\test_case.h" />
-    <ClInclude Include="logic\test_runner.h" />
-    <ClInclude Include="logic\test_server.h" />
-    <ClInclude Include="logic\test_suite.h" />
-    <ClInclude Include="module_data\role_module_data.h" />
-    <ClInclude Include="module_data\talent_data.h" />
-    <ClInclude Include="module_handler\role_login_module.h" />
-    <ClInclude Include="module_handler\role_logout_module.h" />
-    <ClInclude Include="module_handler\role_talent_module.h" />
-    <ClInclude Include="module_handler\test_server_module.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
