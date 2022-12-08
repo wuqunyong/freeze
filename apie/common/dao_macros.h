@@ -71,6 +71,18 @@ private:
 	std::string m_tableName;
 	CreateMethod m_method;
 
+public:
+	static std::optional<std::map<std::string, CreateMethod>> GetRegisterMetaTableByType(DeclarativeBase::DBType type)
+	{
+		auto findIte = m_registerTable.find(type);
+		if (findIte == m_registerTable.end())
+		{
+			return std::nullopt;
+		}
+
+		return findIte->second;
+	}
+
 private:
 	inline static std::map<DeclarativeBase::DBType, std::map<std::string, CreateMethod>> m_registerTable;
 };

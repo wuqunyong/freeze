@@ -52,21 +52,28 @@ apie::status::Status DBProxyMgr::start()
 	case ::common::EPT_DB_ACCOUNT_Proxy:
 	{
 		dbType = DeclarativeBase::DBType::DBT_Account;
-		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelAccount::getFactoryName(), ModelAccount::createMethod);
-		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelAccountName::getFactoryName(), ModelAccountName::createMethod);
 		break;
 	}
 	case ::common::EPT_DB_ROLE_Proxy:
 	{
 		dbType = DeclarativeBase::DBType::DBT_Role;
-		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelUser::getFactoryName(), ModelUser::createMethod);
-		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelRoleExtra::getFactoryName(), ModelRoleExtra::createMethod);
-		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, varchars1_AutoGen::getFactoryName(), varchars1_AutoGen::createMethod);
-
 		break;
 	}
 	default:
+	{
 		return { apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
+	}
+	}
+
+	auto registerOpt = RegisterMetaTable::GetRegisterMetaTableByType(dbType);
+	if (!registerOpt.has_value())
+	{
+		return { apie::status::StatusCode::OK, "" };;
+	}
+
+	for (const auto& elems : registerOpt.value())
+	{
+		DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, elems.first, elems.second);
 	}
 
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
