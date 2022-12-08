@@ -125,11 +125,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\dao\model_account.h" />
-    <ClInclude Include="..\common\dao\model_account_name.h" />
-    <ClInclude Include="..\common\dao\model_role_extra.h" />
-    <ClInclude Include="..\common\dao\model_user.h" />
-    <ClInclude Include="..\common\dao\varchars1_AutoGen.h" />
     <ClInclude Include="logic\dbproxy_mgr.h" />
     <ClInclude Include="logic\table_cache_mgr.h" />
     <ClInclude Include="module_handler\dbproxy_mgr_module.h" />

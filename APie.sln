@@ -12,12 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{A9D0F7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dao", "dao", "{194FF2C4-6DC3-48E3-8291-B4C3B36AE74A}"
 	ProjectSection(SolutionItems) = preProject
-		server\common\dao\model_account.h = server\common\dao\model_account.h
-		server\common\dao\model_account_name.h = server\common\dao\model_account_name.h
-		server\common\dao\model_role_extra.h = server\common\dao\model_role_extra.h
-		server\common\dao\model_service_node.h = server\common\dao\model_service_node.h
-		server\common\dao\model_user.h = server\common\dao\model_user.h
-		server\common\dao\varchars1_AutoGen.h = server\common\dao\varchars1_AutoGen.h
+		server\common\dao\init.h = server\common\dao\init.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DBProxy", "server\db_proxy_server\DBProxy.vcxproj", "{DF57F9F0-A6F6-402C-A678-C3D0343D42C7}"
@@ -31,6 +26,16 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServiceRegistry", "server\service_registry_server\ServiceRegistry.vcxproj", "{7C98683F-C828-4059-A85C-A3D24B9ADA10}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestServer", "server\test_server\TestServer.vcxproj", "{7DA2359B-306A-47AE-9D29-37F1F6080CD6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dbt_account", "dbt_account", "{2D4E1F15-C319-4B75-842B-BC5B914D2E72}"
+	ProjectSection(SolutionItems) = preProject
+		server\common\dao\dbt_account\account_name_AutoGen.h = server\common\dao\dbt_account\account_name_AutoGen.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dbt_role", "dbt_role", "{BB768AF4-F141-4E26-BE06-1271C8107086}"
+	ProjectSection(SolutionItems) = preProject
+		server\common\dao\dbt_role\role_base_AutoGen.h = server\common\dao\dbt_role\role_base_AutoGen.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +107,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{194FF2C4-6DC3-48E3-8291-B4C3B36AE74A} = {A9D0F79B-DEA8-4488-A125-0C99B1B09B53}
+		{2D4E1F15-C319-4B75-842B-BC5B914D2E72} = {194FF2C4-6DC3-48E3-8291-B4C3B36AE74A}
+		{BB768AF4-F141-4E26-BE06-1271C8107086} = {194FF2C4-6DC3-48E3-8291-B4C3B36AE74A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAD434AF-6389-4CA2-957F-63E3E0EC379A}

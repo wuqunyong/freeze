@@ -4,11 +4,7 @@
 
 #include "module_handler/dbproxy_mgr_module.h"
 
-#include "../../common/dao/model_account.h"
-#include "../../common/dao/model_account_name.h"
-#include "../../common/dao/model_user.h"
-#include "../../common/dao/model_role_extra.h"
-#include "../../common/dao/varchars1_AutoGen.h"
+#include "../../common/dao/init.h"
 
 namespace apie {
 
