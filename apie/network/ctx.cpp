@@ -276,6 +276,27 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 		tmpPtrConfig->service_registry.type = node_["service_registry"]["type"].as<uint16_t>(1);
 	}
 
+	if (node_["bind_tables"])
+	{
+		for (const auto& item : this->node_["bind_tables"])
+		{
+			if (item["database"])
+			{
+				APieConfig_Bind_Database database;
+				database.type = item["database"]["type"].as<uint32_t>(0);
+				database.server_id = item["database"]["server_id"].as<uint32_t>(0);
+
+				for (std::size_t i = 0; i < item["database"]["table_name"].size(); i++)
+				{
+					auto sName = item["database"]["table_name"][i].as<std::string>();
+					database.table_name.push_back(sName);
+				}
+
+				tmpPtrConfig->bind_tables.database.push_back(database);
+			}
+		}
+	}
+
 	if (node_["log"])
 	{
 		tmpPtrConfig->log.merge = node_["log"]["merge"].as<bool>(true);

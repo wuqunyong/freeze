@@ -8,6 +8,15 @@ service_registry:
   port_value: 5007
   auth: "hello"
   type: 1
+bind_tables:
+  - database: 
+      type: 1
+      table_name: ["account","account_name"]
+      server_id: 1
+  - database:
+      type: 2
+      table_name: ["role_base"]
+      server_id: 1
 log:
   merge: true
   level: 0

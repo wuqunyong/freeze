@@ -15,6 +15,11 @@
 
 #include "apie/singleton/threadsafe_singleton.h"
 #include "apie/proto/init.h"
+#include "apie/configs/configs.h"
+#include "apie/api/hook.h"
+#include "apie/network/logger.h"
+#include "apie/common/dao_macros.h"
+
 
 
 namespace apie {
@@ -65,4 +70,82 @@ namespace apie {
 
 
 	bool RegisterRequiredTable(const ::rpc_msg::CHANNEL& server, DeclarativeBase::DBType type, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb);
+
+	template<typename T>
+	apie::status::Status DoBindTables(T* ptrMgr, uint32_t iRealm, APieConfig_BindTables tables)
+	{
+		std::shared_ptr<std::map<DeclarativeBase::DBType, bool>> ptrReady = std::make_shared<std::map<DeclarativeBase::DBType, bool>>();
+		for (const auto& elems : tables.database)
+		{
+			ptrReady->insert({ (DeclarativeBase::DBType)elems.type, false });
+		}
+
+		for (const auto& elems : tables.database)
+		{
+			// 加载:数据表结构
+			auto dbType = (DeclarativeBase::DBType)elems.type;
+			auto ptrReadyCb = [ptrMgr, ptrReady, dbType](bool bResul, std::string sInfo, uint64_t iCallCount) mutable {
+				if (!bResul)
+				{
+					std::stringstream ss;
+					ss << "CallMysqlDescTable|bResul:" << bResul << ",sInfo:" << sInfo << ",iCallCount:" << iCallCount;
+
+					PANIC_ABORT(ss.str().c_str());
+				}
+
+				(*ptrReady)[dbType] = true;
+				for (const auto& elems : *ptrReady)
+				{
+					if (elems.second == false)
+					{
+						return;
+					}
+				}
+				ptrMgr->setHookReady(hook::HookPoint::HP_Start);
+			};
+
+			auto iServerProxyType = ::common::EPT_None;
+			switch (dbType)
+			{
+			case DeclarativeBase::DBType::DBT_Account:
+			{
+				iServerProxyType = ::common::EPT_DB_ACCOUNT_Proxy;
+				break;
+			}
+			case DeclarativeBase::DBType::DBT_Role:
+			{
+				iServerProxyType = ::common::EPT_DB_ROLE_Proxy;
+				break;
+			}
+			default:
+				break;
+			}
+
+			::rpc_msg::CHANNEL server;
+			server.set_realm(iRealm);
+			server.set_type(iServerProxyType);
+			server.set_id(elems.server_id);
+
+			std::map<std::string, DAOFactory::TCreateMethod> loadTables;
+			for (const auto& name : elems.table_name)
+			{
+				auto methodOpt = RegisterMetaTable::GetCreateMethond(dbType, name);
+				if (!methodOpt.has_value())
+				{
+					return { apie::status::StatusCode::HOOK_ERROR, "HR_Error" };
+				}
+
+				loadTables.insert(std::make_pair(name, methodOpt.value()));
+			}
+
+			bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
+			if (!bResult)
+			{
+				return { apie::status::StatusCode::HOOK_ERROR, "HR_Error" };
+			}
+		}
+
+		return { apie::status::StatusCode::OK_ASYNC, "" };
+
+	}
 }

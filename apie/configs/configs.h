@@ -61,6 +61,19 @@ namespace apie {
 		uint16_t type = 0;
 	};
 
+
+	struct APieConfig_Bind_Database
+	{
+		uint32_t type = 0;
+		std::vector<std::string> table_name;
+		uint32_t server_id = 0;
+	};
+
+	struct APieConfig_BindTables
+	{
+		std::vector<APieConfig_Bind_Database> database;
+	};
+
 	struct APieConfig_Log
 	{
 		bool merge = true;
@@ -166,6 +179,7 @@ namespace apie {
 		std::vector<APieConfig_ListenersElems> listeners;
 		APieConfig_ClientsElems clients;
 		APieConfig_ServiceRegistry service_registry;
+		APieConfig_BindTables bind_tables;
 		APieConfig_Log log;
 		APieConfig_Metrics metrics;
 		APieConfig_Mysql mysql;

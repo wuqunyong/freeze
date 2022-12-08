@@ -83,6 +83,23 @@ public:
 		return findIte->second;
 	}
 
+	static std::optional<CreateMethod> GetCreateMethond(DeclarativeBase::DBType type, std::string name)
+	{
+		auto findIte = m_registerTable.find(type);
+		if (findIte == m_registerTable.end())
+		{
+			return std::nullopt;
+		}
+
+		auto ite = findIte->second.find(name);
+		if (ite == findIte->second.end())
+		{
+			return std::nullopt;
+		}
+
+		return ite->second;
+	}
+
 private:
 	inline static std::map<DeclarativeBase::DBType, std::map<std::string, CreateMethod>> m_registerTable;
 };

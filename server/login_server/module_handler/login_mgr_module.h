@@ -33,9 +33,6 @@ public:
 
 
 	// CLIENT OPCODE
-	static apie::status::Status handleAccount(
-		MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>&, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>&);
-	static void handleAccountNotify(MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>&);
 
 };
 }

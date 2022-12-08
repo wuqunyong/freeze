@@ -274,4 +274,5 @@ bool RegisterRequiredTable(const ::rpc_msg::CHANNEL& server, DeclarativeBase::DB
 	return true;
 }
 
+
 }

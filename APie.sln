@@ -29,6 +29,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestServer", "server\test_s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dbt_account", "dbt_account", "{2D4E1F15-C319-4B75-842B-BC5B914D2E72}"
 	ProjectSection(SolutionItems) = preProject
+		server\common\dao\dbt_account\account_AutoGen.h = server\common\dao\dbt_account\account_AutoGen.h
 		server\common\dao\dbt_account\account_name_AutoGen.h = server\common\dao\dbt_account\account_name_AutoGen.h
 	EndProjectSection
 EndProject
