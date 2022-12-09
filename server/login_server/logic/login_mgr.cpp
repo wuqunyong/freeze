@@ -43,6 +43,11 @@ apie::status::Status LoginMgr::start()
 	return DoBindTables<LoginMgr>(this, apie::Ctx::getThisChannel().realm(), apie::CtxSingleton::get().getConfigs()->bind_tables);
 }
 
+apie::status::Status LoginMgr::load()
+{
+	return { apie::status::StatusCode::OK, "" };
+}
+
 apie::status::Status LoginMgr::ready()
 {
 	LoginMgrModule::ready();

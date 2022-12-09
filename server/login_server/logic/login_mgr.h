@@ -22,6 +22,7 @@ namespace apie {
 
 		apie::status::Status init();
 		apie::status::Status start();
+		apie::status::Status load();
 		apie::status::Status ready();
 		apie::status::Status exit();
 
