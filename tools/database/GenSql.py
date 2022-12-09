@@ -61,7 +61,7 @@ def GenEnumDefine(lField) :
     sDefine = ""
     sDefine += "enum Fields {\n"
     for elems in lField:
-        sField = "\t" + elems[1] + " = " + str(elems[4]) + ",\n"
+        sField = "\t" + elems[1] + " = " + str(elems[4]-1) + ",\n"
         sDefine += sField
     sDefine += "};\n"
 
