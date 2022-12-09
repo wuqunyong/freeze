@@ -35,6 +35,7 @@ public:
 	bool generateUpdateSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlUpdateRequest& query, std::string& sql);
 	bool generateDeleteSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlDeleteRequest& query, std::string& sql);
 	bool generateQueryByFilterSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryRequestByFilter& query, std::string& sql);
+	bool generateQueryAllSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryAllRequest& query, std::string& sql);
 
 private:
 	std::string m_db;

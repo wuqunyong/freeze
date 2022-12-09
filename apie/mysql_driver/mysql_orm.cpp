@@ -22,6 +22,11 @@ bool DeclarativeBase::initMetaData(MysqlTable& table)
 
 bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string& name)
 {
+	if (this->m_binded)
+	{
+		return true;
+	}
+
 	auto ptrFactory = apie::DAOFactoryTypeSingleton::get().getDAOFactory(type);
 	if (ptrFactory == nullptr)
 	{
@@ -40,6 +45,11 @@ bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string&
 	this->m_binded = true;
 
 	return this->checkInvalid();
+}
+
+std::string DeclarativeBase::getTableName()
+{
+	return m_table.getTable();
 }
 
 MysqlTable& DeclarativeBase::getMysqlTable()
@@ -166,6 +176,15 @@ mysql_proxy_msg::MysqlQueryRequestByFilter DeclarativeBase::generateQueryByFilte
 		*ptrAdd->mutable_value() = field.value();
 		
 	}
+
+	return queryRequest;
+}
+
+mysql_proxy_msg::MysqlQueryAllRequest DeclarativeBase::generateQueryAll()
+{
+	mysql_proxy_msg::MysqlQueryAllRequest queryRequest;
+	queryRequest.set_db_name(m_table.getDb());
+	queryRequest.set_table_name(m_table.getTable());
 
 	return queryRequest;
 }

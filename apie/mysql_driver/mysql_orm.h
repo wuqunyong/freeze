@@ -69,6 +69,8 @@ public:
 	bool initMetaData(MysqlTable& table);
 	bool bindTable(DeclarativeBase::DBType type, const std::string& name);
 
+	std::string getTableName();
+
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
 
 	bool loadFromPbCheck(::mysql_proxy_msg::MysqlQueryResponse& response);
@@ -101,6 +103,7 @@ public:
 	mysql_proxy_msg::MysqlDeleteRequest generateDelete();
 
 	mysql_proxy_msg::MysqlQueryRequestByFilter generateQueryByFilter();
+	mysql_proxy_msg::MysqlQueryAllRequest generateQueryAll();
 
 	MysqlTable& getMysqlTable();
 

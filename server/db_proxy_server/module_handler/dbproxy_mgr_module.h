@@ -39,6 +39,8 @@ public:
 		const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryRequestByFilter>& request, std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response);
 	static apie::status::Status RPC_mysqlMultiQuery(
 		const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlMultiQueryRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlMulitQueryResponse>& multiResponse);
+	static apie::status::Status RPC_mysqlQueryAll(
+		const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryAllRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response);
 };
 
 

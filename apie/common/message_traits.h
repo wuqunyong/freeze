@@ -295,6 +295,88 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 	return apie::rpc::RPC_CallWithContext<::mysql_proxy_msg::MysqlQueryRequestByFilter, ::mysql_proxy_msg::MysqlQueryResponse>(context, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
 }
 
+template <typename T>
+typename std::enable_if<HasLoadFromDb<T>::value&& std::is_base_of<DeclarativeBase, T>::value, bool>::type
+LoadFromDbByQueryAll(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
+{
+	auto ptrTuple = std::make_shared<std::tuple<std::vector<T>, bool>>();
+	std::get<1>(*ptrTuple) = false;
+
+	mysql_proxy_msg::MysqlQueryAllRequest queryRequest;
+	queryRequest = dbObj.generateQueryAll();
+
+	apie::rpc::RPCClientContext context(server);
+	context.setType(rpc::RPCClientContext::Type::SERVER_STREAMING);
+
+	auto queryCB = [dbObj, cb, ptrTuple](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response) mutable {
+		auto& result = std::get<0>(*ptrTuple);
+		auto& hasError = std::get<1>(*ptrTuple);
+		if (hasError)
+		{
+			return;
+		}
+
+		if (!status.ok())
+		{
+			hasError = true;
+			if (cb)
+			{
+				cb(status, result);
+			}
+			return;
+		}
+
+		std::stringstream ss;
+		ss << response->ShortDebugString();
+		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+
+		apie::status::Status newStatus;
+
+		bool bResult = dbObj.loadFromPbCheck(*response);
+		if (!bResult)
+		{
+			hasError = true;
+			newStatus.setErrorCode(apie::status::StatusCode::LoadFromDbError);
+			if (cb)
+			{
+				cb(newStatus, result);
+			}
+			return;
+		}
+
+		auto iBindType = dbObj.getDBType();
+		auto sTableName = dbObj.getTableName();
+		for (auto& rowData : response->table().rows())
+		{
+			typename std::remove_reference<decltype(dbObj)>::type newObj;
+
+			bResult = newObj.bindTable(iBindType, sTableName);
+			if (!bResult)
+			{
+				hasError = true;
+				newStatus.setErrorCode(apie::status::StatusCode::DB_BindTableError);
+				if (cb)
+				{
+					cb(newStatus, result);
+				}
+				return;
+			}
+
+			newObj.loadFromPb(rowData);
+			result.push_back(newObj);
+		}
+
+		if (!status.hasMore())
+		{
+			if (cb)
+			{
+				cb(newStatus, result);
+			}
+		}
+	};
+	return apie::rpc::RPC_CallWithContext<::mysql_proxy_msg::MysqlQueryAllRequest, ::mysql_proxy_msg::MysqlQueryResponse>(context, ::rpc_msg::RPC_MysqlQueryAll, queryRequest, queryCB);
+}
+
 template<class Tuple, std::size_t N>
 struct TupleDynamic {
 	static void load(Tuple& t, ::mysql_proxy_msg::MysqlMulitQueryResponse& response, std::map<uint32_t, std::tuple<bool, uint32_t>>& loadResult)

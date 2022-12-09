@@ -178,6 +178,37 @@ bool MysqlTable::generateQueryByFilterSQL(MySQLConnector& connector, const ::mys
 	return true;
 }
 
+bool MysqlTable::generateQueryAllSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryAllRequest& query, std::string& sql)
+{
+	const std::string graveAccent("`");
+
+	std::stringstream ss;
+	ss << "SELECT ";
+
+	uint32_t iTotalSize = m_fields.size();
+
+	uint32_t iIndex = 0;
+	for (auto& items : m_fields)
+	{
+		iIndex++;
+		ss << graveAccent << items.getName() << graveAccent;
+
+		if (iIndex < iTotalSize)
+		{
+			ss << ",";
+		}
+		else
+		{
+			ss << " ";
+		}
+	}
+
+	ss << "FROM " << m_table << " ";
+
+	sql = ss.str();
+	return true;
+}
+
 bool MysqlTable::generateInsertSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlInsertRequest& query, std::string& sql)
 {
 	const std::string graveAccent("`");

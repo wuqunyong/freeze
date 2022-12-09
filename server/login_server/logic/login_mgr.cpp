@@ -45,7 +45,22 @@ apie::status::Status LoginMgr::start()
 
 apie::status::Status LoginMgr::load()
 {
-	return { apie::status::StatusCode::OK, "" };
+	apie::dbt_account::account_name_AutoGen user(1);
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_id(1);
+
+	auto cb = [](status::Status status, std::vector<apie::dbt_account::account_name_AutoGen>& userList) {
+		if (!status.ok())
+		{
+			return;
+		}
+	};
+	LoadFromDbByQueryAll<apie::dbt_account::account_name_AutoGen>(server, user, cb);
+
+	return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
 apie::status::Status LoginMgr::ready()

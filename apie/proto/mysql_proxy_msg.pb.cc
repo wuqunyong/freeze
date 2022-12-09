@@ -319,8 +319,22 @@ struct MysqlQueryRequestByFilterDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MysqlQueryRequestByFilterDefaultTypeInternal _MysqlQueryRequestByFilter_default_instance_;
+PROTOBUF_CONSTEXPR MysqlQueryAllRequest::MysqlQueryAllRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.db_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.table_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct MysqlQueryAllRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR MysqlQueryAllRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~MysqlQueryAllRequestDefaultTypeInternal() {}
+  union {
+    MysqlQueryAllRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MysqlQueryAllRequestDefaultTypeInternal _MysqlQueryAllRequest_default_instance_;
 }  // namespace mysql_proxy_msg
-static ::_pb::Metadata file_level_metadata_mysql_5fproxy_5fmsg_2eproto[20];
+static ::_pb::Metadata file_level_metadata_mysql_5fproxy_5fmsg_2eproto[21];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_mysql_5fproxy_5fmsg_2eproto[2];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_mysql_5fproxy_5fmsg_2eproto = nullptr;
 
@@ -515,6 +529,14 @@ const uint32_t TableStruct_mysql_5fproxy_5fmsg_2eproto::offsets[] PROTOBUF_SECTI
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryRequestByFilter, _impl_.db_name_),
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryRequestByFilter, _impl_.table_name_),
   PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryRequestByFilter, _impl_.key_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryAllRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryAllRequest, _impl_.db_name_),
+  PROTOBUF_FIELD_OFFSET(::mysql_proxy_msg::MysqlQueryAllRequest, _impl_.table_name_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::mysql_proxy_msg::MysqlValue)},
@@ -537,6 +559,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 162, -1, -1, sizeof(::mysql_proxy_msg::MysqlDeleteRequest)},
   { 171, -1, -1, sizeof(::mysql_proxy_msg::MysqlDeleteResponse)},
   { 181, -1, -1, sizeof(::mysql_proxy_msg::MysqlQueryRequestByFilter)},
+  { 190, -1, -1, sizeof(::mysql_proxy_msg::MysqlQueryAllRequest)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -560,6 +583,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::mysql_proxy_msg::_MysqlDeleteRequest_default_instance_._instance,
   &::mysql_proxy_msg::_MysqlDeleteResponse_default_instance_._instance,
   &::mysql_proxy_msg::_MysqlQueryRequestByFilter_default_instance_._instance,
+  &::mysql_proxy_msg::_MysqlQueryAllRequest_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -617,21 +641,23 @@ const char descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto[] PROTOBUF_SECT
   "fected_rows\030\003 \001(\004\022\025\n\rsql_statement\030\004 \001(\014"
   "\"j\n\031MysqlQueryRequestByFilter\022\017\n\007db_name"
   "\030\001 \001(\t\022\022\n\ntable_name\030\002 \001(\t\022(\n\003key\030\003 \003(\0132"
-  "\033.mysql_proxy_msg.MysqlField*\252\001\n\025MysqlSc"
-  "alarValueTypes\022\r\n\tMSVT_None\020\000\022\016\n\nMSVT_IN"
-  "T32\020\001\022\016\n\nMSVT_INT64\020\002\022\017\n\013MSVT_UINT32\020\003\022\017"
-  "\n\013MSVT_UINT64\020\004\022\017\n\013MSVT_STRING\020\005\022\016\n\nMSVT"
-  "_BYTES\020\006\022\016\n\nMSVT_FLOAT\020\007\022\017\n\013MSVT_DOUBLE\020"
-  "\010*~\n\025MysqlDataManipulation\022\014\n\010MDM_None\020\000"
-  "\022\016\n\nMDM_SELECT\020\001\022\016\n\nMDM_UPDATE\020\002\022\016\n\nMDM_"
-  "DELETE\020\003\022\016\n\nMDM_INSERT\020\004\022\027\n\023MDM_QUERY_BY"
-  "_FILTER\020\005b\006proto3"
+  "\033.mysql_proxy_msg.MysqlField\";\n\024MysqlQue"
+  "ryAllRequest\022\017\n\007db_name\030\001 \001(\t\022\022\n\ntable_n"
+  "ame\030\002 \001(\t*\252\001\n\025MysqlScalarValueTypes\022\r\n\tM"
+  "SVT_None\020\000\022\016\n\nMSVT_INT32\020\001\022\016\n\nMSVT_INT64"
+  "\020\002\022\017\n\013MSVT_UINT32\020\003\022\017\n\013MSVT_UINT64\020\004\022\017\n\013"
+  "MSVT_STRING\020\005\022\016\n\nMSVT_BYTES\020\006\022\016\n\nMSVT_FL"
+  "OAT\020\007\022\017\n\013MSVT_DOUBLE\020\010*\221\001\n\025MysqlDataMani"
+  "pulation\022\014\n\010MDM_None\020\000\022\016\n\nMDM_SELECT\020\001\022\016"
+  "\n\nMDM_UPDATE\020\002\022\016\n\nMDM_DELETE\020\003\022\016\n\nMDM_IN"
+  "SERT\020\004\022\027\n\023MDM_QUERY_BY_FILTER\020\005\022\021\n\rMDM_Q"
+  "UERY_ALL\020\006b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_mysql_5fproxy_5fmsg_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mysql_5fproxy_5fmsg_2eproto = {
-    false, false, 2497, descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto,
+    false, false, 2578, descriptor_table_protodef_mysql_5fproxy_5fmsg_2eproto,
     "mysql_proxy_msg.proto",
-    &descriptor_table_mysql_5fproxy_5fmsg_2eproto_once, nullptr, 0, 20,
+    &descriptor_table_mysql_5fproxy_5fmsg_2eproto_once, nullptr, 0, 21,
     schemas, file_default_instances, TableStruct_mysql_5fproxy_5fmsg_2eproto::offsets,
     file_level_metadata_mysql_5fproxy_5fmsg_2eproto, file_level_enum_descriptors_mysql_5fproxy_5fmsg_2eproto,
     file_level_service_descriptors_mysql_5fproxy_5fmsg_2eproto,
@@ -676,6 +702,7 @@ bool MysqlDataManipulation_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+    case 6:
       return true;
     default:
       return false;
@@ -6128,6 +6155,259 @@ void MysqlQueryRequestByFilter::InternalSwap(MysqlQueryRequestByFilter* other) {
       file_level_metadata_mysql_5fproxy_5fmsg_2eproto[19]);
 }
 
+// ===================================================================
+
+class MysqlQueryAllRequest::_Internal {
+ public:
+};
+
+MysqlQueryAllRequest::MysqlQueryAllRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:mysql_proxy_msg.MysqlQueryAllRequest)
+}
+MysqlQueryAllRequest::MysqlQueryAllRequest(const MysqlQueryAllRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  MysqlQueryAllRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.db_name_){}
+    , decltype(_impl_.table_name_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.db_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.db_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_db_name().empty()) {
+    _this->_impl_.db_name_.Set(from._internal_db_name(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.table_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.table_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_table_name().empty()) {
+    _this->_impl_.table_name_.Set(from._internal_table_name(), 
+      _this->GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:mysql_proxy_msg.MysqlQueryAllRequest)
+}
+
+inline void MysqlQueryAllRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.db_name_){}
+    , decltype(_impl_.table_name_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.db_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.db_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.table_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.table_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+MysqlQueryAllRequest::~MysqlQueryAllRequest() {
+  // @@protoc_insertion_point(destructor:mysql_proxy_msg.MysqlQueryAllRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void MysqlQueryAllRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.db_name_.Destroy();
+  _impl_.table_name_.Destroy();
+}
+
+void MysqlQueryAllRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void MysqlQueryAllRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:mysql_proxy_msg.MysqlQueryAllRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.db_name_.ClearToEmpty();
+  _impl_.table_name_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* MysqlQueryAllRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string db_name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_db_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "mysql_proxy_msg.MysqlQueryAllRequest.db_name"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string table_name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_table_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "mysql_proxy_msg.MysqlQueryAllRequest.table_name"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* MysqlQueryAllRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mysql_proxy_msg.MysqlQueryAllRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string db_name = 1;
+  if (!this->_internal_db_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_db_name().data(), static_cast<int>(this->_internal_db_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mysql_proxy_msg.MysqlQueryAllRequest.db_name");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_db_name(), target);
+  }
+
+  // string table_name = 2;
+  if (!this->_internal_table_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_table_name().data(), static_cast<int>(this->_internal_table_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mysql_proxy_msg.MysqlQueryAllRequest.table_name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_table_name(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mysql_proxy_msg.MysqlQueryAllRequest)
+  return target;
+}
+
+size_t MysqlQueryAllRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mysql_proxy_msg.MysqlQueryAllRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string db_name = 1;
+  if (!this->_internal_db_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_db_name());
+  }
+
+  // string table_name = 2;
+  if (!this->_internal_table_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_table_name());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData MysqlQueryAllRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    MysqlQueryAllRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*MysqlQueryAllRequest::GetClassData() const { return &_class_data_; }
+
+
+void MysqlQueryAllRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<MysqlQueryAllRequest*>(&to_msg);
+  auto& from = static_cast<const MysqlQueryAllRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:mysql_proxy_msg.MysqlQueryAllRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_db_name().empty()) {
+    _this->_internal_set_db_name(from._internal_db_name());
+  }
+  if (!from._internal_table_name().empty()) {
+    _this->_internal_set_table_name(from._internal_table_name());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void MysqlQueryAllRequest::CopyFrom(const MysqlQueryAllRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mysql_proxy_msg.MysqlQueryAllRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MysqlQueryAllRequest::IsInitialized() const {
+  return true;
+}
+
+void MysqlQueryAllRequest::InternalSwap(MysqlQueryAllRequest* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.db_name_, lhs_arena,
+      &other->_impl_.db_name_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.table_name_, lhs_arena,
+      &other->_impl_.table_name_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MysqlQueryAllRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_mysql_5fproxy_5fmsg_2eproto_getter, &descriptor_table_mysql_5fproxy_5fmsg_2eproto_once,
+      file_level_metadata_mysql_5fproxy_5fmsg_2eproto[20]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace mysql_proxy_msg
 PROTOBUF_NAMESPACE_OPEN
@@ -6210,6 +6490,10 @@ Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlDeleteResponse >(Arena* arena
 template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlQueryRequestByFilter*
 Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlQueryRequestByFilter >(Arena* arena) {
   return Arena::CreateMessageInternal< ::mysql_proxy_msg::MysqlQueryRequestByFilter >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mysql_proxy_msg::MysqlQueryAllRequest*
+Arena::CreateMaybeMessage< ::mysql_proxy_msg::MysqlQueryAllRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::mysql_proxy_msg::MysqlQueryAllRequest >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 
