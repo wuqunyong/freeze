@@ -41,20 +41,20 @@ private:
   };
 
   enum Fields {
-    a = 1,
-    b = 2,
-    c = 3,
-    te = 4,
-    aa = 5,
-    aaa = 6,
-    aaa1 = 7,
-    Column1aaa = 8,
-    Column1 = 9,
-    Column2 = 10,
-    Column3 = 11,
-    Column4 = 12,
-    Column5 = 13,
-    Column6 = 14,
+    a = 0,
+    b = 1,
+    c = 2,
+    te = 3,
+    aa = 4,
+    aaa = 5,
+    aaa1 = 6,
+    Column1aaa = 7,
+    Column1 = 8,
+    Column2 = 9,
+    Column3 = 10,
+    Column4 = 11,
+    Column5 = 12,
+    Column6 = 13,
   };
 
   virtual std::string getFieldName(uint32_t iIndex) override {

@@ -30,10 +30,10 @@ private:
   };
 
   enum Fields {
-    account_id = 1,
-    db_id = 2,
-    register_time = 3,
-    modified_time = 4,
+    account_id = 0,
+    db_id = 1,
+    register_time = 2,
+    modified_time = 3,
   };
 
   virtual std::string getFieldName(uint32_t iIndex) override {

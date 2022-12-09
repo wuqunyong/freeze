@@ -29,8 +29,8 @@ private:
   };
 
   enum Fields {
-    user_id = 1,
-    extra_info = 2,
+    user_id = 0,
+    extra_info = 1,
   };
 
   virtual std::string getFieldName(uint32_t iIndex) override {

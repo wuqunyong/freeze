@@ -34,13 +34,13 @@ private:
   };
 
   enum Fields {
-    user_id = 1,
-    game_id = 2,
-    level = 3,
-    register_time = 4,
-    login_time = 5,
-    offline_time = 6,
-    name = 7,
+    user_id = 0,
+    game_id = 1,
+    level = 2,
+    register_time = 3,
+    login_time = 4,
+    offline_time = 5,
+    name = 6,
   };
 
   virtual std::string getFieldName(uint32_t iIndex) override {

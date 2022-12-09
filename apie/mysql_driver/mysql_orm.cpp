@@ -352,6 +352,12 @@ bool DeclarativeBase::isValid()
 			return false;
 		}
 
+		auto sFieldName = this->getFieldName(iIndex);
+		if (sFieldName.empty() || sFieldName != items.getName())
+		{
+			return false;
+		}
+
 		auto dbType = items.convertToDbType();
 		if (layout[iIndex].count(dbType) == 0)
 		{
