@@ -133,7 +133,7 @@ namespace apie {
 				if (!methodOpt.has_value())
 				{
 					std::stringstream ss;
-					ss << "GetCreateMethond error!" << "dbType:" << dbType << ", name:" << name;
+					ss << "GetCreateMethond error!" << "dbType:" << toUnderlyingType(dbType) << ", name:" << name;
 					return { apie::status::StatusCode::HOOK_ERROR, ss.str() };
 				}
 
@@ -144,7 +144,7 @@ namespace apie {
 			if (!bResult)
 			{
 				std::stringstream ss;
-				ss << "RegisterRequiredTable error!" << "dbType:" << dbType;
+				ss << "RegisterRequiredTable error!" << "dbType:" << toUnderlyingType(dbType);
 
 				return { apie::status::StatusCode::HOOK_ERROR, ss.str()};
 			}
