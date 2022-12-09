@@ -59,7 +59,7 @@ private:
 
   virtual std::string getFieldName(uint32_t iIndex) override {
 
-    static std::map<uint32_t, std::string> fields = {
+    static std::map<uint32_t, std::string> kFieldNameMap = {
         {varchars1_AutoGen::a, "a"},
         {varchars1_AutoGen::b, "b"},
         {varchars1_AutoGen::c, "c"},
@@ -75,7 +75,7 @@ private:
         {varchars1_AutoGen::Column5, "Column5"},
         {varchars1_AutoGen::Column6, "Column6"}};
 
-    return fields[iIndex];
+    return kFieldNameMap[iIndex];
   }
 
 public:

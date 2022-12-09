@@ -35,11 +35,11 @@ private:
 
   virtual std::string getFieldName(uint32_t iIndex) override {
 
-    static std::map<uint32_t, std::string> fields = {
+    static std::map<uint32_t, std::string> kFieldNameMap = {
         {account_name_AutoGen::account_id, "account_id"},
         {account_name_AutoGen::name, "name"}};
 
-    return fields[iIndex];
+    return kFieldNameMap[iIndex];
   }
 
 public:

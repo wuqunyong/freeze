@@ -73,7 +73,7 @@ private:
 
   virtual std::string getFieldName(uint32_t iIndex) override {
 
-    static std::map<uint32_t, std::string> fields = {
+    static std::map<uint32_t, std::string> kFieldNameMap = {
         {tbl_mail_recoverer_AutoGen::id, "id"},
         {tbl_mail_recoverer_AutoGen::user_id, "user_id"},
         {tbl_mail_recoverer_AutoGen::title, "title"},
@@ -96,7 +96,7 @@ private:
         {tbl_mail_recoverer_AutoGen::content_lang_en, "content_lang_en"},
         {tbl_mail_recoverer_AutoGen::save_flag, "save_flag"}};
 
-    return fields[iIndex];
+    return kFieldNameMap[iIndex];
   }
 
 public:

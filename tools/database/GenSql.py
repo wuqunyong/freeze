@@ -128,7 +128,7 @@ def GenGetFieldName(sTable, lField):
     sCreate = ""
     sParameters = ""
     sStatements = """
-    static std::map<uint32_t, std::string> fields = 
+    static std::map<uint32_t, std::string> kFieldNameMap = 
     {{
         {}
     }};
@@ -146,7 +146,7 @@ def GenGetFieldName(sTable, lField):
     sTemplate = """virtual std::string getFieldName(uint32_t iIndex) override
     {{
         {}
-        return fields[iIndex];
+        return kFieldNameMap[iIndex];
     }}
 """
 
