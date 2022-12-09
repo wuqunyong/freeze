@@ -35,7 +35,7 @@ namespace module_loader {
 
 		if (bResult)
 		{
-			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
+			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Load);
 		}
 		else
 		{
@@ -48,7 +48,42 @@ namespace module_loader {
 			else
 			{
 				std::stringstream ss;
-				ss << "hook start check ready timeout";
+				ss << "hook start check start timeout";
+				PANIC_ABORT(ss.str().c_str());
+			}
+		}
+	}
+
+	void ModuleLoaderManager::checkLoadFinish()
+	{
+		m_timeOut -= m_stepDuration;
+
+		bool bResult = true;
+		for (auto& elems : m_loader)
+		{
+			if (!elems.second->getHookReady(hook::HookPoint::HP_Load))
+			{
+				bResult = false;
+				break;
+			}
+		}
+
+		if (bResult)
+		{
+			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
+		}
+		else
+		{
+			if (m_timeOut.count() > 0)
+			{
+				auto cb = std::bind(&ModuleLoaderManager::checkLoadFinish, this);
+				auto ptrTimer = apie::event_ns::EphemeralTimerMgrSingleton::get().createEphemeralTimer(cb);
+				ptrTimer->enableTimer(m_stepDuration.count());
+			}
+			else
+			{
+				std::stringstream ss;
+				ss << "hook start check load timeout";
 				PANIC_ABORT(ss.str().c_str());
 			}
 		}
@@ -109,6 +144,24 @@ namespace module_loader {
 				}
 				break;
 			}
+			case apie::hook::HookPoint::HP_Load:
+			{
+				auto status = elems->load();
+				if (!status.ok())
+				{
+					if (status.isAsync())
+					{
+						curState.setErrorCode(status::StatusCode::OK_ASYNC);
+						continue;
+					}
+					return status;
+				}
+				else
+				{
+					elems->setHookReady(point);
+				}
+				break;
+			}
 			case apie::hook::HookPoint::HP_Ready:
 			{
 				auto status = elems->ready();
@@ -146,6 +199,12 @@ namespace module_loader {
 		if (curState.isAsync() && point == apie::hook::HookPoint::HP_Start)
 		{
 			auto cb = std::bind(&ModuleLoaderManager::checkStartFinish, this);
+			auto ptrTimer = apie::event_ns::EphemeralTimerMgrSingleton::get().createEphemeralTimer(cb);
+			ptrTimer->enableTimer(m_stepDuration.count());
+		}
+		if (curState.isAsync() && point == apie::hook::HookPoint::HP_Load)
+		{
+			auto cb = std::bind(&ModuleLoaderManager::checkLoadFinish, this);
 			auto ptrTimer = apie::event_ns::EphemeralTimerMgrSingleton::get().createEphemeralTimer(cb);
 			ptrTimer->enableTimer(m_stepDuration.count());
 		}

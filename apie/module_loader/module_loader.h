@@ -18,6 +18,7 @@ namespace module_loader {
 
 DEFINE_TYPE_TRAIT(HasInit, init)
 DEFINE_TYPE_TRAIT(HasStart, start)
+DEFINE_TYPE_TRAIT(HasLoad, load)
 DEFINE_TYPE_TRAIT(HasReady, ready)
 DEFINE_TYPE_TRAIT(HasExit, exit)
 
@@ -30,6 +31,7 @@ public:
 	virtual uint32_t getPriority() = 0;
 	virtual apie::status::Status init() = 0;
 	virtual apie::status::Status start() = 0;
+	virtual apie::status::Status load() = 0;
 	virtual apie::status::Status ready() = 0;
 	virtual apie::status::Status exit() = 0;
 
@@ -69,6 +71,7 @@ public:
 
 	apie::status::Status init() override;
 	apie::status::Status start() override;
+	apie::status::Status load() override;
 	apie::status::Status ready() override;
 	apie::status::Status exit() override;
 
@@ -127,9 +130,22 @@ apie::status::Status ModuleLoader<T>::init()
 template <typename T>
 apie::status::Status ModuleLoader<T>::start()
 {
-	if constexpr (HasInit<T>::value)
+	if constexpr (HasStart<T>::value)
 	{
 		return m_modulePtr->start();
+	}
+	else
+	{
+		return status::Status(status::StatusCode::OK, "");
+	}
+}
+
+template <typename T>
+apie::status::Status ModuleLoader<T>::load()
+{
+	if constexpr (HasLoad<T>::value)
+	{
+		return m_modulePtr->load();
 	}
 	else
 	{

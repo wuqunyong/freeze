@@ -132,7 +132,9 @@ namespace apie {
 				auto methodOpt = RegisterMetaTable::GetCreateMethond(dbType, name);
 				if (!methodOpt.has_value())
 				{
-					return { apie::status::StatusCode::HOOK_ERROR, "HR_Error" };
+					std::stringstream ss;
+					ss << "GetCreateMethond error!" << "dbType:" << dbType << ", name:" << name;
+					return { apie::status::StatusCode::HOOK_ERROR, ss.str() };
 				}
 
 				loadTables.insert(std::make_pair(name, methodOpt.value()));
@@ -141,7 +143,10 @@ namespace apie {
 			bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
 			if (!bResult)
 			{
-				return { apie::status::StatusCode::HOOK_ERROR, "HR_Error" };
+				std::stringstream ss;
+				ss << "RegisterRequiredTable error!" << "dbType:" << dbType;
+
+				return { apie::status::StatusCode::HOOK_ERROR, ss.str()};
 			}
 		}
 

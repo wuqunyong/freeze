@@ -61,7 +61,8 @@ namespace hook {
 				{
 					bAllOk = false;
 
-					if (point == HookPoint::HP_Start && result.isAsync())
+					if ((point == HookPoint::HP_Start || point == HookPoint::HP_Load)
+						&& result.isAsync())
 					{
 						continue;
 					}
@@ -81,6 +82,11 @@ namespace hook {
 
 			if (bAllOk && point == HookPoint::HP_Start)
 			{
+				apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Load);
+			}
+
+			if (bAllOk && point == HookPoint::HP_Load)
+			{
 				apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 			}
 		}
@@ -90,6 +96,7 @@ namespace hook {
 	{
 		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Init, cb);
 		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Start, cb);
+		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Load, cb);
 		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Ready, cb);
 		apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Exit, cb);
 	}

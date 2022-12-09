@@ -25,7 +25,9 @@ public:
 	auto getModulePtr();
 
 	status::Status hookHandler(hook::HookPoint point);
+
 	void checkStartFinish();
+	void checkLoadFinish();
 
 	static apie::status::Status APieModuleHookHandler(hook::HookPoint point);
 
