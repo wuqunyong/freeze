@@ -71,6 +71,34 @@ private:
     save_flag = 21,
   };
 
+  virtual std::string getFieldName(uint32_t iIndex) override {
+
+    static std::map<uint32_t, std::string> fields = {
+        {tbl_mail_recoverer_AutoGen::id, "id"},
+        {tbl_mail_recoverer_AutoGen::user_id, "user_id"},
+        {tbl_mail_recoverer_AutoGen::title, "title"},
+        {tbl_mail_recoverer_AutoGen::title_id, "title_id"},
+        {tbl_mail_recoverer_AutoGen::title_param, "title_param"},
+        {tbl_mail_recoverer_AutoGen::type, "type"},
+        {tbl_mail_recoverer_AutoGen::guild_id, "guild_id"},
+        {tbl_mail_recoverer_AutoGen::src_user_id, "src_user_id"},
+        {tbl_mail_recoverer_AutoGen::src_user_job_id, "src_user_job_id"},
+        {tbl_mail_recoverer_AutoGen::user_name, "user_name"},
+        {tbl_mail_recoverer_AutoGen::memo, "memo"},
+        {tbl_mail_recoverer_AutoGen::memo_id, "memo_id"},
+        {tbl_mail_recoverer_AutoGen::memo_param, "memo_param"},
+        {tbl_mail_recoverer_AutoGen::reward_param, "reward_param"},
+        {tbl_mail_recoverer_AutoGen::create_time, "create_time"},
+        {tbl_mail_recoverer_AutoGen::is_multi_lang, "is_multi_lang"},
+        {tbl_mail_recoverer_AutoGen::title_lang_cn, "title_lang_cn"},
+        {tbl_mail_recoverer_AutoGen::title_lang_en, "title_lang_en"},
+        {tbl_mail_recoverer_AutoGen::content_lang_cn, "content_lang_cn"},
+        {tbl_mail_recoverer_AutoGen::content_lang_en, "content_lang_en"},
+        {tbl_mail_recoverer_AutoGen::save_flag, "save_flag"}};
+
+    return fields[iIndex];
+  }
+
 public:
   static std::shared_ptr<tbl_mail_recoverer_AutoGen> Create(int64_t id) {
     return std::shared_ptr<tbl_mail_recoverer_AutoGen>(

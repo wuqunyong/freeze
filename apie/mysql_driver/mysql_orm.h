@@ -50,6 +50,7 @@ public:
 	virtual void* layoutAddress() = 0;
 	virtual std::vector<uint32_t> layoutOffset() = 0;
 	virtual std::vector<std::set<MysqlField::DB_FIELD_TYPE>> layoutType() = 0;
+	virtual std::string getFieldName(uint32_t iIndex) = 0;
 
 	template <typename T>
 	void extract(T& t, unsigned char* address)

@@ -57,6 +57,27 @@ private:
     Column6 = 14,
   };
 
+  virtual std::string getFieldName(uint32_t iIndex) override {
+
+    static std::map<uint32_t, std::string> fields = {
+        {varchars1_AutoGen::a, "a"},
+        {varchars1_AutoGen::b, "b"},
+        {varchars1_AutoGen::c, "c"},
+        {varchars1_AutoGen::te, "te"},
+        {varchars1_AutoGen::aa, "aa"},
+        {varchars1_AutoGen::aaa, "aaa"},
+        {varchars1_AutoGen::aaa1, "aaa1"},
+        {varchars1_AutoGen::Column1aaa, "Column1aaa"},
+        {varchars1_AutoGen::Column1, "Column1"},
+        {varchars1_AutoGen::Column2, "Column2"},
+        {varchars1_AutoGen::Column3, "Column3"},
+        {varchars1_AutoGen::Column4, "Column4"},
+        {varchars1_AutoGen::Column5, "Column5"},
+        {varchars1_AutoGen::Column6, "Column6"}};
+
+    return fields[iIndex];
+  }
+
 public:
   static std::shared_ptr<varchars1_AutoGen> Create(int32_t a, uint32_t b) {
     return std::shared_ptr<varchars1_AutoGen>(new varchars1_AutoGen(a, b));

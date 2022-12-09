@@ -43,6 +43,20 @@ private:
     name = 7,
   };
 
+  virtual std::string getFieldName(uint32_t iIndex) override {
+
+    static std::map<uint32_t, std::string> fields = {
+        {role_base_AutoGen::user_id, "user_id"},
+        {role_base_AutoGen::game_id, "game_id"},
+        {role_base_AutoGen::level, "level"},
+        {role_base_AutoGen::register_time, "register_time"},
+        {role_base_AutoGen::login_time, "login_time"},
+        {role_base_AutoGen::offline_time, "offline_time"},
+        {role_base_AutoGen::name, "name"}};
+
+    return fields[iIndex];
+  }
+
 public:
   static std::shared_ptr<role_base_AutoGen> Create(uint64_t user_id) {
     return std::shared_ptr<role_base_AutoGen>(new role_base_AutoGen(user_id));

@@ -36,6 +36,17 @@ private:
     modified_time = 4,
   };
 
+  virtual std::string getFieldName(uint32_t iIndex) override {
+
+    static std::map<uint32_t, std::string> fields = {
+        {account_AutoGen::account_id, "account_id"},
+        {account_AutoGen::db_id, "db_id"},
+        {account_AutoGen::register_time, "register_time"},
+        {account_AutoGen::modified_time, "modified_time"}};
+
+    return fields[iIndex];
+  }
+
 public:
   static std::shared_ptr<account_AutoGen> Create(uint64_t account_id) {
     return std::shared_ptr<account_AutoGen>(new account_AutoGen(account_id));

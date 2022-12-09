@@ -33,6 +33,15 @@ private:
     extra_info = 2,
   };
 
+  virtual std::string getFieldName(uint32_t iIndex) override {
+
+    static std::map<uint32_t, std::string> fields = {
+        {role_extra_AutoGen::user_id, "user_id"},
+        {role_extra_AutoGen::extra_info, "extra_info"}};
+
+    return fields[iIndex];
+  }
+
 public:
   static std::shared_ptr<role_extra_AutoGen> Create(uint64_t user_id) {
     return std::shared_ptr<role_extra_AutoGen>(new role_extra_AutoGen(user_id));

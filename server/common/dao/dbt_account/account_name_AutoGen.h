@@ -33,6 +33,15 @@ private:
     name = 2,
   };
 
+  virtual std::string getFieldName(uint32_t iIndex) override {
+
+    static std::map<uint32_t, std::string> fields = {
+        {account_name_AutoGen::account_id, "account_id"},
+        {account_name_AutoGen::name, "name"}};
+
+    return fields[iIndex];
+  }
+
 public:
   static std::shared_ptr<account_name_AutoGen> Create(uint64_t account_id) {
     return std::shared_ptr<account_name_AutoGen>(
