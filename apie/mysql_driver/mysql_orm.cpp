@@ -44,7 +44,7 @@ bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string&
 	this->setDBType(type);
 	this->m_binded = true;
 
-	return this->checkInvalid();
+	return this->isValid();
 }
 
 std::string DeclarativeBase::getTableName()
@@ -313,7 +313,7 @@ mysql_proxy_msg::MysqlDeleteRequest DeclarativeBase::generateDelete()
 }
 
 
-bool DeclarativeBase::checkInvalid()
+bool DeclarativeBase::isValid()
 {
 	if (m_table.getFields().size() != this->columNums())
 	{

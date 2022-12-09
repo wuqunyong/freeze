@@ -138,7 +138,7 @@ void GatewayMgrModule::Cmd_loadFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	uint64_t userId = std::stoull(cmd.params()[0]);
 
 	ModelUser user(userId);
-	bool bResult = user.checkInvalid();
+	bool bResult = user.isValid();
 	if (!bResult)
 	{
 		return;
@@ -403,7 +403,7 @@ void GatewayMgrModule::Cmd_updateToDbORM(::pubsub::LOGIC_CMD& cmd)
 
 	ModelUser user(userId);
 	user.fields.level = level;
-	bool bResult = user.checkInvalid();
+	bool bResult = user.isValid();
 	if (!bResult)
 	{
 		return;
@@ -437,7 +437,7 @@ void GatewayMgrModule::Cmd_insertToDbORM(::pubsub::LOGIC_CMD& cmd)
 
 	ModelUser user(userId);
 	user.fields.level = level;
-	bool bResult = user.checkInvalid();
+	bool bResult = user.isValid();
 	if (!bResult)
 	{
 		return;
@@ -467,7 +467,7 @@ void GatewayMgrModule::Cmd_deleteFromDbORM(::pubsub::LOGIC_CMD& cmd)
 	uint64_t userId = std::stoull(cmd.params()[0]);
 
 	ModelUser user(userId);
-	bool bResult = user.checkInvalid();
+	bool bResult = user.isValid();
 	if (!bResult)
 	{
 		return;
@@ -491,7 +491,7 @@ apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response)
 {
 	ModelUser user(request->user_id());
-	bool bResult = user.checkInvalid();
+	bool bResult = user.isValid();
 	if (!bResult)
 	{
 		response->set_status_code(opcodes::SC_BindTable_Error);

@@ -72,11 +72,11 @@ apie::status::Status ServiceRegistry::start()
 			}
 
 			ptrDaoBase->initMetaData(table);
-			bool bResult = ptrDaoBase->checkInvalid();
+			bool bResult = ptrDaoBase->isValid();
 			if (!bResult)
 			{
 				std::stringstream ss;
-				ss << "tableName:" << tableName << " checkInvalid false";
+				ss << "tableName:" << tableName << " isValid false";
 
 				return { apie::status::StatusCode::HOOK_ERROR, ss.str() };
 			}

@@ -231,11 +231,11 @@ bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbTyp
 			}
 
 			ptrDaoBase->initMetaData(table);
-			bool bResult = ptrDaoBase->checkInvalid();
+			bool bResult = ptrDaoBase->isValid();
 			if (!bResult)
 			{
 				std::stringstream ss;
-				ss << "tableName:" << tableData.first << " checkInvalid false";
+				ss << "tableName:" << tableData.first << " isValid false";
 
 				cb(false, ss.str(), iCallCount);
 				return;

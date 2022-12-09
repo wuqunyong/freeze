@@ -76,7 +76,7 @@ public:
 	bool loadFromPbCheck(::mysql_proxy_msg::MysqlQueryResponse& response);
 	bool loadFromPb(const ::mysql_proxy_msg::MysqlRow& row);
 
-	bool checkInvalid();
+	bool isValid();
 
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index);
 	uint32_t getLayoutOffset(uint32_t index);
