@@ -68,6 +68,13 @@ https://www.modernescpp.com/index.php/a-generic-data-stream-with-coroutines-in-c
 
 C:\Users\Administrator\AppData\Local\Temp\1489AFE4.TMP
 
+Resets the trial period for Visual Assist X.
+
+This script does the following:
+
+Remove a temporary file "1489AFE4.TMP" in the user's temp directory used by VA
+Remove a registry key "HKEY_CURRENT_USER\SOFTWARE\Licenses" used by VA
+
 
  SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE, COLUMN_DEFAULT, COLUMN_KEY, COLUMN_TYPE, TABLE_SCHEMA FROM INFORMATION_SCHEMA.columns WHERE table_name = 'name'
 
