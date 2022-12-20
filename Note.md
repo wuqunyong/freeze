@@ -81,3 +81,7 @@ Remove a registry key "HKEY_CURRENT_USER\SOFTWARE\Licenses" used by VA
 
 clang format
  https://llvm.org/builds/
+
+
+ nats
+ https://github.com/pixie-io/pixie/blob/a2cc1718283e8bdb549de0e2bc19b2d0ec3d65e8/src/common/event/nats.h
