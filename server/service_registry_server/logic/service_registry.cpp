@@ -105,7 +105,7 @@ apie::status::Status ServiceRegistry::start()
 		return status;
 	}
 
-	for (auto& elem : nodeList)
+	for (const auto& elem : nodeList)
 	{
 		EndPoint key(elem.get_service_realm(), elem.get_service_type(), elem.get_service_id(), "");
 		m_nodes[key] = elem;

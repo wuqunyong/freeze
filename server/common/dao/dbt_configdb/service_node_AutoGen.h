@@ -84,63 +84,65 @@ public:
     this->markDirty({service_node_AutoGen::service_realm});
   }
 
-  uint32_t get_service_realm() { return this->fields.service_realm; }
+  uint32_t get_service_realm() const { return this->fields.service_realm; }
 
   void set_service_type(uint32_t service_type) {
     this->fields.service_type = service_type;
     this->markDirty({service_node_AutoGen::service_type});
   }
 
-  uint32_t get_service_type() { return this->fields.service_type; }
+  uint32_t get_service_type() const { return this->fields.service_type; }
 
   void set_service_id(uint32_t service_id) {
     this->fields.service_id = service_id;
     this->markDirty({service_node_AutoGen::service_id});
   }
 
-  uint32_t get_service_id() { return this->fields.service_id; }
+  uint32_t get_service_id() const { return this->fields.service_id; }
 
   void set_ip(std::string ip) {
     this->fields.ip = ip;
     this->markDirty({service_node_AutoGen::ip});
   }
 
-  std::string get_ip() { return this->fields.ip; }
+  std::string get_ip() const { return this->fields.ip; }
 
   void set_port(uint32_t port) {
     this->fields.port = port;
     this->markDirty({service_node_AutoGen::port});
   }
 
-  uint32_t get_port() { return this->fields.port; }
+  uint32_t get_port() const { return this->fields.port; }
 
   void set_listeners_config(std::string listeners_config) {
     this->fields.listeners_config = listeners_config;
     this->markDirty({service_node_AutoGen::listeners_config});
   }
 
-  std::string get_listeners_config() { return this->fields.listeners_config; }
+  std::string get_listeners_config() const {
+    return this->fields.listeners_config;
+  }
 
   void set_mysql_config(std::string mysql_config) {
     this->fields.mysql_config = mysql_config;
     this->markDirty({service_node_AutoGen::mysql_config});
   }
 
-  std::string get_mysql_config() { return this->fields.mysql_config; }
+  std::string get_mysql_config() const { return this->fields.mysql_config; }
 
   void set_nats_config(std::string nats_config) {
     this->fields.nats_config = nats_config;
     this->markDirty({service_node_AutoGen::nats_config});
   }
 
-  std::string get_nats_config() { return this->fields.nats_config; }
+  std::string get_nats_config() const { return this->fields.nats_config; }
 
   void set_redis_config(std::string redis_config) {
     this->fields.redis_config = redis_config;
     this->markDirty({service_node_AutoGen::redis_config});
   }
 
-  std::string get_redis_config() { return this->fields.redis_config; }
+  std::string get_redis_config() const { return this->fields.redis_config; }
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(service_node_AutoGen, db_fields,
                                   service_node);

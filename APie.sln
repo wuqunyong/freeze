@@ -38,6 +38,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dbt_role", "dbt_role", "{BB
 		server\common\dao\dbt_role\role_base_AutoGen.h = server\common\dao\dbt_role\role_base_AutoGen.h
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dbt_configdb", "dbt_configdb", "{6CCA7FF7-18C6-4A82-850F-00E845B1FD47}"
+	ProjectSection(SolutionItems) = preProject
+		server\common\dao\dbt_configdb\service_node_AutoGen.h = server\common\dao\dbt_configdb\service_node_AutoGen.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -110,6 +115,7 @@ Global
 		{194FF2C4-6DC3-48E3-8291-B4C3B36AE74A} = {A9D0F79B-DEA8-4488-A125-0C99B1B09B53}
 		{2D4E1F15-C319-4B75-842B-BC5B914D2E72} = {194FF2C4-6DC3-48E3-8291-B4C3B36AE74A}
 		{BB768AF4-F141-4E26-BE06-1271C8107086} = {194FF2C4-6DC3-48E3-8291-B4C3B36AE74A}
+		{6CCA7FF7-18C6-4A82-850F-00E845B1FD47} = {194FF2C4-6DC3-48E3-8291-B4C3B36AE74A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAD434AF-6389-4CA2-957F-63E3E0EC379A}

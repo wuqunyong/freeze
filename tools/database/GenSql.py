@@ -159,7 +159,7 @@ def GenProperty(sTable, lField):
         			{}
         		}}
 """
-    sGetTemplate = """{} get_{}({})
+    sGetTemplate = """{} get_{}({}) const
             		{{
             			{}
             		}}
