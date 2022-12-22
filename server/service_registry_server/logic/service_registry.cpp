@@ -37,7 +37,7 @@ apie::status::Status ServiceRegistry::init()
 apie::status::Status ServiceRegistry::start()
 {
 	DeclarativeBase::DBType dbType = DeclarativeBase::DBType::DBT_ConfigDb;
-	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, ModelServiceNode::getFactoryName(), ModelServiceNode::createMethod);
+	DAOFactoryTypeSingleton::get().registerRequiredTable(dbType, dbt_configdb::service_node_AutoGen::getFactoryName(), dbt_configdb::service_node_AutoGen::createMethod);
 	auto ptrDispatched = CtxSingleton::get().getLogicThread();
 	if (ptrDispatched == nullptr)
 	{
@@ -89,25 +89,25 @@ apie::status::Status ServiceRegistry::start()
 		}
 	}
 
-	ModelServiceNode node;
-	node.fields.service_realm = apie::CtxSingleton::get().getServerRealm();
-	bool bResult = node.bindTable(DeclarativeBase::DBType::DBT_ConfigDb, ModelServiceNode::getFactoryName());
+	dbt_configdb::service_node_AutoGen node;
+	auto iRealm = apie::CtxSingleton::get().getServerRealm();
+	node.set_service_realm(iRealm);
+	bool bResult = node.bindTable(DeclarativeBase::DBType::DBT_ConfigDb, dbt_configdb::service_node_AutoGen::getFactoryName());
 	if (!bResult)
 	{
 		return { apie::status::StatusCode::HOOK_ERROR, "bind table"};
 	}
-	node.markFilter({ ModelServiceNode::service_realm });
 
-	std::vector<ModelServiceNode> nodeList;
+	std::vector<dbt_configdb::service_node_AutoGen> nodeList;
 	auto status = syncLoadDbByFilter(ptrDispatched->getMySQLConnector(), node, nodeList);
 	if (!status.ok())
 	{
 		return status;
 	}
 
-	for (const auto& elem : nodeList)
+	for (auto& elem : nodeList)
 	{
-		EndPoint key(elem.fields.service_realm, elem.fields.service_type, elem.fields.service_id, "");
+		EndPoint key(elem.get_service_realm(), elem.get_service_type(), elem.get_service_id(), "");
 		m_nodes[key] = elem;
 	}
 
@@ -118,7 +118,7 @@ apie::status::Status ServiceRegistry::start()
 	}
 
 	apie::LoadConfig<Mysql_ListenersConfig> listenConfig("listenConfig");
-	bResult = listenConfig.load(findIte->second.fields.listeners_config);
+	bResult = listenConfig.load(findIte->second.get_listeners_config());
 	if (!bResult)
 	{
 		return { apie::status::StatusCode::HOOK_ERROR, "invalid listenConfig" };
@@ -172,7 +172,7 @@ std::map<uint64_t, RegisteredEndPoint>& ServiceRegistry::registered()
 	return m_registered;
 }
 
-std::optional<ModelServiceNode> ServiceRegistry::findNode(EndPoint key)
+std::optional<dbt_configdb::service_node_AutoGen> ServiceRegistry::findNode(EndPoint key)
 {
 	auto findIte = m_nodes.find(key);
 	if (findIte == m_nodes.end())

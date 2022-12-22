@@ -78,8 +78,8 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 	}
 
 	::service_discovery::EndPointInstance instanceObj = request->instance();
-	instanceObj.set_ip(nodeOpt.value().fields.ip);
-	instanceObj.set_port(nodeOpt.value().fields.port);
+	instanceObj.set_ip(nodeOpt.value().get_ip());
+	instanceObj.set_port(nodeOpt.value().get_port());
 
 	bool bResult = APieGetModule<apie::ServiceRegistry>()->updateInstance(info.iSessionId, instanceObj);
 	if (!bResult)
@@ -94,10 +94,10 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 	ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
 
 	response->set_status_code(::opcodes::StatusCode::SC_Ok);
-	response->set_listeners_config(nodeOpt.value().fields.listeners_config);
-	response->set_mysql_config(nodeOpt.value().fields.mysql_config);
-	response->set_nats_config(nodeOpt.value().fields.nats_config);
-	response->set_redis_config(nodeOpt.value().fields.redis_config);
+	response->set_listeners_config(nodeOpt.value().get_listeners_config());
+	response->set_mysql_config(nodeOpt.value().get_mysql_config());
+	response->set_nats_config(nodeOpt.value().get_nats_config());
+	response->set_redis_config(nodeOpt.value().get_redis_config());
 
 	auto cb = [](){
 		APieGetModule<apie::ServiceRegistry>()->broadcast();

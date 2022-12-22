@@ -10,7 +10,7 @@
 
 #include "apie.h"
 
-#include "../../common/dao/model_service_node.h"
+#include "../../common/dao/dbt_configdb/service_node_AutoGen.h"
 
 namespace apie {
 
@@ -48,7 +48,7 @@ namespace apie {
 		void disableUpdateTimer();
 
 		std::map<uint64_t, RegisteredEndPoint>& registered();
-		std::optional<ModelServiceNode> findNode(EndPoint key);
+		std::optional<dbt_configdb::service_node_AutoGen> findNode(EndPoint key);
 
 	public:
 		std::string m_name;
@@ -64,7 +64,7 @@ namespace apie {
 		uint64_t m_iStatusCheckTime = 0;
 		event_ns::TimerPtr m_updateTimer;
 
-		std::map<EndPoint, ModelServiceNode> m_nodes;
+		std::map<EndPoint, dbt_configdb::service_node_AutoGen> m_nodes;
 	};
 
 }
