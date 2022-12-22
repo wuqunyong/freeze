@@ -72,7 +72,7 @@ namespace apie {
 	bool RegisterRequiredTable(const ::rpc_msg::CHANNEL& server, DeclarativeBase::DBType type, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb);
 
 	template<typename T>
-	apie::status::Status DoBindTables(T* ptrMgr, uint32_t iRealm, APieConfig_BindTables tables)
+	apie::status::Status DoBindTables(T* ptrMgr, hook::HookPoint iPoint, uint32_t iRealm, APieConfig_BindTables tables)
 	{
 		std::shared_ptr<std::map<DeclarativeBase::DBType, bool>> ptrReady = std::make_shared<std::map<DeclarativeBase::DBType, bool>>();
 		for (const auto& elems : tables.database)
@@ -84,7 +84,7 @@ namespace apie {
 		{
 			// 加载:数据表结构
 			auto dbType = (DeclarativeBase::DBType)elems.type;
-			auto ptrReadyCb = [ptrMgr, ptrReady, dbType](bool bResul, std::string sInfo, uint64_t iCallCount) mutable {
+			auto ptrReadyCb = [ptrMgr, ptrReady, dbType, iPoint](bool bResul, std::string sInfo, uint64_t iCallCount) mutable {
 				if (!bResul)
 				{
 					std::stringstream ss;
@@ -101,7 +101,7 @@ namespace apie {
 						return;
 					}
 				}
-				ptrMgr->setHookReady(hook::HookPoint::HP_Start);
+				ptrMgr->setHookReady(iPoint);
 			};
 
 			auto iServerProxyType = ::common::EPT_None;
