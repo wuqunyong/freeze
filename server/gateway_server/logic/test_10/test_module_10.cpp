@@ -1,6 +1,6 @@
-#include "logic/test_module_10.h"
+#include "logic/test_10/test_module_10.h"
 
-#include "../../common/opcodes.h"
+#include "../../../common/opcodes.h"
 
 
 

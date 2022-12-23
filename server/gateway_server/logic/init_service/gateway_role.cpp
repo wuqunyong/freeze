@@ -1,5 +1,5 @@
-#include "logic/gateway_role.h"
-#include "logic/gateway_mgr.h"
+#include "logic/init_service/gateway_role.h"
+#include "logic/init_service/gateway_mgr.h"
 
 namespace apie {
 

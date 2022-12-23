@@ -1,10 +1,9 @@
-#include "logic/gateway_mgr.h"
+#include "logic/init_service/gateway_mgr.h"
 
-#include "../../common/opcodes.h"
+#include "../../../common/opcodes.h"
 
-#include "logic/gateway_role.h"
-
-#include "module_handler/gateway_mgr_module.h"
+#include "logic/init_service/gateway_role.h"
+#include "logic/init_service/gateway_mgr_module.h"
 
 
 namespace apie {

@@ -6,10 +6,10 @@
 #include <algorithm>
 #include <tuple>
 
-#include "logic/gateway_mgr.h"
-#include "logic/test_module_10.h"
-#include "logic/test_module_11.h"
-#include "logic/test_module_12.h"
+#include "logic/init_service/gateway_mgr.h"
+#include "logic/test_10/test_module_10.h"
+#include "logic/test_11/test_module_11.h"
+#include "logic/test_12/test_module_12.h"
 
 int main(int argc, char **argv)
 {
