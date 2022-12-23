@@ -1,8 +1,5 @@
 #include "logic/test_module_10.h"
 
-#include "../../common/dao/model_user.h"
-#include "../../common/dao/model_role_extra.h"
-#include "../../common/dao/varchars1_AutoGen.h"
 #include "../../common/opcodes.h"
 
 
@@ -101,8 +98,7 @@ public:
 	{
 		if (m_data3.m_optData.has_value())
 		{
-			m_data3.m_optData.value().fields.modified_time++;
-			m_data3.m_optData.value().markDirty({ Single_ModelAccount_Loader::Type::TableType::modified_time });
+			m_data3.m_optData.value().set_modified_time(time(nullptr));
 			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.m_server, m_data3.m_optData.value(), nullptr);
 		}
 
@@ -201,7 +197,7 @@ void CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 	ptrLoad->set<Single_ModelUser_Loader>(iRoleId);
 	ptrLoad->set<Single_ModelRoleExtra_Loader>(iRoleId);
 	ptrLoad->set<Single_ModelVarchars1_Loader>({ iRoleId,1 });
-	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().markFilter({ ModelUser::user_id });
+	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().markFilter({ apie::dbt_role::role_base_AutoGen::user_id });
 
 	auto cb = [ptrModuleLoader, doneCb, server, iRoleId](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
 		if (!status.ok())

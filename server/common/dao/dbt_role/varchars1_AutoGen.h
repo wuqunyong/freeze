@@ -40,23 +40,6 @@ private:
     std::string Column6;
   };
 
-  enum Fields {
-    a = 0,
-    b = 1,
-    c = 2,
-    te = 3,
-    aa = 4,
-    aaa = 5,
-    aaa1 = 6,
-    Column1aaa = 7,
-    Column1 = 8,
-    Column2 = 9,
-    Column3 = 10,
-    Column4 = 11,
-    Column5 = 12,
-    Column6 = 13,
-  };
-
   virtual std::string getFieldName(uint32_t iIndex) override {
 
     static std::map<uint32_t, std::string> kFieldNameMap = {
@@ -79,6 +62,23 @@ private:
   }
 
 public:
+  enum Fields {
+    a = 0,
+    b = 1,
+    c = 2,
+    te = 3,
+    aa = 4,
+    aaa = 5,
+    aaa1 = 6,
+    Column1aaa = 7,
+    Column1 = 8,
+    Column2 = 9,
+    Column3 = 10,
+    Column4 = 11,
+    Column5 = 12,
+    Column6 = 13,
+  };
+
   static std::shared_ptr<varchars1_AutoGen> Create(int32_t a, uint32_t b) {
     return std::shared_ptr<varchars1_AutoGen>(new varchars1_AutoGen(a, b));
   }
@@ -95,98 +95,98 @@ public:
     this->markDirty({varchars1_AutoGen::a});
   }
 
-  int32_t get_a() { return this->fields.a; }
+  int32_t get_a() const { return this->fields.a; }
 
   void set_b(uint32_t b) {
     this->fields.b = b;
     this->markDirty({varchars1_AutoGen::b});
   }
 
-  uint32_t get_b() { return this->fields.b; }
+  uint32_t get_b() const { return this->fields.b; }
 
   void set_c(int64_t c) {
     this->fields.c = c;
     this->markDirty({varchars1_AutoGen::c});
   }
 
-  int64_t get_c() { return this->fields.c; }
+  int64_t get_c() const { return this->fields.c; }
 
   void set_te(std::string te) {
     this->fields.te = te;
     this->markDirty({varchars1_AutoGen::te});
   }
 
-  std::string get_te() { return this->fields.te; }
+  std::string get_te() const { return this->fields.te; }
 
   void set_aa(std::string aa) {
     this->fields.aa = aa;
     this->markDirty({varchars1_AutoGen::aa});
   }
 
-  std::string get_aa() { return this->fields.aa; }
+  std::string get_aa() const { return this->fields.aa; }
 
   void set_aaa(std::string aaa) {
     this->fields.aaa = aaa;
     this->markDirty({varchars1_AutoGen::aaa});
   }
 
-  std::string get_aaa() { return this->fields.aaa; }
+  std::string get_aaa() const { return this->fields.aaa; }
 
   void set_aaa1(std::string aaa1) {
     this->fields.aaa1 = aaa1;
     this->markDirty({varchars1_AutoGen::aaa1});
   }
 
-  std::string get_aaa1() { return this->fields.aaa1; }
+  std::string get_aaa1() const { return this->fields.aaa1; }
 
   void set_Column1aaa(std::string Column1aaa) {
     this->fields.Column1aaa = Column1aaa;
     this->markDirty({varchars1_AutoGen::Column1aaa});
   }
 
-  std::string get_Column1aaa() { return this->fields.Column1aaa; }
+  std::string get_Column1aaa() const { return this->fields.Column1aaa; }
 
   void set_Column1(std::string Column1) {
     this->fields.Column1 = Column1;
     this->markDirty({varchars1_AutoGen::Column1});
   }
 
-  std::string get_Column1() { return this->fields.Column1; }
+  std::string get_Column1() const { return this->fields.Column1; }
 
   void set_Column2(std::string Column2) {
     this->fields.Column2 = Column2;
     this->markDirty({varchars1_AutoGen::Column2});
   }
 
-  std::string get_Column2() { return this->fields.Column2; }
+  std::string get_Column2() const { return this->fields.Column2; }
 
   void set_Column3(std::string Column3) {
     this->fields.Column3 = Column3;
     this->markDirty({varchars1_AutoGen::Column3});
   }
 
-  std::string get_Column3() { return this->fields.Column3; }
+  std::string get_Column3() const { return this->fields.Column3; }
 
   void set_Column4(std::string Column4) {
     this->fields.Column4 = Column4;
     this->markDirty({varchars1_AutoGen::Column4});
   }
 
-  std::string get_Column4() { return this->fields.Column4; }
+  std::string get_Column4() const { return this->fields.Column4; }
 
   void set_Column5(std::string Column5) {
     this->fields.Column5 = Column5;
     this->markDirty({varchars1_AutoGen::Column5});
   }
 
-  std::string get_Column5() { return this->fields.Column5; }
+  std::string get_Column5() const { return this->fields.Column5; }
 
   void set_Column6(std::string Column6) {
     this->fields.Column6 = Column6;
     this->markDirty({varchars1_AutoGen::Column6});
   }
 
-  std::string get_Column6() { return this->fields.Column6; }
+  std::string get_Column6() const { return this->fields.Column6; }
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(varchars1_AutoGen, db_fields, varchars1);
 };

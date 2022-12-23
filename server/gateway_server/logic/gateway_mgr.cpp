@@ -1,10 +1,5 @@
 #include "logic/gateway_mgr.h"
 
-#include "../../common/dao/model_user.h"
-#include "../../common/dao/model_role_extra.h"
-#include "../../common/dao/model_account.h"
-#include "../../common/dao/model_account_name.h"
-#include "../../common/dao/varchars1_AutoGen.h"
 #include "../../common/opcodes.h"
 
 #include "logic/gateway_role.h"
@@ -58,91 +53,7 @@ apie::status::Status GatewayMgr::init()
 
 apie::status::Status GatewayMgr::start()
 {
-	std::shared_ptr<std::map<DeclarativeBase::DBType, bool>> ptrReady = std::make_shared<std::map<DeclarativeBase::DBType, bool>>();
-	ptrReady->insert({ DeclarativeBase::DBType::DBT_Role, false });
-	ptrReady->insert({ DeclarativeBase::DBType::DBT_Account, false });
-
-	{
-		// 加载:数据表结构
-		auto dbType = DeclarativeBase::DBType::DBT_Role;
-		auto ptrReadyCb = [this, ptrReady](bool bResul, std::string sInfo, uint64_t iCallCount) mutable {
-			if (!bResul)
-			{
-				std::stringstream ss;
-				ss << "CallMysqlDescTable|bResul:" << bResul << ",sInfo:" << sInfo << ",iCallCount:" << iCallCount;
-
-				PANIC_ABORT(ss.str().c_str());
-			}
-
-			(*ptrReady)[DeclarativeBase::DBType::DBT_Role] = true;
-			for (const auto& elems : *ptrReady)
-			{
-				if (elems.second == false)
-				{
-					return;
-				}
-			}
-			this->setHookReady(hook::HookPoint::HP_Start);
-		};
-
-		::rpc_msg::CHANNEL server;
-		server.set_realm(apie::Ctx::getThisChannel().realm());
-		server.set_type(::common::EPT_DB_ROLE_Proxy);
-		server.set_id(1);
-
-		std::map<std::string, DAOFactory::TCreateMethod> loadTables;
-		loadTables.insert(std::make_pair(ModelUser::getFactoryName(), ModelUser::createMethod));
-		loadTables.insert(std::make_pair(ModelRoleExtra::getFactoryName(), ModelRoleExtra::createMethod));
-		loadTables.insert(std::make_pair(varchars1_AutoGen::getFactoryName(), varchars1_AutoGen::createMethod));
-
-		bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
-		if (!bResult)
-		{
-			return { apie::status::StatusCode::HOOK_ERROR, "HR_Error" };
-		}
-	}
-
-	{
-		auto dbType = DeclarativeBase::DBType::DBT_Account;
-		auto ptrReadyCb = [this, ptrReady](bool bResul, std::string sInfo, uint64_t iCallCount) mutable {
-			if (!bResul)
-			{
-				std::stringstream ss;
-				ss << "CallMysqlDescTable|bResul:" << bResul << ",sInfo:" << sInfo << ",iCallCount:" << iCallCount;
-
-				PANIC_ABORT(ss.str().c_str());
-			}
-
-			(*ptrReady)[DeclarativeBase::DBType::DBT_Account] = true;
-
-			for (const auto& elems : *ptrReady)
-			{
-				if (elems.second == false)
-				{
-					return;
-				}
-			}
-			this->setHookReady(apie::hook::HookPoint::HP_Start);
-		};
-
-		::rpc_msg::CHANNEL server;
-		server.set_realm(apie::Ctx::getThisChannel().realm());
-		server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
-		server.set_id(1);
-
-		std::map<std::string, DAOFactory::TCreateMethod> loadTables;
-		loadTables.insert(std::make_pair(ModelAccount::getFactoryName(), ModelAccount::createMethod));
-		loadTables.insert(std::make_pair(ModelAccountName::getFactoryName(), ModelAccountName::createMethod));
-
-		bool bResult = RegisterRequiredTable(server, dbType, loadTables, ptrReadyCb);
-		if (!bResult)
-		{
-			return { apie::status::StatusCode::HOOK_ERROR, "HR_Error" };
-		}
-	}
-
-	return { apie::status::StatusCode::OK_ASYNC, "" };
-
+	return DoBindTables<GatewayMgr>(this, hook::HookPoint::HP_Start, apie::Ctx::getThisChannel().realm(), apie::CtxSingleton::get().getConfigs()->bind_tables);
 }
 
 CoTaskVoid TestCoRPC1()

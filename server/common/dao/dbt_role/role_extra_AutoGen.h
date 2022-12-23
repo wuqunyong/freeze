@@ -28,11 +28,6 @@ private:
     std::string extra_info = "";
   };
 
-  enum Fields {
-    user_id = 0,
-    extra_info = 1,
-  };
-
   virtual std::string getFieldName(uint32_t iIndex) override {
 
     static std::map<uint32_t, std::string> kFieldNameMap = {
@@ -43,6 +38,11 @@ private:
   }
 
 public:
+  enum Fields {
+    user_id = 0,
+    extra_info = 1,
+  };
+
   static std::shared_ptr<role_extra_AutoGen> Create(uint64_t user_id) {
     return std::shared_ptr<role_extra_AutoGen>(new role_extra_AutoGen(user_id));
   }
@@ -58,14 +58,14 @@ public:
     this->markDirty({role_extra_AutoGen::user_id});
   }
 
-  uint64_t get_user_id() { return this->fields.user_id; }
+  uint64_t get_user_id() const { return this->fields.user_id; }
 
   void set_extra_info(std::string extra_info) {
     this->fields.extra_info = extra_info;
     this->markDirty({role_extra_AutoGen::extra_info});
   }
 
-  std::string get_extra_info() { return this->fields.extra_info; }
+  std::string get_extra_info() const { return this->fields.extra_info; }
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(role_extra_AutoGen, db_fields, role_extra);
 };

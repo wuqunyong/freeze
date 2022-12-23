@@ -28,11 +28,6 @@ private:
     std::string name;
   };
 
-  enum Fields {
-    account_id = 0,
-    name = 1,
-  };
-
   virtual std::string getFieldName(uint32_t iIndex) override {
 
     static std::map<uint32_t, std::string> kFieldNameMap = {
@@ -43,6 +38,11 @@ private:
   }
 
 public:
+  enum Fields {
+    account_id = 0,
+    name = 1,
+  };
+
   static std::shared_ptr<account_name_AutoGen> Create(uint64_t account_id) {
     return std::shared_ptr<account_name_AutoGen>(
         new account_name_AutoGen(account_id));
@@ -59,14 +59,14 @@ public:
     this->markDirty({account_name_AutoGen::account_id});
   }
 
-  uint64_t get_account_id() { return this->fields.account_id; }
+  uint64_t get_account_id() const { return this->fields.account_id; }
 
   void set_name(std::string name) {
     this->fields.name = name;
     this->markDirty({account_name_AutoGen::name});
   }
 
-  std::string get_name() { return this->fields.name; }
+  std::string get_name() const { return this->fields.name; }
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(account_name_AutoGen, db_fields,
                                   account_name);

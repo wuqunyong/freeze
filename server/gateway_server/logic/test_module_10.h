@@ -11,38 +11,35 @@
 
 #include "apie.h"
 
-#include "../../common/dao/model_user.h"
-#include "../../common/dao/model_account.h"
-#include "../../common/dao/model_role_extra.h"
-#include "../../common/dao/varchars1_AutoGen.h"
+#include "../../common/dao/init.h"
 
 namespace apie {
 
 
 	struct Single_ModelUser_Loader
 	{
-		using Type = SingleRowLoader<apie::ModelUser>;
+		using Type = SingleRowLoader<apie::dbt_role::role_base_AutoGen>;
 	};
 
 	struct Single_ModelRoleExtra_Loader
 	{
-		using Type = SingleRowLoader<apie::ModelRoleExtra>;
+		using Type = SingleRowLoader<apie::dbt_role::role_extra_AutoGen>;
 	};
 
 	struct Single_ModelVarchars1_Loader
 	{
-		using Type = SingleRowLoader<apie::varchars1_AutoGen>;
+		using Type = SingleRowLoader<apie::dbt_role::varchars1_AutoGen>;
 	};
 
 
 	struct Multi_ModelUser_Loader
 	{
-		using Type = MultiRowLoader<apie::ModelUser>;
+		using Type = MultiRowLoader<apie::dbt_role::role_base_AutoGen>;
 	};
 
 	struct Single_ModelAccount_Loader
 	{
-		using Type = SingleRowLoader<apie::ModelAccount>;
+		using Type = SingleRowLoader<apie::dbt_account::account_AutoGen>;
 	};
 
 	class TestModule10

@@ -11,4 +11,8 @@ rem ..\protoc rpc_login.proto --python_out=../../client/proto
 ..\protoc db.proto --cpp_out=./
 ..\protoc talent.proto --cpp_out=./
 ..\protoc decree.proto --cpp_out=./
+
+
+..\protoc error_code.proto --cpp_out=./
+
 pause

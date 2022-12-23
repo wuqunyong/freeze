@@ -29,13 +29,6 @@ private:
     int64_t modified_time;
   };
 
-  enum Fields {
-    account_id = 0,
-    db_id = 1,
-    register_time = 2,
-    modified_time = 3,
-  };
-
   virtual std::string getFieldName(uint32_t iIndex) override {
 
     static std::map<uint32_t, std::string> kFieldNameMap = {
@@ -48,6 +41,13 @@ private:
   }
 
 public:
+  enum Fields {
+    account_id = 0,
+    db_id = 1,
+    register_time = 2,
+    modified_time = 3,
+  };
+
   static std::shared_ptr<account_AutoGen> Create(uint64_t account_id) {
     return std::shared_ptr<account_AutoGen>(new account_AutoGen(account_id));
   }
@@ -63,28 +63,28 @@ public:
     this->markDirty({account_AutoGen::account_id});
   }
 
-  uint64_t get_account_id() { return this->fields.account_id; }
+  uint64_t get_account_id() const { return this->fields.account_id; }
 
   void set_db_id(uint32_t db_id) {
     this->fields.db_id = db_id;
     this->markDirty({account_AutoGen::db_id});
   }
 
-  uint32_t get_db_id() { return this->fields.db_id; }
+  uint32_t get_db_id() const { return this->fields.db_id; }
 
   void set_register_time(int64_t register_time) {
     this->fields.register_time = register_time;
     this->markDirty({account_AutoGen::register_time});
   }
 
-  int64_t get_register_time() { return this->fields.register_time; }
+  int64_t get_register_time() const { return this->fields.register_time; }
 
   void set_modified_time(int64_t modified_time) {
     this->fields.modified_time = modified_time;
     this->markDirty({account_AutoGen::modified_time});
   }
 
-  int64_t get_modified_time() { return this->fields.modified_time; }
+  int64_t get_modified_time() const { return this->fields.modified_time; }
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(account_AutoGen, db_fields, account);
 };

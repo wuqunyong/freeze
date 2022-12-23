@@ -33,16 +33,6 @@ private:
     std::string name = "";
   };
 
-  enum Fields {
-    user_id = 0,
-    game_id = 1,
-    level = 2,
-    register_time = 3,
-    login_time = 4,
-    offline_time = 5,
-    name = 6,
-  };
-
   virtual std::string getFieldName(uint32_t iIndex) override {
 
     static std::map<uint32_t, std::string> kFieldNameMap = {
@@ -58,6 +48,16 @@ private:
   }
 
 public:
+  enum Fields {
+    user_id = 0,
+    game_id = 1,
+    level = 2,
+    register_time = 3,
+    login_time = 4,
+    offline_time = 5,
+    name = 6,
+  };
+
   static std::shared_ptr<role_base_AutoGen> Create(uint64_t user_id) {
     return std::shared_ptr<role_base_AutoGen>(new role_base_AutoGen(user_id));
   }
@@ -73,49 +73,49 @@ public:
     this->markDirty({role_base_AutoGen::user_id});
   }
 
-  uint64_t get_user_id() { return this->fields.user_id; }
+  uint64_t get_user_id() const { return this->fields.user_id; }
 
   void set_game_id(uint64_t game_id) {
     this->fields.game_id = game_id;
     this->markDirty({role_base_AutoGen::game_id});
   }
 
-  uint64_t get_game_id() { return this->fields.game_id; }
+  uint64_t get_game_id() const { return this->fields.game_id; }
 
   void set_level(uint32_t level) {
     this->fields.level = level;
     this->markDirty({role_base_AutoGen::level});
   }
 
-  uint32_t get_level() { return this->fields.level; }
+  uint32_t get_level() const { return this->fields.level; }
 
   void set_register_time(int64_t register_time) {
     this->fields.register_time = register_time;
     this->markDirty({role_base_AutoGen::register_time});
   }
 
-  int64_t get_register_time() { return this->fields.register_time; }
+  int64_t get_register_time() const { return this->fields.register_time; }
 
   void set_login_time(int64_t login_time) {
     this->fields.login_time = login_time;
     this->markDirty({role_base_AutoGen::login_time});
   }
 
-  int64_t get_login_time() { return this->fields.login_time; }
+  int64_t get_login_time() const { return this->fields.login_time; }
 
   void set_offline_time(int64_t offline_time) {
     this->fields.offline_time = offline_time;
     this->markDirty({role_base_AutoGen::offline_time});
   }
 
-  int64_t get_offline_time() { return this->fields.offline_time; }
+  int64_t get_offline_time() const { return this->fields.offline_time; }
 
   void set_name(std::string name) {
     this->fields.name = name;
     this->markDirty({role_base_AutoGen::name});
   }
 
-  std::string get_name() { return this->fields.name; }
+  std::string get_name() const { return this->fields.name; }
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(role_base_AutoGen, db_fields, role_base);
 };

@@ -128,12 +128,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h" />
     <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h" />
-    <ClInclude Include="..\common\dao\model_role_extra.h" />
-    <ClInclude Include="..\common\dao\model_user.h" />
-    <ClInclude Include="..\common\dao\varchars1_AutoGen.h" />
     <ClInclude Include="logic\gateway_mgr.h" />
     <ClInclude Include="logic\gateway_role.h" />
-    <ClInclude Include="logic\role_tables_data.h" />
     <ClInclude Include="logic\test_module_10.h" />
     <ClInclude Include="logic\test_module_11.h" />
     <ClInclude Include="logic\test_module_12.h" />
@@ -144,7 +140,6 @@
     <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc" />
     <ClCompile Include="logic\gateway_mgr.cpp" />
     <ClCompile Include="logic\gateway_role.cpp" />
-    <ClCompile Include="logic\role_tables_data.cpp" />
     <ClCompile Include="logic\test_module_10.cpp" />
     <ClCompile Include="logic\test_module_11.cpp" />
     <ClCompile Include="logic\test_module_12.cpp" />

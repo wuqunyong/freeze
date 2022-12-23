@@ -214,9 +214,9 @@ namespace {} {{
 	private:
 		{}
 		{}
-		{}
 		
 	public:
+		{}
 		{}
 		{}
 		{}
@@ -233,8 +233,8 @@ APIE_REGISTER_TABLE({}, apie::{}::{}_AutoGen, {})
     sDefine = sTemplate.format(sSChema, sName,
                                sBindSpace,
                                sName, sName,
-                               sStruct, sEnum, sGetField,
-                               sCreate, sConstructor, sProperty,
+                               sStruct, sGetField,
+                               sEnum, sCreate, sConstructor, sProperty,
                                sName, sName,
                                sBindType, sBindSpace, sName, sName)
     return sDefine

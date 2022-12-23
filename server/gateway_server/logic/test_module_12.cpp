@@ -1,7 +1,5 @@
 #include "logic/test_module_12.h"
 
-#include "../../common/dao/model_user.h"
-#include "../../common/dao/model_role_extra.h"
 #include "../../common/opcodes.h"
 
 
