@@ -66,14 +66,14 @@
     <Filter Include="logic\init_service">
       <UniqueIdentifier>{c28cdd07-9422-4a05-a727-4aef7162b374}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logic\test_12">
+      <UniqueIdentifier>{a0dafe8a-e690-4d0b-8541-48b32681d97a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="logic\test_10">
       <UniqueIdentifier>{fd0d431f-81a5-4a66-b91f-ce198353d7de}</UniqueIdentifier>
     </Filter>
     <Filter Include="logic\test_11">
       <UniqueIdentifier>{0b1f4f5b-dd34-4f03-a1ac-fe54bb009a4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="logic\test_12">
-      <UniqueIdentifier>{a0dafe8a-e690-4d0b-8541-48b32681d97a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
