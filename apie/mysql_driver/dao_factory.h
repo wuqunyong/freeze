@@ -74,9 +74,13 @@ namespace apie {
 	template<typename T>
 	apie::status::Status DoBindTables(T* ptrMgr, hook::HookPoint iPoint, uint32_t iRealm, APieConfig_BindTables tables)
 	{
+		bool bAsync = false;
+
 		std::shared_ptr<std::map<DeclarativeBase::DBType, bool>> ptrReady = std::make_shared<std::map<DeclarativeBase::DBType, bool>>();
 		for (const auto& elems : tables.database)
 		{
+			bAsync = true;
+
 			ptrReady->insert({ (DeclarativeBase::DBType)elems.type, false });
 		}
 
@@ -150,7 +154,13 @@ namespace apie {
 			}
 		}
 
-		return { apie::status::StatusCode::OK_ASYNC, "" };
-
+		if (bAsync)
+		{
+			return { apie::status::StatusCode::OK_ASYNC, "" };
+		} 
+		else
+		{
+			return { apie::status::StatusCode::OK, "" };
+		}
 	}
 }
