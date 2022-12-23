@@ -46,6 +46,10 @@ public:
 		DBT_ConfigDb = 3,
 	};
 
+	virtual ~DeclarativeBase() {
+
+	}
+
 	//virtual uint32_t blockSize() = 0;
 	virtual void* layoutAddress() = 0;
 	virtual std::vector<uint32_t> layoutOffset() = 0;
