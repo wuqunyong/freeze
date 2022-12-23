@@ -57,12 +57,6 @@
     <Filter Include="logic">
       <UniqueIdentifier>{9fc74d54-78ab-468b-86fd-ba95ecfd17e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="common">
-      <UniqueIdentifier>{9de18d71-708b-4f67-a8a6-2d973d88ca9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="common\dao">
-      <UniqueIdentifier>{0b702e53-b791-485b-93f1-eaa573f0b1c3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="pb_msg">
       <UniqueIdentifier>{8e83c96f-53dc-4113-8164-19888ba4b57e}</UniqueIdentifier>
     </Filter>
