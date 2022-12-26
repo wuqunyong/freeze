@@ -179,7 +179,7 @@ public:
 private:
 	uint64_t m_iId = 0;
 	uint64_t m_value = 0;
-
+	      
 	Multi_ModelUser_Loader::Type m_data1;
 	All_ModelAccountName_Loader::Type m_data2;
 };
@@ -197,7 +197,9 @@ static auto CreateLoadInstance(uint64_t iId)
 	return pInstance;
 }
 
-void CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))> doneCb)
+using CreateLoadInstanceCb = std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))>;
+
+void CreateUserObj(uint64_t iRoleId, CreateLoadInstanceCb doneCb)
 {
 	auto ptrModuleLoader = CreateLoadInstance(iRoleId);
 
