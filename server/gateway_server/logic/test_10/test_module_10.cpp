@@ -167,6 +167,13 @@ public:
 	void saveToDb()
 	{
 		std::cout << "ModuleB saveToDb" << std::endl;
+
+		for (auto& elems : m_data2.m_vecData)
+		{
+			auto name = elems.get_name() + "_test";
+			elems.set_name(name);
+			UpdateToDb(m_data2.m_server, elems, nullptr);
+		}
 	}
 
 private:
