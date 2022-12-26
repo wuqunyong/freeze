@@ -193,7 +193,7 @@ struct TestModuleB
 static auto CreateLoadInstance(uint64_t iId)
 {
 	static auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
-	auto pInstance = CreateCommonModuleLoaderPtr(iId, tupleType, std::make_index_sequence<std::tuple_size<decltype(tupleType)>::value>{});
+	auto pInstance = MakeCommonModuleLoader(iId, tupleType);
 	return pInstance;
 }
 

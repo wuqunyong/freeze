@@ -174,4 +174,12 @@ static inline auto CreateCommonModuleLoaderPtr(Key iId, const Tuple& t, std::ind
 	return pInstance;
 }
 
+
+template<class Key, class Tuple, typename Indices = std::make_index_sequence<std::tuple_size<Tuple>::value>>
+auto MakeCommonModuleLoader(Key iId, const Tuple& t)
+{
+	return CreateCommonModuleLoaderPtr(iId, t, Indices{});
+}
+
+
 }
