@@ -126,5 +126,52 @@ namespace apie {
 		std::vector<TableType> m_vecData;
 	};
 
+
+	template <typename T>
+	struct AllRowLoader {
+		using TableType = T;
+		using LoaderType = AllRowLoader<T>;
+
+		AllRowLoader(uint64_t id) :
+			m_tableType(id)
+		{
+
+		}
+
+		template <typename... Args>
+		AllRowLoader(Args &&... args) :
+			m_tableType(std::forward<Args>(args)...)
+		{
+
+		}
+
+		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
+		{
+			if (!m_initServer)
+			{
+				m_initServer = true;
+				m_server = server;
+			}
+
+			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
+			auto ptrCb = [this, loader](status::Status status, std::vector<TableType>& data) {
+				if (!status.ok())
+				{
+					loader->setState<LoaderType>(DbLoadComponent::ELS_Failure);
+					return;
+				}
+
+				m_vecData = data;
+				loader->setState<LoaderType>(DbLoadComponent::ELS_Success);
+			};
+			apie::LoadFromDbByQueryAll<TableType>(server, m_tableType, ptrCb);
+		}
+
+		bool m_initServer = false;
+		::rpc_msg::CHANNEL m_server;
+
+		TableType m_tableType;
+		std::vector<TableType> m_vecData;
+	};
 } 
 

@@ -19,6 +19,15 @@ log:
   backup: "/usr/local/apie/logs/backup"
   name: "gateway_server"
   show_console: true
+bind_tables:
+  - database: 
+      type: 1
+      table_name: ["account","account_name"]
+      server_id: 1
+  - database:
+      type: 2
+      table_name: ["role_base", "role_extra", "varchars1"]
+      server_id: 1
 metrics:
   enable: true
   ip: "127.0.0.1"

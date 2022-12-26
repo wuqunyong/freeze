@@ -42,6 +42,11 @@ namespace apie {
 		using Type = SingleRowLoader<apie::dbt_account::account_AutoGen>;
 	};
 
+	struct All_ModelAccountName_Loader
+	{
+		using Type = AllRowLoader<apie::dbt_account::account_name_AutoGen>;
+	};
+
 	class TestModule10
 	{
 	public:

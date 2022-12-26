@@ -152,6 +152,11 @@ public:
 		{
 			m_data1 = ptrLoader->get<Multi_ModelUser_Loader>();
 		}
+
+		if (ptrLoader->has<All_ModelAccountName_Loader>())
+		{
+			m_data2 = ptrLoader->get<All_ModelAccountName_Loader>();
+		}
 	}
 
 	void loadFromDbDone()
@@ -169,6 +174,7 @@ private:
 	uint64_t m_value = 0;
 
 	Multi_ModelUser_Loader::Type m_data1;
+	All_ModelAccountName_Loader::Type m_data2;
 };
 
 struct TestModuleB
@@ -215,6 +221,7 @@ void CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 
 		loader->clear();
 		loader->set<Single_ModelAccount_Loader>(iRoleId);
+		loader->set<All_ModelAccountName_Loader>(iRoleId);
 
 		auto wrapperFunc = [loader, ptrModuleLoader, doneCb, accountServer]() mutable {
 			auto funObj = [ptrModuleLoader, doneCb, accountServer](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> ptrLoader) mutable {
