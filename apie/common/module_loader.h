@@ -16,8 +16,8 @@
 
 namespace apie {
 
-template <typename T>
-class CommonModuleLoader : public std::enable_shared_from_this<CommonModuleLoader<T>>
+template <typename KeyType, typename T>
+class CommonModuleLoader : public std::enable_shared_from_this<CommonModuleLoader<KeyType, T>>
 {
 public:
 	template <typename T>
@@ -25,8 +25,8 @@ public:
 
 	using WrapperType = T;
 
-	template<class Tuple, std::size_t... Is>
-	friend static inline auto CreateCommonModuleLoaderPtr(uint64_t iId, const Tuple& t, std::index_sequence<Is...>);
+	template<class Key, class Tuple, std::size_t... Is>
+	friend static inline auto CreateCommonModuleLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>);
 
 	~CommonModuleLoader()
 	{
@@ -77,7 +77,7 @@ public:
 private:
 
 	template <typename... Arg>
-	CommonModuleLoader(WrapperType wrapperType, uint64_t iId, Arg&&... a) :
+	CommonModuleLoader(WrapperType wrapperType, KeyType iId, Arg&&... a) :
 		m_wrapperType(wrapperType), m_id(iId)
 	{
 		AppendAll(std::forward<Arg&&>(a)...);
@@ -160,17 +160,17 @@ private:
 	{
 	}
 
-	uint64_t m_id = 0;
+	KeyType m_id;
 	std::vector<std::type_index> m_modules;
 	apie::common::Options m_options;
 
 	WrapperType m_wrapperType;
 };
 
-template<class Tuple, std::size_t... Is>
-static inline auto CreateCommonModuleLoaderPtr(uint64_t iId, const Tuple& t, std::index_sequence<Is...>)
+template<class Key, class Tuple, std::size_t... Is>
+static inline auto CreateCommonModuleLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>)
 {
-	auto pInstance = std::shared_ptr<CommonModuleLoader<Tuple>>(new CommonModuleLoader<Tuple>(t, iId, std::get<Is>(t)...));
+	auto pInstance = std::shared_ptr<CommonModuleLoader<Key, Tuple>>(new CommonModuleLoader<Key, Tuple>(t, iId, std::get<Is>(t)...));
 	return pInstance;
 }
 
