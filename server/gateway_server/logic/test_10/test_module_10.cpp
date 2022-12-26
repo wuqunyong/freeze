@@ -219,7 +219,7 @@ void CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 			return;
 		}
 
-		ptrModuleLoader->loadFromDbLoader(server, loader);
+		ptrModuleLoader->Meta_loadFromDbLoader(server, loader);
 
 		::rpc_msg::CHANNEL accountServer;
 		accountServer.set_realm(apie::Ctx::getThisChannel().realm());
@@ -238,8 +238,8 @@ void CreateUserObj(uint64_t iRoleId, std::function<void(apie::status::Status sta
 					return;
 				}
 
-				ptrModuleLoader->loadFromDbLoader(accountServer, ptrLoader);
-				ptrModuleLoader->loadFromDbDone();
+				ptrModuleLoader->Meta_loadFromDbLoader(accountServer, ptrLoader);
+				ptrModuleLoader->Meta_loadFromDbDone();
 				doneCb(status, ptrModuleLoader);
 			};
 			loader->loadFromDb(accountServer, funObj);
@@ -269,7 +269,7 @@ apie::status::Status TestModule10::ready()
 			rModuleB.incrementValue();
 			sInfo = rModuleB.toString();
 
-			ptrModule->saveToDb();
+			ptrModule->Meta_saveToDb();
 		}
 	};
 	CreateUserObj(30005, doneCb);

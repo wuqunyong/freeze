@@ -59,17 +59,17 @@ public:
 		return m_options.lookup<T>(value);
 	}
 
-	void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<DbLoadComponent> ptrLoad)
+	void Meta_loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<DbLoadComponent> ptrLoad)
 	{
 		loadFromDbLoadImpl(server, ptrLoad, m_wrapperType);
 	}
 
-	void loadFromDbDone()
+	void Meta_loadFromDbDone()
 	{
 		loadFromDbDoneImpl(m_wrapperType);
 	}
 
-	void saveToDb()
+	void Meta_saveToDb()
 	{
 		SaveToDbImpl(m_wrapperType);
 	}
