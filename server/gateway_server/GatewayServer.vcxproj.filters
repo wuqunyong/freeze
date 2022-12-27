@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h">
-      <Filter>pb_msg\business</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
-      <Filter>pb_msg\business</Filter>
-    </ClInclude>
     <ClInclude Include="logic\init_service\gateway_mgr.h">
       <Filter>logic\init_service</Filter>
     </ClInclude>
@@ -28,12 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc">
-      <Filter>pb_msg\business</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
-      <Filter>pb_msg\business</Filter>
-    </ClCompile>
     <ClCompile Include="logic\init_service\gateway_mgr.cpp">
       <Filter>logic\init_service</Filter>
     </ClCompile>
@@ -56,12 +44,6 @@
   <ItemGroup>
     <Filter Include="logic">
       <UniqueIdentifier>{9fc74d54-78ab-468b-86fd-ba95ecfd17e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pb_msg">
-      <UniqueIdentifier>{8e83c96f-53dc-4113-8164-19888ba4b57e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pb_msg\business">
-      <UniqueIdentifier>{30312d97-04c5-43ff-b056-27682ceec89f}</UniqueIdentifier>
     </Filter>
     <Filter Include="logic\init_service">
       <UniqueIdentifier>{c28cdd07-9422-4a05-a727-4aef7162b374}</UniqueIdentifier>
