@@ -143,6 +143,9 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\apie\LibAPie.vcxproj">
+      <Project>{52102a95-e447-4295-b4bb-5f6f4e78ba43}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\lib_pb\LibPB.vcxproj">
       <Project>{f214da96-185e-446d-a208-d20a3bc0d4d1}</Project>
     </ProjectReference>
