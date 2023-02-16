@@ -111,6 +111,13 @@ OUTPUT
 
 
 
+enum TaskState {
+    TASK_OPEN = 0;
+    TASK_IN_PROGRESS = 1;
+    TASK_POST_PONED = 2;
+    TASK_CLOSED = 3;
+    TASK_DONE = 4;
+}
 
 import todolist_pb2 as TodoList
 
