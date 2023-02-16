@@ -29,6 +29,7 @@ logger.addHandler(ch)
 class EnumObj:
     def __init__(self):
         self.sName = ""
+        self.sComment = ""
         self.lField = []
 
     def reset(self):
@@ -39,6 +40,8 @@ class EnumObj:
         return self.sName
     def setName(self, name):
         self.sName = name
+    def setComment(self, comment):
+        self.sComment = comment
     def appendField(self, lValue):
         if len(self.sName) == 0:
             raise Exception("Enum name empty")
@@ -46,6 +49,7 @@ class EnumObj:
         self.lField.append(lValue)
     def getData(self):
         dData = {}
+        dData["commnet"] = self.sComment
         dData["name"] = self.sName
         dData["field"] = self.lField
         return dData
@@ -81,6 +85,11 @@ def Enum_Generator(sName, s):
                             loadObj = EnumObj()
                             bLoading = False
                         loadObj.setName(sCellVal)
+
+                        sComment = s.cell(row, 4).value
+                        sCommentValue = "{}".format(sComment)
+                        loadObj.setComment(sCommentValue)
+
                         bLoading = True
                         break
                     else:
@@ -88,7 +97,11 @@ def Enum_Generator(sName, s):
                 elif isinstance(cellVal, float):
                     sCellVal = cellVal
                     iValue = int(sCellVal)
-                    lField.append(iValue)
+                    if col == 3:
+                        lField.append(iValue)
+                    else:
+                        sValue = "{}".format(iValue)
+                        lField.append(sValue)
                 else:
                     logger.info("row:%s:col:%s|other|" % (row, col), cellVal, type(cellVal))
                     raise Exception("InvalidCellType|row:%s:col:%s|other|" % (row, col), cellVal, type(cellVal))
@@ -107,6 +120,7 @@ def Enum_Generator(sName, s):
         raise
 
     dEnumData = {}
+    dEnumData["file"] = "{}:{}".format(sName, sSheetName)
     dEnumData["list"] = []
     for elems in lLoadedObj:
         dValue = elems.getData()
