@@ -108,3 +108,10 @@ len = template.render(elements=["a", "b", "c"])
 print(len)
 OUTPUT
 3
+
+
+
+
+import todolist_pb2 as TodoList
+
+first_item.state = TodoList.TaskState.Value("TASK_DONE")
