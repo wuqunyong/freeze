@@ -96,3 +96,15 @@ Jinja2 Template
 
 
  vultr
+
+
+ jinja2
+
+ s = "{{elements|length}}"
+
+template = Template(s)
+len = template.render(elements=["a", "b", "c"])
+
+print(len)
+OUTPUT
+3
