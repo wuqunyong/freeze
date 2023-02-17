@@ -580,7 +580,8 @@ void apie::ClientConnection::handleSend(const char *data, size_t size)
 		int rc = bufferevent_write(this->bev, data, size);
 		if (rc != 0)
 		{
-			PIE_FMT_LOG("Exception/Exception",PIE_CYCLE_DAY,PIE_ERROR,"ClientConnection|handleSend Error:{}|{}|{}", rc, size, data);
+			std::string sData(data, size);
+			PIE_FMT_LOG("Exception/Exception",PIE_CYCLE_DAY,PIE_ERROR,"ClientConnection|handleSend Error:{}|{}", rc, sData);
 		}
 		else
 		{
