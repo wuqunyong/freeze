@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <string>
 #include <map>
+#include <format>
+#include <iostream>
+#include <string_view>
+
 
 #include "apie/network/ctx.h"
 
@@ -37,7 +41,7 @@ extern std::map<std::string, LogFile*> cacheMap;
 
 std::string getLogLevelName(int level);
 void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ignoreMerge);
-void pieLog(const char* file, int cycle, int level, const char *fmt, ...);
+void pieLog(const char* file, int cycle, int level, const char* fmt, ...);
 void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...);
 void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...);
 
@@ -52,6 +56,16 @@ bool isChangeFile(LogFile* ptrFile, int cycle);
 void logFileClose();
 
 //void fatalExit(const char* message);
+
+
+template <class... Args>
+void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view fmt, Args&&... args)
+{
+	std::string msg = std::vformat(fmt, std::make_format_args(args...));
+
+	std::string sFileName(fileName.data(), fileName.size());
+	pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str(), false);
+}
 
 
 #ifdef WIN32

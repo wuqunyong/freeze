@@ -18,6 +18,8 @@ int main(int argc, char **argv)
 		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
 	}
 
+	pieFmtLog("test", PIE_CYCLE_HOUR, PIE_PANIC, "ssfs {} sfaaaas {}", "hello", 123);
+
 	std::string configFile = argv[1];
 
 	APieRegisterModule<apie::GatewayMgr>();
