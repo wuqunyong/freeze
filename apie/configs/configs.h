@@ -78,7 +78,7 @@ namespace apie {
 	{
 		bool merge = true;
 		uint16_t level = 0;
-		bool show_pos = false;
+		bool show_pos = true;
 		uint16_t split_size = 128;
 		std::string backup;
 		std::string name;

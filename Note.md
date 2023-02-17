@@ -122,3 +122,8 @@ enum TaskState {
 import todolist_pb2 as TodoList
 
 first_item.state = TodoList.TaskState.Value("TASK_DONE")
+
+getattr(meta_enum,"SectionType").Value("SECTION_INDEX")
+
+test = importlib.import_module("meta_enum_pb2")
+getattr(test,"SectionType").Value("SECTION_INDEX")
