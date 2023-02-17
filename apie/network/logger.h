@@ -25,6 +25,13 @@
 #define PIE_MAX_LOGMSG_LEN    1024*256 /* Default maximum length of syslog messages */
 
 
+// Convert the line macro to a string literal for concatenation in log macros.
+#define DO_STRINGIZE(x) STRINGIZE(x)
+#define STRINGIZE(x) #x
+#define LINE_STRING DO_STRINGIZE(__LINE__)
+#define LOG_PREFIX "[" __FILE__ ":" LINE_STRING "] "
+
+
 struct LogFile
 {
 	FILE * pFile;
@@ -68,18 +75,44 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
 }
 
 
+//template <class... Args>
+//void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string_view fmt, Args&&... args)
+//{
+//	std::string msg = std::vformat(fmt, std::make_format_args(args...));
+//
+//	std::string sFileName(fileName.data(), fileName.size());
+//
+//	if (NULL == apie::CtxSingleton::get().getLogThread())
+//	{
+//		pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str(), false);
+//		return;
+//	}
+//
+//	apie::LogCmd* ptrCmd = new apie::LogCmd;
+//	ptrCmd->sFile = sFileName;
+//	ptrCmd->iCycle = cycle;
+//	ptrCmd->iLevel = level;
+//	ptrCmd->sMsg = msg;
+//	ptrCmd->bIgnoreMore = false;
+//
+//	apie::Command cmd;
+//	cmd.type = apie::Command::async_log;
+//	cmd.args.async_log.ptrData = ptrCmd;
+//	apie::CtxSingleton::get().getLogThread()->push(cmd);
+//}
+
 #ifdef WIN32
 #define PANIC_ABORT(format, ...) do { \
-	std::string formatStr("%s:%d|"); \
+	std::string formatStr(LOG_PREFIX " | "); \
 	formatStr = formatStr + format; \
-	pieLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_PANIC, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
+	pieFmtLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_PANIC, formatStr, __VA_ARGS__); \
 	abort(); \
 } while (0);
 #else
 #define PANIC_ABORT(format, args...) do { \
-	std::string formatStr("%s:%d|"); \
+	std::string formatStr(LOG_PREFIX " | "); \
 	formatStr = formatStr + format; \
-	pieLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_PANIC, formatStr.c_str(), __FILE__, __LINE__, ##args); \
+	pieFmtLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_PANIC, formatStr, ##args); \
 	abort(); \
 } while (0);
 #endif
@@ -90,13 +123,13 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
     bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
-		std::string formatStr("%s:%d|"); \
+		std::string formatStr(LOG_PREFIX " | "); \
 		formatStr = formatStr + format; \
-		pieLog(file, cycle, level, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
+		pieFmtLog(file, cycle, level, formatStr, __VA_ARGS__); \
 	} \
 	else \
 	{ \
-		pieLog(file, cycle, level, format, __VA_ARGS__); \
+		pieFmtLog(file, cycle, level, format, __VA_ARGS__); \
 	} \
 } while (0);
 #else
@@ -104,13 +137,13 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
-		std::string formatStr("%s:%d|"); \
+		std::string formatStr(LOG_PREFIX " | "); \
 		formatStr = formatStr + format; \
-		pieLog(file, cycle, level, formatStr.c_str(), __FILE__, __LINE__, ##args); \
+		pieFmtLog(file, cycle, level, formatStr, ##args); \
 	} \
 	else \
 	{ \
-		pieLog(file, cycle, level, format, ##args); \
+		pieFmtLog(file, cycle, level, format, ##args); \
 	} \
 } while (0);
 #endif
