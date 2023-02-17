@@ -15,10 +15,15 @@ int main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
+		PANIC_ABORT("usage: exe <ConfFile>, Expected: {}, got: {}", 2, argc);
 	}
 
 	pieFmtLog("test", PIE_CYCLE_HOUR, PIE_PANIC, "ssfs {} sfaaaas {}", "hello", 123);
+
+	std::stringstream ss;
+	ss << "fileName";
+
+	PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
 
 	std::string configFile = argv[1];
 

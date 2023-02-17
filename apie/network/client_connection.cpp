@@ -580,7 +580,7 @@ void apie::ClientConnection::handleSend(const char *data, size_t size)
 		int rc = bufferevent_write(this->bev, data, size);
 		if (rc != 0)
 		{
-			PIE_LOG("Exception/Exception",PIE_CYCLE_DAY,PIE_ERROR,"ClientConnection|handleSend Error:%d|%*s",rc,size,data);
+			PIE_FMT_LOG("Exception/Exception",PIE_CYCLE_DAY,PIE_ERROR,"ClientConnection|handleSend Error:{}|{}|{}", rc, size, data);
 		}
 		else
 		{
@@ -721,7 +721,7 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 		int rc = setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char*)&flag, sizeof(int));
 		if (rc != 0)
 		{
-			PIE_LOG("Exception/Exception", PIE_CYCLE_DAY, PIE_WARNING, "processActiveConnect|setsockopt|TCP_NODELAY:%d|%s:%d", rc, ip, iPort);
+			PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_DAY, PIE_WARNING, "processActiveConnect|setsockopt|TCP_NODELAY:{}|{}:{}", rc, ip, iPort);
 		}
 		//assert(rc == 0);
 
@@ -729,7 +729,7 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 		rc = setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, (const char *)&on, sizeof(on));
 		if (rc != 0)
 		{
-			PIE_LOG("Exception/Exception", PIE_CYCLE_DAY, PIE_WARNING, "processActiveConnect|setsockopt|SO_KEEPALIVE:%d|%s:%d", rc, ip, iPort);
+			PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_DAY, PIE_WARNING, "processActiveConnect|setsockopt|SO_KEEPALIVE:{}|{}:{}", rc, ip, iPort);
 		}
 		//assert(rc == 0);
 

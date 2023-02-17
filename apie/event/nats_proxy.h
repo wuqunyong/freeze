@@ -8,6 +8,7 @@
 
 #include "apie/network/logger.h"
 #include "apie/proto/init.h"
+#include "apie/common/enum_to_int.h"
 
 namespace apie {
 namespace event_ns {
@@ -133,7 +134,7 @@ namespace event_ns {
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
-				PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "nats|subscribe|%s|%s|%d", nats_server_.c_str(), sSub.c_str(), status);
+				PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "nats|subscribe|{}|{}|{}", nats_server_.c_str(), sSub.c_str(), apie::toUnderlyingType(status));
 				
 				return status;
 			}

@@ -154,37 +154,6 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
 
 
 #ifdef WIN32
-#define PIE_LOG(file, cycle, level, format, ...) do { \
-    bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
-	if (bShowPos) \
-	{ \
-		std::string formatStr(LOG_PREFIX " | "); \
-		formatStr = formatStr + format; \
-	} \
-	else \
-	{ \
-		std::string formatStr(""); \
-		formatStr = formatStr + format; \
-	} \
-} while (0);
-#else
-#define PIE_LOG(file, cycle, level, format, args...) do { \
-	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
-	if (bShowPos) \
-	{ \
-		std::string formatStr(LOG_PREFIX " | "); \
-		formatStr = formatStr + format; \
-		pieFmtLog(file, cycle, level, formatStr, ##args); \
-	} \
-	else \
-	{ \
-		pieFmtLog(file, cycle, level, format, ##args); \
-	} \
-} while (0);
-#endif
-
-
-#ifdef WIN32
 #define ASYNC_PIE_LOG(file, cycle, level, format, ...) do { \
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \

@@ -72,7 +72,7 @@ namespace hook {
 
 					if (point == HookPoint::HP_Exit)
 					{
-						PIE_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "exit|%s", ss.str().c_str());
+						PIE_FMT_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "exit|{}", ss.str().c_str());
 						continue;
 					}
 
