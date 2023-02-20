@@ -75,31 +75,31 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
 }
 
 
-//template <class... Args>
-//void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string_view fmt, Args&&... args)
-//{
-//	std::string msg = std::vformat(fmt, std::make_format_args(args...));
-//
-//	std::string sFileName(fileName.data(), fileName.size());
-//
-//	if (NULL == apie::CtxSingleton::get().getLogThread())
-//	{
-//		pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str(), false);
-//		return;
-//	}
-//
-//	apie::LogCmd* ptrCmd = new apie::LogCmd;
-//	ptrCmd->sFile = sFileName;
-//	ptrCmd->iCycle = cycle;
-//	ptrCmd->iLevel = level;
-//	ptrCmd->sMsg = msg;
-//	ptrCmd->bIgnoreMore = false;
-//
-//	apie::Command cmd;
-//	cmd.type = apie::Command::async_log;
-//	cmd.args.async_log.ptrData = ptrCmd;
-//	apie::CtxSingleton::get().getLogThread()->push(cmd);
-//}
+template <class... Args>
+void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string_view fmt, Args&&... args)
+{
+	std::string msg = std::vformat(fmt, std::make_format_args(args...));
+
+	std::string sFileName(fileName.data(), fileName.size());
+
+	if (NULL == apie::CtxSingleton::get().getLogThread())
+	{
+		pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str(), false);
+		return;
+	}
+
+	apie::LogCmd* ptrCmd = new apie::LogCmd;
+	ptrCmd->sFile = sFileName;
+	ptrCmd->iCycle = cycle;
+	ptrCmd->iLevel = level;
+	ptrCmd->sMsg = msg;
+	ptrCmd->bIgnoreMore = false;
+
+	apie::Command cmd;
+	cmd.type = apie::Command::async_log;
+	cmd.args.async_log.ptrData = ptrCmd;
+	apie::CtxSingleton::get().getLogThread()->push(cmd);
+}
 
 #ifdef WIN32
 #define PANIC_ABORT(format, ...) do { \
