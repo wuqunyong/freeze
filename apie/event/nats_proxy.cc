@@ -389,14 +389,16 @@ bool NatsManager::unsubscribeChannel(E_NatsType type, const std::string& channel
 void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType msg)
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "msgHandle|threadid:%d|type:%d|%s", iThreadId, type, msg->ShortDebugString().c_str());
+	std::stringstream ss;
+	ss << "msgHandle|ThreadId:" << iThreadId << "type:" << type << "|" << msg->ShortDebugString().c_str();
+
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "{}", ss.str());
 
 	if (apie::CtxSingleton::get().getLogicThread() == nullptr)
 	{
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|LogicThread null|threadid:%d", iThreadId);
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "{}", ss.str());
 		return;
 	}
-
 
 	{
 		std::lock_guard<std::mutex> guard(_sync);
@@ -429,7 +431,7 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 	}
 	default:
 	{
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "msgHandle|invalid type|threadid:%d|type:%d", iThreadId, type);
+		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "{}", ss.str());
 	}
 	}
 
@@ -494,7 +496,11 @@ void NatsManager::runIntervalCallbacks()
 void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg)
 {
 	std::thread::id iThreadId = std::this_thread::get_id();
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Handle_Subscribe|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
+
+	std::stringstream ss;
+	ss << "ThreadId:" << iThreadId;
+
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Handle_Subscribe|{}|{}", ss.str(), msg->ShortDebugString());
 
 	if (msg->has_rpc_request())
 	{
@@ -530,7 +536,7 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 		return;
 	}
 
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "Handle_Subscribe invalid params|threadid:%d|%s", iThreadId, msg->ShortDebugString().c_str());
+	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "Handle_Subscribe invalid params|{}|{}", ss.str(), msg->ShortDebugString());
 }
 
 std::string NATSConnectorBase::GetCombineTopicChannel(const std::string& domains, const std::string& channel)

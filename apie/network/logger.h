@@ -154,13 +154,13 @@ void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
-		std::string formatStr("%s:%d|"); \
+		std::string formatStr(LOG_PREFIX " | "); \
 		formatStr = formatStr + format; \
-		asyncPieLog(file, cycle, level, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
+		asyncPieFmtLog(file, cycle, level, formatStr, __VA_ARGS__); \
 	} \
 	else \
 	{ \
-		asyncPieLog(file, cycle, level, format, __VA_ARGS__); \
+		asyncPieFmtLog(file, cycle, level, format, __VA_ARGS__); \
 	} \
 } while (0);
 #else
@@ -168,13 +168,13 @@ void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
-		std::string formatStr("%s:%d|"); \
+		std::string formatStr(LOG_PREFIX " | "); \
 		formatStr = formatStr + format; \
-		asyncPieLog(file, cycle, level, formatStr.c_str(), __FILE__, __LINE__, ##args); \
+		asyncPieFmtLog(file, cycle, level, formatStr, ##args); \
 	} \
 	else \
 	{ \
-		asyncPieLog(file, cycle, level, format, ##args); \
+		asyncPieFmtLog(file, cycle, level, format, ##args); \
 	} \
 } while (0);
 #endif
