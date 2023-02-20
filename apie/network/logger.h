@@ -129,9 +129,7 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
 	} \
 	else \
 	{ \
-		std::string formatStr(""); \
-		formatStr = formatStr + format; \
-		pieFmtLog(file, cycle, level, formatStr, __VA_ARGS__); \
+		pieFmtLog(file, cycle, level, format, __VA_ARGS__); \
 	} \
 } while (0);
 #else
@@ -145,9 +143,7 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
 	} \
 	else \
 	{ \
-		std::string formatStr(""); \
-		formatStr = formatStr + format; \
-		pieFmtLog(file, cycle, level, formatStr, ##args); \
+		pieFmtLog(file, cycle, level, format, ##args); \
 	} \
 } while (0);
 #endif
