@@ -187,39 +187,39 @@ void pieLog(const char* file, int cycle, int level, const char *fmt, ...)
 	pieLogRaw(file,cycle,level,msg,false);
 }
 
-void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
-{
-	va_list ap;
-	char msg[PIE_MAX_LOGMSG_LEN] = {'\0'};
-
-	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
-	if ((level&0xff) < iConfigLogLevel)
-	{
-		return;
-	}
-
-	va_start(ap, fmt);
-	vsnprintf(msg, sizeof(msg), fmt, ap);
-	va_end(ap);
-
-	if (NULL == apie::CtxSingleton::get().getLogThread())
-	{
-		pieLogRaw(file, cycle, level, msg, false);
-		return;
-	}
-
-	apie::LogCmd* ptrCmd = new apie::LogCmd;
-	ptrCmd->sFile = file;
-	ptrCmd->iCycle = cycle;
-	ptrCmd->iLevel = level;
-	ptrCmd->sMsg = msg;
-	ptrCmd->bIgnoreMore = false;
-
-	apie::Command cmd;
-	cmd.type = apie::Command::async_log;
-	cmd.args.async_log.ptrData = ptrCmd;
-	apie::CtxSingleton::get().getLogThread()->push(cmd);
-}
+//void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
+//{
+//	va_list ap;
+//	char msg[PIE_MAX_LOGMSG_LEN] = {'\0'};
+//
+//	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
+//	if ((level&0xff) < iConfigLogLevel)
+//	{
+//		return;
+//	}
+//
+//	va_start(ap, fmt);
+//	vsnprintf(msg, sizeof(msg), fmt, ap);
+//	va_end(ap);
+//
+//	if (NULL == apie::CtxSingleton::get().getLogThread())
+//	{
+//		pieLogRaw(file, cycle, level, msg, false);
+//		return;
+//	}
+//
+//	apie::LogCmd* ptrCmd = new apie::LogCmd;
+//	ptrCmd->sFile = file;
+//	ptrCmd->iCycle = cycle;
+//	ptrCmd->iLevel = level;
+//	ptrCmd->sMsg = msg;
+//	ptrCmd->bIgnoreMore = false;
+//
+//	apie::Command cmd;
+//	cmd.type = apie::Command::async_log;
+//	cmd.args.async_log.ptrData = ptrCmd;
+//	apie::CtxSingleton::get().getLogThread()->push(cmd);
+//}
 
 void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...)
 {
@@ -350,13 +350,11 @@ void moveFile(std::string from, std::string to)
 	int result = rename(from.c_str(), target.c_str());
 	if (result == 0)
 	{
-		asyncPieLog("move/log", PIE_CYCLE_DAY, PIE_DEBUG, "rename successfully|%s  ->  %s",
-			from.c_str(), target.c_str());
+		asyncPieFmtLog("move/log", PIE_CYCLE_DAY, PIE_DEBUG, "rename successfully|{}  ->  {}", from, target);
 	}
 	else
 	{
-		asyncPieLog("move/log", PIE_CYCLE_DAY, PIE_ERROR, "rename error|%s  ->  %s",
-			from.c_str(), target.c_str());
+		asyncPieFmtLog("move/log", PIE_CYCLE_DAY, PIE_ERROR, "rename error|{}  ->  {}", from, target);
 	}
 }
 

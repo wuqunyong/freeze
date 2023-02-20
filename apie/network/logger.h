@@ -49,7 +49,7 @@ extern std::map<std::string, LogFile*> cacheMap;
 std::string getLogLevelName(int level);
 void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ignoreMerge);
 void pieLog(const char* file, int cycle, int level, const char* fmt, ...);
-void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...);
+//void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...);
 void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...);
 
 LogFile* openFile(std::string file, int cycle);

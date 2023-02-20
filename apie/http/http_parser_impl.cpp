@@ -115,7 +115,7 @@ namespace apie
             
             HttpError error(code, http_errno_description((http_errno)m_parser.http_errno));
 
-			asyncPieLog("Http/parser", PIE_CYCLE_DAY, PIE_ERROR, "parser error %s", error.message.c_str());
+            asyncPieFmtLog("Http/parser", PIE_CYCLE_DAY, PIE_ERROR, "parser error {}", error.message);
             
             onError(error);
 

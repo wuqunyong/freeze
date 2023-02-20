@@ -56,7 +56,7 @@ namespace apie
         struct http_parser_url u;
         if(http_parser_parse_url(url.c_str(), url.size(), 0, &u) != 0)
         {
-			asyncPieLog("Http", PIE_CYCLE_DAY, PIE_ERROR, "parseurl error %s", url.c_str());
+            asyncPieFmtLog("Http", PIE_CYCLE_DAY, PIE_ERROR, "parseurl error {}", url.c_str());
             return;    
         }
 
