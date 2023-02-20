@@ -48,9 +48,9 @@ extern std::map<std::string, LogFile*> cacheMap;
 
 std::string getLogLevelName(int level);
 void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ignoreMerge);
-void pieLog(const char* file, int cycle, int level, const char* fmt, ...);
+//void pieLog(const char* file, int cycle, int level, const char* fmt, ...);
 //void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...);
-void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...);
+//void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...);
 
 LogFile* openFile(std::string file, int cycle);
 void closeFile(LogFile* ptrFile);
@@ -78,6 +78,12 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
 template <class... Args>
 void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string_view fmt, Args&&... args)
 {
+	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
+	if ((level & 0xff) < iConfigLogLevel)
+	{
+		return;
+	}
+
 	std::string msg = std::vformat(fmt, std::make_format_args(args...));
 
 	std::string sFileName(fileName.data(), fileName.size());
@@ -100,6 +106,38 @@ void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string
 	cmd.args.async_log.ptrData = ptrCmd;
 	apie::CtxSingleton::get().getLogThread()->push(cmd);
 }
+
+template <class... Args>
+void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, std::string_view fmt, Args&&... args)
+{
+	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
+	if ((level & 0xff) < iConfigLogLevel)
+	{
+		return;
+	}
+
+	std::string msg = std::vformat(fmt, std::make_format_args(args...));
+
+	std::string sFileName(fileName.data(), fileName.size());
+	if (NULL == apie::CtxSingleton::get().getLogThread())
+	{
+		pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str(), true);
+		return;
+	}
+
+	apie::LogCmd* ptrCmd = new apie::LogCmd;
+	ptrCmd->sFile = sFileName;
+	ptrCmd->iCycle = cycle;
+	ptrCmd->iLevel = level;
+	ptrCmd->sMsg = msg;
+	ptrCmd->bIgnoreMore = true;
+
+	apie::Command cmd;
+	cmd.type = apie::Command::async_log;
+	cmd.args.async_log.ptrData = ptrCmd;
+	apie::CtxSingleton::get().getLogThread()->push(cmd);
+}
+
 
 #ifdef WIN32
 #define PANIC_ABORT(format, ...) do { \
@@ -184,13 +222,13 @@ void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
-		std::string formatStr("%s:%d|"); \
+		std::string formatStr(LOG_PREFIX " | "); \
 		formatStr = formatStr + format; \
-		asyncPieLogIgnoreMerge(file, cycle, level, formatStr.c_str(), __FILE__, __LINE__, __VA_ARGS__); \
+		asyncPieFmtLogIgnoreMerge(file, cycle, level, formatStr, __VA_ARGS__); \
 	} \
 	else \
 	{ \
-		asyncPieLogIgnoreMerge(file, cycle, level, format, __VA_ARGS__); \
+		asyncPieFmtLogIgnoreMerge(file, cycle, level, format, __VA_ARGS__); \
 	} \
 } while (0);
 #else
@@ -198,13 +236,13 @@ void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
-		std::string formatStr("%s:%d|"); \
+		std::string formatStr(LOG_PREFIX " | "); \
 		formatStr = formatStr + format; \
-		asyncPieLogIgnoreMerge(file, cycle, level, formatStr.c_str(), __FILE__, __LINE__, ##args); \
+		asyncPieFmtLogIgnoreMerge(file, cycle, level, formatStr, ##args); \
 	} \
 	else \
 	{ \
-		asyncPieLogIgnoreMerge(file, cycle, level, format, ##args); \
+		asyncPieFmtLogIgnoreMerge(file, cycle, level, format, ##args); \
 	} \
 } while (0);
 #endif

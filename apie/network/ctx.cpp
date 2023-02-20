@@ -998,14 +998,14 @@ void Ctx::waitForShutdown()
 		int errCount = 0;
 		bool quitFlag = false;
 
-		pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "handleSigWait");
+		pieFmtLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "handleSigWait");
 
 		while (!quitFlag)
 		{
 			int status = sigwait(&g_SigSet, &actualSignal);
 			if (status != 0)
 			{
-				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Got error %d from sigwait", status);
+				pieFmtLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Got error {} from sigwait", status);
 				if (errCount++ > 5)
 				{
 					PANIC_ABORT("sigwait error exit");
@@ -1014,7 +1014,7 @@ void Ctx::waitForShutdown()
 			}
 
 			errCount = 0;
-			pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Main thread: Got signal %d|%s",
+			pieFmtLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Main thread: Got signal {}|{}",
 				actualSignal, strsignal(actualSignal));
 
 			switch (actualSignal) {
@@ -1023,7 +1023,7 @@ void Ctx::waitForShutdown()
 			case SIGHUP:
 			{
 				quitFlag = true;
-				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
+				pieFmtLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
 				break;
 			}
 			case SIGUSR1:
@@ -1038,7 +1038,7 @@ void Ctx::waitForShutdown()
 				break;
 			}
 			default:
-				pieLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "re sigwait");
+				pieFmtLog("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "re sigwait");
 				break;
 			}
 		}

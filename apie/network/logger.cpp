@@ -169,23 +169,23 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 }
 
 //file="directory/filename"
-void pieLog(const char* file, int cycle, int level, const char *fmt, ...)
-{
-	va_list ap;
-	char msg[PIE_MAX_LOGMSG_LEN];
-
-	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
-	if ((level&0xff) < iConfigLogLevel)
-	{
-		return;
-	}
-
-	va_start(ap, fmt);
-	vsnprintf(msg, sizeof(msg), fmt, ap);
-	va_end(ap);
-
-	pieLogRaw(file,cycle,level,msg,false);
-}
+//void pieLog(const char* file, int cycle, int level, const char *fmt, ...)
+//{
+//	va_list ap;
+//	char msg[PIE_MAX_LOGMSG_LEN];
+//
+//	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
+//	if ((level&0xff) < iConfigLogLevel)
+//	{
+//		return;
+//	}
+//
+//	va_start(ap, fmt);
+//	vsnprintf(msg, sizeof(msg), fmt, ap);
+//	va_end(ap);
+//
+//	pieLogRaw(file,cycle,level,msg,false);
+//}
 
 //void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...)
 //{
@@ -221,39 +221,39 @@ void pieLog(const char* file, int cycle, int level, const char *fmt, ...)
 //	apie::CtxSingleton::get().getLogThread()->push(cmd);
 //}
 
-void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...)
-{
-	va_list ap;
-	char msg[PIE_MAX_LOGMSG_LEN] = { '\0' };
-
-	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
-	if ((level & 0xff) < iConfigLogLevel)
-	{
-		return;
-	}
-
-	va_start(ap, fmt);
-	vsnprintf(msg, sizeof(msg), fmt, ap);
-	va_end(ap);
-
-	if (NULL == apie::CtxSingleton::get().getLogThread())
-	{
-		pieLogRaw(file, cycle, level, msg, true);
-		return;
-	}
-
-	apie::LogCmd* ptrCmd = new apie::LogCmd;
-	ptrCmd->sFile = file;
-	ptrCmd->iCycle = cycle;
-	ptrCmd->iLevel = level;
-	ptrCmd->sMsg = msg;
-	ptrCmd->bIgnoreMore = true;
-
-	apie::Command cmd;
-	cmd.type = apie::Command::async_log;
-	cmd.args.async_log.ptrData = ptrCmd;
-	apie::CtxSingleton::get().getLogThread()->push(cmd);
-}
+//void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...)
+//{
+//	va_list ap;
+//	char msg[PIE_MAX_LOGMSG_LEN] = { '\0' };
+//
+//	int iConfigLogLevel = apie::CtxSingleton::get().getConfigs()->log.level;
+//	if ((level & 0xff) < iConfigLogLevel)
+//	{
+//		return;
+//	}
+//
+//	va_start(ap, fmt);
+//	vsnprintf(msg, sizeof(msg), fmt, ap);
+//	va_end(ap);
+//
+//	if (NULL == apie::CtxSingleton::get().getLogThread())
+//	{
+//		pieLogRaw(file, cycle, level, msg, true);
+//		return;
+//	}
+//
+//	apie::LogCmd* ptrCmd = new apie::LogCmd;
+//	ptrCmd->sFile = file;
+//	ptrCmd->iCycle = cycle;
+//	ptrCmd->iLevel = level;
+//	ptrCmd->sMsg = msg;
+//	ptrCmd->bIgnoreMore = true;
+//
+//	apie::Command cmd;
+//	cmd.type = apie::Command::async_log;
+//	cmd.args.async_log.ptrData = ptrCmd;
+//	apie::CtxSingleton::get().getLogThread()->push(cmd);
+//}
 
 LogFile* openFile(std::string file, int cycle)
 {
