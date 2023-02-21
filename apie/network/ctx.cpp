@@ -571,9 +571,6 @@ void Ctx::init(const std::string& configFile)
 		}
 		this->m_ptrConfig = ptrConfig;
 
-		auto sLogName = apie::CtxSingleton::get().getConfigs()->log.name + "-" + apie::Ctx::logPostfix();
-		Ctx::SetLogName(sLogName);
-
 		if (this->getConfigs()->daemon)
 		{
 			this->daemonize();
@@ -582,6 +579,10 @@ void Ctx::init(const std::string& configFile)
 		uint32_t pid = apie::api::OsSysCallsSingleton::get().getCurProcessId();
 		snprintf(timebuf, sizeof(timebuf), "%s-%d", m_launchTime.c_str(), pid);
 		s_log_postfix = timebuf;
+
+		auto sLogName = apie::CtxSingleton::get().getConfigs()->log.name + "-" + apie::Ctx::logPostfix();
+		Ctx::SetLogName(sLogName);
+
 
 		PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "config:{}", configFile.c_str());
 
