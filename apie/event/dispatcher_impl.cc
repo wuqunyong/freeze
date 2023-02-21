@@ -1018,7 +1018,7 @@ void DispatcherImpl::handleRotate(time_t cutTime)
 
 void DispatcherImpl::handleAsyncLog(LogCmd* ptrCmd)
 {
-	pieLogRaw(ptrCmd->sFile.c_str(), ptrCmd->iCycle, ptrCmd->iLevel, ptrCmd->sMsg.c_str(), ptrCmd->bIgnoreMerge);
+	pieLogRaw(ptrCmd->sFile.c_str(), ptrCmd->iCycle, ptrCmd->iLevel, ptrCmd->sMsg.c_str());
 }
 
 void DispatcherImpl::handleMetric(MetricData* ptrCmd)

@@ -70,7 +70,7 @@ std::string getLogLevelName(int level)
 	return sLevelName;
 }
 
-void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ignoreMerge)
+void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 {
 	// 多线程，同时访问所以要加锁
 	assert(file != NULL);

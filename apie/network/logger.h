@@ -51,7 +51,7 @@ struct LogFile
 extern std::map<std::string, LogFile*> cacheMap;
 
 std::string getLogLevelName(int level);
-void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ignoreMerge);
+void pieLogRaw(const char* file, int cycle, int level, const char* msg);
 //void pieLog(const char* file, int cycle, int level, const char* fmt, ...);
 //void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...);
 //void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...);
@@ -75,7 +75,7 @@ void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view
 	std::string msg = std::vformat(fmt, std::make_format_args(args...));
 
 	std::string sFileName(fileName.data(), fileName.size());
-	pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str(), false);
+	pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str());
 }
 
 
@@ -94,7 +94,7 @@ void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string
 
 	if (NULL == apie::CtxSingleton::get().getLogThread())
 	{
-		pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str(), false);
+		pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str());
 		return;
 	}
 
@@ -125,7 +125,7 @@ void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, 
 	std::string sFileName(fileName.data(), fileName.size());
 	if (NULL == apie::CtxSingleton::get().getLogThread())
 	{
-		pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str(), true);
+		pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str());
 		return;
 	}
 
