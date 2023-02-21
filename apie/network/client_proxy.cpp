@@ -32,7 +32,7 @@ ClientProxy::ClientProxy()
 	auto reconnectCb = [this](){
 		std::stringstream ss;
 		ss << "reconnect|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> " << "peerIp:" << this->m_ip << ":" << this->m_port;
-		ASYNC_PIE_LOG("ClientProxy", PIE_CYCLE_DAY, PIE_NOTICE, "reconnect|m_reconnectTimes:%d|%s", m_reconnectTimes, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy|reconnect|m_reconnectTimes:{}|{}", m_reconnectTimes, ss.str().c_str());
 
 		this->reconnect(); 
 		if (this->isConnectted())
@@ -328,7 +328,7 @@ void ClientProxy::onConnect(uint32_t iResult)
 {
 	std::stringstream ss;
 	ss << "recv|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> "<< "peerIp:" << this->m_ip << ":" << this->m_port << ",iResult:" << iResult;
-	ASYNC_PIE_LOG("ClientProxy/onConnect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy/onConnect|{}", ss.str().c_str());
 
 	if (iResult == 0)
 	{
@@ -358,7 +358,7 @@ void ClientProxy::onPassiveClose(uint32_t iResult, const std::string& sInfo, uin
 	std::stringstream ss;
 	ss << "recv|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port 
 		<< ",iResult:" << iResult << ",sInfo:" << sInfo << ",iActiveClose:" << iActiveClose;
-	ASYNC_PIE_LOG("ClientProxy/onPassiveClose", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy/onPassiveClose|{}", ss.str().c_str());
 
 	this->m_hadEstablished = CONNECT_CLOSE;
 
@@ -414,7 +414,7 @@ int ClientProxy::sendConnect()
 	std::stringstream ss;
 	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port
 		<<",reconnectTimes:" << this->m_reconnectTimes;
-	ASYNC_PIE_LOG("ClientProxy/connect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy/connect|{}", ss.str().c_str());
 
 	return 0;
 }
@@ -464,7 +464,7 @@ std::shared_future<std::shared_ptr<service_discovery::ConnectDialResult>> Client
 	std::stringstream ss;
 	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port
 		<< ",reconnectTimes:" << this->m_reconnectTimes;
-	ASYNC_PIE_LOG("ClientProxy/sync_connect", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy/sync_connect|{}", ss.str().c_str());
 
 
 	return ptrSync->getFuture();
@@ -492,7 +492,7 @@ void ClientProxy::close()
 {
 	std::stringstream ss;
 	ss << "close|SerialNum:" << this->m_curSerialNum << "|ip:" << this->m_localIp << " -> "<< "peerIp:" << this->m_ip << ":" << this->m_port;
-	ASYNC_PIE_LOG("ClientProxy/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy/close|{}", ss.str().c_str());
 
 	ClientProxy::unregisterClientProxy(this->m_curSerialNum);
 }
@@ -507,7 +507,7 @@ void ClientProxy::onRecvPackage(uint64_t iSerialNum, ::google::protobuf::Message
 {
 	std::stringstream ss;
 	ss << "iSerialNum:" << iSerialNum << ",Message:" << ptrMsg->ShortDebugString();
-	ASYNC_PIE_LOG("ClientProxy/onRecvPackage", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy/onRecvPackage|{}", ss.str().c_str());
 }
 
 bool ClientProxy::registerClientProxy(std::shared_ptr<ClientProxy> ptrClient)

@@ -62,7 +62,7 @@ bool CopyFile(const std::string &from, const std::string &to) {
   if (!src) {
 	std::stringstream ss;
 	ss << "Source path doesn't exist: " << from;
-	ASYNC_PIE_LOG("file:%s", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_ERROR, "file:{}", ss.str());
     return false;
   }
 
@@ -70,7 +70,7 @@ bool CopyFile(const std::string &from, const std::string &to) {
   if (!dst) {
 	std::stringstream ss;
 	ss << "Target path is not writable: " << to;
-	ASYNC_PIE_LOG("file:%s", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_ERROR, "file:{}", ss.str());
     return false;
   }
 

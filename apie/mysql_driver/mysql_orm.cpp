@@ -251,7 +251,7 @@ mysql_proxy_msg::MysqlUpdateRequest DeclarativeBase::generateUpdate()
 		std::stringstream ss;
 		ss << "invalidUpdate|table:" << m_table.getTable() << "|fieldSize:" << updateRequest.fields_size();
 
-		ASYNC_PIE_LOG("db/mysql", PIE_CYCLE_DAY, PIE_WARNING, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_WARNING, "mysql|{}", ss.str().c_str());
 		//throw std::invalid_argument(ss.str());
 	}
 

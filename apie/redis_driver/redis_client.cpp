@@ -15,7 +15,7 @@ namespace apie {
 		m_password(password),
 		m_cb(cb)
 	{
-		ASYNC_PIE_LOG("Redis/RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, "ctor|key:%d-%d", (uint32_t)std::get<0>(key), std::get<1>(key));
+		ASYNC_PIE_LOG(PIE_NOTICE, "Redis/RedisClient|ctor|key:{}-{}", (uint32_t)std::get<0>(key), std::get<1>(key));
 
 		auto timerCb = [this]() {
 			if (this->client().is_connected())
@@ -26,7 +26,7 @@ namespace apie {
 
 			std::stringstream ss;
 			ss << "host:" << m_host << "|port:" << m_port << "|is_reconnecting:" << this->client().is_reconnecting();
-			ASYNC_PIE_LOG("Redis/ReconnectTimer", PIE_CYCLE_DAY, PIE_WARNING, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_WARNING, "Redis/ReconnectTimer|{}", ss.str().c_str());
 
 			if (this->getState() == RS_Closed)
 			{
@@ -50,7 +50,7 @@ namespace apie {
 
 	RedisClient::~RedisClient()
 	{
-		ASYNC_PIE_LOG("Redis/RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, "destructor|key:%d-%d", (uint32_t)std::get<0>(m_key), std::get<1>(m_key));
+		ASYNC_PIE_LOG(PIE_NOTICE, "Redis/RedisClient|destructor|key:{}-{}", (uint32_t)std::get<0>(m_key), std::get<1>(m_key));
 
 		this->disableReconnectTimer();
 
@@ -84,7 +84,7 @@ namespace apie {
 
 			std::stringstream ss;
 			ss << "host:" << host << "|port:" << port << "|status:" << (uint32_t)status;
-			ASYNC_PIE_LOG("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_NOTICE, "Redis/Redis_ConnectCb|{}", ss.str().c_str());
 
 			switch (status)
 			{
@@ -113,7 +113,7 @@ namespace apie {
 
 						std::stringstream ss;
 						ss << "host:" << host << "|port:" << port << "|auth shared_this null";
-						ASYNC_PIE_LOG("Redis/Redis_ConnectCb", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+						ASYNC_PIE_LOG(PIE_ERROR, "Redis/Redis_ConnectCb|{}", ss.str().c_str());
 
 						PANIC_ABORT(ss.str().c_str());
 						return;
@@ -135,7 +135,7 @@ namespace apie {
 					{
 						std::stringstream ss;
 						ss << "redis reply:" << reply.as_string();
-						ASYNC_PIE_LOG("Redis/Redis_Auth", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
+						ASYNC_PIE_LOG(PIE_NOTICE, "Redis/Redis_Auth|{}", ss.str().c_str());
 
 						shared_this->setAuth(RA_Ok);
 						shared_this->setState(RS_Established);

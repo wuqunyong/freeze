@@ -28,7 +28,7 @@ apie::status::Status TestModule10::init()
 	std::stringstream ss;
 	ss << "TestModule10 init";
 	std::cout << ss.str() << std::endl;
-	ASYNC_PIE_LOG("ModuleLoad", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ModuleLoad|{}", ss.str().c_str());
 
 	return { apie::status::StatusCode::OK, "" };
 }
@@ -38,7 +38,7 @@ apie::status::Status TestModule10::start()
 	std::stringstream ss;
 	ss << "TestModule10 start";
 	std::cout << ss.str() << std::endl;
-	ASYNC_PIE_LOG("ModuleLoad", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ModuleLoad|{}", ss.str().c_str());
 
 	return { apie::status::StatusCode::OK, "" };
 }
@@ -256,7 +256,7 @@ apie::status::Status TestModule10::ready()
 	std::stringstream ss;
 	ss << "TestModule10 ready";
 	std::cout << ss.str() << std::endl;
-	ASYNC_PIE_LOG("ModuleLoad", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ModuleLoad|{}", ss.str().c_str());
 
 	//decltype(CreateLoadInstance(0)) aTest = CreateLoadInstance(123);
 
@@ -314,7 +314,7 @@ apie::status::Status TestModule10::exit()
 	std::stringstream ss;
 	ss << "TestModule10 exit";
 	std::cout << ss.str() << std::endl;
-	ASYNC_PIE_LOG("ModuleLoad", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ModuleLoad|{}", ss.str().c_str());
 
 	return { apie::status::StatusCode::OK, "" };
 }

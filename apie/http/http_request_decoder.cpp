@@ -124,7 +124,7 @@ namespace apie
 
 		std::string tmp = ss.str();
 		apie::ReplaceStrAll(tmp, "\r\n", "@r@n");
-		ASYNC_PIE_LOG("http/request", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", tmp.c_str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "http/request|{}", tmp.c_str());
 
 		char* ptrDecode = apie::URLDecode(m_request_ptr->query.c_str());
 		if (ptrDecode != NULL)
@@ -133,7 +133,7 @@ namespace apie
 			free(ptrDecode);
 		}
 		
-		ASYNC_PIE_LOG("http/request", PIE_CYCLE_HOUR, PIE_NOTICE, "query decode:%s", m_request_ptr->query.c_str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "http/request|query decode:{}", m_request_ptr->query.c_str());
 
 		CtxSingleton::get().getLogicThread()->push(cmd);
 

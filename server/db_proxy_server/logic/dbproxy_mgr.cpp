@@ -133,7 +133,7 @@ apie::status::Status DBProxyMgr::ready()
 	std::stringstream ss;
 	ss << "Server Ready!";
 	std::cout << ss.str() << std::endl;
-	ASYNC_PIE_LOG("ServerStatus", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ServerStatus|{}", ss.str().c_str());
 
 	return { apie::status::StatusCode::OK, "" };
 }

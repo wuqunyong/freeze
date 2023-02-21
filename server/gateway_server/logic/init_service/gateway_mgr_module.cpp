@@ -47,7 +47,7 @@ void GatewayMgrModule::handleDefaultOpcodes(MessageInfo info, const std::string&
 	auto ptrGatewayRole = APieGetModule<GatewayMgr>()->findGatewayRoleBySerialNum(info.iSessionId);
 	if (ptrGatewayRole == nullptr)
 	{
-		ASYNC_PIE_LOG("handleDefaultOpcodes", PIE_CYCLE_DAY, PIE_ERROR, "Not Login|serialNum:%lld|opcodes:%d", info.iSessionId, info.iOpcode);
+		ASYNC_PIE_LOG(PIE_ERROR, "handleDefaultOpcodes|Not Login|serialNum:{}|opcodes:{}", info.iSessionId, info.iOpcode);
 		return;
 	}
 
@@ -227,7 +227,7 @@ void GatewayMgrModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SE
 	std::stringstream ss;
 
 	ss << "topic:" << ",refMsg:" << msg->ShortDebugString();
-	ASYNC_PIE_LOG("GatewayMgr/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "GatewayMgr/onServerPeerClose|{}", ss.str().c_str());
 
 	uint64_t iSerialNum = msg->serial_num();
 

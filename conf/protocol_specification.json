@@ -17,5 +17,15 @@
         "type": "proto.notify"
       }]
     }]
+  }],
+  "route": [{
+    "node_type": 1,
+    "filter": [{
+      "input_opcode": [1, 2, 3],
+      "output_destination": {
+        "type": 1,
+        "id": 1
+      }
+    }]
   }]
 }

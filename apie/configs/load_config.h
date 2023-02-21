@@ -99,7 +99,7 @@ bool LoadConfig<T>::load(const std::string& content)
         std::stringstream ss;
         ss << "load config error|fileName:" << name_ << "|exception:" << e.what();                                                                                                                         \
         
-        ASYNC_PIE_LOG("load_config", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+        ASYNC_PIE_LOG(PIE_ERROR, "load_config:{}", ss.str());
 
         return false;
     }
@@ -119,7 +119,7 @@ bool LoadConfig<T>::reload(const std::string& content)
 		std::stringstream ss;
 		ss << "reload config error|fileName:" << name_ << "|exception:" << e.what();                                                                                                                         \
 
-		ASYNC_PIE_LOG("load_config", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "load_config|{}", ss.str());
 
         return false;
     }

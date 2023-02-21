@@ -85,19 +85,19 @@ namespace event_ns {
 					status = natsSubscription_Unsubscribe(nats_subscription_);
 					if (status != NATS_OK) 
 					{
-						ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "Failed to unsubscribe");
+						ASYNC_PIE_LOG(PIE_NOTICE, "nats/proxy|Failed to unsubscribe");
 					}
 
 					status = natsSubscription_Drain(nats_subscription_);
 					if (status != NATS_OK) 
 					{
-						ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "Failed to drain subscription");
+						ASYNC_PIE_LOG(PIE_NOTICE, "nats/proxy|Failed to drain subscription");
 					}
 
 					status = natsSubscription_WaitForDrainCompletion(nats_subscription_, 1000);
 					if (status != NATS_OK) 
 					{
-						ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "Failed to wait for subscription drain");
+						ASYNC_PIE_LOG(PIE_NOTICE, "nats/proxy|Failed to wait for subscription drain");
 					}
 					// Called only here, because it needs to wait for the natsSubscription_WaitForDrainCompletion
 					natsSubscription_Destroy(nats_subscription_);
@@ -150,7 +150,7 @@ namespace event_ns {
 				{
 					std::stringstream ss;
 					ss << "topic:" << sub_topic_ << "timeout subscription";
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "handleMSG|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|handleMSG|{}", ss.str().c_str());
 					return;
 				}
 
@@ -163,7 +163,7 @@ namespace event_ns {
 				{
 					std::stringstream ss;
 					ss << "topic:" << sub_topic_ << "Failed to parse message";
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "handleMSG|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|handleMSG|{}", ss.str().c_str());
 
 					natsMsg_Destroy(msg);
 					return;
@@ -177,7 +177,7 @@ namespace event_ns {
 				{
 					std::stringstream ss;
 					ss << "Dropping message (no handler registered): " << parsed_msg->DebugString();
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_WARNING, "handleMSG|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_WARNING, "nats/proxy|handleMSG|{}", ss.str().c_str());
 				}
 
 				natsMsg_Destroy(msg);
@@ -195,7 +195,7 @@ namespace event_ns {
 					std::stringstream ss;
 					ss << "Not connected to NATS";
 
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "handlePublish|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|handlePublish|{}", ss.str().c_str());
 					return false;
 				}
 
@@ -211,12 +211,12 @@ namespace event_ns {
 				{
 					std::stringstream ss;
 					ss << "Failed to publish to NATS, nats_status=" << nats_status;
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "handlePublish|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|handlePublish|{}", ss.str().c_str());
 
 					return false;
 				}
 
-				ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Channel:%s|Publish|%s", sPub.c_str(), serialized_msg.c_str());
+				ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Channel:{}|Publish|{}", sPub.c_str(), serialized_msg.c_str());
 
 				return true;
 			}
@@ -228,7 +228,7 @@ namespace event_ns {
 					std::stringstream ss;
 					ss << "Not connected to NATS";
 
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "subscribeChannel|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|subscribeChannel|{}", ss.str().c_str());
 					return false;
 				}
 
@@ -237,7 +237,7 @@ namespace event_ns {
 				{
 					std::stringstream ss;
 					ss << "duplicate subscribe, name=" << channel;
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "subscribeChannel|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|subscribeChannel|{}", ss.str().c_str());
 					return true;
 				}
 				
@@ -253,7 +253,7 @@ namespace event_ns {
 				{
 					std::stringstream ss;
 					ss << "Failed to natsConnection_Subscribe, nats_status=" << status << ", name=" << channel;
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "subscribeChannel|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|subscribeChannel|{}", ss.str().c_str());
 
 					return false;
 				}
@@ -269,7 +269,7 @@ namespace event_ns {
 					{
 						std::stringstream ss;
 						ss << "Failed to natsSubscription_Unsubscribe, nats_status=" << status << ", name=" << channel;
-						ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "unsubscribeChannel|%s", ss.str().c_str());
+						ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|unsubscribeChannel|{}", ss.str().c_str());
 					}
 					natsSubscription_Destroy(ite->second);
 					dynamic_sub_.erase(ite);
@@ -299,7 +299,7 @@ namespace event_ns {
 				{
 					std::stringstream ss;
 					ss << "nats_connection_ nullptr";
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "isConnect|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|isConnect|{}", ss.str().c_str());
 
 					return false;
 				}
@@ -309,7 +309,7 @@ namespace event_ns {
 				{
 					std::stringstream ss;
 					ss << "status:" << connStatus;
-					ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "isConnect|%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|isConnect|{}", ss.str().c_str());
 
 					return false;
 				}

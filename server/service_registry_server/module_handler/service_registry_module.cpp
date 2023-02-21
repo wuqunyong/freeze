@@ -35,7 +35,7 @@ void ServiceRegistryModule::Cmd_showProvider(::pubsub::LOGIC_CMD& cmd)
 		ss << "--> " << "addTime:" << items.second.addTime << "|modifiedTime:" << items.second.modifyTime << "|node:" << items.second.instance.ShortDebugString() << std::endl;
 	}
 
-	ASYNC_PIE_LOG("ServiceRegistryModule/show_provider", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ServiceRegistryModule/show_provider:{}", ss.str().c_str());
 
 }
 
@@ -62,7 +62,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 		response->set_status_code(opcodes::SC_Discovery_AuthError);
 
 		ss << ",auth:error";
-		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
 		return { apie::status::StatusCode::OK, "" };
 	}
 
@@ -73,7 +73,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 		response->set_status_code(opcodes::SC_Discovery_InvalidPoint);
 
 		ss << ",invalid node";
-		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
 		return { apie::status::StatusCode::OK, "" };
 	}
 
@@ -87,11 +87,11 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 		response->set_status_code(opcodes::SC_Discovery_DuplicateNode);
 
 		ss << ",node:duplicate";
-		ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
 		return { apie::status::StatusCode::OK, "" };
 	}
 	
-	ASYNC_PIE_LOG("SelfRegistration/handleRequestRegisterInstance", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_DEBUG, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
 
 	response->set_status_code(::opcodes::StatusCode::SC_Ok);
 	response->set_listeners_config(nodeOpt.value().get_listeners_config());
@@ -122,7 +122,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestHeartbeat(MessageInfo 
 		response->set_status_code(opcodes::SC_Discovery_Unregistered);
 
 		ss << "node:Unregistered";
-		ASYNC_PIE_LOG("SelfRegistration/handleRequestHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestHeartbeat|{}", ss.str().c_str());
 		return { apie::status::StatusCode::OK, "" };
 	}
 
@@ -134,7 +134,7 @@ void ServiceRegistryModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsu
 {
 	std::stringstream ss;
 	ss << "topic:"<< ",refMsg:" << msg->ShortDebugString();
-	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "SelfRegistration/onServerPeerClose|{}", ss.str().c_str());
 
 	uint64_t iSerialNum = msg->serial_num();
 	bool bChanged = APieGetModule<apie::ServiceRegistry>()->deleteBySerialNum(iSerialNum);

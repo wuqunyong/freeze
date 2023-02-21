@@ -32,7 +32,7 @@ namespace apie {
 		auto findIte = m_cmd.find(name);
 		if (findIte != m_cmd.end())
 		{
-			ASYNC_PIE_LOG("logic_cmd", PIE_CYCLE_DAY, PIE_ERROR, "duplicate|registerOnCmd:%s", name.c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "logic_cmd|duplicate|registerOnCmd:{}", name);
 			return false;
 		}
 
@@ -80,7 +80,7 @@ namespace apie {
 			ss << items.second.desc << std::endl;
 		}
 
-		ASYNC_PIE_LOG("logic_cmd", PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_DEBUG, "logic_cmd:{}", ss.str().c_str());
 	}
 
 	void LogicCmdHandler::onReload(::pubsub::LOGIC_CMD& cmd)

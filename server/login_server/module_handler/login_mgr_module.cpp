@@ -45,7 +45,7 @@ void LoginMgrModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SERV
 	std::stringstream ss;
 
 	ss << "topic:" << ",refMsg:" << msg->ShortDebugString();
-	ASYNC_PIE_LOG("LoginMgr/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "LoginMgr/onServerPeerClose|{}", ss.str().c_str());
 }
 
 

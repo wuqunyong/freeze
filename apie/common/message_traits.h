@@ -90,7 +90,7 @@ InsertToDb(::rpc_msg::CHANNEL server, T& dbObj, InsertToDbCB cb)
 
 		std::stringstream ss;
 		ss << response->ShortDebugString();
-		ASYNC_PIE_LOG("mysql_insert", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_DEBUG, "mysql_insert|{}", ss.str());
 
 		if (cb)
 		{
@@ -126,7 +126,7 @@ DeleteFromDb(::rpc_msg::CHANNEL server, T& dbObj, DeleteFromDbCB cb)
 
 		std::stringstream ss;
 		ss << response->ShortDebugString();
-		ASYNC_PIE_LOG("mysql_delete", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_DEBUG, "mysql_delete|{}", ss.str());
 
 		if (cb)
 		{
@@ -169,7 +169,7 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 
 		std::stringstream ss;
 		ss << response->ShortDebugString();
-		ASYNC_PIE_LOG("mysql_update", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_DEBUG, "mysql_update|{}", ss.str());
 
 		if (cb)
 		{
@@ -199,7 +199,7 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 
 		std::stringstream ss;
 		ss << response->ShortDebugString();
-		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_DEBUG, "mysql_query|{}", ss.str());
 
 		apie::status::Status newStatus;
 		bool bResult = dbObj.loadFromPbCheck(*response);
@@ -261,7 +261,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 
 		std::stringstream ss;
 		ss << response->ShortDebugString();
-		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_DEBUG, "mysql_query|{}", ss.str());
 
 		apie::status::Status newStatus;
 
@@ -328,7 +328,7 @@ LoadFromDbByQueryAll(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T
 
 		std::stringstream ss;
 		ss << response->ShortDebugString();
-		ASYNC_PIE_LOG("mysql_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_DEBUG, "mysql_query|{}", ss.str());
 
 		apie::status::Status newStatus;
 
@@ -489,7 +489,7 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 
 		std::stringstream ss;
 		ss << response->ShortDebugString();
-		ASYNC_PIE_LOG("mysql_multi_query", PIE_CYCLE_DAY, PIE_DEBUG, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_DEBUG, "mysql_multi_query|{}", ss.str());
 
 
 		if (response->results_size() != std::tuple_size<decltype(tupleData)>::value)

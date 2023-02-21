@@ -103,13 +103,13 @@ public:
 
 		std::stringstream ss;
 		ss << "accept connect|fd:" << fd << "|iType:" << toUnderlyingType(m_type) << "|peerIp:" << peerIp << " -> " << "ip:" << ip;
-		ASYNC_PIE_LOG("PortCb/onAccept", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "PortCb/onAccept|{}", ss.str().c_str());
 
 
 		auto ptrThread = apie::CtxSingleton::get().chooseIOThread();
 		if (ptrThread == nullptr)
 		{
-			ASYNC_PIE_LOG("PortCb/onAccept", PIE_CYCLE_DAY, PIE_ERROR, "chooseIOThread NULL");
+			ASYNC_PIE_LOG(PIE_ERROR, "PortCb/onAccept|{}", "chooseIOThread NULL");
 			delete itemObjPtr;
 			return;
 		}
@@ -521,7 +521,7 @@ void Ctx::addRedisClients(LoadConfig<Mysql_RedisConfig>& redisConfig)
 		auto ptrCb = [](std::shared_ptr<RedisClient> ptrClient) {
 			std::stringstream ss;
 			ss << key_to_string(*ptrClient);
-			ASYNC_PIE_LOG("RedisClient", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_NOTICE, "RedisClient|{}", ss.str().c_str());
 		};
 		auto sharedPtr = RedisClientFactorySingleton::get().createClient(key, sHost, iPort, sPasswd, ptrCb);
 		bool bResult = RedisClientFactorySingleton::get().registerClient(sharedPtr);

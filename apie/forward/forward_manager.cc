@@ -64,7 +64,7 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 	{
 		std::stringstream ss;
 		ss << "unregister|iOpcode:" << info.iOpcode;
-		ASYNC_PIE_LOG("ForwardManager/onMessage", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "ForwardManager/onMessage|{}", ss.str().c_str());
 		return;
 	}
 
@@ -74,7 +74,7 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 	{
 		std::stringstream ss;
 		ss << "createMessage null|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG("ForwardManager/onMessage", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "ForwardManager/onMessage|{}", ss.str().c_str());
 		return;
 	}
 
@@ -84,7 +84,7 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 	{
 		std::stringstream ss;
 		ss << "ParseFromString error|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG("ForwardManager/onMessage", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "ForwardManager/onMessage|{}", ss.str().c_str());
 		return;
 	}
 

@@ -425,12 +425,12 @@ void SelfRegistration::handleRespRegisterInstance(MessageInfo info, const std::s
 
 	if (response->status_code() != opcodes::StatusCode::SC_Ok)
 	{
-		ASYNC_PIE_LOG("SelfRegistration/handleRespRegisterInstance", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRespRegisterInstance|{}", ss.str().c_str());
 		return;
 	}
 	else
 	{
-		ASYNC_PIE_LOG("SelfRegistration/handleRespRegisterInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "SelfRegistration/handleRespRegisterInstance|{}", ss.str().c_str());
 		apie::CtxSingleton::get().getEndpoint()->setState(apie::SelfRegistration::State::Registered);
 	}
 }
@@ -439,7 +439,7 @@ void SelfRegistration::handleNoticeInstance(MessageInfo info, const std::shared_
 {
 	std::stringstream ss;
 	ss << "iSerialNum:" << info.iSessionId << ",notice:" << notice->ShortDebugString();
-	ASYNC_PIE_LOG("SelfRegistration/handleNoticeInstance", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "SelfRegistration/handleNoticeInstance|{}", ss.str().c_str());
 
 	switch (notice->mode())
 	{
@@ -481,7 +481,7 @@ void SelfRegistration::handleRespHeartbeat(MessageInfo info, const std::shared_p
 	{
 		std::stringstream ss;
 		ss << "iSerialNum:" << info.iSessionId << ",response:" << response->ShortDebugString();
-		ASYNC_PIE_LOG("SelfRegistration/handleRespHeartbeat", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRespHeartbeat|{}", ss.str().c_str());
 
 		apie::CtxSingleton::get().getEndpoint()->setState(apie::SelfRegistration::State::Unregistered);
 	}
@@ -493,7 +493,7 @@ void SelfRegistration::onClientPeerClose(const std::shared_ptr<::pubsub::CLIENT_
 {
 	std::stringstream ss;
 	ss << "topic:" << ",refMsg:" << msg->ShortDebugString();
-	ASYNC_PIE_LOG("SelfRegistration/onClientPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "SelfRegistration/onClientPeerClose|{}", ss.str().c_str());
 
 	uint64_t iSerialNum = msg->serial_num();
 	auto clientProxy = apie::ClientProxy::findClientProxy(iSerialNum);
@@ -513,7 +513,7 @@ void SelfRegistration::onServerPeerClose(const std::shared_ptr<::pubsub::SERVER_
 {
 	std::stringstream ss;
 	ss << "topic:"<< ",refMsg:" << msg->ShortDebugString();
-	ASYNC_PIE_LOG("SelfRegistration/onServerPeerClose", PIE_CYCLE_DAY, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "SelfRegistration/onServerPeerClose|{}", ss.str().c_str());
 }
 
 std::shared_ptr<SelfRegistration> SelfRegistration::createSelfRegistration()

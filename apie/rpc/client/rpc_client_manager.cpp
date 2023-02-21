@@ -71,7 +71,7 @@ void RPCClientManager::handleTimeout()
 				catch (const std::exception& e) {
 					std::stringstream ss;
 					ss << "handleTimeout|exception:" << e.what();
-					ASYNC_PIE_LOG("DispatcherImpl/exception", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/exception|{}", ss.str().c_str());
 				}
 
 				pending_requests_.erase(findIte);

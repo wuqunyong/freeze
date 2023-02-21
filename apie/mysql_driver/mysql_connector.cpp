@@ -39,7 +39,7 @@ bool MySQLConnector::connect(void)
 	{
 		std::stringstream ss;
 		ss << "Could not init MySQL Connector to database " << this->options_.db;
-		ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "mysql|{}", ss.str().c_str());
 
 		return false;
 	}
@@ -72,7 +72,7 @@ bool MySQLConnector::connect(void)
 		std::stringstream ss;
 		ss << "sql: Connector failed. Reason was " << mysql_error(mysql_con);
 		
-		ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "mysql|{}", ss.str().c_str());
 
 		mysql_close(mysql_con);
 		return false;
@@ -242,7 +242,7 @@ bool MySQLConnector::query(const char *q, unsigned long length, std::shared_ptr<
 					std::stringstream ss;
 					ss << "Error: " << mysql_error(this->mysql_);
 					
-					ASYNC_PIE_LOG("mysql/mysql", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+					ASYNC_PIE_LOG(PIE_ERROR, "mysql|{}", ss.str().c_str());
 
 					return false;
 				}

@@ -20,7 +20,7 @@ int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase)
 
 	if (ptrBase == nullptr)
 	{
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connect|event_base null");
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|connect|event_base null");
 		return 1;
 	}
 
@@ -38,7 +38,7 @@ int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase)
 	{
 		std::stringstream ss;
 		ss << "Failed to set NATS event loop, nats_status=" << s;
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connect|%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|connect|{}", ss.str());
 
 		return 2;
 	}
@@ -63,11 +63,11 @@ int32_t NATSConnectorBase::ConnectBase(struct event_base* ptrBase)
 	{
 		std::stringstream ss;
 		ss << "Failed to connect to NATS, nats_status=" << s;
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "connet|%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|connet|{}", ss.str());
 		return 3;
 	}
 
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "connect success|%s", nats_server_.c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "nats/proxy|connect success|{}", nats_server_);
 
 	return 0;
 }
@@ -84,7 +84,7 @@ void NATSConnectorBase::DisconnectedCb(natsConnection* nc, void* closure)
 
 	std::stringstream ss;
 	ss << "DisconnectedCb|status:" << status << "|threadId:" << iThreadId;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_WARNING, "status|%s", ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_WARNING, "nats/proxy|status|{}", ss.str().c_str());
 }
 
 void NATSConnectorBase::ReconnectedCb(natsConnection* nc, void* closure)
@@ -105,7 +105,7 @@ void NATSConnectorBase::ReconnectedCb(natsConnection* nc, void* closure)
 
 	std::stringstream ss;
 	ss << "ReconnectedCb|status:" << status << "|threadId:" << iThreadId;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_WARNING, "status|%s", ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_WARNING, "nats/proxy|status|%s", ss.str().c_str());
 }
 
 void NATSConnectorBase::ClosedCb(natsConnection* nc, void* closure)
@@ -123,7 +123,7 @@ void NATSConnectorBase::ClosedCb(natsConnection* nc, void* closure)
 
 	std::stringstream ss;
 	ss << "ClosedCb|status:" << status << "|threadId:" << iThreadId;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_NOTICE, "status|%s", ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "nats/proxy|status|{}", ss.str().c_str());
 }
 
 void NATSConnectorBase::ErrHandler(natsConnection* nc, natsSubscription* subscription, natsStatus err, void* closure)
@@ -138,12 +138,12 @@ void NATSConnectorBase::ErrHandler(natsConnection* nc, natsSubscription* subscri
 	if (err == NATS_SLOW_CONSUMER)
 	{
 		ss << "ErrHandler|status:" << status;
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "nats runtime error: slow consumer|%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|nats runtime error: slow consumer|{}", ss.str());
 	}
 	else
 	{
 		ss << "ErrHandler|status:" << status;
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "nats runtime error|%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|nats runtime error|{}", ss.str());
 	}
 }
 
@@ -311,7 +311,7 @@ bool NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, co
 		{
 			std::stringstream ss;
 			ss << "nats_realm nullptr";
-			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|publish|channel:{}|{}", channel.c_str(), ss.str().c_str());
 
 			return false;
 		}
@@ -324,7 +324,7 @@ bool NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, co
 
 	std::stringstream ss;
 	ss << "invalid type:" << type;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
 
 	return false;
 }
@@ -339,7 +339,7 @@ bool NatsManager::subscribeChannel(E_NatsType type, const std::string& channel)
 		{
 			std::stringstream ss;
 			ss << "nats_realm nullptr";
-			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|publish|channel:{}|{}", channel.c_str(), ss.str().c_str());
 
 			return false;
 		}
@@ -352,7 +352,7 @@ bool NatsManager::subscribeChannel(E_NatsType type, const std::string& channel)
 
 	std::stringstream ss;
 	ss << "invalid type:" << type;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "subscribeChannel|channel:%s|%s", channel.c_str(), ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|subscribeChannel|channel:{}|{}", channel.c_str(), ss.str().c_str());
 
 	return false;
 }
@@ -367,7 +367,7 @@ bool NatsManager::unsubscribeChannel(E_NatsType type, const std::string& channel
 		{
 			std::stringstream ss;
 			ss << "nats_realm nullptr";
-			ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "publish|channel:%s|%s", channel.c_str(), ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|publish|channel:{}|{}", channel.c_str(), ss.str().c_str());
 
 			return false;
 		}
@@ -380,7 +380,7 @@ bool NatsManager::unsubscribeChannel(E_NatsType type, const std::string& channel
 
 	std::stringstream ss;
 	ss << "invalid type:" << type;
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "unsubscribeChannel|channel:%s|%s", channel.c_str(), ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|unsubscribeChannel|channel:{}|{}", channel.c_str(), ss.str().c_str());
 
 	return false;
 }
@@ -392,11 +392,11 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 	std::stringstream ss;
 	ss << "msgHandle|ThreadId:" << iThreadId << "type:" << type << "|" << msg->ShortDebugString().c_str();
 
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "{}", ss.str());
+	ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|{}", ss.str());
 
 	if (apie::CtxSingleton::get().getLogicThread() == nullptr)
 	{
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "{}", ss.str());
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy:{}", ss.str());
 		return;
 	}
 
@@ -431,7 +431,7 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 	}
 	default:
 	{
-		ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "{}", ss.str());
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|{}", ss.str());
 	}
 	}
 
@@ -500,7 +500,7 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 	std::stringstream ss;
 	ss << "ThreadId:" << iThreadId;
 
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_DEBUG, "Handle_Subscribe|{}|{}", ss.str(), msg->ShortDebugString());
+	ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Handle_Subscribe|{}|{}", ss.str(), msg->ShortDebugString());
 
 	if (msg->has_rpc_request())
 	{
@@ -536,7 +536,7 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 		return;
 	}
 
-	ASYNC_PIE_LOG("nats/proxy", PIE_CYCLE_HOUR, PIE_ERROR, "Handle_Subscribe invalid params|{}|{}", ss.str(), msg->ShortDebugString());
+	ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|Handle_Subscribe invalid params|{}|{}", ss.str(), msg->ShortDebugString());
 }
 
 std::string NATSConnectorBase::GetCombineTopicChannel(const std::string& domains, const std::string& channel)

@@ -281,7 +281,7 @@ void DispatcherImpl::runPostCallbacks() {
 	catch (const std::exception& e) {
 		std::stringstream ss;
 		ss << "runPostCallbacks|exception:" << e.what();
-		ASYNC_PIE_LOG("DispatcherImpl/exception", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/exception:{}", ss.str());
 	}
   }
 }
@@ -456,7 +456,7 @@ void DispatcherImpl::processCommand(evutil_socket_t fd, short event, void *arg)
 	catch (const std::exception& e) {
 		std::stringstream ss;
 		ss << "processCommand|exception:" << e.what();
-		ASYNC_PIE_LOG("DispatcherImpl/exception", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/exception:{}", ss.str());
 	}
 }
 
@@ -593,7 +593,7 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 
 	std::stringstream ss;
 	ss << "iSerialNum:" << iSerialNum << "|fd:" << itemPtr->iFd << "|iType:" << toUnderlyingType(itemPtr->iType) << "|peerIp:" << itemPtr->sPeerIp << " -> " << "ip:" << itemPtr->sIp;
-	ASYNC_PIE_LOG("DispatcherImpl/handleNewConnect", PIE_CYCLE_DAY, PIE_NOTICE, "%s", ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "DispatcherImpl/handleNewConnect:{}", ss.str());
 }
 
 void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
@@ -616,7 +616,7 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 	{
 		std::stringstream ss;
 		ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "| invalid type";
-		ASYNC_PIE_LOG("DispatcherImpl/handlePBRequest", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handlePBRequest:{}", ss.str());
 		break;
 	}
 	}
@@ -635,7 +635,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 		{
 			std::stringstream ss;
 			ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "|unregister";
-			ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handlePBForward:{}", ss.str());
 			return;
 		}
 
@@ -651,7 +651,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 		{
 			std::stringstream ss;
 			ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "|unregister";
-			ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handlePBForward:{}", ss.str());
 			return;
 		}
 
@@ -662,7 +662,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	{
 		std::stringstream ss;
 		ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "| invalid type";
-		ASYNC_PIE_LOG("DispatcherImpl/handlePBForward", PIE_CYCLE_HOUR, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handlePBForward:{}", ss.str());
 		break;
 	}
 	}
@@ -839,8 +839,8 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	}
 	else
 	{
-		ASYNC_PIE_LOG("DispatcherImpl/handleDialResult", PIE_CYCLE_HOUR, PIE_ERROR, "iSerialNum:%lld|iResult:%d|sLocalIp:%s", 
-			ptrCmd->iSerialNum, ptrCmd->iResult, ptrCmd->sLocalIp.c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handleDialResult|iSerialNum:{}|iResult:{}|sLocalIp:{}", 
+			ptrCmd->iSerialNum, ptrCmd->iResult, ptrCmd->sLocalIp);
 	}
 }
 
@@ -855,7 +855,7 @@ void DispatcherImpl::handleSetServerSessionAttr(SetServerSessionAttr* ptrCmd)
 	{
 		std::stringstream ss;
 		ss << "null|iSerialNum:" << ptrCmd->iSerialNum;
-		ASYNC_PIE_LOG("DispatcherImpl/handleSetServerSessionAttr", PIE_CYCLE_HOUR, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handleSetServerSessionAttr:{}", ss.str());
 	}
 }
 
@@ -870,7 +870,7 @@ void DispatcherImpl::handleSetClientSessionAttr(SetClientSessionAttr* ptrCmd)
 	{
 		std::stringstream ss;
 		ss << "null|iSerialNum:" << ptrCmd->iSerialNum;
-		ASYNC_PIE_LOG("DispatcherImpl/handleSetClientSessionAttr", PIE_CYCLE_HOUR, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handleSetClientSessionAttr:{}", ss.str());
 	}
 }
 
@@ -881,7 +881,7 @@ void DispatcherImpl::handleLogicCmd(LogicCmd* ptrCmd)
 	std::stringstream ss;
 	ss << "threadId:" << iThreadId << "|cmd:" << ptrCmd->sCmd;
 
-	ASYNC_PIE_LOG("DispatcherImpl/handleLogicCmd", PIE_CYCLE_HOUR, PIE_DEBUG, "{}", ss.str());
+	ASYNC_PIE_LOG(PIE_DEBUG, "DispatcherImpl/handleLogicCmd:{}", ss.str());
 
 	::pubsub::LOGIC_CMD msg;
 
@@ -932,7 +932,7 @@ void DispatcherImpl::handleCloseLocalServer(CloseLocalServer* ptrCmd)
 		std::stringstream ss;
 		ss << "active close|iSerialNum:" << ptrCmd->iSerialNum
 			<< ",address:" << ptrServer->ip() << "->" << ptrServer->peerIp();
-		ASYNC_PIE_LOG("DispatcherImpl/handleCloseLocalServer", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "DispatcherImpl/handleCloseLocalServer|{}",ss.str());
 	}
 	apie::event_ns::DispatcherImpl::delConnection(ptrCmd->iSerialNum);
 }

@@ -78,7 +78,7 @@ bool LoadConfigManager::loadAll()
 			std::stringstream ss;
 			ss << "configObj not exist|fileName:" << elem.second;                                                                                                                         \
 
-			ASYNC_PIE_LOG("load_config", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "load_config:{}", ss.str());
 
 			return false;
 		}
@@ -90,7 +90,7 @@ bool LoadConfigManager::loadAll()
 			std::stringstream ss;
 			ss << "isValid false|fileName:" << elem.second << "|errInfo:" << errInfo;                                                                                                                         \
 
-			ASYNC_PIE_LOG("load_config", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "load_config:{}", ss.str());
 
 			return bResult;
 		}

@@ -70,7 +70,7 @@ void apie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 	ss << "close|iSerialNum:" << this->iSerialNum 
 		<< "|ip:" << this->sLocalAddress << ":" << this->iLocalPort << " -> " << "peerIp:"<< this->sListenAddress << ":" << this->iListenPort 
 		<< "|reason:" << sInfo;
-	ASYNC_PIE_LOG("ClientConnection/close", PIE_CYCLE_HOUR, PIE_NOTICE, ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "ClientConnection/close|{}", ss.str().c_str());
 
 	if (this->m_ptrDialSyncBase)
 	{
@@ -420,7 +420,7 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 
 			std::stringstream ss;
 			ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
-			ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "ClientConnection/recv|{}", ss.str().c_str());
 			return;
 		}
 
@@ -434,7 +434,7 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 	{
 		std::stringstream ss;
 		ss << "createMessage error|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "ClientConnection/recv|{}", ss.str().c_str());
 		return;
 	}
 
@@ -444,7 +444,7 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 	{
 		std::stringstream ss;
 		ss << "ParseFromString error|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "ClientConnection/recv|{}", ss.str().c_str());
 		return;
 	}
 
@@ -473,7 +473,7 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 
 		std::stringstream ss;
 		ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
-		ASYNC_PIE_LOG("ClientConnection/recv", PIE_CYCLE_DAY, PIE_ERROR, "%s", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "ClientConnection/recv|{}", ss.str().c_str());
 		return;
 	}
 	ptrLogic->push(command);

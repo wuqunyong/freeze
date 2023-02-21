@@ -78,7 +78,7 @@ bool GatewayRole::addRequestPerUnit(uint64_t iValue)
 
 		std::stringstream ss;
 		ss << "recv package out limited|userId:" << m_iRoleId << "|m_iRequestPerUnit:" << m_iRequestPerUnit;
-		ASYNC_PIE_LOG("addRequestPerUnit", PIE_CYCLE_DAY, PIE_ERROR, ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "addRequestPerUnit|{}", ss.str().c_str());
 
 		this->close();
 		return false;

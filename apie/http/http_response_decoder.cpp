@@ -88,7 +88,7 @@ namespace apie
 
 		std::string tmp = ss.str();
 		apie::ReplaceStrAll(tmp, "\r\n", "@r@n");
-		ASYNC_PIE_LOG("http/recv_response", PIE_CYCLE_HOUR, PIE_NOTICE, "%s", tmp.c_str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "http/recv_response|{}", tmp.c_str());
 
 		Command cmd;
 		cmd.type = Command::recv_http_response;

@@ -93,7 +93,7 @@ void apie::Signaler::send ()
         //assert(nbytes == sizeof(dummy));
 		if (nbytes != sizeof(dummy))
 		{
-			ASYNC_PIE_LOG("Signaler/send", PIE_CYCLE_DAY, PIE_ERROR, "nbytes:%d|errno:%d",
+			ASYNC_PIE_LOG(PIE_ERROR, "Signaler/send|nbytes:{}|errno:{}",
 				nbytes, errno);
 		}
         break;
