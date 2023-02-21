@@ -84,6 +84,23 @@ namespace apie
 	public:
 		static std::string logPostfix();
 		
+		static std::string GetLogName() 
+		{ 
+			return GetLogNameRef();
+		}
+
+		static void SetLogName(const std::string& name) 
+		{ 
+			GetLogNameRef() = name; 
+		}
+
+		static std::string& GetLogNameRef() 
+		{
+			static std::string binary_name = "apie";
+			return binary_name;
+		}
+
+
 		static uint64_t getCurMilliseconds();
 		static uint64_t getCurSeconds();
 		static ::rpc_msg::CHANNEL getThisChannel();

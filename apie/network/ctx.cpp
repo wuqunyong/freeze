@@ -571,6 +571,8 @@ void Ctx::init(const std::string& configFile)
 		}
 		this->m_ptrConfig = ptrConfig;
 
+		auto sLogName = apie::CtxSingleton::get().getConfigs()->log.name + "-" + apie::Ctx::logPostfix();
+		Ctx::SetLogName(sLogName);
 
 		if (this->getConfigs()->daemon)
 		{

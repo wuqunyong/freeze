@@ -32,6 +32,10 @@
 #define LOG_PREFIX "[" __FILE__ ":" LINE_STRING "] "
 
 
+#ifndef MODULE_NAME
+#define MODULE_NAME apie::Ctx::GetLogName().c_str()
+#endif
+
 struct LogFile
 {
 	FILE * pFile;
