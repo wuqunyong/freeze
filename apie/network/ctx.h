@@ -15,6 +15,7 @@
 #include "apie/network/end_point.h"
 #include "apie/configs/configs.h"
 #include "apie/proto/init.h"
+#include "apie/api/os_sys_calls.h"
 
 
 
@@ -96,7 +97,25 @@ namespace apie
 
 		static std::string& GetLogNameRef() 
 		{
-			static std::string binary_name = "apie";
+			static std::string binary_name;
+			if (binary_name.empty())
+			{
+				binary_name = "apie";
+
+				time_t now = apie::Ctx::getCurSeconds();
+				char timebuf[128] = { '\0' };
+				strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", localtime(&now));
+
+				std::string sLaunchTime = timebuf;
+				memset(timebuf, 0, sizeof(timebuf));
+
+				uint32_t pid = apie::api::OsSysCallsSingleton::get().getCurProcessId();
+				snprintf(timebuf, sizeof(timebuf), "%s-%d", sLaunchTime.c_str(), pid);
+
+				binary_name = binary_name + "-" + timebuf;
+			}
+
+
 			return binary_name;
 		}
 
