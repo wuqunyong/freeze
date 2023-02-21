@@ -98,7 +98,7 @@ namespace apie
 		int iCycle;
 		int iLevel;
 		std::string sMsg;
-		bool bIgnoreMore = false;
+		bool bIgnoreMerge = false;
 	};
 
 	enum class DIAL_MODE

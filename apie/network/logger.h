@@ -99,7 +99,7 @@ void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string
 	ptrCmd->iCycle = cycle;
 	ptrCmd->iLevel = level;
 	ptrCmd->sMsg = msg;
-	ptrCmd->bIgnoreMore = false;
+	ptrCmd->bIgnoreMerge = false;
 
 	apie::Command cmd;
 	cmd.type = apie::Command::async_log;
@@ -130,7 +130,7 @@ void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, 
 	ptrCmd->iCycle = cycle;
 	ptrCmd->iLevel = level;
 	ptrCmd->sMsg = msg;
-	ptrCmd->bIgnoreMore = true;
+	ptrCmd->bIgnoreMerge = true;
 
 	apie::Command cmd;
 	cmd.type = apie::Command::async_log;

@@ -213,7 +213,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 //	ptrCmd->iCycle = cycle;
 //	ptrCmd->iLevel = level;
 //	ptrCmd->sMsg = msg;
-//	ptrCmd->bIgnoreMore = false;
+//	ptrCmd->bIgnoreMerge = false;
 //
 //	apie::Command cmd;
 //	cmd.type = apie::Command::async_log;
@@ -247,7 +247,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 //	ptrCmd->iCycle = cycle;
 //	ptrCmd->iLevel = level;
 //	ptrCmd->sMsg = msg;
-//	ptrCmd->bIgnoreMore = true;
+//	ptrCmd->bIgnoreMerge = true;
 //
 //	apie::Command cmd;
 //	cmd.type = apie::Command::async_log;
