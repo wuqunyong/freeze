@@ -77,24 +77,8 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 
 	std::lock_guard<std::mutex> guard(log_sync);
 
-	bool bMergeFlag = false;
-
-	std::string logFileName;
-
-	LogFile* ptrFile = NULL;
-	bool bMerge = apie::CtxSingleton::get().getConfigs()->log.merge;
-	if (bMerge && !ignoreMerge)
-	{
-		bMergeFlag = true;
-		logFileName = apie::CtxSingleton::get().getConfigs()->log.name + "-" + apie::Ctx::logPostfix();
-		ptrFile = getCacheFile(logFileName, PIE_CYCLE_DAY);
-	}
-	else
-	{
-		std::string tmpFile(file);
-		logFileName = tmpFile + "-" + apie::Ctx::logPostfix();
-		ptrFile = getCacheFile(logFileName, cycle);
-	}
+	std::string logFileName(file);
+	LogFile* ptrFile = ptrFile = getCacheFile(logFileName, cycle);
 		
 	if (!ptrFile)
 	{
@@ -111,14 +95,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 	uint64_t iMilliSecond = ((tp.tv_sec * (uint64_t) 1000000 + tp.tv_usec) / 1000);
 
 	std::string sLevelName = getLogLevelName(level);
-	if (bMergeFlag)
-	{
-		fprintf(ptrFile->pFile, "%s|%llu|%s|TAG:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
-	} 
-	else
-	{
-		fprintf(ptrFile->pFile, "%s|%llu|%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), msg);
-	}
+	fprintf(ptrFile->pFile, "%s|%llu|%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), msg);
 	fflush(ptrFile->pFile);
 
 	bool bShowConsole = apie::CtxSingleton::get().getConfigs()->log.show_console;
@@ -156,13 +133,13 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg, bool ign
 		default:
 			break;
 		}
-		printf("%s|%llu|%s|TAG:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
+		printf("%s|%llu|%s|fileName:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
 
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 #else
 		if (!apie::CtxSingleton::get().getConfigs()->daemon)
 		{
-			printf("%s|%llu|%s|TAG:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
+			printf("%s|%llu|%s|fileName:%s|%s\n", timebuf, (long long unsigned int)iMilliSecond, sLevelName.c_str(), file, msg);
 		}
 #endif
 	}
