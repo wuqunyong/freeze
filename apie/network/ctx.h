@@ -5,6 +5,8 @@
 #include <string>
 #include <memory>
 #include <atomic>
+#include <chrono>
+#include <time.h>
 
 #include "yaml-cpp/yaml.h"
 
@@ -103,8 +105,11 @@ namespace apie
 				binary_name = "apie";
 
 				time_t now = apie::Ctx::getCurSeconds();
+				struct tm buf;
+				localtime_s(&buf, &now);
+
 				char timebuf[128] = { '\0' };
-				strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", localtime(&now));
+				strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", &buf);
 
 				std::string sLaunchTime = timebuf;
 				memset(timebuf, 0, sizeof(timebuf));
