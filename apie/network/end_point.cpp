@@ -52,7 +52,7 @@ void SelfRegistration::registerEndpoint()
 		std::stringstream ss;
 		ss << "service_registry empty";
 
-		PIE_FMT_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 		PANIC_ABORT(ss.str().c_str());
 	}
 
@@ -82,7 +82,7 @@ void SelfRegistration::registerEndpoint()
 		std::stringstream ss;
 		ss << "sync_connect service_registry error";
 
-		PIE_FMT_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 		PANIC_ABORT(ss.str().c_str());
 	}
 
@@ -98,7 +98,7 @@ void SelfRegistration::registerEndpoint()
 		std::stringstream ss;
 		ss << "syncSendMsg service_registry error";
 
-		PIE_FMT_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 		PANIC_ABORT(ss.str().c_str());
 	}
 	std::stringstream ss;
@@ -117,7 +117,7 @@ void SelfRegistration::registerEndpoint()
 				std::stringstream ss;
 				ss << "invalid listenConfig";
 
-				PIE_FMT_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+				PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 				PANIC_ABORT(ss.str().c_str());
 			}
 
@@ -133,7 +133,7 @@ void SelfRegistration::registerEndpoint()
 				std::stringstream ss;
 				ss << "invalid mysqlConfig";
 
-				PIE_FMT_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+				PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 				PANIC_ABORT(ss.str().c_str());
 			}
 
@@ -154,7 +154,7 @@ void SelfRegistration::registerEndpoint()
 					std::stringstream ss;
 					ss << "invalid redis_config";
 
-					PIE_FMT_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+					PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 					PANIC_ABORT(ss.str().c_str());
 				}
 
@@ -169,7 +169,7 @@ void SelfRegistration::registerEndpoint()
 			std::stringstream ss;
 			ss << "invalid natsConfig";
 
-			PIE_FMT_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+			PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 			PANIC_ABORT(ss.str().c_str());
 		}
 
@@ -180,7 +180,7 @@ void SelfRegistration::registerEndpoint()
 		std::stringstream ss;
 		ss << "register service_registry error";
 
-		PIE_FMT_LOG("SelfRegistration/registerEndpoint", PIE_CYCLE_DAY, PIE_WARNING, ss.str().c_str());
+		PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 		PANIC_ABORT(ss.str().c_str());
 	}
 

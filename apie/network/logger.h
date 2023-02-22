@@ -147,45 +147,45 @@ void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, 
 #define PANIC_ABORT(format, ...) do { \
 	std::string formatStr(LOG_PREFIX "|"); \
 	formatStr = formatStr + format; \
-	pieFmtLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_PANIC, formatStr, __VA_ARGS__); \
+	pieFmtLog(MODULE_NAME, PIE_CYCLE_DAY, PIE_PANIC, formatStr, __VA_ARGS__); \
 	abort(); \
 } while (0);
 #else
 #define PANIC_ABORT(format, args...) do { \
 	std::string formatStr(LOG_PREFIX "|"); \
 	formatStr = formatStr + format; \
-	pieFmtLog("PANIC/PANIC", PIE_CYCLE_HOUR, PIE_PANIC, formatStr, ##args); \
+	pieFmtLog(MODULE_NAME, PIE_CYCLE_DAY, PIE_PANIC, formatStr, ##args); \
 	abort(); \
 } while (0);
 #endif
 
 
 #ifdef WIN32
-#define PIE_FMT_LOG(file, cycle, level, format, ...) do { \
+#define PIE_FMT_LOG(level, format, ...) do { \
     bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr(LOG_PREFIX "|"); \
 		formatStr = formatStr + format; \
-		pieFmtLog(file, cycle, level, formatStr, __VA_ARGS__); \
+		pieFmtLog(MODULE_NAME, PIE_CYCLE_DAY, level, formatStr, __VA_ARGS__); \
 	} \
 	else \
 	{ \
-		pieFmtLog(file, cycle, level, format, __VA_ARGS__); \
+		pieFmtLog(MODULE_NAME, PIE_CYCLE_DAY, level, format, __VA_ARGS__); \
 	} \
 } while (0);
 #else
-#define PIE_FMT_LOG(file, cycle, level, format, args...) do { \
+#define PIE_FMT_LOG(level, format, args...) do { \
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr(LOG_PREFIX "|"); \
 		formatStr = formatStr + format; \
-		pieFmtLog(file, cycle, level, formatStr, ##args); \
+		pieFmtLog(MODULE_NAME, PIE_CYCLE_DAY, level, formatStr, ##args); \
 	} \
 	else \
 	{ \
-		pieFmtLog(file, cycle, level, format, ##args); \
+		pieFmtLog(MODULE_NAME, PIE_CYCLE_DAY, level, format, ##args); \
 	} \
 } while (0);
 #endif

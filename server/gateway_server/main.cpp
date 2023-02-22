@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	std::stringstream ss;
 	ss << "fileName";
 
-	PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "%s: %s", "Exception", ss.str().c_str());
+	PIE_FMT_LOG(PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
 
 	std::string configFile = argv[1];
 

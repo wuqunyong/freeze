@@ -41,7 +41,7 @@ void SceneMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>&
 
 apie::status::Status SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::MSG_REQUEST_ECHO>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ECHO>& response)
 {
-	PIE_FMT_LOG("SceneMgr/Forward_handlEcho", PIE_CYCLE_DAY, PIE_NOTICE, "{}", request->DebugString().c_str());
+	PIE_FMT_LOG(PIE_NOTICE, "{}", request->DebugString().c_str());
 
 	response->set_value1(request->value1());
 	response->set_value2(request->value2() + "|response");
@@ -56,7 +56,7 @@ apie::status::Status SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifie
 
 apie::status::Status SceneMgrModule::RPC_echoTest(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::RPC_EchoTestRequest>& request, std::shared_ptr<rpc_msg::RPC_EchoTestResponse>& response)
 {
-	PIE_FMT_LOG("SceneMgr/RPC_echo", PIE_CYCLE_DAY, PIE_NOTICE, "{}", request->DebugString().c_str());
+	PIE_FMT_LOG(PIE_NOTICE, "{}", request->DebugString().c_str());
 
 	response->set_value1(100);
 	response->set_value2("hello world");

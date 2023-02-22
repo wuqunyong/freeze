@@ -465,7 +465,7 @@ void Ctx::addListeners(LoadConfig<Mysql_ListenersConfig>& listenersConfig)
 		auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
 		ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
 
-		PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|ip:{}|port:{}|type:{}", ip.c_str(), port, type);
+		PIE_FMT_LOG(PIE_NOTICE, "startup|listeners|ip:{}|port:{}|type:{}", ip.c_str(), port, type);
 	}
 
 
@@ -495,7 +495,7 @@ void Ctx::initMysqlConnector(LoadConfig<Mysql_MysqlConfig>& mysqlConfig)
 	options.port = port;
 
 	logic_thread_->initMysql(options);
-	PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "mysql:{}|{}|{}", host.c_str(), db.c_str(), port);
+	PIE_FMT_LOG(PIE_NOTICE, "startup|mysql:{}|{}|{}", host.c_str(), db.c_str(), port);
 }
 
 void Ctx::addNatsConnections(LoadConfig<Mysql_NatsConfig>& natsConfig)
@@ -537,7 +537,7 @@ void Ctx::addRedisClients(LoadConfig<Mysql_RedisConfig>& redisConfig)
 
 void NormalExitHandle()
 { 
-	PIE_FMT_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "NormalExitHandle");
+	PIE_FMT_LOG(PIE_NOTICE, "startup|NormalExitHandle");
 }
 
 void Ctx::init(const std::string& configFile)
@@ -584,7 +584,7 @@ void Ctx::init(const std::string& configFile)
 		Ctx::SetLogName(sLogName);
 
 
-		PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "config:{}", configFile.c_str());
+		PIE_FMT_LOG(PIE_NOTICE, "startup|config:{}", configFile.c_str());
 
 		adjustOpenFilesLimit();
 		enableCoreFiles();
@@ -599,9 +599,9 @@ void Ctx::init(const std::string& configFile)
 		apie::CtxSingleton::get().setServerId(id);
 		apie::CtxSingleton::get().setServerType(type);
 
-		PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "hook::HookPoint::HP_Init before");
+		PIE_FMT_LOG(PIE_NOTICE, "startup|hook::HookPoint::HP_Init before");
 		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Init);
-		PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "hook::HookPoint::HP_Init after");
+		PIE_FMT_LOG(PIE_NOTICE, "startup|hook::HookPoint::HP_Init after");
 
 		//std::shared_ptr<event_ns::DispatchedThreadImpl> ptrListen = nullptr;
 
@@ -646,7 +646,7 @@ void Ctx::init(const std::string& configFile)
 		{
 			thread_[event_ns::EThreadType::TT_IO].push_back(std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_IO, this->generatorTId()));
 		}
-		PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "ioThreads: {}", ioThreads);
+		PIE_FMT_LOG(PIE_NOTICE, "startup|ioThreads: {}", ioThreads);
 
 		logic_thread_ = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Logic, this->generatorTId());
 		log_thread_ = std::make_shared<event_ns::DispatchedThreadImpl>(event_ns::EThreadType::TT_Log, this->generatorTId());
@@ -670,7 +670,7 @@ void Ctx::init(const std::string& configFile)
 
 			//db_thread_ = std::make_shared<Event::DispatchedThreadImpl>(Event::EThreadType::TT_DB, this->generatorTId());
 			logic_thread_->initMysql(options);
-			PIE_FMT_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "mysql:{}|{}|{}", host.c_str(), db.c_str(), port);
+			PIE_FMT_LOG(PIE_NOTICE, "startup|mysql:{}|{}|{}", host.c_str(), db.c_str(), port);
 		}
 
 		//bool bResult = apie::event_ns::NatsSingleton::get().init();
@@ -722,28 +722,28 @@ void Ctx::init(const std::string& configFile)
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|BadFile exception: " << e.what();
 
-		PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
+		PIE_FMT_LOG(PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
 		throw;
 	}
 	catch (YAML::InvalidNode& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|InvalidNode exception: " << e.what();
 
-		PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
+		PIE_FMT_LOG(PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
 		throw;
 	}
 	catch (YAML::BadConversion& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|BadConversion exception: " << e.what();
 
-		PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
+		PIE_FMT_LOG(PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
 		throw;
 	}
 	catch (std::exception& e) {
 		std::stringstream ss;
 		ss << "fileName:" << configFile << "|Unexpected exception: " << e.what();
 
-		PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
+		PIE_FMT_LOG(PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
 		throw;
 	}
 }
@@ -975,7 +975,7 @@ void Ctx::waitForShutdown()
 			int iResult = strncmp(mystring, answer, 4);
 			if (iResult == 0)
 			{
-				PIE_FMT_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
+				PIE_FMT_LOG(PIE_NOTICE, "startup|Aborting nicely");
 				break;
 			}
 
@@ -1070,7 +1070,7 @@ void Ctx::waitForShutdown()
 				int iResult = strncmp(mystring, answer, 4);
 				if (iResult == 0)
 				{
-					PIE_FMT_LOG("startup/startup", PIE_CYCLE_DAY, PIE_NOTICE, "Aborting nicely");
+					PIE_FMT_LOG(PIE_NOTICE, "startup|Aborting nicely");
 					break;
 				}
 
@@ -1124,7 +1124,7 @@ void Ctx::resetYamlNode(YAML::Node node)
 	auto ptrConfig = this->loadConfigs();
 	if (ptrConfig == nullptr)
 	{
-		PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_HOUR, PIE_NOTICE, "reload|loadConfigs error");
+		PIE_FMT_LOG(PIE_NOTICE, "Exception|reload|loadConfigs error");
 		return;
 	}
 
