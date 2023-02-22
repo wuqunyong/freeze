@@ -222,31 +222,31 @@ void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, 
 #endif
 
 #ifdef WIN32
-#define ASYNC_PIE_LOG_CUSTOM(file, cycle, level, format, ...) do { \
+#define ASYNC_PIE_LOG_CUSTOM(file, level, format, ...) do { \
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr(LOG_PREFIX "|"); \
 		formatStr = formatStr + format; \
-		asyncPieFmtLogIgnoreMerge(file, cycle, level, formatStr, __VA_ARGS__); \
+		asyncPieFmtLogIgnoreMerge(file, PIE_CYCLE_DAY, level, formatStr, __VA_ARGS__); \
 	} \
 	else \
 	{ \
-		asyncPieFmtLogIgnoreMerge(file, cycle, level, format, __VA_ARGS__); \
+		asyncPieFmtLogIgnoreMerge(file, PIE_CYCLE_DAY, level, format, __VA_ARGS__); \
 	} \
 } while (0);
 #else
-#define ASYNC_PIE_LOG_CUSTOM(file, cycle, level, format, args...) do { \
+#define ASYNC_PIE_LOG_CUSTOM(file, level, format, args...) do { \
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
 		std::string formatStr(LOG_PREFIX "|"); \
 		formatStr = formatStr + format; \
-		asyncPieFmtLogIgnoreMerge(file, cycle, level, formatStr, ##args); \
+		asyncPieFmtLogIgnoreMerge(file, PIE_CYCLE_DAY, level, formatStr, ##args); \
 	} \
 	else \
 	{ \
-		asyncPieFmtLogIgnoreMerge(file, cycle, level, format, ##args); \
+		asyncPieFmtLogIgnoreMerge(file, PIE_CYCLE_DAY, level, format, ##args); \
 	} \
 } while (0);
 #endif
