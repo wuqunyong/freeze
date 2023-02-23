@@ -30,12 +30,12 @@ namespace apie
 	struct MessageInfo
 	{
 	public:
-		uint64_t iSessionId = 0;
-		uint32_t iSeqNum = 0;
-		uint32_t iOpcode = 0;
-		uint32_t iResponseOpcode = 0;
-		ConnetionType iConnetionType = ConnetionType::CT_NONE;
-		ProtocolType iCodec = ProtocolType::PT_None;
+		uint64_t iSessionId = 0;        // 会话ID
+		uint32_t iSeqNum = 0;           // 序列号ID（RPC）
+		uint32_t iOpcode = 0;           // 请求操作码
+		uint32_t iResponseOpcode = 0;   // 响应操作码
+		ConnetionType iConnetionType = ConnetionType::CT_NONE; // 连接类型
+		ProtocolType iCodec = ProtocolType::PT_None;           // 协议类型
 
 		int64_t iUserId = 0;
 		uint32_t s_idSeq = 0;
