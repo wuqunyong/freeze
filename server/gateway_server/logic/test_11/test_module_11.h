@@ -17,6 +17,7 @@ namespace apie {
 	{
 	public:
 		TestModule11(std::string name, module_loader::ModuleLoaderBase* prtLoader);
+		~TestModule11();
 
 		static std::string moduleName();
 		static uint32_t modulePrecedence();

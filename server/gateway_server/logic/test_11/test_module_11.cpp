@@ -23,6 +23,11 @@ TestModule11::TestModule11(std::string name, module_loader::ModuleLoaderBase* pr
 
 }
 
+TestModule11::~TestModule11()
+{
+
+}
+
 apie::status::Status TestModule11::init()
 {
 	std::stringstream ss;
