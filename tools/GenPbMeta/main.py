@@ -4,11 +4,15 @@ import json
 import os
 import logging
 import traceback
+import json
+import importlib
+import sys
 
 from xlrd import open_workbook
 from _symtable import CELL
 from telnetlib import theNULL
 from jinja2 import Template
+from enum import Enum
 
 logger = logging.getLogger('mylogger')
 logger.setLevel(logging.DEBUG)
@@ -54,6 +58,34 @@ class EnumObj:
         dData["field"] = self.lField
         return dData
 
+class MetaType(Enum):
+    ENUM = 1
+
+class MetaInfo:
+    def __init__(self):
+        self.dData = {}
+
+    def appendEnumType(self, name, fileName):
+        dTypeData = self.dData.setdefault(MetaType.ENUM.name, {})
+        sPbName = fileName + "_pb2"
+        dTypeData[name] = sPbName
+
+    def getData(self):
+        return self.dData
+
+class ExcelFieldType:
+    def __init__(self):
+        self.dData = {}
+
+    def appendEnumType(self, name, fileName):
+        sEnumeName = MetaType.ENUM.name + "|" + name;
+        moduleObj = importlib.import_module(fileName)
+        self.dData[sEnumeName] = moduleObj
+
+
+metaInfoObj = MetaInfo()
+excelFieldTypeObj = ExcelFieldType()
+
 def Enum_Generator(sName, s):
     sSheetName = s.name
     lLoadedObj = []
@@ -82,6 +114,8 @@ def Enum_Generator(sName, s):
 
                         if bLoading:
                             lLoadedObj.append(loadObj)
+                            metaInfoObj.appendEnumType(loadObj.getName(), sSheetName)
+
                             loadObj = EnumObj()
                             bLoading = False
                         loadObj.setName(sCellVal)
@@ -110,6 +144,7 @@ def Enum_Generator(sName, s):
 
         if bLoading:
             lLoadedObj.append(loadObj)
+            metaInfoObj.appendEnumType(loadObj.getName(), sSheetName)
     except:
         sErrorInfo = traceback.format_exc()
         logger.error("CatchException->ErrorPos:File:%s,Sheet:%s|row:%s:col:%s[%c]" % (
@@ -169,8 +204,36 @@ def main():
                     logger.error("dumpExcel error:File:%s," % (f))
                     logger.error("ErrorInfo:%s" % (sErrorInfo,))
                     input("导出出错,输入任意字符退出!")
+
+    # Serializing json
+    dMetaData = metaInfoObj.getData()
+    jsonObj = json.dumps(dMetaData, indent=4)
+
+    # Writing to sample.json
+    with open("MetaType.json", "w") as outfile:
+        outfile.write(jsonObj)
+
     input("导出成功,输入任意字符退出!")
 
+def ProcessEnumRead(dData):
+    for k, v in dData.items():
+        excelFieldTypeObj.appendEnumType(k, v)
+
+def read_main():
+    sDirName = os.path.dirname(__file__)
+    sys.path.append(sDirName + "/DumpConfigs/PB")
+
+    # Opening JSON file
+    with open('MetaType.json', 'r') as openfile:
+        # Reading from json file
+        dJsonDta = json.load(openfile)
+
+    for k, v in dJsonDta.items():
+        if k == MetaType.ENUM.name:
+            ProcessEnumRead(v)
+
+    print(dJsonDta)
 
 if __name__ == "__main__":
-    main()
+    # main()
+    read_main()
