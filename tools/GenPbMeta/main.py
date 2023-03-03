@@ -232,7 +232,7 @@ def read_main():
         if k == MetaType.ENUM.name:
             ProcessEnumRead(v)
 
-    print(dJsonDta)
+    print(dJsonData)
 
 if __name__ == "__main__":
     # main()
