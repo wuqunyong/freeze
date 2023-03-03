@@ -226,9 +226,9 @@ def read_main():
     # Opening JSON file
     with open('MetaType.json', 'r') as openfile:
         # Reading from json file
-        dJsonDta = json.load(openfile)
+        dJsonData = json.load(openfile)
 
-    for k, v in dJsonDta.items():
+    for k, v in dJsonData.items():
         if k == MetaType.ENUM.name:
             ProcessEnumRead(v)
 
