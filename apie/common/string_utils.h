@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <concepts>
 
 
 
@@ -110,6 +111,39 @@ struct streamable_to_string<Key, false> {
 template<typename Key>
 std::string key_to_string(const Key& key) {
 	return streamable_to_string<Key, is_streamable<std::stringstream, Key>::value>().impl(key);
+}
+
+template <typename T>
+constexpr bool always_false = std::false_type::value;
+
+template <typename T>
+std::string as_string(T a)
+{
+	constexpr bool has_to_string = requires(T x)
+	{
+		{ std::to_string(x) } -> std::convertible_to<std::string>;
+	};
+	
+	constexpr bool has_stream = requires(T x, std::ostream & os)
+	{
+		{os << x} -> std::same_as<std::ostream&>;
+	};
+
+
+	if constexpr (has_to_string)
+	{
+		return std::to_string(a);
+	}
+	else if constexpr (has_stream)
+	{
+		std::stringstream s;
+		s << a;
+		return s.str();
+	}
+	else
+	{
+		static_assert(always_false<T>, "The type cannot be serialized");
+	}
 }
 
 
