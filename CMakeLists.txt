@@ -5,8 +5,23 @@ message(STATUS "CMake build type: ${CMAKE_BUILD_TYPE}")
 message(STATUS "freeze CMAKE_CURRENT_SOURCE_DIR: ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 
-# Project name
-project(freeze)
+# Note: update this to your new project's name and version
+project(
+  freeze
+  VERSION 1.0
+  LANGUAGES CXX
+)
+
+
+# ---- Include guards ----
+
+if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
+  message(
+    FATAL_ERROR
+      "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
+  )
+endif()
+
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

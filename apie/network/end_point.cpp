@@ -52,7 +52,7 @@ void SelfRegistration::registerEndpoint()
 		std::stringstream ss;
 		ss << "service_registry empty";
 
-		PIE_FMT_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
+		PIE_FMT_LOG(PIE_ERROR, "registerEndpoint|{}", ss.str().c_str());
 		PANIC_ABORT(ss.str().c_str());
 	}
 
