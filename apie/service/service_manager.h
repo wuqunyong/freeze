@@ -98,7 +98,9 @@ bool ServiceManager::createService(
 	auto find_ite = service_.find(opcode);
 	if (find_ite != service_.end())
 	{
-		//TODO
+		std::stringstream ss;                                                                                                                    
+		ss << "opcode collision: " << opcode << " <=> " << opcode;
+		PANIC_ABORT(ss.str().c_str());
 
 		return false;
 	}
@@ -121,7 +123,10 @@ bool ServiceManager::createService(
 	auto find_ite = service_.find(opcode);
 	if (find_ite != service_.end())
 	{
-		//TODO
+		std::stringstream ss;
+		ss << "opcode collision: " << opcode << " <=> " << opcode;
+		PANIC_ABORT(ss.str().c_str());
+
 		return false;
 	}
 
