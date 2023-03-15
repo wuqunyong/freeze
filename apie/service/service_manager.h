@@ -29,7 +29,7 @@ namespace service {
 		}                                                                                                                                                                                                        \
 	}
 
-#define S_REGISTER_SUBSCRIBE(opcode, func)                                                                                                                 \
+#define S_REGISTER_NOTIFY(opcode, func)                                                                                                                 \
 	{                                                                                                                                                   \
 		bool bResult = apie::service::ServiceHandlerSingleton::get().server.createService<MSG_NOTIFY_##opcode>(::apie::OP_MSG_NOTIFY_##opcode, func);   \
 		if (!bResult) {                                                                                                                                 \
