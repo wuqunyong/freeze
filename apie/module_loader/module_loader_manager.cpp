@@ -3,6 +3,8 @@
 namespace apie {
 namespace module_loader {
 
+	constexpr std::chrono::milliseconds kCheckHookTimeout = std::chrono::milliseconds(1000 * 120);
+
 	ModuleLoaderManager::ModuleLoaderManager()
 	{
 		if (!m_init)
@@ -11,7 +13,7 @@ namespace module_loader {
 			apie::hook::APieModuleObj(ModuleLoaderManager::APieModuleHookHandler);
 		}
 
-		m_timeOut = std::chrono::milliseconds(1000 * 120);
+		m_timeOut = kCheckHookTimeout;
 		m_stepDuration = std::chrono::milliseconds(1000);
 	}
 
@@ -35,6 +37,7 @@ namespace module_loader {
 
 		if (bResult)
 		{
+			m_timeOut = kCheckHookTimeout;
 			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Load);
 		}
 		else
@@ -48,7 +51,7 @@ namespace module_loader {
 			else
 			{
 				std::stringstream ss;
-				ss << "hook start check start timeout";
+				ss << "hook checkStartFinish timeout";
 				PANIC_ABORT(ss.str().c_str());
 			}
 		}
@@ -70,6 +73,7 @@ namespace module_loader {
 
 		if (bResult)
 		{
+			m_timeOut = kCheckHookTimeout;
 			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 		}
 		else
@@ -83,7 +87,7 @@ namespace module_loader {
 			else
 			{
 				std::stringstream ss;
-				ss << "hook start check load timeout";
+				ss << "hook checkLoadFinish timeout";
 				PANIC_ABORT(ss.str().c_str());
 			}
 		}
