@@ -8,6 +8,7 @@
 
 #include "apie/module_loader/module_loader.h"
 #include "apie/event/timer_impl.h"
+#include "apie/api/hook.h"
 
 namespace apie {
 namespace module_loader {
@@ -131,9 +132,12 @@ using ModuleLoaderMgrSingleton = ThreadSafeSingleton<ModuleLoaderManager>;
 
 
 template <typename T>
-concept ModuleT = requires(T c) {
+concept ModuleT = requires(T c, apie::hook::HookPoint point) {
+
 	{T::moduleName()} -> std::convertible_to<std::string>;
 	{T::modulePrecedence()} -> std::convertible_to<uint32_t>;
+
+	c.setHookReady(point);
 };
 
 template <typename T>
