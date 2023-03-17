@@ -3,6 +3,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <concepts>
 #include <unordered_map>
 
 #include "apie/module_loader/module_loader.h"
@@ -128,13 +129,22 @@ using ModuleLoaderMgrSingleton = ThreadSafeSingleton<ModuleLoaderManager>;
 }
 }
 
+
 template <typename T>
+concept ModuleT = requires(T c) {
+	{T::moduleName()} -> std::convertible_to<std::string>;
+	{T::modulePrecedence()} -> std::convertible_to<uint32_t>;
+};
+
+template <typename T>
+requires ModuleT<T>
 static inline bool APieRegisterModule()
 {
 	return apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<T>();
 }
 
 template <typename T>
+requires ModuleT<T>
 static inline auto APieGetModule()
 {
 	return apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<T>();
