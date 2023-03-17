@@ -26,6 +26,9 @@ public:
 	template <typename T>
 	auto getModulePtr();
 
+	template <typename T>
+	bool hasModule();
+
 	status::Status hookHandler(hook::HookPoint point);
 
 	void checkStartFinish();
@@ -89,6 +92,20 @@ auto ModuleLoaderManager::getModulePtr()
 	return ptrMudule;
 }
 
+template <typename T>
+bool ModuleLoaderManager::hasModule()
+{
+	std::string name = T::moduleName();
+
+	auto ite = m_loader.find(name);
+	if (ite != m_loader.end())
+	{
+		return true;
+	}
+
+	return false;
+}
+
 
 template <typename T>
 std::shared_ptr<ModuleLoader<T>> ModuleLoaderManager::getLoader(const std::string& name)
@@ -147,6 +164,13 @@ requires ModuleT<T>
 static inline bool APieRegisterModule()
 {
 	return apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<T>();
+}
+
+template <typename T>
+requires ModuleT<T>
+static inline bool APieHasModule()
+{
+	return apie::module_loader::ModuleLoaderMgrSingleton::get().hasModule<T>();
 }
 
 template <typename T>
