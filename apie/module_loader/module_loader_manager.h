@@ -132,10 +132,12 @@ using ModuleLoaderMgrSingleton = ThreadSafeSingleton<ModuleLoaderManager>;
 
 
 template <typename T>
-concept ModuleT = requires(T c, apie::hook::HookPoint point) {
+concept ModuleT = requires(T c, std::string sName, apie::module_loader::ModuleLoaderBase* prtLoader, apie::hook::HookPoint point) {
 
 	{T::moduleName()} -> std::convertible_to<std::string>;
 	{T::modulePrecedence()} -> std::convertible_to<uint32_t>;
+
+	{ new T(sName, prtLoader) };
 
 	c.setHookReady(point);
 };
