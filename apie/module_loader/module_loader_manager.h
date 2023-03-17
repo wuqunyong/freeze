@@ -76,7 +76,15 @@ auto ModuleLoaderManager::getModulePtr()
 		throw std::invalid_argument(ss.str());
 	}
 
-	return ptrLoader->getModulePtr();
+	auto ptrMudule = ptrLoader->getModulePtr();
+	if (ptrMudule == nullptr)
+	{
+		std::stringstream ss;
+		ss << "null module: " << name;
+		throw std::invalid_argument(ss.str());
+	}
+
+	return ptrMudule;
 }
 
 
