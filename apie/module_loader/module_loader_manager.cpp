@@ -206,12 +206,14 @@ namespace module_loader {
 			auto ptrTimer = apie::event_ns::EphemeralTimerMgrSingleton::get().createEphemeralTimer(cb);
 			ptrTimer->enableTimer(m_stepDuration.count());
 		}
+
 		if (curState.isAsync() && point == apie::hook::HookPoint::HP_Load)
 		{
 			auto cb = std::bind(&ModuleLoaderManager::checkLoadFinish, this);
 			auto ptrTimer = apie::event_ns::EphemeralTimerMgrSingleton::get().createEphemeralTimer(cb);
 			ptrTimer->enableTimer(m_stepDuration.count());
 		}
+
 		return curState;
 	}
 
