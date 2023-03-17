@@ -51,7 +51,7 @@ public:
 	std::shared_ptr<EphemeralTimer> createEphemeralTimer(TimerCb cb);
 	void deleteEphemeralTimer(uint64_t id);
 
-public:
+private:
 	uint64_t m_id = 0;
 	std::map<uint64_t, std::shared_ptr<EphemeralTimer>> m_ephemeralCache;
 };
