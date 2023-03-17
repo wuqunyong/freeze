@@ -14,9 +14,17 @@ std::atomic<uint32_t> TimerImpl::s_callCount = 0;
 TimerImpl::TimerImpl(libevent::BasePtr& libevent, TimerCb cb)
 	: cb_(cb)
 {
-	evtimer_assign(
-		&raw_event_, libevent.get(),
-		[](evutil_socket_t, short, void* arg) -> void { static_cast<TimerImpl*>(arg)->cb_();  s_callCount++; }, this);
+	auto ptrCb = [](evutil_socket_t, short, void* arg) -> void { 
+		
+		if (static_cast<TimerImpl*>(arg)->cb_)
+		{
+			static_cast<TimerImpl*>(arg)->cb_();
+		}
+
+		s_callCount++; 
+	};
+
+	evtimer_assign(&raw_event_, libevent.get(), ptrCb, this);
 }
 
 void TimerImpl::disableTimer()
