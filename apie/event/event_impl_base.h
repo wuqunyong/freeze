@@ -11,9 +11,9 @@ namespace event_ns {
  */
 class ImplBase {
 protected:
-  ~ImplBase();
+	~ImplBase();
 
-  event raw_event_;
+	event raw_event_;
 };
 
 } // namespace Event

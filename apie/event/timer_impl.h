@@ -18,15 +18,15 @@ namespace event_ns {
  */
 class TimerImpl : public Timer, ImplBase {
 public:
-  TimerImpl(libevent::BasePtr& libevent, TimerCb cb);
+	TimerImpl(libevent::BasePtr& libevent, TimerCb cb);
 
-  // Timer
-  void disableTimer() override;
-  void enableTimer(const std::chrono::milliseconds& d) override;
-  bool enabled() override;
+	// Timer
+	void disableTimer() override;
+	void enableTimer(const std::chrono::milliseconds& d) override;
+	bool enabled() override;
 
 private:
-  TimerCb cb_;
+	TimerCb cb_;
 
 public:
 	static std::atomic<uint32_t> s_callCount;
