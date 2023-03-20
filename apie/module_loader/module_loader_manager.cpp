@@ -93,6 +93,22 @@ namespace module_loader {
 		}
 	}
 
+	bool ModuleLoaderManager::checkExitFinish()
+	{
+		bool bResult = true;
+		for (auto& elems : m_loader)
+		{
+			if (!elems.second->getHookReady(hook::HookPoint::HP_Exit))
+			{
+				bResult = false;
+				break;
+			}
+		}
+
+		return bResult;
+	}
+
+
 	status::Status ModuleLoaderManager::hookHandler(hook::HookPoint point)
 	{
 		apie::status::Status curState(apie::status::StatusCode::OK, "");

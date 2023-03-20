@@ -54,6 +54,7 @@ sigset_t g_SigSet;
 #include "apie/api/os_sys_calls.h"
 #include "apie/redis_driver/redis_client.h"
 #include "apie/configs/load_config.h"
+#include "apie/module_loader/module_loader_manager.h"
 
 namespace apie {
 
@@ -1102,6 +1103,24 @@ void Ctx::waitForShutdown()
 	{ 
 		std::this_thread::yield(); 
 	}
+
+
+	uint64_t iCurTime = apie::Ctx::getCurSeconds();
+	auto iDeadline = iCurTime + 60;
+
+	bool bResult = apie::module_loader::ModuleLoaderMgrSingleton::get().checkExitFinish();
+	while (!bResult)
+	{
+		std::this_thread::yield();
+		bResult = apie::module_loader::ModuleLoaderMgrSingleton::get().checkExitFinish();
+
+		iCurTime = apie::Ctx::getCurSeconds();
+		if (iCurTime > iDeadline)
+		{
+			break;
+		}
+	}
+	
 	this->destroy();
 }
 

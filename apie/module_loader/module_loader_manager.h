@@ -34,6 +34,8 @@ public:
 	void checkStartFinish();
 	void checkLoadFinish();
 
+	bool checkExitFinish();
+
 	static apie::status::Status APieModuleHookHandler(hook::HookPoint point);
 
 private:

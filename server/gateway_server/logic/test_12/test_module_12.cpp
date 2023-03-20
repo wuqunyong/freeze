@@ -65,7 +65,7 @@ apie::status::Status TestModule12::exit()
 	std::cout << ss.str() << std::endl;
 	ASYNC_PIE_LOG(PIE_NOTICE, "ModuleLoad|{}", ss.str().c_str());
 
-	return { apie::status::StatusCode::OK, "" };
+	return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
 void TestModule12::setHookReady(hook::HookPoint point)
