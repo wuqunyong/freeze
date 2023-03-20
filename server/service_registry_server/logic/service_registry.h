@@ -34,6 +34,8 @@ namespace apie {
 		apie::status::Status ready();
 		apie::status::Status exit();
 
+		void setHookReady(hook::HookPoint point);
+
 	public:
 		void update();
 

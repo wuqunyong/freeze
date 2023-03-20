@@ -27,6 +27,8 @@ public:
 	apie::status::Status ready();
 	apie::status::Status exit();
 
+	void setHookReady(hook::HookPoint point);
+
 private:
 	std::string m_name;
 	module_loader::ModuleLoaderBase* m_prtLoader;

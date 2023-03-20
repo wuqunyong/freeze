@@ -143,6 +143,15 @@ apie::status::Status DBProxyMgr::exit()
 	return { apie::status::StatusCode::OK, "" };
 }
 
+void DBProxyMgr::setHookReady(hook::HookPoint point)
+{
+	if (m_prtLoader->getHookReady(point))
+	{
+		return;
+	}
+
+	m_prtLoader->setHookReady(point);
+}
 
 }
 

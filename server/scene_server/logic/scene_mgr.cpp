@@ -58,6 +58,15 @@ apie::status::Status SceneMgr::exit()
 	return { apie::status::StatusCode::OK, "" };
 }
 
+void SceneMgr::setHookReady(hook::HookPoint point)
+{
+	if (m_prtLoader->getHookReady(point))
+	{
+		return;
+	}
+
+	m_prtLoader->setHookReady(point);
+}
 
 }
 

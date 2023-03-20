@@ -157,6 +157,16 @@ apie::status::Status ServiceRegistry::exit()
 	return { apie::status::StatusCode::OK, "" };
 }
 
+void ServiceRegistry::setHookReady(hook::HookPoint point)
+{
+	if (m_prtLoader->getHookReady(point))
+	{
+		return;
+	}
+
+	m_prtLoader->setHookReady(point);
+}
+
 void ServiceRegistry::addUpdateTimer(uint64_t interval)
 {
 	this->m_updateTimer->enableTimer(std::chrono::milliseconds(interval));
