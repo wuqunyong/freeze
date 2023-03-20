@@ -39,7 +39,7 @@ namespace apie {
 					std::stringstream ss;
 					ss << "redis connect|Unexpected exception: " << e.what();
 
-					PIE_FMT_LOG(PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
+					PIE_LOG(PIE_ERROR, "{}: {}", "Exception", ss.str().c_str());
 				}
 			}
 
@@ -125,7 +125,7 @@ namespace apie {
 
 						std::stringstream ss;
 						ss << "redis reply:" << reply.error();
-						PIE_FMT_LOG(PIE_ERROR, "Redis_Auth|{}", ss.str().c_str());
+						PIE_LOG(PIE_ERROR, "Redis_Auth|{}", ss.str().c_str());
 
 						PANIC_ABORT(ss.str().c_str());
 						return;
@@ -149,7 +149,7 @@ namespace apie {
 						{
 							ss << "string Value:" << reply.as_string();
 						}
-						PIE_FMT_LOG(PIE_ERROR, "Redis_Auth|{}", ss.str().c_str());
+						PIE_LOG(PIE_ERROR, "Redis_Auth|{}", ss.str().c_str());
 
 						PANIC_ABORT(ss.str().c_str());
 					}

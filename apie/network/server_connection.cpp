@@ -416,7 +416,7 @@ void ServerConnection::handleSend(const char *data, size_t size)
 		int rc = bufferevent_write(this->bev, data, size);
 		if (rc != 0)
 		{
-			//PIE_FMT_LOG("Exception/Exception", PIE_CYCLE_DAY, PIE_ERROR, "Session|handleSend Error:%d|%*s", rc, size, data);
+			//PIE_LOG("Exception/Exception", PIE_CYCLE_DAY, PIE_ERROR, "Session|handleSend Error:%d|%*s", rc, size, data);
 		}
 	}
 }

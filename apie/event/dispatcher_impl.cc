@@ -961,23 +961,23 @@ void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
 		//连接注册中心，获取配置
 		CtxSingleton::get().getEndpoint()->init();
 
-		PIE_FMT_LOG(PIE_NOTICE, "startup|hook::HookPoint::HP_Start before");
+		PIE_LOG(PIE_NOTICE, "startup|hook::HookPoint::HP_Start before");
 		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Start);
-		PIE_FMT_LOG(PIE_NOTICE, "startup|hook::HookPoint::HP_Start after");
+		PIE_LOG(PIE_NOTICE, "startup|hook::HookPoint::HP_Start after");
 
 	}
 	catch (YAML::InvalidNode& e) {
 		std::stringstream ss;
 		ss << "InvalidNode exception: " << e.what();
 
-		PIE_FMT_LOG(PIE_ERROR, "startup|{}: {}", "Exception", ss.str().c_str());
+		PIE_LOG(PIE_ERROR, "startup|{}: {}", "Exception", ss.str().c_str());
 		throw;
 	}
 	catch (std::exception& e) {
 		std::stringstream ss;
 		ss << "Unexpected exception: " << e.what();
 
-		PIE_FMT_LOG(PIE_ERROR, "startup|{}: {}", "Exception", ss.str().c_str());
+		PIE_LOG(PIE_ERROR, "startup|{}: {}", "Exception", ss.str().c_str());
 		throw;
 	}
 }

@@ -92,13 +92,13 @@ namespace apie {
 			int64_t mtime = apie::common::FileDataModificationTime(configFile);
 			if (mtime == -1)
 			{
-				PIE_FMT_LOG(PIE_ERROR, "onReload|reload|configFile:{} not exist", configFile.c_str());
+				PIE_LOG(PIE_ERROR, "onReload|reload|configFile:{} not exist", configFile.c_str());
 				return;
 			}
 
 			if (apie::CtxSingleton::get().getConfigFileMTime() == mtime)
 			{
-				PIE_FMT_LOG(PIE_NOTICE, "onReload|reload|configFile:{} not changed", configFile.c_str());
+				PIE_LOG(PIE_NOTICE, "onReload|reload|configFile:{} not changed", configFile.c_str());
 				return;
 			}
 
@@ -106,13 +106,13 @@ namespace apie {
 			apie::CtxSingleton::get().resetYamlNode(node);
 			apie::CtxSingleton::get().setConfigFileMTime(mtime);
 
-			PIE_FMT_LOG(PIE_NOTICE, "onReload|reload|configFile:{} changed", configFile.c_str());
+			PIE_LOG(PIE_NOTICE, "onReload|reload|configFile:{} changed", configFile.c_str());
 
 		}
 		catch (std::exception& e) {
 			std::stringstream ss;
 			ss << "reload|configFile:" << configFile << "|Unexpected exception: " << e.what();
-			PIE_FMT_LOG(PIE_ERROR, "onReload|{}: {}", "Exception", ss.str().c_str());
+			PIE_LOG(PIE_ERROR, "onReload|{}: {}", "Exception", ss.str().c_str());
 		}
 	}
 

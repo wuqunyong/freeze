@@ -161,7 +161,7 @@ void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, 
 
 
 #ifdef WIN32
-#define PIE_FMT_LOG(level, format, ...) do { \
+#define PIE_LOG(level, format, ...) do { \
     bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
@@ -175,7 +175,7 @@ void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, 
 	} \
 } while (0);
 #else
-#define PIE_FMT_LOG(level, format, args...) do { \
+#define PIE_LOG(level, format, args...) do { \
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \

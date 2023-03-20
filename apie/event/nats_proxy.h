@@ -134,7 +134,7 @@ namespace event_ns {
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
-				PIE_FMT_LOG(PIE_NOTICE, "startup|nats|subscribe|{}|{}|{}", nats_server_.c_str(), sSub.c_str(), apie::toUnderlyingType(status));
+				PIE_LOG(PIE_NOTICE, "startup|nats|subscribe|{}|{}|{}", nats_server_.c_str(), sSub.c_str(), apie::toUnderlyingType(status));
 				
 				return status;
 			}
