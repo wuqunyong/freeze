@@ -801,6 +801,7 @@ void Ctx::start()
 
 void Ctx::destroy()
 {
+	apie::event_ns::NatsSingleton::get().destroy();
 
 	apie::event_ns::DispatcherImpl::clearAllConnection();
 	ClientProxy::clearAllClientProxy();

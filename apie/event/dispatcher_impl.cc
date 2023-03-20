@@ -989,7 +989,6 @@ void DispatcherImpl::handleLogicExit(uint32_t iThreadId)
 		return;
 	}
 
-	apie::event_ns::NatsSingleton::get().destroy();
 	apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Exit);
 
 	terminating_ = true;
