@@ -411,7 +411,7 @@ void DispatcherImpl::handleCommand()
 		}
 		case Command::logic_start:
 		{
-			this->handleLogicStart(cmd.args.logic_exit.iThreadId);
+			this->handleLogicStart(cmd.args.logic_start.iThreadId);
 			break;
 		}
 		case Command::logic_exit:
