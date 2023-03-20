@@ -46,49 +46,51 @@ namespace hook {
 	void HookRegistry::triggerHook(HookPoint point)
 	{
 		auto initCbOpt = apie::hook::HookRegistrySingleton::get().getHook(point);
-		if (initCbOpt.has_value())
+		if (!initCbOpt.has_value())
 		{
-			auto ptrCmp = [](HookEntry& lhs, HookEntry& rhs){
-				return lhs.priority < rhs.priority;
-			};
-			std::sort(initCbOpt.value().begin(), initCbOpt.value().end(), ptrCmp);
+			return;
+		}
 
-			bool bAllOk = true;
-			for (auto& item : initCbOpt.value())
+		auto ptrCmp = [](HookEntry& lhs, HookEntry& rhs) {
+			return lhs.priority < rhs.priority;
+		};
+		std::sort(initCbOpt.value().begin(), initCbOpt.value().end(), ptrCmp);
+
+		bool bAllOk = true;
+		for (auto& item : initCbOpt.value())
+		{
+			auto result = item.cb(point);
+			if (!result.ok())
 			{
-				auto result = item.cb(point);
-				if (!result.ok())
+				bAllOk = false;
+
+				if ((point == HookPoint::HP_Start || point == HookPoint::HP_Load)
+					&& result.isAsync())
 				{
-					bAllOk = false;
-
-					if ((point == HookPoint::HP_Start || point == HookPoint::HP_Load)
-						&& result.isAsync())
-					{
-						continue;
-					}
-
-					std::stringstream ss;
-					ss << "errorCode:" << apie::toUnderlyingType(result.code()) << "|info:" << result.message();
-
-					if (point == HookPoint::HP_Exit)
-					{
-						PIE_FMT_LOG(PIE_NOTICE, "startup/startup|exit|{}", ss.str().c_str());
-						continue;
-					}
-
-					PANIC_ABORT(ss.str().c_str());
+					continue;
 				}
-			}
 
-			if (bAllOk && point == HookPoint::HP_Start)
-			{
-				apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Load);
-			}
+				std::stringstream ss;
+				ss << "errorCode:" << apie::toUnderlyingType(result.code()) << "|info:" << result.message();
 
-			if (bAllOk && point == HookPoint::HP_Load)
-			{
-				apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
+				if (point == HookPoint::HP_Exit)
+				{
+					PIE_FMT_LOG(PIE_NOTICE, "startup/startup|exit|{}", ss.str().c_str());
+					continue;
+				}
+
+				PANIC_ABORT(ss.str().c_str());
 			}
+		}
+
+		if (bAllOk && point == HookPoint::HP_Start)
+		{
+			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Load);
+		}
+
+		if (bAllOk && point == HookPoint::HP_Load)
+		{
+			apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Ready);
 		}
 	}
 
