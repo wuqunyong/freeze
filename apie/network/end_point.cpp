@@ -76,6 +76,7 @@ void SelfRegistration::registerEndpoint()
 	};
 	//ptrClient->connect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
 
+	// 采用同步连接，回调函数不会触发(connectCb)
 	bool bResult = ptrClient->syncConnect(ip, port, static_cast<apie::ProtocolType>(type), maskFlag, connectCb);
 	if (!bResult)
 	{
