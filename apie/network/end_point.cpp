@@ -87,6 +87,7 @@ void SelfRegistration::registerEndpoint()
 		PANIC_ABORT(ss.str().c_str());
 	}
 
+	// 注册节点，获取配置
 	::service_discovery::MSG_REQUEST_REGISTER_INSTANCE request;
 	request.mutable_instance()->set_realm(apie::CtxSingleton::get().getServerRealm());
 	request.mutable_instance()->set_type(static_cast<::common::EndPointType>(apie::CtxSingleton::get().getServerType()));
