@@ -103,6 +103,7 @@ void SelfRegistration::registerEndpoint()
 		PIE_LOG(PIE_WARNING, "registerEndpoint|{}", ss.str().c_str());
 		PANIC_ABORT(ss.str().c_str());
 	}
+
 	std::stringstream ss;
 	ss << "response:" << ptrResponse->ShortDebugString();
 
