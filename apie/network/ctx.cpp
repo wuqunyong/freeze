@@ -1104,6 +1104,7 @@ void Ctx::waitForShutdown()
 		std::this_thread::yield(); 
 	}
 
+	PIE_LOG(PIE_NOTICE, "startup|waiting ExitHook");
 
 	uint64_t iCurTime = apie::Ctx::getCurSeconds();
 	auto iDeadline = iCurTime + 60;
@@ -1117,10 +1118,14 @@ void Ctx::waitForShutdown()
 		iCurTime = apie::Ctx::getCurSeconds();
 		if (iCurTime > iDeadline)
 		{
+			PIE_LOG(PIE_NOTICE, "startup|ExitHook Timeout");
 			break;
 		}
 	}
 	
+	PIE_LOG(PIE_NOTICE, "startup|ExitHook Finish");
+
+
 	this->destroy();
 }
 
