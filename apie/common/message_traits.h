@@ -235,7 +235,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 	auto ptrTuple = std::make_shared<std::tuple<std::vector<T>, bool>>();
 	std::get<1>(*ptrTuple) = false;
 
-	mysql_proxy_msg::MysqlQueryRequestByFilter queryRequest;
+	mysql_proxy_msg::MysqlQueryByFilterRequest queryRequest;
 	queryRequest = dbObj.generateQueryByFilter();
 
 	apie::rpc::RPCClientContext context(server);
@@ -292,7 +292,7 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 			}
 		}
 	};
-	return apie::rpc::RPC_CallWithContext<::mysql_proxy_msg::MysqlQueryRequestByFilter, ::mysql_proxy_msg::MysqlQueryResponse>(context, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
+	return apie::rpc::RPC_CallWithContext<::mysql_proxy_msg::MysqlQueryByFilterRequest, ::mysql_proxy_msg::MysqlQueryResponse>(context, ::rpc_msg::RPC_MysqlQueryByFilter, queryRequest, queryCB);
 }
 
 template <typename T>

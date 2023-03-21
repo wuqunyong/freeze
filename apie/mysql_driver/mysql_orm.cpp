@@ -150,9 +150,9 @@ mysql_proxy_msg::MysqlQueryRequest DeclarativeBase::generateQuery()
 	return queryRequest;
 }
 
-mysql_proxy_msg::MysqlQueryRequestByFilter DeclarativeBase::generateQueryByFilter()
+mysql_proxy_msg::MysqlQueryByFilterRequest DeclarativeBase::generateQueryByFilter()
 {
-	mysql_proxy_msg::MysqlQueryRequestByFilter queryRequest;
+	mysql_proxy_msg::MysqlQueryByFilterRequest queryRequest;
 	queryRequest.set_db_name(m_table.getDb());
 	queryRequest.set_table_name(m_table.getTable());
 

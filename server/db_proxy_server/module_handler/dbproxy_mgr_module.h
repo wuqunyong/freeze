@@ -36,7 +36,7 @@ public:
 	static apie::status::Status RPC_mysqlDelete(
 		const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlDeleteRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlDeleteResponse>& response);
 	static apie::status::Status RPC_mysqlQueryByFilter(
-		const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryRequestByFilter>& request, std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response);
+		const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryByFilterRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response);
 	static apie::status::Status RPC_mysqlMultiQuery(
 		const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlMultiQueryRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlMulitQueryResponse>& multiResponse);
 	static apie::status::Status RPC_mysqlQueryAll(

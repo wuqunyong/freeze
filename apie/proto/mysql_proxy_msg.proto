@@ -163,7 +163,7 @@ message MysqlDeleteResponse
 	bytes sql_statement = 4;
 }
 
-message MysqlQueryRequestByFilter
+message MysqlQueryByFilterRequest
 {
 	string db_name = 1;
 	string table_name = 2;

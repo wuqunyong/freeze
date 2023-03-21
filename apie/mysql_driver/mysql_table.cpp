@@ -121,7 +121,7 @@ bool MysqlTable::generateQuerySQL(MySQLConnector& connector, const ::mysql_proxy
 }
 
 
-bool MysqlTable::generateQueryByFilterSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryRequestByFilter& query, std::string& sql)
+bool MysqlTable::generateQueryByFilterSQL(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlQueryByFilterRequest& query, std::string& sql)
 {
 	const std::string graveAccent("`");
 

@@ -109,7 +109,7 @@ public:
 	mysql_proxy_msg::MysqlUpdateRequest generateUpdate();
 	mysql_proxy_msg::MysqlDeleteRequest generateDelete();
 
-	mysql_proxy_msg::MysqlQueryRequestByFilter generateQueryByFilter();
+	mysql_proxy_msg::MysqlQueryByFilterRequest generateQueryByFilter();
 	mysql_proxy_msg::MysqlQueryAllRequest generateQueryAll();
 
 	MysqlTable& getMysqlTable();
