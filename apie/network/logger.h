@@ -50,9 +50,6 @@ struct LogFile
 
 std::string getLogLevelName(int level);
 void pieLogRaw(const char* file, int cycle, int level, const char* msg);
-//void pieLog(const char* file, int cycle, int level, const char* fmt, ...);
-//void asyncPieLog(const char* file, int cycle, int level, const char *fmt, ...);
-//void asyncPieLogIgnoreMerge(const char* file, int cycle, int level, const char *fmt, ...);
 
 LogFile* openFile(std::string file, int cycle);
 void closeFile(LogFile* ptrFile);
@@ -63,8 +60,6 @@ LogFile* getCacheFile(std::string file, int cycle);
 bool isChangeFile(LogFile* ptrFile, int cycle);
 
 void logFileClose();
-
-//void fatalExit(const char* message);
 
 
 template <class... Args>
