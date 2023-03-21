@@ -179,4 +179,10 @@ message MysqlQueryAllRequest
 	string table_name = 2;
 }
 
-//MysqlQueryResponse
+message MysqlQueryAllResponse
+{
+	bool result = 1;
+	bytes error_info = 2;
+	MysqlTable table = 3;
+	bytes sql_statement = 4;
+}

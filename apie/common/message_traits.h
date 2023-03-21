@@ -308,7 +308,7 @@ LoadFromDbByQueryAll(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T
 	apie::rpc::RPCClientContext context(server);
 	context.setType(rpc::RPCClientContext::Type::SERVER_STREAMING);
 
-	auto queryCB = [dbObj, cb, ptrTuple](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response) mutable {
+	auto queryCB = [dbObj, cb, ptrTuple](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryAllResponse>& response) mutable {
 		auto& result = std::get<0>(*ptrTuple);
 		auto& hasError = std::get<1>(*ptrTuple);
 		if (hasError)
@@ -374,7 +374,7 @@ LoadFromDbByQueryAll(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T
 			}
 		}
 	};
-	return apie::rpc::RPC_CallWithContext<::mysql_proxy_msg::MysqlQueryAllRequest, ::mysql_proxy_msg::MysqlQueryResponse>(context, ::rpc_msg::RPC_MysqlQueryAll, queryRequest, queryCB);
+	return apie::rpc::RPC_CallWithContext<::mysql_proxy_msg::MysqlQueryAllRequest, ::mysql_proxy_msg::MysqlQueryAllResponse>(context, ::rpc_msg::RPC_MysqlQueryAll, queryRequest, queryCB);
 }
 
 template<class Tuple, std::size_t N>

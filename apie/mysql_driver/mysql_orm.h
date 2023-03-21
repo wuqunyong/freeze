@@ -79,6 +79,8 @@ public:
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);
 
 	bool loadFromPbCheck(::mysql_proxy_msg::MysqlQueryResponse& response);
+	bool loadFromPbCheck(::mysql_proxy_msg::MysqlQueryAllResponse& response);
+
 	bool loadFromPb(const ::mysql_proxy_msg::MysqlRow& row);
 
 	bool isValid();

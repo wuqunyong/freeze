@@ -1043,6 +1043,21 @@ bool  DeclarativeBase::loadFromPbCheck(::mysql_proxy_msg::MysqlQueryResponse& re
 	return true;
 }
 
+bool DeclarativeBase::loadFromPbCheck(::mysql_proxy_msg::MysqlQueryAllResponse& response)
+{
+	if (!response.result())
+	{
+		return false;
+	}
+
+	if (response.table().name() != m_table.getTable())
+	{
+		return false;
+	}
+
+	return true;
+}
+
 //bool DeclarativeBase::loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response)
 //{
 //	if (!response.result())
