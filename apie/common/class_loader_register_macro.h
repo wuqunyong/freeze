@@ -9,14 +9,16 @@
   namespace {                                                                 \
   struct ProxyType##UniqueID {                                                \
     ProxyType##UniqueID() {                                                   \
-        std::cout << "ProxyType:" << apie::toUnderlyingType(DbType) << " " << #TableClass << " " << #TableName << " " << UniqueID << std::endl;  \
+        std::stringstream ss;                                                 \
+        ss << "ProxyType:" << apie::toUnderlyingType(DbType) << " " << #TableClass << " " << #TableName << " " << UniqueID << std::endl;  \
+        PIE_LOG(PIE_NOTICE, ss.str().c_str());                                                                                            \
         RegisterTable<TableClass>(DbType, #TableName);                        \
     }                                                                         \
   };                                                                          \
   static ProxyType##UniqueID g_register_class_##UniqueID;                     \
   }
 
-#define CLASS_LOADER_REGISTER_CLASS_INTERNAL_1(DbType, TableClass, TableName,UniqueID) \
+#define CLASS_LOADER_REGISTER_CLASS_INTERNAL_1(DbType, TableClass, TableName, UniqueID) \
   CLASS_LOADER_REGISTER_CLASS_INTERNAL(DbType, TableClass, TableName, UniqueID)
 
 // register class macro

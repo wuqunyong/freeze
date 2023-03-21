@@ -20,9 +20,16 @@
 #include "apie/common/string_utils.h"
 
 
-static std::mutex log_sync;
+static std::mutex& GetLogSync() {
+	static std::mutex log_sync;
+	return log_sync;
+}
 
-std::map<std::string, LogFile*> cacheMap;
+static std::map<std::string, LogFile*>& GetCacheMap() {
+	static std::map<std::string, LogFile*> cacheMap;
+	return cacheMap;
+}
+
 
 std::string getLogLevelName(int level)
 {
@@ -75,7 +82,7 @@ void pieLogRaw(const char* file, int cycle, int level, const char* msg)
 	// 多线程，同时访问所以要加锁
 	assert(file != NULL);
 
-	std::lock_guard<std::mutex> guard(log_sync);
+	std::lock_guard<std::mutex> guard(GetLogSync());
 
 	std::string logFileName(file);
 	LogFile* ptrFile = ptrFile = getCacheFile(logFileName, cycle);
@@ -337,10 +344,10 @@ void moveFile(std::string from, std::string to)
 
 void checkRotate()
 {
-	std::lock_guard<std::mutex> guard(log_sync);
+	std::lock_guard<std::mutex> guard(GetLogSync());
 
-	std::map<std::string, LogFile*>::iterator ite = cacheMap.begin();
-	while (ite != cacheMap.end())
+	std::map<std::string, LogFile*>::iterator ite = GetCacheMap().begin();
+	while (ite != GetCacheMap().end())
 	{
 		if (isChangeFile(ite->second, ite->second->iCycle))
 		{
@@ -350,7 +357,7 @@ void checkRotate()
 
 			std::map<std::string, LogFile*>::iterator o = ite;
 			++ite;
-			cacheMap.erase(o);
+			GetCacheMap().erase(o);
 
 			std::string toDir = apie::CtxSingleton::get().getConfigs()->log.backup;
 #ifdef WIN32
@@ -366,24 +373,24 @@ void checkRotate()
 
 void logFileClose()
 {
-	std::lock_guard<std::mutex> guard(log_sync);
+	std::lock_guard<std::mutex> guard(GetLogSync());
 
-	std::map<std::string, LogFile*>::iterator ite = cacheMap.begin();
-	while (ite != cacheMap.end())
+	std::map<std::string, LogFile*>::iterator ite = GetCacheMap().begin();
+	while (ite != GetCacheMap().end())
 	{
 		closeFile(ite->second);
 		delete ite->second;
 
 		std::map<std::string, LogFile*>::iterator o = ite;
 		++ite;
-		cacheMap.erase(o);
+		GetCacheMap().erase(o);
 	}
 }
 
 LogFile* getCacheFile(std::string file, int cycle)
 {
-	std::map<std::string, LogFile*>::iterator ite = cacheMap.find(file);
-	if (ite != cacheMap.end())
+	std::map<std::string, LogFile*>::iterator ite = GetCacheMap().find(file);
+	if (ite != GetCacheMap().end())
 	{
 		return ite->second;
 	}
@@ -394,7 +401,7 @@ LogFile* getCacheFile(std::string file, int cycle)
 		return NULL;
 	}
 	
-	cacheMap[file] = ptrFile;
+	GetCacheMap()[file] = ptrFile;
 	return ptrFile;
 }
 

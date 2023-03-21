@@ -48,8 +48,6 @@ struct LogFile
 	int iCreateMinute;
 }; 
 
-extern std::map<std::string, LogFile*> cacheMap;
-
 std::string getLogLevelName(int level);
 void pieLogRaw(const char* file, int cycle, int level, const char* msg);
 //void pieLog(const char* file, int cycle, int level, const char* fmt, ...);
