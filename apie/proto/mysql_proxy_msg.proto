@@ -170,8 +170,13 @@ message MysqlQueryByFilterRequest
 	repeated MysqlField key = 3;
 }
 
-//MysqlQueryResponse
-
+message MysqlQueryByFilterResponse
+{
+	bool result = 1;
+	bytes error_info = 2;
+	MysqlTable table = 3;
+	bytes sql_statement = 4;
+}
 
 message MysqlQueryAllRequest
 {

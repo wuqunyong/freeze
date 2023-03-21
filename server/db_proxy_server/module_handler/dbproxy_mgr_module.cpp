@@ -23,7 +23,7 @@ void DBProxyMgrModule::init()
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlInsertRequest, ::mysql_proxy_msg::MysqlInsertResponse>(rpc_msg::RPC_MysqlInsert, DBProxyMgrModule::RPC_mysqlInsert);
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlUpdateRequest, ::mysql_proxy_msg::MysqlUpdateResponse>(rpc_msg::RPC_MysqlUpdate, DBProxyMgrModule::RPC_mysqlUpdate);
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlDeleteRequest, ::mysql_proxy_msg::MysqlDeleteResponse>(rpc_msg::RPC_MysqlDelete, DBProxyMgrModule::RPC_mysqlDelete);
-	rpc.createRPCServer<::mysql_proxy_msg::MysqlQueryByFilterRequest, ::mysql_proxy_msg::MysqlQueryResponse>(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgrModule::RPC_mysqlQueryByFilter);
+	rpc.createRPCServer<::mysql_proxy_msg::MysqlQueryByFilterRequest, ::mysql_proxy_msg::MysqlQueryByFilterResponse>(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgrModule::RPC_mysqlQueryByFilter);
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlMultiQueryRequest, ::mysql_proxy_msg::MysqlMulitQueryResponse>(rpc_msg::RPC_MysqlMultiQuery, DBProxyMgrModule::RPC_mysqlMultiQuery);
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlQueryAllRequest, ::mysql_proxy_msg::MysqlQueryAllResponse>(rpc_msg::RPC_MysqlQueryAll, DBProxyMgrModule::RPC_mysqlQueryAll);
 }
@@ -177,7 +177,7 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlMultiQuery(
 }
 
 apie::status::Status DBProxyMgrModule::RPC_mysqlQueryByFilter(
-	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryByFilterRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlQueryResponse>& response)
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlQueryByFilterRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlQueryByFilterResponse>& response)
 {
 	std::shared_ptr<MysqlTable> sharedTable = TableCacheMgrSingleton::get().getTable(request->table_name());
 	if (sharedTable == nullptr)
