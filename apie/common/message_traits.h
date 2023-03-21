@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdint>
 #include <type_traits>
+#include <concepts>
 
 #include "apie/common/macros.h"
 #include "apie/rpc/client/rpc_client.h"
@@ -180,9 +181,19 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 }
 
 
+template<typename T>
+concept HasLoadFromPb = requires(T a, const ::mysql_proxy_msg::MysqlRow & row)
+{
+	{ a.loadFromPb(row) } -> std::convertible_to<bool>;
+};
+
+template<class T>
+concept LoadFromDBType = HasLoadFromPb<T> && std::is_base_of<DeclarativeBase, T>::value;
+
+
 template <typename T>
-typename std::enable_if<HasLoadFromDb<T>::value && std::is_base_of<DeclarativeBase, T>::value, bool>::type
-LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
+requires LoadFromDBType<T>
+bool LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 {
 	mysql_proxy_msg::MysqlQueryRequest queryRequest;
 	queryRequest = dbObj.generateQuery();
@@ -229,8 +240,8 @@ LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 }
 
 template <typename T>
-typename std::enable_if<HasLoadFromDb<T>::value && std::is_base_of<DeclarativeBase, T>::value, bool>::type
-LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
+requires LoadFromDBType<T>
+bool LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
 {
 	auto ptrTuple = std::make_shared<std::tuple<std::vector<T>, bool>>();
 	std::get<1>(*ptrTuple) = false;
@@ -296,8 +307,8 @@ LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> 
 }
 
 template <typename T>
-typename std::enable_if<HasLoadFromDb<T>::value&& std::is_base_of<DeclarativeBase, T>::value, bool>::type
-LoadFromDbByQueryAll(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
+requires LoadFromDBType<T>
+bool LoadFromDbByQueryAll(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterCB<T> cb)
 {
 	auto ptrTuple = std::make_shared<std::tuple<std::vector<T>, bool>>();
 	std::get<1>(*ptrTuple) = false;
