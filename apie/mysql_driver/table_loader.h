@@ -42,10 +42,9 @@ namespace apie {
 
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
-			if (!m_initServer)
+			if (!isInit())
 			{
-				m_initServer = true;
-				m_server = server;
+				initServer(server);
 			}
 
 			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
@@ -64,6 +63,27 @@ namespace apie {
 				loader->setState<LoaderType>(DbLoadComponent::ELS_Success);
 			};
 			apie::LoadFromDb<TableType>(server, m_tableType, ptrCb);
+		}
+
+		bool isInit()
+		{
+			return m_initServer;
+		}
+
+		void initServer(::rpc_msg::CHANNEL server)
+		{
+			m_initServer = true;
+			m_server = server;
+		}
+
+		::rpc_msg::CHANNEL getServer()
+		{
+			return m_server;
+		}
+
+		std::optional<TableType>& getData()
+		{
+			return m_optData;
 		}
 
 		bool m_initServer = false;
@@ -99,10 +119,9 @@ namespace apie {
 
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
-			if (!m_initServer)
+			if (!isInit())
 			{
-				m_initServer = true;
-				m_server = server;
+				initServer(server);
 			}
 
 			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
@@ -118,6 +137,28 @@ namespace apie {
 			};
 			apie::LoadFromDbByFilter<TableType>(server, m_tableType, ptrCb);
 		}
+
+		bool isInit()
+		{
+			return m_initServer;
+		}
+
+		void initServer(::rpc_msg::CHANNEL server)
+		{
+			m_initServer = true;
+			m_server = server;
+		}
+
+		::rpc_msg::CHANNEL getServer()
+		{
+			return m_server;
+		}
+
+		std::vector<TableType>& getData()
+		{
+			return m_vecData;
+		}
+
 
 		bool m_initServer = false;
 		::rpc_msg::CHANNEL m_server;
@@ -147,10 +188,9 @@ namespace apie {
 
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
-			if (!m_initServer)
+			if (!isInit())
 			{
-				m_initServer = true;
-				m_server = server;
+				initServer(server);
 			}
 
 			loader->setState<LoaderType>(DbLoadComponent::ELS_Loading);
@@ -166,6 +206,28 @@ namespace apie {
 			};
 			apie::LoadFromDbByQueryAll<TableType>(server, m_tableType, ptrCb);
 		}
+
+		bool isInit()
+		{
+			return m_initServer;
+		}
+
+		void initServer(::rpc_msg::CHANNEL server)
+		{
+			m_initServer = true;
+			m_server = server;
+		}
+
+		::rpc_msg::CHANNEL getServer()
+		{
+			return m_server;
+		}
+
+		std::vector<TableType>& getData()
+		{
+			return m_vecData;
+		}
+
 
 		bool m_initServer = false;
 		::rpc_msg::CHANNEL m_server;
