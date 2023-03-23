@@ -193,7 +193,7 @@ namespace apie {
 		{
 			std::cout << "ModuleB saveToDb" << std::endl;
 
-			for (auto& elems : m_data2.m_vecData)
+			for (auto& elems : m_data2.getData())
 			{
 				auto name = elems.get_name() + "_test";
 				elems.set_name(name);
