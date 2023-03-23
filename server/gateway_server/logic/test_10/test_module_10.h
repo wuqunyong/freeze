@@ -105,6 +105,8 @@ namespace apie {
 			if (ptrLoader->has<Single_ModelAccount_Loader>())
 			{
 				m_data3 = ptrLoader->get<Single_ModelAccount_Loader>();
+
+				m_ptrAccount = Single_ModelAccount_Loader::Type::TableType::Create(m_iId);
 			}
 		}
 
@@ -139,6 +141,7 @@ namespace apie {
 		Single_ModelVarchars1_Loader::Type m_data10;
 
 		Single_ModelAccount_Loader::Type m_data3;
+		std::shared_ptr<apie::dbt_account::account_AutoGen> m_ptrAccount = nullptr;
 
 	};
 
