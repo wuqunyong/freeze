@@ -217,10 +217,11 @@ namespace apie {
 	class PlayerFactory
 	{
 	public:
+		using PrimaryKey = uint64_t;
 		using ModuleTuple = std::tuple<TestModuleA, TestModuleB>;
 		using PlayerPtr = std::shared_ptr<CommonModuleLoader<uint64_t, ModuleTuple>>;
 
-		static PlayerPtr CreatePlayer(uint64_t iId)
+		static PlayerPtr CreatePlayer(PrimaryKey iId)
 		{
 			static ModuleTuple kModuleTuple;
 
