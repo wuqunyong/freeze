@@ -86,6 +86,7 @@ namespace apie {
 			return m_optData;
 		}
 
+	private:
 		TableType m_tableType;
 		std::optional<TableType> m_optData;
 

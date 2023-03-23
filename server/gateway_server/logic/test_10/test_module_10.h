@@ -110,10 +110,10 @@ namespace apie {
 
 		void loadFromDbDone()
 		{
-			if (!m_data3.m_optData.has_value())
+			if (!m_data3.getData().has_value())
 			{
-				m_data3.m_optData = Single_ModelAccount_Loader::Type::TableType(m_iId);
-				InsertToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.getServer(), m_data3.m_optData.value(), nullptr);
+				auto dbObj = Single_ModelAccount_Loader::Type::TableType(m_iId);
+				InsertToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.getServer(), dbObj, nullptr);
 			}
 
 			std::cout << "ModuleA loadFromDbDone" << std::endl;
@@ -121,10 +121,10 @@ namespace apie {
 
 		void saveToDb()
 		{
-			if (m_data3.m_optData.has_value())
+			if (m_data3.getData().has_value())
 			{
-				m_data3.m_optData.value().set_modified_time(time(nullptr));
-				UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.getServer(), m_data3.m_optData.value(), nullptr);
+				m_data3.getData().value().set_modified_time(time(nullptr));
+				UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.getServer(), m_data3.getData().value(), nullptr);
 			}
 
 			std::cout << "ModuleA saveToDb" << std::endl;
