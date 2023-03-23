@@ -86,11 +86,13 @@ namespace apie {
 			return m_optData;
 		}
 
+		TableType m_tableType;
+		std::optional<TableType> m_optData;
+
+	private:
 		bool m_initServer = false;
 		::rpc_msg::CHANNEL m_server;
 
-		TableType m_tableType;
-		std::optional<TableType> m_optData;
 	};
 
 
@@ -159,12 +161,13 @@ namespace apie {
 			return m_vecData;
 		}
 
+		TableType m_tableType;
+		std::vector<TableType> m_vecData;
 
+	private:
 		bool m_initServer = false;
 		::rpc_msg::CHANNEL m_server;
 
-		TableType m_tableType;
-		std::vector<TableType> m_vecData;
 	};
 
 
@@ -229,11 +232,13 @@ namespace apie {
 		}
 
 
+		TableType m_tableType;
+		std::vector<TableType> m_vecData;
+
+	private:
 		bool m_initServer = false;
 		::rpc_msg::CHANNEL m_server;
 
-		TableType m_tableType;
-		std::vector<TableType> m_vecData;
 	};
 } 
 
