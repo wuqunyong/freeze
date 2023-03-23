@@ -44,151 +44,6 @@ apie::status::Status TestModule10::start()
 }
 
 
-class ModuleA
-{
-public:
-	ModuleA(uint64_t iId = 0) :
-		m_iId(iId)
-	{
-
-	}
-
-	std::string toString()
-	{
-		return "ModuleA";
-	}
-
-	void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader)
-	{
-		std::cout << "ModuleA loadFromDbLoad" << std::endl;
-
-		if (ptrLoader->has<Single_ModelUser_Loader>())
-		{
-			m_data1 = ptrLoader->get<Single_ModelUser_Loader>();
-		}
-
-		if (ptrLoader->has<Single_ModelRoleExtra_Loader>())
-		{
-			m_data2 = ptrLoader->get<Single_ModelRoleExtra_Loader>();
-		}
-
-		if (ptrLoader->has<Single_ModelVarchars1_Loader>())
-		{
-			m_data10 = ptrLoader->get<Single_ModelVarchars1_Loader>();
-		}
-
-		if (ptrLoader->has<Single_ModelAccount_Loader>())
-		{
-			m_data3 = ptrLoader->get<Single_ModelAccount_Loader>();
-		}
-	}
-
-	void loadFromDbDone()
-	{
-		if (!m_data3.m_optData.has_value())
-		{
-			m_data3.m_optData = Single_ModelAccount_Loader::Type::TableType(m_iId);
-			InsertToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.m_server, m_data3.m_optData.value(), nullptr);
-		}
-
-		std::cout << "ModuleA loadFromDbDone" << std::endl;
-	}
-
-	void saveToDb()
-	{
-		if (m_data3.m_optData.has_value())
-		{
-			m_data3.m_optData.value().set_modified_time(time(nullptr));
-			UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.m_server, m_data3.m_optData.value(), nullptr);
-		}
-
-		std::cout << "ModuleA saveToDb" << std::endl;
-	}
-
-private:
-	uint64_t m_iId = 0;
-	
-
-	Single_ModelUser_Loader::Type m_data1;
-	Single_ModelRoleExtra_Loader::Type m_data2;
-	Single_ModelVarchars1_Loader::Type m_data10;
-
-	Single_ModelAccount_Loader::Type m_data3;
-
-};
-
-struct TestModuleA
-{
-	using Type = ModuleA;
-};
-
-
-class ModuleB
-{
-public:
-	ModuleB(uint64_t iId = 0) :
-		m_iId(iId)
-	{
-
-	}
-
-	std::string toString()
-	{
-		std::stringstream ss;
-		ss << "ModuleB" << ":" << m_iId << ":" << m_value;
-		return ss.str();
-	}
-
-	void incrementValue()
-	{
-		m_value++;
-	}
-
-	void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader)
-	{
-		std::cout << "ModuleB loadFromDbLoad" << std::endl;
-
-		if (ptrLoader->has<Multi_ModelUser_Loader>())
-		{
-			m_data1 = ptrLoader->get<Multi_ModelUser_Loader>();
-		}
-
-		if (ptrLoader->has<All_ModelAccountName_Loader>())
-		{
-			m_data2 = ptrLoader->get<All_ModelAccountName_Loader>();
-		}
-	}
-
-	void loadFromDbDone()
-	{
-		std::cout << "ModuleB loadFromDbDone" << std::endl;
-	}
-
-	void saveToDb()
-	{
-		std::cout << "ModuleB saveToDb" << std::endl;
-
-		for (auto& elems : m_data2.m_vecData)
-		{
-			auto name = elems.get_name() + "_test";
-			elems.set_name(name);
-			UpdateToDb(m_data2.m_server, elems, nullptr);
-		}
-	}
-
-private:
-	uint64_t m_iId = 0;
-	uint64_t m_value = 0;
-	      
-	Multi_ModelUser_Loader::Type m_data1;
-	All_ModelAccountName_Loader::Type m_data2;
-};
-
-struct TestModuleB
-{
-	using Type = ModuleB;
-};
-
 
 static auto CreateLoadInstance(uint64_t iId)
 {
@@ -199,9 +54,11 @@ static auto CreateLoadInstance(uint64_t iId)
 
 using CreateLoadInstanceCb = std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))>;
 
-void CreateUserObj(uint64_t iRoleId, CreateLoadInstanceCb doneCb)
+void CreateUserObj(uint64_t iRoleId, PlayerFactory::Callback doneCb)
 {
-	auto ptrModuleLoader = CreateLoadInstance(iRoleId);
+	//auto ptrModuleLoader = CreateLoadInstance(iRoleId);
+
+	auto ptrModuleLoader = PlayerFactory::CreatePlayer(iRoleId);
 
 	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
 	auto& rModuleB = ptrModuleLoader->lookup<TestModuleB>();
