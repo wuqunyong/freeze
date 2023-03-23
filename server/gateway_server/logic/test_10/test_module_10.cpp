@@ -203,6 +203,10 @@ void CreateUserObj(uint64_t iRoleId, CreateLoadInstanceCb doneCb)
 {
 	auto ptrModuleLoader = CreateLoadInstance(iRoleId);
 
+	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
+	auto& rModuleB = ptrModuleLoader->lookup<TestModuleB>();
+
+
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
 	server.set_type(::common::EPT_DB_ROLE_Proxy);

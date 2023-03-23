@@ -47,7 +47,7 @@ public:
 	}
 
 	template <typename T>
-	ValueTypeT<T>& lookup(ValueTypeT<T> value = {})
+	ValueTypeT<T>& lookup()
 	{
 		if (!has<T>())
 		{
@@ -56,7 +56,7 @@ public:
 			throw std::exception(ss.str().c_str());
 		}
 
-		return m_options.lookup<T>(value);
+		return m_options.lookup<T>();
 	}
 
 	void Meta_loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<DbLoadComponent> ptrLoad)
