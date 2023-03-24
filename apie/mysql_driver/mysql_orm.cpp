@@ -124,7 +124,7 @@ std::string DeclarativeBase::query(MySQLConnector& connector)
 
 mysql_proxy_msg::MysqlQueryRequest DeclarativeBase::generateQuery()
 {
-	checkBind("generateQuery");
+	enforceCheckBind("generateQuery");
 
 	mysql_proxy_msg::MysqlQueryRequest queryRequest;
 	queryRequest.set_db_name(m_table.getDb());
@@ -154,7 +154,7 @@ mysql_proxy_msg::MysqlQueryRequest DeclarativeBase::generateQuery()
 
 mysql_proxy_msg::MysqlQueryByFilterRequest DeclarativeBase::generateQueryByFilter()
 {
-	checkBind("generateQueryByFilter");
+	enforceCheckBind("generateQueryByFilter");
 
 	mysql_proxy_msg::MysqlQueryByFilterRequest queryRequest;
 	queryRequest.set_db_name(m_table.getDb());
@@ -186,7 +186,7 @@ mysql_proxy_msg::MysqlQueryByFilterRequest DeclarativeBase::generateQueryByFilte
 
 mysql_proxy_msg::MysqlQueryAllRequest DeclarativeBase::generateQueryAll()
 {
-	checkBind("generateQueryAll");
+	enforceCheckBind("generateQueryAll");
 
 	mysql_proxy_msg::MysqlQueryAllRequest queryRequest;
 	queryRequest.set_db_name(m_table.getDb());
@@ -197,7 +197,7 @@ mysql_proxy_msg::MysqlQueryAllRequest DeclarativeBase::generateQueryAll()
 
 mysql_proxy_msg::MysqlInsertRequest DeclarativeBase::generateInsert()
 {
-	checkBind("generateInsert");
+	enforceCheckBind("generateInsert");
 
 	mysql_proxy_msg::MysqlInsertRequest insertRequest;
 	insertRequest.set_db_name(m_table.getDb());
@@ -230,7 +230,7 @@ mysql_proxy_msg::MysqlInsertRequest DeclarativeBase::generateInsert()
 
 mysql_proxy_msg::MysqlUpdateRequest DeclarativeBase::generateUpdate()
 {
-	checkBind("generateUpdate");
+	enforceCheckBind("generateUpdate");
 
 	mysql_proxy_msg::MysqlUpdateRequest updateRequest;
 	updateRequest.set_db_name(m_table.getDb());
@@ -289,7 +289,7 @@ mysql_proxy_msg::MysqlUpdateRequest DeclarativeBase::generateUpdate()
 
 mysql_proxy_msg::MysqlDeleteRequest DeclarativeBase::generateDelete()
 {
-	checkBind("generateDelete");
+	enforceCheckBind("generateDelete");
 
 	mysql_proxy_msg::MysqlDeleteRequest deleteRequest;
 	deleteRequest.set_db_name(m_table.getDb());
@@ -1571,13 +1571,15 @@ MysqlTable DeclarativeBase::convertFrom(::mysql_proxy_msg::MysqlDescTable& desc)
 	return table;
 }
 
-bool DeclarativeBase::checkBind(std::string sName)
+bool DeclarativeBase::enforceCheckBind(std::string sName)
 {
 	if (!m_binded)
 	{
 		std::stringstream ss;
 		ss << sName << "|m_binded:" << m_binded << "|getDb:" << m_table.getDb() << "|getTable:" << m_table.getTable();
 		ASYNC_PIE_LOG(PIE_ERROR, "{}", ss.str());
+
+		throw std::logic_error(ss.str());
 	}
 
 	return m_binded;
