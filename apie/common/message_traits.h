@@ -287,9 +287,23 @@ bool LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterC
 			return;
 		}
 
+		auto iBindType = dbObj.getDBType();
+		auto sTableName = dbObj.getTableName();
 		for (auto& rowData : response->table().rows())
 		{
 			typename std::remove_reference<decltype(dbObj)>::type newObj;
+
+			bResult = newObj.bindTable(iBindType, sTableName);
+			if (!bResult)
+			{
+				hasError = true;
+				newStatus.setErrorCode(apie::status::StatusCode::DB_BindTableError);
+				if (cb)
+				{
+					cb(newStatus, result);
+				}
+				return;
+			}
 
 			newObj.loadFromPb(rowData);
 			result.push_back(newObj);
