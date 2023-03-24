@@ -27,11 +27,6 @@ namespace apie {
 		using TableType = T;
 		using LoaderType = SingleRowLoader<T>;
 
-		SingleRowLoader(uint64_t id ) :
-			m_tableType(id)
-		{
-
-		}
 
 		template <typename... Args>
 		SingleRowLoader(Args &&... args) :
@@ -106,11 +101,6 @@ namespace apie {
 		using TableType = T;
 		using LoaderType = MultiRowLoader<T>;
 
-		MultiRowLoader(uint64_t id) :
-			m_tableType(id)
-		{
-
-		}
 
 		template <typename... Args>
 		MultiRowLoader(Args &&... args) :
@@ -187,11 +177,6 @@ namespace apie {
 		using TableType = T;
 		using LoaderType = AllRowLoader<T>;
 
-		AllRowLoader(uint64_t id) :
-			m_tableType(id)
-		{
-
-		}
 
 		template <typename... Args>
 		AllRowLoader(Args &&... args) :
