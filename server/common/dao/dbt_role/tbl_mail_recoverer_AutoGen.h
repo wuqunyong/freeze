@@ -47,30 +47,6 @@ private:
     int32_t save_flag = 0;
   };
 
-  enum Fields {
-    id = 0,
-    user_id = 1,
-    title = 2,
-    title_id = 3,
-    title_param = 4,
-    type = 5,
-    guild_id = 6,
-    src_user_id = 7,
-    src_user_job_id = 8,
-    user_name = 9,
-    memo = 10,
-    memo_id = 11,
-    memo_param = 12,
-    reward_param = 13,
-    create_time = 14,
-    is_multi_lang = 15,
-    title_lang_cn = 16,
-    title_lang_en = 17,
-    content_lang_cn = 18,
-    content_lang_en = 19,
-    save_flag = 20,
-  };
-
   virtual std::string getFieldName(uint32_t iIndex) override {
 
     static std::map<uint32_t, std::string> kFieldNameMap = {
@@ -100,6 +76,30 @@ private:
   }
 
 public:
+  enum Fields {
+    id = 0,
+    user_id = 1,
+    title = 2,
+    title_id = 3,
+    title_param = 4,
+    type = 5,
+    guild_id = 6,
+    src_user_id = 7,
+    src_user_job_id = 8,
+    user_name = 9,
+    memo = 10,
+    memo_id = 11,
+    memo_param = 12,
+    reward_param = 13,
+    create_time = 14,
+    is_multi_lang = 15,
+    title_lang_cn = 16,
+    title_lang_en = 17,
+    content_lang_cn = 18,
+    content_lang_en = 19,
+    save_flag = 20,
+  };
+
   static std::shared_ptr<tbl_mail_recoverer_AutoGen> Create(int64_t id) {
     return std::shared_ptr<tbl_mail_recoverer_AutoGen>(
         new tbl_mail_recoverer_AutoGen(id));
@@ -111,152 +111,158 @@ public:
     this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
   }
 
+  virtual ~tbl_mail_recoverer_AutoGen() {}
+
   void set_id(int64_t id) {
     this->fields.id = id;
     this->markDirty({tbl_mail_recoverer_AutoGen::id});
   }
 
-  int64_t get_id() { return this->fields.id; }
+  int64_t get_id() const { return this->fields.id; }
 
   void set_user_id(int64_t user_id) {
     this->fields.user_id = user_id;
     this->markDirty({tbl_mail_recoverer_AutoGen::user_id});
   }
 
-  int64_t get_user_id() { return this->fields.user_id; }
+  int64_t get_user_id() const { return this->fields.user_id; }
 
   void set_title(std::string title) {
     this->fields.title = title;
     this->markDirty({tbl_mail_recoverer_AutoGen::title});
   }
 
-  std::string get_title() { return this->fields.title; }
+  std::string get_title() const { return this->fields.title; }
 
   void set_title_id(int32_t title_id) {
     this->fields.title_id = title_id;
     this->markDirty({tbl_mail_recoverer_AutoGen::title_id});
   }
 
-  int32_t get_title_id() { return this->fields.title_id; }
+  int32_t get_title_id() const { return this->fields.title_id; }
 
   void set_title_param(std::string title_param) {
     this->fields.title_param = title_param;
     this->markDirty({tbl_mail_recoverer_AutoGen::title_param});
   }
 
-  std::string get_title_param() { return this->fields.title_param; }
+  std::string get_title_param() const { return this->fields.title_param; }
 
   void set_type(uint16_t type) {
     this->fields.type = type;
     this->markDirty({tbl_mail_recoverer_AutoGen::type});
   }
 
-  uint16_t get_type() { return this->fields.type; }
+  uint16_t get_type() const { return this->fields.type; }
 
   void set_guild_id(int32_t guild_id) {
     this->fields.guild_id = guild_id;
     this->markDirty({tbl_mail_recoverer_AutoGen::guild_id});
   }
 
-  int32_t get_guild_id() { return this->fields.guild_id; }
+  int32_t get_guild_id() const { return this->fields.guild_id; }
 
   void set_src_user_id(int64_t src_user_id) {
     this->fields.src_user_id = src_user_id;
     this->markDirty({tbl_mail_recoverer_AutoGen::src_user_id});
   }
 
-  int64_t get_src_user_id() { return this->fields.src_user_id; }
+  int64_t get_src_user_id() const { return this->fields.src_user_id; }
 
   void set_src_user_job_id(int32_t src_user_job_id) {
     this->fields.src_user_job_id = src_user_job_id;
     this->markDirty({tbl_mail_recoverer_AutoGen::src_user_job_id});
   }
 
-  int32_t get_src_user_job_id() { return this->fields.src_user_job_id; }
+  int32_t get_src_user_job_id() const { return this->fields.src_user_job_id; }
 
   void set_user_name(std::string user_name) {
     this->fields.user_name = user_name;
     this->markDirty({tbl_mail_recoverer_AutoGen::user_name});
   }
 
-  std::string get_user_name() { return this->fields.user_name; }
+  std::string get_user_name() const { return this->fields.user_name; }
 
   void set_memo(std::string memo) {
     this->fields.memo = memo;
     this->markDirty({tbl_mail_recoverer_AutoGen::memo});
   }
 
-  std::string get_memo() { return this->fields.memo; }
+  std::string get_memo() const { return this->fields.memo; }
 
   void set_memo_id(int32_t memo_id) {
     this->fields.memo_id = memo_id;
     this->markDirty({tbl_mail_recoverer_AutoGen::memo_id});
   }
 
-  int32_t get_memo_id() { return this->fields.memo_id; }
+  int32_t get_memo_id() const { return this->fields.memo_id; }
 
   void set_memo_param(std::string memo_param) {
     this->fields.memo_param = memo_param;
     this->markDirty({tbl_mail_recoverer_AutoGen::memo_param});
   }
 
-  std::string get_memo_param() { return this->fields.memo_param; }
+  std::string get_memo_param() const { return this->fields.memo_param; }
 
   void set_reward_param(std::string reward_param) {
     this->fields.reward_param = reward_param;
     this->markDirty({tbl_mail_recoverer_AutoGen::reward_param});
   }
 
-  std::string get_reward_param() { return this->fields.reward_param; }
+  std::string get_reward_param() const { return this->fields.reward_param; }
 
   void set_create_time(int64_t create_time) {
     this->fields.create_time = create_time;
     this->markDirty({tbl_mail_recoverer_AutoGen::create_time});
   }
 
-  int64_t get_create_time() { return this->fields.create_time; }
+  int64_t get_create_time() const { return this->fields.create_time; }
 
   void set_is_multi_lang(int32_t is_multi_lang) {
     this->fields.is_multi_lang = is_multi_lang;
     this->markDirty({tbl_mail_recoverer_AutoGen::is_multi_lang});
   }
 
-  int32_t get_is_multi_lang() { return this->fields.is_multi_lang; }
+  int32_t get_is_multi_lang() const { return this->fields.is_multi_lang; }
 
   void set_title_lang_cn(std::string title_lang_cn) {
     this->fields.title_lang_cn = title_lang_cn;
     this->markDirty({tbl_mail_recoverer_AutoGen::title_lang_cn});
   }
 
-  std::string get_title_lang_cn() { return this->fields.title_lang_cn; }
+  std::string get_title_lang_cn() const { return this->fields.title_lang_cn; }
 
   void set_title_lang_en(std::string title_lang_en) {
     this->fields.title_lang_en = title_lang_en;
     this->markDirty({tbl_mail_recoverer_AutoGen::title_lang_en});
   }
 
-  std::string get_title_lang_en() { return this->fields.title_lang_en; }
+  std::string get_title_lang_en() const { return this->fields.title_lang_en; }
 
   void set_content_lang_cn(std::string content_lang_cn) {
     this->fields.content_lang_cn = content_lang_cn;
     this->markDirty({tbl_mail_recoverer_AutoGen::content_lang_cn});
   }
 
-  std::string get_content_lang_cn() { return this->fields.content_lang_cn; }
+  std::string get_content_lang_cn() const {
+    return this->fields.content_lang_cn;
+  }
 
   void set_content_lang_en(std::string content_lang_en) {
     this->fields.content_lang_en = content_lang_en;
     this->markDirty({tbl_mail_recoverer_AutoGen::content_lang_en});
   }
 
-  std::string get_content_lang_en() { return this->fields.content_lang_en; }
+  std::string get_content_lang_en() const {
+    return this->fields.content_lang_en;
+  }
 
   void set_save_flag(int32_t save_flag) {
     this->fields.save_flag = save_flag;
     this->markDirty({tbl_mail_recoverer_AutoGen::save_flag});
   }
 
-  int32_t get_save_flag() { return this->fields.save_flag; }
+  int32_t get_save_flag() const { return this->fields.save_flag; }
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(tbl_mail_recoverer_AutoGen, db_fields,
                                   tbl_mail_recoverer);

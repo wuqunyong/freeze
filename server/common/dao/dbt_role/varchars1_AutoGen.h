@@ -90,6 +90,8 @@ public:
     this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
   }
 
+  virtual ~varchars1_AutoGen() {}
+
   void set_a(int32_t a) {
     this->fields.a = a;
     this->markDirty({varchars1_AutoGen::a});

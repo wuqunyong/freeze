@@ -68,6 +68,8 @@ public:
     this->bindTable(DeclarativeBase::DBType::DBT_Role, getFactoryName());
   }
 
+  virtual ~role_base_AutoGen() {}
+
   void set_user_id(uint64_t user_id) {
     this->fields.user_id = user_id;
     this->markDirty({role_base_AutoGen::user_id});

@@ -58,6 +58,8 @@ public:
     this->bindTable(DeclarativeBase::DBType::DBT_Account, getFactoryName());
   }
 
+  virtual ~account_AutoGen() {}
+
   void set_account_id(uint64_t account_id) {
     this->fields.account_id = account_id;
     this->markDirty({account_AutoGen::account_id});

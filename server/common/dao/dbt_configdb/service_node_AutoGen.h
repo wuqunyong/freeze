@@ -35,18 +35,6 @@ private:
     std::string redis_config = "";
   };
 
-  enum Fields {
-    service_realm = 0,
-    service_type = 1,
-    service_id = 2,
-    ip = 3,
-    port = 4,
-    listeners_config = 5,
-    mysql_config = 6,
-    nats_config = 7,
-    redis_config = 8,
-  };
-
   virtual std::string getFieldName(uint32_t iIndex) override {
 
     static std::map<uint32_t, std::string> kFieldNameMap = {
@@ -64,6 +52,18 @@ private:
   }
 
 public:
+  enum Fields {
+    service_realm = 0,
+    service_type = 1,
+    service_id = 2,
+    ip = 3,
+    port = 4,
+    listeners_config = 5,
+    mysql_config = 6,
+    nats_config = 7,
+    redis_config = 8,
+  };
+
   static std::shared_ptr<service_node_AutoGen>
   Create(uint32_t service_realm, uint32_t service_type, uint32_t service_id) {
     return std::shared_ptr<service_node_AutoGen>(
@@ -78,6 +78,8 @@ public:
 
     this->bindTable(DeclarativeBase::DBType::DBT_ConfigDb, getFactoryName());
   }
+
+  virtual ~service_node_AutoGen() {}
 
   void set_service_realm(uint32_t service_realm) {
     this->fields.service_realm = service_realm;
