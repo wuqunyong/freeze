@@ -153,3 +153,15 @@ https://zhuanlan.zhihu.com/p/82244559
 
 
 动态寻路，带阻挡参数进行寻路
+
+
+unsigned int num_fields;
+unsigned int i;
+MYSQL_FIELD *fields;
+
+num_fields = mysql_num_fields(result);
+fields = mysql_fetch_fields(result);
+for(i = 0; i < num_fields; i++)
+{
+   printf("Field %u is %s\n", i, fields[i].name);
+}
