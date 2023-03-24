@@ -89,9 +89,13 @@ def GenConstructor(sName, lField, sBindType):
     			{}
     			this->bindTable({}, getFactoryName());
     		}}
+    		
+    		virtual ~{}_AutoGen()
+    		{{
+    		}}
 """
 
-    sConstructor += sTemplate.format(sName, sValue, sStatements, sBindType)
+    sConstructor += sTemplate.format(sName, sValue, sStatements, sBindType, sName)
     return sConstructor
 
 
