@@ -124,6 +124,13 @@ std::string DeclarativeBase::query(MySQLConnector& connector)
 
 mysql_proxy_msg::MysqlQueryRequest DeclarativeBase::generateQuery()
 {
+	if (!m_binded)
+	{
+		std::stringstream ss;
+		ss << "generateQuery:|m_binded:" << m_binded << "|getDb:" << m_table.getDb() << "|getTable:" << m_table.getTable();
+		ASYNC_PIE_LOG(PIE_ERROR, "{}", ss.str());
+	}
+
 	mysql_proxy_msg::MysqlQueryRequest queryRequest;
 	queryRequest.set_db_name(m_table.getDb());
 	queryRequest.set_table_name(m_table.getTable());
@@ -152,6 +159,13 @@ mysql_proxy_msg::MysqlQueryRequest DeclarativeBase::generateQuery()
 
 mysql_proxy_msg::MysqlQueryByFilterRequest DeclarativeBase::generateQueryByFilter()
 {
+	if (!m_binded)
+	{
+		std::stringstream ss;
+		ss << "generateQueryByFilter:|m_binded:" << m_binded << "|getDb:" << m_table.getDb() << "|getTable:" << m_table.getTable();
+		ASYNC_PIE_LOG(PIE_ERROR, "{}", ss.str());
+	}
+
 	mysql_proxy_msg::MysqlQueryByFilterRequest queryRequest;
 	queryRequest.set_db_name(m_table.getDb());
 	queryRequest.set_table_name(m_table.getTable());
@@ -182,6 +196,13 @@ mysql_proxy_msg::MysqlQueryByFilterRequest DeclarativeBase::generateQueryByFilte
 
 mysql_proxy_msg::MysqlQueryAllRequest DeclarativeBase::generateQueryAll()
 {
+	if (!m_binded)
+	{
+		std::stringstream ss;
+		ss << "generateQueryAll:|m_binded:" << m_binded << "|getDb:" << m_table.getDb() << "|getTable:" << m_table.getTable();
+		ASYNC_PIE_LOG(PIE_ERROR, "{}", ss.str());
+	}
+
 	mysql_proxy_msg::MysqlQueryAllRequest queryRequest;
 	queryRequest.set_db_name(m_table.getDb());
 	queryRequest.set_table_name(m_table.getTable());
@@ -191,6 +212,13 @@ mysql_proxy_msg::MysqlQueryAllRequest DeclarativeBase::generateQueryAll()
 
 mysql_proxy_msg::MysqlInsertRequest DeclarativeBase::generateInsert()
 {
+	if (!m_binded)
+	{
+		std::stringstream ss;
+		ss << "generateInsert:|m_binded:" << m_binded << "|getDb:" << m_table.getDb() << "|getTable:" << m_table.getTable();
+		ASYNC_PIE_LOG(PIE_ERROR, "{}", ss.str());
+	}
+
 	mysql_proxy_msg::MysqlInsertRequest insertRequest;
 	insertRequest.set_db_name(m_table.getDb());
 	insertRequest.set_table_name(m_table.getTable());
