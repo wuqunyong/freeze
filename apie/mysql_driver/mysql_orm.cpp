@@ -230,6 +230,8 @@ mysql_proxy_msg::MysqlInsertRequest DeclarativeBase::generateInsert()
 
 mysql_proxy_msg::MysqlUpdateRequest DeclarativeBase::generateUpdate()
 {
+	checkBind("generateUpdate");
+
 	mysql_proxy_msg::MysqlUpdateRequest updateRequest;
 	updateRequest.set_db_name(m_table.getDb());
 	updateRequest.set_table_name(m_table.getTable());
@@ -287,6 +289,8 @@ mysql_proxy_msg::MysqlUpdateRequest DeclarativeBase::generateUpdate()
 
 mysql_proxy_msg::MysqlDeleteRequest DeclarativeBase::generateDelete()
 {
+	checkBind("generateDelete");
+
 	mysql_proxy_msg::MysqlDeleteRequest deleteRequest;
 	deleteRequest.set_db_name(m_table.getDb());
 	deleteRequest.set_table_name(m_table.getTable());
