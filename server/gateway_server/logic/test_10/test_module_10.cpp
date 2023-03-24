@@ -69,10 +69,14 @@ void CreateUserObj(uint64_t iRoleId, PlayerFactory::Callback doneCb)
 	server.set_type(::common::EPT_DB_ROLE_Proxy);
 	server.set_id(1);
 
+	std::tuple<uint32_t, uint32_t> params = { iRoleId,1 };
+
 	auto ptrLoad = CreateDBLoaderPtr();
 	ptrLoad->set<Single_ModelUser_Loader>(iRoleId);
 	ptrLoad->set<Single_ModelRoleExtra_Loader>(iRoleId);
 	ptrLoad->set<Single_ModelVarchars1_Loader>({ iRoleId,1 });
+
+	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().getTableType().set_user_id(iRoleId);
 	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().markFilter({ apie::dbt_role::role_base_AutoGen::user_id });
 
 	auto cb = [ptrModuleLoader, doneCb, server, iRoleId](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {

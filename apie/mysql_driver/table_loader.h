@@ -40,6 +40,11 @@ namespace apie {
 
 		}
 
+		TableType& getTableType()
+		{
+			return m_tableType;
+		}
+
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
 		{
 			if (!isInit())
@@ -112,6 +117,11 @@ namespace apie {
 			m_tableType(std::forward<Args>(args)...)
 		{
 
+		}
+
+		TableType& getTableType()
+		{
+			return m_tableType;
 		}
 
 		void markFilter(const std::vector<uint8_t>& index)
@@ -188,6 +198,11 @@ namespace apie {
 			m_tableType(std::forward<Args>(args)...)
 		{
 
+		}
+
+		TableType& getTableType()
+		{
+			return m_tableType;
 		}
 
 		void loadFromDb(std::shared_ptr<apie::DbLoadComponent> loader, ::rpc_msg::CHANNEL server)
