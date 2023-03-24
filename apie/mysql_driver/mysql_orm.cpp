@@ -325,6 +325,11 @@ mysql_proxy_msg::MysqlDeleteRequest DeclarativeBase::generateDelete()
 }
 
 
+bool DeclarativeBase::isBind()
+{
+	return m_binded;
+}
+
 bool DeclarativeBase::isValid()
 {
 	if (m_table.getFields().size() != this->columNums())

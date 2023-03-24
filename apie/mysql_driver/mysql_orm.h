@@ -86,6 +86,7 @@ public:
 
 	bool loadFromPb(const ::mysql_proxy_msg::MysqlRow& row);
 
+	bool isBind();
 	bool isValid();
 
 	std::optional<::mysql_proxy_msg::MysqlValue> getValueByIndex(uint32_t index);
