@@ -119,6 +119,7 @@ public:
 
 private:
 	//bool loadFromPb(::mysql_proxy_msg::MysqlQueryResponse& response);
+	bool checkBind(std::string sName);
 
 public:
 	static std::string toString(MySQLConnector& connector, const ::mysql_proxy_msg::MysqlValue& value);
