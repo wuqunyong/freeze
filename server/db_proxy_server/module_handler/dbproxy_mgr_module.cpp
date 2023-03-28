@@ -119,7 +119,7 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlQuery(
 	if (!bResult)
 	{
 		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
-		return { apie::status::StatusCode::INTERNAL, "CODE_QueryError" };
+		return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlQuery Error" };
 	}
 
 	return { apie::status::StatusCode::OK, "" };
@@ -151,9 +151,7 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlMultiQuery(
 		response.set_sql_statement(sSQL);
 		if (!bResult)
 		{
-			std::stringstream ss;
-			ss << "generateQuerySQL Error|SQL:" << sSQL;
-			return { apie::status::StatusCode::INTERNAL, ss.str() };
+			return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlMultiQuery Error" };
 		}
 
 		std::shared_ptr<ResultSet> recordSet;
@@ -209,6 +207,7 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlQueryByFilter(
 	if (!bResult)
 	{
 		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
+		return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlQueryByFilter Error" };
 	}
 
 	if (!recordSet)
@@ -271,7 +270,7 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlQueryAll(
 	response->set_sql_statement(sSQL);
 	if (!bResult)
 	{
-		return { apie::status::StatusCode::INTERNAL, "generateQueryAllSQL Error" };
+		return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlQueryAll Error" };
 	}
 
 	std::shared_ptr<ResultSet> recordSet;
@@ -283,6 +282,7 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlQueryAll(
 	if (!bResult)
 	{
 		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
+		return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlQueryAll Error" };
 	}
 
 	if (!recordSet)
@@ -343,7 +343,7 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlStatement(
 	if (!bResult)
 	{
 		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
-		return { apie::status::StatusCode::INTERNAL, "CODE_QueryError" };
+		return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlStatement Error" };
 	}
 
 	response->set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
@@ -381,7 +381,9 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlInsert(
 	if (!bResult)
 	{
 		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
+		return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlInsert Error" };
 	}
+
 	response->set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
 	response->set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
 
@@ -417,7 +419,9 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlUpdate(
 	if (!bResult)
 	{
 		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
+		return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlUpdate Error" };
 	}
+
 	response->set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
 	response->set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
 
@@ -443,7 +447,8 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlDelete(
 	response->set_sql_statement(sSQL);
 	if (!bResult)
 	{
-		return { apie::status::StatusCode::INTERNAL, "generateDeleteSQL Error" };
+		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
+		return { apie::status::StatusCode::DB_MysqlQueryError, "RPC_mysqlDelete Error" };
 	}
 
 	std::shared_ptr<ResultSet> recordSet;

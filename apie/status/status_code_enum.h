@@ -126,6 +126,7 @@ DirtyFlagZero = 22,
 DB_InsertError = 23,
 DB_LoadedError = 24,
 DB_BindTableError = 25,
+DB_MysqlQueryError = 26,
 
 Obj_NotExist = 50,
 
