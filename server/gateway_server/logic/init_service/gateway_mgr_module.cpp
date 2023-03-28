@@ -21,6 +21,7 @@ void GatewayMgrModule::init()
 	auto& cmd = LogicCmdHandlerSingleton::get();
 	cmd.init();
 	cmd.registerOnCmd("nats_publish", "nats_publish", GatewayMgrModule::Cmd_natsPublish);
+	cmd.registerOnCmd("mysql_statement", "mysql_statement", GatewayMgrModule::Cmd_mysqlStatement);
 }
 
 void GatewayMgrModule::ready()
@@ -142,8 +143,32 @@ void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 	MessageInfo msgInfo;
 	msgInfo.iOpcode = ::apie::OP_MSG_REQUEST_ECHO;
 	GatewayMgrModule::handleDefaultOpcodes(msgInfo, request.SerializeAsString());
-
 }
+
+void GatewayMgrModule::Cmd_mysqlStatement(::pubsub::LOGIC_CMD& cmd)
+{
+	if (cmd.params_size() < 1)
+	{
+		return;
+	}
+
+	std::string sStatement = cmd.params()[0];
+
+	auto cb = [](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlStatementResponse>& response) {
+		if (status.ok())
+		{
+			ASYNC_PIE_LOG(PIE_NOTICE, "Cmd_mysqlStatement|{}", response->ShortDebugString());
+		}
+	};
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_id(1);
+
+	ExecMysqlStatement(server, sStatement, cb);
+}
+
 
 apie::status::Status GatewayMgrModule::handleRequestClientLogin(
 	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response)

@@ -103,6 +103,9 @@ public:
 			!(m_flags & NO_DEFAULT_VALUE_FLAG);
 	}
 
+	static DB_FIELD_TYPE Convert(enum_field_types type, uint32_t flags);
+	static ::mysql_proxy_msg::MysqlScalarValueTypes convertToPbType(enum_field_types type, uint32_t flags);
+
 private:
 	uint32_t m_index;
 	std::string m_name;

@@ -28,7 +28,7 @@ namespace apie {
 
 		// CMD
 		static void Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd);
-
+		static void Cmd_mysqlStatement(::pubsub::LOGIC_CMD& cmd);
 
 		// RPC
 		static apie::status::Status RPC_loginPending(

@@ -59,6 +59,7 @@ enum MysqlDataManipulation
 	MDM_INSERT = 4;
 	MDM_QUERY_BY_FILTER = 5;
 	MDM_QUERY_ALL = 6;
+	MDM_STATEMENT = 7;
 }
 
 message MysqlDescribeRequest
@@ -190,4 +191,19 @@ message MysqlQueryAllResponse
 	bytes error_info = 2;
 	MysqlTable table = 3;
 	bytes sql_statement = 4;
+}
+
+message MysqlStatementRequest
+{
+	bytes sql_statement = 1;
+}
+
+message MysqlStatementResponse
+{
+	bool result = 1;
+	bytes error_info = 2;
+	MysqlTable table = 3;
+	bytes sql_statement = 4;
+	uint64 affected_rows = 5;
+	uint64 insert_id = 6;
 }

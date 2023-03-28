@@ -78,6 +78,145 @@ void MysqlField::setValue(::mysql_proxy_msg::MysqlValue value)
 	this->m_value = value;
 }
 
+MysqlField::DB_FIELD_TYPE MysqlField::Convert(enum_field_types type, uint32_t flags)
+{
+	DB_FIELD_TYPE fieldType;
+	switch (type)
+	{
+	case MYSQL_TYPE_TINY_BLOB:
+	case MYSQL_TYPE_MEDIUM_BLOB:
+	case MYSQL_TYPE_LONG_BLOB:
+	case MYSQL_TYPE_BLOB:
+		fieldType = DB_FIELD_TYPE::T_BYTES;
+		break;
+
+	case FIELD_TYPE_STRING:
+	case FIELD_TYPE_VAR_STRING:
+	case FIELD_TYPE_DATETIME:
+		fieldType = DB_FIELD_TYPE::T_STRING;
+		break;
+
+	case FIELD_TYPE_FLOAT:
+		fieldType = DB_FIELD_TYPE::T_FLOAT;
+		break;
+
+	case FIELD_TYPE_DOUBLE:
+		fieldType = DB_FIELD_TYPE::T_DOUBLE;
+		break;
+
+	case FIELD_TYPE_TINY:
+		fieldType = DB_FIELD_TYPE::T_INT8;
+		break;
+
+	case FIELD_TYPE_SHORT:
+		fieldType = DB_FIELD_TYPE::T_INT16;
+		break;
+
+	case FIELD_TYPE_LONG:
+		fieldType = DB_FIELD_TYPE::T_INT32;
+		break;
+
+	case FIELD_TYPE_LONGLONG:
+		fieldType = DB_FIELD_TYPE::T_INT64;
+		break;
+
+	case MYSQL_TYPE_NEWDECIMAL:
+		fieldType = DB_FIELD_TYPE::T_INT64;
+		break;
+
+	default:
+		fieldType = DB_FIELD_TYPE::T_NONE;
+		break;
+	}
+
+	if (fieldType == DB_FIELD_TYPE::T_NONE)
+	{
+		return fieldType;
+	}
+
+	if (flags & UNSIGNED_FLAG)
+	{
+		fieldType = DB_FIELD_TYPE(uint32_t(fieldType) | 0x20);
+	}
+
+	return fieldType;
+}
+
+::mysql_proxy_msg::MysqlScalarValueTypes MysqlField::convertToPbType(enum_field_types type, uint32_t flags)
+{
+	::mysql_proxy_msg::MysqlScalarValueTypes fieldType;
+	switch (type)
+	{
+	case MYSQL_TYPE_TINY_BLOB:
+	case MYSQL_TYPE_MEDIUM_BLOB:
+	case MYSQL_TYPE_LONG_BLOB:
+	case MYSQL_TYPE_BLOB:
+		fieldType = ::mysql_proxy_msg::MSVT_BYTES;
+		break;
+
+	case FIELD_TYPE_STRING:
+	case FIELD_TYPE_VAR_STRING:
+	case FIELD_TYPE_DATETIME:
+		fieldType = ::mysql_proxy_msg::MSVT_STRING;
+		break;
+
+	case FIELD_TYPE_FLOAT:
+		fieldType = ::mysql_proxy_msg::MSVT_FLOAT;
+		break;
+
+	case FIELD_TYPE_DOUBLE:
+		fieldType = ::mysql_proxy_msg::MSVT_DOUBLE;// DB_FIELD_TYPE::T_DOUBLE;
+		break;
+
+	case FIELD_TYPE_TINY:
+		fieldType = ::mysql_proxy_msg::MSVT_INT32;//DB_FIELD_TYPE::T_INT8;
+		break;
+
+	case FIELD_TYPE_SHORT:
+		fieldType = ::mysql_proxy_msg::MSVT_INT32;//DB_FIELD_TYPE::T_INT16;
+		break;
+
+	case FIELD_TYPE_LONG:
+		fieldType = ::mysql_proxy_msg::MSVT_INT32;//DB_FIELD_TYPE::T_INT32;
+		break;
+
+	case FIELD_TYPE_LONGLONG:
+		fieldType = ::mysql_proxy_msg::MSVT_INT64;//DB_FIELD_TYPE::T_INT64;
+		break;
+
+	case MYSQL_TYPE_NEWDECIMAL:
+		fieldType = ::mysql_proxy_msg::MSVT_INT64;//DB_FIELD_TYPE::T_INT64;
+		break;
+
+	default:
+		fieldType = ::mysql_proxy_msg::MSVT_None;//DB_FIELD_TYPE::T_NONE;
+		break;
+	}
+
+	if (fieldType == ::mysql_proxy_msg::MSVT_None)//DB_FIELD_TYPE::T_NONE)
+	{
+		return fieldType;
+	}
+
+	if (flags & UNSIGNED_FLAG)
+	{
+		switch (fieldType)
+		{
+		case mysql_proxy_msg::MSVT_INT32:
+			fieldType = mysql_proxy_msg::MSVT_UINT32;
+			break;
+		case mysql_proxy_msg::MSVT_INT64:
+			fieldType = mysql_proxy_msg::MSVT_UINT64;
+			break;
+		default:
+			break;
+		}
+		//fieldType = DB_FIELD_TYPE(uint32_t(fieldType) | 0x20);
+	}
+
+	return fieldType;
+}
+
 MysqlField::DB_FIELD_TYPE MysqlField::convertToDbType()
 {
 	DB_FIELD_TYPE fieldType;
@@ -141,7 +280,6 @@ MysqlField::DB_FIELD_TYPE MysqlField::convertToDbType()
 
 	return fieldType;
 }
-
 
 ::mysql_proxy_msg::MysqlScalarValueTypes MysqlField::convertToPbType()
 {

@@ -113,6 +113,7 @@ enum RPC_OPCODES : int {
   RPC_MysqlQueryByFilter = 406,
   RPC_MysqlMultiQuery = 407,
   RPC_MysqlQueryAll = 408,
+  RPC_MysqlStatement = 409,
   OP_RPC_EchoTest = 1001,
   OP_RPC_LoginPending = 2001,
   RPC_OPCODES_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),

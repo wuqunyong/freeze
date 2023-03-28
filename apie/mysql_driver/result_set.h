@@ -28,6 +28,8 @@ public:
 
 	bool MoveNext();
 
+	MYSQL_RES* GetMysqlRes();
+
 	bool operator>> (int8_t& ref_value);
 	bool operator>> (int16_t& ref_value);
 	bool operator>> (int32_t& ref_value);

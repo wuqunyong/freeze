@@ -27,6 +27,10 @@ bool ResultSet::MoveNext()
 	return (this->mysql_rows_ != NULL);
 }
 
+MYSQL_RES* ResultSet::GetMysqlRes()
+{
+	return ptr_mysql_res_;
+}
 
 bool ResultSet::operator>> (int8_t& ref_value)
 {

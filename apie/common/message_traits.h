@@ -702,5 +702,23 @@ void Update_OnForced(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tup)
 }
 
 
+using MysqlStatementCB = std::function<void(apie::status::Status, const std::shared_ptr<::mysql_proxy_msg::MysqlStatementResponse>& response)>;
+
+static inline bool ExecMysqlStatement(::rpc_msg::CHANNEL server, std::string& sStatement, MysqlStatementCB cb)
+{
+	mysql_proxy_msg::MysqlStatementRequest queryRequest;
+	queryRequest.set_sql_statement(sStatement);
+
+	auto queryCB = [cb](const apie::status::Status& status, const std::shared_ptr<::mysql_proxy_msg::MysqlStatementResponse>& response) mutable {
+		if (cb)
+		{
+			cb(status, response);
+		}
+
+	};
+	return apie::rpc::RPC_Call<::mysql_proxy_msg::MysqlStatementRequest, ::mysql_proxy_msg::MysqlStatementResponse>(server, ::rpc_msg::RPC_MysqlStatement, queryRequest, queryCB);
+}
+
+
 }  // namespace message
 

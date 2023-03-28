@@ -26,6 +26,7 @@ void DBProxyMgrModule::init()
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlQueryByFilterRequest, ::mysql_proxy_msg::MysqlQueryByFilterResponse>(rpc_msg::RPC_MysqlQueryByFilter, DBProxyMgrModule::RPC_mysqlQueryByFilter);
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlMultiQueryRequest, ::mysql_proxy_msg::MysqlMulitQueryResponse>(rpc_msg::RPC_MysqlMultiQuery, DBProxyMgrModule::RPC_mysqlMultiQuery);
 	rpc.createRPCServer<::mysql_proxy_msg::MysqlQueryAllRequest, ::mysql_proxy_msg::MysqlQueryAllResponse>(rpc_msg::RPC_MysqlQueryAll, DBProxyMgrModule::RPC_mysqlQueryAll);
+	rpc.createRPCServer<::mysql_proxy_msg::MysqlStatementRequest, ::mysql_proxy_msg::MysqlStatementResponse>(rpc_msg::RPC_MysqlStatement, DBProxyMgrModule::RPC_mysqlStatement);
 }
 
 
@@ -321,6 +322,34 @@ apie::status::Status DBProxyMgrModule::RPC_mysqlQueryAll(
 	apie::rpc::RPC_AsyncStreamReply(client, ::rpc_msg::CODE_Ok, response->SerializeAsString(), false, iOffset);
 
 	return { apie::status::StatusCode::OK_ASYNC, "" };
+}
+
+apie::status::Status DBProxyMgrModule::RPC_mysqlStatement(
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::mysql_proxy_msg::MysqlStatementRequest>& request, std::shared_ptr<::mysql_proxy_msg::MysqlStatementResponse>& response)
+{
+	auto ptrDispatched = CtxSingleton::get().getLogicThread();
+	if (ptrDispatched == nullptr)
+	{
+		return { apie::status::StatusCode::INTERNAL, "CODE_LogicThreadNull" };
+	}
+
+	std::string sSQL = request->sql_statement();
+
+	std::shared_ptr<ResultSet> recordSet;
+	bool bResult = ptrDispatched->getMySQLConnector().query(sSQL.c_str(), sSQL.length(), recordSet);
+	*response = DeclarativeBase::convertFromResultSet(recordSet);
+	response->set_sql_statement(sSQL);
+	response->set_result(bResult);
+	if (!bResult)
+	{
+		response->set_error_info(ptrDispatched->getMySQLConnector().getError());
+		return { apie::status::StatusCode::INTERNAL, "CODE_QueryError" };
+	}
+
+	response->set_affected_rows(ptrDispatched->getMySQLConnector().getAffectedRows());
+	response->set_insert_id(ptrDispatched->getMySQLConnector().getInsertId());
+
+	return { apie::status::StatusCode::OK, "" };
 }
 
 apie::status::Status DBProxyMgrModule::RPC_mysqlInsert(
