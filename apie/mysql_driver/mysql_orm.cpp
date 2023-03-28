@@ -721,10 +721,15 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 		MYSQL_FIELD* fields = mysql_fetch_fields(ptrMysqlRes);
 		for (unsigned int i = 0; i < num_fields; i++)
 		{
-			printf("Field %u is %s\n", i, fields[i].name);
+			//printf("Field %u is %s\n", i, fields[i].name);
 
 			auto dbType = MysqlField::Convert(fields[i].type, fields[i].flags);
 			auto fieldType = MysqlField::convertToPbType(fields[i].type, fields[i].flags);
+
+			auto ptrAddFields = ptrAddRows->add_fields();
+			ptrAddFields->set_index(iIndex);
+			ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
+			ptrAddFields->mutable_value()->set_type(fieldType);
 
 			switch (dbType)
 			{
@@ -733,12 +738,7 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				int8_t fieldValue = 0;
 				*result >> fieldValue;
 
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
-
 				break;
 			}
 			case MysqlField::DB_FIELD_TYPE::T_INT16:
@@ -746,11 +746,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				int16_t fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
 				break;
 			}
@@ -759,11 +754,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				int32_t fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_int32_v(fieldValue);
 				break;
 			}
@@ -772,11 +762,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				int64_t fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_int64_v(fieldValue);
 				break;
 			}
@@ -785,11 +770,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				float fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_float_v(fieldValue);
 				break;
 			}
@@ -798,11 +778,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				double fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_double_v(fieldValue);
 				break;
 			}
@@ -811,11 +786,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				std::string fieldValue;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_bytes_v(fieldValue);
 				break;
 			}
@@ -824,11 +794,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				std::string fieldValue;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_string_v(fieldValue);
 				break;
 			}
@@ -837,11 +802,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				uint8_t fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);
 				break;
 			}
@@ -850,11 +810,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				uint16_t fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);
 				break;
 			}
@@ -863,11 +818,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				uint32_t fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_uint32_v(fieldValue);;
 				break;
 			}
@@ -876,11 +826,6 @@ mysql_proxy_msg::MysqlStatementResponse DeclarativeBase::convertFromResultSet(st
 				uint64_t fieldValue = 0;
 				*result >> fieldValue;
 
-
-				auto ptrAddFields = ptrAddRows->add_fields();
-				ptrAddFields->set_index(iIndex);
-				ptrAddFields->mutable_value()->set_db_type(static_cast<int32_t>(dbType));
-				ptrAddFields->mutable_value()->set_type(fieldType);
 				ptrAddFields->mutable_value()->set_uint64_v(fieldValue);;
 				break;
 			}
