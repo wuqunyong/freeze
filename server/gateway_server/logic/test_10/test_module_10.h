@@ -126,7 +126,8 @@ namespace apie {
 			if (m_data3.getData().has_value())
 			{
 				m_data3.getData().value().set_modified_time(time(nullptr));
-				UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.getServer(), m_data3.getData().value(), nullptr);
+				//UpdateToDb<Single_ModelAccount_Loader::Type::TableType>(m_data3.getServer(), m_data3.getData().value(), nullptr);
+				UpdateToDb(m_data3.getServer(), m_data3.getData().value(), nullptr);
 			}
 
 			std::cout << "ModuleA saveToDb" << std::endl;
