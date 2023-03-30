@@ -39,14 +39,14 @@ void SceneMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>&
 	handlerOpt.value()(*msg);
 }
 
-apie::status::Status SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::MSG_REQUEST_ECHO>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ECHO>& response)
+apie::status::E_ReturnType SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::MSG_REQUEST_ECHO>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ECHO>& response)
 {
 	PIE_LOG(PIE_NOTICE, "{}", request->DebugString().c_str());
 
 	response->set_value1(request->value1());
 	response->set_value2(request->value2() + "|response");
 
-	return { apie::status::StatusCode::OK, "" };
+	return apie::status::E_ReturnType::kRT_Sync;
 
 	//apie::forward::ForwardManager::sendNotifyToGW(role.user_id(), role.info().response_opcode(), *response);
 

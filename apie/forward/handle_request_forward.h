@@ -17,7 +17,7 @@ namespace forward {
 template <typename Request, uint32_t responseOpcode, typename Response>
 class HandleRequestForward : public ForwardBase {
 public:
-	using ServiceCallback = std::function<status::Status(const ::rpc_msg::RoleIdentifier&, const std::shared_ptr<Request>&, std::shared_ptr<Response>&)>;
+	using ServiceCallback = std::function<status::E_ReturnType(const ::rpc_msg::RoleIdentifier&, const std::shared_ptr<Request>&, std::shared_ptr<Response>&)>;
 
 	HandleRequestForward(uint32_t opcode, const ServiceCallback& service_callback)
 		: ForwardBase(opcode, ForwardBase::RequestType::RT_Request),
@@ -80,13 +80,9 @@ template <typename Request, uint32_t responseOpcode, typename Response>
 void HandleRequestForward<Request, responseOpcode, Response>::handleRequest(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<Request>& request)
 {
 	auto response = std::make_shared<Response>();
-	auto status = service_callback_(role, request, response);
-	if (status.isAsync())
-	{
-		return;
-	}
 
-	if (status.ok())
+	auto status = service_callback_(role, request, response);
+	if (status == apie::status::E_ReturnType::kRT_Sync)
 	{
 		sendResponse(role, response);
 	}

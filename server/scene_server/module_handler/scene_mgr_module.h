@@ -30,7 +30,7 @@ namespace apie {
 
 
 		// FORWARD
-		static apie::status::Status Forward_echo(
+		static apie::status::E_ReturnType Forward_echo(
 			const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::MSG_REQUEST_ECHO>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ECHO>& response);
 	};
 
