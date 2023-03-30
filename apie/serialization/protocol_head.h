@@ -25,7 +25,7 @@ Byte
 /               |               |               |               |
 |0 1 2 3 4 5 6 7|0 1 2 3 4 5 6 7|0 1 2 3 4 5 6 7|0 1 2 3 4 5 6 7|
 +---------------+---------------+---------------+---------------+
-0|                           iSeqNum    
+0|                           RPCRequestID    
 +---------------+---------------+---------------+---------------+
 4| ..........R|C|   --iMagic--  |          ---iOpcode---                 
 +---------------+---------------+---------------+---------------+
@@ -43,7 +43,7 @@ struct ProtocolHead
 {
 	ProtocolHead(void)
 	{
-		this->iSeqNum = 0;
+		this->iRPCRequestID = 0;
 		this->iFlags = 0;
 		this->iMagic = 0;
 		this->iOpcode = 0;
@@ -51,7 +51,7 @@ struct ProtocolHead
 		this->iCheckSum = 0;
 	}
 
-	uint32_t iSeqNum;
+	uint32_t iRPCRequestID;
 	uint8_t iFlags;
 	uint8_t iMagic;
 	uint16_t iOpcode;

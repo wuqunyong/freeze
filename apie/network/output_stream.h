@@ -62,7 +62,7 @@ namespace network {
 		}
 
 		ProtocolHead head;
-		head.iSeqNum = info.iRPCRequestID;
+		head.iRPCRequestID = info.iRPCRequestID;
 		head.iFlags = 0;
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();

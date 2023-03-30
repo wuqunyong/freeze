@@ -84,7 +84,7 @@ namespace network {
 		}
 
 		ProtocolHead head;
-		head.iSeqNum = info.iRPCRequestID;
+		head.iRPCRequestID = info.iRPCRequestID;
 		head.iFlags = info.getFlags();
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
@@ -372,7 +372,7 @@ namespace network {
 		}
 
 		ProtocolHead head;
-		head.iSeqNum = info.iRPCRequestID;
+		head.iRPCRequestID = info.iRPCRequestID;
 		head.iFlags = info.getFlags();
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.size();

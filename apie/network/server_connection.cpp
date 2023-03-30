@@ -192,7 +192,7 @@ void ServerConnection::readPB()
 	
 			MessageInfo info;
 			info.iSessionId = this->iSerialNum;
-			info.iRPCRequestID = head.iSeqNum;
+			info.iRPCRequestID = head.iRPCRequestID;
 			info.iOpcode = head.iOpcode;
 			info.iConnetionType = ConnetionType::CT_SERVER;
 			this->recv(info, sBody);
