@@ -15,7 +15,7 @@ namespace service {
 template <typename Request, uint32_t responseOpcode, typename Response>
 class HandleRequestService : public ServiceBase {
 public:
-	using ServiceCallback = std::function<status::Status(MessageInfo, const std::shared_ptr<Request>&, std::shared_ptr<Response>&)>;
+	using ServiceCallback = std::function<status::E_ReturnType(MessageInfo, const std::shared_ptr<Request>&, std::shared_ptr<Response>&)>;
 
 	HandleRequestService(uint32_t opcode, const ServiceCallback& service_callback)
 		: ServiceBase(opcode, ServiceBase::RequestType::RT_Request),
@@ -78,13 +78,8 @@ void HandleRequestService<Request, responseOpcode, Response>::handleRequest(Mess
 	info.iResponseOpcode = responseOpcode_;
 
 	auto response = std::make_shared<Response>();
-	auto status = service_callback_(info, request, response);
-	if (status.isAsync())
-	{
-		return;
-	}
-
-	if (status.ok())
+	apie::status::E_ReturnType status = service_callback_(info, request, response);
+	if (status == apie::status::E_ReturnType::kRT_Sync)
 	{
 		sendResponse(info, response);
 	}

@@ -9,6 +9,7 @@ namespace apie {
 namespace status {
 
 
+
 class Status {
 public:
 	Status()
@@ -49,6 +50,12 @@ private:
 	StatusCode code_;
 	std::string error_message_;
 	bool has_more_ = false;
+};
+
+enum class E_ReturnType
+{	
+	kRT_Sync = 0,
+	kRT_Async = 1,
 };
 
 

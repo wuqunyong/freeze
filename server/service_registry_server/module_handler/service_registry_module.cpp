@@ -50,7 +50,7 @@ void ServiceRegistryModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGI
 	handlerOpt.value()(*msg);
 }
 
-apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
+apie::status::E_ReturnType  ServiceRegistryModule::handleRequestRegisterInstance(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request,
 	std::shared_ptr<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>& response)
 {
 	std::stringstream ss;
@@ -63,7 +63,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 
 		ss << ",auth:error";
 		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
-		return { apie::status::StatusCode::OK, "" };
+		return apie::status::E_ReturnType::kRT_Sync;
 	}
 
 	EndPoint addNode(request->instance().realm(), request->instance().type(), request->instance().id(), "");
@@ -74,7 +74,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 
 		ss << ",invalid node";
 		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
-		return { apie::status::StatusCode::OK, "" };
+		return apie::status::E_ReturnType::kRT_Sync;
 	}
 
 	::service_discovery::EndPointInstance instanceObj = request->instance();
@@ -88,7 +88,7 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 
 		ss << ",node:duplicate";
 		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
-		return { apie::status::StatusCode::OK, "" };
+		return apie::status::E_ReturnType::kRT_Sync;
 	}
 	
 	ASYNC_PIE_LOG(PIE_DEBUG, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
@@ -104,11 +104,11 @@ apie::status::Status  ServiceRegistryModule::handleRequestRegisterInstance(Messa
 	};
 	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(cb);
 
-	return { apie::status::StatusCode::OK, "" };
+	return apie::status::E_ReturnType::kRT_Sync;
 }
 
 
-apie::status::Status  ServiceRegistryModule::handleRequestHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
+apie::status::E_ReturnType  ServiceRegistryModule::handleRequestHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
 		std::shared_ptr<::service_discovery::MSG_RESPONSE_HEARTBEAT>& response)
 {
 	std::stringstream ss;
@@ -123,10 +123,10 @@ apie::status::Status  ServiceRegistryModule::handleRequestHeartbeat(MessageInfo 
 
 		ss << "node:Unregistered";
 		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestHeartbeat|{}", ss.str().c_str());
-		return { apie::status::StatusCode::OK, "" };
+		return apie::status::E_ReturnType::kRT_Sync;
 	}
 
-	return { apie::status::StatusCode::OK, "" };
+	return apie::status::E_ReturnType::kRT_Sync;
 }
 
 

@@ -39,11 +39,11 @@ namespace apie {
 		static void handleDefaultOpcodes(MessageInfo info, const std::string& msg);
 		static void handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, const std::string& msg);
 
-		static apie::status::Status handleRequestClientLogin(
+		static apie::status::E_ReturnType handleRequestClientLogin(
 			MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response);
-		static apie::status::Status handleRequestHandshakeInit(
+		static apie::status::E_ReturnType handleRequestHandshakeInit(
 			MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>& response);
-		static apie::status::Status handleRequestHandshakeEstablished(
+		static apie::status::E_ReturnType handleRequestHandshakeEstablished(
 			MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>& response);
 	};
 }

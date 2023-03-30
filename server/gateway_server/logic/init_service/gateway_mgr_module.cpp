@@ -170,13 +170,13 @@ void GatewayMgrModule::Cmd_mysqlStatement(::pubsub::LOGIC_CMD& cmd)
 }
 
 
-apie::status::Status GatewayMgrModule::handleRequestClientLogin(
+apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
 	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response)
 {
-	return { apie::status::StatusCode::OK_ASYNC, "" };
+	return apie::status::E_ReturnType::kRT_Sync;
 }
 
-apie::status::Status GatewayMgrModule::handleRequestHandshakeInit(
+apie::status::E_ReturnType GatewayMgrModule::handleRequestHandshakeInit(
 	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>& response)
 {
 	std::string content;
@@ -207,10 +207,10 @@ apie::status::Status GatewayMgrModule::handleRequestHandshakeInit(
 	cmd.args.set_server_session_attr.ptrData = ptr;
 	network::OutputStream::sendCommand(ConnetionType::CT_SERVER, info.iSessionId, cmd);
 
-	return { apie::status::StatusCode::OK, "" };
+	return apie::status::E_ReturnType::kRT_Sync;
 }
 
-apie::status::Status GatewayMgrModule::handleRequestHandshakeEstablished(
+apie::status::E_ReturnType GatewayMgrModule::handleRequestHandshakeEstablished(
 	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>& response)
 {
 	std::string decryptedMsg;
@@ -218,14 +218,14 @@ apie::status::Status GatewayMgrModule::handleRequestHandshakeEstablished(
 	if (!bResult)
 	{
 		response->set_status_code(opcodes::SC_Auth_DecryptError);
-		return { apie::status::StatusCode::OK, "" };
+		return apie::status::E_ReturnType::kRT_Sync;
 	}
 
 	auto ptrConnection = event_ns::DispatcherImpl::getConnection(info.iSessionId);
 	if (ptrConnection == nullptr)
 	{
 		response->set_status_code(opcodes::SC_Connection_Lost);
-		return { apie::status::StatusCode::OK, "" };
+		return apie::status::E_ReturnType::kRT_Sync;
 	}
 
 	std::string sClientRandom = ptrConnection->getClientRandom();
@@ -244,7 +244,7 @@ apie::status::Status GatewayMgrModule::handleRequestHandshakeEstablished(
 	cmd.args.set_server_session_attr.ptrData = ptr;
 	network::OutputStream::sendCommand(ConnetionType::CT_SERVER, info.iSessionId, cmd);
 	
-	return { apie::status::StatusCode::OK, "" };;
+	return apie::status::E_ReturnType::kRT_Sync;
 }
 
 void GatewayMgrModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg)
