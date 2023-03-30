@@ -28,20 +28,22 @@ public:
 	template <typename RequestT, typename ResponseT>
 	friend bool RPC_CallWithContext(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const RequestT& params, const typename RPCClient<RequestT, ResponseT>::CallbackType& calllback);
 
-	RPCClient(RPCClientManager& manager, const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
+	RPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
 		: RPCClientBase(opcode),
-		manager_(manager),
+		manager_(RPCClientManagerSingleton::get()),
 		callback_(callback),
 		context_(server)
 	{
+
 	}
 
-	RPCClient(RPCClientManager& manager, const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
+	RPCClient(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
 		: RPCClientBase(opcode),
-		manager_(manager),
+		manager_(RPCClientManagerSingleton::get()),
 		callback_(callback),
 		context_(context)
 	{
+
 	}
 
 

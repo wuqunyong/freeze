@@ -18,7 +18,7 @@ namespace rpc {
 	auto createRPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
 		->std::shared_ptr<RPCClient<Request, Response>>
 	{
-		auto client_ptr = std::make_shared<RPCClient<Request, Response>>(RPCClientManagerSingleton::get(), server, opcode, calllback);
+		auto client_ptr = std::make_shared<RPCClient<Request, Response>>(server, opcode, calllback);
 		return client_ptr;
 	}
 
@@ -26,7 +26,7 @@ namespace rpc {
 	auto createRPCClient(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const typename RPCClient<Request, Response>::CallbackType& calllback)
 		->std::shared_ptr<RPCClient<Request, Response>>
 	{
-		auto client_ptr = std::make_shared<RPCClient<Request, Response>>(RPCClientManagerSingleton::get(), context, opcode, calllback);
+		auto client_ptr = std::make_shared<RPCClient<Request, Response>>(context, opcode, calllback);
 		return client_ptr;
 	}
 
