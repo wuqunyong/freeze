@@ -95,7 +95,10 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 		return;
 	}
 
-	find_ite->second(role, newMsg);
+	if (find_ite->second)
+	{
+		find_ite->second(role, newMsg);
+	}
 }
 
 void ForwardManager::setDemuxCallback(DemuxCallback func)
