@@ -158,7 +158,10 @@ void ServiceManager::onMessage(MessageInfo info, const std::shared_ptr<T>& messa
 		return;
 	}
 
-	find_ite->second(info, message);
+	if (find_ite->second)
+	{
+		find_ite->second(info, message);
+	}
 }
 
 struct ServiceHandler
