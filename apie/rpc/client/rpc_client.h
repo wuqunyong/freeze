@@ -114,7 +114,7 @@ bool RPCClient<Request, Response>::asyncSendRequest(SharedRequest request_ptr)
 			return result;
 		}
 		uint64_t cur_time_ms = apie::CtxSingleton::get().getCurMilliseconds();
-		auto expire_at = cur_time_ms + context_.timeoutMs();
+		auto expire_at = cur_time_ms + context_.getTimeoutMs();
 		
 		manager_.insertRequestsTimeout(seq_num, expire_at);
 	}

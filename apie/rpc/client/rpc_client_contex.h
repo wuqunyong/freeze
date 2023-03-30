@@ -18,11 +18,11 @@ public:
 	RPCClientContext(const ::rpc_msg::CHANNEL& server);
 	~RPCClientContext();
 
-	Type type() const { return type_; }
-	::rpc_msg::CHANNEL getServerId();
-	uint32_t timeoutMs();
-
+	Type getType() const { return type_; }
 	void setType(Type type);
+
+	::rpc_msg::CHANNEL getServerId();
+	uint32_t getTimeoutMs();
 
 private:
 	::rpc_msg::CHANNEL client_id_;
