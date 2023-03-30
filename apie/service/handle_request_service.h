@@ -78,7 +78,8 @@ void HandleRequestService<Request, responseOpcode, Response>::handleRequest(Mess
 	info.iResponseOpcode = responseOpcode_;
 
 	auto response = std::make_shared<Response>();
-	apie::status::E_ReturnType status = service_callback_(info, request, response);
+
+	auto status = service_callback_(info, request, response);
 	if (status == apie::status::E_ReturnType::kRT_Sync)
 	{
 		sendResponse(info, response);
