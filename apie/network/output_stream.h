@@ -62,7 +62,7 @@ namespace network {
 		}
 
 		ProtocolHead head;
-		head.iSeqNum = info.iSeqNum;
+		head.iSeqNum = info.iRPCRequestID;
 		head.iFlags = 0;
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
@@ -71,7 +71,7 @@ namespace network {
 
 		SyncSendData* itemObjPtr = new SyncSendData;
 		itemObjPtr->type = apie::ConnetionType::CT_CLIENT;
-		itemObjPtr->iSequenceNumber = info.iSeqNum;
+		itemObjPtr->iSequenceNumber = info.iRPCRequestID;
 		itemObjPtr->iSerialNum = info.iSessionId;
 		itemObjPtr->sData.append(reinterpret_cast<char*>(&head), sizeof(ProtocolHead));
 		itemObjPtr->sData.append(msg.SerializeAsString());

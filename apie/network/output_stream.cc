@@ -84,7 +84,7 @@ namespace network {
 		}
 
 		ProtocolHead head;
-		head.iSeqNum = info.iSeqNum;
+		head.iSeqNum = info.iRPCRequestID;
 		head.iFlags = info.getFlags();
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
@@ -190,7 +190,7 @@ namespace network {
 		head.iSize = iHeadLen + iBodyLen;
 		head.iType = iType;
 		head.iCmd = iCmd;
-		head.idSeq = info.iSeqNum;
+		head.idSeq = info.iRPCRequestID;
 
 		SendData* itemObjPtr = new SendData;
 		itemObjPtr->type = type;
@@ -278,7 +278,7 @@ namespace network {
 		head.iSize = iHeadLen + iBodyLen;
 		head.iType = iType;
 		head.iCmd = iCmd;
-		head.idSeq = info.iSeqNum;
+		head.idSeq = info.iRPCRequestID;
 
 		head.iUserId = info.iUserId;
 
@@ -372,7 +372,7 @@ namespace network {
 		}
 
 		ProtocolHead head;
-		head.iSeqNum = info.iSeqNum;
+		head.iSeqNum = info.iRPCRequestID;
 		head.iFlags = info.getFlags();
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.size();

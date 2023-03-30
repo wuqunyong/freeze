@@ -245,7 +245,7 @@ void apie::ClientConnection::readPB()
 
 			MessageInfo info;
 			info.iSessionId = this->iSerialNum;
-			info.iSeqNum = head.iSeqNum;
+			info.iRPCRequestID = head.iSeqNum;
 			info.iOpcode = head.iOpcode;
 			info.iConnetionType = ConnetionType::CT_CLIENT;
 			this->recv(info, sBody);
@@ -315,7 +315,7 @@ void apie::ClientConnection::readPBMsgHead()
 
 		MessageInfo info;
 		info.iSessionId = this->iSerialNum;
-		info.iSeqNum = head.idSeq;
+		info.iRPCRequestID = head.idSeq;
 		info.iOpcode = iOpcode;
 		info.iConnetionType = ConnetionType::CT_CLIENT;
 		info.iCodec = this->iType;
@@ -383,7 +383,7 @@ void apie::ClientConnection::readPBMsgUser()
 
 		MessageInfo info;
 		info.iSessionId = this->iSerialNum;
-		info.iSeqNum = head.idSeq;
+		info.iRPCRequestID = head.idSeq;
 		info.iOpcode = iOpcode;
 		info.iConnetionType = ConnetionType::CT_CLIENT;
 		info.iCodec = this->iType;
@@ -450,7 +450,7 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 
 	//newMsg->PrintDebugString();
 
-	bool bSync = this->triggerSyncHandler(info.iSeqNum, newMsg);
+	bool bSync = this->triggerSyncHandler(info.iRPCRequestID, newMsg);
 	if (bSync)
 	{
 		return;

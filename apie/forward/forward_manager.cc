@@ -46,7 +46,7 @@ bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rp
 	*mux.mutable_role() = role;
 	mux.mutable_info()->set_session_id(info.iSessionId);
 	mux.mutable_info()->set_opcode(info.iOpcode);
-	mux.mutable_info()->set_seq_num(info.iSeqNum);
+	mux.mutable_info()->set_seq_num(info.iRPCRequestID);
 	*(mux.mutable_role()->mutable_info()) = mux.info();
 	mux.set_body_msg(msg);
 
@@ -118,7 +118,7 @@ MessageInfo ForwardManager::extractMessageInfo(const ::rpc_msg::RoleIdentifier& 
 {
 	MessageInfo info;
 	info.iSessionId = role.info().session_id();
-	info.iSeqNum = role.info().seq_num();
+	info.iRPCRequestID = role.info().seq_num();
 	info.iOpcode = role.info().opcode();
 	info.iResponseOpcode = role.info().response_opcode();
 

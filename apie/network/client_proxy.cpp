@@ -267,7 +267,7 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 		{
 			MessageInfo info;
 			info.iSessionId = this->m_curSerialNum;
-			info.iSeqNum = m_sequenceNumber;
+			info.iRPCRequestID = m_sequenceNumber;
 			info.iOpcode = iOpcode;
 			info.iConnetionType = apie::ConnetionType::CT_CLIENT;
 			apie::network::OutputStream::sendProtobufMsgImpl(info, msg);
@@ -276,7 +276,7 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 		{
 			MessageInfo info;
 			info.iSessionId = this->m_curSerialNum;
-			info.iSeqNum = m_sequenceNumber;
+			info.iRPCRequestID = m_sequenceNumber;
 			info.iOpcode = iOpcode;
 			info.iConnetionType = apie::ConnetionType::CT_CLIENT;
 			info.setFlags(this->m_maskFlag);
@@ -288,7 +288,7 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 	{
 		MessageInfo info;
 		info.iSessionId = this->m_curSerialNum;
-		info.iSeqNum = m_sequenceNumber;
+		info.iRPCRequestID = m_sequenceNumber;
 		info.iOpcode = iOpcode;
 		info.iConnetionType = apie::ConnetionType::CT_CLIENT;
 		apie::network::OutputStream::sendPBMsgHead(info, msg);
@@ -298,7 +298,7 @@ int32_t ClientProxy::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message
 	{
 		MessageInfo info;
 		info.iSessionId = this->m_curSerialNum;
-		info.iSeqNum = m_sequenceNumber;
+		info.iRPCRequestID = m_sequenceNumber;
 		info.iOpcode = iOpcode;
 		info.iConnetionType = apie::ConnetionType::CT_CLIENT;
 

@@ -524,7 +524,7 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 	if (msg->has_multiplexer_forward())
 	{
 		MessageInfo info;
-		info.iSeqNum = msg->multiplexer_forward().info().seq_num();
+		info.iRPCRequestID = msg->multiplexer_forward().info().seq_num();
 		info.iOpcode = msg->multiplexer_forward().info().opcode();
 		apie::forward::ForwardManagerSingleton::get().onForwardMuxMessage(msg->multiplexer_forward().role(), info, msg->multiplexer_forward().body_msg());
 		return;

@@ -142,7 +142,7 @@ namespace apie
 
 		MessageInfo info;
 		info.iSessionId = this->m_curSerialNum;
-		info.iSeqNum = m_sequenceNumber;
+		info.iRPCRequestID = m_sequenceNumber;
 		info.iOpcode = iOpcode;
 		info.iConnetionType = apie::ConnetionType::CT_CLIENT;
 		auto future = apie::network::syncSendProtobufMsgImpl<Response>(info, msg);

@@ -31,7 +31,7 @@ namespace apie
 	{
 	public:
 		uint64_t iSessionId = 0;        // 会话ID
-		uint32_t iSeqNum = 0;           // 序列号ID（RPC）
+		uint32_t iRPCRequestID = 0;     // RPC_ID（RPC）
 		uint32_t iOpcode = 0;           // 请求操作码
 		uint32_t iResponseOpcode = 0;   // 响应操作码
 		ConnetionType iConnetionType = ConnetionType::CT_NONE; // 连接类型
