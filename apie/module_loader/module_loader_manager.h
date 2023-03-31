@@ -62,7 +62,7 @@ bool ModuleLoaderManager::registerModule()
 	if (ptrLoader != nullptr)
 	{
 		std::stringstream ss;
-		ss << "module name collision: " << name;
+		ss << "registerModule | name: " << name << " | type:" << typeid(T).name() << "| module name collision";
 
 		PANIC_ABORT(ss.str().c_str());
 	}
@@ -71,7 +71,7 @@ bool ModuleLoaderManager::registerModule()
 	if (ptrCreate == nullptr)
 	{
 		std::stringstream ss;                                                                                                                                  \
-		ss << "registerModule | name: " << name << " | type:" << typeid(T).name() << "not match";
+		ss << "registerModule | name: " << name << " | type:" << typeid(T).name() << "| not match";
 
 		PANIC_ABORT(ss.str().c_str());
 	}
@@ -87,7 +87,7 @@ auto ModuleLoaderManager::getModulePtr()
 	if (ptrLoader == nullptr)
 	{
 		std::stringstream ss;
-		ss << "unregister module: " << name;
+		ss << "getModulePtr | name: " << name << " | type:" << typeid(T).name() << "| getLoader null";
 		throw std::invalid_argument(ss.str());
 	}
 
@@ -95,7 +95,7 @@ auto ModuleLoaderManager::getModulePtr()
 	if (ptrMudule == nullptr)
 	{
 		std::stringstream ss;
-		ss << "null module: " << name;
+		ss << "getModulePtr | name: " << name << " | type:" << typeid(T).name() << "| ptrMudule null";
 		throw std::invalid_argument(ss.str());
 	}
 
