@@ -67,7 +67,15 @@ bool ModuleLoaderManager::registerModule()
 		PANIC_ABORT(ss.str().c_str());
 	}
 
-	this->getOrCreateLoader<T>(name, iPriority);
+	auto ptrCreate = this->getOrCreateLoader<T>(name, iPriority);
+	if (ptrCreate == nullptr)
+	{
+		std::stringstream ss;                                                                                                                                  \
+		ss << "registerModule | name: " << name << " | type:" << typeid(T).name() << "not match";
+
+		PANIC_ABORT(ss.str().c_str());
+	}
+
 	return true;
 }
 
