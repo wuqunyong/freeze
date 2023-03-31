@@ -8,6 +8,7 @@
 
 #include "apie/pub_sub/pubsub.h"
 #include "apie/singleton/threadsafe_singleton.h"
+#include "apie/network/logger.h"
 
 namespace apie {
 namespace pubsub {
@@ -49,6 +50,10 @@ bool PubSubManager::publish(uint32_t topic, const typename PubSub<T>::MessageTyp
 	auto obj = getOrCreateObj<T>(topic);
 	if (obj == nullptr)
 	{
+		std::stringstream ss;                                                                                                                                  \
+		ss << "publish | topic: " << topic << " | type:" << typeid(T).name() << "not match";
+
+		ASYNC_PIE_LOG(PIE_ERROR, "{}", ss.str());
 		return false;
 	}
 
@@ -62,8 +67,13 @@ std::optional<uint32_t> PubSubManager::subscribe(uint32_t topic, const typename 
 	auto obj = getOrCreateObj<T>(topic);
 	if (obj == nullptr)
 	{
+		std::stringstream ss;                                                                                                                                  \
+		ss << "subscribe | topic: " << topic << " | type:" << typeid(T).name() << "not match";                                                                                     \
+		PANIC_ABORT(ss.str().c_str());
+
 		return std::nullopt;
 	}
+
 	++subscribe_id_;
 
 	bool result = obj->subscribe(subscribe_id_, callback);
@@ -81,6 +91,10 @@ void PubSubManager::unsubscribe(uint32_t topic, uint32_t callback_id)
 	auto obj = getOrCreateObj<T>(topic);
 	if (obj == nullptr)
 	{
+		std::stringstream ss;                                                                                                                                  \
+		ss << "unsubscribe | topic: " << topic << " | type:" << typeid(T).name() << "not match";      
+		
+		ASYNC_PIE_LOG(PIE_ERROR, "{}", ss.str());
 		return;
 	}
 
