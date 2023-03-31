@@ -1107,7 +1107,7 @@ void Ctx::waitForShutdown()
 	PIE_LOG(PIE_NOTICE, "startup|waiting ExitHook");
 
 	uint64_t iCurTime = apie::Ctx::getCurSeconds();
-	auto iDeadline = iCurTime + 60;
+	auto iDeadline = iCurTime + 180;
 
 	bool bResult = apie::module_loader::ModuleLoaderMgrSingleton::get().checkExitFinish();
 	while (!bResult)
