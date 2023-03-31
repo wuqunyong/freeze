@@ -21,10 +21,10 @@ namespace service {
 
 #define S_REGISTER_REQUEST(opcode, func)                                                                                                                                                                         \
 	{                                                                                                                                                                                                            \
-		bool bResult = apie::service::ServiceHandlerSingleton::get().server.createService<MSG_REQUEST_##opcode, ::apie::OP_MSG_RESPONSE_##opcode, MSG_RESPONSE_##opcode>(::apie::OP_MSG_REQUEST_##opcode, func); \
+		bool bResult = apie::service::ServiceHandlerSingleton::get().server.createService<opcode##Request, ::apie::OP_##opcode##Response, opcode##Response>(::apie::OP_##opcode##Request, func); \
 		if (!bResult) {                                                                                                                                                                                          \
 			std::stringstream ss;                                                                                                                                                                                \
-			ss << "server register " << ::apie::OP_MSG_REQUEST_##opcode << " collision";                                                                                                                         \
+			ss << "server register " << ::apie::OP_##opcode##Request << " collision";                                                                                                                         \
 			PANIC_ABORT(ss.str().c_str());                                                                                                                                                                       \
 		}                                                                                                                                                                                                        \
 	}

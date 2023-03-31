@@ -144,7 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="init.h" />
+    <ClInclude Include="pb_init.h" />
     <ClInclude Include="src\login_msg.pb.h" />
     <ClInclude Include="src\rpc_login.pb.h" />
   </ItemGroup>

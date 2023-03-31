@@ -2,71 +2,37 @@ syntax = "proto3";
 
 package login_msg;
 
-//---------------------------------------
 
-message GameAccountInfo 
-{
-	uint64 account_id = 1;
-	string display_name = 2;
-	bool is_suspended = 3;
-	bool is_banned = 4;
-	uint64 suspension_expires = 5;
-	string suspension_reason = 6;
-}
-  
-message GameAccountList 
-{
-	repeated GameAccountInfo game_accounts = 1;
-}
-
-message MSG_REQUEST_ACCOUNT_LOGIN_L
-{
-	string platform_id = 1;
-	string program_id = 2;
-	int32 version = 3;
-	uint64 account_id = 4;
-	string auth = 5;
-}
-
-message MSG_RESPONSE_ACCOUNT_LOGIN_L
-{
-	int32 status_code = 1;
-	uint64 account_id = 2;
-	string session_key = 3;
-	string ip = 4;
-	int32 port = 5;
-}
-
-message MSG_REQUEST_HANDSHAKE_INIT
+message HandshakeInitRequest
 {
 	string client_random = 1;
 }
 
-message MSG_RESPONSE_HANDSHAKE_INIT
+message HandshakeInitResponse
 {
 	int32 status_code = 1;
 	string server_random = 2;
 	string public_key = 3;
 }
 
-message MSG_REQUEST_HANDSHAKE_ESTABLISHED
+message HandshakeEstablishedRequest
 {
 	bytes encrypted_key = 1;
 }
 
-message MSG_RESPONSE_HANDSHAKE_ESTABLISHED
+message HandshakeEstablishedResponse
 {
 	int32 status_code = 1;
 }
 
-message MSG_REQUEST_CLIENT_LOGIN
+message ClientLoginRequest
 {
 	uint64 user_id = 1;
 	string session_key = 2;
 	int32 version = 3;
 }
 
-message MSG_RESPONSE_CLIENT_LOGIN
+message ClientLoginResponse
 {
 	int32 status_code = 1;
 	uint64 user_id = 2;
@@ -76,13 +42,13 @@ message MSG_RESPONSE_CLIENT_LOGIN
 	uint32 grenades = 6;
 }
 
-message MSG_REQUEST_ECHO
+message EchoRequest
 {
 	uint64 value1 = 1;
 	string value2 = 2;
 }
 
-message MSG_RESPONSE_ECHO
+message EchoResponse
 {
 	uint64 value1 = 1;
 	string value2 = 2;

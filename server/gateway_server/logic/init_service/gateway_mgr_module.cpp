@@ -35,9 +35,9 @@ void GatewayMgrModule::ready()
 	server.setDefaultFunc(GatewayMgrModule::handleDefaultOpcodes);
 
 	using namespace ::login_msg;
-	S_REGISTER_REQUEST(CLIENT_LOGIN, GatewayMgrModule::handleRequestClientLogin);
-	S_REGISTER_REQUEST(HANDSHAKE_INIT, GatewayMgrModule::handleRequestHandshakeInit);
-	S_REGISTER_REQUEST(HANDSHAKE_ESTABLISHED, GatewayMgrModule::handleRequestHandshakeEstablished);
+	S_REGISTER_REQUEST(ClientLogin, GatewayMgrModule::handleRequestClientLogin);
+	S_REGISTER_REQUEST(HandshakeInit, GatewayMgrModule::handleRequestHandshakeInit);
+	S_REGISTER_REQUEST(HandshakeEstablished, GatewayMgrModule::handleRequestHandshakeEstablished);
 
 	// FORWARD
 	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgrModule::handleDemuxForward);
@@ -136,12 +136,12 @@ void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 	//::nats_msg::NATS_MSG_PRXOY nats_msg;
 	//apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 
-	::login_msg::MSG_REQUEST_ECHO request;
+	::login_msg::EchoRequest request;
 	request.set_value1(100);
 	request.set_value2("hello world");
 
 	MessageInfo msgInfo;
-	msgInfo.iOpcode = ::apie::OP_MSG_REQUEST_ECHO;
+	msgInfo.iOpcode = ::apie::OP_EchoRequest;
 	GatewayMgrModule::handleDefaultOpcodes(msgInfo, request.SerializeAsString());
 }
 
@@ -171,13 +171,13 @@ void GatewayMgrModule::Cmd_mysqlStatement(::pubsub::LOGIC_CMD& cmd)
 
 
 apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
-	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response)
+	MessageInfo info, const std::shared_ptr<::login_msg::ClientLoginRequest>& request, std::shared_ptr<::login_msg::ClientLoginResponse>& response)
 {
 	return apie::status::E_ReturnType::kRT_Sync;
 }
 
 apie::status::E_ReturnType GatewayMgrModule::handleRequestHandshakeInit(
-	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>& response)
+	MessageInfo info, const std::shared_ptr<::login_msg::HandshakeInitRequest>& request, std::shared_ptr<::login_msg::HandshakeInitResponse>& response)
 {
 	std::string content;
 	std::string pubKey = apie::CtxSingleton::get().getConfigs()->certificate.public_key;
@@ -211,7 +211,7 @@ apie::status::E_ReturnType GatewayMgrModule::handleRequestHandshakeInit(
 }
 
 apie::status::E_ReturnType GatewayMgrModule::handleRequestHandshakeEstablished(
-	MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>& response)
+	MessageInfo info, const std::shared_ptr<::login_msg::HandshakeEstablishedRequest>& request, std::shared_ptr<::login_msg::HandshakeEstablishedResponse>& response)
 {
 	std::string decryptedMsg;
 	bool bResult = apie::crypto::RSAUtilitySingleton::get().decrypt(request->encrypted_key(), &decryptedMsg);

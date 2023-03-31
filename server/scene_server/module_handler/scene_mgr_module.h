@@ -9,7 +9,7 @@
 #include <tuple>
 
 #include "apie.h"
-#include "../../pb_msg/business/login_msg.pb.h"
+#include "pb_init.h"
 
 namespace apie {
 
@@ -31,7 +31,7 @@ namespace apie {
 
 		// FORWARD
 		static apie::status::E_ReturnType Forward_echo(
-			const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::MSG_REQUEST_ECHO>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ECHO>& response);
+			const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::EchoRequest>& request, std::shared_ptr<::login_msg::EchoResponse>& response);
 	};
 
 }

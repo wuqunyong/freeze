@@ -10,7 +10,7 @@
 #include <tuple>
 
 #include "apie.h"
-#include "../../../lib_pb/init.h"
+#include "pb_init.h"
 
 namespace apie {
 
@@ -40,10 +40,10 @@ namespace apie {
 		static void handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, const std::string& msg);
 
 		static apie::status::E_ReturnType handleRequestClientLogin(
-			MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_CLIENT_LOGIN>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_CLIENT_LOGIN>& response);
+			MessageInfo info, const std::shared_ptr<::login_msg::ClientLoginRequest>& request, std::shared_ptr<::login_msg::ClientLoginResponse>& response);
 		static apie::status::E_ReturnType handleRequestHandshakeInit(
-			MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_INIT>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_INIT>& response);
+			MessageInfo info, const std::shared_ptr<::login_msg::HandshakeInitRequest>& request, std::shared_ptr<::login_msg::HandshakeInitResponse>& response);
 		static apie::status::E_ReturnType handleRequestHandshakeEstablished(
-			MessageInfo info, const std::shared_ptr<::login_msg::MSG_REQUEST_HANDSHAKE_ESTABLISHED>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_HANDSHAKE_ESTABLISHED>& response);
+			MessageInfo info, const std::shared_ptr<::login_msg::HandshakeEstablishedRequest>& request, std::shared_ptr<::login_msg::HandshakeEstablishedResponse>& response);
 	};
 }

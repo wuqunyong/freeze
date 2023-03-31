@@ -6,7 +6,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="init.h" />
+    <ClInclude Include="pb_init.h" />
     <ClInclude Include="src\login_msg.pb.h">
       <Filter>src</Filter>
     </ClInclude>

@@ -25,7 +25,7 @@ void SceneMgrModule::ready()
 
 	// FORWARD
 	using namespace ::login_msg;
-	S_REGISTER_FORWARD_REQUEST(ECHO, SceneMgrModule::Forward_echo);
+	S_REGISTER_FORWARD_REQUEST(Echo, SceneMgrModule::Forward_echo);
 }
 
 void SceneMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
@@ -39,7 +39,7 @@ void SceneMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>&
 	handlerOpt.value()(*msg);
 }
 
-apie::status::E_ReturnType SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::MSG_REQUEST_ECHO>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ECHO>& response)
+apie::status::E_ReturnType SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIdentifier& role, const std::shared_ptr<::login_msg::EchoRequest>& request, std::shared_ptr<::login_msg::EchoResponse>& response)
 {
 	PIE_LOG(PIE_NOTICE, "{}", request->DebugString().c_str());
 
