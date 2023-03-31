@@ -27,8 +27,8 @@ public:
 		uint64_t expire_at_;
 	};
 
-
 	uint64_t nextSeqNum();
+
 	bool addPendingRequests(uint64_t seq_num, const std::shared_ptr<RPCClientBase>& ptr_request);
 	void removePendingRequests(uint64_t seq_num);
 
