@@ -5,14 +5,22 @@ rem ..\protoc rpc_login.proto --cpp_out=./
 rem ..\protoc login_msg.proto --python_out=../../client/proto
 rem ..\protoc rpc_login.proto --python_out=../../client/proto
 
-..\protoc login.proto --cpp_out=./
-..\protoc userinfo.proto --cpp_out=./
-..\protoc map.proto --cpp_out=./
-..\protoc db.proto --cpp_out=./
-..\protoc talent.proto --cpp_out=./
-..\protoc decree.proto --cpp_out=./
+rem ..\protoc login.proto --cpp_out=./
+rem ..\protoc userinfo.proto --cpp_out=./
+rem ..\protoc map.proto --cpp_out=./
+rem ..\protoc db.proto --cpp_out=./
+rem ..\protoc talent.proto --cpp_out=./
+rem ..\protoc decree.proto --cpp_out=./
 
 
-..\protoc error_code.proto --cpp_out=./
+
+
+rem ..\protoc addressbook.proto --python_out=./
+
+rem ..\protoc meta_enum.proto --python_out=./
+
+
+..\protoc -I=. -I=./core error_code.proto --cpp_out=./core
+..\protoc -I=. -I=./core protocol.proto --cpp_out=./core
 
 pause

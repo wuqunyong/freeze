@@ -4,6 +4,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{a4737dc5-3fcd-4f47-8519-1d6bd9845a01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{a6d05858-6f78-47ee-ba00-1adbc6efc136}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pb_init.h" />
@@ -13,6 +16,12 @@
     <ClInclude Include="src\rpc_login.pb.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\error_code.pb.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\protocol.pb.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\login_msg.pb.cc">
@@ -20,6 +29,12 @@
     </ClCompile>
     <ClCompile Include="src\rpc_login.pb.cc">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\error_code.pb.cc">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\protocol.pb.cc">
+      <Filter>src\core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

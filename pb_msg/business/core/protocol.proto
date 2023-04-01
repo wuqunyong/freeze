@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package pb.core;
+
+
+enum OperateProtocol {
+    OP_None = 0;
+
+    //业务操作码，从1000开始
+    OP_ClientLoginRequest = 1001;
+    OP_ClientLoginResponse = 1002;
+
+    OP_EchoRequest = 1003;
+    OP_EchoResponse = 1004;
+
+    OP_HandshakeInitRequest = 1005;
+    OP_HandshakeInitResponse = 1006;
+    OP_HandshakeEstablishedRequest = 1007;
+    OP_HandshakeEstablishedResponse = 1008;
+}

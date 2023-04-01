@@ -1,7 +1,5 @@
 #include "logic/init_service/gateway_mgr.h"
 
-#include "../../../common/opcodes.h"
-
 #include "logic/init_service/gateway_role.h"
 #include "logic/init_service/gateway_mgr_module.h"
 

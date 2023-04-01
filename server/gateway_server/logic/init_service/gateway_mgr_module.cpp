@@ -2,7 +2,6 @@
 
 #include <type_traits>
 
-#include "../../../common/opcodes.h"
 
 #include "logic/init_service/gateway_mgr.h"
 #include "logic/init_service/gateway_role.h"
