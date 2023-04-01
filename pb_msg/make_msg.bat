@@ -26,4 +26,7 @@ protoc -I=. -I=./core protocol.proto --cpp_out=./core
 protoc -I=. -I=./rpc rpc_login.proto --cpp_out=./rpc
 protoc -I=. -I=./rpc rpc_protocol.proto --cpp_out=./rpc
 
+protoc -I=. -I=./pub_sub pub_sub_protocol.proto --cpp_out=./pub_sub
+protoc -I=. -I=./pub_sub pub_sub_test.proto --cpp_out=./pub_sub
+
 pause

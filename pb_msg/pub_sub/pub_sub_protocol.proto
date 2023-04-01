@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pb.pub_sub;
+
+
+enum PubSub_Topic {
+    OP_PubSub_None = 0;
+
+    //业务操作码，从1000开始
+    OP_PubSub_TestTopic = 1001;
+}

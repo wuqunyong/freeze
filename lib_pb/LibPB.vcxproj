@@ -148,6 +148,8 @@
     <ClInclude Include="src\core\error_code.pb.h" />
     <ClInclude Include="src\core\protocol.pb.h" />
     <ClInclude Include="src\login_msg.pb.h" />
+    <ClInclude Include="src\pub_sub\pub_sub_protocol.pb.h" />
+    <ClInclude Include="src\pub_sub\pub_sub_test.pb.h" />
     <ClInclude Include="src\rpc\rpc_login.pb.h" />
     <ClInclude Include="src\rpc\rpc_protocol.pb.h" />
   </ItemGroup>
@@ -155,6 +157,8 @@
     <ClCompile Include="src\core\error_code.pb.cc" />
     <ClCompile Include="src\core\protocol.pb.cc" />
     <ClCompile Include="src\login_msg.pb.cc" />
+    <ClCompile Include="src\pub_sub\pub_sub_protocol.pb.cc" />
+    <ClCompile Include="src\pub_sub\pub_sub_test.pb.cc" />
     <ClCompile Include="src\rpc\rpc_login.pb.cc" />
     <ClCompile Include="src\rpc\rpc_protocol.pb.cc" />
   </ItemGroup>

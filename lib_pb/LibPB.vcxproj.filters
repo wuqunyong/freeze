@@ -10,6 +10,9 @@
     <Filter Include="src\rpc">
       <UniqueIdentifier>{660daeba-ea36-43e9-ba39-9af1799eaa09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\pub_sub">
+      <UniqueIdentifier>{32664a46-1b9a-4d81-beba-ec9cbdc779d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pb_init.h" />
@@ -28,6 +31,12 @@
     <ClInclude Include="src\rpc\rpc_protocol.pb.h">
       <Filter>src\rpc</Filter>
     </ClInclude>
+    <ClInclude Include="src\pub_sub\pub_sub_protocol.pb.h">
+      <Filter>src\pub_sub</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pub_sub\pub_sub_test.pb.h">
+      <Filter>src\pub_sub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\login_msg.pb.cc">
@@ -44,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="src\rpc\rpc_protocol.pb.cc">
       <Filter>src\rpc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pub_sub\pub_sub_protocol.pb.cc">
+      <Filter>src\pub_sub</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pub_sub\pub_sub_test.pb.cc">
+      <Filter>src\pub_sub</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
