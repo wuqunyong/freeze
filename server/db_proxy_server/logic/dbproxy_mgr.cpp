@@ -27,7 +27,7 @@ DBProxyMgr::DBProxyMgr(std::string name, module_loader::ModuleLoaderBase* prtLoa
 
 apie::status::Status DBProxyMgr::init()
 {
-	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_DB_ACCOUNT_Proxy, ::common::EPT_DB_ROLE_Proxy });
+	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_DbAccount_Proxy, ::common::EPT_DbRole_Proxy });
 	if (!bResult)
 	{
 		return { apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
@@ -45,12 +45,12 @@ apie::status::Status DBProxyMgr::start()
 	auto type = apie::CtxSingleton::get().getServerType();
 	switch (type)
 	{
-	case ::common::EPT_DB_ACCOUNT_Proxy:
+	case ::common::EPT_DbAccount_Proxy:
 	{
 		dbType = DeclarativeBase::DBType::DBT_Account;
 		break;
 	}
-	case ::common::EPT_DB_ROLE_Proxy:
+	case ::common::EPT_DbRole_Proxy:
 	{
 		dbType = DeclarativeBase::DBType::DBT_Role;
 		break;

@@ -4,12 +4,6 @@
     <Filter Include="logic">
       <UniqueIdentifier>{698a48ab-249e-4908-a2a2-017451d63b37}</UniqueIdentifier>
     </Filter>
-    <Filter Include="pb_msg">
-      <UniqueIdentifier>{44939a77-72a0-4ccb-83bc-dc8000d114d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="pb_msg\business">
-      <UniqueIdentifier>{92eaeed6-632f-4235-91f7-da511568d1fb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="module_handler">
       <UniqueIdentifier>{ac813a45-8532-4559-aa83-bc9829cc01c0}</UniqueIdentifier>
     </Filter>
@@ -17,12 +11,6 @@
   <ItemGroup>
     <ClInclude Include="logic\scene_mgr.h">
       <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h">
-      <Filter>pb_msg\business</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h">
-      <Filter>pb_msg\business</Filter>
     </ClInclude>
     <ClInclude Include="module_handler\scene_mgr_module.h">
       <Filter>module_handler</Filter>
@@ -32,12 +20,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="logic\scene_mgr.cpp">
       <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc">
-      <Filter>pb_msg\business</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc">
-      <Filter>pb_msg\business</Filter>
     </ClCompile>
     <ClCompile Include="module_handler\scene_mgr_module.cpp">
       <Filter>module_handler</Filter>

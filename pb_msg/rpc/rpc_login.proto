@@ -1,7 +1,6 @@
 syntax = "proto3";
 
-package rpc_login;
-
+package pb.rpc;
 
 
 message RPC_LoginPendingRequest

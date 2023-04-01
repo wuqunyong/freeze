@@ -26,7 +26,7 @@ void GatewayMgrModule::init()
 void GatewayMgrModule::ready()
 {
 	// RPC
-	using namespace ::rpc_login;
+	using namespace ::pb::rpc;
 	INTRA_REGISTER_RPC(LoginPending, GatewayMgrModule::RPC_loginPending);
 
 	// CLIENT OPCODE
@@ -86,7 +86,7 @@ void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role,
 }
 
 apie::status::Status GatewayMgrModule::RPC_loginPending(
-	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_login::RPC_LoginPendingRequest>& request, std::shared_ptr<rpc_login::RPC_LoginPendingResponse>& response)
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<pb::rpc::RPC_LoginPendingRequest>& request, std::shared_ptr<pb::rpc::RPC_LoginPendingResponse>& response)
 {
 	auto curTime = apie::Ctx::getCurSeconds();
 
@@ -162,7 +162,7 @@ void GatewayMgrModule::Cmd_mysqlStatement(::pubsub::LOGIC_CMD& cmd)
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_type(::common::EPT_DbAccount_Proxy);
 	server.set_id(1);
 
 	ExecMysqlStatement(server, sStatement, cb);

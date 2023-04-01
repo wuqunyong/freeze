@@ -7,6 +7,9 @@
     <Filter Include="src\core">
       <UniqueIdentifier>{a6d05858-6f78-47ee-ba00-1adbc6efc136}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\rpc">
+      <UniqueIdentifier>{660daeba-ea36-43e9-ba39-9af1799eaa09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pb_init.h" />
@@ -22,6 +25,9 @@
     <ClInclude Include="src\core\protocol.pb.h">
       <Filter>src\core</Filter>
     </ClInclude>
+    <ClInclude Include="src\rpc\rpc_login.pb.h">
+      <Filter>src\rpc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\login_msg.pb.cc">
@@ -35,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="src\core\protocol.pb.cc">
       <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rpc\rpc_login.pb.cc">
+      <Filter>src\rpc</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

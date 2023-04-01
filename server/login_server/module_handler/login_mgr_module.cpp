@@ -23,7 +23,6 @@ void LoginMgrModule::init()
 void LoginMgrModule::ready()
 {
 	// CLIENT OPCODE
-	using namespace ::login_msg;
 	//S_REGISTER_REQUEST(ACCOUNT_LOGIN_L, LoginMgrModule::handleAccount);
 }
 

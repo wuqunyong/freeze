@@ -65,7 +65,7 @@ void CreateUserObj(uint64_t iRoleId, PlayerFactory::Callback doneCb)
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(::common::EPT_DB_ROLE_Proxy);
+	server.set_type(::common::EPT_DbRole_Proxy);
 	server.set_id(1);
 
 	std::tuple<uint32_t, uint32_t> params = { iRoleId,1 };
@@ -89,7 +89,7 @@ void CreateUserObj(uint64_t iRoleId, PlayerFactory::Callback doneCb)
 
 		::rpc_msg::CHANNEL accountServer;
 		accountServer.set_realm(apie::Ctx::getThisChannel().realm());
-		accountServer.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+		accountServer.set_type(::common::EPT_DbAccount_Proxy);
 		accountServer.set_id(1);
 
 		loader->clear();

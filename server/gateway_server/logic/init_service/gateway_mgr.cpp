@@ -60,7 +60,7 @@ CoTaskVoid TestCoRPC1()
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_type(::common::EPT_DbAccount_Proxy);
 	server.set_id(1);
 
 	::mysql_proxy_msg::MysqlDescribeRequest args;
@@ -90,7 +90,7 @@ CoTaskVoid TestCoRPC2()
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_type(::common::EPT_DbAccount_Proxy);
 	server.set_id(1);
 
 	::mysql_proxy_msg::MysqlDescribeRequest args;

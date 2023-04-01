@@ -39,8 +39,8 @@ void SelfRegistration::registerEndpoint()
 	needRegister.insert(::common::EndPointType::EPT_Login_Server);
 	needRegister.insert(::common::EndPointType::EPT_Gateway_Server);
 	needRegister.insert(::common::EndPointType::EPT_Scene_Server);
-	needRegister.insert(::common::EndPointType::EPT_DB_ACCOUNT_Proxy);
-	needRegister.insert(::common::EndPointType::EPT_DB_ROLE_Proxy);
+	needRegister.insert(::common::EndPointType::EPT_DbAccount_Proxy);
+	needRegister.insert(::common::EndPointType::EPT_DbRole_Proxy);
 
 	if (needRegister.count(identityType) == 0)
 	{
@@ -127,7 +127,7 @@ void SelfRegistration::registerEndpoint()
 			apie::CtxSingleton::get().addListeners(listenConfig);
 		}
 
-		if (identityType == ::common::EndPointType::EPT_DB_ACCOUNT_Proxy || identityType == ::common::EndPointType::EPT_DB_ROLE_Proxy)
+		if (identityType == ::common::EndPointType::EPT_DbAccount_Proxy || identityType == ::common::EndPointType::EPT_DbRole_Proxy)
 		{
 			apie::LoadConfig<Mysql_MysqlConfig> mysqlConfig("mysqlConfig");
 			bool bResult = mysqlConfig.load(ptrResponse->mysql_config());

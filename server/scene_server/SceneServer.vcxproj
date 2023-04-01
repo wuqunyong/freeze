@@ -126,14 +126,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\pb_msg\business\login_msg.pb.h" />
-    <ClInclude Include="..\..\pb_msg\business\rpc_login.pb.h" />
     <ClInclude Include="logic\scene_mgr.h" />
     <ClInclude Include="module_handler\scene_mgr_module.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\pb_msg\business\login_msg.pb.cc" />
-    <ClCompile Include="..\..\pb_msg\business\rpc_login.pb.cc" />
     <ClCompile Include="logic\scene_mgr.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="module_handler\scene_mgr_module.cpp" />

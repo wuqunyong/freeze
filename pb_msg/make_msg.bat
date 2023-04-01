@@ -20,7 +20,9 @@ rem ..\protoc addressbook.proto --python_out=./
 rem ..\protoc meta_enum.proto --python_out=./
 
 
-..\protoc -I=. -I=./core error_code.proto --cpp_out=./core
-..\protoc -I=. -I=./core protocol.proto --cpp_out=./core
+protoc -I=. -I=./core error_code.proto --cpp_out=./core
+protoc -I=. -I=./core protocol.proto --cpp_out=./core
+
+protoc -I=. -I=./rpc rpc_login.proto --cpp_out=./rpc
 
 pause

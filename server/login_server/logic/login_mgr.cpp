@@ -48,7 +48,7 @@ apie::status::Status LoginMgr::load()
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(::common::EPT_DB_ACCOUNT_Proxy);
+	server.set_type(::common::EPT_DbAccount_Proxy);
 	server.set_id(1);
 
 	auto cb = [](status::Status status, std::vector<apie::dbt_account::account_name_AutoGen>& userList) {

@@ -29,16 +29,16 @@ static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_common_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\014common.proto\022\006common*\315\001\n\014EndPointType\022"
+  "\n\014common.proto\022\006common*\313\001\n\014EndPointType\022"
   "\014\n\010EPT_None\020\000\022\030\n\024EPT_Service_Registry\020\001\022"
   "\024\n\020EPT_Login_Server\020\002\022\026\n\022EPT_Gateway_Ser"
-  "ver\020\003\022\024\n\020EPT_Scene_Server\020\004\022\030\n\024EPT_DB_AC"
-  "COUNT_Proxy\020\005\022\025\n\021EPT_DB_ROLE_Proxy\020\006\022\023\n\017"
-  "EPT_Test_Client\020\007\022\013\n\007EPT_Max\020\010b\006proto3"
+  "ver\020\003\022\024\n\020EPT_Scene_Server\020\004\022\027\n\023EPT_DbAcc"
+  "ount_Proxy\020\005\022\024\n\020EPT_DbRole_Proxy\020\006\022\023\n\017EP"
+  "T_Test_Client\020\007\022\013\n\007EPT_Max\020\010b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_common_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_common_2eproto = {
-    false, false, 238, descriptor_table_protodef_common_2eproto,
+    false, false, 236, descriptor_table_protodef_common_2eproto,
     "common.proto",
     &descriptor_table_common_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_common_2eproto::offsets,

@@ -113,12 +113,12 @@ namespace apie {
 			{
 			case DeclarativeBase::DBType::DBT_Account:
 			{
-				iServerProxyType = ::common::EPT_DB_ACCOUNT_Proxy;
+				iServerProxyType = ::common::EPT_DbAccount_Proxy;
 				break;
 			}
 			case DeclarativeBase::DBType::DBT_Role:
 			{
-				iServerProxyType = ::common::EPT_DB_ROLE_Proxy;
+				iServerProxyType = ::common::EPT_DbRole_Proxy;
 				break;
 			}
 			default:

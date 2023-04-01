@@ -14,7 +14,7 @@
       <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>LibAPie.lib;ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;libprotobufd.lib;libssl.lib;libcrypto.lib;liblz4_static.lib;cpp_redis.lib;tacopie.lib;nats_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>LibAPie.lib;LibPB.lib;ws2_32.lib;wsock32.lib;libmysql.lib;mysqlclient.lib;yaml-cppd.lib;event.lib;event_core.lib;event_extra.lib;libprotobufd.lib;libssl.lib;libcrypto.lib;liblz4_static.lib;cpp_redis.lib;tacopie.lib;nats_staticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
