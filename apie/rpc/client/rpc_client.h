@@ -23,12 +23,12 @@ public:
 	using CallbackType = std::function<void(const status::Status&, const SharedResponse&)>;
 
 	template <typename RequestT, typename ResponseT>
-	friend bool RPC_Call(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const RequestT& params, const typename RPCClient<RequestT, ResponseT>::CallbackType& calllback);
+	friend bool RPC_Call(const ::rpc_msg::CHANNEL& server, uint32_t opcode, const RequestT& params, const typename RPCClient<RequestT, ResponseT>::CallbackType& calllback);
 
 	template <typename RequestT, typename ResponseT>
-	friend bool RPC_CallWithContext(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const RequestT& params, const typename RPCClient<RequestT, ResponseT>::CallbackType& calllback);
+	friend bool RPC_CallWithContext(const RPCClientContext& context, uint32_t opcode, const RequestT& params, const typename RPCClient<RequestT, ResponseT>::CallbackType& calllback);
 
-	RPCClient(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
+	RPCClient(const ::rpc_msg::CHANNEL& server, uint32_t opcode, const CallbackType& callback)
 		: RPCClientBase(opcode),
 		manager_(RPCClientManagerSingleton::get()),
 		callback_(callback),
@@ -37,7 +37,7 @@ public:
 
 	}
 
-	RPCClient(const RPCClientContext& context, ::rpc_msg::RPC_OPCODES opcode, const CallbackType& callback)
+	RPCClient(const RPCClientContext& context, uint32_t opcode, const CallbackType& callback)
 		: RPCClientBase(opcode),
 		manager_(RPCClientManagerSingleton::get()),
 		callback_(callback),

@@ -10,7 +10,7 @@ namespace rpc {
 
 class RPCClientBase : public std::enable_shared_from_this<RPCClientBase> {
 public:
-	explicit RPCClientBase(::rpc_msg::RPC_OPCODES opcode)
+	explicit RPCClientBase(uint32_t opcode)
 		: opcode_(opcode)
 	{
 	}
@@ -20,10 +20,10 @@ public:
 	virtual void destroy() = 0;
 	virtual void onMessage(const status::Status& status, const std::string& response_data) = 0;
 
-	::rpc_msg::RPC_OPCODES opcode() const { return opcode_; }
+	uint32_t opcode() const { return opcode_; }
 
 protected:
-	::rpc_msg::RPC_OPCODES opcode_;
+	uint32_t opcode_;
 
 };
 

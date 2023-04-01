@@ -23,7 +23,7 @@ namespace co_traits {
 		using ResponseTypePtr = std::shared_ptr<Response>;
 
 
-		CoAwaitable(const ::rpc_msg::CHANNEL& server, ::rpc_msg::RPC_OPCODES opcode, const RequestType& request)
+		CoAwaitable(const ::rpc_msg::CHANNEL& server, uint32_t opcode, const RequestType& request)
 			: m_server(server),
 			m_opcode(opcode),
 			m_request(request)
@@ -71,7 +71,7 @@ namespace co_traits {
 
 	private:
 		::rpc_msg::CHANNEL m_server;
-		::rpc_msg::RPC_OPCODES m_opcode;
+		uint32_t m_opcode;
 		RequestType m_request;
 		apie::status::StatusOr<ResponseType> m_response;
 	};
@@ -80,7 +80,7 @@ namespace co_traits {
 }
 
 template<typename Request, typename Response>
-auto MakeCoAwaitable(const ::rpc_msg::CHANNEL& server, const ::rpc_msg::RPC_OPCODES opcode, const Request& request)
+auto MakeCoAwaitable(const ::rpc_msg::CHANNEL& server, const uint32_t opcode, const Request& request)
 {
 	return std::make_shared<apie::co_traits::CoAwaitable<Request, Response>>(server, opcode, request);
 }

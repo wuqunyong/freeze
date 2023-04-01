@@ -9,7 +9,7 @@
 #include <tuple>
 
 #include "apie.h"
-
+#include "pb_init.h"
 
 namespace apie {
 

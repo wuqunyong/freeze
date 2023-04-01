@@ -1414,13 +1414,13 @@ class RPC_REQUEST final :
   void _internal_set_server_stream(bool value);
   public:
 
-  // .rpc_msg.RPC_OPCODES opcodes = 4;
+  // uint32 opcodes = 4;
   void clear_opcodes();
-  ::rpc_msg::RPC_OPCODES opcodes() const;
-  void set_opcodes(::rpc_msg::RPC_OPCODES value);
+  uint32_t opcodes() const;
+  void set_opcodes(uint32_t value);
   private:
-  ::rpc_msg::RPC_OPCODES _internal_opcodes() const;
-  void _internal_set_opcodes(::rpc_msg::RPC_OPCODES value);
+  uint32_t _internal_opcodes() const;
+  void _internal_set_opcodes(uint32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:rpc_msg.RPC_REQUEST)
@@ -1435,7 +1435,7 @@ class RPC_REQUEST final :
     ::rpc_msg::CLIENT_IDENTIFIER* client_;
     ::rpc_msg::SERVER_IDENTIFIER* server_;
     bool server_stream_;
-    int opcodes_;
+    uint32_t opcodes_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -3101,22 +3101,22 @@ inline void RPC_REQUEST::set_server_stream(bool value) {
   // @@protoc_insertion_point(field_set:rpc_msg.RPC_REQUEST.server_stream)
 }
 
-// .rpc_msg.RPC_OPCODES opcodes = 4;
+// uint32 opcodes = 4;
 inline void RPC_REQUEST::clear_opcodes() {
-  _impl_.opcodes_ = 0;
+  _impl_.opcodes_ = 0u;
 }
-inline ::rpc_msg::RPC_OPCODES RPC_REQUEST::_internal_opcodes() const {
-  return static_cast< ::rpc_msg::RPC_OPCODES >(_impl_.opcodes_);
+inline uint32_t RPC_REQUEST::_internal_opcodes() const {
+  return _impl_.opcodes_;
 }
-inline ::rpc_msg::RPC_OPCODES RPC_REQUEST::opcodes() const {
+inline uint32_t RPC_REQUEST::opcodes() const {
   // @@protoc_insertion_point(field_get:rpc_msg.RPC_REQUEST.opcodes)
   return _internal_opcodes();
 }
-inline void RPC_REQUEST::_internal_set_opcodes(::rpc_msg::RPC_OPCODES value) {
+inline void RPC_REQUEST::_internal_set_opcodes(uint32_t value) {
   
   _impl_.opcodes_ = value;
 }
-inline void RPC_REQUEST::set_opcodes(::rpc_msg::RPC_OPCODES value) {
+inline void RPC_REQUEST::set_opcodes(uint32_t value) {
   _internal_set_opcodes(value);
   // @@protoc_insertion_point(field_set:rpc_msg.RPC_REQUEST.opcodes)
 }

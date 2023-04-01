@@ -66,7 +66,7 @@ void LoginMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 	//::nats_msg::NATS_MSG_PRXOY nats_msg;
 	//APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
 
-	rpc_msg::RPC_EchoTestRequest params;
+	pb::rpc::RPC_EchoTestRequest params;
 	params.set_value1(200);
 	params.set_value2("test_hello");
 
@@ -78,7 +78,7 @@ void LoginMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 	//auto rpcObj = apie::rpc::createRPCClient<rpc_msg::RPC_EchoTestRequest, rpc_msg::RPC_EchoTestResponse>(server, rpc_msg::OP_RPC_EchoTest, nullptr);
 	//rpcObj->sendRequest(params);
 
-	auto cb = [](const apie::status::Status& status, const std::shared_ptr<rpc_msg::RPC_EchoTestResponse>& response) {
+	auto cb = [](const apie::status::Status& status, const std::shared_ptr<pb::rpc::RPC_EchoTestResponse>& response) {
 		if (!status.ok())
 		{
 			return;
@@ -87,7 +87,7 @@ void LoginMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 		std::stringstream ss;
 		ss << "RPC_echoCb:" << response->ShortDebugString();
 	};
-	apie::rpc::RPC_Call<rpc_msg::RPC_EchoTestRequest, rpc_msg::RPC_EchoTestResponse>(server, rpc_msg::OP_RPC_EchoTest, params, cb);
+	apie::rpc::RPC_Call<pb::rpc::RPC_EchoTestRequest, pb::rpc::RPC_EchoTestResponse>(server, pb::rpc::OP_RPC_EchoTest, params, cb);
 
 }
 

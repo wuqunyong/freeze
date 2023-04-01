@@ -91,7 +91,7 @@ message RPC_REQUEST
 	CLIENT_IDENTIFIER client = 1;  // 调用方
 	SERVER_IDENTIFIER server = 2;  // 被调用方
 	bool server_stream = 3;        // 是否连续响应
-	RPC_OPCODES opcodes = 4;
+	uint32 opcodes = 4;
 	bytes args_data = 5;
 }
 

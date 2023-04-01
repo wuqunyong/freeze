@@ -117,7 +117,7 @@ PROTOBUF_CONSTEXPR RPC_REQUEST::RPC_REQUEST(
   , /*decltype(_impl_.client_)*/nullptr
   , /*decltype(_impl_.server_)*/nullptr
   , /*decltype(_impl_.server_stream_)*/false
-  , /*decltype(_impl_.opcodes_)*/0
+  , /*decltype(_impl_.opcodes_)*/0u
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct RPC_REQUESTDefaultTypeInternal {
   PROTOBUF_CONSTEXPR RPC_REQUESTDefaultTypeInternal()
@@ -342,46 +342,45 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "IER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg.CHANNEL\022\016\n\006s"
   "eq_id\030\002 \001(\004\022\026\n\016required_reply\030\003 \001(\010\"3\n\021S"
   "ERVER_IDENTIFIER\022\036\n\004stub\030\001 \001(\0132\020.rpc_msg"
-  ".CHANNEL\"\266\001\n\013RPC_REQUEST\022*\n\006client\030\001 \001(\013"
+  ".CHANNEL\"\240\001\n\013RPC_REQUEST\022*\n\006client\030\001 \001(\013"
   "2\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006server\030\002"
   " \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022\025\n\rserv"
-  "er_stream\030\003 \001(\010\022%\n\007opcodes\030\004 \001(\0162\024.rpc_m"
-  "sg.RPC_OPCODES\022\021\n\targs_data\030\005 \001(\014\"#\n\006STA"
-  "TUS\022\014\n\004code\030\001 \001(\r\022\013\n\003msg\030\002 \001(\t\"\276\001\n\014RPC_R"
-  "ESPONSE\022*\n\006client\030\001 \001(\0132\032.rpc_msg.CLIENT"
-  "_IDENTIFIER\022*\n\006server\030\002 \001(\0132\032.rpc_msg.SE"
-  "RVER_IDENTIFIER\022\037\n\006status\030\003 \001(\0132\017.rpc_ms"
-  "g.STATUS\022\020\n\010has_more\030\004 \001(\010\022\016\n\006offset\030\005 \001"
-  "(\r\022\023\n\013result_data\030\006 \001(\014\"|\n\027RPC_Multiplex"
-  "er_Forward\022%\n\004role\030\001 \001(\0132\027.rpc_msg.RoleI"
-  "dentifier\022(\n\004info\030\002 \001(\0132\032.rpc_msg.Client"
-  "MessageInfo\022\020\n\010body_msg\030\003 \001(\014\"~\n\031PRC_DeM"
-  "ultiplexer_Forward\022%\n\004role\030\001 \001(\0132\027.rpc_m"
-  "sg.RoleIdentifier\022(\n\004info\030\002 \001(\0132\032.rpc_ms"
-  "g.ClientMessageInfo\022\020\n\010body_msg\030\003 \001(\014*\363\001"
-  "\n\013RPC_OPCODES\022\014\n\010RPC_None\020\000\022\027\n\022RPC_Mysql"
-  "DescTable\020\221\003\022\023\n\016RPC_MysqlQuery\020\222\003\022\024\n\017RPC"
-  "_MysqlInsert\020\223\003\022\024\n\017RPC_MysqlUpdate\020\224\003\022\024\n"
-  "\017RPC_MysqlDelete\020\225\003\022\033\n\026RPC_MysqlQueryByF"
-  "ilter\020\226\003\022\030\n\023RPC_MysqlMultiQuery\020\227\003\022\026\n\021RP"
-  "C_MysqlQueryAll\020\230\003\022\027\n\022RPC_MysqlStatement"
-  "\020\231\003*\343\003\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCODE_Ok"
-  "_Async\020\001\022\020\n\014CODE_Timeout\020d\022\023\n\017CODE_Unreg"
-  "ister\020e\022\023\n\017CODE_ParseError\020f\022\030\n\024CODE_Err"
-  "orServerPost\020g\022\035\n\031CODE_RouteNotLinkToSer"
-  "ver\020h\022\037\n\033CODE_RouteSendToServerError\020i\022\031"
-  "\n\025CODE_OpcodeUnregister\020j\022\027\n\023CODE_Create"
-  "MsgError\020k\022\030\n\024CODE_LogicThreadNull\020l\022\031\n\025"
-  "CODE_NotReceivedReply\020m\022\020\n\014CODE_NotSend\020"
-  "n\022\030\n\024CODE_LoadFromDbError\020o\022\026\n\022CODE_Dirt"
-  "yFlagZero\020p\022\023\n\017CODE_QueryError\020q\022\037\n\033CODE"
-  "_TableNameNotExistError\020r\022\036\n\032CODE_Genera"
-  "teQuerySQLError\020s\022\036\n\032CODE_NotMatchedResu"
-  "ltError\020tb\006proto3"
+  "er_stream\030\003 \001(\010\022\017\n\007opcodes\030\004 \001(\r\022\021\n\targs"
+  "_data\030\005 \001(\014\"#\n\006STATUS\022\014\n\004code\030\001 \001(\r\022\013\n\003m"
+  "sg\030\002 \001(\t\"\276\001\n\014RPC_RESPONSE\022*\n\006client\030\001 \001("
+  "\0132\032.rpc_msg.CLIENT_IDENTIFIER\022*\n\006server\030"
+  "\002 \001(\0132\032.rpc_msg.SERVER_IDENTIFIER\022\037\n\006sta"
+  "tus\030\003 \001(\0132\017.rpc_msg.STATUS\022\020\n\010has_more\030\004"
+  " \001(\010\022\016\n\006offset\030\005 \001(\r\022\023\n\013result_data\030\006 \001("
+  "\014\"|\n\027RPC_Multiplexer_Forward\022%\n\004role\030\001 \001"
+  "(\0132\027.rpc_msg.RoleIdentifier\022(\n\004info\030\002 \001("
+  "\0132\032.rpc_msg.ClientMessageInfo\022\020\n\010body_ms"
+  "g\030\003 \001(\014\"~\n\031PRC_DeMultiplexer_Forward\022%\n\004"
+  "role\030\001 \001(\0132\027.rpc_msg.RoleIdentifier\022(\n\004i"
+  "nfo\030\002 \001(\0132\032.rpc_msg.ClientMessageInfo\022\020\n"
+  "\010body_msg\030\003 \001(\014*\363\001\n\013RPC_OPCODES\022\014\n\010RPC_N"
+  "one\020\000\022\027\n\022RPC_MysqlDescTable\020\221\003\022\023\n\016RPC_My"
+  "sqlQuery\020\222\003\022\024\n\017RPC_MysqlInsert\020\223\003\022\024\n\017RPC"
+  "_MysqlUpdate\020\224\003\022\024\n\017RPC_MysqlDelete\020\225\003\022\033\n"
+  "\026RPC_MysqlQueryByFilter\020\226\003\022\030\n\023RPC_MysqlM"
+  "ultiQuery\020\227\003\022\026\n\021RPC_MysqlQueryAll\020\230\003\022\027\n\022"
+  "RPC_MysqlStatement\020\231\003*\343\003\n\010RPC_CODE\022\013\n\007CO"
+  "DE_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Timeo"
+  "ut\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_ParseE"
+  "rror\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031CODE"
+  "_RouteNotLinkToServer\020h\022\037\n\033CODE_RouteSen"
+  "dToServerError\020i\022\031\n\025CODE_OpcodeUnregiste"
+  "r\020j\022\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE_Log"
+  "icThreadNull\020l\022\031\n\025CODE_NotReceivedReply\020"
+  "m\022\020\n\014CODE_NotSend\020n\022\030\n\024CODE_LoadFromDbEr"
+  "ror\020o\022\026\n\022CODE_DirtyFlagZero\020p\022\023\n\017CODE_Qu"
+  "eryError\020q\022\037\n\033CODE_TableNameNotExistErro"
+  "r\020r\022\036\n\032CODE_GenerateQuerySQLError\020s\022\036\n\032C"
+  "ODE_NotMatchedResultError\020tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-    false, false, 1937, descriptor_table_protodef_rpc_5fmsg_2eproto,
+    false, false, 1915, descriptor_table_protodef_rpc_5fmsg_2eproto,
     "rpc_msg.proto",
     &descriptor_table_rpc_5fmsg_2eproto_once, nullptr, 0, 11,
     schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
@@ -1975,7 +1974,7 @@ inline void RPC_REQUEST::SharedCtor(
     , decltype(_impl_.client_){nullptr}
     , decltype(_impl_.server_){nullptr}
     , decltype(_impl_.server_stream_){false}
-    , decltype(_impl_.opcodes_){0}
+    , decltype(_impl_.opcodes_){0u}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.args_data_.InitDefault();
@@ -2055,12 +2054,11 @@ const char* RPC_REQUEST::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
         } else
           goto handle_unusual;
         continue;
-      // .rpc_msg.RPC_OPCODES opcodes = 4;
+      // uint32 opcodes = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _impl_.opcodes_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-          _internal_set_opcodes(static_cast<::rpc_msg::RPC_OPCODES>(val));
         } else
           goto handle_unusual;
         continue;
@@ -2122,11 +2120,10 @@ uint8_t* RPC_REQUEST::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteBoolToArray(3, this->_internal_server_stream(), target);
   }
 
-  // .rpc_msg.RPC_OPCODES opcodes = 4;
+  // uint32 opcodes = 4;
   if (this->_internal_opcodes() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      4, this->_internal_opcodes(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(4, this->_internal_opcodes(), target);
   }
 
   // bytes args_data = 5;
@@ -2177,10 +2174,9 @@ size_t RPC_REQUEST::ByteSizeLong() const {
     total_size += 1 + 1;
   }
 
-  // .rpc_msg.RPC_OPCODES opcodes = 4;
+  // uint32 opcodes = 4;
   if (this->_internal_opcodes() != 0) {
-    total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_opcodes());
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_opcodes());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
