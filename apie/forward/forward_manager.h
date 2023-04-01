@@ -36,10 +36,10 @@ namespace forward {
 
 #define S_REGISTER_FORWARD_NOTIFY(opcode, func)                                                                                                       \
 	{                                                                                                                                                 \
-		bool bResult = apie::forward::ForwardManagerSingleton::get().createService<MSG_NOTIFY_##opcode>(::apie::OP_MSG_NOTIFY_##opcode, func);        \
+		bool bResult = apie::forward::ForwardManagerSingleton::get().createService<opcode##Notify>(::apie::OP_##opcode##Notify, func);                \
 		if (!bResult) {                                                                                                                               \
 			std::stringstream ss;                                                                                                                     \
-			ss << "forward register " << ::apie::OP_MSG_NOTIFY_##opcode << " collision";                                                              \
+			ss << "forward register " << ::apie::OP_##opcode##Notify << " collision";                                                              \
 			PANIC_ABORT(ss.str().c_str());                                                                                                            \
 		}                                                                                                                                             \
 	}

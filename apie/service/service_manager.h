@@ -31,10 +31,10 @@ namespace service {
 
 #define S_REGISTER_NOTIFY(opcode, func)                                                                                                                 \
 	{                                                                                                                                                   \
-		bool bResult = apie::service::ServiceHandlerSingleton::get().server.createService<MSG_NOTIFY_##opcode>(::apie::OP_MSG_NOTIFY_##opcode, func);   \
+		bool bResult = apie::service::ServiceHandlerSingleton::get().server.createService<opcode##Notify>(::apie::OP_##opcode##Notify, func);   \
 		if (!bResult) {                                                                                                                                 \
 			std::stringstream ss;                                                                                                                       \
-			ss << "server register " << ::apie::OP_MSG_NOTIFY_##opcode << " collision";                                                                 \
+			ss << "server register " << ::apie::OP_##opcode##Notify << " collision";                                                                 \
 			PANIC_ABORT(ss.str().c_str());                                                                                                              \
 		}                                                                                                                                               \
 	}
