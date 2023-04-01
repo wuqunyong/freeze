@@ -16,9 +16,6 @@
     <ClInclude Include="src\login_msg.pb.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\rpc_login.pb.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\error_code.pb.h">
       <Filter>src\core</Filter>
     </ClInclude>
@@ -34,9 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\login_msg.pb.cc">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\rpc_login.pb.cc">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\core\error_code.pb.cc">

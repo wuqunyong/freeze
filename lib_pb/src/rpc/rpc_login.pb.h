@@ -46,6 +46,12 @@ struct TableStruct_rpc_5flogin_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_5flogin_2eproto;
 namespace pb {
 namespace rpc {
+class RPC_EchoTestRequest;
+struct RPC_EchoTestRequestDefaultTypeInternal;
+extern RPC_EchoTestRequestDefaultTypeInternal _RPC_EchoTestRequest_default_instance_;
+class RPC_EchoTestResponse;
+struct RPC_EchoTestResponseDefaultTypeInternal;
+extern RPC_EchoTestResponseDefaultTypeInternal _RPC_EchoTestResponse_default_instance_;
 class RPC_LoginPendingRequest;
 struct RPC_LoginPendingRequestDefaultTypeInternal;
 extern RPC_LoginPendingRequestDefaultTypeInternal _RPC_LoginPendingRequest_default_instance_;
@@ -55,6 +61,8 @@ extern RPC_LoginPendingResponseDefaultTypeInternal _RPC_LoginPendingResponse_def
 }  // namespace rpc
 }  // namespace pb
 PROTOBUF_NAMESPACE_OPEN
+template<> ::pb::rpc::RPC_EchoTestRequest* Arena::CreateMaybeMessage<::pb::rpc::RPC_EchoTestRequest>(Arena*);
+template<> ::pb::rpc::RPC_EchoTestResponse* Arena::CreateMaybeMessage<::pb::rpc::RPC_EchoTestResponse>(Arena*);
 template<> ::pb::rpc::RPC_LoginPendingRequest* Arena::CreateMaybeMessage<::pb::rpc::RPC_LoginPendingRequest>(Arena*);
 template<> ::pb::rpc::RPC_LoginPendingResponse* Arena::CreateMaybeMessage<::pb::rpc::RPC_LoginPendingResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -406,6 +414,334 @@ class RPC_LoginPendingResponse final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_rpc_5flogin_2eproto;
 };
+// -------------------------------------------------------------------
+
+class RPC_EchoTestRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb.rpc.RPC_EchoTestRequest) */ {
+ public:
+  inline RPC_EchoTestRequest() : RPC_EchoTestRequest(nullptr) {}
+  ~RPC_EchoTestRequest() override;
+  explicit PROTOBUF_CONSTEXPR RPC_EchoTestRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RPC_EchoTestRequest(const RPC_EchoTestRequest& from);
+  RPC_EchoTestRequest(RPC_EchoTestRequest&& from) noexcept
+    : RPC_EchoTestRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline RPC_EchoTestRequest& operator=(const RPC_EchoTestRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RPC_EchoTestRequest& operator=(RPC_EchoTestRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RPC_EchoTestRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RPC_EchoTestRequest* internal_default_instance() {
+    return reinterpret_cast<const RPC_EchoTestRequest*>(
+               &_RPC_EchoTestRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(RPC_EchoTestRequest& a, RPC_EchoTestRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RPC_EchoTestRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RPC_EchoTestRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RPC_EchoTestRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RPC_EchoTestRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RPC_EchoTestRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RPC_EchoTestRequest& from) {
+    RPC_EchoTestRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RPC_EchoTestRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb.rpc.RPC_EchoTestRequest";
+  }
+  protected:
+  explicit RPC_EchoTestRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kValue2FieldNumber = 2,
+    kValue1FieldNumber = 1,
+  };
+  // string value2 = 2;
+  void clear_value2();
+  const std::string& value2() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_value2(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_value2();
+  PROTOBUF_NODISCARD std::string* release_value2();
+  void set_allocated_value2(std::string* value2);
+  private:
+  const std::string& _internal_value2() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_value2(const std::string& value);
+  std::string* _internal_mutable_value2();
+  public:
+
+  // uint64 value1 = 1;
+  void clear_value1();
+  uint64_t value1() const;
+  void set_value1(uint64_t value);
+  private:
+  uint64_t _internal_value1() const;
+  void _internal_set_value1(uint64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:pb.rpc.RPC_EchoTestRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value2_;
+    uint64_t value1_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_rpc_5flogin_2eproto;
+};
+// -------------------------------------------------------------------
+
+class RPC_EchoTestResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:pb.rpc.RPC_EchoTestResponse) */ {
+ public:
+  inline RPC_EchoTestResponse() : RPC_EchoTestResponse(nullptr) {}
+  ~RPC_EchoTestResponse() override;
+  explicit PROTOBUF_CONSTEXPR RPC_EchoTestResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RPC_EchoTestResponse(const RPC_EchoTestResponse& from);
+  RPC_EchoTestResponse(RPC_EchoTestResponse&& from) noexcept
+    : RPC_EchoTestResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline RPC_EchoTestResponse& operator=(const RPC_EchoTestResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RPC_EchoTestResponse& operator=(RPC_EchoTestResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RPC_EchoTestResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RPC_EchoTestResponse* internal_default_instance() {
+    return reinterpret_cast<const RPC_EchoTestResponse*>(
+               &_RPC_EchoTestResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(RPC_EchoTestResponse& a, RPC_EchoTestResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RPC_EchoTestResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RPC_EchoTestResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RPC_EchoTestResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RPC_EchoTestResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RPC_EchoTestResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RPC_EchoTestResponse& from) {
+    RPC_EchoTestResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RPC_EchoTestResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "pb.rpc.RPC_EchoTestResponse";
+  }
+  protected:
+  explicit RPC_EchoTestResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kValue2FieldNumber = 2,
+    kValue1FieldNumber = 1,
+  };
+  // string value2 = 2;
+  void clear_value2();
+  const std::string& value2() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_value2(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_value2();
+  PROTOBUF_NODISCARD std::string* release_value2();
+  void set_allocated_value2(std::string* value2);
+  private:
+  const std::string& _internal_value2() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_value2(const std::string& value);
+  std::string* _internal_mutable_value2();
+  public:
+
+  // uint64 value1 = 1;
+  void clear_value1();
+  uint64_t value1() const;
+  void set_value1(uint64_t value);
+  private:
+  uint64_t _internal_value1() const;
+  void _internal_set_value1(uint64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:pb.rpc.RPC_EchoTestResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value2_;
+    uint64_t value1_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_rpc_5flogin_2eproto;
+};
 // ===================================================================
 
 
@@ -571,9 +907,161 @@ inline void RPC_LoginPendingResponse::set_account_id(uint64_t value) {
   // @@protoc_insertion_point(field_set:pb.rpc.RPC_LoginPendingResponse.account_id)
 }
 
+// -------------------------------------------------------------------
+
+// RPC_EchoTestRequest
+
+// uint64 value1 = 1;
+inline void RPC_EchoTestRequest::clear_value1() {
+  _impl_.value1_ = uint64_t{0u};
+}
+inline uint64_t RPC_EchoTestRequest::_internal_value1() const {
+  return _impl_.value1_;
+}
+inline uint64_t RPC_EchoTestRequest::value1() const {
+  // @@protoc_insertion_point(field_get:pb.rpc.RPC_EchoTestRequest.value1)
+  return _internal_value1();
+}
+inline void RPC_EchoTestRequest::_internal_set_value1(uint64_t value) {
+  
+  _impl_.value1_ = value;
+}
+inline void RPC_EchoTestRequest::set_value1(uint64_t value) {
+  _internal_set_value1(value);
+  // @@protoc_insertion_point(field_set:pb.rpc.RPC_EchoTestRequest.value1)
+}
+
+// string value2 = 2;
+inline void RPC_EchoTestRequest::clear_value2() {
+  _impl_.value2_.ClearToEmpty();
+}
+inline const std::string& RPC_EchoTestRequest::value2() const {
+  // @@protoc_insertion_point(field_get:pb.rpc.RPC_EchoTestRequest.value2)
+  return _internal_value2();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void RPC_EchoTestRequest::set_value2(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.value2_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:pb.rpc.RPC_EchoTestRequest.value2)
+}
+inline std::string* RPC_EchoTestRequest::mutable_value2() {
+  std::string* _s = _internal_mutable_value2();
+  // @@protoc_insertion_point(field_mutable:pb.rpc.RPC_EchoTestRequest.value2)
+  return _s;
+}
+inline const std::string& RPC_EchoTestRequest::_internal_value2() const {
+  return _impl_.value2_.Get();
+}
+inline void RPC_EchoTestRequest::_internal_set_value2(const std::string& value) {
+  
+  _impl_.value2_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RPC_EchoTestRequest::_internal_mutable_value2() {
+  
+  return _impl_.value2_.Mutable(GetArenaForAllocation());
+}
+inline std::string* RPC_EchoTestRequest::release_value2() {
+  // @@protoc_insertion_point(field_release:pb.rpc.RPC_EchoTestRequest.value2)
+  return _impl_.value2_.Release();
+}
+inline void RPC_EchoTestRequest::set_allocated_value2(std::string* value2) {
+  if (value2 != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.value2_.SetAllocated(value2, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.value2_.IsDefault()) {
+    _impl_.value2_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:pb.rpc.RPC_EchoTestRequest.value2)
+}
+
+// -------------------------------------------------------------------
+
+// RPC_EchoTestResponse
+
+// uint64 value1 = 1;
+inline void RPC_EchoTestResponse::clear_value1() {
+  _impl_.value1_ = uint64_t{0u};
+}
+inline uint64_t RPC_EchoTestResponse::_internal_value1() const {
+  return _impl_.value1_;
+}
+inline uint64_t RPC_EchoTestResponse::value1() const {
+  // @@protoc_insertion_point(field_get:pb.rpc.RPC_EchoTestResponse.value1)
+  return _internal_value1();
+}
+inline void RPC_EchoTestResponse::_internal_set_value1(uint64_t value) {
+  
+  _impl_.value1_ = value;
+}
+inline void RPC_EchoTestResponse::set_value1(uint64_t value) {
+  _internal_set_value1(value);
+  // @@protoc_insertion_point(field_set:pb.rpc.RPC_EchoTestResponse.value1)
+}
+
+// string value2 = 2;
+inline void RPC_EchoTestResponse::clear_value2() {
+  _impl_.value2_.ClearToEmpty();
+}
+inline const std::string& RPC_EchoTestResponse::value2() const {
+  // @@protoc_insertion_point(field_get:pb.rpc.RPC_EchoTestResponse.value2)
+  return _internal_value2();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void RPC_EchoTestResponse::set_value2(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.value2_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:pb.rpc.RPC_EchoTestResponse.value2)
+}
+inline std::string* RPC_EchoTestResponse::mutable_value2() {
+  std::string* _s = _internal_mutable_value2();
+  // @@protoc_insertion_point(field_mutable:pb.rpc.RPC_EchoTestResponse.value2)
+  return _s;
+}
+inline const std::string& RPC_EchoTestResponse::_internal_value2() const {
+  return _impl_.value2_.Get();
+}
+inline void RPC_EchoTestResponse::_internal_set_value2(const std::string& value) {
+  
+  _impl_.value2_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RPC_EchoTestResponse::_internal_mutable_value2() {
+  
+  return _impl_.value2_.Mutable(GetArenaForAllocation());
+}
+inline std::string* RPC_EchoTestResponse::release_value2() {
+  // @@protoc_insertion_point(field_release:pb.rpc.RPC_EchoTestResponse.value2)
+  return _impl_.value2_.Release();
+}
+inline void RPC_EchoTestResponse::set_allocated_value2(std::string* value2) {
+  if (value2 != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.value2_.SetAllocated(value2, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.value2_.IsDefault()) {
+    _impl_.value2_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:pb.rpc.RPC_EchoTestResponse.value2)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

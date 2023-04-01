@@ -150,7 +150,6 @@
     <ClInclude Include="src\login_msg.pb.h" />
     <ClInclude Include="src\rpc\rpc_login.pb.h" />
     <ClInclude Include="src\rpc\rpc_protocol.pb.h" />
-    <ClInclude Include="src\rpc_login.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\error_code.pb.cc" />
@@ -158,7 +157,6 @@
     <ClCompile Include="src\login_msg.pb.cc" />
     <ClCompile Include="src\rpc\rpc_login.pb.cc" />
     <ClCompile Include="src\rpc\rpc_protocol.pb.cc" />
-    <ClCompile Include="src\rpc_login.pb.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

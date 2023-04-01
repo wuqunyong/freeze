@@ -18,7 +18,7 @@ void SceneMgrModule::init()
 void SceneMgrModule::ready()
 {
 	// RPC
-	using namespace ::rpc_msg;
+	using namespace ::pb::rpc;
 	INTRA_REGISTER_RPC(EchoTest, SceneMgrModule::RPC_echoTest);
 
 
@@ -53,7 +53,7 @@ apie::status::E_ReturnType SceneMgrModule::Forward_echo(const ::rpc_msg::RoleIde
 	//return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
-apie::status::Status SceneMgrModule::RPC_echoTest(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<rpc_msg::RPC_EchoTestRequest>& request, std::shared_ptr<rpc_msg::RPC_EchoTestResponse>& response)
+apie::status::Status SceneMgrModule::RPC_echoTest(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<pb::rpc::RPC_EchoTestRequest>& request, std::shared_ptr<pb::rpc::RPC_EchoTestResponse>& response)
 {
 	PIE_LOG(PIE_NOTICE, "{}", request->DebugString().c_str());
 
