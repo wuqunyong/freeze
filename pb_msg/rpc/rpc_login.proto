@@ -16,3 +16,16 @@ message RPC_LoginPendingResponse
 	int32 status_code = 1;
 	uint64 account_id = 2;
 }
+
+
+message RPC_EchoTestRequest
+{
+	uint64 value1 = 1;
+	string value2 = 2;
+}
+
+message RPC_EchoTestResponse
+{
+	uint64 value1 = 1;
+	string value2 = 2;
+}

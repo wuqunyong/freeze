@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pb.rpc;
+
+
+enum RPCProtocol {
+    OP_RPC_None = 0;
+
+    //业务操作码，从1000开始
+    OP_RPC_EchoTest = 1001;
+	OP_RPC_LoginPending = 2001;
+}

@@ -20,10 +20,10 @@ namespace rpc {
 
 #define INTRA_REGISTER_RPC(opcode, func)                                                                                                                           \
 	{                                                                                                                                                              \
-		bool bResult = apie::rpc::RPCServerManagerSingleton::get().createRPCServer<RPC_##opcode##Request, RPC_##opcode##Response>(rpc_msg::OP_RPC_##opcode, func); \
+		bool bResult = apie::rpc::RPCServerManagerSingleton::get().createRPCServer<RPC_##opcode##Request, RPC_##opcode##Response>(pb::rpc::OP_RPC_##opcode, func); \
 		if (!bResult) {                                                                                                                                            \
 			std::stringstream ss;                                                                                                                                  \
-			ss << "rpc register " << rpc_msg::OP_RPC_##opcode << " collision";                                                                                     \
+			ss << "rpc register " << pb::rpc::OP_RPC_##opcode << " collision";                                                                                     \
 			PANIC_ABORT(ss.str().c_str());                                                                                                                         \
 		}                                                                                                                                                          \
 	}
