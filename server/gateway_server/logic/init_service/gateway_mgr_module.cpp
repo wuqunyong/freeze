@@ -140,7 +140,7 @@ void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 	request.set_value2("hello world");
 
 	MessageInfo msgInfo;
-	msgInfo.iOpcode = ::apie::OP_EchoRequest;
+	msgInfo.iOpcode = ::pb::core::OP_EchoRequest;
 	GatewayMgrModule::handleDefaultOpcodes(msgInfo, request.SerializeAsString());
 }
 

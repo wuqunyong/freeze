@@ -1,7 +1,6 @@
 ﻿#include "module_handler/login_mgr_module.h"
 
 #include "../../common/dao/init.h"
-#include "../../common/opcodes.h"
 
 
 namespace apie {
