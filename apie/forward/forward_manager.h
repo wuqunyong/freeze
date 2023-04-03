@@ -24,7 +24,7 @@
 namespace apie {
 namespace forward {
 
-#define S_REGISTER_FORWARD_REQUEST(opcode, func)                                                                                                                                                              \
+#define REGISTER_FORWARD_REQUEST(opcode, func)                                                                                                                                                              \
 	{                                                                                                                                                                                                         \
 		bool bResult = apie::forward::ForwardManagerSingleton::get().createService<opcode##Request, ::pb::core::OP_##opcode##Response, opcode##Response>(::pb::core::OP_##opcode##Request, func);             \
 		if (!bResult) {                                                                                                                                                                                       \
@@ -34,7 +34,7 @@ namespace forward {
 		}                                                                                                                                                                                                     \
 	}
 
-#define S_REGISTER_FORWARD_NOTIFY(opcode, func)                                                                                                       \
+#define REGISTER_FORWARD_NOTIFY(opcode, func)                                                                                                       \
 	{                                                                                                                                                 \
 		bool bResult = apie::forward::ForwardManagerSingleton::get().createService<opcode##Notify>(::pb::core::OP_##opcode##Notify, func);            \
 		if (!bResult) {                                                                                                                               \

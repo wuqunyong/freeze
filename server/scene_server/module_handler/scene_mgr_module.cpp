@@ -24,7 +24,7 @@ void SceneMgrModule::ready()
 
 	// FORWARD
 	using namespace ::login_msg;
-	S_REGISTER_FORWARD_REQUEST(Echo, SceneMgrModule::Forward_echo);
+	REGISTER_FORWARD_REQUEST(Echo, SceneMgrModule::Forward_echo);
 }
 
 void SceneMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
