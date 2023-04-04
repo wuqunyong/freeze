@@ -153,7 +153,7 @@ namespace module_loader {
 				{
 					if (status.isAsync())
 					{
-						curState.setErrorCode(status::StatusCode::OK_ASYNC);
+						curState.setStatusCode(status::StatusCode::OK_ASYNC);
 						continue;
 					}
 					return status;
@@ -171,7 +171,7 @@ namespace module_loader {
 				{
 					if (status.isAsync())
 					{
-						curState.setErrorCode(status::StatusCode::OK_ASYNC);
+						curState.setStatusCode(status::StatusCode::OK_ASYNC);
 						continue;
 					}
 					return status;
@@ -210,7 +210,7 @@ namespace module_loader {
 			}
 			default:
 			{
-				curState.setErrorCode(status::StatusCode::UNKNOWN);
+				curState.setStatusCode(status::StatusCode::UNKNOWN);
 				return curState;
 			}
 			}

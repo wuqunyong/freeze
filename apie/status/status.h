@@ -24,7 +24,7 @@ public:
 	{
 	}
 
-	void setErrorCode(StatusCode code)
+	void setStatusCode(StatusCode code)
 	{
 		code_ = code;
 	}

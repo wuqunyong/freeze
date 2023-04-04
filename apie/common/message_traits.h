@@ -148,7 +148,7 @@ UpdateToDb(::rpc_msg::CHANNEL server, T& dbObj, UpdateToDbCB cb)
 	if (updateRequest.fields_size() == 0)
 	{
 		apie::status::Status status;
-		status.setErrorCode(apie::status::StatusCode::DirtyFlagZero);
+		status.setStatusCode(apie::status::StatusCode::DirtyFlagZero);
 
 		if (cb)
 		{
@@ -216,7 +216,7 @@ bool LoadFromDb(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbReplyCB<T> cb)
 		bool bResult = dbObj.loadFromPbCheck(*response);
 		if (!bResult)
 		{
-			newStatus.setErrorCode(apie::status::StatusCode::LoadFromDbError);
+			newStatus.setStatusCode(apie::status::StatusCode::LoadFromDbError);
 			if (cb)
 			{
 				cb(newStatus, dbObj, 0);
@@ -279,7 +279,7 @@ bool LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterC
 		bool bResult = dbObj.loadFromPbCheck(*response);
 		if (!bResult)
 		{
-			newStatus.setErrorCode(apie::status::StatusCode::LoadFromDbError);
+			newStatus.setStatusCode(apie::status::StatusCode::LoadFromDbError);
 			if (cb)
 			{
 				cb(newStatus, result);
@@ -297,7 +297,7 @@ bool LoadFromDbByFilter(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilterC
 			if (!bResult)
 			{
 				hasError = true;
-				newStatus.setErrorCode(apie::status::StatusCode::DB_BindTableError);
+				newStatus.setStatusCode(apie::status::StatusCode::DB_BindTableError);
 				if (cb)
 				{
 					cb(newStatus, result);
@@ -361,7 +361,7 @@ bool LoadFromDbByQueryAll(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilte
 		if (!bResult)
 		{
 			hasError = true;
-			newStatus.setErrorCode(apie::status::StatusCode::LoadFromDbError);
+			newStatus.setStatusCode(apie::status::StatusCode::LoadFromDbError);
 			if (cb)
 			{
 				cb(newStatus, result);
@@ -379,7 +379,7 @@ bool LoadFromDbByQueryAll(::rpc_msg::CHANNEL server, T& dbObj, LoadFromDbByFilte
 			if (!bResult)
 			{
 				hasError = true;
-				newStatus.setErrorCode(apie::status::StatusCode::DB_BindTableError);
+				newStatus.setStatusCode(apie::status::StatusCode::DB_BindTableError);
 				if (cb)
 				{
 					cb(newStatus, result);
@@ -519,7 +519,7 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 
 		if (response->results_size() != std::tuple_size<decltype(tupleData)>::value)
 		{
-			newStatus.setErrorCode(apie::status::StatusCode::NotMatchedResultError);
+			newStatus.setStatusCode(apie::status::StatusCode::NotMatchedResultError);
 			if (cb)
 			{
 				cb(newStatus, tupleData, tupleRows);
@@ -535,7 +535,7 @@ Multi_LoadFromDb(LoadFromDbMultiReplyCB<Ts...> cb, ::rpc_msg::CHANNEL server, Ts
 			tupleRows[elems.first] = std::get<1>(elems.second);
 			if (!std::get<0>(elems.second))
 			{
-				newStatus.setErrorCode(apie::status::StatusCode::LoadFromDbError);
+				newStatus.setStatusCode(apie::status::StatusCode::LoadFromDbError);
 			}
 		}
 
@@ -597,7 +597,7 @@ void _Insert_OnNotExists(const ::rpc_msg::CHANNEL& server, std::tuple<Ts...>& tu
 				{
 					if (!result)
 					{
-						status.setErrorCode(status::StatusCode::DB_InsertError);
+						status.setStatusCode(status::StatusCode::DB_InsertError);
 					}
 
 					auto& doneFlag = std::get<2>(*ptrCheck);
