@@ -133,7 +133,7 @@ namespace apie {
 			if (it == m_.end())
 			{
 				std::stringstream ss;
-				ss << "type:" << typeid(T).name() << " not exist";
+				ss << "DbLoadComponent get type:" << typeid(T).name() << " not exist";
 				throw std::exception(ss.str().c_str());
 			}
 			auto const* value = it->second->data_address();
@@ -163,9 +163,13 @@ namespace apie {
 		template <typename T>
 		ValueTypeT<T>& lookup(ValueTypeT<T> value = {}) {
 			auto p = m_.find(typeid(T));
-			if (p == m_.end()) {
-				p = m_.emplace(typeid(T), std::make_unique<Data<T>>(std::move(value)))
-					.first;
+			if (p == m_.end()) 
+			{
+				//p = m_.emplace(typeid(T), std::make_unique<Data<T>>(std::move(value)))
+				//	.first;
+				std::stringstream ss;
+				ss << "DbLoadComponent lookup type:" << typeid(T).name() << " not exist";
+				throw std::exception(ss.str().c_str());
 			}
 			auto* v = p->second->data_address();
 			return *reinterpret_cast<ValueTypeT<T>*>(v);
