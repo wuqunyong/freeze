@@ -107,7 +107,7 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 
 		}
 	};
-	Account::LoadAccountFromDb(30005, doneCb);
+	Account::LoadAccountFromDb(iId, doneCb);
 }
 
 }

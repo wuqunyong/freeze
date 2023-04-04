@@ -59,7 +59,7 @@ apie::status::Status LoginMgr::load()
 	};
 	LoadFromDbByQueryAll<apie::dbt_account::account_name_AutoGen>(server, user, cb);
 
-	return { apie::status::StatusCode::OK_ASYNC, "" };
+	return { apie::status::StatusCode::OK, "" };
 }
 
 apie::status::Status LoginMgr::ready()
