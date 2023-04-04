@@ -161,7 +161,7 @@ namespace apie {
 		 * @param value the initial value to use if `T` is not set (optional)
 		 */
 		template <typename T>
-		ValueTypeT<T>& lookup(ValueTypeT<T> value = {}) {
+		ValueTypeT<T>& lookup() {
 			auto p = m_.find(typeid(T));
 			if (p == m_.end()) 
 			{

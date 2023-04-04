@@ -52,7 +52,7 @@ public:
 		if (!has<T>())
 		{
 			std::stringstream ss;
-			ss << typeid(T).name() << " : unregister";
+			ss << "CommonModuleLoader lookup " << typeid(T).name() << " : unregister";
 			throw std::exception(ss.str().c_str());
 		}
 
