@@ -8,6 +8,7 @@ import threading
 import lz4.frame
 from arc4 import ARC4
 
+from proto import protocol_pb2
 from proto import rpc_login_pb2
 from proto import login_msg_pb2
 
@@ -207,7 +208,7 @@ class Client(threading.Thread):
         self.registerHandler(1001, handle_MSG_RESPONSE_ACCOUNT_LOGIN_L)
         self.registerHandler(1007, handle_MSG_RESPONSE_HANDSHAKE_INIT)
         self.registerHandler(1009, handle_MSG_RESPONSE_HANDSHAKE_ESTABLISHED)
-        self.registerHandler(1003, handle_MSG_RESPONSE_CLIENT_LOGIN)
+        self.registerHandler(protocol_pb2.OP_ClientLoginRequest, handle_MSG_RESPONSE_CLIENT_LOGIN)
 
         self.registerHandler(1005, handle_MSG_RESPONSE_ECHO)
 

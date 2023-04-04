@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="logic\login_mgr.h">
-      <Filter>logic</Filter>
-    </ClInclude>
-    <ClInclude Include="module_handler\login_mgr_module.h">
-      <Filter>module_handler</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="logic\login_mgr.cpp">
-      <Filter>logic</Filter>
-    </ClCompile>
-    <ClCompile Include="module_handler\login_mgr_module.cpp">
-      <Filter>module_handler</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="logic\init_service\login_mgr.cpp">
+      <Filter>logic\init_service</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\init_service\login_mgr_module.cpp">
+      <Filter>logic\init_service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
       <UniqueIdentifier>{48ecb0b7-fcb7-4067-9052-4ca376e37ce8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="module_handler">
-      <UniqueIdentifier>{fbc7e580-3d21-46ad-bd8f-eecd3c57e411}</UniqueIdentifier>
+    <Filter Include="logic\init_service">
+      <UniqueIdentifier>{3d521429-9c45-4651-83d1-bf99946f2322}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="logic\init_service\login_mgr.h">
+      <Filter>logic\init_service</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\init_service\login_mgr_module.h">
+      <Filter>logic\init_service</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

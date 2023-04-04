@@ -125,13 +125,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="logic\login_mgr.h" />
-    <ClInclude Include="module_handler\login_mgr_module.h" />
+    <ClCompile Include="logic\init_service\login_mgr.cpp" />
+    <ClCompile Include="logic\init_service\login_mgr_module.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="logic\login_mgr.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="module_handler\login_mgr_module.cpp" />
+    <ClInclude Include="logic\init_service\login_mgr.h" />
+    <ClInclude Include="logic\init_service\login_mgr_module.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <tuple>
 
-#include "logic/login_mgr.h"
+#include "logic/init_service/login_mgr.h"
 
 
 int main(int argc, char **argv)
