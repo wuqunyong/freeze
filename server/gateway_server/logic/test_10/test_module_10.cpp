@@ -51,7 +51,7 @@ static auto CreateLoadInstance(uint64_t iId)
 	return pInstance;
 }
 
-using CreateLoadInstanceCb = std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))>;
+//using CreateLoadInstanceCb = std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))>;
 
 void CreateUserObj(uint64_t iRoleId, PlayerFactory::Callback doneCb)
 {

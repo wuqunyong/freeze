@@ -2,6 +2,7 @@
 
 #include "../../../common/dao/init.h"
 
+#include "logic/init_service/account.h"
 
 namespace apie {
 
@@ -17,6 +18,7 @@ void LoginMgrModule::init()
 	auto& cmd = LogicCmdHandlerSingleton::get();
 	cmd.init();
 	cmd.registerOnCmd("nats_publish", "nats_publish", LoginMgrModule::Cmd_natsPublish);
+	cmd.registerOnCmd("load_account", "load_account", LoginMgrModule::Cmd_loadAccount);
 }
 
 
@@ -88,7 +90,24 @@ void LoginMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 		ss << "RPC_echoCb:" << response->ShortDebugString();
 	};
 	apie::rpc::RPC_Call<pb::rpc::RPC_EchoTestRequest, pb::rpc::RPC_EchoTestResponse>(server, pb::rpc::OP_RPC_EchoTest, params, cb);
+}
 
+void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
+{
+	if (cmd.params_size() < 1)
+	{
+		return;
+	}
+
+	uint32_t iId = std::stoul(cmd.params()[0]);
+
+	auto doneCb = [](apie::status::Status status, auto ptrModule) {
+		if (status.ok())
+		{
+
+		}
+	};
+	Account::LoadAccountFromDb(30005, doneCb);
 }
 
 }

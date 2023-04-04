@@ -8,6 +8,12 @@
     <ClCompile Include="logic\init_service\login_mgr_module.cpp">
       <Filter>logic\init_service</Filter>
     </ClCompile>
+    <ClCompile Include="logic\init_service\account.cpp">
+      <Filter>logic\init_service</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\init_service\module_create.cpp">
+      <Filter>logic\init_service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -22,6 +28,12 @@
       <Filter>logic\init_service</Filter>
     </ClInclude>
     <ClInclude Include="logic\init_service\login_mgr_module.h">
+      <Filter>logic\init_service</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\init_service\account.h">
+      <Filter>logic\init_service</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\init_service\module_create.h">
       <Filter>logic\init_service</Filter>
     </ClInclude>
   </ItemGroup>
