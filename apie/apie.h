@@ -19,6 +19,7 @@
 #include "apie/base/datagen.h"
 
 #include "apie/common/class_loader_register_macro.h"
+#include "apie/common/croncpp.h"
 #include "apie/common/dao_macros.h"
 #include "apie/common/env.h"
 #include "apie/common/string_utils.h"
