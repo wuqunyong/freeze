@@ -26,7 +26,7 @@ public:
 	using WrapperType = T;
 
 	template<class Key, class Tuple, std::size_t... Is>
-	friend static inline auto CreateCommonModuleLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>);
+	friend static inline auto CreateComponentLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>);
 
 	~ComponentLoader()
 	{
@@ -168,7 +168,7 @@ private:
 };
 
 template<class Key, class Tuple, std::size_t... Is>
-static inline auto CreateCommonModuleLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>)
+static inline auto CreateComponentLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>)
 {
 	auto pInstance = std::shared_ptr<ComponentLoader<Key, Tuple>>(new ComponentLoader<Key, Tuple>(t, iId, std::get<Is>(t)...));
 	return pInstance;
@@ -176,9 +176,9 @@ static inline auto CreateCommonModuleLoaderPtr(Key iId, const Tuple& t, std::ind
 
 
 template<class Key, class Tuple, typename Indices = std::make_index_sequence<std::tuple_size<Tuple>::value>>
-auto MakeCommonModuleLoader(Key iId, const Tuple& t)
+auto MakeComponentLoader(Key iId, const Tuple& t)
 {
-	return CreateCommonModuleLoaderPtr(iId, t, Indices{});
+	return CreateComponentLoaderPtr(iId, t, Indices{});
 }
 
 

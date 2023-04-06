@@ -231,7 +231,7 @@ namespace apie {
 		{
 			static ModuleTuple kModuleTuple;
 
-			auto pInstance = MakeCommonModuleLoader(iId, kModuleTuple);
+			auto pInstance = MakeComponentLoader(iId, kModuleTuple);
 			return pInstance;
 		}
 

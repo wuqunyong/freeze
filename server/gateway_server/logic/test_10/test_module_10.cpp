@@ -47,7 +47,7 @@ apie::status::Status TestModule10::start()
 static auto CreateLoadInstance(uint64_t iId)
 {
 	static auto tupleType = std::make_tuple(TestModuleA(), TestModuleB());
-	auto pInstance = MakeCommonModuleLoader(iId, tupleType);
+	auto pInstance = MakeComponentLoader(iId, tupleType);
 	return pInstance;
 }
 
