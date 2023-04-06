@@ -188,7 +188,7 @@
     <ClInclude Include="common\graphics_utility.h" />
     <ClInclude Include="common\macros.h" />
     <ClInclude Include="common\message_traits.h" />
-    <ClInclude Include="common\module_loader.h" />
+    <ClInclude Include="common\component_loader.h" />
     <ClInclude Include="common\noncopyable.h" />
     <ClInclude Include="common\optional_serializer.h" />
     <ClInclude Include="common\options.h" />

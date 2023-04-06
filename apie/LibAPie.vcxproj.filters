@@ -565,7 +565,7 @@
     <ClInclude Include="mysql_driver\table_loader.h">
       <Filter>mysql_driver</Filter>
     </ClInclude>
-    <ClInclude Include="common\module_loader.h">
+    <ClInclude Include="common\component_loader.h">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="co_traits\co_task.h">

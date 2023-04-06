@@ -24,7 +24,7 @@
 #include "apie/common/env.h"
 #include "apie/common/string_utils.h"
 #include "apie/common/message_traits.h"
-#include "apie/common/module_loader.h"
+#include "apie/common/component_loader.h"
 #include "apie/common/exception_trap.h"
 #include "apie/common/graphics_utility.h"
 #include "apie/common/enum_to_int.h"
