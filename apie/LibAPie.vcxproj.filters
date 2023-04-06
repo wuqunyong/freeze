@@ -109,6 +109,12 @@
     <Filter Include="co_traits">
       <UniqueIdentifier>{de4d508e-41a7-42fb-8756-25660ea0b13d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party\croncpp">
+      <UniqueIdentifier>{00ead399-a551-44d0-abc1-58a055cac00a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\croncpp\include">
+      <UniqueIdentifier>{e691e35e-1b82-4033-8707-41f2c6f18390}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -574,8 +580,8 @@
     <ClInclude Include="common\class_loader_register_macro.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="common\croncpp.h">
-      <Filter>common</Filter>
+    <ClInclude Include="..\third_party\croncpp\include\croncpp.h">
+      <Filter>third_party\croncpp\include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
