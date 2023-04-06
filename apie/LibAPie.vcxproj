@@ -101,6 +101,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)third_party\libs;$(SolutionDir)third_party\MySQL Server 5.7\lib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -3,6 +3,9 @@
 #include <exception>
 #include <iostream>
 
+#include "croncpp.h"
+
+
 template <typename T>
 struct Generator
 {
@@ -127,6 +130,21 @@ fibonacci_sequence(unsigned n)
 
 int main()
 {
+	std::cout << std::setw(6) << "hello" << ": " << __cplusplus << std::endl;
+
+	try
+	{
+		auto cron = cron::make_cron("0 0 0 * * *");
+
+		std::time_t now = 1680796800;
+		std::time_t next = cron::cron_next(cron, now);
+	}
+	catch (cron::bad_cronexpr const& ex)
+	{
+		std::cerr << ex.what() << '\n';
+	}
+
+
 	try
 	{
 		auto gen = fibonacci_sequence(10); // max 94 before uint64_t overflows
