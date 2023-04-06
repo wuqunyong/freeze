@@ -21,9 +21,6 @@
   <ItemGroup>
     <ClCompile Include="test_client.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="croncpp.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{7DA2359B-306A-47AE-9D29-37F1F6080CD6}</ProjectGuid>

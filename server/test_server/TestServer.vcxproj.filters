@@ -3,7 +3,4 @@
   <ItemGroup>
     <ClCompile Include="test_client.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="croncpp.h" />
-  </ItemGroup>
 </Project>
