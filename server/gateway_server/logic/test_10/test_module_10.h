@@ -223,7 +223,7 @@ namespace apie {
 	public:
 		using PrimaryKey = uint64_t;
 		using ModuleTuple = std::tuple<TestModuleA, TestModuleB>;
-		using PlayerPtr = std::shared_ptr<CommonModuleLoader<uint64_t, ModuleTuple>>;
+		using PlayerPtr = std::shared_ptr<ComponentLoader<uint64_t, ModuleTuple>>;
 		using Callback = std::function<void(apie::status::Status status, PlayerPtr)>;
 
 
