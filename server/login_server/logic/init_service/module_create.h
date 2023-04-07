@@ -31,30 +31,7 @@ namespace apie {
 		void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader);
 		void loadFromDbDone();
 		void saveToDb();
-		void initCreate(auto cbObj)
-		{
-			if (!m_account.empty())
-			{
-				cbObj(true);
-			}
-			else
-			{
-				auto cb = [cbObj](apie::status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
-					if (!status.ok())
-					{
-						cbObj(false);
-					}
-					else
-					{
-						cbObj(true);
-					}
-				};
-				apie::dbt_account::account_AutoGen dbObj(m_accountId);
-				dbObj.set_register_time(time(nullptr));
-
-				InsertToDb<apie::dbt_account::account_AutoGen>(m_server, dbObj, cb);
-			}
-		}
+		void initCreate(auto cbObj);
 
 	private:
 		uint64_t m_accountId;
@@ -62,4 +39,29 @@ namespace apie {
 		::rpc_msg::CHANNEL m_server;
 		std::map<uint64_t, apie::dbt_account::account_AutoGen> m_account;
 	};
+
+	void Module_Create::initCreate(auto cbObj)
+	{
+		if (!m_account.empty())
+		{
+			cbObj(true);
+		}
+		else
+		{
+			auto cb = [cbObj](apie::status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
+				if (!status.ok())
+				{
+					cbObj(false);
+				}
+				else
+				{
+					cbObj(true);
+				}
+			};
+			apie::dbt_account::account_AutoGen dbObj(m_accountId);
+			dbObj.set_register_time(time(nullptr));
+
+			InsertToDb<apie::dbt_account::account_AutoGen>(m_server, dbObj, cb);
+		}
+	}
 }
