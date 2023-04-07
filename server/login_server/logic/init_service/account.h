@@ -12,6 +12,7 @@
 #include "pb_init.h"
 
 #include "logic/init_service/module_create.h"
+#include "logic/init_service/module_name.h"
 
 namespace apie {
 
@@ -25,7 +26,7 @@ namespace apie {
 	{
 	public:
 		using PrimaryKey = uint64_t;
-		using ModuleTuple = std::tuple<ModuleWrapper<Module_Create>>;
+		using ModuleTuple = std::tuple<ModuleWrapper<Module_Create>, ModuleWrapper<Module_Name>>;
 
 		using AccountLoader = ComponentLoader<PrimaryKey, ModuleTuple>;
 		using AccountLoaderPtr = std::shared_ptr<ComponentLoader<PrimaryKey, ModuleTuple>>;

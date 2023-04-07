@@ -23,6 +23,7 @@ void Account::LoadAccountFromDb(PrimaryKey iId, Callback doneCb)
 
 	ptrLoad->set<Multi_Account_Loader>(iId).lookup<Multi_Account_Loader>().getTableType().set_account_id(iId);
 	ptrLoad->set<Multi_Account_Loader>(iId).lookup<Multi_Account_Loader>().markFilter({ apie::dbt_account::account_AutoGen::account_id });
+	ptrLoad->set<Single_Name_Loader>(iId);
 
 	auto cb = [ptrModuleLoader, doneCb, server](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
 		if (!status.ok())
