@@ -26,11 +26,13 @@ namespace apie {
 	public:
 		using PrimaryKey = uint64_t;
 		using ModuleTuple = std::tuple<ModuleWrapper<Module_Create>>;
-		using AccountPtr = std::shared_ptr<ComponentLoader<PrimaryKey, ModuleTuple>>;
-		using Callback = std::function<void(apie::status::Status status, AccountPtr)>;
+
+		using AccountLoader = ComponentLoader<PrimaryKey, ModuleTuple>;
+		using AccountLoaderPtr = std::shared_ptr<ComponentLoader<PrimaryKey, ModuleTuple>>;
+		using Callback = std::function<void(apie::status::Status status, AccountLoaderPtr)>;
 
 
-		static AccountPtr CreateAccount(PrimaryKey iId)
+		static AccountLoaderPtr CreateAccount(PrimaryKey iId)
 		{
 			static ModuleTuple kModuleTuple;
 

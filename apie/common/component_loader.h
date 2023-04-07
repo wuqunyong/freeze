@@ -25,6 +25,18 @@ public:
 
 	using WrapperType = T;
 
+	using type = ComponentLoader;
+	using ReadyCb = std::function<void(apie::status::Status, std::shared_ptr<type> loader)>;
+
+	enum E_LoadingState
+	{
+		ELS_None = 0,
+		ELS_Loading = 1,
+		ELS_Failure = 2,
+		ELS_Success = 3,
+	};
+
+
 	template<class Key, class Tuple, std::size_t... Is>
 	friend static inline auto CreateComponentLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>);
 
@@ -59,6 +71,57 @@ public:
 		return m_options.lookup<T>();
 	}
 
+	template <typename T>
+	ComponentLoader& setState(E_LoadingState v) {
+		m_loading[typeid(T)] = v;
+
+		switch (v)
+		{
+		case ELS_Failure:
+		{
+			if (m_ready)
+			{
+				break;
+			}
+			m_ready = true;
+
+			auto self = this->shared_from_this();
+			apie::status::Status status(apie::status::StatusCode::LoadFromDbError, typeid(T).name());
+			m_cb(status, self);
+			break;
+		}
+		case ELS_Success:
+		{
+			if (m_ready)
+			{
+				break;
+			}
+
+			bool bDone = true;
+			for (const auto& elems : m_loading)
+			{
+				if (elems.second == ELS_Loading)
+				{
+					bDone = false;
+					break;
+				}
+			}
+
+			if (bDone)
+			{
+				m_ready = true;
+				apie::status::Status status(apie::status::StatusCode::OK, "");
+				auto self = this->shared_from_this();
+				m_cb(status, self);
+			}
+			break;
+		}
+		default:
+			break;
+		}
+		return *this;
+	}
+
 	void Meta_loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<DbLoadComponent> ptrLoad)
 	{
 		loadFromDbLoadImpl(server, ptrLoad, m_wrapperType);
@@ -72,6 +135,13 @@ public:
 	void Meta_saveToDb()
 	{
 		SaveToDbImpl(m_wrapperType);
+	}
+
+	void Meta_initCreate(ReadyCb cb)
+	{
+		this->m_cb = cb;
+
+		initCreateImpl(m_wrapperType);
 	}
 
 private:
@@ -143,6 +213,29 @@ private:
 		}
 	}
 
+	template <size_t I = 0, typename... Ts>
+	constexpr void initCreateImpl(std::tuple<Ts...> tup)
+	{
+		// If we have iterated through all elements
+		if constexpr (I == sizeof...(Ts))
+		{
+			// Last case, if nothing is left to
+			// iterate, then exit the function
+			return;
+		}
+		else
+		{
+			auto tObj = std::get<I>(tup);
+			this->setState<decltype(tObj)>(ELS_Loading);
+
+			auto self = this->shared_from_this();
+			this->lookup<decltype(tObj)>().initCreate(self);
+
+			// Going for next element.
+			this->initCreateImpl<I + 1>(tup);
+		}
+	}
+
 
 	ComponentLoader(const ComponentLoader&) = delete;
 	ComponentLoader& operator=(const ComponentLoader&) = delete;
@@ -165,6 +258,10 @@ private:
 	apie::common::Options m_options;
 
 	WrapperType m_wrapperType;
+
+	std::unordered_map<std::type_index, E_LoadingState> m_loading;
+	ReadyCb m_cb;
+	bool m_ready = false;
 };
 
 template<class Key, class Tuple, std::size_t... Is>

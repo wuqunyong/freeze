@@ -34,6 +34,13 @@ void Account::LoadAccountFromDb(PrimaryKey iId, Callback doneCb)
 		ptrModuleLoader->Meta_loadFromDbLoader(server, loader);
 		ptrModuleLoader->Meta_loadFromDbDone();
 		
+		auto cb = [](apie::status::Status status, auto ptrLoader) {
+			if (!status.ok())
+			{
+			}
+		};
+		//ptrModuleLoader->Meta_initCreate(cb);
+
 		doneCb(status, ptrModuleLoader);
 	};
 	ptrLoad->loadFromDb(server, cb);

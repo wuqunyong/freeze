@@ -13,6 +13,7 @@
 
 #include "../../../common/dao/init.h"
 
+
 namespace apie {
 
 	struct Multi_Account_Loader
@@ -20,6 +21,7 @@ namespace apie {
 		using Type = MultiRowLoader<apie::dbt_account::account_AutoGen>;
 	};
 
+	class Account;
 
 	class Module_Create
 	{
@@ -29,6 +31,7 @@ namespace apie {
 		void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader);
 		void loadFromDbDone();
 		void saveToDb();
+		//void initCreate(apie::Account::AccountLoaderPtr ptrComponetMgr);
 
 	private:
 		uint64_t m_accountId;

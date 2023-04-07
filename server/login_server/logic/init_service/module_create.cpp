@@ -31,5 +31,10 @@ void Module_Create::saveToDb()
 
 }
 
+//void Module_Create::initCreate(apie::Account::AccountLoaderPtr ptrComponetMgr)
+//{
+//	//ptrComponetMgr->setState<Module_Create>(apie::Account::AccountLoader::ELS_Success);
+//}
+
 }
 
