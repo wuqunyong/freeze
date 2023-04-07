@@ -18,7 +18,7 @@ namespace apie {
 	template <typename T>
 	struct ModuleWrapper
 	{
-		using Type = T;;
+		using Type = T;
 	};
 
 	class Account
