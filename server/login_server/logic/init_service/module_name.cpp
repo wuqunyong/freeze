@@ -12,6 +12,12 @@ Module_Name::Module_Name(uint64_t accountId)
 void Module_Name::loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 {
 	m_server = server;
+
+	if (ptrLoader->has<Single_Name_Loader>())
+	{
+		auto& optData = ptrLoader->lookup<Single_Name_Loader>().getData();
+		m_dbData = optData;
+	}
 }
 
 void Module_Name::loadFromDbDone()
