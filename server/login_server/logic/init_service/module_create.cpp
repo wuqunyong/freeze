@@ -11,6 +11,8 @@ Module_Create::Module_Create(uint64_t accountId)
 
 void Module_Create::loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 {
+	m_server = server;
+
 	if (ptrLoader->has<Multi_Account_Loader>())
 	{
 		auto& vecData = ptrLoader->lookup<Multi_Account_Loader>().getData();
@@ -31,10 +33,6 @@ void Module_Create::saveToDb()
 
 }
 
-//void Module_Create::initCreate(apie::Account::AccountLoaderPtr ptrComponetMgr)
-//{
-//	//ptrComponetMgr->setState<Module_Create>(apie::Account::AccountLoader::ELS_Success);
-//}
 
 }
 

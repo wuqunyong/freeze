@@ -141,6 +141,7 @@ public:
 	{
 		this->m_cb = cb;
 
+		initCreateImpl_Loading(m_wrapperType);
 		initCreateImpl(m_wrapperType);
 	}
 
@@ -214,7 +215,7 @@ private:
 	}
 
 	template <size_t I = 0, typename... Ts>
-	constexpr void initCreateImpl(std::tuple<Ts...> tup)
+	constexpr void initCreateImpl_Loading(std::tuple<Ts...> tup)
 	{
 		// If we have iterated through all elements
 		if constexpr (I == sizeof...(Ts))
@@ -228,8 +229,38 @@ private:
 			auto tObj = std::get<I>(tup);
 			this->setState<decltype(tObj)>(ELS_Loading);
 
+			// Going for next element.
+			this->initCreateImpl<I + 1>(tup);
+		}
+	}
+
+	template <size_t I = 0, typename... Ts>
+	constexpr void initCreateImpl(std::tuple<Ts...> tup)
+	{
+		// If we have iterated through all elements
+		if constexpr (I == sizeof...(Ts))
+		{
+			// Last case, if nothing is left to
+			// iterate, then exit the function
+			return;
+		}
+		else
+		{
+			auto tObj = std::get<I>(tup);
+
 			auto self = this->shared_from_this();
-			this->lookup<decltype(tObj)>().initCreate(self);
+			auto cbObj = [self, tObj](bool bResult) {
+				if (bResult)
+				{
+					self->setState<decltype(tObj)>(ELS_Success);
+				} 
+				else
+				{
+					self->setState<decltype(tObj)>(ELS_Failure);
+				}
+			};
+
+			this->lookup<decltype(tObj)>().initCreate(cbObj);
 
 			// Going for next element.
 			this->initCreateImpl<I + 1>(tup);
