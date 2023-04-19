@@ -25,7 +25,7 @@ public:
 
 	using WrapperType = T;
 
-	using type = ComponentLoader;
+	using type = ComponentLoader; // using injected-class-name
 	using ReadyCb = std::function<void(apie::status::Status, std::shared_ptr<type> loader)>;
 
 	enum E_LoadingState
@@ -249,7 +249,7 @@ private:
 			auto tObj = std::get<I>(tup);
 
 			auto self = this->shared_from_this();
-			auto cbObj = [self, tObj](bool bResult) {
+			auto functorObj = [self, tObj](bool bResult) {
 				if (bResult)
 				{
 					self->setState<decltype(tObj)>(ELS_Success);
@@ -260,7 +260,7 @@ private:
 				}
 			};
 
-			this->lookup<decltype(tObj)>().initCreate(cbObj);
+			this->lookup<decltype(tObj)>().initCreate(functorObj);
 
 			// Going for next element.
 			this->initCreateImpl<I + 1>(tup);
