@@ -57,7 +57,7 @@ void RPCServerManager::onMessage(const ::rpc_msg::RPC_REQUEST& context)
 	bool bResult = newMsg->ParseFromString(context.args_data());
 	if (!bResult)
 	{
-		//TODO
+		ASYNC_PIE_LOG(PIE_ERROR, "RPCServerManager | onMessage | ParseFromString | opcode:{} | type: {} | data:{}", context.opcodes(), optType.value(), context.args_data());
 		return;
 	}
 

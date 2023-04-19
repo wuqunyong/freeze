@@ -158,6 +158,8 @@ namespace event_ns {
 				const char* data = natsMsg_GetData(msg);
 				auto parsed_msg = std::make_unique<TMsg>();
 
+				ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|NATSMessageHandler | iLen:{} | data: {}", len, std::string(data, len));
+
 				bool ok = parsed_msg->ParseFromArray(data, len);
 				if (!ok)
 				{
@@ -206,7 +208,8 @@ namespace event_ns {
 				}
 
 				auto serialized_msg = msg.SerializeAsString();
-				auto nats_status = natsConnection_Publish(nats_connection_, sPub.c_str(), serialized_msg.c_str(), serialized_msg.size());
+				auto iLen = serialized_msg.size();
+				auto nats_status = natsConnection_Publish(nats_connection_, sPub.c_str(), serialized_msg.c_str(), iLen);
 				if (nats_status != NATS_OK)
 				{
 					std::stringstream ss;
@@ -216,7 +219,7 @@ namespace event_ns {
 					return false;
 				}
 
-				ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Channel:{}|Publish|{}", sPub.c_str(), serialized_msg.c_str());
+				ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Channel:{}|Publish|{}|iLen:{}", sPub.c_str(), serialized_msg.c_str(), iLen);
 
 				return true;
 			}
