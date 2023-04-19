@@ -35,5 +35,14 @@ namespace apie {
 
 		static AccountLoaderPtr CreateAccount(PrimaryKey iId);
 		static void LoadAccountFromDb(PrimaryKey iId, Callback cb);
+
+		static void AddAccount(AccountLoaderPtr ptrLoader);
+		static AccountLoaderPtr FindAccount(PrimaryKey iId);
+
+	private:
+		static inline std::map<PrimaryKey, AccountLoaderPtr> m_accounts;
 	};
+
+	template <typename ComponentType>
+	using ComponentUnwrapType = ModuleWrapper<ComponentType>::Type;
 }

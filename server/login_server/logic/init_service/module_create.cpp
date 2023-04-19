@@ -33,6 +33,10 @@ void Module_Create::saveToDb()
 
 }
 
+void Module_Create::TestFunc()
+{
+
+}
 
 }
 

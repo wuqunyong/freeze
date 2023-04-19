@@ -45,11 +45,16 @@ public:
 
 	}
 
+	KeyType getKey()
+	{
+		return m_id;
+	}
+
 	template <typename T>
 	void Append(T moduleType)
 	{
 		m_options.set<T>(m_id);
-		m_modules.push_back(typeid(moduleType));
+		//m_modules.push_back(typeid(moduleType));
 	}
 
 	template <typename T>
@@ -288,7 +293,7 @@ private:
 	}
 
 	KeyType m_id;
-	std::vector<std::type_index> m_modules;
+	//std::vector<std::type_index> m_modules;
 	apie::common::Options m_options;
 
 	WrapperType m_wrapperType;

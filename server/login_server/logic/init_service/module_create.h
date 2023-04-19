@@ -33,6 +33,8 @@ namespace apie {
 		void saveToDb();
 		void initCreate(auto cbObj);
 
+		void TestFunc();
+
 	private:
 		uint64_t m_accountId;
 

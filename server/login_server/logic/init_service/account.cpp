@@ -45,5 +45,24 @@ void AccountFactory::LoadAccountFromDb(PrimaryKey iId, Callback doneCb)
 	ptrLoad->loadFromDb(server, cb);
 }
 
+
+void AccountFactory::AddAccount(AccountLoaderPtr ptrLoader)
+{
+	auto iId = ptrLoader->getKey();
+	m_accounts[iId] = ptrLoader;
+}
+ 
+AccountFactory::AccountLoaderPtr AccountFactory::FindAccount(PrimaryKey iId)
+{
+	auto findIte = m_accounts.find(iId);
+	if (findIte == m_accounts.end())
+	{
+		return nullptr;
+	}
+
+	return findIte->second;
+}
+
+
 }
 
