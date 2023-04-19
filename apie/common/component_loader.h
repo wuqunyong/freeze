@@ -141,6 +141,9 @@ public:
 	{
 		this->m_cb = cb;
 
+		m_loading.clear();
+		m_ready = false;
+
 		initCreateImpl_Loading(m_wrapperType);
 		initCreateImpl(m_wrapperType);
 	}
