@@ -31,7 +31,7 @@ namespace apie {
 		void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader);
 		void loadFromDbDone();
 		void saveToDb();
-		void initCreate(auto cbObj);
+		void initCreate(auto functorObj);
 
 	private:
 		uint64_t m_accountId;
@@ -40,26 +40,32 @@ namespace apie {
 		std::optional<apie::dbt_account::account_name_AutoGen> m_dbData;
 	};
 
-	void Module_Name::initCreate(auto cbObj)
+	void Module_Name::initCreate(auto functorObj)
 	{
 		if (m_dbData.has_value())
 		{
-			cbObj(true);
+			functorObj(true);
 		}
 		else
 		{
-			auto cb = [cbObj](apie::status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
+			auto cb = [functorObj](apie::status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
 				if (!status.ok())
 				{
-					cbObj(false);
+					functorObj(false);
 				}
 				else
 				{
-					cbObj(true);
+					functorObj(true);
 				}
 			};
 			apie::dbt_account::account_name_AutoGen dbObj(m_accountId);
-			dbObj.set_name("ssssssssss");
+
+			std::time_t t = std::time(nullptr);
+			std::tm tm = *std::localtime(&t);
+			std::stringstream ss;
+			ss << std::put_time(&tm, "%c %Z");
+
+			dbObj.set_name(ss.str());
 
 			InsertToDb<apie::dbt_account::account_name_AutoGen>(m_server, dbObj, cb);
 		}
