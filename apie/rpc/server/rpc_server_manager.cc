@@ -37,19 +37,47 @@ void RPCServerManager::destroy()
 	service_.clear();
 }
 
+void RPCServerManager::sendResponseError(const apie::status::Status& status, const ::rpc_msg::RPC_REQUEST& context)
+{
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(context.client().stub());
+
+	::rpc_msg::CHANNEL server = apie::Ctx::getThisChannel();
+
+	::rpc_msg::RPC_RESPONSE response;
+	*response.mutable_client() = context.client();
+	*response.mutable_server()->mutable_stub() = server;
+
+	response.mutable_status()->set_code(apie::toUnderlyingType(status.code()));
+	response.mutable_status()->set_msg(status.message());
+
+	response.set_result_data("");
+
+	::nats_msg::NATS_MSG_PRXOY nats_msg;
+	(*nats_msg.mutable_rpc_response()) = response;
+	apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
+}
+
 void RPCServerManager::onMessage(const ::rpc_msg::RPC_REQUEST& context)
 {
 	auto optType = this->getType(context.opcodes());
 	if (!optType.has_value())
 	{
-		//TODO
+		std::stringstream ss;
+		ss << "getType opcodes:" << context.opcodes();
+
+		apie::status::Status status(apie::status::StatusCode::RPC_Request_UnRegister, ss.str());
+		sendResponseError(status, context);
 		return;
 	}
 
 	auto ptrMsg = apie::message::ProtobufFactory::createMessage(optType.value());
 	if (ptrMsg == nullptr)
 	{
-		//TODO
+		std::stringstream ss;
+		ss << "createMessage:" << optType.value();
+
+		apie::status::Status status(apie::status::StatusCode::RPC_Request_createMessage, ss.str());
+		sendResponseError(status, context);
 		return;
 	}
 
@@ -58,13 +86,23 @@ void RPCServerManager::onMessage(const ::rpc_msg::RPC_REQUEST& context)
 	if (!bResult)
 	{
 		ASYNC_PIE_LOG(PIE_ERROR, "RPCServerManager | onMessage | ParseFromString | opcode:{} | type: {} | data:{}", context.opcodes(), optType.value(), context.args_data());
+		
+		std::stringstream ss;
+		ss << "ParseFromString Error";
+
+		apie::status::Status status(apie::status::StatusCode::RPC_Request_ParseFromString, ss.str());
+		sendResponseError(status, context);
 		return;
 	}
 
 	auto find_ite = func_.find(context.opcodes());
 	if (find_ite == func_.end())
 	{
-		//TODO
+		std::stringstream ss;
+		ss << "func_ opcodes:" << context.opcodes();
+
+		apie::status::Status status(apie::status::StatusCode::RPC_Request_UnRegister, ss.str());
+		sendResponseError(status, context);
 		return;
 	}
 	find_ite->second(context, newMsg);

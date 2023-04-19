@@ -130,6 +130,10 @@ DB_MysqlQueryError = 26,
 
 Obj_NotExist = 50,
 
+RPC_Request_UnRegister = 60,
+RPC_Request_createMessage = 61,
+RPC_Request_ParseFromString = 62,
+
 /// Force users to include a default branch:
   DO_NOT_USE = -1
 };

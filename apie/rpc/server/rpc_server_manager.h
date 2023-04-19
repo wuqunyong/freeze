@@ -45,6 +45,7 @@ public:
 	bool createRPCServer(uint32_t opcode, const typename RPCServer<Request, Response>::ServiceCallback& service_calllback);
 
 
+	void sendResponseError(const apie::status::Status& status, const ::rpc_msg::RPC_REQUEST& context);
 	void onMessage(const ::rpc_msg::RPC_REQUEST& request);
 
 
