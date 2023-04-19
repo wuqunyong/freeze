@@ -3,15 +3,17 @@
 namespace apie {
 
 
-Account::Account(uint64_t accountId)
-	: m_accountId(accountId)
+AccountFactory::AccountLoaderPtr AccountFactory::CreateAccount(PrimaryKey iId)
 {
+	static ModuleTuple kModuleTuple;
 
+	auto pInstance = MakeComponentLoader(iId, kModuleTuple);
+	return pInstance;
 }
 
-void Account::LoadAccountFromDb(PrimaryKey iId, Callback doneCb)
+void AccountFactory::LoadAccountFromDb(PrimaryKey iId, Callback doneCb)
 {
-	auto ptrModuleLoader = Account::CreateAccount(iId);
+	auto ptrModuleLoader = AccountFactory::CreateAccount(iId);
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());

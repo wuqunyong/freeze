@@ -22,7 +22,7 @@ namespace apie {
 		using Type = T;
 	};
 
-	class Account
+	class AccountFactory
 	{
 	public:
 		using PrimaryKey = uint64_t;
@@ -33,22 +33,7 @@ namespace apie {
 		using Callback = std::function<void(apie::status::Status status, AccountLoaderPtr)>;
 
 
-		static AccountLoaderPtr CreateAccount(PrimaryKey iId)
-		{
-			static ModuleTuple kModuleTuple;
-
-			auto pInstance = MakeComponentLoader(iId, kModuleTuple);
-			return pInstance;
-		}
-
+		static AccountLoaderPtr CreateAccount(PrimaryKey iId);
 		static void LoadAccountFromDb(PrimaryKey iId, Callback cb);
-
-
-		Account(uint64_t accountId);
-
-
-
-	private:
-		uint64_t m_accountId;
 	};
 }

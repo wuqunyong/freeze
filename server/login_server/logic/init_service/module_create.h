@@ -21,7 +21,7 @@ namespace apie {
 		using Type = MultiRowLoader<apie::dbt_account::account_AutoGen>;
 	};
 
-	class Account;
+	class AccountFactory;
 
 	class Module_Create
 	{
