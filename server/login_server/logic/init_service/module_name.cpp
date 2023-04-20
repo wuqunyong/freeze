@@ -17,7 +17,11 @@ void Module_Name::loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared
 	{
 		auto& optData = ptrLoader->lookup<Single_Name_Loader>().getData();
 		m_dbData = optData;
-		m_dbData.value().SetDbProxyServer(m_server);
+
+		if (m_dbData.has_value())
+		{
+			m_dbData.value().SetDbProxyServer(m_server);
+		}
 	}
 }
 
