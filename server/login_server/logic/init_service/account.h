@@ -31,7 +31,8 @@ namespace apie {
 		using ComponentWrapperTuple = std::tuple<ComponentWrapper<Module_Create>, ComponentWrapper<Module_Name>>;
 
 		using Loader = ComponentLoader<PrimaryKey, ComponentWrapperTuple>;
-		using LoaderPtr = std::shared_ptr<ComponentLoader<PrimaryKey, ComponentWrapperTuple>>;
+
+		using LoaderPtr = std::shared_ptr<Loader>;
 		using Callback = std::function<void(apie::status::Status status, LoaderPtr)>;
 
 
