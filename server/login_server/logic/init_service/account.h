@@ -30,20 +30,21 @@ namespace apie {
 		using PrimaryKey = uint64_t;
 		using ComponentWrapperTuple = std::tuple<ComponentWrapper<Module_Create>, ComponentWrapper<Module_Name>>;
 
-		using AccountLoader = ComponentLoader<PrimaryKey, ComponentWrapperTuple>;
-		using AccountLoaderPtr = std::shared_ptr<ComponentLoader<PrimaryKey, ComponentWrapperTuple>>;
-		using Callback = std::function<void(apie::status::Status status, AccountLoaderPtr)>;
+		using Loader = ComponentLoader<PrimaryKey, ComponentWrapperTuple>;
+		using LoaderPtr = std::shared_ptr<ComponentLoader<PrimaryKey, ComponentWrapperTuple>>;
+		using Callback = std::function<void(apie::status::Status status, LoaderPtr)>;
 
 
-		static AccountLoaderPtr CreateAccount(PrimaryKey iId);
+		static LoaderPtr CreateAccount(PrimaryKey iId);
 		static void LoadAccountFromDb(PrimaryKey iId, Callback cb);
 
-		static void AddAccount(AccountLoaderPtr ptrLoader);
-		static AccountLoaderPtr FindAccount(PrimaryKey iId);
+		static void AddAccount(LoaderPtr ptrLoader);
+		static LoaderPtr FindAccount(PrimaryKey iId);
 
 	private:
-		static inline std::map<PrimaryKey, AccountLoaderPtr> m_accounts;
+		static inline std::map<PrimaryKey, LoaderPtr> m_accounts;
 	};
+
 
 	template <typename ComponentType>
 	using UnwrapComponentWrapper = ComponentWrapper<ComponentType>::Type;

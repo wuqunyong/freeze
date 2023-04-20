@@ -103,7 +103,7 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 
 	uint32_t iId = std::stoul(cmd.params()[0]);
 
-	auto doneCb = [iId](apie::status::Status status, AccountFactory::AccountLoaderPtr ptrModule) {
+	auto doneCb = [iId](apie::status::Status status, AccountFactory::LoaderPtr ptrModule) {
 		if (status.ok())
 		{
 			AccountFactory::AddAccount(ptrModule);

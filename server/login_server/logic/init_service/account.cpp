@@ -6,7 +6,7 @@
 namespace apie {
 
 
-AccountFactory::AccountLoaderPtr AccountFactory::CreateAccount(PrimaryKey iId)
+AccountFactory::LoaderPtr AccountFactory::CreateAccount(PrimaryKey iId)
 {
 	static ComponentWrapperTuple kTuple;
 
@@ -49,13 +49,13 @@ void AccountFactory::LoadAccountFromDb(PrimaryKey iId, Callback doneCb)
 }
 
 
-void AccountFactory::AddAccount(AccountLoaderPtr ptrLoader)
+void AccountFactory::AddAccount(LoaderPtr ptrLoader)
 {
 	auto iId = ptrLoader->getKey();
 	m_accounts[iId] = ptrLoader;
 }
  
-AccountFactory::AccountLoaderPtr AccountFactory::FindAccount(PrimaryKey iId)
+AccountFactory::LoaderPtr AccountFactory::FindAccount(PrimaryKey iId)
 {
 	auto findIte = m_accounts.find(iId);
 	if (findIte == m_accounts.end())
