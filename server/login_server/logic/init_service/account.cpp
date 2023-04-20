@@ -6,7 +6,7 @@
 namespace apie {
 
 
-AccountFactory::LoaderPtr AccountFactory::CreateAccount(PrimaryKey iId)
+AccountFactory::LoaderPtr AccountFactory::Create(PrimaryKey iId)
 {
 	static ComponentWrapperTuple kTuple;
 
@@ -14,9 +14,9 @@ AccountFactory::LoaderPtr AccountFactory::CreateAccount(PrimaryKey iId)
 	return pInstance;
 }
 
-void AccountFactory::LoadAccountFromDb(PrimaryKey iId, Callback doneCb)
+void AccountFactory::LoadFromDb(PrimaryKey iId, Callback doneCb)
 {
-	auto ptrModuleLoader = AccountFactory::CreateAccount(iId);
+	auto ptrModuleLoader = AccountFactory::Create(iId);
 
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());
@@ -49,13 +49,13 @@ void AccountFactory::LoadAccountFromDb(PrimaryKey iId, Callback doneCb)
 }
 
 
-void AccountFactory::AddAccount(LoaderPtr ptrLoader)
+void AccountFactory::Add(LoaderPtr ptrLoader)
 {
 	auto iId = ptrLoader->getKey();
 	m_accounts[iId] = ptrLoader;
 }
  
-AccountFactory::LoaderPtr AccountFactory::FindAccount(PrimaryKey iId)
+AccountFactory::LoaderPtr AccountFactory::Find(PrimaryKey iId)
 {
 	auto findIte = m_accounts.find(iId);
 	if (findIte == m_accounts.end())

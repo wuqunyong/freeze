@@ -106,13 +106,13 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 	auto doneCb = [iId](apie::status::Status status, AccountFactory::LoaderPtr ptrModule) {
 		if (status.ok())
 		{
-			AccountFactory::AddAccount(ptrModule);
+			AccountFactory::Add(ptrModule);
 
-			auto ptrLoader = AccountFactory::FindAccount(iId);
+			auto ptrLoader = AccountFactory::Find(iId);
 			ptrLoader->lookup<ComponentWrapper<Module_Create>>().TestFunc();
 		}
 	};
-	AccountFactory::LoadAccountFromDb(iId, doneCb);
+	AccountFactory::LoadFromDb(iId, doneCb);
 }
 
 }

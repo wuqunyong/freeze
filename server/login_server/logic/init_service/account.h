@@ -36,11 +36,11 @@ namespace apie {
 		using Callback = std::function<void(apie::status::Status status, LoaderPtr)>;
 
 
-		static LoaderPtr CreateAccount(PrimaryKey iId);
-		static void LoadAccountFromDb(PrimaryKey iId, Callback cb);
+		static LoaderPtr Create(PrimaryKey iId);
+		static void LoadFromDb(PrimaryKey iId, Callback cb);
 
-		static void AddAccount(LoaderPtr ptrLoader);
-		static LoaderPtr FindAccount(PrimaryKey iId);
+		static void Add(LoaderPtr ptrLoader);
+		static LoaderPtr Find(PrimaryKey iId);
 
 	private:
 		static inline std::map<PrimaryKey, LoaderPtr> m_accounts;
