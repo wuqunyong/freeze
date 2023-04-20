@@ -47,6 +47,11 @@ bool DeclarativeBase::bindTable(DeclarativeBase::DBType type, const std::string&
 	return this->isValid();
 }
 
+std::string DeclarativeBase::getgDbName()
+{
+	return m_table.getDb();
+}
+
 std::string DeclarativeBase::getTableName()
 {
 	return m_table.getTable();

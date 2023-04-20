@@ -78,6 +78,7 @@ public:
 	bool initMetaData(MysqlTable& table);
 	bool bindTable(DeclarativeBase::DBType type, const std::string& name);
 
+	std::string getgDbName();
 	std::string getTableName();
 
 	bool loadFromDb(std::shared_ptr<ResultSet> sharedPtr);

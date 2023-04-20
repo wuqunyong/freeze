@@ -83,6 +83,7 @@ public:
 	void Insert(InsertCB cb = nullptr) {
 		if (!m_optServer.has_value())
 		{
+            ASYNC_PIE_LOG(PIE_ERROR, "DBOpreateError | Insert | isBind:{} | dbName:{} | tableName:{}", isBind(), getgDbName(), getTableName());
 			return;
 		}
 
@@ -93,6 +94,7 @@ public:
     void Update(UpdateCB cb = nullptr) {
         if (!m_optServer.has_value())
         {
+            ASYNC_PIE_LOG(PIE_ERROR, "DBOpreateError | Update | isBind:{} | dbName:{} | tableName:{}", isBind(), getgDbName(), getTableName());
             return;
         }
 
@@ -103,6 +105,7 @@ public:
 	void Delete(DeleteCB cb = nullptr) {
 		if (!m_optServer.has_value())
 		{
+            ASYNC_PIE_LOG(PIE_ERROR, "DBOpreateError | Delete | isBind:{} | dbName:{} | tableName:{}", isBind(), getgDbName(), getTableName());
 			return;
 		}
 
