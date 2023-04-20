@@ -24,7 +24,7 @@ namespace apie {
 	class Module_Name;
 
 
-	class AccountFactory
+	class AccountLoader
 	{
 	public:
 		using PrimaryKey = uint64_t;
