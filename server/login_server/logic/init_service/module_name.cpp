@@ -17,6 +17,7 @@ void Module_Name::loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared
 	{
 		auto& optData = ptrLoader->lookup<Single_Name_Loader>().getData();
 		m_dbData = optData;
+		m_dbData.value().SetDbProxyServer(m_server);
 	}
 }
 
@@ -33,7 +34,24 @@ void Module_Name::initCreate(DoneFunctor functorObj)
 {
 	if (m_dbData.has_value())
 	{
-		functorObj(true);
+		auto cb = [functorObj](apie::status::Status status, bool result, uint64_t affectedRows) {
+			if (!status.ok())
+			{
+				functorObj(false);
+			}
+			else
+			{
+				functorObj(true);
+			}
+		};
+
+		std::time_t t = std::time(nullptr);
+		std::tm tm = *std::localtime(&t);
+		std::stringstream ss;
+		ss << std::put_time(&tm, "%c");
+
+		m_dbData.value().set_name(ss.str());
+		m_dbData.value().Update(cb);
 	}
 	else
 	{
@@ -55,8 +73,10 @@ void Module_Name::initCreate(DoneFunctor functorObj)
 		ss << std::put_time(&tm, "%c");
 
 		dbObj.set_name(ss.str());
+		dbObj.SetDbProxyServer(m_server);
+		dbObj.Insert(cb);
 
-		InsertToDb<apie::dbt_account::account_name_AutoGen>(m_server, dbObj, cb);
+		//InsertToDb<apie::dbt_account::account_name_AutoGen>(m_server, dbObj, cb);
 	}
 }
 
