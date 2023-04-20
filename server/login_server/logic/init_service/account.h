@@ -41,6 +41,7 @@ namespace apie {
 
 		static void Add(LoaderPtr ptrLoader);
 		static LoaderPtr Find(PrimaryKey iId);
+		static void Erase(PrimaryKey iId);
 
 	private:
 		static inline std::map<PrimaryKey, LoaderPtr> m_accounts;

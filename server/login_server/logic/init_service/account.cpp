@@ -66,6 +66,11 @@ AccountFactory::LoaderPtr AccountFactory::Find(PrimaryKey iId)
 	return findIte->second;
 }
 
+void AccountFactory::Erase(PrimaryKey iId)
+{
+	m_accounts.erase(iId);
+}
+
 
 }
 
