@@ -215,6 +215,11 @@ namespace {} {{
 
 	class {}_AutoGen : public DeclarativeBase,
 						public std::enable_shared_from_this<{}_AutoGen> {{
+						
+    using InsertCB = std::function<void(apie::status::Status, bool, uint64_t, uint64_t)>;
+	using UpdateCB = std::function<void(apie::status::Status, bool, uint64_t)>;
+	using DeleteCB = std::function<void(apie::status::Status, bool, uint64_t)>;
+	
 	private:
 		{}
 		{}
@@ -225,6 +230,44 @@ namespace {} {{
 		{}
 		{}
 		
+	public:
+	void SetDbProxyServer(::rpc_msg::CHANNEL server) {{
+		m_optServer = server;
+	}}
+
+	void Insert(InsertCB cb = nullptr) {{
+		if (!m_optServer.has_value())
+		{{
+			ASYNC_PIE_LOG(PIE_ERROR, "DBOpreateError | Insert | isBind:{{}} | dbName:{{}} | tableName:{{}}", isBind(), getgDbName(), getTableName());
+			return;
+		}}
+
+		auto channel = m_optServer.value();
+		InsertToDb(channel, *this, cb);
+	}}
+
+	void Update(UpdateCB cb = nullptr) {{
+		if (!m_optServer.has_value())
+		{{
+			ASYNC_PIE_LOG(PIE_ERROR, "DBOpreateError | Update | isBind:{{}} | dbName:{{}} | tableName:{{}}", isBind(), getgDbName(), getTableName());
+			return;
+		}}
+
+		auto channel = m_optServer.value();
+		UpdateToDb(channel, *this, cb);
+	}}
+
+	void Delete(DeleteCB cb = nullptr) {{
+		if (!m_optServer.has_value())
+		{{
+			ASYNC_PIE_LOG(PIE_ERROR, "DBOpreateError | Delete | isBind:{{}} | dbName:{{}} | tableName:{{}}", isBind(), getgDbName(), getTableName());
+			return;
+		}}
+
+		auto channel = m_optServer.value();
+		DeleteFromDb(channel, *this, cb);
+	}}
+	
 		DAO_DEFINE_TYPE_INTRUSIVE_MACRO({}_AutoGen, db_fields, {});
 	}};
 	
