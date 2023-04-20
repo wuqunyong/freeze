@@ -3,6 +3,8 @@
 #include "../../../common/dao/init.h"
 
 #include "logic/init_service/account.h"
+#include "logic/init_service/module_create.h"
+#include "logic/init_service/module_name.h"
 
 namespace apie {
 
@@ -101,7 +103,7 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 
 	uint32_t iId = std::stoul(cmd.params()[0]);
 
-	auto doneCb = [iId](apie::status::Status status, auto ptrModule) {
+	auto doneCb = [iId](apie::status::Status status, AccountFactory::AccountLoaderPtr ptrModule) {
 		if (status.ok())
 		{
 			AccountFactory::AddAccount(ptrModule);

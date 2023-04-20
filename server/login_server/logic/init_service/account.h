@@ -11,8 +11,6 @@
 #include "apie.h"
 #include "pb_init.h"
 
-#include "logic/init_service/module_create.h"
-#include "logic/init_service/module_name.h"
 
 namespace apie {
 
@@ -21,6 +19,10 @@ namespace apie {
 	{
 		using Type = T;
 	};
+
+	class Module_Create;
+	class Module_Name;
+
 
 	class AccountFactory
 	{
