@@ -15,7 +15,7 @@
 namespace apie {
 
 	template <typename T>
-	struct ModuleWrapper
+	struct ComponentWrapper
 	{
 		using Type = T;
 	};
@@ -28,7 +28,7 @@ namespace apie {
 	{
 	public:
 		using PrimaryKey = uint64_t;
-		using ModuleTuple = std::tuple<ModuleWrapper<Module_Create>, ModuleWrapper<Module_Name>>;
+		using ModuleTuple = std::tuple<ComponentWrapper<Module_Create>, ComponentWrapper<Module_Name>>;
 
 		using AccountLoader = ComponentLoader<PrimaryKey, ModuleTuple>;
 		using AccountLoaderPtr = std::shared_ptr<ComponentLoader<PrimaryKey, ModuleTuple>>;
@@ -46,5 +46,5 @@ namespace apie {
 	};
 
 	template <typename ComponentType>
-	using ComponentUnwrapType = ModuleWrapper<ComponentType>::Type;
+	using UnwrapComponentWrapper = ComponentWrapper<ComponentType>::Type;
 }

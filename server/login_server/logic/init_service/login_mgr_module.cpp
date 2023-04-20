@@ -109,7 +109,7 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 			AccountFactory::AddAccount(ptrModule);
 
 			auto ptrLoader = AccountFactory::FindAccount(iId);
-			ptrLoader->lookup<ModuleWrapper<Module_Create>>().TestFunc();
+			ptrLoader->lookup<ComponentWrapper<Module_Create>>().TestFunc();
 		}
 	};
 	AccountFactory::LoadAccountFromDb(iId, doneCb);
