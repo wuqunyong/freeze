@@ -8,9 +8,9 @@ namespace apie {
 
 AccountFactory::AccountLoaderPtr AccountFactory::CreateAccount(PrimaryKey iId)
 {
-	static ModuleTuple kModuleTuple;
+	static ComponentWrapperTuple kTuple;
 
-	auto pInstance = MakeComponentLoader(iId, kModuleTuple);
+	auto pInstance = MakeComponentLoader(iId, kTuple);
 	return pInstance;
 }
 
