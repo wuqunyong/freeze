@@ -11,11 +11,14 @@
 #include <variant>
 #include <utility>
 #include <set>
+#include <optional>
 
 #include "apie/mysql_driver/mysql_field.h"
 #include "apie/mysql_driver/mysql_orm.h"
 
 #include "boost/pfr.hpp"
+
+#include "apie/proto/rpc_msg.pb.h"
 
 
 template<typename T, std::size_t... Idx>
@@ -156,6 +159,7 @@ void RegisterTable(DeclarativeBase::DBType type, const std::string& tableName)
 #define DAO_DEFINE_TYPE_INTRUSIVE_MACRO(ModelType, DbType, TableName) \
 	private:                                                          \
 		DbType fields;                                                \
+		std::optional<::rpc_msg::CHANNEL> m_optServer;                \
     public:                                                           \
 	virtual void* layoutAddress() override						      \
 	{                                                                 \

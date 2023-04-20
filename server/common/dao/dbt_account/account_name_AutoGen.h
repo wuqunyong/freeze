@@ -38,6 +38,11 @@ private:
   }
 
 public:
+	using InsertCB = std::function<void(apie::status::Status, bool result, uint64_t affectedRows, uint64_t insertId)>;
+	using UpdateCB = std::function<void(apie::status::Status, bool result, uint64_t affectedRows)>;
+	using DeleteCB = std::function<void(apie::status::Status, bool result, uint64_t affectedRows)>;
+
+
   enum Fields {
     account_id = 0,
     name = 1,
@@ -69,6 +74,42 @@ public:
   }
 
   std::string get_name() const { return this->fields.name; }
+
+public:
+    void SetDbProxyServer(::rpc_msg::CHANNEL server) {
+        m_optServer = server;
+    }
+
+	void Insert(InsertCB cb = nullptr) {
+		if (!m_optServer.has_value())
+		{
+			return;
+		}
+
+		auto channel = m_optServer.value();
+		InsertToDb(channel, *this, cb);
+	}
+
+    void Update(UpdateCB cb = nullptr) {
+        if (!m_optServer.has_value())
+        {
+            return;
+        }
+
+        auto channel = m_optServer.value();
+        UpdateToDb(channel, *this, cb);
+    }
+
+	void Delete(DeleteCB cb = nullptr) {
+		if (!m_optServer.has_value())
+		{
+			return;
+		}
+
+		auto channel = m_optServer.value();
+        DeleteFromDb(channel, *this, cb);
+	}
+
 
   DAO_DEFINE_TYPE_INTRUSIVE_MACRO(account_name_AutoGen, db_fields,
                                   account_name);
