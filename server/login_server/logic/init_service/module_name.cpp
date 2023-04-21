@@ -31,7 +31,13 @@ void Module_Name::loadFromDbDone()
 
 void Module_Name::saveToDb()
 {
+	std::time_t t = std::time(nullptr);
+	std::tm tm = *std::localtime(&t);
+	std::stringstream ss;
+	ss << std::put_time(&tm, "%c");
 
+	m_dbData.value().set_name(ss.str());
+	m_dbData.value().Update();
 }
 
 void Module_Name::initCreate(DoneFunctor functorObj)

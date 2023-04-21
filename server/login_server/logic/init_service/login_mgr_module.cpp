@@ -102,6 +102,12 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 	}
 
 	uint32_t iId = std::stoul(cmd.params()[0]);
+	auto ptrLoader = AccountLoader::Find(iId);
+	if (ptrLoader != nullptr)
+	{
+		ptrLoader->lookup<ComponentWrapper<Module_Name>>().saveToDb();
+		return;
+	}
 
 	auto doneCb = [iId](apie::status::Status status, AccountLoader::LoaderPtr ptrModule) {
 		if (status.ok())
