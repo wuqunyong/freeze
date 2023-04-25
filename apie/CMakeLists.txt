@@ -39,6 +39,8 @@ else ()
 endif()
 
 
+message(STATUS "sources: ${sources}")
+
 add_library(apie ${LibType} ${APIE_SOURCE} ${sources} ${public_headers})
 set_target_properties(apie PROPERTIES VERSION "1.0.0" SOVERSION "1")
 target_include_directories(apie PUBLIC ${IncludeDirs})

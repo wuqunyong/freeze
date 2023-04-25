@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "third_party/http-parser/http_parser.h"
+#include "http_parser.h"
 
 #include "apie/http/http_common.h"
 #include "apie/common/noncopyable.h"

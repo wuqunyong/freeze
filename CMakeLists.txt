@@ -66,6 +66,7 @@ if (WIN32)
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/json/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/pfr/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/croncpp/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/http-parser
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libnats)
 
     set(LinkDirs
@@ -140,7 +141,7 @@ message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 
 add_subdirectory(apie)
 add_subdirectory(lib_pb)
-#add_subdirectory(server)
+add_subdirectory(server)
 
 #install(TARGETS apie db_proxy_server gateway_server login_server scene_server service_registry test_server
 #    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
