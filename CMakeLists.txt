@@ -9,7 +9,7 @@ message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 project(
   freeze
   VERSION 1.0
-  LANGUAGES CXX
+  LANGUAGES CXX C
 )
 
 
@@ -44,6 +44,8 @@ message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 set(IncludeDirs)
 set(LinkDirs)
 set(LinkLibs)
+
+message(STATUS "WIN32: ${WIN32}")
 
 if (WIN32)
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT") 
