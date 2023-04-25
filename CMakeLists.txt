@@ -25,8 +25,8 @@ endif()
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++17")
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++20")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
@@ -52,7 +52,7 @@ if (WIN32)
     set(IncludeDirs
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/OpenSSL-Win64/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/MySQL/MySQLServer5.7/include
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/MySQL/MySQL Server 5.7/include"
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/protobuf/src
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/yaml-cpp/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libevent-release-2.1.11/include
@@ -65,12 +65,13 @@ if (WIN32)
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cpp_redis/tacopie/includes
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/json/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/pfr/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/croncpp/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libnats)
 
     set(LinkDirs
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libs
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/OpenSSL-Win64/lib
-        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/MySQL/MySQLServer5.7/lib)
+        "${CMAKE_CURRENT_SOURCE_DIR}/third_party/MySQL/MySQL Server 5.7/lib")
 
 	set(LinkLibs
         ws2_32.lib
@@ -88,6 +89,11 @@ if (WIN32)
         cpp_redis.lib
         tacopie.lib
         nats_staticd.lib)
+
+    message(STATUS "IncludeDirs: ${IncludeDirs}")
+    message(STATUS "LinkDirs: ${LinkDirs}")
+    message(STATUS "LinkLibs: ${LinkLibs}")
+
 else ()
     set(CMAKE_BUILD_TYPE RelWithDebInfo)
 
@@ -133,19 +139,20 @@ message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 
 
 add_subdirectory(apie)
-add_subdirectory(server)
+add_subdirectory(lib_pb)
+#add_subdirectory(server)
 
-install(TARGETS apie db_proxy_server gateway_server login_server scene_server service_registry test_server
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY conf/ DESTINATION conf/
-        FILES_MATCHING PATTERN "*.yaml")
-install(DIRECTORY data/ DESTINATION data/
-        FILES_MATCHING PATTERN "*.*")
-install(DIRECTORY etc/ DESTINATION etc/
-        FILES_MATCHING PATTERN "*.pem"
-        PATTERN "*.pub")
-install(FILES
-    "etc/apie.sh"
-    DESTINATION "scripts")
+#install(TARGETS apie db_proxy_server gateway_server login_server scene_server service_registry test_server
+#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+#install(DIRECTORY conf/ DESTINATION conf/
+#        FILES_MATCHING PATTERN "*.yaml")
+#install(DIRECTORY data/ DESTINATION data/
+#        FILES_MATCHING PATTERN "*.*")
+#install(DIRECTORY etc/ DESTINATION etc/
+#        FILES_MATCHING PATTERN "*.pem"
+#        PATTERN "*.pub")
+#install(FILES
+#    "etc/apie.sh"
+#    DESTINATION "scripts")
