@@ -37,6 +37,10 @@ set(CMAKE_BUILD_TYPE Debug)
 
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
+#PROJECT_SOURCE_DIR
+#set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+#set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+
 set(IncludeDirs)
 set(LinkDirs)
 set(LinkLibs)
