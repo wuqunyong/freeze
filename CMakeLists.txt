@@ -38,6 +38,7 @@ set(CMAKE_BUILD_TYPE Debug)
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
 #PROJECT_SOURCE_DIR
+#CMAKE_CURRENT_LIST_DIR
 #set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 #set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
@@ -144,6 +145,9 @@ message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 add_subdirectory(apie)
 add_subdirectory(lib_pb)
 add_subdirectory(server)
+
+message(STATUS "CMAKE_INSTALL_BINDIR: ${CMAKE_INSTALL_BINDIR}")
+message(STATUS "CMAKE_INSTALL_LIBDIR: ${CMAKE_INSTALL_LIBDIR}")
 
 #install(TARGETS apie db_proxy_server gateway_server login_server scene_server service_registry test_server
 #    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
