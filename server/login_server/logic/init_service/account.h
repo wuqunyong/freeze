@@ -21,14 +21,14 @@ namespace apie {
 	};
 
 	class Module_Create;
-	class Module_Name;
+	class Component_Name;
 
 
 	class AccountLoader
 	{
 	public:
 		using PrimaryKey = uint64_t;
-		using ComponentWrapperTuple = std::tuple<ComponentWrapper<Module_Create>, ComponentWrapper<Module_Name>>;
+		using ComponentWrapperTuple = std::tuple<ComponentWrapper<Module_Create>, ComponentWrapper<Component_Name>>;
 
 		using Loader = ComponentLoader<PrimaryKey, ComponentWrapperTuple>;
 

@@ -3,8 +3,8 @@
 #include "../../../common/dao/init.h"
 
 #include "logic/init_service/account.h"
-#include "logic/init_service/module_create.h"
-#include "logic/init_service/module_name.h"
+#include "logic/init_service/componet_create.h"
+#include "logic/init_service/componet_name.h"
 
 namespace apie {
 
@@ -105,7 +105,7 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 	auto ptrLoader = AccountLoader::Find(iId);
 	if (ptrLoader != nullptr)
 	{
-		ptrLoader->lookup<ComponentWrapper<Module_Name>>().saveToDb();
+		ptrLoader->lookup<ComponentWrapper<Component_Name>>().saveToDb();
 		return;
 	}
 
