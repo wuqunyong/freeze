@@ -129,16 +129,16 @@
     <ClCompile Include="logic\init_service\account.cpp" />
     <ClCompile Include="logic\init_service\login_mgr.cpp" />
     <ClCompile Include="logic\init_service\login_mgr_module.cpp" />
-    <ClCompile Include="logic\init_service\componet_create.cpp" />
-    <ClCompile Include="logic\init_service\componet_name.cpp" />
+    <ClCompile Include="logic\init_service\component_create.cpp" />
+    <ClCompile Include="logic\init_service\component_name.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logic\init_service\account.h" />
     <ClInclude Include="logic\init_service\login_mgr.h" />
     <ClInclude Include="logic\init_service\login_mgr_module.h" />
-    <ClInclude Include="logic\init_service\componet_create.h" />
-    <ClInclude Include="logic\init_service\componet_name.h" />
+    <ClInclude Include="logic\init_service\component_create.h" />
+    <ClInclude Include="logic\init_service\component_name.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

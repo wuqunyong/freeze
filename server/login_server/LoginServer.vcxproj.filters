@@ -11,10 +11,10 @@
     <ClCompile Include="logic\init_service\account.cpp">
       <Filter>logic\init_service</Filter>
     </ClCompile>
-    <ClCompile Include="logic\init_service\componet_create.cpp">
+    <ClCompile Include="logic\init_service\component_create.cpp">
       <Filter>logic\init_service</Filter>
     </ClCompile>
-    <ClCompile Include="logic\init_service\componet_name.cpp">
+    <ClCompile Include="logic\init_service\component_name.cpp">
       <Filter>logic\init_service</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,10 +36,10 @@
     <ClInclude Include="logic\init_service\account.h">
       <Filter>logic\init_service</Filter>
     </ClInclude>
-    <ClInclude Include="logic\init_service\componet_create.h">
+    <ClInclude Include="logic\init_service\component_create.h">
       <Filter>logic\init_service</Filter>
     </ClInclude>
-    <ClInclude Include="logic\init_service\componet_name.h">
+    <ClInclude Include="logic\init_service\component_name.h">
       <Filter>logic\init_service</Filter>
     </ClInclude>
   </ItemGroup>
