@@ -3,13 +3,13 @@
 namespace apie {
 
 
-Module_Create::Module_Create(uint64_t accountId)
+Component_Create::Component_Create(uint64_t accountId)
 	: m_accountId(accountId)
 {
 
 }
 
-void Module_Create::loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader)
+void Component_Create::loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader)
 {
 	m_server = server;
 
@@ -24,16 +24,16 @@ void Module_Create::loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shar
 	}
 }
 
-void Module_Create::loadFromDbDone()
+void Component_Create::loadFromDbDone()
 {
 }
 
-void Module_Create::saveToDb()
+void Component_Create::saveToDb()
 {
 
 }
 
-void Module_Create::initCreate(DoneFunctor cbObj)
+void Component_Create::initCreate(DoneFunctor cbObj)
 {
 	if (!m_account.empty())
 	{
@@ -58,7 +58,7 @@ void Module_Create::initCreate(DoneFunctor cbObj)
 	}
 }
 
-void Module_Create::TestFunc()
+void Component_Create::TestFunc()
 {
 
 }

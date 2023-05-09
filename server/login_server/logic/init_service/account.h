@@ -20,7 +20,7 @@ namespace apie {
 		using Type = T;
 	};
 
-	class Module_Create;
+	class Component_Create;
 	class Component_Name;
 
 
@@ -28,7 +28,7 @@ namespace apie {
 	{
 	public:
 		using PrimaryKey = uint64_t;
-		using ComponentWrapperTuple = std::tuple<ComponentWrapper<Module_Create>, ComponentWrapper<Component_Name>>;
+		using ComponentWrapperTuple = std::tuple<ComponentWrapper<Component_Create>, ComponentWrapper<Component_Name>>;
 
 		using Loader = ComponentLoader<PrimaryKey, ComponentWrapperTuple>;
 

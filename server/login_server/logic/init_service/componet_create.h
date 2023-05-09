@@ -23,12 +23,12 @@ namespace apie {
 
 	class AccountLoader;
 
-	class Module_Create
+	class Component_Create
 	{
 	public:
 		using DoneFunctor = std::function<void(bool)>;
 
-		Module_Create(uint64_t accountId = 0);
+		Component_Create(uint64_t accountId = 0);
 
 		void loadFromDbLoader(const ::rpc_msg::CHANNEL& server, std::shared_ptr<apie::DbLoadComponent> ptrLoader);
 		void loadFromDbDone();
