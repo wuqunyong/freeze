@@ -154,6 +154,7 @@ public:
 
 		m_loading.clear();
 		m_ready = false;
+		m_timerId = 0;
 
 		initCreateImpl_Loading(m_wrapperType);
 		initCreateImpl(m_wrapperType);
