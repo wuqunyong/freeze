@@ -148,7 +148,7 @@ public:
 		SaveToDbImpl(m_wrapperType);
 	}
 
-	void Meta_initCreate(ReadyCb cb, uint64_t interval = 30000)
+	void Meta_initCreate(ReadyCb cb, uint64_t interval = 60000)
 	{
 		this->m_cb = cb;
 
