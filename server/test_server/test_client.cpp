@@ -128,12 +128,59 @@ fibonacci_sequence(unsigned n)
 	}
 }
 
+class TestB
+{
+public:
+	TestB(std::string value)
+	{
+		m_value = value;
+		std::cout << "TestB  contructor" << std::endl;
+	}
+
+	~TestB()
+	{
+		std::cout << "TestB  destructor" << std::endl;
+	}
+
+	std::string m_value;
+};
+class TestA
+{
+public:
+	TestA(int32_t a)
+	{
+		m_a = 0;
+		m_ptrB.reset(new TestB("hello world"));
+
+		std::cout <<  "TestA  Constructor" << std::endl;
+
+		throw -1;
+
+		std::cout << "TestA  Constructor after" << std::endl;
+
+		m_ptrC = new TestB("hello world");
+	}
+
+	~TestA()
+	{
+		std::cout << "TestA  destructor" << std::endl;
+		delete m_ptrC;
+	}
+
+	int32_t m_a = 0;
+	std::shared_ptr<TestB> m_ptrB = nullptr;
+	TestB* m_ptrC= nullptr;
+};
+
+
 int main()
 {
 	std::cout << std::setw(6) << "hello" << ": " << __cplusplus << std::endl;
 
 	try
 	{
+		auto a = TestA(123);
+
 		auto cron = cron::make_cron("0 0 0 * * *");
 
 		std::time_t now = 1680796800;
@@ -143,7 +190,10 @@ int main()
 	{
 		std::cerr << ex.what() << '\n';
 	}
-
+	catch (...)
+	{
+		std::cerr << "Unknown exception.\n";
+	}
 
 	try
 	{
@@ -160,4 +210,7 @@ int main()
 	{
 		std::cerr << "Unknown exception.\n";
 	}
+
+	std::cout << "Welcome To Geeksforgeek ";
+	system("pause");
 }

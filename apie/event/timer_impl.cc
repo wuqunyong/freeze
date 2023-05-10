@@ -60,6 +60,11 @@ void EphemeralTimer::enableTimer(uint64_t interval)
 	m_timer->enableTimer(std::chrono::milliseconds(interval));
 }
 
+uint64_t EphemeralTimer::getId()
+{
+	return m_id;
+}
+
 std::shared_ptr<EphemeralTimer> EphemeralTimerMgr::createEphemeralTimer(TimerCb cb)
 {
 	m_id++;

@@ -37,6 +37,7 @@ class EphemeralTimer
 {
 public:
 	void enableTimer(uint64_t interval);
+	uint64_t getId();
 
 private:
 	uint64_t m_id = 0;

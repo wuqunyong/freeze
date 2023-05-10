@@ -36,8 +36,11 @@ void Component_Name::saveToDb()
 	std::stringstream ss;
 	ss << std::put_time(&tm, "%c");
 
-	m_dbData.value().set_name(ss.str());
-	m_dbData.value().Update();
+	if (m_dbData.has_value())
+	{
+		m_dbData.value().set_name(ss.str());
+		m_dbData.value().Update();
+	}
 }
 
 void Component_Name::initCreate(DoneFunctor functorObj)

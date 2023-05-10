@@ -13,6 +13,7 @@
 #include "apie/common/options.h"
 #include "apie/mysql_driver/db_load_component.h"
 #include "apie/proto/init.h"
+#include "apie/event/timer_impl.h"
 
 namespace apie {
 
@@ -90,6 +91,8 @@ public:
 			}
 			m_ready = true;
 
+			apie::event_ns::EphemeralTimerMgrSingleton::get().deleteEphemeralTimer(m_timerId);
+
 			auto self = this->shared_from_this();
 			apie::status::Status status(apie::status::StatusCode::LoadFromDbError, typeid(T).name());
 			m_cb(status, self);
@@ -115,6 +118,9 @@ public:
 			if (bDone)
 			{
 				m_ready = true;
+
+				apie::event_ns::EphemeralTimerMgrSingleton::get().deleteEphemeralTimer(m_timerId);
+
 				apie::status::Status status(apie::status::StatusCode::OK, "");
 				auto self = this->shared_from_this();
 				m_cb(status, self);
@@ -142,7 +148,7 @@ public:
 		SaveToDbImpl(m_wrapperType);
 	}
 
-	void Meta_initCreate(ReadyCb cb)
+	void Meta_initCreate(ReadyCb cb, uint64_t interval = 30000)
 	{
 		this->m_cb = cb;
 
@@ -151,6 +157,25 @@ public:
 
 		initCreateImpl_Loading(m_wrapperType);
 		initCreateImpl(m_wrapperType);
+
+		if (m_ready)
+		{
+			return;
+		}
+
+
+		auto self = this->shared_from_this();
+		auto ephemeralTimerCb = [self]() mutable
+		{
+			self->m_ready = true;
+
+			apie::status::Status status(apie::status::StatusCode::TIMEOUT, "");
+			self->m_cb(status, self);
+		};
+		auto ptrTimer = apie::event_ns::EphemeralTimerMgrSingleton::get().createEphemeralTimer(ephemeralTimerCb);
+		ptrTimer->enableTimer(interval);
+
+		m_timerId = ptrTimer->getId();
 	}
 
 private:
@@ -301,6 +326,7 @@ private:
 	std::unordered_map<std::type_index, E_LoadingState> m_loading;
 	ReadyCb m_cb;
 	bool m_ready = false;
+	uint64_t m_timerId = 0;
 };
 
 template<class Key, class Tuple, std::size_t... Is>
