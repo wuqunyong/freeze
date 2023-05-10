@@ -338,10 +338,13 @@ static inline auto CreateComponentLoaderPtr(Key iId, const Tuple& t, std::index_
 }
 
 
-template<class Key, class Tuple, typename Indices = std::make_index_sequence<std::tuple_size<Tuple>::value>>
+template<class Key, class Tuple>
 auto MakeComponentLoader(Key iId, const Tuple& t)
 {
-	return CreateComponentLoaderPtr(iId, t, Indices{});
+	using Indices = std::make_index_sequence<
+		std::tuple_size<typename std::decay<Tuple>::type>::value>;
+
+	return CreateComponentLoaderPtr(iId, t, Indices());
 }
 
 
