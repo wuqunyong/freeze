@@ -169,3 +169,6 @@ for(i = 0; i < num_fields; i++)
 MSys2
 
 https://v2sub.com/modules/servers/V2raySocks/osubscribe.php?sid=128736&token=QFdNEaVUsVIO
+
+
+SHOW COLUMNS FROM TBALE_NAME;
