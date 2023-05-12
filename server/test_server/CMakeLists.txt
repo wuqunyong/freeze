@@ -21,7 +21,8 @@ if (WIN32)
         ${PROJECT_BINARY_DIR}/lib)
 
     set(DependenciesLinkLibs 
-        apie.lib)
+        apie.lib
+        pb.lib)
 else ()
     set(DependenciesIncludeDirs
         ${CMAKE_CURRENT_SOURCE_DIR}/../../apie)
@@ -33,15 +34,10 @@ else ()
 endif()
 
 
-set(pb_sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../pb_msg/business/login_msg.pb.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../pb_msg/business/rpc_login.pb.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../pb_msg/business/role_server_msg.pb.cc)
-
 file(GLOB_RECURSE SOURCE_FILES ./*.cc ./*.cpp)
 
 
-add_executable(test_server ${SOURCE_FILES} ${pb_sources})
+add_executable(test_server ${SOURCE_FILES})
 target_include_directories(test_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(test_server PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(test_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})

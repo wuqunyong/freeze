@@ -8,7 +8,6 @@ message(STATUS "service_registry CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 
 
 # Set lists to empty beforehand as to not accidentally take values from parent
-set(pb_sources)
 
 set(DependenciesIncludeDirs)
 set(DependenciesLinkDirs)
@@ -21,7 +20,8 @@ if (WIN32)
         ${PROJECT_BINARY_DIR}/lib)
 
 	set(DependenciesLinkLibs 
-        apie.lib)
+        apie.lib
+        pb.lib)
 else ()
     set(DependenciesIncludeDirs
         ${CMAKE_CURRENT_SOURCE_DIR}/../../apie)
@@ -36,7 +36,7 @@ endif()
 file(GLOB_RECURSE SOURCE_FILES ./*.cc ./*.cpp)
 
 
-add_executable(service_registry ${SOURCE_FILES} ${public_headers})
+add_executable(service_registry ${SOURCE_FILES})
 target_include_directories(service_registry PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(service_registry PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(service_registry PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
