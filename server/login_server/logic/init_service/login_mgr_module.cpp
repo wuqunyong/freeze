@@ -21,6 +21,7 @@ void LoginMgrModule::init()
 	cmd.init();
 	cmd.registerOnCmd("nats_publish", "nats_publish", LoginMgrModule::Cmd_natsPublish);
 	cmd.registerOnCmd("load_account", "load_account", LoginMgrModule::Cmd_loadAccount);
+	cmd.registerOnCmd("co_mysql_load", "co_mysql_load", LoginMgrModule::Cmd_CoMysqlLoad);
 }
 
 
@@ -119,6 +120,40 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 		}
 	};
 	AccountLoader::LoadFromDb(iId, doneCb);
+}
+
+CoTaskVoid CO_MysqlLoad(int64_t iRoleId)
+{
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_DbAccount_Proxy);
+	server.set_id(1);
+
+	apie::dbt_account::account_AutoGen dbObj(iRoleId);
+	mysql_proxy_msg::MysqlQueryRequest queryRequest;
+	queryRequest = dbObj.generateQuery();
+
+	auto ptrAwait = MakeCoAwaitable<::mysql_proxy_msg::MysqlQueryRequest, ::mysql_proxy_msg::MysqlQueryResponse>(server, rpc_msg::RPC_MysqlQuery, queryRequest);
+	auto response = co_await *ptrAwait;
+	if (!response.ok())
+	{
+		co_return;
+	}
+
+	auto valueObj = response.value();
+	ASYNC_PIE_LOG(PIE_NOTICE, "CO_MysqlLoad | valueObj:{}", valueObj.ShortDebugString());;
+}
+
+
+void LoginMgrModule::Cmd_CoMysqlLoad(::pubsub::LOGIC_CMD& cmd)
+{
+	if (cmd.params_size() < 1)
+	{
+		return;
+	}
+
+	uint32_t iId = std::stoul(cmd.params()[0]);
+	CO_MysqlLoad(iId);
 }
 
 }

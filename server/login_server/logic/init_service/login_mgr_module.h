@@ -29,7 +29,8 @@ public:
 	// CMD
 	static void Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd);
 	static void Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd);
-
+	static void Cmd_CoMysqlLoad(::pubsub::LOGIC_CMD& cmd);
+	
 
 	// CLIENT OPCODE
 
