@@ -121,6 +121,21 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 	};
 	AccountLoader::LoadFromDb(iId, doneCb);
 }
+class TestCOScope
+{
+public:
+	TestCOScope(int a)
+	{
+		a_ = a;
+		ASYNC_PIE_LOG(PIE_NOTICE, "TestCOScope | con:{}", a_);
+	}
+	~TestCOScope()
+	{
+		ASYNC_PIE_LOG(PIE_NOTICE, "TestCOScope | decon:{}", a_);
+	}
+
+	int32_t a_ = 0;
+};
 
 CoTaskVoid LoginMgrModule::CO_MysqlLoad(int64_t iRoleId)
 {
@@ -133,6 +148,8 @@ CoTaskVoid LoginMgrModule::CO_MysqlLoad(int64_t iRoleId)
 	mysql_proxy_msg::MysqlQueryRequest queryRequest;
 	queryRequest = dbObj.generateQuery();
 
+	auto ptrScope = std::make_shared<TestCOScope>(iRoleId);
+
 	auto ptrAwait = MakeCoAwaitable<::mysql_proxy_msg::MysqlQueryRequest, ::mysql_proxy_msg::MysqlQueryResponse>(server, rpc_msg::RPC_MysqlQuery, queryRequest);
 	auto response = co_await *ptrAwait;
 	if (!response.ok())
@@ -140,8 +157,13 @@ CoTaskVoid LoginMgrModule::CO_MysqlLoad(int64_t iRoleId)
 		co_return;
 	}
 
+	if (ptrScope != nullptr)
+	{
+		ptrScope = nullptr;
+	}
+
 	auto valueObj = response.value();
-	ASYNC_PIE_LOG(PIE_NOTICE, "CO_MysqlLoad | valueObj:{}", valueObj.ShortDebugString());;
+	ASYNC_PIE_LOG(PIE_NOTICE, "CO_MysqlLoad | valueObj:{}", valueObj.ShortDebugString());
 }
 
 
