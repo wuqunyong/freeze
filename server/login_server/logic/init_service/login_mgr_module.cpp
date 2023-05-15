@@ -122,7 +122,7 @@ void LoginMgrModule::Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd)
 	AccountLoader::LoadFromDb(iId, doneCb);
 }
 
-CoTaskVoid CO_MysqlLoad(int64_t iRoleId)
+CoTaskVoid LoginMgrModule::CO_MysqlLoad(int64_t iRoleId)
 {
 	::rpc_msg::CHANNEL server;
 	server.set_realm(apie::Ctx::getThisChannel().realm());

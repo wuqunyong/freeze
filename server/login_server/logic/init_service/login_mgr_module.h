@@ -31,6 +31,7 @@ public:
 	static void Cmd_loadAccount(::pubsub::LOGIC_CMD& cmd);
 	static void Cmd_CoMysqlLoad(::pubsub::LOGIC_CMD& cmd);
 	
+	static CoTaskVoid CO_MysqlLoad(int64_t iRoleId);
 
 	// CLIENT OPCODE
 
