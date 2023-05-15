@@ -1,216 +1,35 @@
-#include <coroutine>
-#include <cstdint>
-#include <exception>
+#include <cstdlib>
+#include <string>
 #include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
+#include <tuple>
+#include <iostream>
+#include <type_traits>
+#include <variant>
+#include <utility>
+#include <nlohmann/json.hpp>
+#include <thread>
+#include <optional>
+#include <typeinfo>
+#include <typeindex>
+#include <memory>
 
-#include "croncpp.h"
+#include "apie.h"
 
 
-template <typename T>
-struct Generator
+int main(int argc, char **argv)
 {
-	// The class name 'Generator' is our choice and it is not required for coroutine
-	// magic. Compiler recognizes coroutine by the presence of 'co_yield' keyword.
-	// You can use name 'MyGenerator' (or any other name) instead as long as you include
-	// nested struct promise_type with 'MyGenerator get_return_object()' method.
-
-	struct promise_type;
-	using handle_type = std::coroutine_handle<promise_type>;
-
-	struct promise_type // required
+	if (argc != 2)
 	{
-		T value_;
-		std::exception_ptr exception_;
-
-		Generator get_return_object()
-		{
-			return Generator(handle_type::from_promise(*this));
-		}
-		std::suspend_always initial_suspend() 
-		{
-			return {}; 
-		}
-		std::suspend_always final_suspend() noexcept 
-		{
-			return {};
-		}
-
-		void unhandled_exception() 
-		{ 
-			exception_ = std::current_exception();
-		} // saving
-																			  // exception
-
-		template <std::convertible_to<T> From> // C++20 concept
-		std::suspend_always yield_value(From&& from)
-		{
-			value_ = std::forward<From>(from); // caching the result in promise
-			return {};
-		}
-		void return_void() 
-		{
-		}
-	};
-
-	handle_type h_;
-
-	Generator(handle_type h)
-		: h_(h)
-	{
-	}
-	~Generator() {
-		h_.destroy();
+		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
 	}
 
-	explicit operator bool()
-	{
-		fill(); // The only way to reliably find out whether or not we finished coroutine,
-				// whether or not there is going to be a next value generated (co_yield)
-				// in coroutine via C++ getter (operator () below) is to execute/resume
-				// coroutine until the next co_yield point (or let it fall off end).
-				// Then we store/cache result in promise to allow getter (operator() below
-				// to grab it without executing coroutine).
-		return !h_.done();
-	}
-	T operator()()
-	{
-		fill();
-		full_ = false; // we are going to move out previously cached
-					   // result to make promise empty again
-		return std::move(h_.promise().value_);
-	}
+	std::string configFile = argv[1];
+	apie::CtxSingleton::get().init(configFile);
+	apie::CtxSingleton::get().start();
+	apie::CtxSingleton::get().waitForShutdown();
 
-private:
-	bool full_ = false;
-
-	void fill()
-	{
-		if (!full_)
-		{
-			h_();
-			if (h_.promise().exception_)
-				std::rethrow_exception(h_.promise().exception_);
-			// propagate coroutine exception in called context
-
-			full_ = true;
-		}
-	}
-};
-
-Generator<std::uint64_t>
-fibonacci_sequence(unsigned n)
-{
-	if (n == 0)
-		co_return;
-
-	if (n > 94)
-		throw std::runtime_error("Too big Fibonacci sequence. Elements would overflow.");
-
-	co_yield 0;
-
-	if (n == 1)
-		co_return;
-
-	co_yield 1;
-
-	if (n == 2)
-		co_return;
-
-	std::uint64_t a = 0;
-	std::uint64_t b = 1;
-
-	for (unsigned i = 2; i < n; i++)
-	{
-		std::uint64_t s = a + b;
-		co_yield s;
-		a = b;
-		b = s;
-	}
-}
-
-class TestB
-{
-public:
-	TestB(std::string value)
-	{
-		m_value = value;
-		std::cout << "TestB  contructor" << std::endl;
-	}
-
-	~TestB()
-	{
-		std::cout << "TestB  destructor" << std::endl;
-	}
-
-	std::string m_value;
-};
-class TestA
-{
-public:
-	TestA(int32_t a)
-	{
-		m_a = 0;
-		m_ptrB.reset(new TestB("hello world"));
-
-		std::cout <<  "TestA  Constructor" << std::endl;
-
-		throw -1;
-
-		std::cout << "TestA  Constructor after" << std::endl;
-
-		m_ptrC = new TestB("hello world");
-	}
-
-	~TestA()
-	{
-		std::cout << "TestA  destructor" << std::endl;
-		delete m_ptrC;
-	}
-
-	int32_t m_a = 0;
-	std::shared_ptr<TestB> m_ptrB = nullptr;
-	TestB* m_ptrC= nullptr;
-};
-
-
-int main()
-{
-	std::cout << std::setw(6) << "hello" << ": " << __cplusplus << std::endl;
-
-	try
-	{
-		auto a = TestA(123);
-
-		auto cron = cron::make_cron("0 0 0 * * *");
-
-		std::time_t now = 1680796800;
-		std::time_t next = cron::cron_next(cron, now);
-	}
-	catch (cron::bad_cronexpr const& ex)
-	{
-		std::cerr << ex.what() << '\n';
-	}
-	catch (...)
-	{
-		std::cerr << "Unknown exception.\n";
-	}
-
-	try
-	{
-		auto gen = fibonacci_sequence(10); // max 94 before uint64_t overflows
-
-		for (int j = 0; gen; j++)
-			std::cout << "fib(" << j << ")=" << gen() << '\n';
-	}
-	catch (const std::exception& ex)
-	{
-		std::cerr << "Exception: " << ex.what() << '\n';
-	}
-	catch (...)
-	{
-		std::cerr << "Unknown exception.\n";
-	}
-
-	std::cout << "Welcome To Geeksforgeek ";
-	system("pause");
+	return 0;
 }
