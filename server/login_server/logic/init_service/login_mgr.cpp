@@ -1,6 +1,6 @@
 #include "logic/init_service/login_mgr.h"
 
-#include "../../../common/dao/init.h"
+#include "common/dao/init.h"
 
 #include "logic/init_service/login_mgr_module.h"
 

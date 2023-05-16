@@ -1,10 +1,10 @@
 ﻿#include "logic/init_service/login_mgr_module.h"
 
-#include "../../../common/dao/init.h"
+#include "common/dao/init.h"
 
-#include "logic/init_service/account.h"
-#include "logic/init_service/component_create.h"
-#include "logic/init_service/component_name.h"
+#include "logic/account/account.h"
+#include "logic/account/component_create.h"
+#include "logic/account/component_name.h"
 
 namespace apie {
 

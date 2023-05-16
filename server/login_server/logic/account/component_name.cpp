@@ -1,4 +1,4 @@
-#include "logic/init_service/component_name.h"
+#include "logic/account/component_name.h"
 
 namespace apie {
 

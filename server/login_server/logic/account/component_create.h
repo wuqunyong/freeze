@@ -11,7 +11,7 @@
 #include "apie.h"
 #include "pb_init.h"
 
-#include "../../../common/dao/init.h"
+#include "common/dao/init.h"
 
 
 namespace apie {

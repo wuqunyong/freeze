@@ -11,8 +11,8 @@
 #include "apie.h"
 #include "pb_init.h"
 
-#include "../../../common/dao/init.h"
-#include "logic/init_service/account.h"
+#include "common/dao/init.h"
+#include "logic/account/account.h"
 
 namespace apie {
 
