@@ -16,6 +16,7 @@ void GatewayMgrModule::init()
 	pubsub.subscribe<::pubsub::LOGIC_CMD>(::pubsub::PT_LogicCmd, GatewayMgrModule::PubSub_logicCmd);
 	pubsub.subscribe<::pubsub::SERVER_PEER_CLOSE>(::pubsub::PT_ServerPeerClose, GatewayMgrModule::PubSub_serverPeerClose);
 
+
 	// CMD
 	auto& cmd = LogicCmdHandlerSingleton::get();
 	cmd.init();
@@ -29,16 +30,18 @@ void GatewayMgrModule::ready()
 	using namespace ::pb::rpc;
 	INTRA_REGISTER_RPC(LoginPending, GatewayMgrModule::RPC_loginPending);
 
+
 	// CLIENT OPCODE
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
 	server.setDefaultFunc(GatewayMgrModule::handleDefaultOpcodes);
 
 	using namespace ::login_msg;
-	S_REGISTER_REQUEST(ClientLogin, GatewayMgrModule::handleRequestClientLogin);
 	S_REGISTER_REQUEST(HandshakeInit, GatewayMgrModule::handleRequestHandshakeInit);
 	S_REGISTER_REQUEST(HandshakeEstablished, GatewayMgrModule::handleRequestHandshakeEstablished);
 
+	S_REGISTER_REQUEST(ClientLogin, GatewayMgrModule::handleRequestClientLogin);
 	S_REGISTER_REQUEST(Echo, GatewayMgrModule::handleEcho);
+
 
 	// FORWARD
 	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgrModule::handleDemuxForward);

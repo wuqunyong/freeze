@@ -39,13 +39,13 @@ namespace apie {
 		static void handleDefaultOpcodes(MessageInfo info, const std::string& msg);
 		static void handleDemuxForward(const ::rpc_msg::RoleIdentifier& role, const std::string& msg);
 
-		static apie::status::E_ReturnType handleRequestClientLogin(
-			MessageInfo info, const std::shared_ptr<::login_msg::ClientLoginRequest>& request, std::shared_ptr<::login_msg::ClientLoginResponse>& response);
 		static apie::status::E_ReturnType handleRequestHandshakeInit(
 			MessageInfo info, const std::shared_ptr<::login_msg::HandshakeInitRequest>& request, std::shared_ptr<::login_msg::HandshakeInitResponse>& response);
 		static apie::status::E_ReturnType handleRequestHandshakeEstablished(
 			MessageInfo info, const std::shared_ptr<::login_msg::HandshakeEstablishedRequest>& request, std::shared_ptr<::login_msg::HandshakeEstablishedResponse>& response);
 
+		static apie::status::E_ReturnType handleRequestClientLogin(
+			MessageInfo info, const std::shared_ptr<::login_msg::ClientLoginRequest>& request, std::shared_ptr<::login_msg::ClientLoginResponse>& response);
 		static apie::status::E_ReturnType handleEcho(
 			MessageInfo info, const std::shared_ptr<::login_msg::EchoRequest>& request, std::shared_ptr<::login_msg::EchoResponse>& response);
 		
