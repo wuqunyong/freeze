@@ -17,7 +17,7 @@
 #include <memory>
 
 #include "apie.h"
-
+#include "logic/test_server.h"
 
 int main(int argc, char **argv)
 {
@@ -25,6 +25,8 @@ int main(int argc, char **argv)
 	{
 		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
 	}
+
+	APieRegisterModule<apie::TestServerMgr>();
 
 	std::string configFile = argv[1];
 	apie::CtxSingleton::get().init(configFile);

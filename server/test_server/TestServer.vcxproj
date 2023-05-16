@@ -19,7 +19,29 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="logic\mock_role.cpp" />
+    <ClCompile Include="logic\task\login_test_case.cpp" />
+    <ClCompile Include="logic\task\logout_test_case.cpp" />
+    <ClCompile Include="logic\test_case.cpp" />
+    <ClCompile Include="logic\test_runner.cpp" />
+    <ClCompile Include="logic\test_server.cpp" />
+    <ClCompile Include="logic\test_suite.cpp" />
+    <ClCompile Include="module_handler\role_login_module.cpp" />
+    <ClCompile Include="module_handler\role_logout_module.cpp" />
+    <ClCompile Include="module_handler\test_server_module.cpp" />
     <ClCompile Include="test_client.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="logic\mock_role.h" />
+    <ClInclude Include="logic\task\login_test_case.h" />
+    <ClInclude Include="logic\task\logout_test_case.h" />
+    <ClInclude Include="logic\test_case.h" />
+    <ClInclude Include="logic\test_runner.h" />
+    <ClInclude Include="logic\test_server.h" />
+    <ClInclude Include="logic\test_suite.h" />
+    <ClInclude Include="module_handler\role_login_module.h" />
+    <ClInclude Include="module_handler\role_logout_module.h" />
+    <ClInclude Include="module_handler\test_server_module.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -2,5 +2,78 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="test_client.cpp" />
+    <ClCompile Include="module_handler\role_login_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="module_handler\role_logout_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="module_handler\test_server_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\mock_role.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_case.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_runner.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_server.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\test_suite.cpp">
+      <Filter>logic</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\task\login_test_case.cpp">
+      <Filter>logic\task</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\task\logout_test_case.cpp">
+      <Filter>logic\task</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="logic">
+      <UniqueIdentifier>{af8a0f4c-6c2b-4bc7-8f3e-945a3e16d407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="module_handler">
+      <UniqueIdentifier>{284dab7f-9132-4b15-b979-1e7678f9bf95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic\task">
+      <UniqueIdentifier>{7b81acb3-400b-4cc8-acd1-3f376b2acc6f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="module_handler\role_login_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="module_handler\role_logout_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="module_handler\test_server_module.h">
+      <Filter>module_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\mock_role.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_case.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_runner.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_server.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\test_suite.h">
+      <Filter>logic</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\task\login_test_case.h">
+      <Filter>logic\task</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\task\logout_test_case.h">
+      <Filter>logic\task</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

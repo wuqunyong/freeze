@@ -13,10 +13,9 @@ log:
   backup: "/usr/local/apie/logs/backup"
   name: "test_client"
 login_server:
-  # address: "127.0.0.1"
-  address: "10.0.3.8"
-  port_value: 9339
-  type: 3
+  address: "127.0.0.1"
+  port_value: 16007
+  type: 1
   mask_flag : 0
 pb_map_vec :
   - { type:   505, cmd:   0, pb_name: "pb.db.DB_Update"}
