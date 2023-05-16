@@ -28,6 +28,7 @@ void LoginMgrModule::init()
 void LoginMgrModule::ready()
 {
 	// CLIENT OPCODE
+	using namespace ::login_msg;
 	S_REGISTER_REQUEST(AccountLogin, LoginMgrModule::handleAccountLogin);
 }
 
@@ -181,7 +182,7 @@ void LoginMgrModule::Cmd_CoMysqlLoad(::pubsub::LOGIC_CMD& cmd)
 apie::status::E_ReturnType LoginMgrModule::handleAccountLogin(
 	MessageInfo info, const std::shared_ptr<::login_msg::AccountLoginRequest>& request, std::shared_ptr<::login_msg::AccountLoginResponse>& response)
 {
-
+	return apie::status::E_ReturnType::kRT_Sync;
 }
 
 
