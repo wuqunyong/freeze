@@ -219,7 +219,7 @@ namespace event_ns {
 					return false;
 				}
 
-				ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Channel:{}|Publish|{}|iLen:{}", sPub.c_str(), serialized_msg.c_str(), iLen);
+				//ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Channel:{}|Publish|{}|iLen:{}", sPub.c_str(), serialized_msg.c_str(), iLen);
 
 				return true;
 			}

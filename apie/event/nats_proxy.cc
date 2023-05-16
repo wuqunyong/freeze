@@ -498,12 +498,7 @@ void NatsManager::runIntervalCallbacks()
 
 void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg)
 {
-	std::thread::id iThreadId = std::this_thread::get_id();
-
-	std::stringstream ss;
-	ss << "ThreadId:" << iThreadId;
-
-	ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Handle_Subscribe|{}|{}", ss.str(), msg->ShortDebugString());
+	//ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Handle_Subscribe|{}|{}", ss.str(), msg->ShortDebugString());
 
 	if (msg->has_rpc_request())
 	{
@@ -539,6 +534,10 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 		return;
 	}
 
+	std::thread::id iThreadId = std::this_thread::get_id();
+
+	std::stringstream ss;
+	ss << "ThreadId:" << iThreadId;
 	ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|Handle_Subscribe invalid params|{}|{}", ss.str(), msg->ShortDebugString());
 }
 
