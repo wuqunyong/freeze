@@ -388,15 +388,14 @@ bool NatsManager::unsubscribeChannel(E_NatsType type, const std::string& channel
 
 void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType msg)
 {
-	std::thread::id iThreadId = std::this_thread::get_id();
-	std::stringstream ss;
-	ss << "msgHandle|ThreadId:" << iThreadId << "type:" << type << "|" << msg->ShortDebugString().c_str();
-
-	ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|{}", ss.str());
-
 	if (apie::CtxSingleton::get().getLogicThread() == nullptr)
 	{
+		std::thread::id iThreadId = std::this_thread::get_id();
+
+		std::stringstream ss;
+		ss << "msgHandle|ThreadId:" << iThreadId << "type:" << type << "|" << msg->ShortDebugString().c_str();
 		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy:{}", ss.str());
+
 		return;
 	}
 
@@ -431,6 +430,10 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 	}
 	default:
 	{
+		std::thread::id iThreadId = std::this_thread::get_id();
+
+		std::stringstream ss;
+		ss << "msgHandle|ThreadId:" << iThreadId << "type:" << type << "|" << msg->ShortDebugString().c_str();
 		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|{}", ss.str());
 	}
 	}
