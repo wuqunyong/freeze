@@ -107,6 +107,13 @@ apie::status::Status GatewayMgrModule::RPC_loginPending(
 	response->set_account_id(request->account_id());
 
 	return { apie::status::StatusCode::OK, "" };
+
+	//auto funObj = [client, response]() mutable {
+	//	apie::rpc::RPC_AsyncSendResponse(apie::status::Status(), client, response);
+	//};
+	//apie::CtxSingleton::get().getLogicThread()->dispatcher().post(funObj);
+
+	//return { apie::status::StatusCode::OK_ASYNC, "" };
 }
 
 void GatewayMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
