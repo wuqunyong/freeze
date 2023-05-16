@@ -34,6 +34,7 @@ public:
 	static CoTaskVoid CO_MysqlLoad(int64_t iRoleId);
 
 	// CLIENT OPCODE
-
+	static apie::status::E_ReturnType handleAccountLogin(
+		MessageInfo info, const std::shared_ptr<::login_msg::AccountLoginRequest>& request, std::shared_ptr<::login_msg::AccountLoginResponse>& response);
 };
 }

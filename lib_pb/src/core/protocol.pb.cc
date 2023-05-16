@@ -31,18 +31,20 @@ static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016protocol.proto\022\007pb.core*\212\002\n\017OperatePro"
-  "tocol\022\013\n\007OP_None\020\000\022\032\n\025OP_ClientLoginRequ"
-  "est\020\351\007\022\033\n\026OP_ClientLoginResponse\020\352\007\022\023\n\016O"
-  "P_EchoRequest\020\353\007\022\024\n\017OP_EchoResponse\020\354\007\022\034"
-  "\n\027OP_HandshakeInitRequest\020\355\007\022\035\n\030OP_Hands"
-  "hakeInitResponse\020\356\007\022#\n\036OP_HandshakeEstab"
-  "lishedRequest\020\357\007\022$\n\037OP_HandshakeEstablis"
-  "hedResponse\020\360\007b\006proto3"
+  "\n\016protocol.proto\022\007pb.core*\305\002\n\017OperatePro"
+  "tocol\022\013\n\007OP_None\020\000\022\033\n\026OP_AccountLoginReq"
+  "uest\020\351\007\022\034\n\027OP_AccountLoginResponse\020\352\007\022\032\n"
+  "\025OP_ClientLoginRequest\020\315\010\022\033\n\026OP_ClientLo"
+  "ginResponse\020\316\010\022\023\n\016OP_EchoRequest\020\317\010\022\024\n\017O"
+  "P_EchoResponse\020\320\010\022\034\n\027OP_HandshakeInitReq"
+  "uest\020\321\010\022\035\n\030OP_HandshakeInitResponse\020\322\010\022#"
+  "\n\036OP_HandshakeEstablishedRequest\020\323\010\022$\n\037O"
+  "P_HandshakeEstablishedResponse\020\324\010b\006proto"
+  "3"
   ;
 static ::_pbi::once_flag descriptor_table_protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_protocol_2eproto = {
-    false, false, 302, descriptor_table_protodef_protocol_2eproto,
+    false, false, 361, descriptor_table_protodef_protocol_2eproto,
     "protocol.proto",
     &descriptor_table_protocol_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_protocol_2eproto::offsets,
@@ -66,12 +68,14 @@ bool OperateProtocol_IsValid(int value) {
     case 0:
     case 1001:
     case 1002:
-    case 1003:
-    case 1004:
-    case 1005:
-    case 1006:
-    case 1007:
-    case 1008:
+    case 1101:
+    case 1102:
+    case 1103:
+    case 1104:
+    case 1105:
+    case 1106:
+    case 1107:
+    case 1108:
       return true;
     default:
       return false;

@@ -45,6 +45,12 @@ struct TableStruct_login_5fmsg_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_login_5fmsg_2eproto;
 namespace login_msg {
+class AccountLoginRequest;
+struct AccountLoginRequestDefaultTypeInternal;
+extern AccountLoginRequestDefaultTypeInternal _AccountLoginRequest_default_instance_;
+class AccountLoginResponse;
+struct AccountLoginResponseDefaultTypeInternal;
+extern AccountLoginResponseDefaultTypeInternal _AccountLoginResponse_default_instance_;
 class ClientLoginRequest;
 struct ClientLoginRequestDefaultTypeInternal;
 extern ClientLoginRequestDefaultTypeInternal _ClientLoginRequest_default_instance_;
@@ -71,6 +77,8 @@ struct HandshakeInitResponseDefaultTypeInternal;
 extern HandshakeInitResponseDefaultTypeInternal _HandshakeInitResponse_default_instance_;
 }  // namespace login_msg
 PROTOBUF_NAMESPACE_OPEN
+template<> ::login_msg::AccountLoginRequest* Arena::CreateMaybeMessage<::login_msg::AccountLoginRequest>(Arena*);
+template<> ::login_msg::AccountLoginResponse* Arena::CreateMaybeMessage<::login_msg::AccountLoginResponse>(Arena*);
 template<> ::login_msg::ClientLoginRequest* Arena::CreateMaybeMessage<::login_msg::ClientLoginRequest>(Arena*);
 template<> ::login_msg::ClientLoginResponse* Arena::CreateMaybeMessage<::login_msg::ClientLoginResponse>(Arena*);
 template<> ::login_msg::EchoRequest* Arena::CreateMaybeMessage<::login_msg::EchoRequest>(Arena*);
@@ -718,6 +726,318 @@ class HandshakeEstablishedResponse final :
 };
 // -------------------------------------------------------------------
 
+class AccountLoginRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.AccountLoginRequest) */ {
+ public:
+  inline AccountLoginRequest() : AccountLoginRequest(nullptr) {}
+  ~AccountLoginRequest() override;
+  explicit PROTOBUF_CONSTEXPR AccountLoginRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  AccountLoginRequest(const AccountLoginRequest& from);
+  AccountLoginRequest(AccountLoginRequest&& from) noexcept
+    : AccountLoginRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline AccountLoginRequest& operator=(const AccountLoginRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AccountLoginRequest& operator=(AccountLoginRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AccountLoginRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AccountLoginRequest* internal_default_instance() {
+    return reinterpret_cast<const AccountLoginRequest*>(
+               &_AccountLoginRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(AccountLoginRequest& a, AccountLoginRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AccountLoginRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AccountLoginRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AccountLoginRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AccountLoginRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AccountLoginRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AccountLoginRequest& from) {
+    AccountLoginRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AccountLoginRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "login_msg.AccountLoginRequest";
+  }
+  protected:
+  explicit AccountLoginRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAccountIdFieldNumber = 1,
+  };
+  // uint64 account_id = 1;
+  void clear_account_id();
+  uint64_t account_id() const;
+  void set_account_id(uint64_t value);
+  private:
+  uint64_t _internal_account_id() const;
+  void _internal_set_account_id(uint64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:login_msg.AccountLoginRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint64_t account_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_login_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class AccountLoginResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.AccountLoginResponse) */ {
+ public:
+  inline AccountLoginResponse() : AccountLoginResponse(nullptr) {}
+  ~AccountLoginResponse() override;
+  explicit PROTOBUF_CONSTEXPR AccountLoginResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  AccountLoginResponse(const AccountLoginResponse& from);
+  AccountLoginResponse(AccountLoginResponse&& from) noexcept
+    : AccountLoginResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline AccountLoginResponse& operator=(const AccountLoginResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AccountLoginResponse& operator=(AccountLoginResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AccountLoginResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AccountLoginResponse* internal_default_instance() {
+    return reinterpret_cast<const AccountLoginResponse*>(
+               &_AccountLoginResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(AccountLoginResponse& a, AccountLoginResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AccountLoginResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AccountLoginResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AccountLoginResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AccountLoginResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AccountLoginResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AccountLoginResponse& from) {
+    AccountLoginResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AccountLoginResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "login_msg.AccountLoginResponse";
+  }
+  protected:
+  explicit AccountLoginResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSessionKeyFieldNumber = 2,
+    kUserIdFieldNumber = 1,
+  };
+  // string session_key = 2;
+  void clear_session_key();
+  const std::string& session_key() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_session_key(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_session_key();
+  PROTOBUF_NODISCARD std::string* release_session_key();
+  void set_allocated_session_key(std::string* session_key);
+  private:
+  const std::string& _internal_session_key() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_session_key(const std::string& value);
+  std::string* _internal_mutable_session_key();
+  public:
+
+  // uint64 user_id = 1;
+  void clear_user_id();
+  uint64_t user_id() const;
+  void set_user_id(uint64_t value);
+  private:
+  uint64_t _internal_user_id() const;
+  void _internal_set_user_id(uint64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:login_msg.AccountLoginResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr session_key_;
+    uint64_t user_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_login_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ClientLoginRequest final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.ClientLoginRequest) */ {
  public:
@@ -766,7 +1086,7 @@ class ClientLoginRequest final :
                &_ClientLoginRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    6;
 
   friend void swap(ClientLoginRequest& a, ClientLoginRequest& b) {
     a.Swap(&b);
@@ -941,7 +1261,7 @@ class ClientLoginResponse final :
                &_ClientLoginResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    7;
 
   friend void swap(ClientLoginResponse& a, ClientLoginResponse& b) {
     a.Swap(&b);
@@ -1144,7 +1464,7 @@ class EchoRequest final :
                &_EchoRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    8;
 
   friend void swap(EchoRequest& a, EchoRequest& b) {
     a.Swap(&b);
@@ -1308,7 +1628,7 @@ class EchoResponse final :
                &_EchoResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    9;
 
   friend void swap(EchoResponse& a, EchoResponse& b) {
     a.Swap(&b);
@@ -1687,6 +2007,104 @@ inline void HandshakeEstablishedResponse::set_status_code(int32_t value) {
 
 // -------------------------------------------------------------------
 
+// AccountLoginRequest
+
+// uint64 account_id = 1;
+inline void AccountLoginRequest::clear_account_id() {
+  _impl_.account_id_ = uint64_t{0u};
+}
+inline uint64_t AccountLoginRequest::_internal_account_id() const {
+  return _impl_.account_id_;
+}
+inline uint64_t AccountLoginRequest::account_id() const {
+  // @@protoc_insertion_point(field_get:login_msg.AccountLoginRequest.account_id)
+  return _internal_account_id();
+}
+inline void AccountLoginRequest::_internal_set_account_id(uint64_t value) {
+  
+  _impl_.account_id_ = value;
+}
+inline void AccountLoginRequest::set_account_id(uint64_t value) {
+  _internal_set_account_id(value);
+  // @@protoc_insertion_point(field_set:login_msg.AccountLoginRequest.account_id)
+}
+
+// -------------------------------------------------------------------
+
+// AccountLoginResponse
+
+// uint64 user_id = 1;
+inline void AccountLoginResponse::clear_user_id() {
+  _impl_.user_id_ = uint64_t{0u};
+}
+inline uint64_t AccountLoginResponse::_internal_user_id() const {
+  return _impl_.user_id_;
+}
+inline uint64_t AccountLoginResponse::user_id() const {
+  // @@protoc_insertion_point(field_get:login_msg.AccountLoginResponse.user_id)
+  return _internal_user_id();
+}
+inline void AccountLoginResponse::_internal_set_user_id(uint64_t value) {
+  
+  _impl_.user_id_ = value;
+}
+inline void AccountLoginResponse::set_user_id(uint64_t value) {
+  _internal_set_user_id(value);
+  // @@protoc_insertion_point(field_set:login_msg.AccountLoginResponse.user_id)
+}
+
+// string session_key = 2;
+inline void AccountLoginResponse::clear_session_key() {
+  _impl_.session_key_.ClearToEmpty();
+}
+inline const std::string& AccountLoginResponse::session_key() const {
+  // @@protoc_insertion_point(field_get:login_msg.AccountLoginResponse.session_key)
+  return _internal_session_key();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AccountLoginResponse::set_session_key(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.session_key_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:login_msg.AccountLoginResponse.session_key)
+}
+inline std::string* AccountLoginResponse::mutable_session_key() {
+  std::string* _s = _internal_mutable_session_key();
+  // @@protoc_insertion_point(field_mutable:login_msg.AccountLoginResponse.session_key)
+  return _s;
+}
+inline const std::string& AccountLoginResponse::_internal_session_key() const {
+  return _impl_.session_key_.Get();
+}
+inline void AccountLoginResponse::_internal_set_session_key(const std::string& value) {
+  
+  _impl_.session_key_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AccountLoginResponse::_internal_mutable_session_key() {
+  
+  return _impl_.session_key_.Mutable(GetArenaForAllocation());
+}
+inline std::string* AccountLoginResponse::release_session_key() {
+  // @@protoc_insertion_point(field_release:login_msg.AccountLoginResponse.session_key)
+  return _impl_.session_key_.Release();
+}
+inline void AccountLoginResponse::set_allocated_session_key(std::string* session_key) {
+  if (session_key != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.session_key_.SetAllocated(session_key, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.session_key_.IsDefault()) {
+    _impl_.session_key_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:login_msg.AccountLoginResponse.session_key)
+}
+
+// -------------------------------------------------------------------
+
 // ClientLoginRequest
 
 // uint64 user_id = 1;
@@ -2054,6 +2472,10 @@ inline void EchoResponse::set_allocated_value2(std::string* value2) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

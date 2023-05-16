@@ -28,7 +28,7 @@ void LoginMgrModule::init()
 void LoginMgrModule::ready()
 {
 	// CLIENT OPCODE
-	//S_REGISTER_REQUEST(ACCOUNT_LOGIN_L, LoginMgrModule::handleAccount);
+	S_REGISTER_REQUEST(AccountLogin, LoginMgrModule::handleAccountLogin);
 }
 
 
@@ -177,6 +177,13 @@ void LoginMgrModule::Cmd_CoMysqlLoad(::pubsub::LOGIC_CMD& cmd)
 	uint32_t iId = std::stoul(cmd.params()[0]);
 	CO_MysqlLoad(iId);
 }
+
+apie::status::E_ReturnType LoginMgrModule::handleAccountLogin(
+	MessageInfo info, const std::shared_ptr<::login_msg::AccountLoginRequest>& request, std::shared_ptr<::login_msg::AccountLoginResponse>& response)
+{
+
+}
+
 
 }
 

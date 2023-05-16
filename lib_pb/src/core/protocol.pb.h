@@ -50,14 +50,16 @@ namespace core {
 
 enum OperateProtocol : int {
   OP_None = 0,
-  OP_ClientLoginRequest = 1001,
-  OP_ClientLoginResponse = 1002,
-  OP_EchoRequest = 1003,
-  OP_EchoResponse = 1004,
-  OP_HandshakeInitRequest = 1005,
-  OP_HandshakeInitResponse = 1006,
-  OP_HandshakeEstablishedRequest = 1007,
-  OP_HandshakeEstablishedResponse = 1008,
+  OP_AccountLoginRequest = 1001,
+  OP_AccountLoginResponse = 1002,
+  OP_ClientLoginRequest = 1101,
+  OP_ClientLoginResponse = 1102,
+  OP_EchoRequest = 1103,
+  OP_EchoResponse = 1104,
+  OP_HandshakeInitRequest = 1105,
+  OP_HandshakeInitResponse = 1106,
+  OP_HandshakeEstablishedRequest = 1107,
+  OP_HandshakeEstablishedResponse = 1108,
   OperateProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   OperateProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
