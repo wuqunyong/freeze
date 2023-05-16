@@ -1373,7 +1373,7 @@ class ClientLoginResponse final :
 
   enum : int {
     kUserIdFieldNumber = 2,
-    kStatusCodeFieldNumber = 1,
+    kErrorCodeFieldNumber = 1,
     kVersionFieldNumber = 3,
     kIsNewbieFieldNumber = 4,
     kAmmoFieldNumber = 5,
@@ -1388,13 +1388,13 @@ class ClientLoginResponse final :
   void _internal_set_user_id(uint64_t value);
   public:
 
-  // int32 status_code = 1;
-  void clear_status_code();
-  int32_t status_code() const;
-  void set_status_code(int32_t value);
+  // int32 error_code = 1;
+  void clear_error_code();
+  int32_t error_code() const;
+  void set_error_code(int32_t value);
   private:
-  int32_t _internal_status_code() const;
-  void _internal_set_status_code(int32_t value);
+  int32_t _internal_error_code() const;
+  void _internal_set_error_code(int32_t value);
   public:
 
   // int32 version = 3;
@@ -1442,7 +1442,7 @@ class ClientLoginResponse final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     uint64_t user_id_;
-    int32_t status_code_;
+    int32_t error_code_;
     int32_t version_;
     bool is_newbie_;
     uint32_t ammo_;
@@ -2329,24 +2329,24 @@ inline void ClientLoginRequest::set_version(int32_t value) {
 
 // ClientLoginResponse
 
-// int32 status_code = 1;
-inline void ClientLoginResponse::clear_status_code() {
-  _impl_.status_code_ = 0;
+// int32 error_code = 1;
+inline void ClientLoginResponse::clear_error_code() {
+  _impl_.error_code_ = 0;
 }
-inline int32_t ClientLoginResponse::_internal_status_code() const {
-  return _impl_.status_code_;
+inline int32_t ClientLoginResponse::_internal_error_code() const {
+  return _impl_.error_code_;
 }
-inline int32_t ClientLoginResponse::status_code() const {
-  // @@protoc_insertion_point(field_get:login_msg.ClientLoginResponse.status_code)
-  return _internal_status_code();
+inline int32_t ClientLoginResponse::error_code() const {
+  // @@protoc_insertion_point(field_get:login_msg.ClientLoginResponse.error_code)
+  return _internal_error_code();
 }
-inline void ClientLoginResponse::_internal_set_status_code(int32_t value) {
+inline void ClientLoginResponse::_internal_set_error_code(int32_t value) {
   
-  _impl_.status_code_ = value;
+  _impl_.error_code_ = value;
 }
-inline void ClientLoginResponse::set_status_code(int32_t value) {
-  _internal_set_status_code(value);
-  // @@protoc_insertion_point(field_set:login_msg.ClientLoginResponse.status_code)
+inline void ClientLoginResponse::set_error_code(int32_t value) {
+  _internal_set_error_code(value);
+  // @@protoc_insertion_point(field_set:login_msg.ClientLoginResponse.error_code)
 }
 
 // uint64 user_id = 2;

@@ -45,5 +45,9 @@ namespace apie {
 			MessageInfo info, const std::shared_ptr<::login_msg::HandshakeInitRequest>& request, std::shared_ptr<::login_msg::HandshakeInitResponse>& response);
 		static apie::status::E_ReturnType handleRequestHandshakeEstablished(
 			MessageInfo info, const std::shared_ptr<::login_msg::HandshakeEstablishedRequest>& request, std::shared_ptr<::login_msg::HandshakeEstablishedResponse>& response);
+
+		static apie::status::E_ReturnType handleEcho(
+			MessageInfo info, const std::shared_ptr<::login_msg::EchoRequest>& request, std::shared_ptr<::login_msg::EchoResponse>& response);
+		
 	};
 }

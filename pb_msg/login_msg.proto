@@ -49,7 +49,7 @@ message ClientLoginRequest
 
 message ClientLoginResponse
 {
-	int32 status_code = 1;
+	int32 error_code = 1;
 	uint64 user_id = 2;
 	int32 version = 3;
 	bool is_newbie = 4;

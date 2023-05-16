@@ -123,7 +123,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR ClientLoginResponse::ClientLoginResponse(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.user_id_)*/uint64_t{0u}
-  , /*decltype(_impl_.status_code_)*/0
+  , /*decltype(_impl_.error_code_)*/0
   , /*decltype(_impl_.version_)*/0
   , /*decltype(_impl_.is_newbie_)*/false
   , /*decltype(_impl_.ammo_)*/0u
@@ -235,7 +235,7 @@ const uint32_t TableStruct_login_5fmsg_2eproto::offsets[] PROTOBUF_SECTION_VARIA
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::login_msg::ClientLoginResponse, _impl_.status_code_),
+  PROTOBUF_FIELD_OFFSET(::login_msg::ClientLoginResponse, _impl_.error_code_),
   PROTOBUF_FIELD_OFFSET(::login_msg::ClientLoginResponse, _impl_.user_id_),
   PROTOBUF_FIELD_OFFSET(::login_msg::ClientLoginResponse, _impl_.version_),
   PROTOBUF_FIELD_OFFSET(::login_msg::ClientLoginResponse, _impl_.is_newbie_),
@@ -297,17 +297,17 @@ const char descriptor_table_protodef_login_5fmsg_2eproto[] PROTOBUF_SECTION_VARI
   "\n\002ip\030\002 \001(\t\022\014\n\004port\030\003 \001(\005\022\017\n\007user_id\030\004 \001("
   "\004\022\023\n\013session_key\030\005 \001(\t\"K\n\022ClientLoginReq"
   "uest\022\017\n\007user_id\030\001 \001(\004\022\023\n\013session_key\030\002 \001"
-  "(\t\022\017\n\007version\030\003 \001(\005\"\177\n\023ClientLoginRespon"
-  "se\022\023\n\013status_code\030\001 \001(\005\022\017\n\007user_id\030\002 \001(\004"
-  "\022\017\n\007version\030\003 \001(\005\022\021\n\tis_newbie\030\004 \001(\010\022\014\n\004"
-  "ammo\030\005 \001(\r\022\020\n\010grenades\030\006 \001(\r\"-\n\013EchoRequ"
-  "est\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\".\n\014E"
-  "choResponse\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 "
-  "\001(\tb\006proto3"
+  "(\t\022\017\n\007version\030\003 \001(\005\"~\n\023ClientLoginRespon"
+  "se\022\022\n\nerror_code\030\001 \001(\005\022\017\n\007user_id\030\002 \001(\004\022"
+  "\017\n\007version\030\003 \001(\005\022\021\n\tis_newbie\030\004 \001(\010\022\014\n\004a"
+  "mmo\030\005 \001(\r\022\020\n\010grenades\030\006 \001(\r\"-\n\013EchoReque"
+  "st\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\".\n\014Ec"
+  "hoResponse\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001"
+  "(\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_login_5fmsg_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_login_5fmsg_2eproto = {
-    false, false, 731, descriptor_table_protodef_login_5fmsg_2eproto,
+    false, false, 730, descriptor_table_protodef_login_5fmsg_2eproto,
     "login_msg.proto",
     &descriptor_table_login_5fmsg_2eproto_once, nullptr, 0, 10,
     schemas, file_default_instances, TableStruct_login_5fmsg_2eproto::offsets,
@@ -1976,7 +1976,7 @@ ClientLoginResponse::ClientLoginResponse(const ClientLoginResponse& from)
   ClientLoginResponse* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.user_id_){}
-    , decltype(_impl_.status_code_){}
+    , decltype(_impl_.error_code_){}
     , decltype(_impl_.version_){}
     , decltype(_impl_.is_newbie_){}
     , decltype(_impl_.ammo_){}
@@ -1996,7 +1996,7 @@ inline void ClientLoginResponse::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.user_id_){uint64_t{0u}}
-    , decltype(_impl_.status_code_){0}
+    , decltype(_impl_.error_code_){0}
     , decltype(_impl_.version_){0}
     , decltype(_impl_.is_newbie_){false}
     , decltype(_impl_.ammo_){0u}
@@ -2040,10 +2040,10 @@ const char* ClientLoginResponse::_InternalParse(const char* ptr, ::_pbi::ParseCo
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int32 status_code = 1;
+      // int32 error_code = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.status_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.error_code_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -2117,10 +2117,10 @@ uint8_t* ClientLoginResponse::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 status_code = 1;
-  if (this->_internal_status_code() != 0) {
+  // int32 error_code = 1;
+  if (this->_internal_error_code() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_status_code(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_error_code(), target);
   }
 
   // uint64 user_id = 2;
@@ -2174,9 +2174,9 @@ size_t ClientLoginResponse::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_user_id());
   }
 
-  // int32 status_code = 1;
-  if (this->_internal_status_code() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_status_code());
+  // int32 error_code = 1;
+  if (this->_internal_error_code() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_error_code());
   }
 
   // int32 version = 3;
@@ -2220,8 +2220,8 @@ void ClientLoginResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, co
   if (from._internal_user_id() != 0) {
     _this->_internal_set_user_id(from._internal_user_id());
   }
-  if (from._internal_status_code() != 0) {
-    _this->_internal_set_status_code(from._internal_status_code());
+  if (from._internal_error_code() != 0) {
+    _this->_internal_set_error_code(from._internal_error_code());
   }
   if (from._internal_version() != 0) {
     _this->_internal_set_version(from._internal_version());

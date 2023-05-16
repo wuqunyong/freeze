@@ -38,6 +38,8 @@ void GatewayMgrModule::ready()
 	S_REGISTER_REQUEST(HandshakeInit, GatewayMgrModule::handleRequestHandshakeInit);
 	S_REGISTER_REQUEST(HandshakeEstablished, GatewayMgrModule::handleRequestHandshakeEstablished);
 
+	S_REGISTER_REQUEST(Echo, GatewayMgrModule::handleEcho);
+
 	// FORWARD
 	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgrModule::handleDemuxForward);
 }
@@ -172,6 +174,19 @@ void GatewayMgrModule::Cmd_mysqlStatement(::pubsub::LOGIC_CMD& cmd)
 apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
 	MessageInfo info, const std::shared_ptr<::login_msg::ClientLoginRequest>& request, std::shared_ptr<::login_msg::ClientLoginResponse>& response)
 {
+	auto iId = request->user_id();
+	auto optData = APieGetModule<GatewayMgr>()->getPendingRole(iId);
+	if (!optData.has_value())
+	{
+		response->set_error_code(pb::core::CONTROL_ERROR);
+		return apie::status::E_ReturnType::kRT_Sync;
+	}
+
+	response->set_error_code(pb::core::OK);
+	response->set_version(iId);
+	response->set_ammo(100);
+	response->set_grenades(100);
+
 	return apie::status::E_ReturnType::kRT_Sync;
 }
 
@@ -243,6 +258,18 @@ apie::status::E_ReturnType GatewayMgrModule::handleRequestHandshakeEstablished(
 	cmd.args.set_server_session_attr.ptrData = ptr;
 	network::OutputStream::sendCommand(ConnetionType::CT_SERVER, info.iSessionId, cmd);
 	
+	return apie::status::E_ReturnType::kRT_Sync;
+}
+
+apie::status::E_ReturnType GatewayMgrModule::handleEcho(
+	MessageInfo info, const std::shared_ptr<::login_msg::EchoRequest>& request, std::shared_ptr<::login_msg::EchoResponse>& response)
+{
+	auto value1 = request->value1();
+	auto value2 = request->value2();
+
+	response->set_value1(value1);
+	response->set_value2(value2);
+
 	return apie::status::E_ReturnType::kRT_Sync;
 }
 
