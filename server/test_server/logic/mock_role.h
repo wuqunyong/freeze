@@ -148,7 +148,8 @@ namespace apie {
 	private:
 		void handleMsg(::pubsub::TEST_CMD& msg);
 		
-		void handle_MSG_GAMESERVER_LOGINRESP(MessageInfo info, const std::string& msg);
+		void handleAccountLogin(MessageInfo info, const std::string& msg);
+		void handleClientLogin(MessageInfo info, const std::string& msg);
 		
 
 		void sendKeepAlive();

@@ -183,7 +183,7 @@ apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
 	}
 
 	response->set_error_code(pb::core::OK);
-	response->set_version(iId);
+	response->set_user_id(iId);
 	response->set_ammo(100);
 	response->set_grenades(100);
 
