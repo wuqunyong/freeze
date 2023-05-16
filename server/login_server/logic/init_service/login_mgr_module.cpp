@@ -182,7 +182,61 @@ void LoginMgrModule::Cmd_CoMysqlLoad(::pubsub::LOGIC_CMD& cmd)
 apie::status::E_ReturnType LoginMgrModule::handleAccountLogin(
 	MessageInfo info, const std::shared_ptr<::login_msg::AccountLoginRequest>& request, std::shared_ptr<::login_msg::AccountLoginResponse>& response)
 {
-	return apie::status::E_ReturnType::kRT_Sync;
+	auto iId = request->account_id();
+	auto doneCb = [iId, info, response](apie::status::Status status, AccountLoader::LoaderPtr ptrModule) mutable {
+		if (status.ok())
+		{
+			auto gatewayOpt = EndPointMgrSingleton::get().modulusEndpointById(::common::EPT_Gateway_Server, iId);
+			if (!gatewayOpt.has_value())
+			{
+				response->set_error_code(opcodes::SC_Discovery_ServerListEmpty);
+				service::ServiceManager::sendResponse(info, *response);
+				return;
+			}
+
+			std::string ip = gatewayOpt.value().ip();
+			uint32_t port = gatewayOpt.value().port();
+			std::string sessionKey = apie::randomStr(16);
+
+			response->set_ip(ip);
+			response->set_port(port);
+			response->set_session_key(sessionKey);
+
+			ptrModule->lookup<ComponentWrapper<Component_Create>>().TestFunc();
+
+			::pb::rpc::RPC_LoginPendingRequest rpcRequest;
+			rpcRequest.set_account_id(iId);
+			rpcRequest.set_session_key(sessionKey);
+			rpcRequest.set_db_id(1);
+			rpcRequest.set_version(0);
+
+			::rpc_msg::CHANNEL server;
+			server.set_realm(apie::Ctx::getThisChannel().realm());
+			server.set_type(gatewayOpt.value().type());
+			server.set_id(gatewayOpt.value().id());
+
+			auto rpcCB = [info, response](const apie::status::Status& status, const std::shared_ptr<::pb::rpc::RPC_LoginPendingResponse>& responsePtr) mutable {
+				if (!status.ok())
+				{
+					response->set_error_code(apie::toUnderlyingType(status.code()));
+					service::ServiceManager::sendResponse(info, *response);
+					return;
+				}
+
+				service::ServiceManager::sendResponse(info, *response);
+			};
+			apie::rpc::RPC_Call<::pb::rpc::RPC_LoginPendingRequest, ::pb::rpc::RPC_LoginPendingResponse>(server, ::pb::rpc::OP_RPC_LoginPending, rpcRequest, rpcCB);
+		}
+		else
+		{
+			response->set_error_code(pb::core::CONTROL_ERROR);
+
+			service::ServiceManager::sendResponse(info, *response);
+		}
+	};
+	AccountLoader::LoadFromDb(iId, doneCb);
+
+	return apie::status::E_ReturnType::kRT_Async;
 }
 
 

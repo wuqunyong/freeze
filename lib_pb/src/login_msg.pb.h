@@ -995,10 +995,27 @@ class AccountLoginResponse final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSessionKeyFieldNumber = 2,
-    kUserIdFieldNumber = 1,
+    kIpFieldNumber = 2,
+    kSessionKeyFieldNumber = 5,
+    kErrorCodeFieldNumber = 1,
+    kPortFieldNumber = 3,
+    kUserIdFieldNumber = 4,
   };
-  // string session_key = 2;
+  // string ip = 2;
+  void clear_ip();
+  const std::string& ip() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_ip(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_ip();
+  PROTOBUF_NODISCARD std::string* release_ip();
+  void set_allocated_ip(std::string* ip);
+  private:
+  const std::string& _internal_ip() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ip(const std::string& value);
+  std::string* _internal_mutable_ip();
+  public:
+
+  // string session_key = 5;
   void clear_session_key();
   const std::string& session_key() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -1012,7 +1029,25 @@ class AccountLoginResponse final :
   std::string* _internal_mutable_session_key();
   public:
 
-  // uint64 user_id = 1;
+  // int32 error_code = 1;
+  void clear_error_code();
+  int32_t error_code() const;
+  void set_error_code(int32_t value);
+  private:
+  int32_t _internal_error_code() const;
+  void _internal_set_error_code(int32_t value);
+  public:
+
+  // int32 port = 3;
+  void clear_port();
+  int32_t port() const;
+  void set_port(int32_t value);
+  private:
+  int32_t _internal_port() const;
+  void _internal_set_port(int32_t value);
+  public:
+
+  // uint64 user_id = 4;
   void clear_user_id();
   uint64_t user_id() const;
   void set_user_id(uint64_t value);
@@ -1029,7 +1064,10 @@ class AccountLoginResponse final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ip_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr session_key_;
+    int32_t error_code_;
+    int32_t port_;
     uint64_t user_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -2033,7 +2071,97 @@ inline void AccountLoginRequest::set_account_id(uint64_t value) {
 
 // AccountLoginResponse
 
-// uint64 user_id = 1;
+// int32 error_code = 1;
+inline void AccountLoginResponse::clear_error_code() {
+  _impl_.error_code_ = 0;
+}
+inline int32_t AccountLoginResponse::_internal_error_code() const {
+  return _impl_.error_code_;
+}
+inline int32_t AccountLoginResponse::error_code() const {
+  // @@protoc_insertion_point(field_get:login_msg.AccountLoginResponse.error_code)
+  return _internal_error_code();
+}
+inline void AccountLoginResponse::_internal_set_error_code(int32_t value) {
+  
+  _impl_.error_code_ = value;
+}
+inline void AccountLoginResponse::set_error_code(int32_t value) {
+  _internal_set_error_code(value);
+  // @@protoc_insertion_point(field_set:login_msg.AccountLoginResponse.error_code)
+}
+
+// string ip = 2;
+inline void AccountLoginResponse::clear_ip() {
+  _impl_.ip_.ClearToEmpty();
+}
+inline const std::string& AccountLoginResponse::ip() const {
+  // @@protoc_insertion_point(field_get:login_msg.AccountLoginResponse.ip)
+  return _internal_ip();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AccountLoginResponse::set_ip(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.ip_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:login_msg.AccountLoginResponse.ip)
+}
+inline std::string* AccountLoginResponse::mutable_ip() {
+  std::string* _s = _internal_mutable_ip();
+  // @@protoc_insertion_point(field_mutable:login_msg.AccountLoginResponse.ip)
+  return _s;
+}
+inline const std::string& AccountLoginResponse::_internal_ip() const {
+  return _impl_.ip_.Get();
+}
+inline void AccountLoginResponse::_internal_set_ip(const std::string& value) {
+  
+  _impl_.ip_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AccountLoginResponse::_internal_mutable_ip() {
+  
+  return _impl_.ip_.Mutable(GetArenaForAllocation());
+}
+inline std::string* AccountLoginResponse::release_ip() {
+  // @@protoc_insertion_point(field_release:login_msg.AccountLoginResponse.ip)
+  return _impl_.ip_.Release();
+}
+inline void AccountLoginResponse::set_allocated_ip(std::string* ip) {
+  if (ip != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.ip_.SetAllocated(ip, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.ip_.IsDefault()) {
+    _impl_.ip_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:login_msg.AccountLoginResponse.ip)
+}
+
+// int32 port = 3;
+inline void AccountLoginResponse::clear_port() {
+  _impl_.port_ = 0;
+}
+inline int32_t AccountLoginResponse::_internal_port() const {
+  return _impl_.port_;
+}
+inline int32_t AccountLoginResponse::port() const {
+  // @@protoc_insertion_point(field_get:login_msg.AccountLoginResponse.port)
+  return _internal_port();
+}
+inline void AccountLoginResponse::_internal_set_port(int32_t value) {
+  
+  _impl_.port_ = value;
+}
+inline void AccountLoginResponse::set_port(int32_t value) {
+  _internal_set_port(value);
+  // @@protoc_insertion_point(field_set:login_msg.AccountLoginResponse.port)
+}
+
+// uint64 user_id = 4;
 inline void AccountLoginResponse::clear_user_id() {
   _impl_.user_id_ = uint64_t{0u};
 }
@@ -2053,7 +2181,7 @@ inline void AccountLoginResponse::set_user_id(uint64_t value) {
   // @@protoc_insertion_point(field_set:login_msg.AccountLoginResponse.user_id)
 }
 
-// string session_key = 2;
+// string session_key = 5;
 inline void AccountLoginResponse::clear_session_key() {
   _impl_.session_key_.ClearToEmpty();
 }

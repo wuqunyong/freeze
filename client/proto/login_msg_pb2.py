@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0flogin_msg.proto\x12\tlogin_msg\"-\n\x14HandshakeInitRequest\x12\x15\n\rclient_random\x18\x01 \x01(\t\"W\n\x15HandshakeInitResponse\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x15\n\rserver_random\x18\x02 \x01(\t\x12\x12\n\npublic_key\x18\x03 \x01(\t\"4\n\x1bHandshakeEstablishedRequest\x12\x15\n\rencrypted_key\x18\x01 \x01(\x0c\"3\n\x1cHandshakeEstablishedResponse\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\")\n\x13\x41\x63\x63ountLoginRequest\x12\x12\n\naccount_id\x18\x01 \x01(\x04\"<\n\x14\x41\x63\x63ountLoginResponse\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\x12\x13\n\x0bsession_key\x18\x02 \x01(\t\"K\n\x12\x43lientLoginRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\x12\x13\n\x0bsession_key\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x05\"\x7f\n\x13\x43lientLoginResponse\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\x0f\n\x07version\x18\x03 \x01(\x05\x12\x11\n\tis_newbie\x18\x04 \x01(\x08\x12\x0c\n\x04\x61mmo\x18\x05 \x01(\r\x12\x10\n\x08grenades\x18\x06 \x01(\r\"-\n\x0b\x45\x63hoRequest\x12\x0e\n\x06value1\x18\x01 \x01(\x04\x12\x0e\n\x06value2\x18\x02 \x01(\t\".\n\x0c\x45\x63hoResponse\x12\x0e\n\x06value1\x18\x01 \x01(\x04\x12\x0e\n\x06value2\x18\x02 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0flogin_msg.proto\x12\tlogin_msg\"-\n\x14HandshakeInitRequest\x12\x15\n\rclient_random\x18\x01 \x01(\t\"W\n\x15HandshakeInitResponse\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x15\n\rserver_random\x18\x02 \x01(\t\x12\x12\n\npublic_key\x18\x03 \x01(\t\"4\n\x1bHandshakeEstablishedRequest\x12\x15\n\rencrypted_key\x18\x01 \x01(\x0c\"3\n\x1cHandshakeEstablishedResponse\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\")\n\x13\x41\x63\x63ountLoginRequest\x12\x12\n\naccount_id\x18\x01 \x01(\x04\"j\n\x14\x41\x63\x63ountLoginResponse\x12\x12\n\nerror_code\x18\x01 \x01(\x05\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\x05\x12\x0f\n\x07user_id\x18\x04 \x01(\x04\x12\x13\n\x0bsession_key\x18\x05 \x01(\t\"K\n\x12\x43lientLoginRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x04\x12\x13\n\x0bsession_key\x18\x02 \x01(\t\x12\x0f\n\x07version\x18\x03 \x01(\x05\"\x7f\n\x13\x43lientLoginResponse\x12\x13\n\x0bstatus_code\x18\x01 \x01(\x05\x12\x0f\n\x07user_id\x18\x02 \x01(\x04\x12\x0f\n\x07version\x18\x03 \x01(\x05\x12\x11\n\tis_newbie\x18\x04 \x01(\x08\x12\x0c\n\x04\x61mmo\x18\x05 \x01(\r\x12\x10\n\x08grenades\x18\x06 \x01(\r\"-\n\x0b\x45\x63hoRequest\x12\x0e\n\x06value1\x18\x01 \x01(\x04\x12\x0e\n\x06value2\x18\x02 \x01(\t\".\n\x0c\x45\x63hoResponse\x12\x0e\n\x06value1\x18\x01 \x01(\x04\x12\x0e\n\x06value2\x18\x02 \x01(\tb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'login_msg_pb2', globals())
@@ -31,13 +31,13 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _ACCOUNTLOGINREQUEST._serialized_start=273
   _ACCOUNTLOGINREQUEST._serialized_end=314
   _ACCOUNTLOGINRESPONSE._serialized_start=316
-  _ACCOUNTLOGINRESPONSE._serialized_end=376
-  _CLIENTLOGINREQUEST._serialized_start=378
-  _CLIENTLOGINREQUEST._serialized_end=453
-  _CLIENTLOGINRESPONSE._serialized_start=455
-  _CLIENTLOGINRESPONSE._serialized_end=582
-  _ECHOREQUEST._serialized_start=584
-  _ECHOREQUEST._serialized_end=629
-  _ECHORESPONSE._serialized_start=631
-  _ECHORESPONSE._serialized_end=677
+  _ACCOUNTLOGINRESPONSE._serialized_end=422
+  _CLIENTLOGINREQUEST._serialized_start=424
+  _CLIENTLOGINREQUEST._serialized_end=499
+  _CLIENTLOGINRESPONSE._serialized_start=501
+  _CLIENTLOGINRESPONSE._serialized_end=628
+  _ECHOREQUEST._serialized_start=630
+  _ECHOREQUEST._serialized_end=675
+  _ECHORESPONSE._serialized_start=677
+  _ECHORESPONSE._serialized_end=723
 # @@protoc_insertion_point(module_scope)

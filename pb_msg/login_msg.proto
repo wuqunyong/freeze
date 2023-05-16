@@ -32,8 +32,11 @@ message AccountLoginRequest
 
 message AccountLoginResponse
 {
-	uint64 user_id = 1;
-	string session_key = 2;
+	int32 error_code = 1;
+	string ip = 2;
+	int32 port = 3;
+	uint64 user_id = 4;
+	string session_key = 5;
 }
 
 
