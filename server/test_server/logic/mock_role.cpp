@@ -504,7 +504,7 @@ bool MockRole::handleResponse(MessageInfo info, const std::string& msg)
 
 	auto [iType, iCmd] = SplitOpcode(opcodes);
 	ss << "recv|iSessionId:" << info.iSessionId << "|iSeqId:" << info.iRPCRequestID << "|iOpcode:" << opcodes << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << sMsg;
-	//ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
+	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_DEBUG, "{}", ss.str().c_str());
 
 	auto findIte = findResponseHandler(opcodes);
 	if (findIte != nullptr)
@@ -769,7 +769,7 @@ uint64_t MockRole::sendMsg(uint32_t iOpcode, const ::google::protobuf::Message& 
 	auto [iType, iCmd] = SplitOpcode(iOpcode);
 	ss << "send|iSessionId:" << iSessionId << "|iSeqId:" << iSeqId << "|iOpcode:" << iOpcode  << ",iType:" << iType << ",iCmd:" << iCmd << "|data:" << msg.ShortDebugString();
 	
-	//ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_DEBUG, "%s", ss.str().c_str());
+	ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_DEBUG, "{}", ss.str().c_str());
 
 	return iSeqId;
 }

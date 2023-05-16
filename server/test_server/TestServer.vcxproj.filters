@@ -32,6 +32,9 @@
     <ClCompile Include="logic\task\logout_test_case.cpp">
       <Filter>logic\task</Filter>
     </ClCompile>
+    <ClCompile Include="module_handler\role_echo_module.cpp">
+      <Filter>module_handler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -74,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="logic\task\logout_test_case.h">
       <Filter>logic\task</Filter>
+    </ClInclude>
+    <ClInclude Include="module_handler\role_echo_module.h">
+      <Filter>module_handler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

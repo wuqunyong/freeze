@@ -18,24 +18,7 @@ login_server:
   type: 1
   mask_flag : 0
 pb_map_vec :
-  - { type:   505, cmd:   0, pb_name: "pb.db.DB_Update"}
-  - { type:   505, cmd:   3, pb_name: "pb.db.DB_EffectProp"}
-  - { type:   505, cmd:   4, pb_name: "pb.db.DB_DataFlag"}
-  - { type:   505, cmd:   5, pb_name: "pb.db.DB_DataFlag"}
-  - { type:   509, cmd:   6, pb_name: "pb.login.UserLogin"}
-  - { type:   701, cmd:  22, pb_name: "pb.map.Map_Objs"}
-  - { type:   701, cmd: 125, pb_name: "pb.map.Req_ChgMap"}
-  - { type:   715, cmd:   2, pb_name: "pb.decree.decree_reflush"}
-  - { type:   720, cmd:   4, pb_name: "pb.userinfo.SearchResp"}
-  - { type:   720, cmd:   5, pb_name: "pb.userinfo.NewUser"}
-  - { type:   720, cmd:   6, pb_name: "pb.userinfo.AsyncUserDatasResp"}
-  - { type:   750, cmd:   1, pb_name: "pb.talent.Talent_Login_Notice"}
-  - { type:   750, cmd:   2, pb_name: "pb.talent.Talent_BaseChange_Notice"}
-  - { type:   750, cmd:   3, pb_name: "pb.talent.Talent_ElemsChange_Notice"}
-  - { type:   750, cmd:  11, pb_name: "pb.talent.Talent_Open_Response"}
-  - { type:   750, cmd:  13, pb_name: "pb.talent.Talent_Choose_Response"}
-  - { type:   750, cmd:  15, pb_name: "pb.talent.Talent_Activate_Response"}
-  - { type:  1001, cmd:   0, pb_name: "pb.db.User_DB_Recordset"}
+  - { type:   0, cmd:   1104, pb_name: "login_msg.EchoResponse"}
 
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false

@@ -180,7 +180,7 @@ namespace apie {
 			ss << "report/report_" << m_startTime;
 			std::string fileName = ss.str();
 
-			//ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_CYCLE_DAY, PIE_NOTICE, "%s", json_file.c_str());
+			ASYNC_PIE_LOG_CUSTOM(fileName.c_str(), PIE_NOTICE, "{}", json_file.c_str());
 
 
 			for (auto& elems : m_doneSuite)
