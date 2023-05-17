@@ -152,67 +152,92 @@ mysqladmin -u root -p version
 #include <tuple>
 
 #include "apie.h"
+#include "pb_init.h"
 
-#include "../common/opcodes.h"
-#include "../common/dao/model_account.h"
-#include "../common/dao/model_account_name.h"
-#include "../pb_msg/business/login_msg.pb.h"
-#include "../pb_msg/business/rpc_login.pb.h"
-
-apie::status::Status initHook()
+class GatewayMgr
 {
-	auto bResult = apie::CtxSingleton::get().checkIsValidServerType({ ::common::EPT_Login_Server });
-	if (!bResult)
+public:
+	GatewayMgr(std::string name, apie::module_loader::ModuleLoaderBase* prtLoader)
 	{
-		return { apie::status::StatusCode::HOOK_ERROR, "invalid Type" };
+		m_name = name;
+		m_prtLoader = prtLoader;
 	}
-	return {apie::status::StatusCode::OK, ""};
-}
 
-apie::status::Status startHook()
-{
-	return {apie::status::StatusCode::OK, ""};
-}
+	static std::string moduleName()
+	{
+		return "GatewayMgr";
+	}
 
-apie::status::Status handleAccount(uint64_t iSerialNum, const std::shared_ptr<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L>& request, std::shared_ptr<::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>& response)
-{
-	response->set_account_id(request->account_id());
-	return { apie::status::StatusCode::OK, "" };
-}
+	static uint32_t modulePrecedence()
+	{
+		return 1;
+	}
 
-apie::status::Status readyHook()
-{
-	auto& server = apie::service::ServiceHandlerSingleton::get().server;
-	server.createService<::login_msg::MSG_REQUEST_ACCOUNT_LOGIN_L, ::apie::OP_MSG_RESPONSE_ACCOUNT_LOGIN_L, ::login_msg::MSG_RESPONSE_ACCOUNT_LOGIN_L>(::apie::OP_MSG_REQUEST_ACCOUNT_LOGIN_L, handleAccount);
+	apie::status::Status init()
+	{
+		return { apie::status::StatusCode::OK, "" };
+	}
+	apie::status::Status start()
+	{
+		return { apie::status::StatusCode::OK, "" };
+	}
+	apie::status::Status ready()
+	{
+		using namespace ::login_msg;
+		S_REGISTER_REQUEST(Echo, GatewayMgr::handleEcho);
 
-	return {apie::status::StatusCode::OK, ""};
-}
+		return { apie::status::StatusCode::OK, "" };
+	}
+	apie::status::Status exit()
+	{
+		return { apie::status::StatusCode::OK, "" };
+	}
 
-apie::status::Status exitHook()
-{
-	return {apie::status::StatusCode::OK, ""};
-}
+	void setHookReady(apie::hook::HookPoint point)
+	{
+		if (m_prtLoader->getHookReady(point))
+		{
+			return;
+		}
+
+		m_prtLoader->setHookReady(point);
+	}
+
+public:
+	static apie::status::E_ReturnType handleEcho(
+		apie::MessageInfo info, const std::shared_ptr<::login_msg::EchoRequest>& request, std::shared_ptr<::login_msg::EchoResponse>& response)
+	{
+		auto value1 = request->value1();
+		auto value2 = request->value2();
+
+		response->set_value1(value1);
+		response->set_value2(value2);
+
+		return apie::status::E_ReturnType::kRT_Sync;
+	}
+
+private:
+	std::string m_name;
+	apie::module_loader::ModuleLoaderBase* m_prtLoader;
+};
 
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	if (argc != 2)
 	{
-		PANIC_ABORT("usage: exe <ConfFile>, Expected: %d, got: %d", 2, argc);
+		PANIC_ABORT("usage: exe <ConfFile>, Expected: {}, got: {}", 2, argc);
 	}
 
 	std::string configFile = argv[1];
 
-	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Init, initHook);
-	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Start, startHook);
-	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Ready, readyHook);
-	apie::hook::HookRegistrySingleton::get().registerHook(apie::hook::HookPoint::HP_Exit, exitHook);
+	APieRegisterModule<GatewayMgr>();
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();
 	apie::CtxSingleton::get().waitForShutdown();
 
-    return 0;
+	return 0;
 }
 
 ```
