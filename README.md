@@ -229,10 +229,9 @@ int main(int argc, char** argv)
 		PANIC_ABORT("usage: exe <ConfFile>, Expected: {}, got: {}", 2, argc);
 	}
 
-	std::string configFile = argv[1];
-
 	APieRegisterModule<GatewayMgr>();
 
+	std::string configFile = argv[1];
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();
 	apie::CtxSingleton::get().waitForShutdown();
