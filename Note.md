@@ -172,3 +172,8 @@ https://v2sub.com/modules/servers/V2raySocks/osubscribe.php?sid=128736&token=QFd
 
 
 SHOW COLUMNS FROM TBALE_NAME;
+
+
+
+
+LD_DEBUG=libs ls
