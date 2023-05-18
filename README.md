@@ -22,8 +22,8 @@ git --version
 ## clone项目
 ```
 cd /root/
-git clone https://github.com/wuqunyong/APie.git
-cd /root/APie/download/
+git clone https://github.com/wuqunyong/freeze.git
+cd /root/freeze/download/
 cp cmake-3.18.1-Linux-x86_64.tar.gz /root/
 cp protobuf-3.11.4.zip /root/
 cp yaml-cpp-master.zip /root/
@@ -67,7 +67,7 @@ make install
 ## 安装cpp_redis
 ```
 # Clone the project
-git clone https://github.com/cpp-redis/cpp_redis.git
+git clone git@github.com:Cylix/cpp_redis.git
 # Go inside the project directory
 cd cpp_redis
 # Get tacopie submodule
@@ -84,10 +84,10 @@ make install
 
 ### 安装nats
 ```shell
-git clone https://github.com/nats-io/nats.c.git
+git clone git@github.com:nats-io/nats.c.git
 cd nats.c/
 mkdir build && cd build
-cmake .. -DNATS_BUILD_STREAMING=OFF
+cmake .. -DNATS_BUILD_STREAMING=OFF -DNATS_BUILD_TLS_USE_OPENSSL_1_1_API=OFF
 make
 make install
 ```
