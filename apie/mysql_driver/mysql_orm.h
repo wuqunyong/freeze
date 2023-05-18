@@ -13,7 +13,6 @@
 #include <sstream>
 #include <bitset>
 #include <vector>
-#include <format>
 #include <iostream>
 #include <string>
 #include <string_view>

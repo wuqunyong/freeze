@@ -115,6 +115,12 @@
     <Filter Include="third_party\croncpp\include">
       <UniqueIdentifier>{e691e35e-1b82-4033-8707-41f2c6f18390}</UniqueIdentifier>
     </Filter>
+    <Filter Include="third_party\fmt">
+      <UniqueIdentifier>{e3d399a9-1b8a-428f-b73e-9064af00e8b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\fmt\src">
+      <UniqueIdentifier>{34d37957-f2f2-4690-a89c-e5e5fd5cad04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\c_smart_ptr.h">
@@ -848,6 +854,9 @@
     </ClCompile>
     <ClCompile Include="common\env.cc">
       <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third_party\fmt\src\format.cc">
+      <Filter>third_party\fmt\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

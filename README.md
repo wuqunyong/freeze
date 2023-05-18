@@ -40,6 +40,11 @@ yum install centos-release-scl -y
 yum install devtoolset-8 -y
 scl enable devtoolset-8 bash
 gcc --version
+
+yum install centos-release-scl-rh -y
+yum install devtoolset-11 -y
+scl enable devtoolset-11 bash
+gcc --version
 ```
 ### 安装protobuf
 ```shell
