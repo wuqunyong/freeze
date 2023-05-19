@@ -104,12 +104,22 @@ namespace apie
 			{
 				binary_name = "apie";
 
-				time_t now = apie::Ctx::getCurSeconds();
-				struct tm buf;
-				localtime_s(&buf, &now);
-
 				char timebuf[128] = { '\0' };
-				strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", &buf);
+
+				time_t now = apie::Ctx::getCurSeconds();
+				
+				#ifdef WIN32
+					struct tm buf;
+					localtime_s(&buf, &now);
+					strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", &buf);
+				#else
+					struct tm* timeinfo;
+					timeinfo = localtime (&now);
+					strftime(timebuf, sizeof(timebuf), "%Y%m%d-%H%M%S", timeinfo);
+				#endif
+
+				
+				
 
 				std::string sLaunchTime = timebuf;
 				memset(timebuf, 0, sizeof(timebuf));
