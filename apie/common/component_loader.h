@@ -17,14 +17,14 @@
 
 namespace apie {
 
-template <typename KeyType, typename T>
-class ComponentLoader : public std::enable_shared_from_this<ComponentLoader<KeyType, T>>
+template <typename KeyType, typename TupleT>
+class ComponentLoader : public std::enable_shared_from_this<ComponentLoader<KeyType, TupleT>>
 {
 public:
-	//template <typename T>
-	using ValueTypeT = typename T::Type;
+	template <typename U>
+	using ValueTypeT = typename U::Type;
 
-	using WrapperType = T;
+	using WrapperType = TupleT;
 
 	using type = ComponentLoader; // using injected-class-name
 	using ReadyCb = std::function<void(apie::status::Status, std::shared_ptr<type> loader)>;
@@ -52,35 +52,35 @@ public:
 		return m_id;
 	}
 
-	template <typename T>
-	void Append(T moduleType)
+	template <typename U>
+	void Append(U moduleType)
 	{
-		m_options.set<T>(m_id);
+		m_options.set<U>(m_id);
 		//m_modules.push_back(typeid(moduleType));
 	}
 
-	template <typename T>
+	template <typename U>
 	bool has() const
 	{
-		return m_options.has<T>();
+		return m_options.has<U>();
 	}
 
-	template <typename T>
-	ValueTypeT<T>& lookup()
+	template <typename U>
+	ValueTypeT<U>& lookup()
 	{
-		if (!has<T>())
+		if (!has<U>())
 		{
 			std::stringstream ss;
-			ss << "CommonModuleLoader lookup " << typeid(T).name() << " : unregister";
+			ss << "CommonModuleLoader lookup " << typeid(U).name() << " : unregister";
 			throw std::exception(ss.str().c_str());
 		}
 
-		return m_options.lookup<T>();
+		return m_options.lookup<U>();
 	}
 
-	template <typename T>
+	template <typename U>
 	ComponentLoader& setState(E_LoadingState v) {
-		m_loading[typeid(T)] = v;
+		m_loading[typeid(U)] = v;
 
 		switch (v)
 		{
@@ -95,7 +95,7 @@ public:
 			apie::event_ns::EphemeralTimerMgrSingleton::get().deleteEphemeralTimer(m_timerId);
 
 			auto self = this->shared_from_this();
-			apie::status::Status status(apie::status::StatusCode::LoadFromDbError, typeid(T).name());
+			apie::status::Status status(apie::status::StatusCode::LoadFromDbError, typeid(U).name());
 			m_cb(status, self);
 			break;
 		}
