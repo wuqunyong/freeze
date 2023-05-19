@@ -39,7 +39,8 @@ public:
 
 
 	template<class Key, class Tuple, std::size_t... Is>
-	friend static inline auto CreateComponentLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>);
+	//friend static inline auto CreateComponentLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>);
+	friend inline auto CreateComponentLoaderPtr(Key iId, const Tuple& t, std::index_sequence<Is...>);
 
 	~ComponentLoader()
 	{
