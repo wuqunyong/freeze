@@ -12,7 +12,19 @@
 
 ## 安装依赖
 ```shell
-yum install -y mysql-devel mysql-server lrzsz curl-devel openssl openssl-devel readline-devel pcre pcre-devel zlib zlib-devel libevent libevent-devel gcc gcc-c++ rpm-build automake libtool lz4-devel
+yum install -y mysql-devel mysql-server lrzsz curl-devel openssl openssl-devel readline-devel pcre pcre-devel zlib zlib-devel gcc gcc-c++ rpm-build automake libtool lz4-devel
+
+ssh-keygen -t ed25519 -C "your_email@example.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
+```
+### 升级GCC
+```shell
+yum install centos-release-scl-rh -y
+yum install devtoolset-11 -y
+scl enable devtoolset-11 bash
+gcc --version
 ```
 ## 安装git
 ```
@@ -22,11 +34,15 @@ git --version
 ## clone项目
 ```
 cd /root/
-git clone https://github.com/wuqunyong/freeze.git
+git clone git@github.com:wuqunyong/freeze.git
+git branch -a
+git checkout future_codec
+git pull
 cd /root/freeze/download/
 cp cmake-3.18.1-Linux-x86_64.tar.gz /root/
-cp protobuf-3.11.4.zip /root/
-cp yaml-cpp-master.zip /root/
+cp protobuf-3.21.6.zip /root/
+cp yaml-cpp-yaml-cpp-0.7.0.zip /root/
+cp libevent-release-2.1.11-stable.zip /root/
 cd /root/
 ```
 ### 安装cmake
@@ -34,36 +50,24 @@ cd /root/
 tar -zxvf cmake-3.18.1-Linux-x86_64.tar.gz
 cd cmake-3.18.1-Linux-x86_64
 ```
-### 升级GCC
-```shell
-yum install centos-release-scl -y
-yum install devtoolset-8 -y
-scl enable devtoolset-8 bash
-gcc --version
 
-yum install centos-release-scl-rh -y
-yum install devtoolset-11 -y
-scl enable devtoolset-11 bash
-gcc --version
-```
 ### 安装protobuf
 ```shell
-unzip protobuf-3.11.4.zip
-cd protobuf-3.11.4
+unzip protobuf-3.21.6.zip
+cd protobuf-3.21.6
 ./autogen.sh
 ./configure --prefix=/usr/local/protobuf/
 make
-make check
+# make check
 make install
 ldconfig
 ```
 ### 安装yaml
 ```shell
-unzip yaml-cpp-master.zip
-cd yaml-cpp-master
-mkdir build
-cd build
-cmake ..
+unzip yaml-cpp-yaml-cpp-0.7.0.zip
+cd yaml-cpp-yaml-cpp-0.7.0
+mkdir build && cd build
+/root/cmake-3.18.1-Linux-x86_64/bin/cmake ..
 make
 make test
 make install
@@ -80,27 +84,43 @@ git submodule init && git submodule update
 # Create a build directory and move into it
 mkdir build && cd build
 # Generate the Makefile using CMake
-cmake .. -DCMAKE_BUILD_TYPE=Release
+/root/cmake-3.18.1-Linux-x86_64/bin/cmake .. -DCMAKE_BUILD_TYPE=Release
 # Build the library
 make
 # Install the library
 make install
+
+#include<thread>
+
 ```
 
 ### 安装nats
 ```shell
+#libevent libevent-devel 依赖libevent 2.1版本
+
 git clone git@github.com:nats-io/nats.c.git
 cd nats.c/
 mkdir build && cd build
-cmake .. -DNATS_BUILD_STREAMING=OFF -DNATS_BUILD_TLS_USE_OPENSSL_1_1_API=OFF
+/root/cmake-3.18.1-Linux-x86_64/bin/cmake .. -DNATS_BUILD_STREAMING=OFF -DNATS_BUILD_TLS_USE_OPENSSL_1_1_API=OFF
 make
 make install
 ```
 
+### 安装libevent
+```shell
+unzip libevent-release-2.1.11-stable.zip
+cd libevent-release-2.1.11-stable
+mkdir build && cd build
+/root/cmake-3.18.1-Linux-x86_64/bin/cmake ..
+make
+make install
+```
+
+
 ## 编译
 ```shell
 $ mkdir build && cd build
-$ cmake .. -DCMAKE_CXX_COMPILER=$(which g++)   
+$ /root/cmake-3.18.1-Linux-x86_64/bin/cmake .. -DCMAKE_CXX_COMPILER=$(which g++)   
 $ make
 $ make install
 ```
@@ -137,7 +157,7 @@ mysqladmin -u root -p version
 ```
 
 # Windows安装
-安装依赖库protobuf-3.11.4.zip
+安装依赖库protobuf-3.21.6.zip
 直接visual studio启动，编译
 
 # 架构图
