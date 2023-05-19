@@ -203,7 +203,7 @@ void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, 
 	} \
 } while (0);
 #else
-#define ASYNC_PIE_LOG(file, cycle, level, format, args...) do { \
+#define ASYNC_PIE_LOG(level, format, args...) do { \
 	bool bShowPos = apie::CtxSingleton::get().getConfigs()->log.show_pos; \
 	if (bShowPos) \
 	{ \
