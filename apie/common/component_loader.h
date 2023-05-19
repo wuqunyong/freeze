@@ -78,9 +78,9 @@ public:
 		return m_options.lookup<U>();
 	}
 
-	template <typename U>
-	ComponentLoader& setState(E_LoadingState v) {
-		m_loading[typeid(U)] = v;
+
+	ComponentLoader& setState(std::type_index tIndex, E_LoadingState v) {
+		m_loading[tIndex] = v;
 
 		switch (v)
 		{
@@ -95,7 +95,7 @@ public:
 			apie::event_ns::EphemeralTimerMgrSingleton::get().deleteEphemeralTimer(m_timerId);
 
 			auto self = this->shared_from_this();
-			apie::status::Status status(apie::status::StatusCode::LoadFromDbError, typeid(U).name());
+			apie::status::Status status(apie::status::StatusCode::LoadFromDbError, tIndex.name());
 			m_cb(status, self);
 			break;
 		}
@@ -285,15 +285,13 @@ private:
 
 			auto self = this->shared_from_this();
 			auto functorObj = [self, tObj](bool bResult) {
-				using TupleElemT = decltype(tObj);
-
 				if (bResult)
 				{
-					self->setState<TupleElemT>(ELS_Success);
+					self->setState(typeid(decltype(tObj)), ELS_Success);
 				} 
 				else
 				{
-					self->setState<TupleElemT>(ELS_Failure);
+					self->setState(typeid(decltype(tObj)), ELS_Failure);
 				}
 			};
 
