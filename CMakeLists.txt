@@ -112,6 +112,7 @@ else ()
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/astar
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cpp_redis/includes
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/cpp_redis/tacopie/includes
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/croncpp/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/http-parser
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/JPSPlusGoalBounding
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/jsoncpp/include
