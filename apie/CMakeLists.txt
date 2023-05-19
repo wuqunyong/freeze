@@ -24,6 +24,7 @@ set(cxx-outer-sources
     third_party/jsoncpp/src/lib_json/json_writer.cpp
     third_party/jsoncpp/src/lib_json/json_reader.cpp
     third_party/jsoncpp/src/lib_json/json_value.cpp
+    third_party/fmt/src/format.cc
     third_party/tinyxml2/tinyxml2.cpp)
 
 foreach(source ${cxx-outer-sources})

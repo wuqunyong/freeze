@@ -70,7 +70,8 @@ if (WIN32)
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/pfr/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/croncpp/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/http-parser
-        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libnats)
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libnats
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/fmt/include)
 
     set(LinkDirs
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libs
@@ -118,6 +119,7 @@ else ()
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/influxdb-cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/json/include
         ${CMAKE_CURRENT_SOURCE_DIR}/third_party/pfr/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/third_party/fmt/include
         ${CMAKE_CURRENT_SOURCE_DIR}/pb_msg
         ${CMAKE_CURRENT_SOURCE_DIR}/apie)
 
