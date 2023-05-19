@@ -21,7 +21,7 @@ template <typename KeyType, typename T>
 class ComponentLoader : public std::enable_shared_from_this<ComponentLoader<KeyType, T>>
 {
 public:
-	template <typename T>
+	//template <typename T>
 	using ValueTypeT = typename T::Type;
 
 	using WrapperType = T;
