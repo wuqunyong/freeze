@@ -285,13 +285,15 @@ private:
 
 			auto self = this->shared_from_this();
 			auto functorObj = [self, tObj](bool bResult) {
+				using TupleElemT = decltype(tObj);
+
 				if (bResult)
 				{
-					self->setState<decltype(tObj)>(ELS_Success);
+					self->setState<TupleElemT>(ELS_Success);
 				} 
 				else
 				{
-					self->setState<decltype(tObj)>(ELS_Failure);
+					self->setState<TupleElemT>(ELS_Failure);
 				}
 			};
 
