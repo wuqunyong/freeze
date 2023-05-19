@@ -11,6 +11,7 @@
 #include <functional>
 #include <optional>
 
+#include "apie/common/enum_to_int.h"
 #include "apie/mysql_driver/mysql_orm.h"
 
 #include "apie/singleton/threadsafe_singleton.h"
