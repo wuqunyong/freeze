@@ -100,7 +100,7 @@ make install
 ## 编译
 ```shell
 $ mkdir build && cd build
-$ cmake ..    
+$ cmake .. -DCMAKE_CXX_COMPILER=$(which g++)   
 $ make
 $ make install
 ```
