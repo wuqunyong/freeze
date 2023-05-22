@@ -248,7 +248,7 @@ namespace status {
 				std::stringstream ss;
 				ss << "ErrorCode:" << apie::toUnderlyingType(status_.code()) << ", ErrorMsg:" << status_.message();
 
-				throw std::exception(ss.str().c_str());
+				throw std::logic_error(ss.str());
 			}
 		}
 
@@ -258,7 +258,7 @@ namespace status {
 				std::stringstream ss;
 				ss << "ErrorCode:" << apie::toUnderlyingType(status_.code()) << ", ErrorMsg:" << status_.message();
 
-				throw std::exception(ss.str().c_str());
+				throw std::logic_error(ss.str());
 			}
 		}
 
