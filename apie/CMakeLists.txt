@@ -41,12 +41,14 @@ endif()
 
 
 message(STATUS "sources: ${sources}")
+message(STATUS "LinkLibs: ${LinkLibs}")
+
 
 add_library(apie ${LibType} ${APIE_SOURCE} ${sources} ${public_headers})
 set_target_properties(apie PROPERTIES VERSION "1.0.0" SOVERSION "1")
 target_include_directories(apie PUBLIC ${IncludeDirs})
 target_link_directories(apie PUBLIC ${LinkDirs})
-target_link_libraries(apie ${LinkLibs})
+target_link_libraries(apie ${LinkLibs} -lcpp_redis -ltacopie)
 
 
 message(STATUS "apie PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
