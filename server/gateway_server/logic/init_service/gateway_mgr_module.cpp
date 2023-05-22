@@ -130,7 +130,7 @@ void GatewayMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD
 
 void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 {
-	if (cmd.params_size() < 5)
+	if (cmd.params_size() < 3)
 	{
 		return;
 	}
@@ -141,8 +141,8 @@ void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 
 	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(realm, type, id);
 
-	std::string name = cmd.params()[3];
-	std::string info = cmd.params()[4];
+	//std::string name = cmd.params()[3];
+	//std::string info = cmd.params()[4];
 
 	//::nats_msg::NATS_MSG_PRXOY nats_msg;
 	//apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
