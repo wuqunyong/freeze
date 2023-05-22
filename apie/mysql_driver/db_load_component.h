@@ -134,7 +134,7 @@ namespace apie {
 			{
 				std::stringstream ss;
 				ss << "DbLoadComponent get type:" << typeid(T).name() << " not exist";
-				throw std::exception(ss.str().c_str());
+				throw std::logic_error(ss.str());
 			}
 			auto const* value = it->second->data_address();
 			return *reinterpret_cast<ValueTypeT<T> const*>(value);
