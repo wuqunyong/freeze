@@ -131,7 +131,7 @@ else ()
         /usr/local/protobuf/lib
         /usr/local/apie/lib)
 
-    set(LinkLibs -lmysqlclient -levent -levent_pthreads -lpthread -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie)
+    set(LinkLibs -lmysqlclient -levent -levent_pthreads -ldl -lc -lrt -lcrypto -lssl -llz4 -lcpp_redis -ltacopie -lpthread)
 endif()
 
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
