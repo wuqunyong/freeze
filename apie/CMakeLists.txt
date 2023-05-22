@@ -36,7 +36,7 @@ set(LibType)
 if (WIN32)
     set(LibType STATIC)
 else ()
-	set(LibType STATIC)
+	set(LibType SHARED)
 endif()
 
 
