@@ -113,7 +113,7 @@ namespace status {
 			// NOLINTNEXTLINE(google-explicit-constructor)
 		StatusOr(Status rhs) : status_(std::move(rhs)) {
 			if (status_.ok()) {
-				throw std::exception("ThrowInvalidArgument");
+				throw std::logic_error("ThrowInvalidArgument");
 			}
 		}
 
