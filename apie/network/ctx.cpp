@@ -36,6 +36,7 @@
 sigset_t g_SigSet;
 #endif
 
+#include <cpp_redis/cpp_redis>
 
 #include "nats/nats.h"
 
