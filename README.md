@@ -35,8 +35,9 @@ git --version
 ```
 cd /root/
 git clone git@github.com:wuqunyong/freeze.git
+cd freeze
 git branch -a
-git checkout future_codec
+git checkout future_lite
 git pull
 cd /root/freeze/download/
 cp cmake-3.18.1-Linux-x86_64.tar.gz /root/
@@ -69,8 +70,11 @@ cd yaml-cpp-yaml-cpp-0.7.0
 mkdir build && cd build
 /root/cmake-3.18.1-Linux-x86_64/bin/cmake ..
 make
-make test
+# make test
 make install
+
+
+error: ‘dummy’ may be used uninitialized
 ```
 
 ## 安装cpp_redis
