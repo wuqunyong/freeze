@@ -72,7 +72,7 @@ public:
 		{
 			std::stringstream ss;
 			ss << "CommonModuleLoader lookup " << typeid(U).name() << " : unregister";
-			throw std::exception(ss.str().c_str());
+			throw std::logic_error(ss.str());
 		}
 
 		return m_options.lookup<U>();
