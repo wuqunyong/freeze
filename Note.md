@@ -177,3 +177,8 @@ SHOW COLUMNS FROM TBALE_NAME;
 
 
 LD_DEBUG=libs ls
+
+
+
+连接库
+https://cloud.tencent.com/developer/article/1377516

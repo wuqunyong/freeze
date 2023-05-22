@@ -32,7 +32,7 @@ else ()
     set(DependenciesLinkDirs
         ${PROJECT_BINARY_DIR}/lib)
 
-	set(DependenciesLinkLibs -lapie -lprotobuf -lyaml-cpp -lnats)
+	set(DependenciesLinkLibs -lapie -lprotobuf -lyaml-cpp -lnats -lcpp_redis -ltacopie)
 endif()
 
 
@@ -42,4 +42,4 @@ file(GLOB_RECURSE SOURCE_FILES ./*.cc ./*.cpp)
 add_executable(service_registry ${SOURCE_FILES})
 target_include_directories(service_registry PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(service_registry PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
-target_link_libraries(service_registry PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
+target_link_libraries(service_registry PUBLIC ${DependenciesLinkLibs} ${LinkLibs})
