@@ -127,13 +127,14 @@ apie::status::Status TestModule10::ready()
 	auto doneCb = [](apie::status::Status status, auto ptrModule) {
 		if (status.ok())
 		{
-			auto& rModuleA = ptrModule->lookup<TestModuleA>();
-			auto sInfo = rModuleA.toString();
+			// TODO
+			//auto& rModuleA = ptrModule->lookup<TestModuleA>();
+			//auto sInfo = rModuleA.toString();
 
-			auto& rModuleB = ptrModule->lookup<TestModuleB>();
-			sInfo = rModuleB.toString();
-			rModuleB.incrementValue();
-			sInfo = rModuleB.toString();
+			//auto& rModuleB = ptrModule->lookup<TestModuleB>();
+			//sInfo = rModuleB.toString();
+			//rModuleB.incrementValue();
+			//sInfo = rModuleB.toString();
 
 			ptrModule->Meta_saveToDb();
 		}
