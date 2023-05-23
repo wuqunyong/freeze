@@ -27,12 +27,13 @@ if (WIN32)
         pb.lib)
 else ()
     set(DependenciesIncludeDirs
-        ${CMAKE_CURRENT_SOURCE_DIR}/../../apie)
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../apie
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../lib_pb)
 
     set(DependenciesLinkDirs
         ${PROJECT_BINARY_DIR}/lib)
 
-    set(DependenciesLinkLibs -lapie -lprotobuf -lyaml-cpp -lnats)
+    set(DependenciesLinkLibs -lapie -lpb -lprotobuf -lyaml-cpp -lnats -lcpp_redis -ltacopie)
 endif()
 
 
