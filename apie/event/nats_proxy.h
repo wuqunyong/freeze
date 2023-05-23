@@ -375,7 +375,7 @@ namespace event_ns {
 			static bool SubscribeChannelByRIdFromGW(uint64_t iRId);
 			static bool UnsubscribeChannelByRIdFromGW(uint64_t iRId);
 
-			void Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg);
+			void Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>& msg);
 
 		private:
 			void NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType msg);

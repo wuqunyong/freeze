@@ -422,10 +422,13 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 	{
 	case apie::event_ns::NatsManager::E_NT_Realm:
 	{
-		::nats_msg::NATS_MSG_PRXOY* m = msg.release();
-		apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
-			[m, this]() mutable { Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>(m)); }
-		);
+		//::nats_msg::NATS_MSG_PRXOY* m = msg.release();
+		//apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+		//	[m, this]() mutable { Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>(m)); }
+		//);
+
+		
+		Handle_RealmSubscribe(msg);
 		break;
 	}
 	default:
@@ -496,13 +499,13 @@ void NatsManager::runIntervalCallbacks()
 	interval_timer_->enableTimer(std::chrono::milliseconds(1000));
 }
 
-void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY> msg)
+void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>& msg)
 {
 	//ASYNC_PIE_LOG(PIE_DEBUG, "nats/proxy|Handle_Subscribe|{}|{}", ss.str(), msg->ShortDebugString());
 
 	if (msg->has_rpc_request())
 	{
-		apie::rpc::RPCServerManagerSingleton::get().onMessage(msg->rpc_request());
+		apie::rpc::RPCServerManagerSingleton::get().onMessage_Head(msg->rpc_request());
 		return;
 	}
 
@@ -515,22 +518,38 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 		apie::status::Status status(code, response.status().msg());
 		status.setHasMore(response.has_more());
 
-		apie::rpc::RPCClientManagerSingleton::get().handleResponse(response.client().seq_id(), status, response.result_data());
+		apie::rpc::RPCClientManagerSingleton::get().handleResponse_Head(response.client().seq_id(), status, response.result_data());
 		return;
 	}
 
 	if (msg->has_multiplexer_forward())
 	{
+		::rpc_msg::RoleIdentifier role = msg->multiplexer_forward().role();
+
 		MessageInfo info;
 		info.iRPCRequestID = msg->multiplexer_forward().info().seq_num();
 		info.iOpcode = msg->multiplexer_forward().info().opcode();
-		apie::forward::ForwardManagerSingleton::get().onForwardMuxMessage(msg->multiplexer_forward().role(), info, msg->multiplexer_forward().body_msg());
+
+		std::string sBodyMsg = msg->multiplexer_forward().body_msg();
+
+		apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+			[role, info, sBodyMsg]() mutable {
+				apie::forward::ForwardManagerSingleton::get().onForwardMuxMessage(role, info, sBodyMsg);
+			}
+		);
 		return;
 	}
 
 	if (msg->has_demultiplexer_forward())
 	{
-		apie::forward::ForwardManagerSingleton::get().onForwardDemuxMessage(msg->demultiplexer_forward().role(), msg->demultiplexer_forward().body_msg());
+		::rpc_msg::RoleIdentifier role = msg->demultiplexer_forward().role();
+		std::string sBodyMsg = msg->demultiplexer_forward().body_msg();
+
+		apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+			[role, sBodyMsg]() mutable {
+				apie::forward::ForwardManagerSingleton::get().onForwardDemuxMessage(role, sBodyMsg);
+			}
+		);
 		return;
 	}
 

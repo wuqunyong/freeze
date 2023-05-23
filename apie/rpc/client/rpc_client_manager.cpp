@@ -66,7 +66,8 @@ void RPCClientManager::handleTimeout()
 			{
 				try {
 					status::Status status(status::StatusCode::TIMEOUT, "timeout");
-					findIte->second->onMessage(status, "");
+					auto ptrMsg = findIte->second->onMessage_Head(status, "");
+					findIte->second->onMessage_Tail(status, ptrMsg);
 				}
 				catch (const std::exception& e) {
 					std::stringstream ss;
@@ -85,7 +86,7 @@ void RPCClientManager::handleTimeout()
 	}
 }
 
-void RPCClientManager::handleResponse(uint64_t seq_num, const status::Status& status, const std::string& response_data)
+void RPCClientManager::handleResponse_Head(uint64_t seq_num, const status::Status& status, const std::string& response_data)
 {
 	auto find_ite = pending_requests_.find(seq_num);
 	if (find_ite == pending_requests_.end())
@@ -93,13 +94,30 @@ void RPCClientManager::handleResponse(uint64_t seq_num, const status::Status& st
 		//TODO
 		return;
 	}
-	find_ite->second->onMessage(status, response_data);
+
+	auto ptrMsg = find_ite->second->onMessage_Head(status, response_data);
+
+	status::Status rpcStatus = status;
+	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+		[seq_num, rpcStatus, ptrMsg, this]() mutable { handleResponse_Tail(seq_num, rpcStatus, ptrMsg); }
+	);
+
+}
+
+void RPCClientManager::handleResponse_Tail(uint64_t seq_num, const status::Status& status, std::shared_ptr<::google::protobuf::Message> ptrMsg)
+{
+	auto find_ite = pending_requests_.find(seq_num);
+	if (find_ite == pending_requests_.end())
+	{
+		//TODO
+		return;
+	}
+	find_ite->second->onMessage_Tail(status, ptrMsg);
 
 	if (!status.hasMore())
 	{
 		pending_requests_.erase(find_ite);
 	}
-
 }
 
 void RPCClientManager::insertRequestsTimeout(uint64_t seq_num, uint64_t expired_at)

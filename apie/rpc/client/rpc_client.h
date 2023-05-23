@@ -54,7 +54,9 @@ public:
 		this->destroy();
 	}
 
-	void onMessage(const status::Status& status, const std::string& response_data) override;
+	std::shared_ptr<::google::protobuf::Message> onMessage_Head(const status::Status& status, const std::string& response_data) override;
+	void onMessage_Tail(const status::Status& status, std::shared_ptr<::google::protobuf::Message> ptrMsg);
+
 	void destroy();
 
 private:
@@ -136,13 +138,13 @@ void RPCClient<Request, Response>::handleResponse(const status::Status& status, 
 }
 
 template <typename Request, typename Response>
-void RPCClient<Request, Response>::onMessage(const status::Status& status, const std::string& response_data)
+std::shared_ptr<::google::protobuf::Message> RPCClient<Request, Response>::onMessage_Head(const status::Status& status, const std::string& response_data)
 {
 	auto ptrMsg = apie::message::ProtobufFactory::createMessage(Response::descriptor()->full_name());
 	if (ptrMsg == nullptr)
 	{
 		//TODO
-		return;
+		return nullptr;
 	}
 
 	std::shared_ptr<::google::protobuf::Message> newMsg(ptrMsg);
@@ -150,10 +152,30 @@ void RPCClient<Request, Response>::onMessage(const status::Status& status, const
 	if (!bResult)
 	{
 		//TODO
+		return nullptr;
+	}
+	
+	return newMsg;
+
+	//auto shared_obj = std::dynamic_pointer_cast<Response>(newMsg);
+	//if (shared_obj == nullptr)
+	//{
+	//	//TODO
+	//	return;
+	//}
+
+	//this->handleResponse(status, shared_obj);
+}
+
+template <typename Request, typename Response>
+void RPCClient<Request, Response>::onMessage_Tail(const status::Status& status, std::shared_ptr<::google::protobuf::Message> ptrMsg)
+{
+	if (ptrMsg == nullptr)
+	{
 		return;
 	}
 
-	auto shared_obj = std::dynamic_pointer_cast<Response>(newMsg);
+	auto shared_obj = std::dynamic_pointer_cast<Response>(ptrMsg);
 	if (shared_obj == nullptr)
 	{
 		//TODO

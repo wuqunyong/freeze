@@ -46,8 +46,9 @@ public:
 
 
 	void sendResponseError(const apie::status::Status& status, const ::rpc_msg::RPC_REQUEST& context);
-	void onMessage(const ::rpc_msg::RPC_REQUEST& request);
-
+	
+	void onMessage_Head(const ::rpc_msg::RPC_REQUEST& context);
+	void onMessage_Tail(const ::rpc_msg::RPC_REQUEST& context, std::shared_ptr<::google::protobuf::Message> ptrNewMsg);
 
 private:
 	std::map<uint32_t, std::shared_ptr<RPCServerBase>> service_;

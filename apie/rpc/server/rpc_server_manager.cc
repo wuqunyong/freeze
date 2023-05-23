@@ -57,7 +57,7 @@ void RPCServerManager::sendResponseError(const apie::status::Status& status, con
 	apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 }
 
-void RPCServerManager::onMessage(const ::rpc_msg::RPC_REQUEST& context)
+void RPCServerManager::onMessage_Head(const ::rpc_msg::RPC_REQUEST& context)
 {
 	auto optType = this->getType(context.opcodes());
 	if (!optType.has_value())
@@ -95,6 +95,32 @@ void RPCServerManager::onMessage(const ::rpc_msg::RPC_REQUEST& context)
 		return;
 	}
 
+	//auto find_ite = func_.find(context.opcodes());
+	//if (find_ite == func_.end())
+	//{
+	//	std::stringstream ss;
+	//	ss << "func_ opcodes:" << context.opcodes();
+
+	//	apie::status::Status status(apie::status::StatusCode::RPC_Request_UnRegister, ss.str());
+	//	sendResponseError(status, context);
+	//	return;
+	//}
+	//find_ite->second(context, newMsg);
+
+	::rpc_msg::RPC_REQUEST rpcContext;
+	(*rpcContext.mutable_client()) = context.client();
+	(*rpcContext.mutable_server()) = context.server();
+	rpcContext.set_server_stream(context.server_stream());
+	rpcContext.set_opcodes(context.opcodes());
+	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+		[rpcContext, newMsg, this]() mutable {
+			onMessage_Tail(rpcContext, newMsg);
+		}
+	);
+}
+
+void RPCServerManager::onMessage_Tail(const ::rpc_msg::RPC_REQUEST& context, std::shared_ptr<::google::protobuf::Message> ptrNewMsg)
+{
 	auto find_ite = func_.find(context.opcodes());
 	if (find_ite == func_.end())
 	{
@@ -105,7 +131,7 @@ void RPCServerManager::onMessage(const ::rpc_msg::RPC_REQUEST& context)
 		sendResponseError(status, context);
 		return;
 	}
-	find_ite->second(context, newMsg);
+	find_ite->second(context, ptrNewMsg);
 }
 
 }  

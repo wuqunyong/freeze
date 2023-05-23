@@ -18,7 +18,8 @@ public:
 	virtual ~RPCClientBase() {}
 
 	virtual void destroy() = 0;
-	virtual void onMessage(const status::Status& status, const std::string& response_data) = 0;
+	virtual std::shared_ptr<::google::protobuf::Message> onMessage_Head(const status::Status& status, const std::string& response_data) = 0;
+	virtual void onMessage_Tail(const status::Status& status, std::shared_ptr<::google::protobuf::Message> ptrMsg) = 0;
 
 	uint32_t opcode() const { return opcode_; }
 
