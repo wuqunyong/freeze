@@ -25,7 +25,6 @@
 #include <atomic>
 #include <condition_variable>
 #include <functional>
-#include <list>
 #include <mutex>
 #include <queue>
 #include <thread>
@@ -115,12 +114,9 @@ private:
   //!
   //! retrieve a new task
   //! fetch the first element in the queue, or wait if no task are available
+  //! may return null if the threadpool is stopped
   //!
-  //! \return a pair <stopped, task>
-  //!         pair.first indicated whether the thread has been marked for stop and should return immediately
-  //!         pair.second contains the task to be executed
-  //!
-  std::pair<bool, task_t> fetch_task_or_stop(void);
+  task_t fetch_task(void);
 
   //!
   //! \return whether the thread should stop or not
@@ -131,17 +127,12 @@ private:
   //!
   //! threads
   //!
-  std::list<std::thread> m_workers;
+  std::vector<std::thread> m_workers;
 
   //!
   //! number of threads allowed
   //!
-  std::atomic<std::size_t> m_max_nb_threads = ATOMIC_VAR_INIT(0);
-
-  //!
-  //! current number of running threads
-  //!
-  std::atomic<std::size_t> m_nb_running_threads = ATOMIC_VAR_INIT(0);
+  std::size_t m_nb_threads;
 
   //!
   //! whether the thread_pool should stop or not

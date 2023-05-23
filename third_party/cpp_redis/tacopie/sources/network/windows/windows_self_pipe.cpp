@@ -20,13 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! guard for bulk content integration depending on how user integrates the library
-#ifdef _WIN32
-
 #include <tacopie/network/self_pipe.hpp>
 #include <tacopie/utils/error.hpp>
 
-#include <winsock2.h>
+#include <Winsock2.h>
 
 #include <tacopie/utils/typedefs.hpp>
 #include <fcntl.h>
@@ -99,5 +96,3 @@ self_pipe::clr_buffer(void) {
 }
 
 } // namespace tacopie
-
-#endif /* _WIN32 */

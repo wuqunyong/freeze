@@ -31,9 +31,8 @@ namespace apie {
 			if (this->getState() == RS_Closed)
 			{
 				try {
-					//TODO
 					auto ptrCb = this->getAdapterCb();
-					//m_client.connect(m_host, m_port, ptrCb);
+					m_client.connect(m_host, m_port, ptrCb);
 					m_status = RS_Connect;
 				}
 				catch (std::exception& e) {
@@ -72,7 +71,7 @@ namespace apie {
 
 		std::weak_ptr<RedisClient> weak_this = shared_from_this();
 
-		auto ptrCb = [weak_this](const std::string &host, std::size_t port, cpp_redis::connect_state status) {
+		auto ptrCb = [weak_this](const std::string &host, std::size_t port, cpp_redis::client::connect_state status) {
 			
 			std::shared_ptr<RedisClient> shared_this = weak_this.lock();
 			if (shared_this == nullptr) {
@@ -89,15 +88,15 @@ namespace apie {
 
 			switch (status)
 			{
-			case cpp_redis::connect_state::dropped:
+			case cpp_redis::client::connect_state::dropped:
 				break;
-			case cpp_redis::connect_state::start:
+			case cpp_redis::client::connect_state::start:
 			{
 				break;
 			}
-			case cpp_redis::connect_state::sleeping:
+			case cpp_redis::client::connect_state::sleeping:
 				break;
-			case cpp_redis::connect_state::ok:
+			case cpp_redis::client::connect_state::ok:
 			{
 				shared_this->setState(RS_Auth);
 
@@ -160,11 +159,11 @@ namespace apie {
 				shared_this->setAuth(RA_Doing);
 				break;
 			}
-			case cpp_redis::connect_state::failed:
+			case cpp_redis::client::connect_state::failed:
 				break;
-			case cpp_redis::connect_state::lookup_failed:
+			case cpp_redis::client::connect_state::lookup_failed:
 				break;
-			case cpp_redis::connect_state::stopped:
+			case cpp_redis::client::connect_state::stopped:
 			{
 				shared_this->setState(RS_Closed);
 				shared_this->setAuth(RA_None);
@@ -177,9 +176,8 @@ namespace apie {
 			shared_this->getCb()(shared_this);
 		};
 
-		//TODO
 		m_adapterCb = ptrCb;
-		//m_client.connect(m_host, m_port, ptrCb);
+		m_client.connect(m_host, m_port, ptrCb);
 		m_status = RS_Connect;
 	}
 

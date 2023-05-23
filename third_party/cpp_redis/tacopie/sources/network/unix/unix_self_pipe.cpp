@@ -20,9 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! guard for bulk content integration depending on how user integrates the library
-#ifndef _WIN32
-
 #include <tacopie/network/self_pipe.hpp>
 #include <tacopie/utils/error.hpp>
 
@@ -62,16 +59,12 @@ self_pipe::get_write_fd(void) const {
   return m_fds[1];
 }
 
-template <typename T1>
-void
-___ignore_unused(T1 const&) {}
-
 //!
 //! notify
 //!
 void
 self_pipe::notify(void) {
-  ___ignore_unused(write(m_fds[1], "a", 1));
+  (void) write(m_fds[1], "a", 1);
 }
 
 //!
@@ -80,9 +73,7 @@ self_pipe::notify(void) {
 void
 self_pipe::clr_buffer(void) {
   char buf[1024];
-  ___ignore_unused(read(m_fds[0], buf, 1024));
+  (void) read(m_fds[0], buf, 1024);
 }
 
 } // namespace tacopie
-
-#endif /* _WIN32 */

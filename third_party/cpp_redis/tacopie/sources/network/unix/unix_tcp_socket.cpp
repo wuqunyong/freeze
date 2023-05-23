@@ -20,9 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! guard for bulk content integration depending on how user integrates the library
-#ifndef _WIN32
-
 #include <tacopie/network/tcp_server.hpp>
 #include <tacopie/utils/error.hpp>
 #include <tacopie/utils/logger.hpp>
@@ -269,5 +266,3 @@ tcp_socket::create_socket_if_necessary(void) {
 }
 
 } // namespace tacopie
-
-#endif /* _WIN32 */

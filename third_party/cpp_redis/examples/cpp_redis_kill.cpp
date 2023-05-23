@@ -24,15 +24,28 @@
 
 #include <iostream>
 #include <sstream>
-#include "winsock_initializer.h"
+
+#ifdef _WIN32
+#include <Winsock2.h>
+#endif /* _WIN32 */
 
 int
 main(void) {
-  winsock_initializer winsock_init;
+#ifdef _WIN32
+  //! Windows netword DLL init
+  WORD version = MAKEWORD(2, 2);
+  WSADATA data;
+
+  if (WSAStartup(version, &data) != 0) {
+    std::cerr << "WSAStartup() failure" << std::endl;
+    return -1;
+  }
+#endif /* _WIN32 */
+
   cpp_redis::client client;
 
-  client.connect("127.0.0.1", 6379, [](const std::string& host, std::size_t port, cpp_redis::connect_state status) {
-    if (status == cpp_redis::connect_state::dropped) {
+  client.connect("127.0.0.1", 6379, [](const std::string& host, std::size_t port, cpp_redis::client::connect_state status) {
+    if (status == cpp_redis::client::connect_state::dropped) {
       std::cout << "client disconnected from " << host << ":" << port << std::endl;
     }
   });
@@ -58,8 +71,8 @@ main(void) {
   std::this_thread::sleep_for(std::chrono::seconds(1));
 
   if (!client.is_connected()) {
-    client.connect("127.0.0.1", 6379, [](const std::string& host, std::size_t port, cpp_redis::connect_state status) {
-      if (status == cpp_redis::connect_state::dropped) {
+    client.connect("127.0.0.1", 6379, [](const std::string& host, std::size_t port, cpp_redis::client::connect_state status) {
+      if (status == cpp_redis::client::connect_state::dropped) {
         std::cout << "client disconnected from " << host << ":" << port << std::endl;
       }
     });
@@ -82,6 +95,10 @@ main(void) {
 
   client.sync_commit();
   std::this_thread::sleep_for(std::chrono::seconds(1));
+
+#ifdef _WIN32
+  WSACleanup();
+#endif /* _WIN32 */
 
   return 0;
 }

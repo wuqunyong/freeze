@@ -20,13 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-//! guard for bulk content integration depending on how user integrates the library
-#ifdef _WIN32
-
-//! force link with ws2_32.lib
-//! some user of the lib forgot to link with it #34
-#pragma comment(lib, "ws2_32.lib")
-
 #include <tacopie/network/tcp_server.hpp>
 #include <tacopie/utils/error.hpp>
 #include <tacopie/utils/logger.hpp>
@@ -34,22 +27,8 @@
 
 #include <cstring>
 
-#ifdef __GNUC__
-#   include <Ws2tcpip.h>	   // Mingw / gcc on windows
-   #define _WIN32_WINNT 0x0501
-   #include <winsock2.h>
-   #   include <Ws2tcpip.h>
-   extern "C" {
-   WINSOCK_API_LINKAGE  INT WSAAPI inet_pton( INT Family, PCSTR pszAddrString, PVOID pAddrBuf);
-   WINSOCK_API_LINKAGE  PCSTR WSAAPI inet_ntop(INT  Family, PVOID pAddr, PSTR pStringBuf, size_t StringBufSize);
-   }
-
- #else
-   // Windows...
-   #include <winsock2.h>
-   #include <In6addr.h>
-   #include <Ws2tcpip.h>
-#endif
+#include <Winsock2.h>
+#include <Ws2tcpip.h>
 
 namespace tacopie {
 
@@ -257,5 +236,3 @@ tcp_socket::create_socket_if_necessary(void) {
 }
 
 } // namespace tacopie
-
-#endif /* _WIN32 */

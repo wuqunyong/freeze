@@ -32,7 +32,7 @@
 #include <vector>
 
 #ifdef _WIN32
-#include <winsock2.h>
+#include <Winsock2.h>
 #else
 #include <sys/select.h>
 #endif /* _WIN32 */
@@ -56,7 +56,9 @@ public:
   //!
   //! ctor
   //!
-  io_service(void);
+  //! \param nb_threads defines the number of background threads that will be used to process read and write callbacks. This must be a strictly positive value.
+  //!
+  io_service(std::size_t nb_threads = __TACOPIE_IO_SERVICE_NB_WORKERS);
 
   //! dtor
   ~io_service(void);
@@ -250,10 +252,13 @@ private:
 
 //!
 //! default io_service getter & setter
+//! if the default is fetched for the first time, build it, otherwise return the current instance
+//! if the io_service already exist, return it and reset its number of workers if necessary
 //!
+//! \param num_io_workers defines the number of background threads that will be used to process read and write callbacks. This must be a strictly positive value.
 //! \return shared_ptr to the default instance of the io_service
 //!
-const std::shared_ptr<io_service>& get_default_io_service(void);
+const std::shared_ptr<io_service>& get_default_io_service(std::uint32_t num_io_workers = 1);
 
 //!
 //! set the default io_service to be returned by get_default_io_service

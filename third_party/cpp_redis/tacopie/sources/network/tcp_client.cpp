@@ -30,9 +30,9 @@ namespace tacopie {
 //! ctor & dtor
 //!
 
-tcp_client::tcp_client(void)
+tcp_client::tcp_client(std::uint32_t num_io_workers)
 : m_disconnection_handler(nullptr) {
-  m_io_service = get_default_io_service();
+  m_io_service = get_default_io_service(num_io_workers);
   __TACOPIE_LOG(debug, "create tcp_client");
 }
 

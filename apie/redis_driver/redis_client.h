@@ -64,7 +64,7 @@ namespace apie {
 
 		using Key = std::tuple<uint32_t, uint32_t>;
 		using Cb = std::function<void(std::shared_ptr<RedisClient> ptrClient)>;
-		using AdapterCb = std::function<void(const std::string &host, std::size_t port, cpp_redis::connect_state status)>;
+		using AdapterCb = std::function<void(const std::string& host, std::size_t port, cpp_redis::client::connect_state status)>;
 
 		RedisClient(Key key, const std::string &host, std::size_t port, const std::string &password, Cb cb);
 		~RedisClient();

@@ -23,15 +23,28 @@
 #include <cpp_redis/cpp_redis>
 
 #include <iostream>
-#include "winsock_initializer.h"
+
+#ifdef _WIN32
+#include <Winsock2.h>
+#endif /* _WIN32 */
 
 int
 main(void) {
-  winsock_initializer winsock_init;
+#ifdef _WIN32
+  //! Windows netword DLL init
+  WORD version = MAKEWORD(2, 2);
+  WSADATA data;
+
+  if (WSAStartup(version, &data) != 0) {
+    std::cerr << "WSAStartup() failure" << std::endl;
+    return -1;
+  }
+#endif /* _WIN32 */
+
   //! Enable logging
   cpp_redis::active_logger = std::unique_ptr<cpp_redis::logger>(new cpp_redis::logger);
 
-  //! High availability requires at least 2 io service workers
+  //! High availablity requires at least 2 io service workers
   cpp_redis::network::set_default_nb_workers(2);
 
   cpp_redis::client client;
@@ -41,8 +54,8 @@ main(void) {
 
   //! Call connect with optional timeout
   //! Can put a loop around this until is_connected() returns true.
-  client.connect("mymaster", [](const std::string& host, std::size_t port, cpp_redis::connect_state status) {
-    if (status == cpp_redis::connect_state::dropped) {
+  client.connect("mymaster", [](const std::string& host, std::size_t port, cpp_redis::client::connect_state status) {
+    if (status == cpp_redis::client::connect_state::dropped) {
       std::cout << "client disconnected from " << host << ":" << port << std::endl;
     }
   },
@@ -78,6 +91,10 @@ main(void) {
     std::cout << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
   }
+
+#ifdef _WIN32
+  WSACleanup();
+#endif /* _WIN32 */
 
   return 0;
 }
