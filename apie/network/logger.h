@@ -67,8 +67,7 @@ template <class... Args>
 void pieFmtLog(std::string_view fileName, int cycle, int level, std::string_view fmt, Args&&... args)
 {
 	//std::string msg = std::vformat(fmt, std::make_format_args(args...));
-	//std::string msg = fmt::format(fmt, std::forward<Args>(args)...);
-	std::string msg;
+	std::string msg = fmt::format(fmt, std::forward<Args>(args)...);
 
 	std::string sFileName(fileName.data(), fileName.size());
 	pieLogRaw(sFileName.c_str(), cycle, level, msg.c_str());
@@ -86,8 +85,7 @@ void asyncPieFmtLog(std::string_view fileName, int cycle, int level, std::string
 
 	//std::string msg = std::vformat(fmt, std::make_format_args(args...));
 
-	std::string msg;
-	//std::string msg = fmt::format(fmt, std::forward<Args>(args)...);
+	std::string msg = fmt::format(fmt, std::forward<Args>(args)...);
 	std::string sFileName(fileName.data(), fileName.size());
 
 	if (NULL == apie::CtxSingleton::get().getLogThread())
@@ -120,8 +118,7 @@ void asyncPieFmtLogIgnoreMerge(std::string_view fileName, int cycle, int level, 
 
 	//std::string msg = std::vformat(fmt, std::make_format_args(args...));
 
-	std::string msg;
-	//std::string msg = fmt::format(fmt, std::forward<Args>(args)...);
+	std::string msg = fmt::format(fmt, std::forward<Args>(args)...);
 	std::string sFileName(fileName.data(), fileName.size());
 	if (NULL == apie::CtxSingleton::get().getLogThread())
 	{
