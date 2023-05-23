@@ -31,8 +31,9 @@ namespace apie {
 			if (this->getState() == RS_Closed)
 			{
 				try {
+					//TODO
 					auto ptrCb = this->getAdapterCb();
-					m_client.connect(m_host, m_port, ptrCb);
+					//m_client.connect(m_host, m_port, ptrCb);
 					m_status = RS_Connect;
 				}
 				catch (std::exception& e) {
@@ -176,8 +177,9 @@ namespace apie {
 			shared_this->getCb()(shared_this);
 		};
 
+		//TODO
 		m_adapterCb = ptrCb;
-		m_client.connect(m_host, m_port, ptrCb);
+		//m_client.connect(m_host, m_port, ptrCb);
 		m_status = RS_Connect;
 	}
 
