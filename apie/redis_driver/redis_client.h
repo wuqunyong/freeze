@@ -11,6 +11,7 @@
 #include <functional>
 #include <optional>
 #include <utility>
+#include <sstream>
 
 #include <cpp_redis/cpp_redis>
 

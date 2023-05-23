@@ -50,4 +50,18 @@ cat ./apie.sql | xargs echo "`date +'%Y-%m-%d %H:%M:%S'`|apie.sql|" | /usr/bin/t
 #/bin/echo "`date +'%Y-%m-%d %H:%M:%S'`|apie.sql " >> ${logFile}
 
 
-# USE apie_account;
+# config_db
+mysql -h$HOST -P$PORT -u$USER -p$PASSWORD <<EOF
+DROP DATABASE IF EXISTS config_db;
+CREATE DATABASE IF NOT EXISTS config_db DEFAULT CHARACTER SET utf8;
+EOF
+
+DATABASE="config_db"
+echo DATABASE $DATABASE
+
+
+mysql -h$HOST -P$PORT -u$USER -p$PASSWORD $DATABASE < ./config_db.sql 2>&1 | /usr/bin/tee -a ${logFile}
+cat ./config_db.sql | xargs echo "`date +'%Y-%m-%d %H:%M:%S'`|config_db.sql|" | /usr/bin/tee -a ${logFile}
+
+
+# USE config_db;
