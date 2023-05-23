@@ -124,9 +124,11 @@ make install
 ## 编译
 ```shell
 $ mkdir build && cd build
-$ /root/cmake-3.18.1-Linux-x86_64/bin/cmake .. -DCMAKE_CXX_COMPILER=$(which g++)   
+$ /root/cmake-3.18.1-Linux-x86_64/bin/cmake ..
 $ make
 $ make install
+
+# /root/cmake-3.18.1-Linux-x86_64/bin/cmake .. -DCMAKE_CXX_COMPILER=$(which g++)  
 ```
 
 
