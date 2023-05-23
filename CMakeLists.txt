@@ -152,17 +152,17 @@ add_subdirectory(server)
 message(STATUS "CMAKE_INSTALL_BINDIR: ${CMAKE_INSTALL_BINDIR}")
 message(STATUS "CMAKE_INSTALL_LIBDIR: ${CMAKE_INSTALL_LIBDIR}")
 
-#install(TARGETS apie db_proxy_server gateway_server login_server scene_server service_registry test_server
-#    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-#install(DIRECTORY conf/ DESTINATION conf/
-#        FILES_MATCHING PATTERN "*.yaml")
-#install(DIRECTORY data/ DESTINATION data/
-#        FILES_MATCHING PATTERN "*.*")
-#install(DIRECTORY etc/ DESTINATION etc/
-#        FILES_MATCHING PATTERN "*.pem"
-#        PATTERN "*.pub")
-#install(FILES
-#    "etc/apie.sh"
-#    DESTINATION "scripts")
+install(TARGETS apie db_proxy_server gateway_server login_server scene_server service_registry
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY conf/ DESTINATION conf/
+        FILES_MATCHING PATTERN "*.yaml")
+install(DIRECTORY data/ DESTINATION data/
+        FILES_MATCHING PATTERN "*.*")
+install(DIRECTORY etc/ DESTINATION etc/
+        FILES_MATCHING PATTERN "*.pem"
+        PATTERN "*.pub")
+install(FILES
+    "etc/apie.sh"
+    DESTINATION "scripts")
