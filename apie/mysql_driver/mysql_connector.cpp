@@ -51,8 +51,8 @@ bool MySQLConnector::connect(void)
 	{
 		std::stringstream ss;
 
-		my_bool my_true = true;
-		my_bool result = mysql_autocommit(this->mysql_, my_true);
+		bool my_true = true;
+		auto result = mysql_autocommit(this->mysql_, my_true);
 
 		//int rc = mysql_set_charset_name(this->mysql_, "utf8");
 
