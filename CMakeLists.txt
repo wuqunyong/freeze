@@ -152,7 +152,7 @@ add_subdirectory(server)
 message(STATUS "CMAKE_INSTALL_BINDIR: ${CMAKE_INSTALL_BINDIR}")
 message(STATUS "CMAKE_INSTALL_LIBDIR: ${CMAKE_INSTALL_LIBDIR}")
 
-install(TARGETS apie db_proxy_server gateway_server login_server scene_server service_registry
+install(TARGETS apie pb db_proxy_server gateway_server login_server scene_server service_registry
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
