@@ -31,7 +31,8 @@ else ()
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib_pb)
 
     set(DependenciesLinkDirs
-        ${PROJECT_BINARY_DIR}/lib)
+        ${PROJECT_BINARY_DIR}/lib
+        /usr/local/apie/lib)
 
 	set(DependenciesLinkLibs -lapie -lpb -lprotobuf -lyaml-cpp -lnats -lcpp_redis -ltacopie)
 endif()
