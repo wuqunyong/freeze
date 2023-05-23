@@ -1,7 +1,7 @@
 
 set HOST="127.0.0.1"
 set USER="root"
-set PASSWORD="root"
+set PASSWORD="gyo(=;QSC1(e"
 set PORT=3306
 
 @echo HOST %HOST%
