@@ -45,9 +45,12 @@ namespace hook {
 
 	void HookRegistry::triggerHook(HookPoint point)
 	{
+		PIE_LOG(PIE_NOTICE, "startup|triggerHook:{}", toUnderlyingType(point));
+
 		auto initCbOpt = apie::hook::HookRegistrySingleton::get().getHook(point);
 		if (!initCbOpt.has_value())
 		{
+			apie::CtxSingleton::get().setCurHookPoint(point);
 			return;
 		}
 
@@ -82,6 +85,8 @@ namespace hook {
 				PANIC_ABORT(ss.str().c_str());
 			}
 		}
+
+		apie::CtxSingleton::get().setCurHookPoint(point);
 
 		if (bAllOk && point == HookPoint::HP_Start)
 		{

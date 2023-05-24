@@ -537,6 +537,15 @@ void Ctx::addRedisClients(LoadConfig<Mysql_RedisConfig>& redisConfig)
 	}
 }
 
+void Ctx::setCurHookPoint(apie::hook::HookPoint point)
+{
+	m_curHookPoint = point;
+}
+apie::hook::HookPoint Ctx::getCurHookPoint()
+{
+	return m_curHookPoint;
+}
+
 void NormalExitHandle()
 { 
 	PIE_LOG(PIE_NOTICE, "startup|NormalExitHandle");

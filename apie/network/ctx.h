@@ -18,6 +18,7 @@
 #include "apie/configs/configs.h"
 #include "apie/proto/init.h"
 #include "apie/api/os_sys_calls.h"
+#include "apie/api/hook.h"
 
 
 
@@ -83,6 +84,9 @@ namespace apie
 		void initMysqlConnector(LoadConfig<Mysql_MysqlConfig>& mysqlConfig);
 		void addNatsConnections(LoadConfig<Mysql_NatsConfig>& natsConfig);
 		void addRedisClients(LoadConfig<Mysql_RedisConfig>& redisConfig);
+
+		void setCurHookPoint(apie::hook::HookPoint point);
+		apie::hook::HookPoint getCurHookPoint();
 
 	public:
 		static std::string logPostfix();
@@ -174,6 +178,8 @@ namespace apie
 		uint32_t m_server_type = 0;
 
 		std::shared_ptr<APieConfig> m_ptrConfig;
+
+		apie::hook::HookPoint m_curHookPoint = hook::HookPoint::HP_Init;
 
         Ctx (const Ctx&) = delete;
         const Ctx &operator = (const Ctx&) = delete;
