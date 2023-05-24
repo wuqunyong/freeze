@@ -22,15 +22,15 @@ void GatewayMgrModule::init()
 	cmd.init();
 	cmd.registerOnCmd("nats_publish", "nats_publish", GatewayMgrModule::Cmd_natsPublish);
 	cmd.registerOnCmd("mysql_statement", "mysql_statement", GatewayMgrModule::Cmd_mysqlStatement);
+
+
+	// RPC
+	using namespace ::pb::rpc;
+	INTRA_REGISTER_RPC(LoginPending, GatewayMgrModule::RPC_loginPending);
 }
 
 void GatewayMgrModule::ready()
 {
-	// RPC
-	using namespace ::pb::rpc;
-	INTRA_REGISTER_RPC(LoginPending, GatewayMgrModule::RPC_loginPending);
-
-
 	// CLIENT OPCODE
 	auto& server = apie::service::ServiceHandlerSingleton::get().server;
 	server.setDefaultFunc(GatewayMgrModule::handleDefaultOpcodes);
