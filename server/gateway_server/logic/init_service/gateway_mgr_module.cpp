@@ -130,7 +130,7 @@ void GatewayMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD
 
 void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 {
-	if (cmd.params_size() < 3)
+	if (cmd.params_size() < 4)
 	{
 		return;
 	}
@@ -153,6 +153,7 @@ void GatewayMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
 
 	MessageInfo msgInfo;
 	msgInfo.iOpcode = ::pb::core::OP_EchoRequest;
+	msgInfo.iSessionId = std::stoul(cmd.params()[3]);
 	GatewayMgrModule::handleDefaultOpcodes(msgInfo, request.SerializeAsString());
 }
 
