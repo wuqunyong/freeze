@@ -38,8 +38,6 @@ namespace apie {
 		static LoaderPtr Create(PrimaryKey iId);
 		static void LoadFromDb(PrimaryKey iId, Callback cb);
 
-	private:
-		static inline std::map<PrimaryKey, LoaderPtr> m_accounts;
 	};
 
 
