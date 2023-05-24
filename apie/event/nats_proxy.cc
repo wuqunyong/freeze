@@ -518,7 +518,11 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 		apie::status::Status status(code, response.status().msg());
 		status.setHasMore(response.has_more());
 
-		apie::rpc::RPCClientManagerSingleton::get().handleResponse_Head(response.client().seq_id(), status, response.result_data());
+		apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+			[response, status]() mutable {
+				apie::rpc::RPCClientManagerSingleton::get().handleResponse(response.client().seq_id(), status, response.result_data());
+			}
+		);
 		return;
 	}
 

@@ -33,8 +33,7 @@ public:
 	void removePendingRequests(uint64_t seq_num);
 
 	void handleTimeout();
-	void handleResponse_Head(uint64_t seq_num, const status::Status& status, const std::string& response_data);
-	void handleResponse_Tail(uint64_t seq_num, const status::Status& status, std::shared_ptr<::google::protobuf::Message> ptrMsg);
+	void handleResponse(uint64_t seq_num, const status::Status& status, const std::string& response_data);
 
 	void insertRequestsTimeout(uint64_t seq_num, uint64_t expired_at);
 
