@@ -75,6 +75,14 @@ nats:                        # nats
 limited:                 # 限制
   requests_per_unit: 10  # 客户端发送的请求数/间隔单位(0:没有限制，默认：0)
   uint: 1                # 客户端间隔单位(秒数，默认:60)
+routes:                  # gateway,转发路由规则
+  - id: xx_service       # 路由ID
+    uri:                 # 匹配路由的转发地址
+      type: 4
+      id: 1
+    predicates:          # 判断
+      - Opcode: '200-2000,302,5000'  #操作码
+
 login_server:            # 测试客户端连接的登录服地址
   address: "127.0.0.1"
   port_value: 9339
