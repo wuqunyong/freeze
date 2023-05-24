@@ -185,6 +185,8 @@ void GatewayMgrModule::Cmd_mysqlStatement(::pubsub::LOGIC_CMD& cmd)
 apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
 	MessageInfo info, const std::shared_ptr<::login_msg::ClientLoginRequest>& request, std::shared_ptr<::login_msg::ClientLoginResponse>& response)
 {
+	auto iSerialNum = info.iSessionId;
+
 	auto iId = request->user_id();
 	auto optData = APieGetModule<GatewayMgr>()->getPendingRole(iId);
 	if (!optData.has_value())
@@ -197,6 +199,29 @@ apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
 	response->set_user_id(iId);
 	response->set_ammo(100);
 	response->set_grenades(100);
+
+
+	auto ptrRole = APieGetModule<GatewayMgr>()->findGatewayRoleById(iId);
+	if (ptrRole != nullptr)
+	{
+		return apie::status::E_ReturnType::kRT_Sync;
+	}
+
+	auto doneCb = [iId, iSerialNum, info, response](apie::status::Status status, RoleLoader::LoaderPtr ptrLoader) mutable {
+		if (status.ok())
+		{
+			auto ptrRole = GatewayRole::createGatewayRole(iId, iSerialNum, ptrLoader);
+			APieGetModule<GatewayMgr>()->addGatewayRole(ptrRole);
+
+			service::ServiceManager::sendResponse(info, *response);
+		}
+		else
+		{
+			response->set_error_code(toUnderlyingType(status.code()));
+			service::ServiceManager::sendResponse(info, *response);
+		}
+	};
+	RoleLoader::LoadFromDb(iId, doneCb);
 
 	return apie::status::E_ReturnType::kRT_Sync;
 }

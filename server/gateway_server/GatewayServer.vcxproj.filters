@@ -19,6 +19,12 @@
     <ClInclude Include="logic\test_10\test_module_10.h">
       <Filter>logic\test_10</Filter>
     </ClInclude>
+    <ClInclude Include="logic\role\component_role_base.h">
+      <Filter>logic\role</Filter>
+    </ClInclude>
+    <ClInclude Include="logic\role\role.h">
+      <Filter>logic\role</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -40,6 +46,12 @@
     <ClCompile Include="logic\test_10\test_module_10.cpp">
       <Filter>logic\test_10</Filter>
     </ClCompile>
+    <ClCompile Include="logic\role\component_role_base.cpp">
+      <Filter>logic\role</Filter>
+    </ClCompile>
+    <ClCompile Include="logic\role\role.cpp">
+      <Filter>logic\role</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="logic">
@@ -56,6 +68,9 @@
     </Filter>
     <Filter Include="logic\test_11">
       <UniqueIdentifier>{0b1f4f5b-dd34-4f03-a1ac-fe54bb009a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logic\role">
+      <UniqueIdentifier>{09455768-e87d-45fd-aac3-62161e7dc3ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

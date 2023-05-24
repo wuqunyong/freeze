@@ -10,14 +10,15 @@
 #include <memory>
 
 #include "apie.h"
-
+#include "logic/role/role.h"
 
 namespace apie {
+
 
 	class GatewayRole : public std::enable_shared_from_this<GatewayRole>
 	{
 	public:
-		GatewayRole(uint64_t iRoleId, uint64_t iSerialNum);
+		GatewayRole(uint64_t iRoleId, uint64_t iSerialNum, RoleLoader::LoaderPtr ptrLoader);
 		~GatewayRole();
 
 		uint64_t getSerailNum();
@@ -32,7 +33,7 @@ namespace apie {
 
 
 	public:
-		static std::shared_ptr<GatewayRole> createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum);
+		static std::shared_ptr<GatewayRole> createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum, RoleLoader::LoaderPtr ptrLoader);
 
 	private:
 		void resetRequestPerUnit();
@@ -48,5 +49,7 @@ namespace apie {
 		uint64_t m_iRequests = 0;
 		uint64_t m_iRequestPerUnit = 0;
 		uint64_t m_iRequestUnitExpiresAt = 0;
+
+		RoleLoader::LoaderPtr m_ptrLoader = nullptr;
 	};
 }

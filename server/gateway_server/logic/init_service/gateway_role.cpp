@@ -3,15 +3,16 @@
 
 namespace apie {
 
-std::shared_ptr<GatewayRole> GatewayRole::createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum)
+std::shared_ptr<GatewayRole> GatewayRole::createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum, RoleLoader::LoaderPtr ptrLoader)
 {
-	return std::make_shared<GatewayRole>(iRoleId, iSerialNum);
+	return std::make_shared<GatewayRole>(iRoleId, iSerialNum, ptrLoader);
 }
 
 
-GatewayRole::GatewayRole(uint64_t iRoleId, uint64_t iSerialNum) :
+GatewayRole::GatewayRole(uint64_t iRoleId, uint64_t iSerialNum, RoleLoader::LoaderPtr ptrLoader) :
 	m_iRoleId(iRoleId),
-	m_iSerialNum(iSerialNum)
+	m_iSerialNum(iSerialNum),
+	m_ptrLoader(ptrLoader)
 {
 	m_bSubNats = apie::event_ns::NatsManager::SubscribeChannelByRIdFromGW(iRoleId);
 }
