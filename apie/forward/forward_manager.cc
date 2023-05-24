@@ -57,7 +57,7 @@ bool ForwardManager::sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rp
 	return apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
 }
 
-void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg)
+void ForwardManager::onForwardMuxMessage_Head(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg)
 {
 	auto typeOpt = this->getType(info.iOpcode);
 	if (!typeOpt.has_value())
@@ -88,6 +88,27 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 		return;
 	}
 
+	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
+		[role, info, newMsg, this]() mutable {
+			onForwardMuxMessage_Tail(role, info, newMsg);
+		}
+	);
+
+	//auto find_ite = func_.find(info.iOpcode);
+	//if (find_ite == func_.end())
+	//{
+	//	//TODO
+	//	return;
+	//}
+
+	//if (find_ite->second)
+	//{
+	//	find_ite->second(role, newMsg);
+	//}
+}
+
+void ForwardManager::onForwardMuxMessage_Tail(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, std::shared_ptr<::google::protobuf::Message> ptrMsg)
+{
 	auto find_ite = func_.find(info.iOpcode);
 	if (find_ite == func_.end())
 	{
@@ -97,7 +118,7 @@ void ForwardManager::onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, 
 
 	if (find_ite->second)
 	{
-		find_ite->second(role, newMsg);
+		find_ite->second(role, ptrMsg);
 	}
 }
 

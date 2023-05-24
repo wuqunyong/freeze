@@ -66,7 +66,8 @@ public:
 
 	bool sendForwardMux(const ::rpc_msg::CHANNEL& server, const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg);
 
-	void onForwardMuxMessage(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg);
+	void onForwardMuxMessage_Head(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, const std::string& msg);
+	void onForwardMuxMessage_Tail(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, std::shared_ptr<::google::protobuf::Message> ptrMsg);
 
 	void setDemuxCallback(DemuxCallback func);
 	void onForwardDemuxMessage(const ::rpc_msg::RoleIdentifier& role, const std::string& msg);

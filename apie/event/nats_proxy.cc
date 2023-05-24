@@ -528,19 +528,11 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 
 	if (msg->has_multiplexer_forward())
 	{
-		::rpc_msg::RoleIdentifier role = msg->multiplexer_forward().role();
-
 		MessageInfo info;
 		info.iRPCRequestID = msg->multiplexer_forward().info().seq_num();
 		info.iOpcode = msg->multiplexer_forward().info().opcode();
 
-		std::string sBodyMsg = msg->multiplexer_forward().body_msg();
-
-		apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
-			[role, info, sBodyMsg]() mutable {
-				apie::forward::ForwardManagerSingleton::get().onForwardMuxMessage(role, info, sBodyMsg);
-			}
-		);
+		apie::forward::ForwardManagerSingleton::get().onForwardMuxMessage_Head(msg->multiplexer_forward().role(), info, msg->multiplexer_forward().body_msg());
 		return;
 	}
 
