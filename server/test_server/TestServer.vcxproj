@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="logic\mock_role.cpp" />
+    <ClCompile Include="logic\task\echo_test_case.cpp" />
     <ClCompile Include="logic\task\login_test_case.cpp" />
     <ClCompile Include="logic\task\logout_test_case.cpp" />
     <ClCompile Include="logic\test_case.cpp" />
@@ -34,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="logic\mock_role.h" />
+    <ClInclude Include="logic\task\echo_test_case.h" />
     <ClInclude Include="logic\task\login_test_case.h" />
     <ClInclude Include="logic\task\logout_test_case.h" />
     <ClInclude Include="logic\test_case.h" />

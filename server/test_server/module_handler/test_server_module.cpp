@@ -9,7 +9,9 @@
 #include "module_handler/role_echo_module.h"
 
 #include "logic/task/login_test_case.h"
+#include "logic/task/echo_test_case.h"
 #include "logic/task/logout_test_case.h"
+
 
 namespace apie {
 
@@ -178,6 +180,7 @@ void TestServerModule::registerRoleCmd()
 void TestServerModule::registerTestCase()
 {
 	TestCaseFactory::registerFactory(LoginTestCase::getFactoryType(), LoginTestCase::createMethod);
+	TestCaseFactory::registerFactory(EchoTestCase::getFactoryType(), EchoTestCase::createMethod);
 	TestCaseFactory::registerFactory(LogoutTestCase::getFactoryType(), LogoutTestCase::createMethod);
 }
 

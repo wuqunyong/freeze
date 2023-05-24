@@ -22,8 +22,8 @@ pb_map_vec :
 
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false
-  start: 920001
-  stop: 920002
+  start: 1
+  stop: 2
   ramp_up_interval: 1000
   ramp_up_nums: 5
   task_suite:

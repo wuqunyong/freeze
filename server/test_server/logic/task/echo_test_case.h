@@ -18,19 +18,25 @@
 
 namespace apie {
 
-	class LoginTestCase : public TestCase
+	class EchoTestCase : public TestCase
 	{
 	public:
-		LoginTestCase(MockRole& role, uint32_t type);
+		EchoTestCase(MockRole& role, uint32_t type);
 
 		virtual void setUp();
 		virtual void tearDown();
 
 	public:
-		void handleLogin(MockRole* ptrRole, MessageInfo info, const std::string& msg);
+		void RPC_onEcho(MockRole* ptrRole, MessageInfo info, const std::string& msg);
 
 	public:
 		static std::shared_ptr<TestCase> createMethod(MockRole& role, uint32_t type);
 		static uint32_t getFactoryType();
+
+	private:
+		uint32_t sendEcho();
+
+	private:
+		uint32_t m_iIndex = 0;
 	};
 }
