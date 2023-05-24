@@ -16,6 +16,8 @@ RPCServerManager::~RPCServerManager()
 
 std::optional<std::string> RPCServerManager::getType(uint32_t opcode)
 {
+	std::lock_guard<std::mutex> guard(type_sync_);
+
 	auto find_ite = type_.find(opcode);
 	if (find_ite == type_.end())
 	{

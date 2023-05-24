@@ -7,6 +7,7 @@
 #include <functional>
 #include <optional>
 #include <sstream>
+#include <mutex>
 
 #include <google/protobuf/message.h>
 
@@ -84,6 +85,8 @@ private:
 	std::map<uint32_t, std::string> type_;
 	std::map<uint32_t, ServiceCallback> func_;
 
+	std::mutex type_sync_;
+
 	DemuxCallback demux_callback_;
 };
 
@@ -104,7 +107,12 @@ bool ForwardManager::createService(
 	service_[opcode] = service_ptr;
 
 	std::string pb_type = Request::descriptor()->full_name();
-	type_[opcode] = pb_type;
+
+	{
+		std::lock_guard<std::mutex> guard(type_sync_);
+		type_[opcode] = pb_type;
+	}
+
 	func_[opcode] = service_ptr->getHandler();
 
 	return true;
@@ -126,7 +134,12 @@ bool ForwardManager::createService(
 	service_[opcode] = service_ptr;
 
 	std::string pb_type = Notify::descriptor()->full_name();
-	type_[opcode] = pb_type;
+
+	{
+		std::lock_guard<std::mutex> guard(type_sync_);
+		type_[opcode] = pb_type;
+	}
+
 	func_[opcode] = service_ptr->getHandler();
 
 	return true;

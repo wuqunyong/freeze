@@ -13,8 +13,10 @@ void SceneMgrModule::init()
 	// CMD
 	auto& cmd = LogicCmdHandlerSingleton::get();
 	cmd.init();
+}
 
-
+void SceneMgrModule::ready()
+{
 	// RPC
 	using namespace ::pb::rpc;
 	INTRA_REGISTER_RPC(EchoTest, SceneMgrModule::RPC_echoTest);
@@ -23,10 +25,6 @@ void SceneMgrModule::init()
 	// FORWARD
 	using namespace ::login_msg;
 	REGISTER_FORWARD_REQUEST(Echo, SceneMgrModule::Forward_echo);
-}
-
-void SceneMgrModule::ready()
-{
 }
 
 void SceneMgrModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg)
