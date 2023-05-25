@@ -20,8 +20,6 @@ SET FOREIGN_KEY_CHECKS=0;
 --
 
 DROP TABLE IF EXISTS `role_base`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role_base` (
   `user_id` bigint(20) unsigned NOT NULL,
   `game_id` bigint(20) unsigned NOT NULL DEFAULT '0',
@@ -32,29 +30,23 @@ CREATE TABLE `role_base` (
   `name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `role_extra`
 --
 
 DROP TABLE IF EXISTS `role_extra`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role_extra` (
   `user_id` bigint(20) unsigned NOT NULL,
   `extra_info` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tbl_mail_recoverer`
 --
 
 DROP TABLE IF EXISTS `tbl_mail_recoverer`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbl_mail_recoverer` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Id',
   `user_id` bigint(20) NOT NULL DEFAULT '0' COMMENT 'UserId',
@@ -79,15 +71,12 @@ CREATE TABLE `tbl_mail_recoverer` (
   `save_flag` int(11) NOT NULL DEFAULT '0' COMMENT '是否跨赛季保存，0：不保存，1：保存',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `varchars1`
 --
 
 DROP TABLE IF EXISTS `varchars1`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `varchars1` (
   `a` int(11) NOT NULL DEFAULT '0',
   `b` int(10) unsigned NOT NULL DEFAULT '0',
@@ -105,4 +94,3 @@ CREATE TABLE `varchars1` (
   `Column6` datetime DEFAULT NULL,
   PRIMARY KEY (`a`,`b`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
