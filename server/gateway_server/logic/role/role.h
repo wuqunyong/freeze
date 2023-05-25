@@ -14,12 +14,6 @@
 
 namespace apie {
 
-	template <typename T>
-	struct ComponentWrapper
-	{
-		using Type = T;
-	};
-
 	class Component_RoleBase;
 
 
@@ -40,7 +34,4 @@ namespace apie {
 
 	};
 
-
-	template <typename ComponentType>
-	using UnwrapComponentWrapper = ComponentWrapper<ComponentType>::Type;
 }

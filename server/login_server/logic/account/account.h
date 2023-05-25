@@ -14,12 +14,6 @@
 
 namespace apie {
 
-	template <typename T>
-	struct ComponentWrapper
-	{
-		using Type = T;
-	};
-
 	class Component_Create;
 	class Component_Name;
 
@@ -47,7 +41,4 @@ namespace apie {
 		static inline std::map<PrimaryKey, LoaderPtr> m_accounts;
 	};
 
-
-	template <typename ComponentType>
-	using UnwrapComponentWrapper = ComponentWrapper<ComponentType>::Type;
 }

@@ -34,6 +34,17 @@ constexpr bool HasDbSerializer<T>::value;
 
 
 template <typename T>
+struct ComponentWrapper
+{
+	using Type = T;
+};
+
+
+template <typename ComponentType>
+using UnwrapComponentWrapper = ComponentWrapper<ComponentType>::Type;
+
+
+template <typename T>
 struct LoadFromDbCallback_
 {
 	using ReplyCallback = std::function<void(apie::status::Status, T& dbObj, uint32_t iRows)>;
