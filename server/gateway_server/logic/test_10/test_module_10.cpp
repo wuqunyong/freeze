@@ -53,68 +53,6 @@ static auto CreateLoadInstance(uint64_t iId)
 
 //using CreateLoadInstanceCb = std::function<void(apie::status::Status status, decltype(CreateLoadInstance(0)))>;
 
-void CreateUserObj(uint64_t iRoleId, PlayerFactory::Callback doneCb)
-{
-	//auto ptrModuleLoader = CreateLoadInstance(iRoleId);
-
-	auto ptrModuleLoader = PlayerFactory::CreatePlayer(iRoleId);
-
-	auto& rModuleA = ptrModuleLoader->lookup<TestModuleA>();
-	auto& rModuleB = ptrModuleLoader->lookup<TestModuleB>();
-
-
-	::rpc_msg::CHANNEL server;
-	server.set_realm(apie::Ctx::getThisChannel().realm());
-	server.set_type(::common::EPT_DbRole_Proxy);
-	server.set_id(1);
-
-	std::tuple<uint32_t, uint32_t> params = { iRoleId,1 };
-
-	auto ptrLoad = CreateDBLoaderPtr();
-	ptrLoad->set<Single_ModelUser_Loader>(iRoleId);
-	ptrLoad->set<Single_ModelRoleExtra_Loader>(iRoleId);
-	ptrLoad->set<Single_ModelVarchars1_Loader>({ iRoleId,1 });
-
-	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().getTableType().set_user_id(iRoleId);
-	ptrLoad->set<Multi_ModelUser_Loader>(iRoleId).lookup<Multi_ModelUser_Loader>().markFilter({ apie::dbt_role::role_base_AutoGen::user_id });
-
-	auto cb = [ptrModuleLoader, doneCb, server, iRoleId](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> loader) {
-		if (!status.ok())
-		{
-			doneCb(status, ptrModuleLoader);
-			return;
-		}
-
-		ptrModuleLoader->Meta_loadFromDbLoader(server, loader);
-
-		::rpc_msg::CHANNEL accountServer;
-		accountServer.set_realm(apie::Ctx::getThisChannel().realm());
-		accountServer.set_type(::common::EPT_DbAccount_Proxy);
-		accountServer.set_id(1);
-
-		loader->clear();
-		loader->set<Single_ModelAccount_Loader>(iRoleId);
-		loader->set<All_ModelAccountName_Loader>(iRoleId);
-
-		auto wrapperFunc = [loader, ptrModuleLoader, doneCb, accountServer]() mutable {
-			auto funObj = [ptrModuleLoader, doneCb, accountServer](apie::status::Status status, std::shared_ptr<apie::DbLoadComponent> ptrLoader) mutable {
-				if (!status.ok())
-				{
-					doneCb(status, ptrModuleLoader);
-					return;
-				}
-
-				ptrModuleLoader->Meta_loadFromDbLoader(accountServer, ptrLoader);
-				ptrModuleLoader->Meta_loadFromDbDone();
-				doneCb(status, ptrModuleLoader);
-			};
-			loader->loadFromDb(accountServer, funObj);
-		};
-		apie::CtxSingleton::get().getLogicThread()->dispatcher().post(wrapperFunc);
-	};
-	ptrLoad->loadFromDb(server, cb);
-}
-
 apie::status::Status TestModule10::ready()
 {
 	std::stringstream ss;
@@ -123,23 +61,6 @@ apie::status::Status TestModule10::ready()
 	ASYNC_PIE_LOG(PIE_NOTICE, "ModuleLoad|{}", ss.str().c_str());
 
 	//decltype(CreateLoadInstance(0)) aTest = CreateLoadInstance(123);
-
-	auto doneCb = [](apie::status::Status status, auto ptrModule) {
-		if (status.ok())
-		{
-			// TODO
-			//auto& rModuleA = ptrModule->lookup<TestModuleA>();
-			//auto sInfo = rModuleA.toString();
-
-			//auto& rModuleB = ptrModule->lookup<TestModuleB>();
-			//sInfo = rModuleB.toString();
-			//rModuleB.incrementValue();
-			//sInfo = rModuleB.toString();
-
-			ptrModule->Meta_saveToDb();
-		}
-	};
-	CreateUserObj(30005, doneCb);
 
 	//::rpc_msg::CHANNEL server;
 	//server.set_realm(apie::Ctx::getThisChannel().realm());

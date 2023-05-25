@@ -218,22 +218,4 @@ namespace apie {
 		using Type = ModuleB;
 	};
 
-	class PlayerFactory
-	{
-	public:
-		using PrimaryKey = uint64_t;
-		using ModuleTuple = std::tuple<TestModuleA, TestModuleB>;
-		using PlayerPtr = std::shared_ptr<ComponentLoader<uint64_t, ModuleTuple>>;
-		using Callback = std::function<void(apie::status::Status status, PlayerPtr)>;
-
-
-		static PlayerPtr CreatePlayer(PrimaryKey iId)
-		{
-			static ModuleTuple kModuleTuple;
-
-			auto pInstance = MakeComponentLoader(iId, kModuleTuple);
-			return pInstance;
-		}
-
-	};
 }
