@@ -185,3 +185,10 @@ https://cloud.tencent.com/developer/article/1377516
 
 
 gyo(=;QSC1(e
+
+
+
+use mysql;
+update user set host='%' where user='root';
+grant all privileges on root.* to 'root'@'%';
+flush privileges;
