@@ -63,7 +63,17 @@ void Component_RoleBase::initCreate(DoneFunctor functorObj)
 	}
 	else
 	{
-		auto cb = [functorObj](apie::status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
+		std::time_t iCurTime = std::time(nullptr);
+
+		apie::dbt_role::role_base_AutoGen dbObj(m_roleId);
+		dbObj.set_game_id(0);
+		dbObj.set_register_time(iCurTime);
+		dbObj.set_login_time(iCurTime);
+		dbObj.SetDbProxyServer(m_server);
+		
+		m_dbData = dbObj;
+
+		auto cb = [functorObj, dbObj](apie::status::Status status, bool result, uint64_t affectedRows, uint64_t insertId) {
 			if (!status.ok())
 			{
 				functorObj(false);
@@ -73,14 +83,7 @@ void Component_RoleBase::initCreate(DoneFunctor functorObj)
 				functorObj(true);
 			}
 		};
-		apie::dbt_role::role_base_AutoGen dbObj(m_roleId);
 
-		std::time_t iCurTime = std::time(nullptr);
-
-		dbObj.set_game_id(0);
-		dbObj.set_register_time(iCurTime);
-		dbObj.set_login_time(iCurTime);
-		dbObj.SetDbProxyServer(m_server);
 		dbObj.Insert(cb);
 
 	}
