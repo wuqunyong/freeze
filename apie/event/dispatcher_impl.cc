@@ -970,15 +970,15 @@ void DispatcherImpl::handleLogicStart(uint32_t iThreadId)
 		std::stringstream ss;
 		ss << "InvalidNode exception: " << e.what();
 
-		PIE_LOG(PIE_ERROR, "startup|{}: {}", "Exception", ss.str().c_str());
-		throw;
+		PANIC_ABORT("startup|handleLogicStart|{}: {}", "Exception", ss.str().c_str());
+		//throw;
 	}
 	catch (std::exception& e) {
 		std::stringstream ss;
 		ss << "Unexpected exception: " << e.what();
 
-		PIE_LOG(PIE_ERROR, "startup|{}: {}", "Exception", ss.str().c_str());
-		throw;
+		PANIC_ABORT("startup|handleLogicStart|{}: {}", "Exception", ss.str().c_str());
+		//throw;
 	}
 }
 
