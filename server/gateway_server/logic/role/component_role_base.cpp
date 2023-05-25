@@ -86,5 +86,17 @@ void Component_RoleBase::initCreate(DoneFunctor functorObj)
 	}
 }
 
+void Component_RoleBase::addLevel()
+{
+	if (!m_dbData.has_value())
+	{
+		return;
+	}
+
+	auto iCurLevel = m_dbData.value().get_level();
+	m_dbData.value().set_level(iCurLevel + 1);
+	m_dbData.value().Update();
+}
+
 }
 

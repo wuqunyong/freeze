@@ -35,6 +35,8 @@ namespace apie {
 		void saveToDb();
 		void initCreate(DoneFunctor functorObj);
 
+		void addLevel();
+
 	private:
 		uint64_t m_roleId;
 

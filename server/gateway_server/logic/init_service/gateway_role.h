@@ -30,7 +30,7 @@ namespace apie {
 		bool addRequestPerUnit(uint64_t iValue);
 		void close();
 
-
+		RoleLoader::LoaderPtr getLoader();
 
 	public:
 		static std::shared_ptr<GatewayRole> createGatewayRole(uint64_t iRoleId, uint64_t iSerialNum, RoleLoader::LoaderPtr ptrLoader);

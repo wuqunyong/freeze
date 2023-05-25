@@ -101,5 +101,10 @@ void GatewayRole::close()
 	ServerConnection::sendCloseLocalServer(m_iSerialNum);
 }
 
+RoleLoader::LoaderPtr GatewayRole::getLoader()
+{
+	return m_ptrLoader;
+}
+
 }
 

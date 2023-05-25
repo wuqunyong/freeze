@@ -5,6 +5,7 @@
 
 #include "logic/init_service/gateway_mgr.h"
 #include "logic/init_service/gateway_role.h"
+#include "logic/role/component_role_base.h"
 
 namespace apie {
 
@@ -305,6 +306,12 @@ apie::status::E_ReturnType GatewayMgrModule::handleEcho(
 
 	response->set_value1(value1);
 	response->set_value2(value2);
+
+	auto ptrRole = APieGetModule<GatewayMgr>()->findGatewayRoleBySerialNum(info.iSessionId);
+	if (ptrRole != nullptr)
+	{
+		ptrRole->getLoader()->lookup<ComponentWrapper<Component_RoleBase>>().addLevel();
+	}
 
 	return apie::status::E_ReturnType::kRT_Sync;
 }
