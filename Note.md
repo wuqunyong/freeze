@@ -192,3 +192,7 @@ use mysql;
 update user set host='%' where user='root';
 grant all privileges on root.* to 'root'@'%';
 flush privileges;
+
+
+算法可视化
+https://www.redblobgames.com/pathfinding/a-star/introduction.html
