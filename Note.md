@@ -196,3 +196,10 @@ flush privileges;
 
 算法可视化
 https://www.redblobgames.com/pathfinding/a-star/introduction.html
+
+Linux 动态库 undefined symbol 原因定位与解决方法 
+https://www.cnblogs.com/zoule/p/15002536.html
+1. ldd -r <lib/excutable file> 
+2. nm -gDC libSXVideoEngineJni.so | grep -i license
+3. readelf -d libSXVideoEngineJni.so | grep rpath
+4. c++filt __ZN13SXVideoEngine6Public7License10SetLicenseEPKc
