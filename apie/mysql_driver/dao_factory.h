@@ -11,11 +11,11 @@
 #include <functional>
 #include <optional>
 
+#include "apie/proto/init.h"
+
 #include "apie/common/enum_to_int.h"
 #include "apie/mysql_driver/mysql_orm.h"
-
 #include "apie/singleton/threadsafe_singleton.h"
-#include "apie/proto/init.h"
 #include "apie/configs/configs.h"
 #include "apie/api/hook.h"
 #include "apie/network/logger.h"
@@ -66,10 +66,10 @@ namespace apie {
 	using CallMysqlDescTableCB = std::function<void(bool bResul, std::string sInfo, uint64_t iCallCount)>;
 
 
-	// ¼ÓÔØ±í½á¹¹µ½ÒÑ¼ÓÔØÁÐ±í£»RPCµ÷ÓÃÊ§°Ü»áÒ»Ö±ÖØÊÔ£¬Ö±µ½µ÷ÓÃ³É¹¦£¬µ÷ÓÃ³É¹¦ºó²Å»á´¥·¢»Øµ÷
+	// ï¿½ï¿½ï¿½Ø±ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½Ñ¼ï¿½ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½RPCï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü»ï¿½Ò»Ö±ï¿½ï¿½ï¿½Ô£ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½Ã³É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã³É¹ï¿½ï¿½ï¿½Å»á´¥ï¿½ï¿½ï¿½Øµï¿½
 	bool CallMysqlDescTable(::rpc_msg::CHANNEL server, DeclarativeBase::DBType dbType, std::vector<std::string> tables, CallMysqlDescTableCB cb, uint64_t iCallCount = 0);
 
-	//×¢²áÐèÒª¼ÓÔØµÄ±í
+	//×¢ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ØµÄ±ï¿½
 	bool RegisterRequiredTable(const ::rpc_msg::CHANNEL& server, DeclarativeBase::DBType type, const std::map<std::string, DAOFactory::TCreateMethod> &loadTables, CallMysqlDescTableCB cb);
 
 	template<typename T>
@@ -87,7 +87,7 @@ namespace apie {
 
 		for (const auto& elems : tables.database)
 		{
-			// ¼ÓÔØ:Êý¾Ý±í½á¹¹
+			// ï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½Ý±ï¿½ï¿½á¹¹
 			auto dbType = (DeclarativeBase::DBType)elems.type;
 			auto ptrReadyCb = [ptrMgr, ptrReady, dbType, iPoint](bool bResul, std::string sInfo, uint64_t iCallCount) mutable {
 				if (!bResul)

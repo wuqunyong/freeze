@@ -68,3 +68,15 @@ message EchoResponse
 	uint64 value1 = 1;
 	string value2 = 2;
 }
+
+message AsyncEchoRequest
+{
+	uint64 value1 = 1;
+	string value2 = 2;
+}
+
+message AsyncEchoResponse
+{
+	uint64 value1 = 1;
+	string value2 = 2;
+}

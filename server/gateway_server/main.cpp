@@ -20,10 +20,10 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	APieRegisterModule<apie::GatewayMgr>();
-	APieRegisterModule<apie::TestModule10>();
-	APieRegisterModule<apie::TestModule11>();
-	APieRegisterModule<apie::TestModule12>();
+	RegisterModule<apie::GatewayMgr>();
+	RegisterModule<apie::TestModule10>();
+	RegisterModule<apie::TestModule11>();
+	RegisterModule<apie::TestModule12>();
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();

@@ -19,11 +19,11 @@
 
 #include <google/protobuf/message.h>
 
+#include "apie/proto/init.h"
+
 #include "apie/mysql_driver/mysql_table.h"
 #include "apie/mysql_driver/mysql_connector.h"
 #include "apie/mysql_driver/result_set.h"
-
-#include "apie/proto/init.h"
 #include "apie/status/status.h"
 
 

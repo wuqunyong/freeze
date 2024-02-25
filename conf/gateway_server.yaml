@@ -4,8 +4,8 @@ identify:
   id: 1
 io_threads: 16
 certificate:         #证书
-  public_key: F:\\freeze\\etc\\key.pub    #公钥位置
-  private_key: F:\\freeze\\etc\\key.pem   #私钥位置
+  public_key: ..\\..\\etc\\key.pub    #公钥位置
+  private_key: ..\\..\\etc\\key.pem   #私钥位置
 service_registry:
   address: "127.0.0.1"
   port_value: 5007

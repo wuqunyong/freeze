@@ -42,7 +42,7 @@ void GatewayMgrModule::ready()
 
 	S_REGISTER_REQUEST(ClientLogin, GatewayMgrModule::handleRequestClientLogin);
 	S_REGISTER_REQUEST(Echo, GatewayMgrModule::handleEcho);
-
+	S_REGISTER_REQUEST(AsyncEcho, GatewayMgrModule::handleAsyncEcho);
 
 	// FORWARD
 	apie::forward::ForwardManagerSingleton::get().setDemuxCallback(GatewayMgrModule::handleDemuxForward);
@@ -50,7 +50,7 @@ void GatewayMgrModule::ready()
 
 void GatewayMgrModule::handleDefaultOpcodes(MessageInfo info, const std::string& msg)
 {	
-	auto ptrGatewayRole = APieGetModule<GatewayMgr>()->findGatewayRoleBySerialNum(info.iSessionId);
+	auto ptrGatewayRole = GetModule<GatewayMgr>()->findGatewayRoleBySerialNum(info.iSessionId);
 	if (ptrGatewayRole == nullptr)
 	{
 		ASYNC_PIE_LOG(PIE_ERROR, "handleDefaultOpcodes|Not Login|serialNum:{}|opcodes:{}", info.iSessionId, info.iOpcode);
@@ -76,7 +76,7 @@ void GatewayMgrModule::handleDemuxForward(const ::rpc_msg::RoleIdentifier& role,
 	MessageInfo info = apie::forward::ForwardManager::extractMessageInfo(role);
 
 	uint64_t iRoleId = role.user_id();
-	auto ptrGatewayRole = APieGetModule<GatewayMgr>()->findGatewayRoleById(iRoleId);
+	auto ptrGatewayRole = GetModule<GatewayMgr>()->findGatewayRoleById(iRoleId);
 	if (ptrGatewayRole == nullptr)
 	{
 		return;
@@ -102,7 +102,7 @@ apie::status::Status GatewayMgrModule::RPC_loginPending(
 	role.db_id = request->db_id();
 	role.expires_at = curTime + 30;
 
-	APieGetModule<GatewayMgr>()->addPendingRole(role);
+	GetModule<GatewayMgr>()->addPendingRole(role);
 
 	response->set_status_code(opcodes::SC_Ok);
 	response->set_account_id(request->account_id());
@@ -189,7 +189,7 @@ apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
 	auto iSerialNum = info.iSessionId;
 
 	auto iId = request->user_id();
-	auto optData = APieGetModule<GatewayMgr>()->getPendingRole(iId);
+	auto optData = GetModule<GatewayMgr>()->getPendingRole(iId);
 	if (!optData.has_value())
 	{
 		response->set_error_code(pb::core::CONTROL_ERROR);
@@ -202,7 +202,7 @@ apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
 	response->set_grenades(100);
 
 
-	auto ptrRole = APieGetModule<GatewayMgr>()->findGatewayRoleById(iId);
+	auto ptrRole = GetModule<GatewayMgr>()->findGatewayRoleById(iId);
 	if (ptrRole != nullptr)
 	{
 		return apie::status::E_ReturnType::kRT_Sync;
@@ -212,7 +212,7 @@ apie::status::E_ReturnType GatewayMgrModule::handleRequestClientLogin(
 		if (status.ok())
 		{
 			auto ptrRole = GatewayRole::createGatewayRole(iId, iSerialNum, ptrLoader);
-			APieGetModule<GatewayMgr>()->addGatewayRole(ptrRole);
+			GetModule<GatewayMgr>()->addGatewayRole(ptrRole);
 
 			service::ServiceManager::sendResponse(info, *response);
 		}
@@ -307,13 +307,85 @@ apie::status::E_ReturnType GatewayMgrModule::handleEcho(
 	response->set_value1(value1);
 	response->set_value2(value2);
 
-	auto ptrRole = APieGetModule<GatewayMgr>()->findGatewayRoleBySerialNum(info.iSessionId);
+	auto ptrRole = GetModule<GatewayMgr>()->findGatewayRoleBySerialNum(info.iSessionId);
 	if (ptrRole != nullptr)
 	{
 		ptrRole->getLoader()->lookup<ComponentWrapper<Component_RoleBase>>().addLevel();
 	}
 
 	return apie::status::E_ReturnType::kRT_Sync;
+}
+
+
+CoTaskVoid AsyncEcho_Coroutine(MessageInfo info, const std::shared_ptr<::login_msg::AsyncEchoRequest>& request, std::shared_ptr<::login_msg::AsyncEchoResponse>& response)
+{
+	auto dataResponse = response;
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_Scene_Server);
+	server.set_id(1);
+
+	pb::rpc::RPC_EchoTestRequest params;
+	params.set_value1(request->value1());
+	params.set_value2(request->value2() + " coroutine");
+
+	auto ptrAwait = MakeCoAwaitable<pb::rpc::RPC_EchoTestRequest, pb::rpc::RPC_EchoTestResponse>(server, pb::rpc::OP_RPC_EchoTest, params);
+	auto coResponse = co_await *ptrAwait;
+	if (!coResponse.ok())
+	{
+		co_return;
+	}
+
+	dataResponse->set_value1(coResponse.value().value1());
+	dataResponse->set_value2(coResponse.value().value2());
+
+	info.iOpcode = info.iResponseOpcode;
+	apie::network::OutputStream::sendProtobufMsgImpl(info, *dataResponse);
+}
+
+void AsyncEcho_RPC(MessageInfo info, const std::shared_ptr<::login_msg::AsyncEchoRequest>& request, std::shared_ptr<::login_msg::AsyncEchoResponse>& response)
+{
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_Scene_Server);
+	server.set_id(1);
+
+	pb::rpc::RPC_EchoTestRequest params;
+	params.set_value1(request->value1());
+	params.set_value2(request->value2() + " rpc");
+
+	auto cb = [info, response](const apie::status::Status& status, const std::shared_ptr<pb::rpc::RPC_EchoTestResponse>& data) mutable {
+		if (!status.ok())
+		{
+			return;
+		}
+
+		std::stringstream ss;
+		ss << "RPC_echoCb:" << data->ShortDebugString();
+
+		response->set_value1(data->value1());
+		response->set_value2(data->value2());
+
+		info.iOpcode = info.iResponseOpcode;
+		apie::network::OutputStream::sendProtobufMsgImpl(info, *response);
+	};
+	apie::rpc::RPC_Call<pb::rpc::RPC_EchoTestRequest, pb::rpc::RPC_EchoTestResponse>(server, pb::rpc::OP_RPC_EchoTest, params, cb);
+}
+
+apie::status::E_ReturnType GatewayMgrModule::handleAsyncEcho(
+	MessageInfo info, const std::shared_ptr<::login_msg::AsyncEchoRequest>& request, std::shared_ptr<::login_msg::AsyncEchoResponse>& response)
+{
+	auto iValue = request->value1();
+	if (iValue % 2 == 0)
+	{
+		AsyncEcho_Coroutine(info, request, response);
+	}
+	else
+	{
+		AsyncEcho_RPC(info, request, response);
+	}
+	return apie::status::E_ReturnType::kRT_Async;
 }
 
 void GatewayMgrModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SERVER_PEER_CLOSE>& msg)
@@ -325,13 +397,13 @@ void GatewayMgrModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsub::SE
 
 	uint64_t iSerialNum = msg->serial_num();
 
-	auto optRoleId = APieGetModule<GatewayMgr>()->findRoleIdBySerialNum(iSerialNum);
+	auto optRoleId = GetModule<GatewayMgr>()->findRoleIdBySerialNum(iSerialNum);
 	if (!optRoleId.has_value())
 	{
 		return;
 	}
 
-	APieGetModule<GatewayMgr>()->removeGateWayRole(optRoleId.value());
+	GetModule<GatewayMgr>()->removeGateWayRole(optRoleId.value());
 }
 
 }

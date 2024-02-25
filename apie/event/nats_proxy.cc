@@ -394,12 +394,13 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 
 		std::stringstream ss;
 		ss << "msgHandle|ThreadId:" << iThreadId << "type:" << type << "|" << msg->ShortDebugString().c_str();
-		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy:{}", ss.str());
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|logic thread nullptr|{}", ss.str());
 
 		return;
 	}
 
 	{
+		//metrics
 		std::lock_guard<std::mutex> guard(_sync);
 
 		if (msg->has_rpc_request())
@@ -422,12 +423,6 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 	{
 	case apie::event_ns::NatsManager::E_NT_Realm:
 	{
-		//::nats_msg::NATS_MSG_PRXOY* m = msg.release();
-		//apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
-		//	[m, this]() mutable { Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRXOY>(m)); }
-		//);
-
-		
 		Handle_RealmSubscribe(msg);
 		break;
 	}
@@ -437,7 +432,7 @@ void NatsManager::NATSMessageHandler(uint32_t type, PrxoyNATSConnector::MsgType 
 
 		std::stringstream ss;
 		ss << "msgHandle|ThreadId:" << iThreadId << "type:" << type << "|" << msg->ShortDebugString().c_str();
-		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|{}", ss.str());
+		ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|invalid type|{}", ss.str());
 	}
 	}
 

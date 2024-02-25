@@ -10,6 +10,7 @@
 
 #include <google/protobuf/message.h>
 
+#include "apie/network/logger.h"
 
 namespace apie {
 namespace service {
@@ -32,14 +33,22 @@ public:
 	using Promise = std::promise<SharedResponse>;
 	using SharedFuture = std::shared_future<SharedResponse>;
 
+	SyncService(std::string info) :
+		info_(info)
+	{
+
+	}
+
 	ServiceCallback getHandler() override
 	{
+		auto sInfo = info_;
 		std::weak_ptr<SyncService<Response>> weak_this = std::dynamic_pointer_cast<SyncService<Response>>(shared_from_this());
-		auto ptr_cb = [weak_this](const std::shared_ptr<::google::protobuf::Message>& response)
+		auto ptr_cb = [weak_this, sInfo](const std::shared_ptr<::google::protobuf::Message>& response)
 		{
 			auto share_this = weak_this.lock();
 			if (!share_this) 
 			{
+				PIE_LOG(PIE_NOTICE, "Network|SyncService|{}", sInfo);
 				return;
 			}
 
@@ -76,6 +85,7 @@ public:
 
 private:
 	Promise promise_;
+	std::string info_;
 };
 
 

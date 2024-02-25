@@ -31,20 +31,21 @@ static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016protocol.proto\022\007pb.core*\305\002\n\017OperatePro"
+  "\n\016protocol.proto\022\007pb.core*\372\002\n\017OperatePro"
   "tocol\022\013\n\007OP_None\020\000\022\033\n\026OP_AccountLoginReq"
   "uest\020\351\007\022\034\n\027OP_AccountLoginResponse\020\352\007\022\032\n"
   "\025OP_ClientLoginRequest\020\315\010\022\033\n\026OP_ClientLo"
   "ginResponse\020\316\010\022\023\n\016OP_EchoRequest\020\317\010\022\024\n\017O"
-  "P_EchoResponse\020\320\010\022\034\n\027OP_HandshakeInitReq"
-  "uest\020\321\010\022\035\n\030OP_HandshakeInitResponse\020\322\010\022#"
-  "\n\036OP_HandshakeEstablishedRequest\020\323\010\022$\n\037O"
-  "P_HandshakeEstablishedResponse\020\324\010b\006proto"
-  "3"
+  "P_EchoResponse\020\320\010\022\030\n\023OP_AsyncEchoRequest"
+  "\020\321\010\022\031\n\024OP_AsyncEchoResponse\020\322\010\022\034\n\027OP_Han"
+  "dshakeInitRequest\020\265\t\022\035\n\030OP_HandshakeInit"
+  "Response\020\266\t\022#\n\036OP_HandshakeEstablishedRe"
+  "quest\020\267\t\022$\n\037OP_HandshakeEstablishedRespo"
+  "nse\020\270\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_protocol_2eproto = {
-    false, false, 361, descriptor_table_protodef_protocol_2eproto,
+    false, false, 414, descriptor_table_protodef_protocol_2eproto,
     "protocol.proto",
     &descriptor_table_protocol_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_protocol_2eproto::offsets,
@@ -74,8 +75,10 @@ bool OperateProtocol_IsValid(int value) {
     case 1104:
     case 1105:
     case 1106:
-    case 1107:
-    case 1108:
+    case 1205:
+    case 1206:
+    case 1207:
+    case 1208:
       return true;
     default:
       return false;

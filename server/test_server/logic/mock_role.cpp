@@ -25,7 +25,7 @@ MockRole::~MockRole()
 
 	if (this->m_clientProxy)
 	{
-		APieGetModule<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
+		GetModule<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
 
 		this->m_clientProxy->onActiveClose();
 	}
@@ -39,10 +39,11 @@ void MockRole::setUp()
 	}
 
 	m_bInit = true;
-	APieGetModule<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iIggId);
+	GetModule<apie::TestServerMgr>()->addSerialNumRole(this->m_clientProxy->getSerialNum(), m_iIggId);
 
 	this->addResponseHandler(pb::core::OP_AccountLoginResponse, &MockRole::handleAccountLogin);
 	this->addResponseHandler(pb::core::OP_ClientLoginResponse, &MockRole::handleClientLogin);
+	this->addResponseHandler(pb::core::OP_AsyncEchoResponse, &MockRole::handleAsyncEchoResponse);
 
 	//µÇÂ¼·µ»Ø
 
@@ -589,7 +590,7 @@ void MockRole::handleAccountLogin(MessageInfo info, const std::string& msg)
 	{
 		ASYNC_PIE_LOG(PIE_NOTICE, "{}", ss.str());
 
-		APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
+		GetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
 		return;
 	}
 
@@ -598,14 +599,14 @@ void MockRole::handleAccountLogin(MessageInfo info, const std::string& msg)
 		ss << "data|" << response.ShortDebugString();
 		ASYNC_PIE_LOG(PIE_NOTICE, "{}", ss.str());
 
-		APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
+		GetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
 		return;
 	}
 
 	ss << "data|" << response.ShortDebugString();
 	ASYNC_PIE_LOG(PIE_NOTICE, "{}", ss.str());
 
-	APieGetModule<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
+	GetModule<apie::TestServerMgr>()->removeSerialNum(this->m_clientProxy->getSerialNum());
 	this->m_clientProxy->onActiveClose();
 
 
@@ -623,7 +624,7 @@ void MockRole::handleAccountLogin(MessageInfo info, const std::string& msg)
 			auto ptrShared = ptrSelf.lock();
 			if (ptrShared)
 			{
-				APieGetModule<apie::TestServerMgr>()->addSerialNumRole(ptrShared->m_clientProxy->getSerialNum(), ptrShared->m_iIggId);
+				GetModule<apie::TestServerMgr>()->addSerialNumRole(ptrShared->m_clientProxy->getSerialNum(), ptrShared->m_iIggId);
 
 				::login_msg::ClientLoginRequest request;
 				request.set_user_id(ptrShared->m_iIggId);
@@ -649,7 +650,24 @@ void MockRole::handleClientLogin(MessageInfo info, const std::string& msg)
 	if (!bResult)
 	{
 		ASYNC_PIE_LOG(PIE_NOTICE, "recv:{}", ss.str());
-		APieGetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
+		GetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
+		return;
+	}
+
+	ASYNC_PIE_LOG(PIE_NOTICE, "recv:{}|response:{}", ss.str(), response.ShortDebugString());
+}
+
+void MockRole::handleAsyncEchoResponse(MessageInfo info, const std::string& msg)
+{
+	std::stringstream ss;
+	ss << "handleResponse|m_iIggId:" << m_iIggId << "|serialNum:" << info.iRPCRequestID << "|iOpcode:" << info.iOpcode;
+
+	::login_msg::AsyncEchoResponse response;
+	bool bResult = response.ParseFromString(msg);
+	if (!bResult)
+	{
+		ASYNC_PIE_LOG(PIE_NOTICE, "recv:{}", ss.str());
+		GetModule<apie::TestServerMgr>()->removeMockRole(m_iIggId);
 		return;
 	}
 

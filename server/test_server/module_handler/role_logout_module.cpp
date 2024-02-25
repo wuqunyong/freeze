@@ -12,7 +12,7 @@ void RoleLogoutModule::registerModule()
 
 void RoleLogoutModule::onLogout(MockRole& mockRole, ::pubsub::TEST_CMD& msg)
 {
-	APieGetModule<apie::TestServerMgr>()->removeMockRole(mockRole.getIggId());
+	GetModule<apie::TestServerMgr>()->removeMockRole(mockRole.getIggId());
 }
 
 }

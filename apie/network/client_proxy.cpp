@@ -11,7 +11,7 @@
 #include "apie/network/output_stream.h"
 #include "apie/event/dispatcher_impl.h"
 #include "apie/common/enum_to_int.h"
-
+#include "apie/sync_service/sync_service.h"
 
 using namespace apie;
 
@@ -375,17 +375,18 @@ void ClientProxy::onActiveClose()
 
 int ClientProxy::sendConnect()
 {
+	std::stringstream ss;
+	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port
+		<< ",reconnectTimes:" << this->m_reconnectTimes;
+
 	auto *ptr = new DialParameters;
-	if (NULL == ptr)
-	{
-		return opcodes::SC_ClientProxy_BadAlloc;
-	}
 	ptr->mode = DIAL_MODE::DM_ASYNC;
 	ptr->sIp = this->m_ip;
 	ptr->iPort = this->m_port;
 	ptr->iCodecType = this->m_codecType;
 	ptr->iCurSerialNum = this->m_curSerialNum;
 	ptr->ptrSyncBase = nullptr;
+	ptr->sInfo = ss.str();
 
 	Command cmd;
 	cmd.type = Command::dial;
@@ -394,8 +395,10 @@ int ClientProxy::sendConnect()
 	if (m_tId == 0)
 	{
 		auto ptrThread = apie::CtxSingleton::get().chooseIOThread();
-		if (ptrThread == NULL)
+		if (ptrThread == nullptr)
 		{
+			ASYNC_PIE_LOG(PIE_ERROR, "Network|ClientProxy|connect|chooseIOThread nullptr|{}", ss.str().c_str());
+
 			delete ptr;
 			return opcodes::SC_ClientProxy_NoIOThread;
 		}
@@ -403,18 +406,16 @@ int ClientProxy::sendConnect()
 	}
 
 	auto ptrIOThread = apie::CtxSingleton::get().getThreadById(m_tId);
-	if (ptrIOThread == NULL)
+	if (ptrIOThread == nullptr)
 	{
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ClientProxy|connect|getThreadById nullptr|{}", ss.str().c_str());
+
 		delete ptr;
 		return opcodes::SC_ClientProxy_NoIOThread;
 	}
 
 	ptrIOThread->push(cmd);
-
-	std::stringstream ss;
-	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port
-		<<",reconnectTimes:" << this->m_reconnectTimes;
-	ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy/connect|{}", ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "Network|ClientProxy|connect|{}", ss.str().c_str());
 
 	return 0;
 }
@@ -423,19 +424,20 @@ std::shared_future<std::shared_ptr<service_discovery::ConnectDialResult>> Client
 {
 	std::shared_future<std::shared_ptr<service_discovery::ConnectDialResult>> invalidResult;
 
-	auto* ptr = new DialParameters;
-	if (NULL == ptr)
-	{
-		return invalidResult;
-	}
+	std::stringstream ss;
+	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port
+		<< ",reconnectTimes:" << this->m_reconnectTimes;
 
-	auto ptrSync = std::make_shared<apie::service::SyncService<service_discovery::ConnectDialResult>>();
+	auto ptrSync = std::make_shared<apie::service::SyncService<service_discovery::ConnectDialResult>>(ss.str());
+
+	auto* ptr = new DialParameters;
 	ptr->mode = DIAL_MODE::DM_SYNC;
 	ptr->sIp = this->m_ip;
 	ptr->iPort = this->m_port;
 	ptr->iCodecType = this->m_codecType;
 	ptr->iCurSerialNum = this->m_curSerialNum;
 	ptr->ptrSyncBase = ptrSync;
+	ptr->sInfo = ss.str();
 
 	Command cmd;
 	cmd.type = Command::dial;
@@ -446,6 +448,8 @@ std::shared_future<std::shared_ptr<service_discovery::ConnectDialResult>> Client
 		auto ptrThread = apie::CtxSingleton::get().chooseIOThread();
 		if (ptrThread == NULL)
 		{
+			ASYNC_PIE_LOG(PIE_ERROR, "Network|ClientProxy|sync_connect|chooseIOThread nullptr|{}", ss.str().c_str());
+
 			delete ptr;
 			return invalidResult;
 		}
@@ -453,19 +457,16 @@ std::shared_future<std::shared_ptr<service_discovery::ConnectDialResult>> Client
 	}
 
 	auto ptrIOThread = apie::CtxSingleton::get().getThreadById(m_tId);
-	if (ptrIOThread == NULL)
+	if (ptrIOThread == nullptr)
 	{
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ClientProxy|sync_connect|getThreadById nullptr|{}", ss.str().c_str());
+
 		delete ptr;
 		return invalidResult;
 	}
 
 	ptrIOThread->push(cmd);
-
-	std::stringstream ss;
-	ss << "send|SerialNum:" << this->m_curSerialNum << ",ip:" << this->m_ip << ",port:" << this->m_port
-		<< ",reconnectTimes:" << this->m_reconnectTimes;
-	ASYNC_PIE_LOG(PIE_NOTICE, "ClientProxy/sync_connect|{}", ss.str().c_str());
-
+	ASYNC_PIE_LOG(PIE_NOTICE, "Network|ClientProxy|sync_connect|{}", ss.str().c_str());
 
 	return ptrSync->getFuture();
 }

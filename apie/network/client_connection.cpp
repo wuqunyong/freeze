@@ -13,6 +13,7 @@
 
 #include "apie/service/service_manager.h"
 #include "apie/common/protobuf_factory.h"
+#include "apie/sync_service/sync_service.h"
 
 static const unsigned int MAX_MESSAGE_LENGTH = 16*1024*1024;
 static const unsigned int HTTP_BUF_LEN = 8192;
@@ -70,7 +71,7 @@ void apie::ClientConnection::close(std::string sInfo, int iCode, int iActive)
 	ss << "close|iSerialNum:" << this->iSerialNum 
 		<< "|ip:" << this->sLocalAddress << ":" << this->iLocalPort << " -> " << "peerIp:"<< this->sListenAddress << ":" << this->iListenPort 
 		<< "|reason:" << sInfo;
-	ASYNC_PIE_LOG(PIE_NOTICE, "ClientConnection/close|{}", ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "Network|ClientConnection|close|{}", ss.str().c_str());
 
 	if (this->m_ptrDialSyncBase)
 	{
@@ -404,6 +405,15 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 	auto optionalData = apie::service::ServiceHandlerSingleton::get().client.getType(info.iOpcode);
 	if (!optionalData)
 	{
+		auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
+		if (ptrLogic == nullptr)
+		{
+			std::stringstream ss;
+			ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
+			ASYNC_PIE_LOG(PIE_ERROR, "Network|ClientConnection|recv|{}", ss.str().c_str());
+			return;
+		}
+
 		PBForward *itemObjPtr = new PBForward;
 		itemObjPtr->type = ConnetionType::CT_CLIENT;
 		itemObjPtr->info = info;
@@ -412,17 +422,6 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 		Command command;
 		command.type = Command::pb_forward;
 		command.args.pb_forward.ptrData = itemObjPtr;
-
-		auto ptrLogic = apie::CtxSingleton::get().getLogicThread();
-		if (ptrLogic == nullptr)
-		{
-			delete itemObjPtr;
-
-			std::stringstream ss;
-			ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
-			ASYNC_PIE_LOG(PIE_ERROR, "ClientConnection/recv|{}", ss.str().c_str());
-			return;
-		}
 
 		ptrLogic->push(command);
 		return;
@@ -434,7 +433,7 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 	{
 		std::stringstream ss;
 		ss << "createMessage error|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG(PIE_ERROR, "ClientConnection/recv|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ClientConnection|recv|{}", ss.str().c_str());
 		return;
 	}
 
@@ -444,7 +443,7 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 	{
 		std::stringstream ss;
 		ss << "ParseFromString error|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG(PIE_ERROR, "ClientConnection/recv|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ClientConnection|recv|{}", ss.str().c_str());
 		return;
 	}
 
@@ -473,7 +472,7 @@ void apie::ClientConnection::recv(MessageInfo info, std::string& requestStr)
 
 		std::stringstream ss;
 		ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
-		ASYNC_PIE_LOG(PIE_ERROR, "ClientConnection/recv|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ClientConnection|recv|{}", ss.str().c_str());
 		return;
 	}
 	ptrLogic->push(command);
@@ -531,7 +530,7 @@ void apie::ClientConnection::eventcb(short what)
 	} 
 	else if (what & BEV_EVENT_CONNECTED) 
 	{
-		this->sendConnectResultCmd(0);
+		this->sendConnectResultCmd(E_DR_SUCCESS);
 	}
 	else if (what & BEV_EVENT_TIMEOUT)
 	{
@@ -672,7 +671,7 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 	ProtocolType iCodecType =  ptrDial->iCodecType;
 	const char* ip = ptrDial->sIp.c_str();
 
-	uint32_t iResult = 0;
+	uint32_t iResult = E_DR_SUCCESS;
 	struct bufferevent * bev = NULL;
 
 	do
@@ -692,7 +691,7 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 		bev = bufferevent_socket_new(base, -1, BEV_OPT_CLOSE_ON_FREE);
 		if (NULL == bev)
 		{
-			iResult = 2;
+			iResult = E_DR_FAILURE_SocketNew;
 			break;
 		}
 
@@ -702,7 +701,7 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 			bufferevent_free(bev);
 			bev = NULL;
 
-			iResult = 3;
+			iResult = E_DR_FAILURE_SocketConnect;
 			break;
 		}
 
@@ -713,7 +712,7 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 
 			bufferevent_free(bev);
 			bev = NULL;
-			iResult = 4;
+			iResult = E_DR_FAILURE_GetFd;
 			break;
 		}
 
@@ -741,7 +740,7 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 			fprintf(stderr, "New ClientConnection Error!");
 			bufferevent_free(bev);
 			bev = NULL;
-			iResult = 5;
+			iResult = E_DR_FAILURE_New;
 			break;
 		}
 
@@ -761,7 +760,7 @@ std::shared_ptr<apie::ClientConnection> apie::ClientConnection::createClient(uin
 		bufferevent_set_timeouts(bev, &tv_read, &tv_write);
 	} while (false);
 
-	if (0 != iResult)
+	if (E_DR_SUCCESS != iResult)
 	{
 		Command cmd;
 		cmd.type = Command::dial_result;

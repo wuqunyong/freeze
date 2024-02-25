@@ -57,8 +57,9 @@ apie::status::Status SceneMgrModule::RPC_echoTest(const ::rpc_msg::CLIENT_IDENTI
 {
 	PIE_LOG(PIE_NOTICE, "{}", request->DebugString().c_str());
 
-	response->set_value1(100);
-	response->set_value2("hello world");
+	response->set_value1(request->value1());
+	response->set_value2(request->value2() + " scene");
+
 	return { apie::status::StatusCode::OK, "" };
 }
 

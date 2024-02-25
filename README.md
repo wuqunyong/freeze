@@ -167,7 +167,7 @@ mysqladmin -u root -p version
 直接visual studio启动，编译
 
 # 架构图
-![架构图](https://github.com/wuqunyong/freeze/blob/main/conf/topology.png)
+![架构图](.\\conf\\topology.png)
 
 # Reactor线程模型
  [nio reactor](http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf)
@@ -272,3 +272,114 @@ int main(int argc, char** argv)
 
 ```
 
+## RPC调用
+
+来看第一个RPC例子, 提供Callback和Coroutine的两种RPC调用
+
+**Client**　-----　1.Request　　----->　**GatewayServer**　-----　2.RPCRequest(Callback　|　Coroutine)　----->　**SceneServer**
+**Client**　<-----　4.Response　------　**GatewayServer**　<-----　3.RPCResponse　　　　　　　　　　------　**SceneServer**
+
+### Client
+
+```
+//发送AsyncEcho 客户端请求
+::login_msg::AsyncEchoRequest request;
+request.set_value1(123);
+request.set_value2("hello");
+mockRole.sendMsg(pb::core::OP_AsyncEchoRequest, request);
+```
+
+### GatewayServer
+
+```
+//注册AsyncEcho 客户端请求处理
+S_REGISTER_REQUEST(AsyncEcho, GatewayMgrModule::handleAsyncEcho);
+
+apie::status::E_ReturnType GatewayMgrModule::handleAsyncEcho(
+	MessageInfo info, const std::shared_ptr<::login_msg::AsyncEchoRequest>& request, std::shared_ptr<::login_msg::AsyncEchoResponse>& response)
+{
+	auto iValue = request->value1();
+	if (iValue % 2 == 0)
+	{
+		AsyncEcho_Coroutine(info, request, response);
+	}
+	else
+	{
+		AsyncEcho_RPC(info, request, response);
+	}
+	return apie::status::E_ReturnType::kRT_Async;
+}
+
+CoTaskVoid AsyncEcho_Coroutine(MessageInfo info, const std::shared_ptr<::login_msg::AsyncEchoRequest>& request, std::shared_ptr<::login_msg::AsyncEchoResponse>& response)
+{
+	auto dataResponse = response;
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_Scene_Server);
+	server.set_id(1);
+
+	pb::rpc::RPC_EchoTestRequest params;
+	params.set_value1(request->value1());
+	params.set_value2(request->value2() + " coroutine");
+
+	//发送EchoTest RPC请求
+	auto ptrAwait = MakeCoAwaitable<pb::rpc::RPC_EchoTestRequest, pb::rpc::RPC_EchoTestResponse>(server, pb::rpc::OP_RPC_EchoTest, params);
+	auto coResponse = co_await *ptrAwait;
+	if (!coResponse.ok())
+	{
+		co_return;
+	}
+
+	dataResponse->set_value1(coResponse.value().value1());
+	dataResponse->set_value2(coResponse.value().value2());
+
+	info.iOpcode = info.iResponseOpcode;
+	apie::network::OutputStream::sendProtobufMsgImpl(info, *dataResponse);
+}
+
+void AsyncEcho_RPC(MessageInfo info, const std::shared_ptr<::login_msg::AsyncEchoRequest>& request, std::shared_ptr<::login_msg::AsyncEchoResponse>& response)
+{
+	::rpc_msg::CHANNEL server;
+	server.set_realm(apie::Ctx::getThisChannel().realm());
+	server.set_type(::common::EPT_Scene_Server);
+	server.set_id(1);
+
+	pb::rpc::RPC_EchoTestRequest params;
+	params.set_value1(request->value1());
+	params.set_value2(request->value2() + " rpc");
+
+	auto cb = [info, response](const apie::status::Status& status, const std::shared_ptr<pb::rpc::RPC_EchoTestResponse>& data) mutable {
+		if (!status.ok())
+		{
+			return;
+		}
+
+		std::stringstream ss;
+		ss << "RPC_echoCb:" << data->ShortDebugString();
+
+		response->set_value1(data->value1());
+		response->set_value2(data->value2());
+
+		info.iOpcode = info.iResponseOpcode;
+		apie::network::OutputStream::sendProtobufMsgImpl(info, *response);
+	};
+	//发送EchoTest RPC请求
+	apie::rpc::RPC_Call<pb::rpc::RPC_EchoTestRequest, pb::rpc::RPC_EchoTestResponse>(server, pb::rpc::OP_RPC_EchoTest, params, cb);
+}
+```
+
+### SceneServer
+
+```
+//注册EchoTest RPC服务
+INTRA_REGISTER_RPC(EchoTest, SceneMgrModule::RPC_echoTest);
+
+apie::status::Status SceneMgrModule::RPC_echoTest(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<pb::rpc::RPC_EchoTestRequest>& request, std::shared_ptr<pb::rpc::RPC_EchoTestResponse>& response)
+{
+	response->set_value1(request->value1());
+	response->set_value2(request->value2() + " scene");
+
+	return { apie::status::StatusCode::OK, "" };
+}
+```

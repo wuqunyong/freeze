@@ -10,9 +10,10 @@
 #include <typeinfo>
 #include <typeindex>
 
+#include "apie/proto/init.h"
+
 #include "apie/common/options.h"
 #include "apie/mysql_driver/db_load_component.h"
-#include "apie/proto/init.h"
 #include "apie/event/timer_impl.h"
 
 namespace apie {

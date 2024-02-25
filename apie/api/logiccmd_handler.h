@@ -12,8 +12,9 @@
 
 #include <google/protobuf/message.h>
 
-#include "apie/singleton/threadsafe_singleton.h"
 #include "apie/proto/init.h"
+
+#include "apie/singleton/threadsafe_singleton.h"
 
 
 namespace apie {

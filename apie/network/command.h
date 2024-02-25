@@ -14,10 +14,13 @@
 #include "apie/http/http_response.h"
 #include "apie/network/i_poll_events.hpp"
 #include "apie/serialization/protocol_head.h"
-#include "apie/sync_service/sync_service.h"
 
 namespace apie
 {
+	namespace service {
+		class SyncServiceBase;
+	}
+
 	struct PassiveConnect
 	{
 		evutil_socket_t iFd;
@@ -25,6 +28,7 @@ namespace apie
 		std::string sIp;
 		std::string sPeerIp;
 		uint32_t iMaskFlag = 0;
+		std::string sInfo;
 	};
 
 	struct MessageInfo
@@ -116,6 +120,7 @@ namespace apie
 		uint64_t iCurSerialNum = 0;
 		uint32_t iMaskFlag = 0;
 		std::shared_ptr<apie::service::SyncServiceBase> ptrSyncBase = nullptr;
+		std::string sInfo;
 	};
 
 	struct DialResult

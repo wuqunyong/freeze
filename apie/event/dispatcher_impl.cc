@@ -13,6 +13,7 @@
 #include "influxdb.hpp"
 
 
+
 #include "apie/event/libevent_scheduler.h"
 #include "apie/event/signal_impl.h"
 #include "apie/event/timer_impl.h"
@@ -42,6 +43,7 @@
 #include "apie/service/service_manager.h"
 #include "apie/event/nats_proxy.h"
 #include "apie/pub_sub/pubsub_manager.h"
+#include "apie/sync_service/sync_service.h"
 
 
 
@@ -71,48 +73,49 @@ DispatcherImpl::DispatcherImpl(EThreadType type, uint32_t tid)
 DispatcherImpl::~DispatcherImpl() {}
 
 void DispatcherImpl::clearDeferredDeleteList() {
-  std::vector<DeferredDeletablePtr>* to_delete = current_to_delete_;
+	std::vector<DeferredDeletablePtr>* to_delete = current_to_delete_;
 
-  size_t num_to_delete = to_delete->size();
-  if (deferred_deleting_ || !num_to_delete) {
-    return;
-  }
+	size_t num_to_delete = to_delete->size();
+	if (deferred_deleting_ || !num_to_delete) {
+		return;
+	}
 
 
-  // Swap the current deletion vector so that if we do deferred delete while we are deleting, we
-  // use the other vector. We will get another callback to delete that vector.
-  if (current_to_delete_ == &to_delete_1_) {
-    current_to_delete_ = &to_delete_2_;
-  } else {
-    current_to_delete_ = &to_delete_1_;
-  }
+	// Swap the current deletion vector so that if we do deferred delete while we are deleting, we
+	// use the other vector. We will get another callback to delete that vector.
+	if (current_to_delete_ == &to_delete_1_) {
+		current_to_delete_ = &to_delete_2_;
+	}
+	else {
+		current_to_delete_ = &to_delete_1_;
+	}
 
-  deferred_deleting_ = true;
+	deferred_deleting_ = true;
 
-  // Calling clear() on the vector does not specify which order destructors run in. We want to
-  // destroy in FIFO order so just do it manually. This required 2 passes over the vector which is
-  // not optimal but can be cleaned up later if needed.
-  for (size_t i = 0; i < num_to_delete; i++) {
-    (*to_delete)[i].reset();
-  }
+	// Calling clear() on the vector does not specify which order destructors run in. We want to
+	// destroy in FIFO order so just do it manually. This required 2 passes over the vector which is
+	// not optimal but can be cleaned up later if needed.
+	for (size_t i = 0; i < num_to_delete; i++) {
+		(*to_delete)[i].reset();
+	}
 
-  to_delete->clear();
-  deferred_deleting_ = false;
+	to_delete->clear();
+	deferred_deleting_ = false;
 }
 
 network::ListenerPtr DispatcherImpl::createListener(network::ListenerCbPtr cb, network::ListenerConfig config) {
-  return network::ListenerPtr{new network::ListenerImpl(*this, cb, config)};
+	return network::ListenerPtr{new network::ListenerImpl(*this, cb, config)};
 }
 
 TimerPtr DispatcherImpl::createTimer(TimerCb cb) {
-  return base_scheduler_.createTimer(cb);
+	return base_scheduler_.createTimer(cb);
 }
 
 void DispatcherImpl::deferredDelete(DeferredDeletablePtr&& to_delete) {
-  current_to_delete_->emplace_back(std::move(to_delete));
-  if (1 == current_to_delete_->size()) {
-    deferred_delete_timer_->enableTimer(std::chrono::milliseconds(0));
-  }
+	current_to_delete_->emplace_back(std::move(to_delete));
+	if (1 == current_to_delete_->size()) {
+		deferred_delete_timer_->enableTimer(std::chrono::milliseconds(0));
+	}
 }
 
 void DispatcherImpl::start()
@@ -120,8 +123,8 @@ void DispatcherImpl::start()
 	mailbox_.registerFd(&base_scheduler_.base(), processCommand, this);
 }
 
-void DispatcherImpl::exit() 
-{ 
+void DispatcherImpl::exit()
+{
 	base_scheduler_.loopExit();
 
 	switch (type_)
@@ -137,30 +140,30 @@ void DispatcherImpl::exit()
 }
 
 SignalEventPtr DispatcherImpl::listenForSignal(int signal_num, SignalCb cb) {
-  return SignalEventPtr{new SignalEventImpl(*this, signal_num, cb)};
+	return SignalEventPtr{ new SignalEventImpl(*this, signal_num, cb) };
 }
 
 void DispatcherImpl::post(std::function<void()> callback) {
-  bool do_post;
-  {
-	std::lock_guard<std::mutex> lock(post_lock_);
-    do_post = post_callbacks_.empty();
-    post_callbacks_.push_back(callback);
-  }
+	bool do_post;
+	{
+		std::lock_guard<std::mutex> lock(post_lock_);
+		do_post = post_callbacks_.empty();
+		post_callbacks_.push_back(callback);
+	}
 
-  if (do_post) {
-    post_timer_->enableTimer(std::chrono::milliseconds(0));
-  }
+	if (do_post) {
+		post_timer_->enableTimer(std::chrono::milliseconds(0));
+	}
 }
 
 void DispatcherImpl::run(void) {
-  // Flush all post callbacks before we run the event loop. We do this because there are post
-  // callbacks that have to get run before the initial event loop starts running. libevent does
-  // not guarantee that events are run in any particular order. So even if we post() and call
-  // event_base_once() before some other event, the other event might get called first.
-  runPostCallbacks();
-  interval_timer_->enableTimer(std::chrono::milliseconds(200));
-  base_scheduler_.run();
+	// Flush all post callbacks before we run the event loop. We do this because there are post
+	// callbacks that have to get run before the initial event loop starts running. libevent does
+	// not guarantee that events are run in any particular order. So even if we post() and call
+	// event_base_once() before some other event, the other event might get called first.
+	runPostCallbacks();
+	interval_timer_->enableTimer(std::chrono::milliseconds(200));
+	base_scheduler_.run();
 }
 
 void DispatcherImpl::push(Command& cmd)
@@ -178,7 +181,7 @@ void DispatcherImpl::runIntervalCallbacks()
 	bool enable = apie::CtxSingleton::get().getConfigs()->metrics.enable;
 	if (enable)
 	{
-		MetricData *ptrData = new MetricData;
+		MetricData* ptrData = new MetricData;
 		ptrData->sMetric = "queue";
 
 		auto iType = apie::CtxSingleton::get().getServerType();
@@ -258,32 +261,33 @@ void DispatcherImpl::runIntervalCallbacks()
 }
 
 void DispatcherImpl::runPostCallbacks() {
-  while (true) {
-    // It is important that this declaration is inside the body of the loop so that the callback is
-    // destructed while post_lock_ is not held. If callback is declared outside the loop and reused
-    // for each iteration, the previous iteration's callback is destructed when callback is
-    // re-assigned, which happens while holding the lock. This can lead to a deadlock (via
-    // recursive mutex acquisition) if destroying the callback runs a destructor, which through some
-    // callstack calls post() on this dispatcher.
-    std::function<void()> callback;
-    {
-	  std::lock_guard<std::mutex> lock(post_lock_);
-      if (post_callbacks_.empty()) {
-        return;
-      }
-      callback = post_callbacks_.front();
-      post_callbacks_.pop_front();
-    }
 
-	try {
-		callback();
+	std::list<std::function<void()>> callbacks;
+	{
+		std::lock_guard<std::mutex> lock(post_lock_);
+		callbacks = std::move(post_callbacks_);
+
+		assert(post_callbacks_.empty());
 	}
-	catch (const std::exception& e) {
-		std::stringstream ss;
-		ss << "runPostCallbacks|exception:" << e.what();
-		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/exception:{}", ss.str());
+
+	std::function<void()> callback;
+	while (!callbacks.empty())
+	{
+		// Run the callback.
+		callback = callbacks.front();
+		callbacks.pop_front();
+
+		try
+		{
+			callback();
+		}
+		catch (const std::exception& e)
+		{
+			std::stringstream ss;
+			ss << "runPostCallbacks|exception:" << e.what();
+			ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/exception:{}", ss.str());
+		}
 	}
-  }
 }
 
 void DispatcherImpl::handleCommand()
@@ -448,7 +452,7 @@ void DispatcherImpl::handleCommand()
 	}
 }
 
-void DispatcherImpl::processCommand(evutil_socket_t fd, short event, void *arg)
+void DispatcherImpl::processCommand(evutil_socket_t fd, short event, void* arg)
 {
 	try {
 		((DispatcherImpl*)arg)->handleCommand();
@@ -495,7 +499,7 @@ void DispatcherImpl::delConnection(uint64_t iSerialNum)
 void DispatcherImpl::addClientConnection(std::shared_ptr<ClientConnection> ptrConnection)
 {
 	std::shared_ptr<ClientConnection> delClient = nullptr;
-	
+
 	{
 		std::lock_guard<std::mutex> guard(connecton_sync_);
 		auto iSerialNum = ptrConnection->getSerialNum();
@@ -540,31 +544,32 @@ void DispatcherImpl::clearAllConnection()
 	connection_map_.clear();
 }
 
-static void readcb(struct bufferevent *bev, void *arg)
+static void readcb(struct bufferevent* bev, void* arg)
 {
-	ServerConnection* ptrConnection = (ServerConnection *)arg;
+	ServerConnection* ptrConnection = (ServerConnection*)arg;
 	ptrConnection->readcb();
 }
 
-static void writecb(struct bufferevent *bev, void *arg)
+static void writecb(struct bufferevent* bev, void* arg)
 {
-	ServerConnection *ptrConnection = (ServerConnection *)arg;
+	ServerConnection* ptrConnection = (ServerConnection*)arg;
 	ptrConnection->writecb();
 }
 
-static void eventcb(struct bufferevent *bev, short what, void *arg)
+static void eventcb(struct bufferevent* bev, short what, void* arg)
 {
-	ServerConnection *ptrConnection = (ServerConnection *)arg;
+	ServerConnection* ptrConnection = (ServerConnection*)arg;
 	ptrConnection->eventcb(what);
 }
 
-void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
+void DispatcherImpl::handleNewConnect(PassiveConnect* itemPtr)
 {
-	struct bufferevent *bev;
+	struct bufferevent* bev;
 	bev = bufferevent_socket_new(&base_scheduler_.base(), itemPtr->iFd, BEV_OPT_CLOSE_ON_FREE);
 	if (!bev)
 	{
 		evutil_closesocket(itemPtr->iFd);
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|bufferevent_socket_new error|{}", itemPtr->sInfo.c_str());
 		return;
 	}
 
@@ -573,8 +578,10 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 	if (nullptr == ptrConnection)
 	{
 		bufferevent_free(bev);
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|make_shared error|{}", itemPtr->sInfo.c_str());
 		return;
 	}
+
 	ptrConnection->setIp(itemPtr->sIp, itemPtr->sPeerIp);
 	ptrConnection->setMaskFlag(itemPtr->iMaskFlag);
 
@@ -593,10 +600,10 @@ void DispatcherImpl::handleNewConnect(PassiveConnect *itemPtr)
 
 	std::stringstream ss;
 	ss << "iSerialNum:" << iSerialNum << "|fd:" << itemPtr->iFd << "|iType:" << toUnderlyingType(itemPtr->iType) << "|peerIp:" << itemPtr->sPeerIp << " -> " << "ip:" << itemPtr->sIp;
-	ASYNC_PIE_LOG(PIE_NOTICE, "DispatcherImpl/handleNewConnect:{}", ss.str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "Network|handleNewConnect:{}", ss.str());
 }
 
-void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
+void DispatcherImpl::handlePBRequest(PBRequest* itemPtr)
 {
 	switch (itemPtr->type)
 	{
@@ -622,7 +629,7 @@ void DispatcherImpl::handlePBRequest(PBRequest *itemPtr)
 	}
 }
 
-void DispatcherImpl::handlePBForward(PBForward *itemPtr)
+void DispatcherImpl::handlePBForward(PBForward* itemPtr)
 {
 	switch (itemPtr->type)
 	{
@@ -635,7 +642,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 		{
 			std::stringstream ss;
 			ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "|unregister";
-			ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handlePBForward:{}", ss.str());
+			ASYNC_PIE_LOG(PIE_ERROR, "Network|server|handlePBForward:{}", ss.str());
 			return;
 		}
 
@@ -651,7 +658,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 		{
 			std::stringstream ss;
 			ss << "iSerialNum:" << itemPtr->info.iSessionId << "|type:" << toUnderlyingType(itemPtr->type) << "|iOpcode:" << itemPtr->info.iOpcode << "|unregister";
-			ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handlePBForward:{}", ss.str());
+			ASYNC_PIE_LOG(PIE_ERROR, "Network|client|handlePBForward:{}", ss.str());
 			return;
 		}
 
@@ -668,7 +675,7 @@ void DispatcherImpl::handlePBForward(PBForward *itemPtr)
 	}
 }
 
-void DispatcherImpl::handleSendData(SendData *itemPtr)
+void DispatcherImpl::handleSendData(SendData* itemPtr)
 {
 	switch (itemPtr->type)
 	{
@@ -724,7 +731,7 @@ void DispatcherImpl::handleSyncSendData(SyncSendData* itemPtr)
 }
 
 
-void DispatcherImpl::handleSendDataByFlag(SendDataByFlag *itemPtr)
+void DispatcherImpl::handleSendDataByFlag(SendDataByFlag* itemPtr)
 {
 	switch (itemPtr->type)
 	{
@@ -836,10 +843,13 @@ void DispatcherImpl::handleDialResult(DialResult* ptrCmd)
 	{
 		clientProxy->setLocalIp(ptrCmd->sLocalIp);
 		clientProxy->onConnect(ptrCmd->iResult);
+
+		ASYNC_PIE_LOG(PIE_NOTICE, "Network|handleDialResult|iSerialNum:{}|iResult:{}|sLocalIp:{}",
+			ptrCmd->iSerialNum, ptrCmd->iResult, ptrCmd->sLocalIp);
 	}
 	else
 	{
-		ASYNC_PIE_LOG(PIE_ERROR, "DispatcherImpl/handleDialResult|iSerialNum:{}|iResult:{}|sLocalIp:{}", 
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|handleDialResult|findClientProxy nullptr|iSerialNum:{}|iResult:{}|sLocalIp:{}",
 			ptrCmd->iSerialNum, ptrCmd->iResult, ptrCmd->sLocalIp);
 	}
 }
@@ -932,7 +942,7 @@ void DispatcherImpl::handleCloseLocalServer(CloseLocalServer* ptrCmd)
 		std::stringstream ss;
 		ss << "active close|iSerialNum:" << ptrCmd->iSerialNum
 			<< ",address:" << ptrServer->ip() << "->" << ptrServer->peerIp();
-		ASYNC_PIE_LOG(PIE_NOTICE, "DispatcherImpl/handleCloseLocalServer|{}",ss.str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "DispatcherImpl/handleCloseLocalServer|{}", ss.str());
 	}
 	apie::event_ns::DispatcherImpl::delConnection(ptrCmd->iSerialNum);
 }
@@ -1036,7 +1046,7 @@ void DispatcherImpl::handleMetric(MetricData* ptrCmd)
 		}
 		else
 		{
-			influxdb_cpp::detail::field_caller *ptrField = nullptr;
+			influxdb_cpp::detail::field_caller* ptrField = nullptr;
 
 			std::size_t iCount = ptrCmd->field.size();
 			std::size_t iIndex = 0;

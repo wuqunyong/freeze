@@ -34,7 +34,7 @@ public:
 	void init();
 	void destroy();
 
-	std::function<void(MessageInfo, const std::shared_ptr<::google::protobuf::Message>&) > getHandler()
+	HandlerCb getHandler()
 	{
 		auto ptr_cb = [this](MessageInfo info, const std::shared_ptr<::google::protobuf::Message>& notify) {
 			auto shared_obj = std::dynamic_pointer_cast<Notify>(notify);

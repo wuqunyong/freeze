@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "apie/proto/init.h"
+
 namespace apie {
 namespace forward {
 
@@ -13,6 +15,8 @@ public:
 		RT_Request = 0,
 		RT_Notify,
 	};
+
+	using HandlerCb = std::function<void(::rpc_msg::RoleIdentifier, const std::shared_ptr<::google::protobuf::Message>&)>;
 
 	explicit ForwardBase(uint32_t opcode, RequestType type)
 		: opcode_(opcode),

@@ -30,7 +30,7 @@ void ServiceRegistryModule::Cmd_showProvider(::pubsub::LOGIC_CMD& cmd)
 {
 	std::stringstream ss;
 	ss << std::endl;
-	for (const auto& items : APieGetModule<apie::ServiceRegistry>()->registered())
+	for (const auto& items : GetModule<apie::ServiceRegistry>()->registered())
 	{
 		ss << "--> " << "addTime:" << items.second.addTime << "|modifiedTime:" << items.second.modifyTime << "|node:" << items.second.instance.ShortDebugString() << std::endl;
 	}
@@ -67,7 +67,7 @@ apie::status::E_ReturnType  ServiceRegistryModule::handleRequestRegisterInstance
 	}
 
 	EndPoint addNode(request->instance().realm(), request->instance().type(), request->instance().id(), "");
-	auto nodeOpt = APieGetModule<apie::ServiceRegistry>()->findNode(addNode);
+	auto nodeOpt = GetModule<apie::ServiceRegistry>()->findNode(addNode);
 	if (!nodeOpt.has_value())
 	{
 		response->set_status_code(opcodes::SC_Discovery_InvalidPoint);
@@ -81,7 +81,7 @@ apie::status::E_ReturnType  ServiceRegistryModule::handleRequestRegisterInstance
 	instanceObj.set_ip(nodeOpt.value().get_ip());
 	instanceObj.set_port(nodeOpt.value().get_port());
 
-	bool bResult = APieGetModule<apie::ServiceRegistry>()->updateInstance(info.iSessionId, instanceObj);
+	bool bResult = GetModule<apie::ServiceRegistry>()->updateInstance(info.iSessionId, instanceObj);
 	if (!bResult)
 	{
 		response->set_status_code(opcodes::SC_Discovery_DuplicateNode);
@@ -100,7 +100,7 @@ apie::status::E_ReturnType  ServiceRegistryModule::handleRequestRegisterInstance
 	response->set_redis_config(nodeOpt.value().get_redis_config());
 
 	auto cb = [](){
-		APieGetModule<apie::ServiceRegistry>()->broadcast();
+		GetModule<apie::ServiceRegistry>()->broadcast();
 	};
 	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(cb);
 
@@ -116,7 +116,7 @@ apie::status::E_ReturnType  ServiceRegistryModule::handleRequestHeartbeat(Messag
 
 	response->set_status_code(opcodes::SC_Ok);
 
-	bool bResult = APieGetModule<apie::ServiceRegistry>()->updateHeartbeat(info.iSessionId);
+	bool bResult = GetModule<apie::ServiceRegistry>()->updateHeartbeat(info.iSessionId);
 	if (!bResult)
 	{
 		response->set_status_code(opcodes::SC_Discovery_Unregistered);
@@ -137,10 +137,10 @@ void ServiceRegistryModule::PubSub_serverPeerClose(const std::shared_ptr<::pubsu
 	ASYNC_PIE_LOG(PIE_NOTICE, "SelfRegistration/onServerPeerClose|{}", ss.str().c_str());
 
 	uint64_t iSerialNum = msg->serial_num();
-	bool bChanged = APieGetModule<apie::ServiceRegistry>()->deleteBySerialNum(iSerialNum);
+	bool bChanged = GetModule<apie::ServiceRegistry>()->deleteBySerialNum(iSerialNum);
 	if (bChanged)
 	{
-		APieGetModule<apie::ServiceRegistry>()->broadcast();
+		GetModule<apie::ServiceRegistry>()->broadcast();
 	}
 }
 

@@ -10,10 +10,11 @@
 
 #include <google/protobuf/message.h>
 
+#include "apie/proto/init.h"
+
 #include "apie/singleton/threadsafe_singleton.h"
 #include "apie/rpc/server/rpc_server.h"
 #include "apie/rpc/server/rpc_server_base.h"
-#include "apie/proto/init.h"
 #include "apie/common/protobuf_factory.h"
 
 namespace apie {

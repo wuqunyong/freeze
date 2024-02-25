@@ -70,7 +70,7 @@ void ServerConnection::close(std::string sInfo, uint32_t iCode, uint32_t iActive
 		<< "|code:" << iCode
 		<< "|active:" << iActive
 		<< "|peerIp:" << this->sPeerIp << " -> " << "ip:" << this->sIp;
-	ASYNC_PIE_LOG(PIE_NOTICE, "ServerConnection/close|{}", ss.str().c_str());
+	ASYNC_PIE_LOG(PIE_NOTICE, "Network|ServerConnection|close|{}", ss.str().c_str());
 
 	this->sendCloseCmd(iCode, sInfo, iActive);
 
@@ -218,7 +218,7 @@ void ServerConnection::recv(MessageInfo info, std::string& requestStr)
 		{
 			std::stringstream ss;
 			ss << "getLogicThread null | iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode;
-			ASYNC_PIE_LOG(PIE_ERROR, "ServerConnection/recv|{}", ss.str().c_str());
+			ASYNC_PIE_LOG(PIE_ERROR, "Network|ServerConnection|recv|{}", ss.str().c_str());
 			return;
 		}
 
@@ -241,7 +241,7 @@ void ServerConnection::recv(MessageInfo info, std::string& requestStr)
 	{
 		std::stringstream ss;
 		ss << "createMessage null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG(PIE_ERROR, "ServerConnection/recv|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ServerConnection|recv|{}", ss.str().c_str());
 		return;
 	}
 
@@ -251,7 +251,7 @@ void ServerConnection::recv(MessageInfo info, std::string& requestStr)
 	{
 		std::stringstream ss;
 		ss << "ParseFromString error|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG(PIE_ERROR, "ServerConnection/recv|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ServerConnection|recv|{}", ss.str().c_str());
 		return;
 	}
 
@@ -262,7 +262,7 @@ void ServerConnection::recv(MessageInfo info, std::string& requestStr)
 	{
 		std::stringstream ss;
 		ss << "getLogicThread null|iSerialNum:" << info.iSessionId << "|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG(PIE_ERROR, "ServerConnection/recv|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ServerConnection|recv|{}", ss.str().c_str());
 		return;
 	}
 

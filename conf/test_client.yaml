@@ -19,6 +19,7 @@ login_server:
   mask_flag : 0
 pb_map_vec :
   - { type:   0, cmd:   1104, pb_name: "login_msg.EchoResponse"}
+  - { type:   0, cmd:   1106, pb_name: "login_msg.AsyncEchoResponse"}
 
 auto_test:               # 自动化测试
   enable: true           # 是否启用, 默认false

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "apie/network/command.h"
 
 namespace apie {
 namespace service {
@@ -8,6 +9,8 @@ namespace service {
 
 class ServiceBase {
 public:
+	using HandlerCb = std::function<void(MessageInfo, const std::shared_ptr<::google::protobuf::Message>&)>;
+
 	enum class RequestType
 	{
 		RT_Request = 0,

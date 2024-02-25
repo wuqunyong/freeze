@@ -33,7 +33,7 @@ public:
 	void init();
 	void destroy();
 
-	std::function<void(MessageInfo, const std::shared_ptr<::google::protobuf::Message>&) > getHandler()
+	HandlerCb getHandler()
 	{
 		auto ptr_cb = [this](MessageInfo info, const std::shared_ptr<::google::protobuf::Message>& request)
 		{
@@ -58,7 +58,7 @@ private:
 	ServiceCallback service_callback_;
 	std::function<void(MessageInfo, const std::shared_ptr<Request>&)> request_callback_;
 
-	uint32_t responseOpcode_ = responseOpcode;
+	const uint32_t responseOpcode_ = responseOpcode;
 };
 
 template <typename Request, uint32_t responseOpcode, typename Response>

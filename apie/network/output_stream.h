@@ -7,15 +7,17 @@
 #include <event2/util.h>
 #include <google/protobuf/message.h>
 
+#include "apie/proto/init.h"
+
 #include "apie/network/address.h"
 #include "apie/network/windows_platform.h"
 #include "apie/network/i_poll_events.hpp"
-#include "apie/proto/init.h"
 #include "apie/event/dispatcher_impl.h"
 #include "apie/network/ctx.h"
 #include "apie/serialization/protocol_head.h"
 #include "apie/rpc/client/rpc_client.h"
 #include "apie/network/command.h"
+#include "apie/sync_service/sync_service.h"
 
 namespace apie {
 	class Command;
@@ -42,10 +44,13 @@ namespace network {
 		static bool sendPBMsgUser(MessageInfo info, const ::google::protobuf::Message& msg);
 	};
 
-	// Ö»ÓÐ¿Í»§¶ËÄÜ·¢ËÍÍ¬²½ÇëÇó
+	// Ö»ï¿½Ð¿Í»ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	template <typename Response>
 	std::shared_future<std::shared_ptr<Response>> syncSendProtobufMsgImpl(MessageInfo info, const ::google::protobuf::Message& msg)
 	{
+		std::stringstream ss;
+		ss << "iSessionId:" << info.iSessionId << ", iRPCRequestID:" << info.iRPCRequestID;
+
 		std::shared_future<std::shared_ptr<Response>> invalidResult;
 
 		auto ptrConnection = event_ns::DispatcherImpl::getClientConnection(info.iSessionId);
@@ -67,7 +72,7 @@ namespace network {
 		head.iOpcode = info.iOpcode;
 		head.iBodyLen = (uint32_t)msg.ByteSizeLong();
 
-		auto ptrSync = std::make_shared<apie::service::SyncService<Response>>();
+		auto ptrSync = std::make_shared<apie::service::SyncService<Response>>(ss.str());
 
 		SyncSendData* itemObjPtr = new SyncSendData;
 		itemObjPtr->type = apie::ConnetionType::CT_CLIENT;

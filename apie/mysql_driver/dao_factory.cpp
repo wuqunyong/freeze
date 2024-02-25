@@ -269,7 +269,7 @@ bool RegisterRequiredTable(const ::rpc_msg::CHANNEL& server, DeclarativeBase::DB
 		tables.push_back(items.first);
 	}
 
-	CallMysqlDescTable(server, type, tables, cb);
+	CallMysqlDescTable(server, type, tables, cb, 0);
 
 	return true;
 }

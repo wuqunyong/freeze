@@ -150,6 +150,8 @@ namespace apie {
 		
 		void handleAccountLogin(MessageInfo info, const std::string& msg);
 		void handleClientLogin(MessageInfo info, const std::string& msg);
+		void handleAsyncEchoResponse(MessageInfo info, const std::string& msg);
+
 		
 
 		void sendKeepAlive();

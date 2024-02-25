@@ -166,8 +166,36 @@ struct EchoResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EchoResponseDefaultTypeInternal _EchoResponse_default_instance_;
+PROTOBUF_CONSTEXPR AsyncEchoRequest::AsyncEchoRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.value2_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.value1_)*/uint64_t{0u}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct AsyncEchoRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR AsyncEchoRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~AsyncEchoRequestDefaultTypeInternal() {}
+  union {
+    AsyncEchoRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AsyncEchoRequestDefaultTypeInternal _AsyncEchoRequest_default_instance_;
+PROTOBUF_CONSTEXPR AsyncEchoResponse::AsyncEchoResponse(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.value2_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.value1_)*/uint64_t{0u}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct AsyncEchoResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR AsyncEchoResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~AsyncEchoResponseDefaultTypeInternal() {}
+  union {
+    AsyncEchoResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AsyncEchoResponseDefaultTypeInternal _AsyncEchoResponse_default_instance_;
 }  // namespace login_msg
-static ::_pb::Metadata file_level_metadata_login_5fmsg_2eproto[10];
+static ::_pb::Metadata file_level_metadata_login_5fmsg_2eproto[12];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_login_5fmsg_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_login_5fmsg_2eproto = nullptr;
 
@@ -257,6 +285,22 @@ const uint32_t TableStruct_login_5fmsg_2eproto::offsets[] PROTOBUF_SECTION_VARIA
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::login_msg::EchoResponse, _impl_.value1_),
   PROTOBUF_FIELD_OFFSET(::login_msg::EchoResponse, _impl_.value2_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::login_msg::AsyncEchoRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::login_msg::AsyncEchoRequest, _impl_.value1_),
+  PROTOBUF_FIELD_OFFSET(::login_msg::AsyncEchoRequest, _impl_.value2_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::login_msg::AsyncEchoResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::login_msg::AsyncEchoResponse, _impl_.value1_),
+  PROTOBUF_FIELD_OFFSET(::login_msg::AsyncEchoResponse, _impl_.value2_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::login_msg::HandshakeInitRequest)},
@@ -269,6 +313,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 57, -1, -1, sizeof(::login_msg::ClientLoginResponse)},
   { 69, -1, -1, sizeof(::login_msg::EchoRequest)},
   { 77, -1, -1, sizeof(::login_msg::EchoResponse)},
+  { 85, -1, -1, sizeof(::login_msg::AsyncEchoRequest)},
+  { 93, -1, -1, sizeof(::login_msg::AsyncEchoResponse)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -282,6 +328,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::login_msg::_ClientLoginResponse_default_instance_._instance,
   &::login_msg::_EchoRequest_default_instance_._instance,
   &::login_msg::_EchoResponse_default_instance_._instance,
+  &::login_msg::_AsyncEchoRequest_default_instance_._instance,
+  &::login_msg::_AsyncEchoResponse_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_login_5fmsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -303,13 +351,15 @@ const char descriptor_table_protodef_login_5fmsg_2eproto[] PROTOBUF_SECTION_VARI
   "mmo\030\005 \001(\r\022\020\n\010grenades\030\006 \001(\r\"-\n\013EchoReque"
   "st\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\t\".\n\014Ec"
   "hoResponse\022\016\n\006value1\030\001 \001(\004\022\016\n\006value2\030\002 \001"
-  "(\tb\006proto3"
+  "(\t\"2\n\020AsyncEchoRequest\022\016\n\006value1\030\001 \001(\004\022\016"
+  "\n\006value2\030\002 \001(\t\"3\n\021AsyncEchoResponse\022\016\n\006v"
+  "alue1\030\001 \001(\004\022\016\n\006value2\030\002 \001(\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_login_5fmsg_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_login_5fmsg_2eproto = {
-    false, false, 730, descriptor_table_protodef_login_5fmsg_2eproto,
+    false, false, 835, descriptor_table_protodef_login_5fmsg_2eproto,
     "login_msg.proto",
-    &descriptor_table_login_5fmsg_2eproto_once, nullptr, 0, 10,
+    &descriptor_table_login_5fmsg_2eproto_once, nullptr, 0, 12,
     schemas, file_default_instances, TableStruct_login_5fmsg_2eproto::offsets,
     file_level_metadata_login_5fmsg_2eproto, file_level_enum_descriptors_login_5fmsg_2eproto,
     file_level_service_descriptors_login_5fmsg_2eproto,
@@ -2726,6 +2776,466 @@ void EchoResponse::InternalSwap(EchoResponse* other) {
       file_level_metadata_login_5fmsg_2eproto[9]);
 }
 
+// ===================================================================
+
+class AsyncEchoRequest::_Internal {
+ public:
+};
+
+AsyncEchoRequest::AsyncEchoRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:login_msg.AsyncEchoRequest)
+}
+AsyncEchoRequest::AsyncEchoRequest(const AsyncEchoRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  AsyncEchoRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.value2_){}
+    , decltype(_impl_.value1_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.value2_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.value2_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_value2().empty()) {
+    _this->_impl_.value2_.Set(from._internal_value2(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.value1_ = from._impl_.value1_;
+  // @@protoc_insertion_point(copy_constructor:login_msg.AsyncEchoRequest)
+}
+
+inline void AsyncEchoRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.value2_){}
+    , decltype(_impl_.value1_){uint64_t{0u}}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.value2_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.value2_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+AsyncEchoRequest::~AsyncEchoRequest() {
+  // @@protoc_insertion_point(destructor:login_msg.AsyncEchoRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void AsyncEchoRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.value2_.Destroy();
+}
+
+void AsyncEchoRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void AsyncEchoRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:login_msg.AsyncEchoRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.value2_.ClearToEmpty();
+  _impl_.value1_ = uint64_t{0u};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* AsyncEchoRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint64 value1 = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.value1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string value2 = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_value2();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "login_msg.AsyncEchoRequest.value2"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* AsyncEchoRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:login_msg.AsyncEchoRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 value1 = 1;
+  if (this->_internal_value1() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_value1(), target);
+  }
+
+  // string value2 = 2;
+  if (!this->_internal_value2().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_value2().data(), static_cast<int>(this->_internal_value2().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "login_msg.AsyncEchoRequest.value2");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_value2(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:login_msg.AsyncEchoRequest)
+  return target;
+}
+
+size_t AsyncEchoRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:login_msg.AsyncEchoRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string value2 = 2;
+  if (!this->_internal_value2().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_value2());
+  }
+
+  // uint64 value1 = 1;
+  if (this->_internal_value1() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_value1());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AsyncEchoRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    AsyncEchoRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AsyncEchoRequest::GetClassData() const { return &_class_data_; }
+
+
+void AsyncEchoRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<AsyncEchoRequest*>(&to_msg);
+  auto& from = static_cast<const AsyncEchoRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:login_msg.AsyncEchoRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_value2().empty()) {
+    _this->_internal_set_value2(from._internal_value2());
+  }
+  if (from._internal_value1() != 0) {
+    _this->_internal_set_value1(from._internal_value1());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void AsyncEchoRequest::CopyFrom(const AsyncEchoRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:login_msg.AsyncEchoRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AsyncEchoRequest::IsInitialized() const {
+  return true;
+}
+
+void AsyncEchoRequest::InternalSwap(AsyncEchoRequest* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.value2_, lhs_arena,
+      &other->_impl_.value2_, rhs_arena
+  );
+  swap(_impl_.value1_, other->_impl_.value1_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata AsyncEchoRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_login_5fmsg_2eproto_getter, &descriptor_table_login_5fmsg_2eproto_once,
+      file_level_metadata_login_5fmsg_2eproto[10]);
+}
+
+// ===================================================================
+
+class AsyncEchoResponse::_Internal {
+ public:
+};
+
+AsyncEchoResponse::AsyncEchoResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:login_msg.AsyncEchoResponse)
+}
+AsyncEchoResponse::AsyncEchoResponse(const AsyncEchoResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  AsyncEchoResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.value2_){}
+    , decltype(_impl_.value1_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.value2_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.value2_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_value2().empty()) {
+    _this->_impl_.value2_.Set(from._internal_value2(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.value1_ = from._impl_.value1_;
+  // @@protoc_insertion_point(copy_constructor:login_msg.AsyncEchoResponse)
+}
+
+inline void AsyncEchoResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.value2_){}
+    , decltype(_impl_.value1_){uint64_t{0u}}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.value2_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.value2_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+AsyncEchoResponse::~AsyncEchoResponse() {
+  // @@protoc_insertion_point(destructor:login_msg.AsyncEchoResponse)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void AsyncEchoResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.value2_.Destroy();
+}
+
+void AsyncEchoResponse::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void AsyncEchoResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:login_msg.AsyncEchoResponse)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.value2_.ClearToEmpty();
+  _impl_.value1_ = uint64_t{0u};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* AsyncEchoResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint64 value1 = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.value1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string value2 = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_value2();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "login_msg.AsyncEchoResponse.value2"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* AsyncEchoResponse::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:login_msg.AsyncEchoResponse)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 value1 = 1;
+  if (this->_internal_value1() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_value1(), target);
+  }
+
+  // string value2 = 2;
+  if (!this->_internal_value2().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_value2().data(), static_cast<int>(this->_internal_value2().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "login_msg.AsyncEchoResponse.value2");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_value2(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:login_msg.AsyncEchoResponse)
+  return target;
+}
+
+size_t AsyncEchoResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:login_msg.AsyncEchoResponse)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string value2 = 2;
+  if (!this->_internal_value2().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_value2());
+  }
+
+  // uint64 value1 = 1;
+  if (this->_internal_value1() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_value1());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AsyncEchoResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    AsyncEchoResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AsyncEchoResponse::GetClassData() const { return &_class_data_; }
+
+
+void AsyncEchoResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<AsyncEchoResponse*>(&to_msg);
+  auto& from = static_cast<const AsyncEchoResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:login_msg.AsyncEchoResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_value2().empty()) {
+    _this->_internal_set_value2(from._internal_value2());
+  }
+  if (from._internal_value1() != 0) {
+    _this->_internal_set_value1(from._internal_value1());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void AsyncEchoResponse::CopyFrom(const AsyncEchoResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:login_msg.AsyncEchoResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AsyncEchoResponse::IsInitialized() const {
+  return true;
+}
+
+void AsyncEchoResponse::InternalSwap(AsyncEchoResponse* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.value2_, lhs_arena,
+      &other->_impl_.value2_, rhs_arena
+  );
+  swap(_impl_.value1_, other->_impl_.value1_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata AsyncEchoResponse::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_login_5fmsg_2eproto_getter, &descriptor_table_login_5fmsg_2eproto_once,
+      file_level_metadata_login_5fmsg_2eproto[11]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace login_msg
 PROTOBUF_NAMESPACE_OPEN
@@ -2768,6 +3278,14 @@ Arena::CreateMaybeMessage< ::login_msg::EchoRequest >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::login_msg::EchoResponse*
 Arena::CreateMaybeMessage< ::login_msg::EchoResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::login_msg::EchoResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::login_msg::AsyncEchoRequest*
+Arena::CreateMaybeMessage< ::login_msg::AsyncEchoRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::login_msg::AsyncEchoRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::login_msg::AsyncEchoResponse*
+Arena::CreateMaybeMessage< ::login_msg::AsyncEchoResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::login_msg::AsyncEchoResponse >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

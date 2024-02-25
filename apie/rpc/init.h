@@ -6,9 +6,10 @@
 
 #include <event2/util.h>
 
+#include "apie/proto/init.h"
+
 #include "apie/network/address.h"
 #include "apie/network/windows_platform.h"
-#include "apie/proto/init.h"
 #include "apie/rpc/client/rpc_client.h"
 
 namespace apie {

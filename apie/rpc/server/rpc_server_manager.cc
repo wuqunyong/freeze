@@ -97,18 +97,6 @@ void RPCServerManager::onMessage_Head(const ::rpc_msg::RPC_REQUEST& context)
 		return;
 	}
 
-	//auto find_ite = func_.find(context.opcodes());
-	//if (find_ite == func_.end())
-	//{
-	//	std::stringstream ss;
-	//	ss << "func_ opcodes:" << context.opcodes();
-
-	//	apie::status::Status status(apie::status::StatusCode::RPC_Request_UnRegister, ss.str());
-	//	sendResponseError(status, context);
-	//	return;
-	//}
-	//find_ite->second(context, newMsg);
-
 	::rpc_msg::RPC_REQUEST rpcContext;
 	(*rpcContext.mutable_client()) = context.client();
 	(*rpcContext.mutable_server()) = context.server();

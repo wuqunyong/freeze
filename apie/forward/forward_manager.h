@@ -11,13 +11,12 @@
 
 #include <google/protobuf/message.h>
 
-#include "apie/singleton/threadsafe_singleton.h"
+#include "apie/proto/init.h"
 
+#include "apie/singleton/threadsafe_singleton.h"
 #include "apie/forward/handle_notify_forward.h"
 #include "apie/forward/handle_request_forward.h"
 #include "apie/forward/forward_base.h"
-
-#include "apie/proto/init.h"
 #include "apie/event/nats_proxy.h"
 #include "apie/common/protobuf_factory.h"
 #include "apie/network/command.h"
@@ -98,8 +97,9 @@ bool ForwardManager::createService(
 	auto find_ite = service_.find(opcode);
 	if (find_ite != service_.end())
 	{
-		//TODO
-
+		std::stringstream ss;
+		ss << "service_ register duplicate |iOpcode:" << opcode;
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ForwardManager|createService|{}", ss.str());
 		return false;
 	}
 
@@ -126,7 +126,9 @@ bool ForwardManager::createService(
 	auto find_ite = service_.find(opcode);
 	if (find_ite != service_.end())
 	{
-		//TODO
+		std::stringstream ss;
+		ss << "service_ register duplicate |iOpcode:" << opcode;
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ForwardManager|createService|{}", ss.str());
 		return false;
 	}
 

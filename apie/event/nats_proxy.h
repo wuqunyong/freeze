@@ -6,8 +6,9 @@
 #include <string>
 #include <thread>
 
-#include "apie/network/logger.h"
 #include "apie/proto/init.h"
+
+#include "apie/network/logger.h"
 #include "apie/common/enum_to_int.h"
 
 namespace apie {

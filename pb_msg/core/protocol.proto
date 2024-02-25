@@ -16,8 +16,12 @@ enum OperateProtocol {
     OP_EchoRequest = 1103;
     OP_EchoResponse = 1104;
 
-    OP_HandshakeInitRequest = 1105;
-    OP_HandshakeInitResponse = 1106;
-    OP_HandshakeEstablishedRequest = 1107;
-    OP_HandshakeEstablishedResponse = 1108;
+    OP_AsyncEchoRequest = 1105;
+    OP_AsyncEchoResponse = 1106;
+
+
+    OP_HandshakeInitRequest = 1205;
+    OP_HandshakeInitResponse = 1206;
+    OP_HandshakeEstablishedRequest = 1207;
+    OP_HandshakeEstablishedResponse = 1208;
 }

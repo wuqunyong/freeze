@@ -154,7 +154,7 @@ void ServiceManager::onMessage(MessageInfo info, const std::shared_ptr<T>& messa
 	auto find_ite = func_.find(info.iOpcode);
 	if (find_ite == func_.end())
 	{
-		//TODO
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|onMessage|unregister|iOpcode:{}", info.iOpcode);
 		return;
 	}
 

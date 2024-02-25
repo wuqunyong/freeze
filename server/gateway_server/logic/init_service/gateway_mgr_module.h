@@ -48,6 +48,7 @@ namespace apie {
 			MessageInfo info, const std::shared_ptr<::login_msg::ClientLoginRequest>& request, std::shared_ptr<::login_msg::ClientLoginResponse>& response);
 		static apie::status::E_ReturnType handleEcho(
 			MessageInfo info, const std::shared_ptr<::login_msg::EchoRequest>& request, std::shared_ptr<::login_msg::EchoResponse>& response);
-		
+		static apie::status::E_ReturnType handleAsyncEcho(
+			MessageInfo info, const std::shared_ptr<::login_msg::AsyncEchoRequest>& request, std::shared_ptr<::login_msg::AsyncEchoResponse>& response);
 	};
 }

@@ -11,20 +11,21 @@
 
 #include <google/protobuf/message.h>
 
+#include "apie/proto/init.h"
+
 #include "apie/network/i_poll_events.hpp"
 #include "apie/network/command.h"
 #include "apie/event/timer.h"
 #include "apie/network/output_stream.h"
 
-#include "apie/proto/init.h"
 
 namespace apie
 {
 	class ClientProxy : public std::enable_shared_from_this<ClientProxy>
 	{
 	public:
-		//²ÎÊý£ºiResult:0(Á¬½Ó³É¹¦)
-		//·µ»ØÖµ£ºtrue:³ö´íºó½ø³Ì³¢ÊÔ£¬false:³ö´íºóµ÷ÓÃclose
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iResult:0(ï¿½ï¿½ï¿½Ó³É¹ï¿½)
+		//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½true:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ï¿½Ô£ï¿½false:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½close
 		using HandleConnectCB = std::function<bool(apie::ClientProxy* ptrClient, uint32_t iResult)>;
 
 		using HeartbeatCB = std::function<void(ClientProxy* ptrClient)>;
@@ -110,11 +111,11 @@ namespace apie
 
 		std::string m_ip;
 		uint16_t m_port;
-		ProtocolType m_codecType;  //Ð­Òé£º1(PB¡Ì),2(HTTP)
-		uint32_t m_maskFlag = 0;   //°´Î»±íÊ¾£º0b1u(Ñ¹Ëõ¡Ì,¿Í»§¶Ë<->Gateway),0b10u(¼ÓÃÜ¡Á)
+		ProtocolType m_codecType;  //Ð­ï¿½é£º1(PBï¿½ï¿½),2(HTTP)
+		uint32_t m_maskFlag = 0;   //ï¿½ï¿½Î»ï¿½ï¿½Ê¾ï¿½ï¿½0b1u(Ñ¹ï¿½ï¿½ï¿½ï¿½,ï¿½Í»ï¿½ï¿½ï¿½<->Gateway),0b10u(ï¿½ï¿½ï¿½Ü¡ï¿½)
 		HandleConnectCB m_cb;
 
-		uint32_t m_hadEstablished; //µ±Ç°µÄÁ¬½Ó×´Ì¬£º0£ºÎ´Á¬½Ó£¬1£ºÒÑÁ¬ÉÏ
+		uint32_t m_hadEstablished; //ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½0ï¿½ï¿½Î´ï¿½ï¿½ï¿½Ó£ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		uint32_t m_reconnectTimes;
 
 		event_ns::TimerPtr m_reconnectTimer;
@@ -122,7 +123,7 @@ namespace apie
 		event_ns::TimerPtr m_heartbeatTimer;
 		HeartbeatCB m_heartbeatCb;
 
-		uint32_t m_tId;            //¸½×ÅIOÏß³ÌID
+		uint32_t m_tId;            //ï¿½ï¿½ï¿½ï¿½IOï¿½ß³ï¿½ID
 
 		int64_t m_iUserId = 0;
 

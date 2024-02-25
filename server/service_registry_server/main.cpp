@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 
 	std::string configFile = argv[1];
 
-	APieRegisterModule<apie::ServiceRegistry>();
+	RegisterModule<apie::ServiceRegistry>();
 
 	apie::CtxSingleton::get().init(configFile);
 	apie::CtxSingleton::get().start();

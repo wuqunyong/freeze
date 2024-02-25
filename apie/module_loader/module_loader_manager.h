@@ -171,21 +171,21 @@ concept ModuleT = requires(T c, std::string sName, apie::module_loader::ModuleLo
 
 template <typename T>
 requires ModuleT<T>
-static inline bool APieRegisterModule()
+static inline bool RegisterModule()
 {
 	return apie::module_loader::ModuleLoaderMgrSingleton::get().registerModule<T>();
 }
 
 template <typename T>
 requires ModuleT<T>
-static inline bool APieHasModule()
+static inline bool HasModule()
 {
 	return apie::module_loader::ModuleLoaderMgrSingleton::get().hasModule<T>();
 }
 
 template <typename T>
 requires ModuleT<T>
-static inline auto APieGetModule()
+static inline auto GetModule()
 {
 	return apie::module_loader::ModuleLoaderMgrSingleton::get().getModulePtr<T>();
 }

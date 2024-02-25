@@ -8,8 +8,8 @@ message(STATUS "freeze PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 # Note: update this to your new project's name and version
 project(
   freeze
-  VERSION 1.0
-  LANGUAGES CXX C
+  VERSION 1.0.0
+  LANGUAGES C CXX
 )
 
 
@@ -31,6 +31,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
+SET(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS ON)
+
 # Debug
 set(CMAKE_BUILD_TYPE Debug)
 # set(CMAKE_BUILD_TYPE RelWithDebInfo)
@@ -49,8 +51,23 @@ set(LinkLibs)
 message(STATUS "WIN32: ${WIN32}")
 
 if (WIN32)
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT") 
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+	# set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT") 
+	# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+
+    set(CompilerFlags
+            CMAKE_CXX_FLAGS
+            CMAKE_CXX_FLAGS_DEBUG
+            CMAKE_CXX_FLAGS_RELEASE
+            CMAKE_CXX_FLAGS_MINSIZEREL
+            CMAKE_C_FLAGS
+            CMAKE_C_FLAGS_DEBUG
+            CMAKE_C_FLAGS_RELEASE
+            CMAKE_C_FLAGS_MINSIZEREL
+            )
+
+    foreach(CompilerFlag ${CompilerFlags})
+        string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+    endforeach ()
 
     set(IncludeDirs
         ${CMAKE_CURRENT_SOURCE_DIR}
@@ -132,6 +149,8 @@ else ()
         /usr/local/apie/lib)
 
     set(LinkLibs -lmysqlclient -levent -levent_pthreads -ldl -lc -lrt -lcrypto -lssl -llz4 -lpthread)
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wall -W -Wno-narrowing -Wno-unused-parameter -Wno-deprecated-declarations -fmessage-length=0 -fPIC -pthread -Wextra -fpermissive -rdynamic ${M64FLAG}")
 endif()
 
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")

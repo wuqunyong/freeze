@@ -4,9 +4,10 @@
 #include <string>
 #include <functional>
 
+#include "apie/proto/init.h"
+
 #include "apie/rpc/server/rpc_server_base.h"
 #include "apie/status/status.h"
-#include "apie/proto/init.h"
 #include "apie/network/ctx.h"
 #include "apie/event/nats_proxy.h"
 #include "apie/common/enum_to_int.h"

@@ -27,7 +27,7 @@ bool RPCClientManager::addPendingRequests(uint64_t seq_num, const std::shared_pt
 	auto find_ite = pending_requests_.find(seq_num);
 	if (find_ite != pending_requests_.end())
 	{
-		//TODO
+		ASYNC_PIE_LOG(PIE_ERROR, "addPendingRequests|duplicated|seq_num:{}", seq_num);
 		return false;
 	}
 
@@ -90,7 +90,7 @@ void RPCClientManager::handleResponse(uint64_t seq_num, const status::Status& st
 	auto find_ite = pending_requests_.find(seq_num);
 	if (find_ite == pending_requests_.end())
 	{
-		//TODO
+		ASYNC_PIE_LOG(PIE_ERROR, "handleResponse|pending_requests_ not found|seq_num:{}", seq_num);
 		return;
 	}
 

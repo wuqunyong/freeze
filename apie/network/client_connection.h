@@ -23,6 +23,15 @@ namespace apie
 {
 	struct SetClientSessionAttr;
 
+	enum E_DialResult
+	{
+		E_DR_SUCCESS = 0,
+		E_DR_FAILURE_SocketNew = 1,
+		E_DR_FAILURE_SocketConnect = 2,
+		E_DR_FAILURE_GetFd = 3,
+		E_DR_FAILURE_New = 4,
+	};
+
     class ClientConnection :
         public i_poll_events
     {

@@ -66,7 +66,7 @@ void ForwardManager::onForwardMuxMessage_Head(const ::rpc_msg::RoleIdentifier& r
 	{
 		std::stringstream ss;
 		ss << "unregister|iOpcode:" << info.iOpcode;
-		ASYNC_PIE_LOG(PIE_ERROR, "ForwardManager/onMessage|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ForwardManager|onMessage|{}", ss.str().c_str());
 		return;
 	}
 
@@ -76,7 +76,7 @@ void ForwardManager::onForwardMuxMessage_Head(const ::rpc_msg::RoleIdentifier& r
 	{
 		std::stringstream ss;
 		ss << "createMessage null|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG(PIE_ERROR, "ForwardManager/onMessage|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ForwardManager|onMessage|{}", ss.str().c_str());
 		return;
 	}
 
@@ -86,27 +86,16 @@ void ForwardManager::onForwardMuxMessage_Head(const ::rpc_msg::RoleIdentifier& r
 	{
 		std::stringstream ss;
 		ss << "ParseFromString error|iOpcode:" << info.iOpcode << "|sType:" << sType;
-		ASYNC_PIE_LOG(PIE_ERROR, "ForwardManager/onMessage|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ForwardManager|onMessage|{}", ss.str().c_str());
 		return;
 	}
+
 
 	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(
 		[role, info, newMsg, this]() mutable {
 			onForwardMuxMessage_Tail(role, info, newMsg);
 		}
 	);
-
-	//auto find_ite = func_.find(info.iOpcode);
-	//if (find_ite == func_.end())
-	//{
-	//	//TODO
-	//	return;
-	//}
-
-	//if (find_ite->second)
-	//{
-	//	find_ite->second(role, newMsg);
-	//}
 }
 
 void ForwardManager::onForwardMuxMessage_Tail(const ::rpc_msg::RoleIdentifier& role, MessageInfo info, std::shared_ptr<::google::protobuf::Message> ptrMsg)
@@ -114,7 +103,9 @@ void ForwardManager::onForwardMuxMessage_Tail(const ::rpc_msg::RoleIdentifier& r
 	auto find_ite = func_.find(info.iOpcode);
 	if (find_ite == func_.end())
 	{
-		//TODO
+		std::stringstream ss;
+		ss << "func_ unregister|iOpcode:" << info.iOpcode;
+		ASYNC_PIE_LOG(PIE_ERROR, "Network|ForwardManager|Tail|{}", ss.str().c_str());
 		return;
 	}
 
@@ -150,12 +141,12 @@ MessageInfo ForwardManager::extractMessageInfo(const ::rpc_msg::RoleIdentifier& 
 
 	switch (role.info().connetion_type())
 	{
-	case 1:
+	case static_cast<int>(ConnetionType::CT_CLIENT):
 	{
 		info.iConnetionType = ConnetionType::CT_CLIENT;
 		break;
 	}
-	case 2:
+	case static_cast<int>(ConnetionType::CT_SERVER):
 	{
 		info.iConnetionType = ConnetionType::CT_SERVER;
 		break;

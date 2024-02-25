@@ -56,10 +56,12 @@ enum OperateProtocol : int {
   OP_ClientLoginResponse = 1102,
   OP_EchoRequest = 1103,
   OP_EchoResponse = 1104,
-  OP_HandshakeInitRequest = 1105,
-  OP_HandshakeInitResponse = 1106,
-  OP_HandshakeEstablishedRequest = 1107,
-  OP_HandshakeEstablishedResponse = 1108,
+  OP_AsyncEchoRequest = 1105,
+  OP_AsyncEchoResponse = 1106,
+  OP_HandshakeInitRequest = 1205,
+  OP_HandshakeInitResponse = 1206,
+  OP_HandshakeEstablishedRequest = 1207,
+  OP_HandshakeEstablishedResponse = 1208,
   OperateProtocol_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   OperateProtocol_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };

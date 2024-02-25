@@ -20,7 +20,7 @@ MySQLConnector::~MySQLConnector(void)
 void MySQLConnector::initData()
 {
 	this->re_connect_count_ = 0;
-	this->mysql_ = NULL;
+	this->mysql_ = nullptr;
 
 	this->affected_rows_ = 0;
 	this->insert_id_ = 0;
@@ -33,8 +33,10 @@ void MySQLConnector::init(MySQLConnectOptions& options)
 
 bool MySQLConnector::connect(void)
 {
-	MYSQL *mysql_con;
-	mysql_con = mysql_init(NULL);
+	std::string sVersion = mysql_get_client_info();
+	PIE_LOG(PIE_NOTICE, "startup|mysql version:{}", sVersion.c_str());
+
+	MYSQL* mysql_con = mysql_init(NULL);
 	if (!mysql_con)
 	{
 		std::stringstream ss;
@@ -47,7 +49,7 @@ bool MySQLConnector::connect(void)
 	this->mysql_ = mysql_real_connect(mysql_con, this->options_.host.c_str(),this->options_.user.c_str(), 
 		this->options_.passwd.c_str(),this->options_.db.c_str(), this->options_.port, NULL, CLIENT_MULTI_RESULTS);
 
-	if (this->mysql_)
+	if (this->mysql_ != nullptr)
 	{
 		std::stringstream ss;
 
@@ -81,10 +83,10 @@ bool MySQLConnector::connect(void)
 
 void MySQLConnector::close(void)
 {
-	if (NULL != this->mysql_)
+	if (nullptr != this->mysql_)
 	{
 		mysql_close(this->mysql_);
-		this->mysql_ = NULL;
+		this->mysql_ = nullptr;
 	}
 }
 

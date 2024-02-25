@@ -66,10 +66,10 @@ namespace {
 PlatformImpl Ctx::s_platform;
 std::string Ctx::s_log_postfix;
 
-class PortCb : public network::ListenerCallbacks
+class AcceptHandler : public network::ListenerCallbacks
 {
 public:
-	PortCb(ProtocolType type, uint32_t maskFlag) : 
+	AcceptHandler(ProtocolType type, uint32_t maskFlag) :
 		m_type(type),
 		m_maskFlag(maskFlag)
 	{
@@ -92,26 +92,28 @@ public:
 			peerIp = network::makeFriendlyAddress(*ptrPeerAddr);
 		}
 
+		std::stringstream ss;
+		ss << "fd:" << fd << "|iType:" << toUnderlyingType(m_type) << "|peerIp:" << peerIp << " -> " << "ip:" << ip;
+
 		PassiveConnect *itemObjPtr = new PassiveConnect;
 		itemObjPtr->iFd = fd;
 		itemObjPtr->iType = m_type;
 		itemObjPtr->sIp = ip;
 		itemObjPtr->sPeerIp = peerIp;
 		itemObjPtr->iMaskFlag = m_maskFlag;
+		itemObjPtr->sInfo = ss.str();
 
 		Command command;
 		command.type = Command::passive_connect;
 		command.args.passive_connect.ptrData = itemObjPtr;
 
-		std::stringstream ss;
-		ss << "accept connect|fd:" << fd << "|iType:" << toUnderlyingType(m_type) << "|peerIp:" << peerIp << " -> " << "ip:" << ip;
-		ASYNC_PIE_LOG(PIE_NOTICE, "PortCb/onAccept|{}", ss.str().c_str());
+		ASYNC_PIE_LOG(PIE_NOTICE, "Network|onAccept|{}", itemObjPtr->sInfo.c_str());
 
 
 		auto ptrThread = apie::CtxSingleton::get().chooseIOThread();
 		if (ptrThread == nullptr)
 		{
-			ASYNC_PIE_LOG(PIE_ERROR, "PortCb/onAccept|{}", "chooseIOThread NULL");
+			ASYNC_PIE_LOG(PIE_ERROR, "Network|onAccept|chooseIOThread nullptr|{}", itemObjPtr->sInfo.c_str());
 			delete itemObjPtr;
 			return;
 		}
@@ -464,7 +466,7 @@ void Ctx::addListeners(LoadConfig<Mysql_ListenersConfig>& listenersConfig)
 			thread_[event_ns::EThreadType::TT_Listen].push_back(ptrListen);
 		}
 
-		auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
+		auto ptrCb = std::make_shared<AcceptHandler>(config.type, maskFlag);
 		ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
 
 		PIE_LOG(PIE_NOTICE, "startup|listeners|ip:{}|port:{}|type:{}", ip.c_str(), port, type);
@@ -610,6 +612,8 @@ void Ctx::init(const std::string& configFile)
 		apie::CtxSingleton::get().setServerId(id);
 		apie::CtxSingleton::get().setServerType(type);
 
+		PIE_LOG(PIE_NOTICE, "startup|libevnet|version {}", event_get_version());
+
 		PIE_LOG(PIE_NOTICE, "startup|hook::HookPoint::HP_Init before");
 		apie::hook::HookRegistrySingleton::get().triggerHook(hook::HookPoint::HP_Init);
 		PIE_LOG(PIE_NOTICE, "startup|hook::HookPoint::HP_Init after");
@@ -642,7 +646,7 @@ void Ctx::init(const std::string& configFile)
 		//		thread_[event_ns::EThreadType::TT_Listen].push_back(ptrListen);
 		//	}
 
-		//	auto ptrCb = std::make_shared<PortCb>(config.type, maskFlag);
+		//	auto ptrCb = std::make_shared<AcceptHandler>(config.type, maskFlag);
 		//	ptrListen->push(ptrListen->dispatcher().createListener(ptrCb, config));
 
 		//	PIE_LOG("startup/startup", PIE_CYCLE_HOUR, PIE_NOTICE, "listeners|ip:{}|port:{}|type:{}", ip.c_str(), port, type);

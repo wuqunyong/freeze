@@ -81,7 +81,7 @@ private:
 	bool dumpTableStructure(MYSQL_RES* pRES, MysqlTable& table);
 
 private:
-	MYSQL* mysql_;
+	MYSQL* mysql_ = nullptr;
 	MySQLConnectOptions  options_;
 	uint32_t  re_connect_count_;
 

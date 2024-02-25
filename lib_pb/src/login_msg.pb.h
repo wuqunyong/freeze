@@ -51,6 +51,12 @@ extern AccountLoginRequestDefaultTypeInternal _AccountLoginRequest_default_insta
 class AccountLoginResponse;
 struct AccountLoginResponseDefaultTypeInternal;
 extern AccountLoginResponseDefaultTypeInternal _AccountLoginResponse_default_instance_;
+class AsyncEchoRequest;
+struct AsyncEchoRequestDefaultTypeInternal;
+extern AsyncEchoRequestDefaultTypeInternal _AsyncEchoRequest_default_instance_;
+class AsyncEchoResponse;
+struct AsyncEchoResponseDefaultTypeInternal;
+extern AsyncEchoResponseDefaultTypeInternal _AsyncEchoResponse_default_instance_;
 class ClientLoginRequest;
 struct ClientLoginRequestDefaultTypeInternal;
 extern ClientLoginRequestDefaultTypeInternal _ClientLoginRequest_default_instance_;
@@ -79,6 +85,8 @@ extern HandshakeInitResponseDefaultTypeInternal _HandshakeInitResponse_default_i
 PROTOBUF_NAMESPACE_OPEN
 template<> ::login_msg::AccountLoginRequest* Arena::CreateMaybeMessage<::login_msg::AccountLoginRequest>(Arena*);
 template<> ::login_msg::AccountLoginResponse* Arena::CreateMaybeMessage<::login_msg::AccountLoginResponse>(Arena*);
+template<> ::login_msg::AsyncEchoRequest* Arena::CreateMaybeMessage<::login_msg::AsyncEchoRequest>(Arena*);
+template<> ::login_msg::AsyncEchoResponse* Arena::CreateMaybeMessage<::login_msg::AsyncEchoResponse>(Arena*);
 template<> ::login_msg::ClientLoginRequest* Arena::CreateMaybeMessage<::login_msg::ClientLoginRequest>(Arena*);
 template<> ::login_msg::ClientLoginResponse* Arena::CreateMaybeMessage<::login_msg::ClientLoginResponse>(Arena*);
 template<> ::login_msg::EchoRequest* Arena::CreateMaybeMessage<::login_msg::EchoRequest>(Arena*);
@@ -1780,6 +1788,334 @@ class EchoResponse final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_login_5fmsg_2eproto;
 };
+// -------------------------------------------------------------------
+
+class AsyncEchoRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.AsyncEchoRequest) */ {
+ public:
+  inline AsyncEchoRequest() : AsyncEchoRequest(nullptr) {}
+  ~AsyncEchoRequest() override;
+  explicit PROTOBUF_CONSTEXPR AsyncEchoRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  AsyncEchoRequest(const AsyncEchoRequest& from);
+  AsyncEchoRequest(AsyncEchoRequest&& from) noexcept
+    : AsyncEchoRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline AsyncEchoRequest& operator=(const AsyncEchoRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AsyncEchoRequest& operator=(AsyncEchoRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AsyncEchoRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AsyncEchoRequest* internal_default_instance() {
+    return reinterpret_cast<const AsyncEchoRequest*>(
+               &_AsyncEchoRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(AsyncEchoRequest& a, AsyncEchoRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AsyncEchoRequest* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AsyncEchoRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AsyncEchoRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AsyncEchoRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AsyncEchoRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AsyncEchoRequest& from) {
+    AsyncEchoRequest::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AsyncEchoRequest* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "login_msg.AsyncEchoRequest";
+  }
+  protected:
+  explicit AsyncEchoRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kValue2FieldNumber = 2,
+    kValue1FieldNumber = 1,
+  };
+  // string value2 = 2;
+  void clear_value2();
+  const std::string& value2() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_value2(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_value2();
+  PROTOBUF_NODISCARD std::string* release_value2();
+  void set_allocated_value2(std::string* value2);
+  private:
+  const std::string& _internal_value2() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_value2(const std::string& value);
+  std::string* _internal_mutable_value2();
+  public:
+
+  // uint64 value1 = 1;
+  void clear_value1();
+  uint64_t value1() const;
+  void set_value1(uint64_t value);
+  private:
+  uint64_t _internal_value1() const;
+  void _internal_set_value1(uint64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:login_msg.AsyncEchoRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value2_;
+    uint64_t value1_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_login_5fmsg_2eproto;
+};
+// -------------------------------------------------------------------
+
+class AsyncEchoResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:login_msg.AsyncEchoResponse) */ {
+ public:
+  inline AsyncEchoResponse() : AsyncEchoResponse(nullptr) {}
+  ~AsyncEchoResponse() override;
+  explicit PROTOBUF_CONSTEXPR AsyncEchoResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  AsyncEchoResponse(const AsyncEchoResponse& from);
+  AsyncEchoResponse(AsyncEchoResponse&& from) noexcept
+    : AsyncEchoResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline AsyncEchoResponse& operator=(const AsyncEchoResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AsyncEchoResponse& operator=(AsyncEchoResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AsyncEchoResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AsyncEchoResponse* internal_default_instance() {
+    return reinterpret_cast<const AsyncEchoResponse*>(
+               &_AsyncEchoResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(AsyncEchoResponse& a, AsyncEchoResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AsyncEchoResponse* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AsyncEchoResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  AsyncEchoResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AsyncEchoResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AsyncEchoResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AsyncEchoResponse& from) {
+    AsyncEchoResponse::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AsyncEchoResponse* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "login_msg.AsyncEchoResponse";
+  }
+  protected:
+  explicit AsyncEchoResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kValue2FieldNumber = 2,
+    kValue1FieldNumber = 1,
+  };
+  // string value2 = 2;
+  void clear_value2();
+  const std::string& value2() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_value2(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_value2();
+  PROTOBUF_NODISCARD std::string* release_value2();
+  void set_allocated_value2(std::string* value2);
+  private:
+  const std::string& _internal_value2() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_value2(const std::string& value);
+  std::string* _internal_mutable_value2();
+  public:
+
+  // uint64 value1 = 1;
+  void clear_value1();
+  uint64_t value1() const;
+  void set_value1(uint64_t value);
+  private:
+  uint64_t _internal_value1() const;
+  void _internal_set_value1(uint64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:login_msg.AsyncEchoResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr value2_;
+    uint64_t value1_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_login_5fmsg_2eproto;
+};
 // ===================================================================
 
 
@@ -2597,9 +2933,161 @@ inline void EchoResponse::set_allocated_value2(std::string* value2) {
   // @@protoc_insertion_point(field_set_allocated:login_msg.EchoResponse.value2)
 }
 
+// -------------------------------------------------------------------
+
+// AsyncEchoRequest
+
+// uint64 value1 = 1;
+inline void AsyncEchoRequest::clear_value1() {
+  _impl_.value1_ = uint64_t{0u};
+}
+inline uint64_t AsyncEchoRequest::_internal_value1() const {
+  return _impl_.value1_;
+}
+inline uint64_t AsyncEchoRequest::value1() const {
+  // @@protoc_insertion_point(field_get:login_msg.AsyncEchoRequest.value1)
+  return _internal_value1();
+}
+inline void AsyncEchoRequest::_internal_set_value1(uint64_t value) {
+  
+  _impl_.value1_ = value;
+}
+inline void AsyncEchoRequest::set_value1(uint64_t value) {
+  _internal_set_value1(value);
+  // @@protoc_insertion_point(field_set:login_msg.AsyncEchoRequest.value1)
+}
+
+// string value2 = 2;
+inline void AsyncEchoRequest::clear_value2() {
+  _impl_.value2_.ClearToEmpty();
+}
+inline const std::string& AsyncEchoRequest::value2() const {
+  // @@protoc_insertion_point(field_get:login_msg.AsyncEchoRequest.value2)
+  return _internal_value2();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AsyncEchoRequest::set_value2(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.value2_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:login_msg.AsyncEchoRequest.value2)
+}
+inline std::string* AsyncEchoRequest::mutable_value2() {
+  std::string* _s = _internal_mutable_value2();
+  // @@protoc_insertion_point(field_mutable:login_msg.AsyncEchoRequest.value2)
+  return _s;
+}
+inline const std::string& AsyncEchoRequest::_internal_value2() const {
+  return _impl_.value2_.Get();
+}
+inline void AsyncEchoRequest::_internal_set_value2(const std::string& value) {
+  
+  _impl_.value2_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AsyncEchoRequest::_internal_mutable_value2() {
+  
+  return _impl_.value2_.Mutable(GetArenaForAllocation());
+}
+inline std::string* AsyncEchoRequest::release_value2() {
+  // @@protoc_insertion_point(field_release:login_msg.AsyncEchoRequest.value2)
+  return _impl_.value2_.Release();
+}
+inline void AsyncEchoRequest::set_allocated_value2(std::string* value2) {
+  if (value2 != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.value2_.SetAllocated(value2, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.value2_.IsDefault()) {
+    _impl_.value2_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:login_msg.AsyncEchoRequest.value2)
+}
+
+// -------------------------------------------------------------------
+
+// AsyncEchoResponse
+
+// uint64 value1 = 1;
+inline void AsyncEchoResponse::clear_value1() {
+  _impl_.value1_ = uint64_t{0u};
+}
+inline uint64_t AsyncEchoResponse::_internal_value1() const {
+  return _impl_.value1_;
+}
+inline uint64_t AsyncEchoResponse::value1() const {
+  // @@protoc_insertion_point(field_get:login_msg.AsyncEchoResponse.value1)
+  return _internal_value1();
+}
+inline void AsyncEchoResponse::_internal_set_value1(uint64_t value) {
+  
+  _impl_.value1_ = value;
+}
+inline void AsyncEchoResponse::set_value1(uint64_t value) {
+  _internal_set_value1(value);
+  // @@protoc_insertion_point(field_set:login_msg.AsyncEchoResponse.value1)
+}
+
+// string value2 = 2;
+inline void AsyncEchoResponse::clear_value2() {
+  _impl_.value2_.ClearToEmpty();
+}
+inline const std::string& AsyncEchoResponse::value2() const {
+  // @@protoc_insertion_point(field_get:login_msg.AsyncEchoResponse.value2)
+  return _internal_value2();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AsyncEchoResponse::set_value2(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.value2_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:login_msg.AsyncEchoResponse.value2)
+}
+inline std::string* AsyncEchoResponse::mutable_value2() {
+  std::string* _s = _internal_mutable_value2();
+  // @@protoc_insertion_point(field_mutable:login_msg.AsyncEchoResponse.value2)
+  return _s;
+}
+inline const std::string& AsyncEchoResponse::_internal_value2() const {
+  return _impl_.value2_.Get();
+}
+inline void AsyncEchoResponse::_internal_set_value2(const std::string& value) {
+  
+  _impl_.value2_.Set(value, GetArenaForAllocation());
+}
+inline std::string* AsyncEchoResponse::_internal_mutable_value2() {
+  
+  return _impl_.value2_.Mutable(GetArenaForAllocation());
+}
+inline std::string* AsyncEchoResponse::release_value2() {
+  // @@protoc_insertion_point(field_release:login_msg.AsyncEchoResponse.value2)
+  return _impl_.value2_.Release();
+}
+inline void AsyncEchoResponse::set_allocated_value2(std::string* value2) {
+  if (value2 != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.value2_.SetAllocated(value2, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.value2_.IsDefault()) {
+    _impl_.value2_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:login_msg.AsyncEchoResponse.value2)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

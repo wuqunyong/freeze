@@ -304,7 +304,7 @@ void ServiceRegistry::checkTimeout()
 	for (const auto& items : delSerial)
 	{
 		ServerConnection::sendCloseLocalServer(items);
-		bool bTemp = APieGetModule<apie::ServiceRegistry>()->deleteBySerialNum(items);
+		bool bTemp = GetModule<apie::ServiceRegistry>()->deleteBySerialNum(items);
 		if (bTemp)
 		{
 			bChanged = true;
@@ -313,7 +313,7 @@ void ServiceRegistry::checkTimeout()
 
 	if (bChanged)
 	{
-		APieGetModule<apie::ServiceRegistry>()->broadcast();
+		GetModule<apie::ServiceRegistry>()->broadcast();
 	}
 }
 
