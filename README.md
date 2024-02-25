@@ -276,8 +276,10 @@ int main(int argc, char** argv)
 
 来看第一个RPC例子, 提供Callback和Coroutine的两种RPC调用
 
-**Client**　-----　1.Request　　----->　**GatewayServer**　-----　2.RPCRequest(Callback　|　Coroutine)　----->　**SceneServer**
-**Client**　<-----　4.Response　------　**GatewayServer**　<-----　3.RPCResponse　　　　　　　　　　------　**SceneServer**
+| 对象 | 操作 | 对象 | 操作 | 对象 |
+| --- | --- | --- | --- | --- |
+| ***Client*** | 1.Request | ***GatewayServer*** | 2.RPCRequest(Callback或Coroutine) | ***SceneServer*** |
+| ***Client*** | 4.Response| ***GatewayServer*** | 3.RPCResponse                     | ***SceneServer*** |
 
 ### Client
 
