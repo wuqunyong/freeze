@@ -167,7 +167,7 @@ mysqladmin -u root -p version
 直接visual studio启动，编译
 
 # 架构图
-![架构图](.\\conf\\topology.png)
+![架构图](./conf/topology.png)
 
 # Reactor线程模型
  [nio reactor](http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf)
