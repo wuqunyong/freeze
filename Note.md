@@ -203,3 +203,7 @@ https://www.cnblogs.com/zoule/p/15002536.html
 2. nm -gDC libSXVideoEngineJni.so | grep -i license
 3. readelf -d libSXVideoEngineJni.so | grep rpath
 4. c++filt __ZN13SXVideoEngine6Public7License10SetLicenseEPKc
+
+LD_DEBUG=help ./main
+LD_DEBUG=libs ./main
+输出log保存可以使用LD_DEBUG=all LD_DEBUG_OUTPUT=log ./main 会生成一个output指定文件名加进程号结尾的文件
