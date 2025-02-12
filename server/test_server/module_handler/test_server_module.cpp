@@ -71,7 +71,8 @@ void TestServerModule::PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD
 * 
 * Р§згЃК
 *		client|101|login
-*		client|101|echo|echo|123|hello
+*		client|101|echo|sync|123|hello
+*       client|101|echo|async|123|hello
 *		client|101|logout
 * 
 */

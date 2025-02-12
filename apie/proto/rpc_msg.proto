@@ -49,6 +49,7 @@ message CHANNEL
 	uint32 realm = 1; // 区服ID
 	uint32 type = 2;  // 服务类型
 	uint32 id = 3;    // 服务ID
+	string actor_id = 4; // actor id
 }
 
 message CONTROLLER 
@@ -79,6 +80,7 @@ message CLIENT_IDENTIFIER
 	CHANNEL stub = 1;
 	uint64 seq_id = 2;
 	bool required_reply = 3;
+	string reply_topic = 4;
 }
 
 message SERVER_IDENTIFIER

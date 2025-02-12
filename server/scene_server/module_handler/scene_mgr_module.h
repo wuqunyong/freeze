@@ -23,6 +23,8 @@ namespace apie {
 		// PUBSUB
 		static void PubSub_logicCmd(const std::shared_ptr<::pubsub::LOGIC_CMD>& msg);
 
+		// CMD
+		static void Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd);
 
 		// RPC
 		static apie::status::Status RPC_echoTest(

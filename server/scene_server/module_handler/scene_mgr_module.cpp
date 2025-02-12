@@ -13,6 +13,7 @@ void SceneMgrModule::init()
 	// CMD
 	auto& cmd = LogicCmdHandlerSingleton::get();
 	cmd.init();
+	cmd.registerOnCmd("nats_publish", "nats_publish", SceneMgrModule::Cmd_natsPublish);
 }
 
 void SceneMgrModule::ready()
@@ -63,6 +64,50 @@ apie::status::Status SceneMgrModule::RPC_echoTest(const ::rpc_msg::CLIENT_IDENTI
 	return { apie::status::StatusCode::OK, "" };
 }
 
+void SceneMgrModule::Cmd_natsPublish(::pubsub::LOGIC_CMD& cmd)
+{
+	if (cmd.params_size() < 5)
+	{
+		return;
+	}
+
+	uint32_t realm = std::stoul(cmd.params()[0]);
+	uint32_t type = std::stoul(cmd.params()[1]);
+	uint32_t id = std::stoul(cmd.params()[2]);
+
+	std::string channel = apie::event_ns::NatsManager::GetTopicChannel(realm, type, id);
+
+	std::string name = cmd.params()[3];
+	std::string info = cmd.params()[4];
+
+	//::nats_msg::NATS_MSG_PRXOY nats_msg;
+	//APie::Event::NatsSingleton::get().publishNatsMsg(APie::Event::NatsManager::E_NT_Realm, channel, nats_msg);
+
+	pb::rpc::RPC_EchoTestRequest params;
+	params.set_value1(200);
+	params.set_value2("test_hello");
+
+	::rpc_msg::CHANNEL server;
+	server.set_realm(realm);
+	server.set_type(type);
+	server.set_id(id);
+	server.set_actor_id("1");
+
+	//auto rpcObj = apie::rpc::createRPCClient<rpc_msg::RPC_EchoTestRequest, rpc_msg::RPC_EchoTestResponse>(server, rpc_msg::OP_RPC_EchoTest, nullptr);
+	//rpcObj->sendRequest(params);
+
+	auto cb = [](const apie::status::Status& status, const std::shared_ptr<pb::rpc::RPC_EchoTestResponse>& response) {
+		if (!status.ok())
+		{
+			return;
+		}
+
+		std::stringstream ss;
+		ss << "RPC_echoCb:" << response->ShortDebugString() << std::endl;
+		ASYNC_PIE_LOG(PIE_NOTICE, "{}", ss.str());
+		};
+	apie::rpc::RPC_Call<pb::rpc::RPC_EchoTestRequest, pb::rpc::RPC_EchoTestResponse>(server, pb::rpc::OP_RPC_EchoTest, params, cb);
+}
 
 }
 

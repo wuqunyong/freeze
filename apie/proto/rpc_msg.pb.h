@@ -293,10 +293,25 @@ class CHANNEL final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kActorIdFieldNumber = 4,
     kRealmFieldNumber = 1,
     kTypeFieldNumber = 2,
     kIdFieldNumber = 3,
   };
+  // string actor_id = 4;
+  void clear_actor_id();
+  const std::string& actor_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_actor_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_actor_id();
+  PROTOBUF_NODISCARD std::string* release_actor_id();
+  void set_allocated_actor_id(std::string* actor_id);
+  private:
+  const std::string& _internal_actor_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_actor_id(const std::string& value);
+  std::string* _internal_mutable_actor_id();
+  public:
+
   // uint32 realm = 1;
   void clear_realm();
   uint32_t realm() const;
@@ -332,6 +347,7 @@ class CHANNEL final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr actor_id_;
     uint32_t realm_;
     uint32_t type_;
     uint32_t id_;
@@ -1013,10 +1029,25 @@ class CLIENT_IDENTIFIER final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kReplyTopicFieldNumber = 4,
     kStubFieldNumber = 1,
     kSeqIdFieldNumber = 2,
     kRequiredReplyFieldNumber = 3,
   };
+  // string reply_topic = 4;
+  void clear_reply_topic();
+  const std::string& reply_topic() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_reply_topic(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_reply_topic();
+  PROTOBUF_NODISCARD std::string* release_reply_topic();
+  void set_allocated_reply_topic(std::string* reply_topic);
+  private:
+  const std::string& _internal_reply_topic() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_reply_topic(const std::string& value);
+  std::string* _internal_mutable_reply_topic();
+  public:
+
   // .rpc_msg.CHANNEL stub = 1;
   bool has_stub() const;
   private:
@@ -1061,6 +1092,7 @@ class CLIENT_IDENTIFIER final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr reply_topic_;
     ::rpc_msg::CHANNEL* stub_;
     uint64_t seq_id_;
     bool required_reply_;
@@ -2297,6 +2329,56 @@ inline void CHANNEL::set_id(uint32_t value) {
   // @@protoc_insertion_point(field_set:rpc_msg.CHANNEL.id)
 }
 
+// string actor_id = 4;
+inline void CHANNEL::clear_actor_id() {
+  _impl_.actor_id_.ClearToEmpty();
+}
+inline const std::string& CHANNEL::actor_id() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.CHANNEL.actor_id)
+  return _internal_actor_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CHANNEL::set_actor_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.actor_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc_msg.CHANNEL.actor_id)
+}
+inline std::string* CHANNEL::mutable_actor_id() {
+  std::string* _s = _internal_mutable_actor_id();
+  // @@protoc_insertion_point(field_mutable:rpc_msg.CHANNEL.actor_id)
+  return _s;
+}
+inline const std::string& CHANNEL::_internal_actor_id() const {
+  return _impl_.actor_id_.Get();
+}
+inline void CHANNEL::_internal_set_actor_id(const std::string& value) {
+  
+  _impl_.actor_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CHANNEL::_internal_mutable_actor_id() {
+  
+  return _impl_.actor_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CHANNEL::release_actor_id() {
+  // @@protoc_insertion_point(field_release:rpc_msg.CHANNEL.actor_id)
+  return _impl_.actor_id_.Release();
+}
+inline void CHANNEL::set_allocated_actor_id(std::string* actor_id) {
+  if (actor_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.actor_id_.SetAllocated(actor_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.actor_id_.IsDefault()) {
+    _impl_.actor_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc_msg.CHANNEL.actor_id)
+}
+
 // -------------------------------------------------------------------
 
 // CONTROLLER
@@ -2801,6 +2883,56 @@ inline void CLIENT_IDENTIFIER::_internal_set_required_reply(bool value) {
 inline void CLIENT_IDENTIFIER::set_required_reply(bool value) {
   _internal_set_required_reply(value);
   // @@protoc_insertion_point(field_set:rpc_msg.CLIENT_IDENTIFIER.required_reply)
+}
+
+// string reply_topic = 4;
+inline void CLIENT_IDENTIFIER::clear_reply_topic() {
+  _impl_.reply_topic_.ClearToEmpty();
+}
+inline const std::string& CLIENT_IDENTIFIER::reply_topic() const {
+  // @@protoc_insertion_point(field_get:rpc_msg.CLIENT_IDENTIFIER.reply_topic)
+  return _internal_reply_topic();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CLIENT_IDENTIFIER::set_reply_topic(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.reply_topic_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rpc_msg.CLIENT_IDENTIFIER.reply_topic)
+}
+inline std::string* CLIENT_IDENTIFIER::mutable_reply_topic() {
+  std::string* _s = _internal_mutable_reply_topic();
+  // @@protoc_insertion_point(field_mutable:rpc_msg.CLIENT_IDENTIFIER.reply_topic)
+  return _s;
+}
+inline const std::string& CLIENT_IDENTIFIER::_internal_reply_topic() const {
+  return _impl_.reply_topic_.Get();
+}
+inline void CLIENT_IDENTIFIER::_internal_set_reply_topic(const std::string& value) {
+  
+  _impl_.reply_topic_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CLIENT_IDENTIFIER::_internal_mutable_reply_topic() {
+  
+  return _impl_.reply_topic_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CLIENT_IDENTIFIER::release_reply_topic() {
+  // @@protoc_insertion_point(field_release:rpc_msg.CLIENT_IDENTIFIER.reply_topic)
+  return _impl_.reply_topic_.Release();
+}
+inline void CLIENT_IDENTIFIER::set_allocated_reply_topic(std::string* reply_topic) {
+  if (reply_topic != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.reply_topic_.SetAllocated(reply_topic, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.reply_topic_.IsDefault()) {
+    _impl_.reply_topic_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rpc_msg.CLIENT_IDENTIFIER.reply_topic)
 }
 
 // -------------------------------------------------------------------
