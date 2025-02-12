@@ -22,6 +22,14 @@ namespace event_ns {
 			std::string tls_cert;
 		};
 
+		enum class NatsMsgType {
+			NMT_Invalid = 0,
+			NMT_Request = 1,
+			NMT_Response = 2,
+			NMT_Multiplexer = 3,
+			NMT_DeMultiplexer = 4,
+		};
+
 		class NATSConnectorBase {
 		public:
 			static void DisconnectedCb(natsConnection* nc, void* closure);
@@ -29,7 +37,8 @@ namespace event_ns {
 			static void ClosedCb(natsConnection* nc, void* closure);
 			static void ErrHandler(natsConnection* nc, natsSubscription* subscription, natsStatus err, void* closure);
 
-			static std::string GetCombineTopicChannel(const std::string& domains, const std::string& channel);
+			static std::string GetSubscribeTopic(const std::string& domains, const std::string& channel);
+			static std::string GetPublishTopic(const std::string& domains, const std::string& channel, NatsMsgType type);
 		protected:
 			NATSConnectorBase(std::string nats_server, std::unique_ptr<NATSTLSConfig> tls_config)
 				: nats_server_(nats_server), tls_config_(std::move(tls_config)) {}
@@ -131,7 +140,7 @@ namespace event_ns {
 					return iRC;
 				}
 
-				std::string sSub = apie::event_ns::NATSConnectorBase::GetCombineTopicChannel(sub_topic_, channel);
+				std::string sSub = apie::event_ns::NATSConnectorBase::GetSubscribeTopic(sub_topic_, channel);
 
 				// Attach the message reader.
 				natsStatus status = natsConnection_Subscribe(&nats_subscription_, nats_connection_, sSub.c_str(), NATSMessageCallbackHandler, this);
@@ -191,7 +200,7 @@ namespace event_ns {
 			 * @param msg The protobuf message.
 			 * @return Status of publication.
 			 */
-			virtual bool Publish(const std::string& channel, const TMsg& msg, bool bSplice)
+			virtual bool Publish(const std::string& channel, const TMsg& msg, bool bSplice, NatsMsgType msgType)
 			{
 				if (!nats_connection_)
 				{
@@ -205,7 +214,7 @@ namespace event_ns {
 				std::string sPub = channel;
 				if (bSplice)
 				{
-					sPub = apie::event_ns::NATSConnectorBase::GetCombineTopicChannel(pub_topic_, channel);
+					sPub = apie::event_ns::NATSConnectorBase::GetPublishTopic(pub_topic_, channel, msgType);
 				}
 
 				auto serialized_msg = msg.SerializeAsString();

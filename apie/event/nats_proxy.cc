@@ -316,7 +316,24 @@ bool NatsManager::publishNatsMsg(E_NatsType type, const std::string& channel, co
 			return false;
 		}
 
-		return nats_realm->Publish(channel, msg, bSplice);
+		NatsMsgType msgType(apie::event_ns::NatsMsgType::NMT_Invalid);
+		if (msg.has_rpc_request())
+		{
+			msgType = apie::event_ns::NatsMsgType::NMT_Request;
+		}
+		if (msg.has_rpc_response())
+		{
+			msgType = apie::event_ns::NatsMsgType::NMT_Response;
+		}
+		if (msg.has_multiplexer_forward())
+		{
+			msgType = apie::event_ns::NatsMsgType::NMT_Multiplexer;
+		}
+		if (msg.has_demultiplexer_forward())
+		{
+			msgType = apie::event_ns::NatsMsgType::NMT_DeMultiplexer;
+		}
+		return nats_realm->Publish(channel, msg, bSplice, msgType);
 	}
 	default:
 		break;
@@ -551,9 +568,33 @@ void NatsManager::Handle_RealmSubscribe(std::unique_ptr<::nats_msg::NATS_MSG_PRX
 	ASYNC_PIE_LOG(PIE_ERROR, "nats/proxy|Handle_Subscribe invalid params|{}|{}", ss.str(), msg->ShortDebugString());
 }
 
-std::string NATSConnectorBase::GetCombineTopicChannel(const std::string& domains, const std::string& channel)
+std::string NATSConnectorBase::GetSubscribeTopic(const std::string& domains, const std::string& channel)
 {
-	std::string topic = domains + "." + channel;
+	std::string topic = domains + "." + channel + "." + "*";
+	return topic;
+}
+
+std::string NATSConnectorBase::GetPublishTopic(const std::string& domains, const std::string& channel, NatsMsgType type)
+{
+	std::string postfix;
+	switch (type)
+	{
+	case apie::event_ns::NatsMsgType::NMT_Request:
+		postfix = "server";
+		break;
+	case apie::event_ns::NatsMsgType::NMT_Response:
+		postfix = "client";
+		break;
+	case apie::event_ns::NatsMsgType::NMT_Multiplexer:
+		postfix = "backend";
+		break;
+	case apie::event_ns::NatsMsgType::NMT_DeMultiplexer:
+		postfix = "frontend";
+		break;
+	default:
+		break;
+	}
+	std::string topic = domains + "." + channel + "." + postfix;
 	return topic;
 }
 
