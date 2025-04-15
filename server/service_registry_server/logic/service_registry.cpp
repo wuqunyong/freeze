@@ -126,6 +126,17 @@ apie::status::Status ServiceRegistry::start()
 	apie::CtxSingleton::get().addListeners(listenConfig);
 
 
+	apie::LoadConfig<Mysql_NatsConfig> natsConfig("natsConfig");
+	bResult = natsConfig.load(findIte->second.get_nats_config());
+	if (!bResult)
+	{
+		return { apie::status::StatusCode::HOOK_ERROR, "invalid natsConfig" };
+	}
+
+	apie::CtxSingleton::get().addNatsConnections(natsConfig);
+
+
+
 	m_id = "id_" + apie::CtxSingleton::get().launchTime();
 	m_serviceTimeout = apie::CtxSingleton::get().getConfigs()->service_timeout;
 
@@ -251,6 +262,42 @@ bool ServiceRegistry::updateInstance(uint64_t iSerialNum, const ::service_discov
 	return true;
 }
 
+
+bool ServiceRegistry::updateNatsInstance(const ::service_discovery::EndPointInstance& instance) {
+
+	auto curTime = apie::CtxSingleton::get().getCurSeconds();
+
+	EndPoint point;
+	point.realm = instance.realm();
+	point.type = instance.type();
+	point.id = instance.id();
+
+	auto findPoint = m_pointMap.find(point);
+	if (findPoint != m_pointMap.end())
+	{
+		return false;
+	}
+
+	//add
+	m_pointMap[point] = 0;
+	auto findIte = m_natsRegistered.find(point);
+	if (findIte == m_natsRegistered.end())
+	{
+		RegisteredEndPoint endPoint;
+		endPoint.addTime = curTime;
+		endPoint.modifyTime = curTime;
+		endPoint.instance = instance;
+
+		m_natsRegistered[point] = endPoint;
+	}
+	else
+	{
+		findIte->second.modifyTime = curTime;
+		findIte->second.instance = instance;
+	}
+
+	return true;
+}
 
 bool ServiceRegistry::updateHeartbeat(uint64_t iSerialNum)
 {

@@ -20,6 +20,10 @@ void ServiceRegistryModule::init()
 	using namespace ::service_discovery;
 	S_INTRA_REGISTER_SERVICE(REGISTER_INSTANCE, ServiceRegistryModule::handleRequestRegisterInstance);
 	S_INTRA_REGISTER_SERVICE(HEARTBEAT, ServiceRegistryModule::handleRequestHeartbeat);
+
+	auto& rpc = apie::rpc::RPCServerManagerSingleton::get();
+	rpc.createRPCServer<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE, ::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>(rpc_msg::RPC_RegisterInstance, ServiceRegistryModule::onRegisterInstance);
+	
 }
 
 void ServiceRegistryModule::ready()
@@ -107,6 +111,63 @@ apie::status::E_ReturnType  ServiceRegistryModule::handleRequestRegisterInstance
 	return apie::status::E_ReturnType::kRT_Sync;
 }
 
+
+apie::status::Status ServiceRegistryModule::onRegisterInstance(
+	const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request, std::shared_ptr<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>& response)
+{
+	std::stringstream ss;
+	ss << "request:" << request->ShortDebugString();
+
+	auto auth = apie::CtxSingleton::get().identify().auth;
+	if (!auth.empty() && auth != request->auth())
+	{
+		response->set_status_code(opcodes::SC_Discovery_AuthError);
+
+		ss << ",auth:error";
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
+		return { apie::status::StatusCode::OK, "" };
+	}
+
+	EndPoint addNode(request->instance().realm(), request->instance().type(), request->instance().id(), "");
+	auto nodeOpt = GetModule<apie::ServiceRegistry>()->findNode(addNode);
+	if (!nodeOpt.has_value())
+	{
+		response->set_status_code(opcodes::SC_Discovery_InvalidPoint);
+
+		ss << ",invalid node";
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
+		return { apie::status::StatusCode::OK, "" };
+	}
+
+	::service_discovery::EndPointInstance instanceObj = request->instance();
+	instanceObj.set_ip(nodeOpt.value().get_ip());
+	instanceObj.set_port(nodeOpt.value().get_port());
+
+	bool bResult = GetModule<apie::ServiceRegistry>()->updateNatsInstance(instanceObj);
+	if (!bResult)
+	{
+		response->set_status_code(opcodes::SC_Discovery_DuplicateNode);
+
+		ss << ",node:duplicate";
+		ASYNC_PIE_LOG(PIE_ERROR, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
+		return { apie::status::StatusCode::OK, "" };
+	}
+
+	ASYNC_PIE_LOG(PIE_DEBUG, "SelfRegistration/handleRequestRegisterInstance|{}", ss.str().c_str());
+
+	response->set_status_code(::opcodes::StatusCode::SC_Ok);
+	response->set_listeners_config(nodeOpt.value().get_listeners_config());
+	response->set_mysql_config(nodeOpt.value().get_mysql_config());
+	response->set_nats_config(nodeOpt.value().get_nats_config());
+	response->set_redis_config(nodeOpt.value().get_redis_config());
+
+	auto cb = []() {
+		GetModule<apie::ServiceRegistry>()->broadcast();
+		};
+	apie::CtxSingleton::get().getLogicThread()->dispatcher().post(cb);
+
+	return { apie::status::StatusCode::OK, "" };
+}
 
 apie::status::E_ReturnType  ServiceRegistryModule::handleRequestHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
 		std::shared_ptr<::service_discovery::MSG_RESPONSE_HEARTBEAT>& response)

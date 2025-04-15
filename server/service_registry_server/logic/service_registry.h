@@ -43,6 +43,9 @@ namespace apie {
 		bool updateHeartbeat(uint64_t iSerialNum);
 		bool deleteBySerialNum(uint64_t iSerialNum);
 
+
+		bool updateNatsInstance(const ::service_discovery::EndPointInstance& instance);
+
 		void checkTimeout();
 		void broadcast();
 
@@ -56,8 +59,10 @@ namespace apie {
 		std::string m_name;
 		module_loader::ModuleLoaderBase* m_prtLoader;
 
-		std::map<uint64_t, RegisteredEndPoint> m_registered;
-		std::map<EndPoint, uint64_t> m_pointMap;
+		std::map<uint64_t, RegisteredEndPoint> m_registered;        // 通过TCP连接注册的节点
+		std::map<EndPoint, RegisteredEndPoint> m_natsRegistered;    // 通过NATS注册的节点
+
+		std::map<EndPoint, uint64_t> m_pointMap;  //已注册的节点                
 		uint32_t m_serviceTimeout = 300;
 
 		std::string m_id;

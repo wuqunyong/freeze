@@ -363,29 +363,30 @@ const char descriptor_table_protodef_rpc_5fmsg_2eproto[] PROTOBUF_SECTION_VARIAB
   "\030\003 \001(\014\"~\n\031PRC_DeMultiplexer_Forward\022%\n\004r"
   "ole\030\001 \001(\0132\027.rpc_msg.RoleIdentifier\022(\n\004in"
   "fo\030\002 \001(\0132\032.rpc_msg.ClientMessageInfo\022\020\n\010"
-  "body_msg\030\003 \001(\014*\363\001\n\013RPC_OPCODES\022\014\n\010RPC_No"
+  "body_msg\030\003 \001(\014*\216\002\n\013RPC_OPCODES\022\014\n\010RPC_No"
   "ne\020\000\022\027\n\022RPC_MysqlDescTable\020\221\003\022\023\n\016RPC_Mys"
   "qlQuery\020\222\003\022\024\n\017RPC_MysqlInsert\020\223\003\022\024\n\017RPC_"
   "MysqlUpdate\020\224\003\022\024\n\017RPC_MysqlDelete\020\225\003\022\033\n\026"
   "RPC_MysqlQueryByFilter\020\226\003\022\030\n\023RPC_MysqlMu"
   "ltiQuery\020\227\003\022\026\n\021RPC_MysqlQueryAll\020\230\003\022\027\n\022R"
-  "PC_MysqlStatement\020\231\003*\343\003\n\010RPC_CODE\022\013\n\007COD"
-  "E_Ok\020\000\022\021\n\rCODE_Ok_Async\020\001\022\020\n\014CODE_Timeou"
-  "t\020d\022\023\n\017CODE_Unregister\020e\022\023\n\017CODE_ParseEr"
-  "ror\020f\022\030\n\024CODE_ErrorServerPost\020g\022\035\n\031CODE_"
-  "RouteNotLinkToServer\020h\022\037\n\033CODE_RouteSend"
-  "ToServerError\020i\022\031\n\025CODE_OpcodeUnregister"
-  "\020j\022\027\n\023CODE_CreateMsgError\020k\022\030\n\024CODE_Logi"
-  "cThreadNull\020l\022\031\n\025CODE_NotReceivedReply\020m"
-  "\022\020\n\014CODE_NotSend\020n\022\030\n\024CODE_LoadFromDbErr"
-  "or\020o\022\026\n\022CODE_DirtyFlagZero\020p\022\023\n\017CODE_Que"
-  "ryError\020q\022\037\n\033CODE_TableNameNotExistError"
-  "\020r\022\036\n\032CODE_GenerateQuerySQLError\020s\022\036\n\032CO"
-  "DE_NotMatchedResultError\020tb\006proto3"
+  "PC_MysqlStatement\020\231\003\022\031\n\024RPC_RegisterInst"
+  "ance\020\232\003*\343\003\n\010RPC_CODE\022\013\n\007CODE_Ok\020\000\022\021\n\rCOD"
+  "E_Ok_Async\020\001\022\020\n\014CODE_Timeout\020d\022\023\n\017CODE_U"
+  "nregister\020e\022\023\n\017CODE_ParseError\020f\022\030\n\024CODE"
+  "_ErrorServerPost\020g\022\035\n\031CODE_RouteNotLinkT"
+  "oServer\020h\022\037\n\033CODE_RouteSendToServerError"
+  "\020i\022\031\n\025CODE_OpcodeUnregister\020j\022\027\n\023CODE_Cr"
+  "eateMsgError\020k\022\030\n\024CODE_LogicThreadNull\020l"
+  "\022\031\n\025CODE_NotReceivedReply\020m\022\020\n\014CODE_NotS"
+  "end\020n\022\030\n\024CODE_LoadFromDbError\020o\022\026\n\022CODE_"
+  "DirtyFlagZero\020p\022\023\n\017CODE_QueryError\020q\022\037\n\033"
+  "CODE_TableNameNotExistError\020r\022\036\n\032CODE_Ge"
+  "nerateQuerySQLError\020s\022\036\n\032CODE_NotMatched"
+  "ResultError\020tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_rpc_5fmsg_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_rpc_5fmsg_2eproto = {
-    false, false, 1954, descriptor_table_protodef_rpc_5fmsg_2eproto,
+    false, false, 1981, descriptor_table_protodef_rpc_5fmsg_2eproto,
     "rpc_msg.proto",
     &descriptor_table_rpc_5fmsg_2eproto_once, nullptr, 0, 11,
     schemas, file_default_instances, TableStruct_rpc_5fmsg_2eproto::offsets,
@@ -415,6 +416,7 @@ bool RPC_OPCODES_IsValid(int value) {
     case 407:
     case 408:
     case 409:
+    case 410:
       return true;
     default:
       return false;

@@ -34,6 +34,11 @@ public:
 	static apie::status::E_ReturnType handleRequestHeartbeat(MessageInfo info, const std::shared_ptr<::service_discovery::MSG_REQUEST_HEARTBEAT>& request,
 		std::shared_ptr<::service_discovery::MSG_RESPONSE_HEARTBEAT>& response);
 
+	// RPC
+	static apie::status::Status onRegisterInstance(const ::rpc_msg::CLIENT_IDENTIFIER& client, const std::shared_ptr<::service_discovery::MSG_REQUEST_REGISTER_INSTANCE>& request, std::shared_ptr<::service_discovery::MSG_RESPONSE_REGISTER_INSTANCE>& response);
+
+
+
 };
 
 
