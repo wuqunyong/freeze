@@ -386,6 +386,18 @@ void ServiceRegistry::broadcast()
 		info.iOpcode = ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE;
 		apie::network::OutputStream::sendMsg(info, notice);
 	}
+
+	for (const auto& items : m_natsRegistered) {
+		::rpc_msg::CHANNEL server;
+		server.set_realm(0);
+		server.set_type(1);
+		server.set_id(1002);
+		server.set_actor_id("1");
+		apie::rpc::RPC_Call<::service_discovery::MSG_NOTICE_INSTANCE, ::service_discovery::MSG_NOTICE_INSTANCE>(server, 103, notice, nullptr);
+
+		ASYNC_PIE_LOG(PIE_NOTICE, "Nats|notice|{}", items.second.instance.id());
+	}
+
 }
 
 
