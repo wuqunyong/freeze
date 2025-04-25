@@ -47,8 +47,8 @@ namespace rpc {
 
 
 
-	template <typename Notify>
-	bool RPC_CallNotify(const ::rpc_msg::CHANNEL& server, uint32_t opcode, const Notify& notify)
+	template <typename Notify, typename std::enable_if<std::is_base_of<google::protobuf::Message, Notify>::value,bool>::type = 0>
+	bool RPC_Notify(const ::rpc_msg::CHANNEL& server, uint32_t opcode, const Notify& notify)
 	{
 		auto seq_num = RPCClientManagerSingleton::get().nextSeqNum();
 

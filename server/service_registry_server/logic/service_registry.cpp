@@ -393,7 +393,7 @@ void ServiceRegistry::broadcast()
 		server.set_type(items.second.instance.type());
 		server.set_id(items.second.instance.id());
 		server.set_actor_id(items.second.instance.actor_id());
-		apie::rpc::RPC_CallNotify(server, ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE, notice);
+		apie::rpc::RPC_Notify(server, ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE, notice);
 
 		ASYNC_PIE_LOG(PIE_NOTICE, "Nats|notice|{}", items.second.instance.id());
 	}
