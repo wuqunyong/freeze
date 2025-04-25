@@ -70,7 +70,7 @@ apie::status::E_ReturnType  ServiceRegistryModule::handleRequestRegisterInstance
 		return apie::status::E_ReturnType::kRT_Sync;
 	}
 
-	EndPoint addNode(request->instance().realm(), request->instance().type(), request->instance().id(), "");
+	EndPoint addNode(request->instance().realm(), request->instance().type(), request->instance().id(), "", "");
 	auto nodeOpt = GetModule<apie::ServiceRegistry>()->findNode(addNode);
 	if (!nodeOpt.has_value())
 	{
@@ -128,7 +128,7 @@ apie::status::Status ServiceRegistryModule::onRegisterInstance(
 		return { apie::status::StatusCode::OK, "" };
 	}
 
-	EndPoint addNode(request->instance().realm(), request->instance().type(), request->instance().id(), "");
+	EndPoint addNode(request->instance().realm(), request->instance().type(), request->instance().id(), "", "");
 	auto nodeOpt = GetModule<apie::ServiceRegistry>()->findNode(addNode);
 	if (!nodeOpt.has_value())
 	{

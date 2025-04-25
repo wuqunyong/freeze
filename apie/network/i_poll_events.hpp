@@ -10,14 +10,16 @@ namespace apie
 		uint32_t realm = 0;
 		uint32_t type = 0;
 		uint32_t id = 0;
+		std::string actor_id;
 		std::string auth;
 
 		EndPoint() = default;
-		EndPoint(uint32_t realm, uint32_t type, uint32_t id, std::string auth)
+		EndPoint(uint32_t realm, uint32_t type, uint32_t id, std::string actor_id, std::string auth)
 		{
 			this->realm = realm;
 			this->type = type;
 			this->id = id;
+			this->actor_id = actor_id;
 			this->auth = auth;
 		}
 

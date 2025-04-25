@@ -107,7 +107,7 @@ apie::status::Status ServiceRegistry::start()
 
 	for (const auto& elem : nodeList)
 	{
-		EndPoint key(elem.get_service_realm(), elem.get_service_type(), elem.get_service_id(), "");
+		EndPoint key(elem.get_service_realm(), elem.get_service_type(), elem.get_service_id(), "", "");
 		m_nodes[key] = elem;
 	}
 
@@ -324,6 +324,7 @@ bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 		point.realm = findIte->second.instance.realm();
 		point.type = findIte->second.instance.type();
 		point.id = findIte->second.instance.id();
+		point.actor_id = findIte->second.instance.actor_id();
 
 		m_pointMap.erase(point);
 		m_registered.erase(findIte);
