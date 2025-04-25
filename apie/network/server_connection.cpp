@@ -442,19 +442,18 @@ void ServerConnection::handleClose()
 
 void ServerConnection::sendCloseLocalServer(uint64_t iSerialNum)
 {
+	auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
+	if (ptrConnection == nullptr)
+	{
+		return;
+	}
+
 	apie::CloseLocalServer *ptr = new apie::CloseLocalServer;
 	ptr->iSerialNum = iSerialNum;
 
 	Command cmd;
 	cmd.type = Command::close_local_server;
 	cmd.args.close_local_server.ptrData = ptr;
-
-	auto ptrConnection = event_ns::DispatcherImpl::getConnection(iSerialNum);
-	if (ptrConnection == nullptr)
-	{
-		delete ptr;
-		return;
-	}
 
 	uint32_t iThreadId = ptrConnection->getTId();
 	auto ptrThread = CtxSingleton::get().getThreadById(iThreadId);

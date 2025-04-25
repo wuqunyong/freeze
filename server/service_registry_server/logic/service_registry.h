@@ -42,7 +42,7 @@ namespace apie {
 		bool updateInstance(uint64_t iSerialNum, const ::service_discovery::EndPointInstance& instance);
 		bool updateHeartbeat(uint64_t iSerialNum);
 		bool deleteBySerialNum(uint64_t iSerialNum);
-
+		bool deleteByNats(EndPoint point);
 
 		bool updateNatsInstance(const ::service_discovery::EndPointInstance& instance);
 

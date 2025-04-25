@@ -334,6 +334,22 @@ bool ServiceRegistry::deleteBySerialNum(uint64_t iSerialNum)
 	return bResult;
 }
 
+bool ServiceRegistry::deleteByNats(EndPoint point) 
+{
+	bool bResult = false;
+	auto findIte = m_natsRegistered.find(point);
+	if (findIte != m_natsRegistered.end())
+	{
+		m_pointMap.erase(point);
+		m_natsRegistered.erase(findIte);
+
+		bResult = true;
+	}
+
+	return bResult;
+}
+
+
 void ServiceRegistry::checkTimeout()
 {
 	auto curTime = apie::CtxSingleton::get().getCurSeconds();
@@ -347,11 +363,28 @@ void ServiceRegistry::checkTimeout()
 		}
 	}
 
+	std::vector<EndPoint> delNatSerial;
+	for (const auto& items : m_natsRegistered)
+	{
+		if (curTime > items.second.modifyTime + m_serviceTimeout)
+		{
+			delNatSerial.push_back(items.first);
+		}
+	}
+
 	bool bChanged = false;
 	for (const auto& items : delSerial)
 	{
 		ServerConnection::sendCloseLocalServer(items);
 		bool bTemp = GetModule<apie::ServiceRegistry>()->deleteBySerialNum(items);
+		if (bTemp)
+		{
+			bChanged = true;
+		}
+	}
+	for (const auto& items : delNatSerial)
+	{
+		bool bTemp = GetModule<apie::ServiceRegistry>()->deleteByNats(items);
 		if (bTemp)
 		{
 			bChanged = true;
@@ -373,7 +406,12 @@ void ServiceRegistry::broadcast()
 	notice.set_version(m_version);
 	notice.set_status(m_status);
 	notice.set_mode(service_discovery::UM_Full);
-	for (const auto& items : m_registered)
+	for (const auto& items : m_registered) 
+	{
+		auto ptrAdd = notice.add_add_instance();
+		*ptrAdd = items.second.instance;
+	}
+	for (const auto& items : m_natsRegistered)
 	{
 		auto ptrAdd = notice.add_add_instance();
 		*ptrAdd = items.second.instance;
@@ -387,15 +425,14 @@ void ServiceRegistry::broadcast()
 		apie::network::OutputStream::sendMsg(info, notice);
 	}
 
-	for (const auto& items : m_natsRegistered) {
+	for (const auto& items : m_natsRegistered)
+	{
 		::rpc_msg::CHANNEL server;
 		server.set_realm(items.second.instance.realm());
 		server.set_type(items.second.instance.type());
 		server.set_id(items.second.instance.id());
 		server.set_actor_id(items.second.instance.actor_id());
 		apie::rpc::RPC_Notify(server, ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE, notice);
-
-		ASYNC_PIE_LOG(PIE_NOTICE, "Nats|notice|{}", items.second.instance.id());
 	}
 
 }
