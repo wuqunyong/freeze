@@ -47,7 +47,7 @@ namespace apie {
 		bool updateNatsInstance(const ::service_discovery::EndPointInstance& instance);
 
 		void checkTimeout();
-		void broadcast();
+		::service_discovery::MSG_NOTICE_INSTANCE broadcast();
 
 		void addUpdateTimer(uint64_t interval);
 		void disableUpdateTimer();

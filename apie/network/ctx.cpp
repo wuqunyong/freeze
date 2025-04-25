@@ -224,8 +224,8 @@ std::shared_ptr<APieConfig> Ctx::loadConfigs()
 	tmpPtrConfig->io_threads = node_["io_threads"].as<uint16_t>(2);
 	tmpPtrConfig->daemon = node_["daemon"].as<bool>(true);
 
-	//tmpPtrConfig->service_timeout = node_["service_timeout"].as<uint32_t>(600);
-	//tmpPtrConfig->service_learning_duration = node_["service_learning_duration"].as<uint32_t>(60);
+	tmpPtrConfig->service_timeout = node_["service_timeout"].as<uint32_t>(180);
+	tmpPtrConfig->service_learning_duration = node_["service_learning_duration"].as<uint32_t>(60);
 
 	if (node_["certificate"])
 	{

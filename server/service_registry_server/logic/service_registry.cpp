@@ -394,11 +394,21 @@ void ServiceRegistry::checkTimeout()
 
 	if (bChanged)
 	{
-		GetModule<apie::ServiceRegistry>()->broadcast();
+		auto notice = GetModule<apie::ServiceRegistry>()->broadcast();
+		
+		for (const auto& items : delNatSerial)
+		{
+			::rpc_msg::CHANNEL server;
+			server.set_realm(items.realm);
+			server.set_type(items.type);
+			server.set_id(items.id);
+			server.set_actor_id(items.actor_id);
+			apie::rpc::RPC_Notify(server, ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE, notice);
+		}
 	}
 }
 
-void ServiceRegistry::broadcast()
+::service_discovery::MSG_NOTICE_INSTANCE ServiceRegistry::broadcast()
 {
 	m_version++;
 
@@ -436,6 +446,7 @@ void ServiceRegistry::broadcast()
 		apie::rpc::RPC_Notify(server, ::opcodes::OPCODE_ID::OP_MSG_NOTICE_INSTANCE, notice);
 	}
 
+	return notice;
 }
 
 

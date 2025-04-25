@@ -173,7 +173,7 @@ namespace apie {
 		APieConfig_Identify identify;
 		uint16_t io_threads = 2;
 		bool daemon = true;
-		uint32_t service_timeout = 600;
+		uint32_t service_timeout = 180;
 		uint32_t service_learning_duration = 60;
 		APieConfig_Certificate certificate;
 		std::vector<APieConfig_ListenersElems> listeners;

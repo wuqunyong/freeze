@@ -5,7 +5,7 @@ identify:
   auth: "hello"
 io_threads: 2
 daemon: true
-service_timeout: 600
+service_timeout: 120
 log:
   merge: true
   level: 0
