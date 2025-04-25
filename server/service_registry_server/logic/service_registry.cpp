@@ -271,6 +271,7 @@ bool ServiceRegistry::updateNatsInstance(const ::service_discovery::EndPointInst
 	point.realm = instance.realm();
 	point.type = instance.type();
 	point.id = instance.id();
+	point.actor_id = instance.actor_id();
 
 	auto findPoint = m_pointMap.find(point);
 	if (findPoint != m_pointMap.end())
