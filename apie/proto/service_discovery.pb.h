@@ -256,16 +256,31 @@ class EndPointInstance final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kAuthFieldNumber = 4,
-    kIpFieldNumber = 5,
+    kActorIdFieldNumber = 4,
+    kAuthFieldNumber = 5,
+    kIpFieldNumber = 6,
     kRealmFieldNumber = 1,
     kTypeFieldNumber = 2,
     kIdFieldNumber = 3,
-    kPortFieldNumber = 6,
-    kCodecTypeFieldNumber = 7,
-    kMaskFlagFieldNumber = 8,
+    kPortFieldNumber = 7,
+    kCodecTypeFieldNumber = 8,
+    kMaskFlagFieldNumber = 9,
   };
-  // string auth = 4;
+  // string actor_id = 4;
+  void clear_actor_id();
+  const std::string& actor_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_actor_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_actor_id();
+  PROTOBUF_NODISCARD std::string* release_actor_id();
+  void set_allocated_actor_id(std::string* actor_id);
+  private:
+  const std::string& _internal_actor_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_actor_id(const std::string& value);
+  std::string* _internal_mutable_actor_id();
+  public:
+
+  // string auth = 5;
   void clear_auth();
   const std::string& auth() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -279,7 +294,7 @@ class EndPointInstance final :
   std::string* _internal_mutable_auth();
   public:
 
-  // string ip = 5;
+  // string ip = 6;
   void clear_ip();
   const std::string& ip() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -320,7 +335,7 @@ class EndPointInstance final :
   void _internal_set_id(uint32_t value);
   public:
 
-  // uint32 port = 6;
+  // uint32 port = 7;
   void clear_port();
   uint32_t port() const;
   void set_port(uint32_t value);
@@ -329,7 +344,7 @@ class EndPointInstance final :
   void _internal_set_port(uint32_t value);
   public:
 
-  // uint32 codec_type = 7;
+  // uint32 codec_type = 8;
   void clear_codec_type();
   uint32_t codec_type() const;
   void set_codec_type(uint32_t value);
@@ -338,7 +353,7 @@ class EndPointInstance final :
   void _internal_set_codec_type(uint32_t value);
   public:
 
-  // uint32 mask_flag = 8;
+  // uint32 mask_flag = 9;
   void clear_mask_flag();
   uint32_t mask_flag() const;
   void set_mask_flag(uint32_t value);
@@ -355,6 +370,7 @@ class EndPointInstance final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr actor_id_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr auth_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ip_;
     uint32_t realm_;
@@ -1511,7 +1527,57 @@ inline void EndPointInstance::set_id(uint32_t value) {
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.id)
 }
 
-// string auth = 4;
+// string actor_id = 4;
+inline void EndPointInstance::clear_actor_id() {
+  _impl_.actor_id_.ClearToEmpty();
+}
+inline const std::string& EndPointInstance::actor_id() const {
+  // @@protoc_insertion_point(field_get:service_discovery.EndPointInstance.actor_id)
+  return _internal_actor_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void EndPointInstance::set_actor_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.actor_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.actor_id)
+}
+inline std::string* EndPointInstance::mutable_actor_id() {
+  std::string* _s = _internal_mutable_actor_id();
+  // @@protoc_insertion_point(field_mutable:service_discovery.EndPointInstance.actor_id)
+  return _s;
+}
+inline const std::string& EndPointInstance::_internal_actor_id() const {
+  return _impl_.actor_id_.Get();
+}
+inline void EndPointInstance::_internal_set_actor_id(const std::string& value) {
+  
+  _impl_.actor_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* EndPointInstance::_internal_mutable_actor_id() {
+  
+  return _impl_.actor_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* EndPointInstance::release_actor_id() {
+  // @@protoc_insertion_point(field_release:service_discovery.EndPointInstance.actor_id)
+  return _impl_.actor_id_.Release();
+}
+inline void EndPointInstance::set_allocated_actor_id(std::string* actor_id) {
+  if (actor_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.actor_id_.SetAllocated(actor_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.actor_id_.IsDefault()) {
+    _impl_.actor_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:service_discovery.EndPointInstance.actor_id)
+}
+
+// string auth = 5;
 inline void EndPointInstance::clear_auth() {
   _impl_.auth_.ClearToEmpty();
 }
@@ -1561,7 +1627,7 @@ inline void EndPointInstance::set_allocated_auth(std::string* auth) {
   // @@protoc_insertion_point(field_set_allocated:service_discovery.EndPointInstance.auth)
 }
 
-// string ip = 5;
+// string ip = 6;
 inline void EndPointInstance::clear_ip() {
   _impl_.ip_.ClearToEmpty();
 }
@@ -1611,7 +1677,7 @@ inline void EndPointInstance::set_allocated_ip(std::string* ip) {
   // @@protoc_insertion_point(field_set_allocated:service_discovery.EndPointInstance.ip)
 }
 
-// uint32 port = 6;
+// uint32 port = 7;
 inline void EndPointInstance::clear_port() {
   _impl_.port_ = 0u;
 }
@@ -1631,7 +1697,7 @@ inline void EndPointInstance::set_port(uint32_t value) {
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.port)
 }
 
-// uint32 codec_type = 7;
+// uint32 codec_type = 8;
 inline void EndPointInstance::clear_codec_type() {
   _impl_.codec_type_ = 0u;
 }
@@ -1651,7 +1717,7 @@ inline void EndPointInstance::set_codec_type(uint32_t value) {
   // @@protoc_insertion_point(field_set:service_discovery.EndPointInstance.codec_type)
 }
 
-// uint32 mask_flag = 8;
+// uint32 mask_flag = 9;
 inline void EndPointInstance::clear_mask_flag() {
   _impl_.mask_flag_ = 0u;
 }

@@ -47,6 +47,32 @@ namespace rpc {
 
 
 
+	template <typename Notify>
+	bool RPC_CallNotify(const ::rpc_msg::CHANNEL& server, uint32_t opcode, const Notify& notify)
+	{
+		auto seq_num = RPCClientManagerSingleton::get().nextSeqNum();
+
+		::rpc_msg::CHANNEL client = apie::Ctx::getThisChannel();
+
+		::rpc_msg::RPC_REQUEST request;
+		*request.mutable_client()->mutable_stub() = client;
+		request.mutable_client()->set_seq_id(seq_num);
+		request.mutable_client()->set_required_reply(false);
+
+		RPCClientContext context(server);
+		*request.mutable_server()->mutable_stub() = context.getServerId();
+		request.set_opcodes(opcode);
+		request.set_args_data(notify.SerializeAsString());
+
+
+		std::string channel = apie::event_ns::NatsManager::GetTopicChannel(request.server().stub());
+
+		::nats_msg::NATS_MSG_PRXOY nats_msg;
+		(*nats_msg.mutable_rpc_request()) = request;
+		return apie::event_ns::NatsSingleton::get().publishNatsMsg(apie::event_ns::NatsManager::E_NT_Realm, channel, nats_msg);
+	}
+
+
 	void RPC_AsyncStreamReply(const rpc_msg::CLIENT_IDENTIFIER& client, uint32_t errCode, const std::string& replyData, bool hasMore, uint32_t offset);
 
 
