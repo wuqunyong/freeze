@@ -54,3 +54,7 @@ target_link_libraries(pb ${LinkLibs})
 
 
 message(STATUS "pb PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
+
+
+auto_source_group("${PB_SOURCE}")
+auto_source_group("${sources}")

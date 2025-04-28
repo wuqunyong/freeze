@@ -46,3 +46,6 @@ add_executable(login_server ${SOURCE_FILES})
 target_include_directories(login_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(login_server PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(login_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
+
+
+auto_source_group("${SOURCE_FILES}")

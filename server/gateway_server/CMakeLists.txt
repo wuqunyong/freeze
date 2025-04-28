@@ -45,3 +45,6 @@ add_executable(gateway_server ${SOURCE_FILES})
 target_include_directories(gateway_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(gateway_server PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(gateway_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
+
+
+auto_source_group("${SOURCE_FILES}")

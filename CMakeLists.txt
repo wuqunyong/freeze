@@ -50,6 +50,25 @@ set(LinkLibs)
 
 message(STATUS "WIN32: ${WIN32}")
 
+# 定义宏：自动为源文件创建与磁盘一致的VS过滤器结构
+# 自动分组宏
+macro(auto_source_group SOURCE_FILES)
+    foreach(FILE ${SOURCE_FILES})
+        # 获取文件相对于项目根目录的路径
+        file(RELATIVE_PATH RELATIVE_FILE ${CMAKE_CURRENT_SOURCE_DIR} ${FILE})
+
+        # 提取目录路径并替换分隔符
+        get_filename_component(DIR_PATH ${RELATIVE_FILE} DIRECTORY)
+        if(DIR_PATH)
+            string(REPLACE "/" "\\" GROUP_PATH ${DIR_PATH})
+            source_group(${GROUP_PATH} FILES ${FILE})
+        else()
+            source_group("\\" FILES ${FILE})  # 根目录文件
+        endif()
+
+    endforeach()
+endmacro()
+
 if (WIN32)
 	# set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT") 
 	# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
