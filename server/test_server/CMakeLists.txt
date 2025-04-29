@@ -50,5 +50,5 @@ target_link_libraries(test_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
 
 if (WIN32)
     auto_source_group("${SOURCE_HEADER}")
-    auto_source_group("${SOURCE_FILES}" ${SOURCE_HEADER})
+    auto_source_group("${SOURCE_FILES}")
 endif()
