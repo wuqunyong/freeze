@@ -41,11 +41,9 @@ else ()
 endif()
 
 
-message(STATUS "sources: ${sources}")
 message(STATUS "***********")
 message(STATUS "***********")
 message(STATUS "LinkLibs: ${LinkLibs}")
-
 
 
 
@@ -58,7 +56,8 @@ target_link_libraries(apie ${LinkLibs})
 
 message(STATUS "apie PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 
-message(STATUS "apie APIE_HEADER: ${APIE_HEADER}")
-auto_source_group("${APIE_HEADER}")
-auto_source_group("${APIE_SOURCE}")
-auto_source_group("${sources}")
+if (WIN32)
+    auto_source_group("${APIE_HEADER}")
+    auto_source_group("${APIE_SOURCE}")
+    auto_source_group("${sources}")
+endif()
