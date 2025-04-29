@@ -38,6 +38,7 @@ endif()
 
 
 file(GLOB_RECURSE SOURCE_FILES ./*.cc ./*.cpp)
+file(GLOB_RECURSE SOURCE_HEADER ./*.h)
 
 
 message(STATUS "IncludeDirs: ${IncludeDirs}")
@@ -48,10 +49,12 @@ message(STATUS "DependenciesLinkDirs: ${DependenciesLinkDirs}")
 message(STATUS "DependenciesLinkLibs: ${DependenciesLinkLibs}")
 
 
-add_executable(db_proxy_server ${SOURCE_FILES} ${common_sources})
+add_executable(db_proxy_server ${SOURCE_FILES} ${common_sources} ${SOURCE_HEADER})
 target_include_directories(db_proxy_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(db_proxy_server PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(db_proxy_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
 
-
-auto_source_group("${SOURCE_FILES}")
+if (WIN32)
+    auto_source_group("${SOURCE_HEADER}")
+    auto_source_group("${SOURCE_FILES}")
+endif()

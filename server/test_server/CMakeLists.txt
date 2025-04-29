@@ -40,7 +40,7 @@ endif()
 
 
 file(GLOB_RECURSE SOURCE_FILES ./*.cc ./*.cpp)
-
+file(GLOB_RECURSE SOURCE_HEADER ./*.h)
 
 add_executable(test_server ${SOURCE_FILES})
 target_include_directories(test_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${IncludeDirs} ${DependenciesIncludeDirs})
@@ -48,4 +48,7 @@ target_link_directories(test_server PUBLIC ${LinkDirs} ${DependenciesLinkDirs})
 target_link_libraries(test_server PUBLIC ${LinkLibs} ${DependenciesLinkLibs})
 
 
-auto_source_group("${SOURCE_FILES}")
+if (WIN32)
+    auto_source_group("${SOURCE_HEADER}")
+    auto_source_group("${SOURCE_FILES}" ${SOURCE_HEADER})
+endif()

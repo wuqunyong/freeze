@@ -34,7 +34,7 @@ endif()
 
 
 file(GLOB_RECURSE PB_SOURCE ./*.cc ./*.cpp)
-
+file(GLOB_RECURSE PB_HEADER ./*.h)
 
 set(LibType)
 if (WIN32)
@@ -46,7 +46,7 @@ endif()
 
 
 
-add_library(pb ${LibType} ${PB_SOURCE} ${sources} ${public_headers})
+add_library(pb ${LibType} ${PB_SOURCE} ${sources} ${public_headers} ${PB_HEADER})
 set_target_properties(pb PROPERTIES VERSION "1.0.0" SOVERSION "1")
 target_include_directories(pb PUBLIC ${IncludeDirs} ${DependenciesIncludeDirs})
 target_link_directories(pb PUBLIC ${LinkDirs})
@@ -55,6 +55,8 @@ target_link_libraries(pb ${LinkLibs})
 
 message(STATUS "pb PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 
-
-auto_source_group("${PB_SOURCE}")
-auto_source_group("${sources}")
+if (WIN32)
+    auto_source_group("${PB_HEADER}")
+    auto_source_group("${PB_SOURCE}")
+    auto_source_group("${sources}")
+endif()

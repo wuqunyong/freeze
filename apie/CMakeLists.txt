@@ -18,6 +18,7 @@ set(cxx-outer-sources)
 
 
 file(GLOB_RECURSE APIE_SOURCE ./*.cc ./*.cpp)
+file(GLOB_RECURSE APIE_HEADER ./*.h)
 
 set(cxx-outer-sources
     third_party/http-parser/http_parser.c
@@ -48,7 +49,7 @@ message(STATUS "LinkLibs: ${LinkLibs}")
 
 
 
-add_library(apie ${LibType} ${APIE_SOURCE} ${sources} ${public_headers})
+add_library(apie ${LibType} ${APIE_SOURCE} ${sources} ${public_headers} ${APIE_HEADER})
 set_target_properties(apie PROPERTIES VERSION "1.0.0" SOVERSION "1")
 target_include_directories(apie PUBLIC ${IncludeDirs})
 target_link_directories(apie PUBLIC ${LinkDirs})
@@ -57,5 +58,7 @@ target_link_libraries(apie ${LinkLibs})
 
 message(STATUS "apie PROJECT_BINARY_DIR: ${PROJECT_BINARY_DIR}")
 
+message(STATUS "apie APIE_HEADER: ${APIE_HEADER}")
+auto_source_group("${APIE_HEADER}")
 auto_source_group("${APIE_SOURCE}")
 auto_source_group("${sources}")
